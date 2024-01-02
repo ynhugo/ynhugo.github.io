@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- 2023-11-25 周六 14:46 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>&lrm;</title>
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+</head>
+<body>
+<div id="content" class="content">
+<nav id="table-of-contents" role="doc-toc">
+<h2>&#30446;&#24405;</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org86b31ce">1. 推荐书籍</a></li>
+<li><a href="#org79f7d22">2. emacs入门教程</a></li>
+<li><a href="#org9913422">3. Emacs文件和目录操作模式Dired</a>
+<ul>
+<li><a href="#orgb673832">3.1. 参考链接</a></li>
+<li><a href="#org0409540">3.2. 在目录模式(dired)下的操作</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</nav>
+<p>
+&#x2014;
+title: emacs_study
+tags: ["emacs"]
+&#x2014;
+</p>
+
+<div id="outline-container-org86b31ce" class="outline-2">
+<h2 id="org86b31ce"><span class="section-number-2">1.</span> 推荐书籍</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+<a href="file:///d:/book/计算机/程序员/emacs/Emacs-生存指南.pdf">Emacs-生存指南</a>
+</p>
+
+<p>
+<a href="file:///d:/book/计算机/程序员/emacs/GNU-Emacs-Lisp编程入门.pdf">GNU-Emacs-Lisp编程入门</a>
+</p>
+
+<p>
+<a href="file:///d:/book/计算机/程序员/emacs/ANSI-Common-Lisp-中文版.epub">ANSI-Common-Lisp-中文版</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-org79f7d22" class="outline-2">
+<h2 id="org79f7d22"><span class="section-number-2">2.</span> emacs入门教程</h2>
+<div class="outline-text-2" id="text-2">
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">&lt;C-h t&gt;</td>
+<td class="org-left">查看官方教程，教程会根据系统语言显示中文</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org9913422" class="outline-2">
+<h2 id="org9913422"><span class="section-number-2">3.</span> Emacs文件和目录操作模式Dired</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+<div id="outline-container-orgb673832" class="outline-3">
+<h3 id="orgb673832"><span class="section-number-3">3.1.</span> 参考链接</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+<a href="https://www.cnblogs.com/beanmoon/archive/2012/09/22/2697723.html">Emacs文件和目录操作模式Dired</a>
+</p>
+
+<p>
+&lt;&gt; 内对应要执行的快捷键，C 表示 Ctrl 键，RET 表示回车，M 表示 Alt 键
+</p>
+
+
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">&lt;C-x d&gt;</th>
+<th scope="col" class="org-left">进入Dired模式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">&lt;C-x C-f&gt; RET PATH</td>
+<td class="org-left">打开PATH目录</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org0409540" class="outline-3">
+<h3 id="org0409540"><span class="section-number-3">3.2.</span> 在目录模式(dired)下的操作</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+将文件根据时间进行排序
+</p>
+
+
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">&lt;s&gt;</td>
+<td class="org-left">将文件按时间进行排序，按下 s 后使最新修改的文件排在前边</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+移动光标
+</p>
+
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">&lt;SPACE&gt;、&lt;C-n&gt;、&lt;n&gt;</th>
+<th scope="col" class="org-left">向下</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">&lt;Backspace&gt;、&lt;C-p&gt;、&lt;p&gt;</td>
+<td class="org-left">向上</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">&lt;ENTER&gt;</td>
+<td class="org-left">进入子目录</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">&lt;q&gt;</td>
+<td class="org-left">退出子目录</td>
+</tr>
+</tbody>
+</table>
+
+
+<p>
+查看文件内容
+</p>
+
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">&lt;v&gt;</th>
+<th scope="col" class="org-left">移动到某文件以只读模式查看</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">&lt;s&gt;</td>
+<td class="org-left">递增查找字符串</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">&lt;q&gt;</td>
+<td class="org-left">退出只读模式</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+编辑文件
+</p>
+
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">&lt;f&gt;</th>
+<th scope="col" class="org-left">编辑文件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">&lt;C-x k&gt;、&lt;C-x 4 0&gt;</td>
+<td class="org-left">关闭当前buffer</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">&lt;C-b&gt;</td>
+<td class="org-left">切换到上一个buffer，也可以rpv tab 键显示其他buffer手动输入切换</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">&lt;C-x C-b&gt;</td>
+<td class="org-left">显示buffer列表</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">&lt;C-x C-f M-y&gt;</td>
+<td class="org-left">重新编辑关掉的文件，&lt;M-y&gt;递归历史记录，找到关闭的文件并打开</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+文件的删除、复制、重命名、压缩与解压缩、比较
+</p>
+
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">&lt;d&gt;</th>
+<th scope="col" class="org-left">加上待删除标记</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">&lt;u&gt;</td>
+<td class="org-left">取消标记</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">&lt;x&gt;</td>
+<td class="org-left">执行被记的文件</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">&lt;#&gt;</td>
+<td class="org-left">给所有自动文件添加待删除标记</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">&lt;~&gt;</td>
+<td class="org-left">给所有备份文件添加待删除标记</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">&lt;D&gt;</td>
+<td class="org-left">立即删除指定文件</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">&lt;l&gt;</td>
+<td class="org-left">用于复制光标所在文件文件</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">&lt;2 C&gt;</td>
+<td class="org-left">复制光标所在位置文件以及后一个文件</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">&lt;R&gt;</td>
+<td class="org-left">重命名或移动文件</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">&lt;Z&gt;</td>
+<td class="org-left">压缩与解压缩操作</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">&lt;=&gt;</td>
+<td class="org-left">比较当前文件与待输入的文件，类似于lunix的diff命令</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+在文件上运行linux命令，在文件上按&lt;!&gt;键
+</p>
+
+<p>
+对文件组进行操作
+</p>
+
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">&lt;m&gt;</th>
+<th scope="col" class="org-left">标记文件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">&lt;$m&gt;</td>
+<td class="org-left">使用正则标记</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">&lt;+&gt;</td>
+<td class="org-left">创建目录</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2023-11-25 周六 14:46</p>
+</div>
+</body>
+</html>

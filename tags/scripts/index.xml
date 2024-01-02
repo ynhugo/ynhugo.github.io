@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>scripts on ynblog</title>
+        <link>https://ynhugo.github.io/tags/scripts/</link>
+        <description>Recent content in scripts on ynblog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language><atom:link href="https://ynhugo.github.io/tags/scripts/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>基于时间创建文件</title>
+        <link>https://ynhugo.github.io/p/%E5%9F%BA%E4%BA%8E%E6%97%B6%E9%97%B4%E5%88%9B%E5%BB%BA%E6%96%87%E4%BB%B6/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>https://ynhugo.github.io/p/%E5%9F%BA%E4%BA%8E%E6%97%B6%E9%97%B4%E5%88%9B%E5%BB%BA%E6%96%87%E4%BB%B6/</guid>
+        <description>&lt;ul&gt;
+&lt;li&gt;shell环境基于时间创建文件&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#+begin_src :
+#!/usr/bin/bash&lt;/p&gt;
+&lt;p&gt;var1=&lt;code&gt;date | tr &#39;年&#39; &#39; &#39; | tr &#39;月&#39; &#39; &#39; | tr &#39;日&#39; &#39; &#39; |  awk &#39;{print $1}&#39;&lt;/code&gt;
+var2=&lt;code&gt;date | tr &#39;年&#39; &#39; &#39; | tr &#39;月&#39; &#39; &#39; | tr &#39;日&#39; &#39; &#39; |  awk &#39;{print $2}&#39;&lt;/code&gt;
+var3=&lt;code&gt;date | tr &#39;年&#39; &#39; &#39; | tr &#39;月&#39; &#39; &#39; | tr &#39;日&#39; &#39; &#39; |  awk &#39;{print $3}&#39;&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;touch $var1$var2$var3.txt&lt;/p&gt;
+&lt;p&gt;echo &amp;ldquo;$var1$var2$var3: yenao&amp;rdquo; &amp;gt; $var1$var2$var3.txt
+echo &amp;ldquo;1. &amp;quot; &amp;raquo; $var1$var2$var3.txt
+#+end_src&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;windows环境基于时间创建文件&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#+begin_src :
+set var1=%date:~0,4%
+set var2=%date:~5,2%
+set var3=%date:~8,2%&lt;/p&gt;
+&lt;p&gt;if not exist %var1%%var2%%var3%.txt (
+type nul &amp;gt; %var1%%var2%%var3%.txt
+echo %var1%%var2%%var3%: yenao &amp;gt; %var1%%var2%%var3%.txt
+echo 1. &amp;raquo; %var1%%var2%%var3%.txt
+)
+#+end_src&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>
