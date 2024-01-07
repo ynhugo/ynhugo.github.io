@@ -583,6 +583,8 @@
 </span><span class="lnt">204
 </span><span class="lnt">205
 </span><span class="lnt">206
+</span><span class="lnt">207
+</span><span class="lnt">208
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl">
@@ -605,7 +607,9 @@
 </span></span><span class="line"><span class="cl">  <span class="nv">sudo</span> <span class="nv">apt-get</span> <span class="nv">install</span> <span class="nv">ed</span> <span class="nv">-y</span><span class="c1">;</span>
 </span></span><span class="line"><span class="cl">  <span class="nv">sudo</span> <span class="nv">apt-get</span> <span class="nv">install</span> <span class="nv">tftp-hpa</span> <span class="nv">tftpd-hpa</span> <span class="nv">xinetd</span> <span class="nv">-y</span><span class="c1">; sudo chmod 777 /etc/default/tftpd-hpa;</span>
 </span></span><span class="line"><span class="cl">  <span class="nv">sudo</span> <span class="nv">apt-get</span> <span class="nv">install</span>  <span class="nv">nfs-kernel-server</span> <span class="nv">-y</span><span class="c1">;</span>
-</span></span><span class="line"><span class="cl">  <span class="nv">sudo</span> <span class="nv">apt</span> <span class="nv">install</span> <span class="nv">device-tree-compiler</span> <span class="nv">-y</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">sudo</span> <span class="nv">apt</span> <span class="nv">install</span> <span class="nv">device-tree-compiler</span> <span class="nv">-y</span><span class="c1">;</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">sudo</span> <span class="nv">apt-get</span> <span class="nv">install</span> <span class="nv">qemu</span> <span class="nv">qemu-kvm</span> <span class="nv">libvirt-bin</span> <span class="nv">bridge-utils</span> <span class="nv">virt-manager</span> <span class="nv">-y</span><span class="c1">;</span>
+</span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="nv">cat</span> <span class="nv">/etc/default/tftpd-hpa</span> <span class="nf">&gt;</span> <span class="nv">/etc/default/tftpd-hpa</span>
 </span></span><span class="line"><span class="cl">  <span class="nv">echo</span> <span class="ss">&#39;a</span>
@@ -702,20 +706,20 @@
 </span></span><span class="line"><span class="cl">  <span class="err">#</span> 	<span class="nv">result=$</span><span class="p">(</span><span class="nv">ip</span> <span class="nv">addr</span> <span class="nv">|</span> <span class="nv">grep</span> <span class="s">&#34;ens33&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">  <span class="err">#</span> 	<span class="nb">if</span> <span class="p">[</span> <span class="s">&#34;$result&#34;</span> <span class="nv">!=</span> <span class="s">&#34;&#34;</span> <span class="p">]</span><span class="c1">; then</span>
 </span></span><span class="line"><span class="cl">  <span class="err">#</span> 		<span class="nv">sudo</span> <span class="nv">su</span> <span class="nv">-c</span> <span class="s">&#34;cat &gt;&gt; /etc/network/interfaces &lt;&lt; EOF
-</span></span></span><span class="line"><span class="cl"><span class="s">	# 		auto ens33
-</span></span></span><span class="line"><span class="cl"><span class="s">	# 		auto br0
-</span></span></span><span class="line"><span class="cl"><span class="s">	# 		iface br0 inet dhcp
-</span></span></span><span class="line"><span class="cl"><span class="s">	# 		bridge_ports ens33
-</span></span></span><span class="line"><span class="cl"><span class="s">	# EOF&#34;</span>
+</span></span></span><span class="line"><span class="cl"><span class="s">	  # 		auto ens33
+</span></span></span><span class="line"><span class="cl"><span class="s">	  # 		auto br0
+</span></span></span><span class="line"><span class="cl"><span class="s">	  # 		iface br0 inet dhcp
+</span></span></span><span class="line"><span class="cl"><span class="s">	  # 		bridge_ports ens33
+</span></span></span><span class="line"><span class="cl"><span class="s">	  # EOF&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="err">#</span> 	<span class="nv">else</span>
 </span></span><span class="line"><span class="cl">  <span class="err">#</span> 		<span class="nv">result=$</span><span class="p">(</span><span class="nv">ip</span> <span class="nv">addr</span> <span class="nv">|</span> <span class="nv">grep</span> <span class="s">&#34;eth0&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">  <span class="err">#</span> 		<span class="nb">if</span> <span class="p">[</span> <span class="s">&#34;$result&#34;</span> <span class="nv">!=</span> <span class="s">&#34;&#34;</span> <span class="p">]</span><span class="c1">; then</span>
 </span></span><span class="line"><span class="cl">  <span class="err">#</span> 			<span class="nv">sudo</span> <span class="nv">su</span> <span class="nv">-c</span> <span class="s">&#34;cat &gt;&gt; /etc/network/interfaces &lt;&lt; EOF
-</span></span></span><span class="line"><span class="cl"><span class="s">	# 			auto eth0
-</span></span></span><span class="line"><span class="cl"><span class="s">	# 			auto br0
-</span></span></span><span class="line"><span class="cl"><span class="s">	# 			iface br0 inet dhcp
-</span></span></span><span class="line"><span class="cl"><span class="s">	# 			bridge_ports eth0
-</span></span></span><span class="line"><span class="cl"><span class="s">	# EOF&#34;</span>
+</span></span></span><span class="line"><span class="cl"><span class="s">	  # 			auto eth0
+</span></span></span><span class="line"><span class="cl"><span class="s">	  # 			auto br0
+</span></span></span><span class="line"><span class="cl"><span class="s">	  # 			iface br0 inet dhcp
+</span></span></span><span class="line"><span class="cl"><span class="s">	  # 			bridge_ports eth0
+</span></span></span><span class="line"><span class="cl"><span class="s">	  # EOF&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="err">#</span> 		<span class="nv">fi</span>
 </span></span><span class="line"><span class="cl">  <span class="err">#</span> 	<span class="nv">fi</span>
 </span></span><span class="line"><span class="cl">  <span class="err">#</span> <span class="nv">fi</span>
