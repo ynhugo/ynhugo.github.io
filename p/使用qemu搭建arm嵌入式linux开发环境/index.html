@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-cn" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='参考链接 使用qemu搭建arm嵌入式linux开发环境 使用QEMU搭建u-boot&#43;Linux&#43;NFS嵌入式开发环境 一步步教你：如何用Qem'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='使用qemu搭建arm嵌入式linux开发环境 使用说明 该脚本只有在第一次运行的时候需要构建环境，花费时间长一些，构建完成以后自动启动环境，以'>
 <title>使用qemu搭建arm嵌入式linux开发环境</title>
 
 <link rel='canonical' href='https://ynhugo.github.io/p/%E4%BD%BF%E7%94%A8qemu%E6%90%AD%E5%BB%BAarm%E5%B5%8C%E5%85%A5%E5%BC%8Flinux%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/'>
 
 <link rel="stylesheet" href="/scss/style.min.2328f6a64e9c190e18c4f69895d0081330e55c8210e9395d11068ea1d881517f.css"><meta property='og:title' content='使用qemu搭建arm嵌入式linux开发环境'>
-<meta property='og:description' content='参考链接 使用qemu搭建arm嵌入式linux开发环境 使用QEMU搭建u-boot&#43;Linux&#43;NFS嵌入式开发环境 一步步教你：如何用Qem'>
+<meta property='og:description' content='使用qemu搭建arm嵌入式linux开发环境 使用说明 该脚本只有在第一次运行的时候需要构建环境，花费时间长一些，构建完成以后自动启动环境，以'>
 <meta property='og:url' content='https://ynhugo.github.io/p/%E4%BD%BF%E7%94%A8qemu%E6%90%AD%E5%BB%BAarm%E5%B5%8C%E5%85%A5%E5%BC%8Flinux%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/'>
 <meta property='og:site_name' content='ynblog'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2023-09-14T07:37:20&#43;08:00'/><meta property='article:modified_time' content='2023-09-14T07:37:20&#43;08:00'/>
 <meta name="twitter:title" content="使用qemu搭建arm嵌入式linux开发环境">
-<meta name="twitter:description" content="参考链接 使用qemu搭建arm嵌入式linux开发环境 使用QEMU搭建u-boot&#43;Linux&#43;NFS嵌入式开发环境 一步步教你：如何用Qem">
+<meta name="twitter:description" content="使用qemu搭建arm嵌入式linux开发环境 使用说明 该脚本只有在第一次运行的时候需要构建环境，花费时间长一些，构建完成以后自动启动环境，以">
     <link rel="shortcut icon" href="/img/favicon.ico" />
 
     </head>
@@ -269,17 +269,17 @@
         <div class="widget--toc">
             <nav id="TableOfContents">
 <ul>
-<li><a href="#headline-1">参考链接</a>
-</li>
-<li><a href="#headline-2">使用qemu搭建arm嵌入式linux开发环境</a>
+<li><a href="#headline-1">使用qemu搭建arm嵌入式linux开发环境</a>
 <ul>
-<li><a href="#headline-3">使用说明</a>
+<li><a href="#headline-2">使用说明</a>
 </li>
-<li><a href="#headline-4">搭建脚本</a>
+<li><a href="#headline-3">搭建脚本</a>
 </li>
-<li><a href="#headline-5">简化的脚本，也是最初版本的脚本</a>
+<li><a href="#headline-4">简化的脚本，也是最初版本的脚本</a>
 </li>
 </ul>
+</li>
+<li><a href="#headline-5">参考链接</a>
 </li>
 </ul>
 </nav>
@@ -355,50 +355,25 @@
     
 <div id="outline-container-headline-1" class="outline-2">
 <h2 id="headline-1">
-参考链接
-</h2>
-<div id="outline-text-headline-1" class="outline-text-2">
-<p>
-<a href="https://blog.csdn.net/zhvngchvng/article/details/107856401">使用qemu搭建arm嵌入式linux开发环境</a></p>
-<p>
-<a href="https://blog.csdn.net/qq_23850025/article/details/115667774">使用QEMU搭建u-boot+Linux+NFS嵌入式开发环境</a></p>
-<p>
-<a href="https://zhuanlan.zhihu.com/p/340362172">一步步教你：如何用Qemu来模拟ARM系统</a></p>
-<p>
-<a href="https://cloud.tencent.com/developer/article/2347447">深入理解 Linux 启动过程 | QEMU 启动 linux 内核和自制根文件系统</a></p>
-<p>
-<a href="https://blog.csdn.net/qq_43644573/article/details/126998814">qemu安装及设备添加</a></p>
-<p>
-<a href="https://wiki.phytec.com/pages/viewpage.action?pageId=69501647">linux内核设备树修改指南 / linux kernel device tree modify guide</a></p>
-<p>
-<a href="https://developer.aliyun.com/article/972122">Linux设备树系列-GPIO驱动实践</a></p>
-<p>
-<a href="https://zhuanlan.zhihu.com/p/620384778">Linux内核设备驱动设备树概念与使用</a></p>
-<p>
-<a href="https://zhuanlan.zhihu.com/p/665624816">初学者教程：修改和理解设备树（dts）</a></p>
-</div>
-</div>
-<div id="outline-container-headline-2" class="outline-2">
-<h2 id="headline-2">
 使用qemu搭建arm嵌入式linux开发环境
 </h2>
-<div id="outline-text-headline-2" class="outline-text-2">
-<div id="outline-container-headline-3" class="outline-3">
-<h3 id="headline-3">
+<div id="outline-text-headline-1" class="outline-text-2">
+<div id="outline-container-headline-2" class="outline-3">
+<h3 id="headline-2">
 使用说明
 </h3>
-<div id="outline-text-headline-3" class="outline-text-3">
+<div id="outline-text-headline-2" class="outline-text-3">
 <p>
 该脚本只有在第一次运行的时候需要构建环境，花费时间长一些，构建完成以后自动启动环境，以后再运行该脚本的时候就不需要再次构建环境了，加载后进入开发环境，敲回车确认。</p>
 <p>
 退出时先按快捷键&#34;Ctrl+x&#34;，再按&#34;x&#34;即可退出环境。</p>
 </div>
 </div>
-<div id="outline-container-headline-4" class="outline-3">
-<h3 id="headline-4">
+<div id="outline-container-headline-3" class="outline-3">
+<h3 id="headline-3">
 搭建脚本
 </h3>
-<div id="outline-text-headline-4" class="outline-text-3">
+<div id="outline-text-headline-3" class="outline-text-3">
 <div class="src src-emacs-lisp">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -821,11 +796,11 @@
 </div>
 </div>
 </div>
-<div id="outline-container-headline-5" class="outline-3">
-<h3 id="headline-5">
+<div id="outline-container-headline-4" class="outline-3">
+<h3 id="headline-4">
 简化的脚本，也是最初版本的脚本
 </h3>
-<div id="outline-text-headline-5" class="outline-text-3">
+<div id="outline-text-headline-4" class="outline-text-3">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1020,6 +995,33 @@
 </div>
 </div>
 </div>
+</div>
+</div>
+<div id="outline-container-headline-5" class="outline-2">
+<h2 id="headline-5">
+参考链接
+</h2>
+<div id="outline-text-headline-5" class="outline-text-2">
+<p>
+<a href="https://blog.csdn.net/zhvngchvng/article/details/107856401">使用qemu搭建arm嵌入式linux开发环境</a></p>
+<p>
+<a href="https://blog.csdn.net/qq_23850025/article/details/115667774">使用QEMU搭建u-boot+Linux+NFS嵌入式开发环境</a></p>
+<p>
+<a href="https://zhuanlan.zhihu.com/p/340362172">一步步教你：如何用Qemu来模拟ARM系统</a></p>
+<p>
+<a href="https://cloud.tencent.com/developer/article/2347447">深入理解 Linux 启动过程 | QEMU 启动 linux 内核和自制根文件系统</a></p>
+<p>
+<a href="https://blog.csdn.net/qq_43644573/article/details/126998814">qemu安装及设备添加</a></p>
+<p>
+<a href="https://wiki.phytec.com/pages/viewpage.action?pageId=69501647">linux内核设备树修改指南 / linux kernel device tree modify guide</a></p>
+<p>
+<a href="https://developer.aliyun.com/article/972122">Linux设备树系列-GPIO驱动实践</a></p>
+<p>
+<a href="https://zhuanlan.zhihu.com/p/620384778">Linux内核设备驱动设备树概念与使用</a></p>
+<p>
+<a href="https://zhuanlan.zhihu.com/p/665624816">初学者教程：修改和理解设备树（dts）</a></p>
+<p>
+<a href="https://zhuanlan.zhihu.com/p/395145692">【嵌入式Linux驱动入门】一、基于QEMU的IMX6ULL虚拟开发环境搭建</a></p>
 </div>
 </div>
 
