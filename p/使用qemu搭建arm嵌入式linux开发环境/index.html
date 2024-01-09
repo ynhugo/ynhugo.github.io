@@ -589,11 +589,11 @@
 </span></span><span class="line"><span class="cl">  <span class="k">fi</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="c1"># 允许开发板通过NFS访问Ubuntu的/home/${USER}目录，当然你可以加其他目录</span>
-</span></span><span class="line"><span class="cl">  <span class="nv">result</span><span class="o">=</span><span class="k">$(</span>grep -w <span class="s2">&#34;/home/</span><span class="si">${</span><span class="nv">USER</span><span class="si">}</span><span class="s2"> \*(rw,nohide,insecure,no_subtree_check,async,no_root_squash)&#34;</span> /etc/exports <span class="p">|</span> grep -v <span class="s2">&#34;#&#34;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">result</span><span class="o">=</span><span class="k">$(</span>grep -w <span class="s2">&#34;</span><span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="s2"> \*(rw,nohide,insecure,no_subtree_check,async,no_root_squash)&#34;</span> /etc/exports <span class="p">|</span> grep -v <span class="s2">&#34;#&#34;</span><span class="k">)</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -eq <span class="m">0</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
 </span></span><span class="line"><span class="cl">	  <span class="c1"># 查找并注释匹配行</span>
-</span></span><span class="line"><span class="cl">	  <span class="c1"># sudo sed -i &#34;s/\/home\/${USER} \*(rw,nohide,insecure,no_subtree_check,async,no_root_squash)/#\/home\/${USER} \*(rw,nohide,insecure,no_subtree_check,async,no_root_squash)/g&#34; /etc/exports</span>
+</span></span><span class="line"><span class="cl">	  <span class="c1"># sudo sed -i &#34;s/${work_dir} \*(rw,nohide,insecure,no_subtree_check,async,no_root_squash)/#\/home\/${USER} \*(rw,nohide,insecure,no_subtree_check,async,no_root_squash)/g&#34; /etc/exports</span>
 </span></span><span class="line"><span class="cl">	  <span class="c1"># echo &#34;已注释匹配行：$result&#34;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">	  sudo /etc/init.d/nfs-kernel-server restart
@@ -602,10 +602,10 @@
 </span></span><span class="line"><span class="cl">	  <span class="nv">power</span><span class="o">=</span><span class="k">$(</span>ls -l /etc/exports <span class="p">|</span> awk <span class="s1">&#39;{print $4}&#39;</span><span class="k">)</span>
 </span></span><span class="line"><span class="cl">	  <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$power</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="s2">&#34;root&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
 </span></span><span class="line"><span class="cl">		  sudo chown <span class="si">${</span><span class="nv">USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">USER</span><span class="si">}</span> -R /etc/exports
-</span></span><span class="line"><span class="cl">		  <span class="nb">echo</span> <span class="s2">&#34;/home/</span><span class="si">${</span><span class="nv">USER</span><span class="si">}</span><span class="s2"> *(rw,nohide,insecure,no_subtree_check,async,no_root_squash)&#34;</span> &gt;&gt; /etc/exports
+</span></span><span class="line"><span class="cl">		  <span class="nb">echo</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="s2"> *(rw,nohide,insecure,no_subtree_check,async,no_root_squash)&#34;</span> &gt;&gt; /etc/exports
 </span></span><span class="line"><span class="cl">		  sudo chown root:root -R /etc/exports
 </span></span><span class="line"><span class="cl">	  <span class="k">else</span>
-</span></span><span class="line"><span class="cl">		  <span class="nb">echo</span> <span class="s2">&#34;/home/</span><span class="si">${</span><span class="nv">USER</span><span class="si">}</span><span class="s2"> *(rw,nohide,insecure,no_subtree_check,async,no_root_squash)&#34;</span> &gt;&gt; /etc/exports
+</span></span><span class="line"><span class="cl">		  <span class="nb">echo</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="s2"> *(rw,nohide,insecure,no_subtree_check,async,no_root_squash)&#34;</span> &gt;&gt; /etc/exports
 </span></span><span class="line"><span class="cl">		  sudo chown root:root -R /etc/exports
 </span></span><span class="line"><span class="cl">	  <span class="k">fi</span>
 </span></span><span class="line"><span class="cl">	  sudo /etc/init.d/nfs-kernel-server restart
@@ -670,8 +670,8 @@
 </span></span><span class="line"><span class="cl">  <span class="c1"># 准备根文件系统</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">cd</span> <span class="nv">$work_dir</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  cp -av <span class="nv">$work_dir</span>/<span class="nv">$busybox</span>/_install/* <span class="nv">$work_dir</span>/rootfs/<span class="p">;</span>
 </span></span><span class="line"><span class="cl">  mkdir -p <span class="nv">$work_dir</span>/rootfs/<span class="o">{</span>dev,etc/init.d,lib<span class="o">}</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  cp -av <span class="nv">$work_dir</span>/<span class="nv">$busybox</span>/_install/* <span class="nv">$work_dir</span>/rootfs/<span class="p">;</span>
 </span></span><span class="line"><span class="cl">  cp -av /usr/arm-linux-gnueabi/lib/* <span class="nv">$work_dir</span>/rootfs/lib/<span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">cd</span> <span class="nv">$work_dir</span>/rootfs/dev<span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="c1"># 创建字符设备类型的设备节点，这些设备节点的主设备号为4,次设备号为1..11</span>
