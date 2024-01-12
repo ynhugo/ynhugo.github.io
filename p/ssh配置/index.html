@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-cn" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='ssh配置文件结构 1 2 3 4 5 Host HostName User Port IdentityFile 在电脑的`应用`的`可选功能`中搜索&amp;#34;OpenSSH 服务端&amp;#34;并安装。 启动ssh 在`启动'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='ssh配置文件结构 1 2 3 4 5 Host HostName User Port IdentityFile 如何不让ssh连接断开 在客户端设置 SSH 保活选项 您可以在 SSH 客户端的配置文件中设置保活选项，以防止连接因为长'>
 <title>SSH配置</title>
 
 <link rel='canonical' href='https://ynhugo.github.io/p/ssh%E9%85%8D%E7%BD%AE/'>
 
 <link rel="stylesheet" href="/scss/style.min.2328f6a64e9c190e18c4f69895d0081330e55c8210e9395d11068ea1d881517f.css"><meta property='og:title' content='SSH配置'>
-<meta property='og:description' content='ssh配置文件结构 1 2 3 4 5 Host HostName User Port IdentityFile 在电脑的`应用`的`可选功能`中搜索&amp;#34;OpenSSH 服务端&amp;#34;并安装。 启动ssh 在`启动'>
+<meta property='og:description' content='ssh配置文件结构 1 2 3 4 5 Host HostName User Port IdentityFile 如何不让ssh连接断开 在客户端设置 SSH 保活选项 您可以在 SSH 客户端的配置文件中设置保活选项，以防止连接因为长'>
 <meta property='og:url' content='https://ynhugo.github.io/p/ssh%E9%85%8D%E7%BD%AE/'>
 <meta property='og:site_name' content='ynblog'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='ssh' />
 <meta name="twitter:title" content="SSH配置">
-<meta name="twitter:description" content="ssh配置文件结构 1 2 3 4 5 Host HostName User Port IdentityFile 在电脑的`应用`的`可选功能`中搜索&amp;#34;OpenSSH 服务端&amp;#34;并安装。 启动ssh 在`启动">
+<meta name="twitter:description" content="ssh配置文件结构 1 2 3 4 5 Host HostName User Port IdentityFile 如何不让ssh连接断开 在客户端设置 SSH 保活选项 您可以在 SSH 客户端的配置文件中设置保活选项，以防止连接因为长">
     <link rel="shortcut icon" href="/img/favicon.ico" />
 
     </head>
@@ -270,12 +270,20 @@
             <nav id="TableOfContents">
 <ul>
 <li><a href="#headline-1">ssh配置文件结构</a>
-<ul>
-<li><a href="#headline-2">启动ssh</a>
 </li>
-<li><a href="#headline-3">让ssh能够自动启动</a>
+<li><a href="#headline-2">如何不让ssh连接断开</a>
+<ul>
+<li><a href="#headline-3">在客户端设置 SSH 保活选项</a>
+</li>
+<li><a href="#headline-4">在服务器端设置 SSH 保活选项</a>
+</li>
+<li><a href="#headline-5">使用 tmux 或 screen 会话</a>
+</li>
+<li><a href="#headline-6">注意事项</a>
 </li>
 </ul>
+</li>
+<li><a href="#headline-7">参考链接</a>
 </li>
 </ul>
 </nav>
@@ -320,7 +328,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 1 分钟
+                    阅读时长: 2 分钟
                 </time>
             </div>
         
@@ -341,7 +349,7 @@
 ssh配置文件结构
 </h2>
 <div id="outline-text-headline-1" class="outline-text-2">
-<div class="src src-:">
+<div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -351,31 +359,154 @@ ssh配置文件结构
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Host            
-</span></span><span class="line"><span class="cl">HostName        
-</span></span><span class="line"><span class="cl">User            
-</span></span><span class="line"><span class="cl">Port            
-</span></span><span class="line"><span class="cl">IdentityFile</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  Host            
+</span></span><span class="line"><span class="cl">  HostName        
+</span></span><span class="line"><span class="cl">  User            
+</span></span><span class="line"><span class="cl">  Port            
+</span></span><span class="line"><span class="cl">  IdentityFile</span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
-<p>在电脑的`应用`的`可选功能`中搜索&#34;OpenSSH 服务端&#34;并安装。</p>
-<div id="outline-container-headline-2" class="outline-3">
-<h3 id="headline-2">
-启动ssh
-</h3>
-<div id="outline-text-headline-2" class="outline-text-3">
-<p>在`启动菜单`搜索`cmd`并`以管理员身份运行`打开cmd终端，然后在终端输入`net start sshd`启动ssh。</p>
 </div>
 </div>
+<div id="outline-container-headline-2" class="outline-2">
+<h2 id="headline-2">
+如何不让ssh连接断开
+</h2>
+<div id="outline-text-headline-2" class="outline-text-2">
 <div id="outline-container-headline-3" class="outline-3">
 <h3 id="headline-3">
-让ssh能够自动启动
+在客户端设置 SSH 保活选项
 </h3>
 <div id="outline-text-headline-3" class="outline-text-3">
-<p>执行快捷键`win+r`打开运行框，输入`services.msc`并回车以打开`服务`，然后在服务的列表中往下找到`OpenSSH SSH Server`查看`启动类型`是否是`自动`，如果不是就将其改为自动启动，然后在`恢复`选项中设置`第一次`与`第二次`和`第三次启动失败`时`自动恢复`，这样ssh自动启动服务就设置好了。</p>
+<p>
+您可以在 SSH 客户端的配置文件中设置保活选项，以防止连接因为长时间无活动而断开。这通常在客户端的 ~/.ssh/config 文件中设置：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  Host *
+</span></span><span class="line"><span class="cl">  ServerAliveInterval <span class="m">60</span>
+</span></span><span class="line"><span class="cl">  ServerAliveCountMax <span class="m">120</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
+</div>
+<p>
+ServerAliveInterval：指定客户端向服务器发送空闲包的时间间隔（秒）。例如，60 表示每 60 秒发送一次。
+ServerAliveCountMax：在没有收到任何服务器响应的情况下，客户端发送保活包的最大次数。120 意味着在没有响应的情况下最多发送 120 次。</p>
+</div>
+</div>
+<div id="outline-container-headline-4" class="outline-3">
+<h3 id="headline-4">
+在服务器端设置 SSH 保活选项
+</h3>
+<div id="outline-text-headline-4" class="outline-text-3">
+<p>
+同样，您也可以在 SSH 服务器端设置保活选项，来防止客户端连接由于超时而断开。在服务器的 SSH 配置文件 /etc/ssh/sshd_config 中设置：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  ClientAliveInterval <span class="m">60</span>
+</span></span><span class="line"><span class="cl">  ClientAliveCountMax <span class="m">120</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+ClientAliveInterval：服务器向客户端发送请求的时间间隔（秒），用于检查客户端是否仍然连接。
+ClientAliveCountMax：在没有收到客户端响应的情况下，服务器尝试发送请求的最大次数。</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  sudo systemctl restart sshd</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-5" class="outline-3">
+<h3 id="headline-5">
+使用 tmux 或 screen 会话
+</h3>
+<div id="outline-text-headline-5" class="outline-text-3">
+<p>
+termux教程：<a href="https://ynhugo.github.io/p/tmux">https://ynhugo.github.io/p/tmux</a>%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/</p>
+<p>
+screen教程：<a href="https://ynhugo.github.io/p/screen">https://ynhugo.github.io/p/screen</a>%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/</p>
+<p>
+使用 tmux 或 screen 可以在连接断开后保持您的工作会话。即使 SSH 连接断开，您也可以重新连接到同一个 tmux 或 screen 会话，继续之前的工作。</p>
+<p>
+安装 tmux 或 screen（取决于您的系统）</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  sudo apt install tmux screen -y  <span class="c1"># 对于 Ubuntu/Debian</span>
+</span></span><span class="line"><span class="cl">  sudo yum install tmux screen -y  <span class="c1"># 对于 CentOS/RHEL</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+开始一个新会话：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  tmux</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+如果连接断开，您可以重新连接：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  tmux attach</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-6" class="outline-3">
+<h3 id="headline-6">
+注意事项
+</h3>
+<div id="outline-text-headline-6" class="outline-text-3">
+<ul>
+<li>长时间保持 SSH 连接可能会有安全风险，特别是在公共或不受信任的网络中。</li>
+<li>确保您有足够的权限来修改 SSH 配置文件。</li>
+<li>在修改服务器配置时，谨慎操作，错误的配置可能会导致无法通过 SSH 连接到服务器。</li>
+</ul>
+<p>通过上述方法，您可以有效地防止 SSH 连接因为长时间无活动而断开，提高远程工作的连续性和便捷性。</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-7" class="outline-2">
+<h2 id="headline-7">
+参考链接
+</h2>
+<div id="outline-text-headline-7" class="outline-text-2">
+<p>
+<a href="https://blog.csdn.net/m0_57236802/article/details/134729088">如何不让ssh连接断开</a></p>
 </div>
 </div>
 
