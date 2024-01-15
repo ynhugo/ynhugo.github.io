@@ -910,8 +910,8 @@
 </span></span><span class="line"><span class="cl"><span class="c1"># 在rootfs目录下准备挂载NFS脚本</span>
 </span></span><span class="line"><span class="cl">touch <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/rootfs/mountNFS.sh
 </span></span><span class="line"><span class="cl">cat mountNFS.sh &gt; <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/rootfs/mountNFS.sh
-</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;ifconfig eth0 10.0.2.15&#34;</span> &gt;&gt; <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/rootfs/mountNFS.sh 
-</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;mount -t nfs -o nolock 10.0.2.2:</span><span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="s2"> /mnt&#34;</span> &gt;&gt; <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/rootfs/mountNFS.sh
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;ifconfig eth0 </span><span class="si">${</span><span class="nv">of_ip_var1</span><span class="si">}</span><span class="s2">.</span><span class="si">${</span><span class="nv">of_ip_var2</span><span class="si">}</span><span class="s2">.</span><span class="si">${</span><span class="nv">of_ip_var3</span><span class="si">}</span><span class="s2">.</span><span class="si">${</span><span class="nv">of_ip_var4</span><span class="si">}</span><span class="s2">&#34;</span> &gt;&gt; <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/rootfs/mountNFS.sh 
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;mount -t nfs -o nolock </span><span class="si">${</span><span class="nv">of_ip_var1</span><span class="si">}</span><span class="s2">.</span><span class="si">${</span><span class="nv">of_ip_var2</span><span class="si">}</span><span class="s2">.</span><span class="si">${</span><span class="nv">of_ip_var3</span><span class="si">}</span><span class="s2">.</span><span class="si">${</span><span class="nv">of_ip_var4</span><span class="si">}</span><span class="s2">:</span><span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="s2"> /mnt&#34;</span> &gt;&gt; <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/rootfs/mountNFS.sh
 </span></span><span class="line"><span class="cl"><span class="c1"># 进入qemu运行的虚拟机后通过以下命令运行脚本进行挂载nfs：&#34;sh mountNFS.sh&#34;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="nb">cd</span> <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="p">;</span>
@@ -953,7 +953,7 @@
 </span></span><span class="line"><span class="cl"><span class="c1"># QEMU运行虚拟机，只加载u-boot</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># qemu-system-arm -M vexpress-a9 -m 256M -kernel ${work_dir}/${uboot}/u-boot  -nographic</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># 通过网络开发环境加载内核</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 通过网络开发环境加载内核，如果第一次运行没有引导成功，可以再运行一次应该就可以成功</span>
 </span></span><span class="line"><span class="cl"><span class="nb">cd</span> /tftpboot
 </span></span><span class="line"><span class="cl">sudo qemu-system-arm -M vexpress-a9 -kernel u-boot -nographic -m 128M -net nic,vlan<span class="o">=</span><span class="m">0</span> -net tap,vlan<span class="o">=</span>0,ifname<span class="o">=</span>tap0 -sd rootfs.ext3</span></span></code></pre></td></tr></table>
 </div>
