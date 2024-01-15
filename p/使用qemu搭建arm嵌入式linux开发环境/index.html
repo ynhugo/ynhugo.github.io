@@ -669,8 +669,6 @@
 </span><span class="lnt">273
 </span><span class="lnt">274
 </span><span class="lnt">275
-</span><span class="lnt">276
-</span><span class="lnt">277
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nv">linux</span><span class="o">=</span><span class="s2">&#34;linux-4.4.232&#34;</span><span class="p">;</span>
@@ -849,20 +847,18 @@
 </span></span><span class="line"><span class="cl">		<span class="nb">echo</span> <span class="s2">&#34;auto lo&#34;</span> &gt;&gt; <span class="nv">$Operate_Net_File</span>
 </span></span><span class="line"><span class="cl">		<span class="nb">echo</span> <span class="s2">&#34;iface lo inet loopback&#34;</span> &gt;&gt; <span class="nv">$Operate_Net_File</span>
 </span></span><span class="line"><span class="cl">		<span class="nb">echo</span> <span class="s2">&#34;auto ens33&#34;</span> &gt;&gt; <span class="nv">$Operate_Net_File</span>
-</span></span><span class="line"><span class="cl">		<span class="nb">echo</span> <span class="s2">&#34;iface ens33 inet dhcp&#34;</span> &gt;&gt; <span class="nv">$Operate_Net_File</span>
 </span></span><span class="line"><span class="cl">		<span class="nb">echo</span> <span class="s2">&#34;auto br0&#34;</span> &gt;&gt; <span class="nv">$Operate_Net_File</span>
 </span></span><span class="line"><span class="cl">		<span class="nb">echo</span> <span class="s2">&#34;iface br0 inet dhcp&#34;</span> &gt;&gt; <span class="nv">$Operate_Net_File</span>
-</span></span><span class="line"><span class="cl">		<span class="nb">echo</span> <span class="s2">&#34;bridge_ports ens33&#34;</span> &gt;&gt; <span class="nv">$Operate_Net_File</span>
+</span></span><span class="line"><span class="cl">		<span class="nb">echo</span> <span class="s2">&#34;	bridge_ports ens33&#34;</span> &gt;&gt; <span class="nv">$Operate_Net_File</span>
 </span></span><span class="line"><span class="cl">		sudo chown <span class="si">${</span><span class="nv">root</span><span class="si">}</span>:<span class="si">${</span><span class="nv">root</span><span class="si">}</span> <span class="nv">$Operate_Net_File</span>
 </span></span><span class="line"><span class="cl">		sudo /etc/init.d/networking restart
 </span></span><span class="line"><span class="cl">	<span class="k">else</span>
 </span></span><span class="line"><span class="cl">  		<span class="nv">result</span><span class="o">=</span><span class="k">$(</span>ip addr <span class="p">|</span> grep <span class="s2">&#34;eth0&#34;</span><span class="k">)</span>
 </span></span><span class="line"><span class="cl">  		<span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$result</span><span class="s2">&#34;</span> !<span class="o">=</span> <span class="s2">&#34;&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">			<span class="nb">echo</span> <span class="s2">&#34;auto ens33&#34;</span> &gt;&gt; <span class="nv">$Operate_Net_File</span> 
-</span></span><span class="line"><span class="cl">			<span class="nb">echo</span> <span class="s2">&#34;iface ens33 inet dhcp&#34;</span> &gt;&gt; <span class="nv">$Operate_Net_File</span>
+</span></span><span class="line"><span class="cl">			<span class="nb">echo</span> <span class="s2">&#34;auto eth0&#34;</span> &gt;&gt; <span class="nv">$Operate_Net_File</span> 
 </span></span><span class="line"><span class="cl">			<span class="nb">echo</span> <span class="s2">&#34;auto br0&#34;</span> &gt;&gt; <span class="nv">$Operate_Net_File</span>
 </span></span><span class="line"><span class="cl">			<span class="nb">echo</span> <span class="s2">&#34;iface br0 inet dhcp&#34;</span> &gt;&gt; <span class="nv">$Operate_Net_File</span>
-</span></span><span class="line"><span class="cl">			<span class="nb">echo</span> <span class="s2">&#34;bridge_ports eth0&#34;</span> &gt;&gt; <span class="nv">$Operate_Net_File</span>
+</span></span><span class="line"><span class="cl">			<span class="nb">echo</span> <span class="s2">&#34;	bridge_ports eth0&#34;</span> &gt;&gt; <span class="nv">$Operate_Net_File</span>
 </span></span><span class="line"><span class="cl">			sudo chown <span class="si">${</span><span class="nv">root</span><span class="si">}</span>:<span class="si">${</span><span class="nv">root</span><span class="si">}</span> <span class="nv">$Operate_Net_File</span>
 </span></span><span class="line"><span class="cl">			sudo /etc/init.d/networking restart
 </span></span><span class="line"><span class="cl">  		<span class="k">fi</span>
