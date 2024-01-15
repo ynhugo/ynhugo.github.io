@@ -349,7 +349,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 10 分钟
+                    阅读时长: 11 分钟
                 </time>
             </div>
         
@@ -896,7 +896,7 @@
 </span></span><span class="line"><span class="cl">	sed -i  <span class="s2">&#34;</span><span class="si">${</span><span class="nv">uboot_config_file_var2</span><span class="si">}</span><span class="s2">i\#define CONFIG_NETMASK 255.255.255.0&#34;</span> <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>
 </span></span><span class="line"><span class="cl">	sed -i  <span class="s2">&#34;</span><span class="si">${</span><span class="nv">uboot_config_file_var2</span><span class="si">}</span><span class="s2">i\#define CONFIG_IPADDR </span><span class="si">${</span><span class="nv">of_ip_var1</span><span class="si">}</span><span class="s2">.</span><span class="si">${</span><span class="nv">of_ip_var2</span><span class="si">}</span><span class="s2">.</span><span class="si">${</span><span class="nv">of_ip_var3</span><span class="si">}</span><span class="s2">.223&#34;</span> <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>
 </span></span><span class="line"><span class="cl">	sed -i  <span class="s2">&#34;</span><span class="si">${</span><span class="nv">uboot_config_file_var2</span><span class="si">}</span><span class="s2">i\/* netmask */&#34;</span> <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>
-</span></span><span class="line"><span class="cl">	sed -i  <span class="s2">&#34;</span><span class="si">${</span><span class="nv">uboot_config_file_var2</span><span class="si">}</span><span class="s2">i\#define CONFIG_BOOTCOMMAND \&#34;tftp 0x60003000 uImage;tftp 0x60500000 vexpress-v2p-ca9.dtb;setenv bootargs &#39;root=/dev/mmcblk0 console=ttyAMA0&#39;;bootm 0x60003000-0x60500000;\&#34; \\&#34;</span> <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">	sed -i  <span class="s2">&#34;</span><span class="si">${</span><span class="nv">uboot_config_file_var2</span><span class="si">}</span><span class="s2">i\#define CONFIG_BOOTCOMMAND \&#34;tftp 0x60003000 uImage;tftp 0x60500000 vexpress-v2p-ca9.dtb;setenv bootargs &#39;root=/dev/mmcblk0 console=ttyAMA0&#39;;bootm 0x60003000 - 0x60500000;\&#34; \\&#34;</span> <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>
 </span></span><span class="line"><span class="cl"><span class="k">fi</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># 准备根文件系统</span>
