@@ -349,7 +349,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 11 分钟
+                    阅读时长: 10 分钟
                 </time>
             </div>
         
@@ -674,7 +674,6 @@
 </span><span class="lnt">278
 </span><span class="lnt">279
 </span><span class="lnt">280
-</span><span class="lnt">281
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nv">linux</span><span class="o">=</span><span class="s2">&#34;linux-4.4.232&#34;</span><span class="p">;</span>
@@ -706,11 +705,11 @@
 </span></span><span class="line"><span class="cl">cat /etc/default/tftpd-hpa &gt; /etc/default/tftpd-hpa
 </span></span><span class="line"><span class="cl">sudo chown <span class="si">${</span><span class="nv">USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">USER</span><span class="si">}</span> -R /etc/default/tftpd-hpa
 </span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s1">&#39;TFTP_USERNAME=&#34;tftp&#34;&#39;</span> &gt;&gt; /etc/default/tftpd-hpa
-</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;TFTP_DIRECTORY=\&#34;/tftpboot\&#34;&#34;</span> &gt;&gt; /etc/default/tftpd-hpa
-</span></span><span class="line"><span class="cl"><span class="c1"># echo &#34;TFTP_DIRECTORY=\&#34;/tftpboot /tftpboot/${work_dir_name}\&#34;&#34; &gt;&gt; /etc/default/tftpd-hpa</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># echo &#34;TFTP_DIRECTORY=\&#34;/tftpboot\&#34;&#34; &gt;&gt; /etc/default/tftpd-hpa</span>
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;TFTP_DIRECTORY=\&#34;/tftpboot /tftpboot/</span><span class="si">${</span><span class="nv">work_dir_name</span><span class="si">}</span><span class="s2">\&#34;&#34;</span> &gt;&gt; /etc/default/tftpd-hpa
 </span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s1">&#39;TFTP_ADDRESS=&#34;0.0.0.0:69&#34;&#39;</span> &gt;&gt; /etc/default/tftpd-hpa
-</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s1">&#39;TFTP_OPTIONS=&#34;-l -c -s&#34;&#39;</span> &gt;&gt; /etc/default/tftpd-hpa <span class="c1"># 如果要设置多个目录就不能添加&#34;-s&#34;选项</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># echo &#39;TFTP_OPTIONS=&#34;-l -c&#34;&#39; &gt;&gt; /etc/default/tftpd-hpa</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># echo &#39;TFTP_OPTIONS=&#34;-l -c -s&#34;&#39; &gt;&gt; /etc/default/tftpd-hpa # 如果要设置多个目录就不能添加&#34;-s&#34;选项</span>
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s1">&#39;TFTP_OPTIONS=&#34;-l -c&#34;&#39;</span> &gt;&gt; /etc/default/tftpd-hpa
 </span></span><span class="line"><span class="cl">sudo chown root:root -R /etc/default/tftpd-hpa
 </span></span><span class="line"><span class="cl"><span class="c1"># 判断/tftpboot是否存在</span>
 </span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> -d <span class="s2">&#34;/tftpboot/&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
@@ -920,12 +919,11 @@
 </span></span><span class="line"><span class="cl">dd <span class="k">if</span><span class="o">=</span>/dev/zero <span class="nv">of</span><span class="o">=</span>rootfs.ext3 <span class="nv">bs</span><span class="o">=</span>1M <span class="nv">count</span><span class="o">=</span>32<span class="p">;</span> mkfs.ext3 rootfs.ext3<span class="p">;</span> sudo mount -t ext3 rootfs.ext3 /mnt -o loop<span class="p">;</span> sudo cp -av <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/rootfs/* /mnt<span class="p">;</span> sudo umount /mnt<span class="p">;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># tftpboot</span>
-</span></span><span class="line"><span class="cl">sudo mkdir /tftpboot<span class="p">;</span>
-</span></span><span class="line"><span class="cl">sudo cp -av <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">linux</span><span class="si">}</span>/arch/arm/boot/zImage /tftpboot<span class="p">;</span>
-</span></span><span class="line"><span class="cl">sudo cp -av <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">linux</span><span class="si">}</span>/arch/arm/boot/uImage /tftpboot<span class="p">;</span>
-</span></span><span class="line"><span class="cl">sudo cp -av <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">linux</span><span class="si">}</span>/arch/arm/boot/dts/vexpress-v2p-ca9.dtb /tftpboot<span class="p">;</span>
-</span></span><span class="line"><span class="cl">sudo cp -av <span class="nv">$work_dir</span>/<span class="nv">$uboot</span>/u-boot /tftpboot<span class="p">;</span>
-</span></span><span class="line"><span class="cl">sudo cp -av <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/rootfs.ext3 /tftpboot<span class="p">;</span>
+</span></span><span class="line"><span class="cl">sudo cp -av <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">linux</span><span class="si">}</span>/arch/arm/boot/zImage /tftpboot/<span class="si">${</span><span class="nv">work_dir_name</span><span class="si">}</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">sudo cp -av <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">linux</span><span class="si">}</span>/arch/arm/boot/uImage /tftpboot/<span class="si">${</span><span class="nv">work_dir_name</span><span class="si">}</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">sudo cp -av <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">linux</span><span class="si">}</span>/arch/arm/boot/dts/vexpress-v2p-ca9.dtb /tftpboot/<span class="si">${</span><span class="nv">work_dir_name</span><span class="si">}</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">sudo cp -av <span class="nv">$work_dir</span>/<span class="nv">$uboot</span>/u-boot /tftpboot/<span class="si">${</span><span class="nv">work_dir_name</span><span class="si">}</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">sudo cp -av <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/rootfs.ext3 /tftpboot/<span class="si">${</span><span class="nv">work_dir_name</span><span class="si">}</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># QEMU运行虚拟机，加载linux内核</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># qemu-system-arm -M vexpress-a9 -m 256M -kernel ${work_dir}/$linux/arch/arm/boot/zImage -dtb ${work_dir}/$linux/arch/arm/boot/dts/vexpress-v2p-ca9.dtb -nographic -append &#34;root=/dev/mmcblk0 rw console=ttyAMA0&#34; -sd ${work_dir}/rootfs.ext3;</span>
