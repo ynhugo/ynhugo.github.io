@@ -670,6 +670,7 @@
 </span><span class="lnt">274
 </span><span class="lnt">275
 </span><span class="lnt">276
+</span><span class="lnt">277
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nv">linux</span><span class="o">=</span><span class="s2">&#34;linux-4.4.232&#34;</span><span class="p">;</span>
@@ -688,6 +689,7 @@
 </span></span><span class="line"><span class="cl"><span class="nb">cd</span> <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">sudo apt-get install gcc-arm-linux-gnueabi -y<span class="p">;</span>
+</span></span><span class="line"><span class="cl">sudo apt-get install python-dev -y<span class="p">;</span>
 </span></span><span class="line"><span class="cl">sudo apt-get install qemu qemu-kvm libvirt-bin bridge-utils virt-manager -y<span class="p">;</span>
 </span></span><span class="line"><span class="cl">sudo apt-get install uml-utilities bridge-utils -y<span class="p">;</span>
 </span></span><span class="line"><span class="cl">sudo apt-get install u-boot-tools -y<span class="p">;</span>
@@ -947,7 +949,7 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># 通过网络开发环境加载内核</span>
 </span></span><span class="line"><span class="cl"><span class="nb">cd</span> /tftpboot
-</span></span><span class="line"><span class="cl">sudo qemu-system-arm -M vexpress-a9 -kernel u-boot -nographic -m 512M -net nic,vlan<span class="o">=</span><span class="m">0</span> -net tap,vlan<span class="o">=</span>0,ifname<span class="o">=</span>tap0 -sd rootfs.ext3</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">sudo qemu-system-arm -M vexpress-a9 -kernel u-boot -nographic -m 128M -net nic,vlan<span class="o">=</span><span class="m">0</span> -net tap,vlan<span class="o">=</span>0,ifname<span class="o">=</span>tap0 -sd rootfs.ext3</span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
