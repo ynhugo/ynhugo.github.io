@@ -674,288 +674,304 @@
 </span><span class="lnt">278
 </span><span class="lnt">279
 </span><span class="lnt">280
+</span><span class="lnt">281
+</span><span class="lnt">282
+</span><span class="lnt">283
+</span><span class="lnt">284
+</span><span class="lnt">285
+</span><span class="lnt">286
+</span><span class="lnt">287
+</span><span class="lnt">288
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nv">linux</span><span class="o">=</span><span class="s2">&#34;linux-4.4.232&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># linux=&#34;linux-4.4.76&#34;;</span>
-</span></span><span class="line"><span class="cl"><span class="nv">busybox</span><span class="o">=</span><span class="s2">&#34;busybox-1.32.0&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="nv">uboot</span><span class="o">=</span><span class="s2">&#34;u-boot-2017.05&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># uboot=&#34;u-boot-2020.07&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="nv">file_linux</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">linux</span><span class="si">}</span><span class="s2">.tar.xz&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="nv">file_busybox</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">busybox</span><span class="si">}</span><span class="s2">.tar.bz2&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="nv">file_uboot</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">uboot</span><span class="si">}</span><span class="s2">.tar.bz2&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="nv">work_dir_name</span><span class="o">=</span><span class="s2">&#34;yenao_qemu_test&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="nv">work_dir</span><span class="o">=</span><span class="s2">&#34;/home/</span><span class="nv">$USER</span><span class="s2">/</span><span class="si">${</span><span class="nv">work_dir_name</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="nv">Operate_Net_File</span><span class="o">=</span><span class="s2">&#34;/etc/network/interfaces&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="nv">uboot_config_file</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">uboot</span><span class="si">}</span><span class="s2">/include/configs/vexpress_common.h&#34;</span>
-</span></span><span class="line"><span class="cl">mkdir -p <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="nb">cd</span> <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="p">;</span>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nv">linux</span><span class="o">=</span><span class="s2">&#34;linux-4.4.232&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># linux=&#34;linux-4.4.76&#34;;</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">busybox</span><span class="o">=</span><span class="s2">&#34;busybox-1.32.0&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">uboot</span><span class="o">=</span><span class="s2">&#34;u-boot-2017.05&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># uboot=&#34;u-boot-2020.07&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">file_linux</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">linux</span><span class="si">}</span><span class="s2">.tar.xz&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">file_busybox</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">busybox</span><span class="si">}</span><span class="s2">.tar.bz2&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">file_uboot</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">uboot</span><span class="si">}</span><span class="s2">.tar.bz2&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">work_dir_name</span><span class="o">=</span><span class="s2">&#34;yenao_qemu_test&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">work_dir</span><span class="o">=</span><span class="s2">&#34;/home/</span><span class="nv">$USER</span><span class="s2">/</span><span class="si">${</span><span class="nv">work_dir_name</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">Operate_Net_File</span><span class="o">=</span><span class="s2">&#34;/etc/network/interfaces&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">uboot_config_file</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">uboot</span><span class="si">}</span><span class="s2">/include/configs/vexpress_common.h&#34;</span>
+</span></span><span class="line"><span class="cl">  mkdir -p <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">cd</span> <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">sudo apt-get install gcc-arm-linux-gnueabi -y<span class="p">;</span>
-</span></span><span class="line"><span class="cl">sudo apt-get install python-dev -y<span class="p">;</span>
-</span></span><span class="line"><span class="cl">sudo apt-get install qemu qemu-kvm libvirt-bin bridge-utils virt-manager -y<span class="p">;</span>
-</span></span><span class="line"><span class="cl">sudo apt-get install uml-utilities bridge-utils -y<span class="p">;</span>
-</span></span><span class="line"><span class="cl">sudo apt-get install u-boot-tools -y<span class="p">;</span>
-</span></span><span class="line"><span class="cl">sudo apt-get install ed -y<span class="p">;</span>
-</span></span><span class="line"><span class="cl">sudo apt-get install tftp-hpa tftpd-hpa xinetd -y<span class="p">;</span> sudo chmod <span class="m">777</span> /etc/default/tftpd-hpa<span class="p">;</span>
-</span></span><span class="line"><span class="cl">sudo apt-get install  nfs-kernel-server -y<span class="p">;</span>
-</span></span><span class="line"><span class="cl">sudo apt install device-tree-compiler -y<span class="p">;</span>
+</span></span><span class="line"><span class="cl">  sudo apt-get install gcc-arm-linux-gnueabi -y<span class="p">;</span> <span class="c1"># 该交叉编译工具链与 gcc-multilib 不能共存，因此如果电脑之前有安装并且需要 gcc-multilib 的话，可以再运行完脚本后重新安装 gcc-multilib</span>
+</span></span><span class="line"><span class="cl">  sudo apt-get install python-dev -y<span class="p">;</span>
+</span></span><span class="line"><span class="cl">  sudo apt-get install qemu qemu-kvm libvirt-bin bridge-utils virt-manager -y<span class="p">;</span>
+</span></span><span class="line"><span class="cl">  sudo apt-get install uml-utilities bridge-utils -y<span class="p">;</span>
+</span></span><span class="line"><span class="cl">  sudo apt-get install u-boot-tools -y<span class="p">;</span>
+</span></span><span class="line"><span class="cl">  sudo apt-get install ed -y<span class="p">;</span>
+</span></span><span class="line"><span class="cl">  sudo apt-get install tftp-hpa tftpd-hpa xinetd -y<span class="p">;</span> sudo chmod <span class="m">777</span> /etc/default/tftpd-hpa<span class="p">;</span>
+</span></span><span class="line"><span class="cl">  sudo apt-get install  nfs-kernel-server -y<span class="p">;</span>
+</span></span><span class="line"><span class="cl">  sudo apt install device-tree-compiler -y<span class="p">;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># 配置/etc/default/tftpd-hpa</span>
-</span></span><span class="line"><span class="cl">cat /etc/default/tftpd-hpa &gt; /etc/default/tftpd-hpa
-</span></span><span class="line"><span class="cl">sudo chown <span class="si">${</span><span class="nv">USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">USER</span><span class="si">}</span> -R /etc/default/tftpd-hpa
-</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s1">&#39;TFTP_USERNAME=&#34;tftp&#34;&#39;</span> &gt;&gt; /etc/default/tftpd-hpa
-</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;TFTP_DIRECTORY=\&#34;/tftpboot\&#34;&#34;</span> &gt;&gt; /etc/default/tftpd-hpa
-</span></span><span class="line"><span class="cl"><span class="c1"># echo &#34;TFTP_DIRECTORY=\&#34;/tftpboot /tftpboot/${work_dir_name}\&#34;&#34; &gt;&gt; /etc/default/tftpd-hpa</span>
-</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s1">&#39;TFTP_ADDRESS=&#34;0.0.0.0:69&#34;&#39;</span> &gt;&gt; /etc/default/tftpd-hpa
-</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s1">&#39;TFTP_OPTIONS=&#34;-l -c -s&#34;&#39;</span> &gt;&gt; /etc/default/tftpd-hpa <span class="c1"># 如果要设置多个目录就不能添加&#34;-s&#34;选项</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># echo &#39;TFTP_OPTIONS=&#34;-l -c&#34;&#39; &gt;&gt; /etc/default/tftpd-hpa</span>
-</span></span><span class="line"><span class="cl">sudo chown root:root -R /etc/default/tftpd-hpa
-</span></span><span class="line"><span class="cl"><span class="c1"># 判断/tftpboot是否存在</span>
-</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> -d <span class="s2">&#34;/tftpboot/&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;tftpboot exists.&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="nv">tftpboot_access</span><span class="o">=</span><span class="k">$(</span>stat /tftpboot/ <span class="p">|</span> grep -w <span class="s2">&#34;Uid&#34;</span> <span class="p">|</span> tr <span class="s1">&#39;(&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> tr <span class="s1">&#39;/&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span><span class="k">)</span>
-</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$tftpboot_access</span><span class="s2">&#34;</span> !<span class="o">=</span> <span class="s2">&#34;0777&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">        sudo chmod <span class="m">777</span> /tftpboot<span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="nb">echo</span> <span class="s2">&#34;/tftpboot的权限已设置为0777&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="k">fi</span>
-</span></span><span class="line"><span class="cl"><span class="k">else</span>
-</span></span><span class="line"><span class="cl">    sudo mkdir /tftpboot<span class="p">;</span>
-</span></span><span class="line"><span class="cl">    sudo chmod <span class="m">777</span> /tftpboot<span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;/tftpboot的权限已设置为0777&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="k">fi</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># 判断/tftpboot/${work_dir_name}是否存在</span>
-</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> -d <span class="s2">&#34;/tftpboot/</span><span class="si">${</span><span class="nv">work_dir_name</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;tftpboot/</span><span class="si">${</span><span class="nv">work_dir_name</span><span class="si">}</span><span class="s2"> exists.&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="nv">work_dir_name_access</span><span class="o">=</span><span class="k">$(</span>stat /tftpboot/ <span class="p">|</span> grep -w <span class="s2">&#34;Uid&#34;</span> <span class="p">|</span> tr <span class="s1">&#39;(&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> tr <span class="s1">&#39;/&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span><span class="k">)</span>
-</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$work_dir_name_access</span><span class="s2">&#34;</span> !<span class="o">=</span> <span class="s2">&#34;0777&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">        sudo chmod <span class="m">777</span> /tftpboot<span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="nb">echo</span> <span class="s2">&#34;/tftpboot/</span><span class="si">${</span><span class="nv">work_dir_name</span><span class="si">}</span><span class="s2">的权限已设置为0777&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="k">fi</span>
-</span></span><span class="line"><span class="cl"><span class="k">else</span>
-</span></span><span class="line"><span class="cl">    sudo mkdir /tftpboot/<span class="si">${</span><span class="nv">work_dir_name</span><span class="si">}</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    sudo chmod <span class="m">777</span> /tftpboot/<span class="si">${</span><span class="nv">work_dir_name</span><span class="si">}</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;/tftpboot/</span><span class="si">${</span><span class="nv">work_dir_name</span><span class="si">}</span><span class="s2">的权限已设置为0777&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># 配置/etc/default/tftpd-hpa</span>
+</span></span><span class="line"><span class="cl">  cat /etc/default/tftpd-hpa &gt; /etc/default/tftpd-hpa
+</span></span><span class="line"><span class="cl">  sudo chown <span class="si">${</span><span class="nv">USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">USER</span><span class="si">}</span> -R /etc/default/tftpd-hpa
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s1">&#39;TFTP_USERNAME=&#34;tftp&#34;&#39;</span> &gt;&gt; /etc/default/tftpd-hpa
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;TFTP_DIRECTORY=\&#34;/tftpboot\&#34;&#34;</span> &gt;&gt; /etc/default/tftpd-hpa
+</span></span><span class="line"><span class="cl">  <span class="c1"># echo &#34;TFTP_DIRECTORY=\&#34;/tftpboot /tftpboot/${work_dir_name}\&#34;&#34; &gt;&gt; /etc/default/tftpd-hpa</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s1">&#39;TFTP_ADDRESS=&#34;0.0.0.0:69&#34;&#39;</span> &gt;&gt; /etc/default/tftpd-hpa
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s1">&#39;TFTP_OPTIONS=&#34;-l -c -s&#34;&#39;</span> &gt;&gt; /etc/default/tftpd-hpa <span class="c1"># 如果要设置多个目录就不能添加&#34;-s&#34;选项</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># echo &#39;TFTP_OPTIONS=&#34;-l -c&#34;&#39; &gt;&gt; /etc/default/tftpd-hpa</span>
+</span></span><span class="line"><span class="cl">  sudo chown root:root -R /etc/default/tftpd-hpa
+</span></span><span class="line"><span class="cl">  <span class="c1"># 判断/tftpboot是否存在</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> -d <span class="s2">&#34;/tftpboot/&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> <span class="s2">&#34;tftpboot exists.&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	  <span class="nv">tftpboot_access</span><span class="o">=</span><span class="k">$(</span>stat /tftpboot/ <span class="p">|</span> grep -w <span class="s2">&#34;Uid&#34;</span> <span class="p">|</span> tr <span class="s1">&#39;(&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> tr <span class="s1">&#39;/&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$tftpboot_access</span><span class="s2">&#34;</span> !<span class="o">=</span> <span class="s2">&#34;0777&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">		  sudo chmod <span class="m">777</span> /tftpboot<span class="p">;</span>
+</span></span><span class="line"><span class="cl">		  <span class="nb">echo</span> <span class="s2">&#34;/tftpboot的权限已设置为0777&#34;</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">  <span class="k">else</span>
+</span></span><span class="line"><span class="cl">	  sudo mkdir /tftpboot<span class="p">;</span>
+</span></span><span class="line"><span class="cl">	  sudo chmod <span class="m">777</span> /tftpboot<span class="p">;</span>
+</span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> <span class="s2">&#34;/tftpboot的权限已设置为0777&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># 判断/tftpboot/${work_dir_name}是否存在</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> -d <span class="s2">&#34;/tftpboot/</span><span class="si">${</span><span class="nv">work_dir_name</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> <span class="s2">&#34;tftpboot/</span><span class="si">${</span><span class="nv">work_dir_name</span><span class="si">}</span><span class="s2"> exists.&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	  <span class="nv">work_dir_name_access</span><span class="o">=</span><span class="k">$(</span>stat /tftpboot/ <span class="p">|</span> grep -w <span class="s2">&#34;Uid&#34;</span> <span class="p">|</span> tr <span class="s1">&#39;(&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> tr <span class="s1">&#39;/&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$work_dir_name_access</span><span class="s2">&#34;</span> !<span class="o">=</span> <span class="s2">&#34;0777&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">		  sudo chmod <span class="m">777</span> /tftpboot<span class="p">;</span>
+</span></span><span class="line"><span class="cl">		  <span class="nb">echo</span> <span class="s2">&#34;/tftpboot/</span><span class="si">${</span><span class="nv">work_dir_name</span><span class="si">}</span><span class="s2">的权限已设置为0777&#34;</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">  <span class="k">else</span>
+</span></span><span class="line"><span class="cl">	  sudo mkdir /tftpboot/<span class="si">${</span><span class="nv">work_dir_name</span><span class="si">}</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	  sudo chmod <span class="m">777</span> /tftpboot/<span class="si">${</span><span class="nv">work_dir_name</span><span class="si">}</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> <span class="s2">&#34;/tftpboot/</span><span class="si">${</span><span class="nv">work_dir_name</span><span class="si">}</span><span class="s2">的权限已设置为0777&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># 允许开发板通过NFS访问Ubuntu的/home/${USER}目录，当然你可以加其他目录</span>
-</span></span><span class="line"><span class="cl"><span class="nv">result</span><span class="o">=</span><span class="k">$(</span>grep -w <span class="s2">&#34;</span><span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="s2"> \*(rw,nohide,insecure,no_subtree_check,async,no_root_squash)&#34;</span> /etc/exports <span class="p">|</span> grep -v <span class="s2">&#34;#&#34;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># 允许开发板通过NFS访问Ubuntu的/home/${USER}目录，当然你可以加其他目录</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">result</span><span class="o">=</span><span class="k">$(</span>grep -w <span class="s2">&#34;</span><span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="s2"> \*(rw,nohide,insecure,no_subtree_check,async,no_root_squash)&#34;</span> /etc/exports <span class="p">|</span> grep -v <span class="s2">&#34;#&#34;</span><span class="k">)</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -eq <span class="m">0</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	<span class="c1"># 查找并注释匹配行</span>
-</span></span><span class="line"><span class="cl">	<span class="c1"># sudo sed -i &#34;s/${work_dir} \*(rw,nohide,insecure,no_subtree_check,async,no_root_squash)/#\/home\/${USER} \*(rw,nohide,insecure,no_subtree_check,async,no_root_squash)/g&#34; /etc/exports</span>
-</span></span><span class="line"><span class="cl">	<span class="c1"># echo &#34;已注释匹配行：$result&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -eq <span class="m">0</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">	  <span class="c1"># 查找并注释匹配行</span>
+</span></span><span class="line"><span class="cl">	  <span class="c1"># sudo sed -i &#34;s/${work_dir} \*(rw,nohide,insecure,no_subtree_check,async,no_root_squash)/#\/home\/${USER} \*(rw,nohide,insecure,no_subtree_check,async,no_root_squash)/g&#34; /etc/exports</span>
+</span></span><span class="line"><span class="cl">	  <span class="c1"># echo &#34;已注释匹配行：$result&#34;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	sudo /etc/init.d/nfs-kernel-server restart
-</span></span><span class="line"><span class="cl">	<span class="nb">echo</span> <span class="s2">&#34;匹配行已存在，并且重启了nfs服务&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="k">else</span>
-</span></span><span class="line"><span class="cl">	<span class="nv">power</span><span class="o">=</span><span class="k">$(</span>ls -l /etc/exports <span class="p">|</span> awk <span class="s1">&#39;{print $4}&#39;</span><span class="k">)</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$power</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="s2">&#34;root&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">		sudo chown <span class="si">${</span><span class="nv">USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">USER</span><span class="si">}</span> -R /etc/exports
-</span></span><span class="line"><span class="cl">		<span class="nb">echo</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="s2"> *(rw,nohide,insecure,no_subtree_check,async,no_root_squash)&#34;</span> &gt;&gt; /etc/exports
-</span></span><span class="line"><span class="cl">		sudo chown root:root -R /etc/exports
-</span></span><span class="line"><span class="cl">	<span class="k">else</span>
-</span></span><span class="line"><span class="cl">		<span class="nb">echo</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="s2"> *(rw,nohide,insecure,no_subtree_check,async,no_root_squash)&#34;</span> &gt;&gt; /etc/exports
-</span></span><span class="line"><span class="cl">		sudo chown root:root -R /etc/exports
-</span></span><span class="line"><span class="cl">	<span class="k">fi</span>
-</span></span><span class="line"><span class="cl">	sudo /etc/init.d/nfs-kernel-server restart
-</span></span><span class="line"><span class="cl">	<span class="nb">echo</span> <span class="s2">&#34;匹配行已添加，并且重启了nfs服务&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="cl">	  sudo /etc/init.d/nfs-kernel-server restart
+</span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> <span class="s2">&#34;匹配行已存在，并且重启了nfs服务&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">else</span>
+</span></span><span class="line"><span class="cl">	  <span class="nv">power</span><span class="o">=</span><span class="k">$(</span>ls -l /etc/exports <span class="p">|</span> awk <span class="s1">&#39;{print $4}&#39;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$power</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="s2">&#34;root&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">		  sudo chown <span class="si">${</span><span class="nv">USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">USER</span><span class="si">}</span> -R /etc/exports
+</span></span><span class="line"><span class="cl">		  <span class="nb">echo</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="s2"> *(rw,nohide,insecure,no_subtree_check,async,no_root_squash)&#34;</span> &gt;&gt; /etc/exports
+</span></span><span class="line"><span class="cl">		  sudo chown root:root -R /etc/exports
+</span></span><span class="line"><span class="cl">	  <span class="k">else</span>
+</span></span><span class="line"><span class="cl">		  <span class="nb">echo</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="s2"> *(rw,nohide,insecure,no_subtree_check,async,no_root_squash)&#34;</span> &gt;&gt; /etc/exports
+</span></span><span class="line"><span class="cl">		  sudo chown root:root -R /etc/exports
+</span></span><span class="line"><span class="cl">	  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">	  sudo /etc/init.d/nfs-kernel-server restart
+</span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> <span class="s2">&#34;匹配行已添加，并且重启了nfs服务&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># 判断linux内核是否准备好</span>
-</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> -f <span class="s2">&#34;</span><span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="s2">/</span><span class="nv">$file_linux</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	<span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$file_linux</span><span class="s2"> exists.&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="k">else</span>
-</span></span><span class="line"><span class="cl">	<span class="c1"># wget https://cdn.kernel.org/pub/linux/kernel/v4.x/${file_linux}</span>
-</span></span><span class="line"><span class="cl">	<span class="c1"># wget https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.4.232.tar.xz</span>
-</span></span><span class="line"><span class="cl">	wget https://cdn.kernel.org/pub/linux/kernel/v4.x/<span class="si">${</span><span class="nv">file_linux</span><span class="si">}</span>
-</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># 判断linux内核是否准备好</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> -f <span class="s2">&#34;</span><span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="s2">/</span><span class="nv">$file_linux</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$file_linux</span><span class="s2"> exists.&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">else</span>
+</span></span><span class="line"><span class="cl">	  <span class="c1"># wget https://cdn.kernel.org/pub/linux/kernel/v4.x/${file_linux}</span>
+</span></span><span class="line"><span class="cl">	  <span class="c1"># wget https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.4.232.tar.xz</span>
+</span></span><span class="line"><span class="cl">	  wget https://cdn.kernel.org/pub/linux/kernel/v4.x/<span class="si">${</span><span class="nv">file_linux</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># 判断busybox文件是否准备好</span>
-</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> -f <span class="s2">&#34;</span><span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="s2">/</span><span class="nv">$file_busybox</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	<span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$file_busybox</span><span class="s2"> exists.&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="k">else</span>
-</span></span><span class="line"><span class="cl">	<span class="c1"># wget https://busybox.net/downloads/busybox-1.32.0.tar.bz2</span>
-</span></span><span class="line"><span class="cl">	wget https://busybox.net/downloads/<span class="si">${</span><span class="nv">file_busybox</span><span class="si">}</span>
-</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># 判断busybox文件是否准备好</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> -f <span class="s2">&#34;</span><span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="s2">/</span><span class="nv">$file_busybox</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$file_busybox</span><span class="s2"> exists.&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">else</span>
+</span></span><span class="line"><span class="cl">	  <span class="c1"># wget https://busybox.net/downloads/busybox-1.32.0.tar.bz2</span>
+</span></span><span class="line"><span class="cl">	  wget https://busybox.net/downloads/<span class="si">${</span><span class="nv">file_busybox</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># 判断u-boot文件是否准备好</span>
-</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> -f <span class="s2">&#34;</span><span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="s2">/</span><span class="nv">$file_uboot</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	<span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$file_uboot</span><span class="s2"> exists.&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="k">else</span>
-</span></span><span class="line"><span class="cl">	<span class="c1"># wget https://ftp.denx.de/pub/u-boot/u-boot-2017.05.tar.bz2</span>
-</span></span><span class="line"><span class="cl">	<span class="c1"># wget https://ftp.denx.de/pub/u-boot/u-boot-2020.07.tar.bz2</span>
-</span></span><span class="line"><span class="cl">	wget https://ftp.denx.de/pub/u-boot/<span class="si">${</span><span class="nv">file_uboot</span><span class="si">}</span>
-</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># 判断u-boot文件是否准备好</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> -f <span class="s2">&#34;</span><span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="s2">/</span><span class="nv">$file_uboot</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$file_uboot</span><span class="s2"> exists.&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">else</span>
+</span></span><span class="line"><span class="cl">	  <span class="c1"># wget https://ftp.denx.de/pub/u-boot/u-boot-2017.05.tar.bz2</span>
+</span></span><span class="line"><span class="cl">	  <span class="c1"># wget https://ftp.denx.de/pub/u-boot/u-boot-2020.07.tar.bz2</span>
+</span></span><span class="line"><span class="cl">	  wget https://ftp.denx.de/pub/u-boot/<span class="si">${</span><span class="nv">file_uboot</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># 临时配置交叉编译环境</span>
-</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">ARCH</span><span class="o">=</span>arm <span class="o">&amp;&amp;</span> <span class="nb">export</span> <span class="nv">CROSS_COMPILE</span><span class="o">=</span>arm-linux-gnueabi-<span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># 临时配置交叉编译环境</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">export</span> <span class="nv">ARCH</span><span class="o">=</span>arm <span class="o">&amp;&amp;</span> <span class="nb">export</span> <span class="nv">CROSS_COMPILE</span><span class="o">=</span>arm-linux-gnueabi-<span class="p">;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># 判断linux内核是否解压</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># kernel</span>
-</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> -d <span class="s2">&#34;</span><span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="s2">/</span><span class="nv">$linux</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	<span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$linux</span><span class="s2"> exists.&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="k">else</span>
-</span></span><span class="line"><span class="cl">	tar xvf <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="nv">$file_linux</span> -C <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># 判断linux内核是否解压</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># kernel</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> -d <span class="s2">&#34;</span><span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="s2">/</span><span class="nv">$linux</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$linux</span><span class="s2"> exists.&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">else</span>
+</span></span><span class="line"><span class="cl">	  tar xvf <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="nv">$file_linux</span> -C <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># 判断busybox文件是否解压</span>
-</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> -d <span class="s2">&#34;</span><span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="s2">/</span><span class="nv">$busybox</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	<span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$busybox</span><span class="s2"> exists.&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="k">else</span>
-</span></span><span class="line"><span class="cl">	tar xvf <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="nv">$file_busybox</span> -C <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># 判断busybox文件是否解压</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> -d <span class="s2">&#34;</span><span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="s2">/</span><span class="nv">$busybox</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$busybox</span><span class="s2"> exists.&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">else</span>
+</span></span><span class="line"><span class="cl">	  tar xvf <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="nv">$file_busybox</span> -C <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># 判断u-boot文件是否解压</span>
-</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> -d <span class="s2">&#34;</span><span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">uboot</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	<span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$busybox</span><span class="s2"> exists.&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="k">else</span>
-</span></span><span class="line"><span class="cl">	tar xvf <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="nv">$file_uboot</span> -C <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># 判断u-boot文件是否解压</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> -d <span class="s2">&#34;</span><span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">uboot</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$uboot</span><span class="s2"> exists.&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">else</span>
+</span></span><span class="line"><span class="cl">	  tar xvf <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="nv">$file_uboot</span> -C <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">if</span> <span class="o">[</span> -f <span class="s2">&#34;</span><span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">uboot</span><span class="si">}</span><span class="s2">/include/configs/vexpress_common.h&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">		  cp <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span> <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>.old
+</span></span><span class="line"><span class="cl">	  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># 编译linux内核</span>
-</span></span><span class="line"><span class="cl"><span class="nb">cd</span>  <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">linux</span><span class="si">}</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">make vexpress_defconfig -j12<span class="p">;</span>
-</span></span><span class="line"><span class="cl">make zImage -j12<span class="p">;</span>
-</span></span><span class="line"><span class="cl">make modules -j12<span class="p">;</span>
-</span></span><span class="line"><span class="cl">make uImage -j12<span class="p">;</span>
-</span></span><span class="line"><span class="cl">make <span class="nv">LOADADDR</span><span class="o">=</span>0x60003000 uImage -j12<span class="p">;</span>
-</span></span><span class="line"><span class="cl">make dtbs<span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># mkimage -n &#39;mini2440&#39; -A arm -O linux -T kernel -C none -a 0x30008000 -e 0x30008040 -d  ${work_dir}/$linux/arch/arm/boot/zImage  ${work_dir}/$linux/arch/arm/boot/uImage</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># 编译linux内核</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">cd</span>  <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">linux</span><span class="si">}</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  make vexpress_defconfig -j12<span class="p">;</span>
+</span></span><span class="line"><span class="cl">  make zImage -j12<span class="p">;</span>
+</span></span><span class="line"><span class="cl">  make modules -j12<span class="p">;</span>
+</span></span><span class="line"><span class="cl">  make <span class="nv">LOADADDR</span><span class="o">=</span>0x60003000 uImage -j12<span class="p">;</span>
+</span></span><span class="line"><span class="cl">  make dtbs<span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># mkimage -n &#39;mini2440&#39; -A arm -O linux -T kernel -C none -a 0x30008000 -e 0x30008040 -d  ${work_dir}/$linux/arch/arm/boot/zImage  ${work_dir}/$linux/arch/arm/boot/uImage</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># 编译busybox，编译之后把&#34;${busybox}/_install/*&#34;拷贝到rootfs目录下</span>
-</span></span><span class="line"><span class="cl"><span class="nb">cd</span>  <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">busybox</span><span class="si">}</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">make defconfig -j12<span class="p">;</span>
-</span></span><span class="line"><span class="cl">make -j12<span class="p">;</span>
-</span></span><span class="line"><span class="cl">make install -j12<span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># 编译busybox，编译之后把&#34;${busybox}/_install/*&#34;拷贝到rootfs目录下</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">cd</span>  <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">busybox</span><span class="si">}</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  make defconfig -j12<span class="p">;</span>
+</span></span><span class="line"><span class="cl">  make -j12<span class="p">;</span>
+</span></span><span class="line"><span class="cl">  make install -j12<span class="p">;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># 编译u-boot，编译之后会在${uboot}目录下出现u-boot，传真u-boot示例：sudo qemu-system-arm -M vexpress-a9 -m 256 -kernel ./u-boot -nographic</span>
-</span></span><span class="line"><span class="cl"><span class="nb">cd</span>  <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">uboot</span><span class="si">}</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">make vexpress_ca9x4_defconfig
-</span></span><span class="line"><span class="cl">make -j12<span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># 编译u-boot，编译之后会在${uboot}目录下出现u-boot，传真u-boot示例：sudo qemu-system-arm -M vexpress-a9 -m 256 -kernel ./u-boot -nographic</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">cd</span>  <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">uboot</span><span class="si">}</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  make vexpress_ca9x4_defconfig
+</span></span><span class="line"><span class="cl">  make -j12<span class="p">;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># 搭建网络开发环境</span>
-</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> -f <span class="s2">&#34;</span><span class="nv">$Operate_Net_File</span><span class="s2">.old&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	<span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$Operate_Net_File</span><span class="s2">.old is exists.&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="k">else</span>
-</span></span><span class="line"><span class="cl">	sudo cp <span class="nv">$Operate_Net_File</span> <span class="nv">$Operate_Net_File</span>.old
-</span></span><span class="line"><span class="cl"><span class="k">fi</span>
-</span></span><span class="line"><span class="cl"><span class="nv">result</span><span class="o">=</span><span class="k">$(</span>cat /etc/network/interfaces <span class="p">|</span> grep <span class="s2">&#34;br0&#34;</span><span class="k">)</span>
-</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$result</span><span class="s2">&#34;</span> !<span class="o">=</span> <span class="s2">&#34;&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">  	<span class="nb">echo</span> <span class="s2">&#34;br0 exists.&#34;</span>
-</span></span><span class="line"><span class="cl">	
-</span></span><span class="line"><span class="cl"><span class="k">else</span>
-</span></span><span class="line"><span class="cl">	sudo chown <span class="si">${</span><span class="nv">USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">USER</span><span class="si">}</span> <span class="nv">$Operate_Net_File</span>
-</span></span><span class="line"><span class="cl">	cat <span class="nv">$Operate_Net_File</span> &gt; <span class="nv">$Operate_Net_File</span>
-</span></span><span class="line"><span class="cl">	<span class="nv">result</span><span class="o">=</span><span class="k">$(</span>ip addr <span class="p">|</span> grep <span class="s2">&#34;ens33&#34;</span><span class="k">)</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$result</span><span class="s2">&#34;</span> !<span class="o">=</span> <span class="s2">&#34;&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">		<span class="nb">echo</span> <span class="s2">&#34;auto lo&#34;</span> &gt;&gt; <span class="nv">$Operate_Net_File</span>
-</span></span><span class="line"><span class="cl">		<span class="nb">echo</span> <span class="s2">&#34;iface lo inet loopback&#34;</span> &gt;&gt; <span class="nv">$Operate_Net_File</span>
-</span></span><span class="line"><span class="cl">		<span class="nb">echo</span> <span class="s2">&#34;&#34;</span> &gt;&gt; <span class="nv">$Operate_Net_File</span>
-</span></span><span class="line"><span class="cl">		<span class="nb">echo</span> <span class="s2">&#34;auto ens33&#34;</span> &gt;&gt; <span class="nv">$Operate_Net_File</span>
-</span></span><span class="line"><span class="cl">		<span class="nb">echo</span> <span class="s2">&#34;&#34;</span> &gt;&gt; <span class="nv">$Operate_Net_File</span>
-</span></span><span class="line"><span class="cl">		<span class="nb">echo</span> <span class="s2">&#34;auto br0&#34;</span> &gt;&gt; <span class="nv">$Operate_Net_File</span>
-</span></span><span class="line"><span class="cl">		<span class="nb">echo</span> <span class="s2">&#34;iface br0 inet dhcp&#34;</span> &gt;&gt; <span class="nv">$Operate_Net_File</span>
-</span></span><span class="line"><span class="cl">		<span class="nb">echo</span> <span class="s2">&#34;	bridge_ports ens33&#34;</span> &gt;&gt; <span class="nv">$Operate_Net_File</span>
-</span></span><span class="line"><span class="cl">		sudo chown <span class="si">${</span><span class="nv">root</span><span class="si">}</span>:<span class="si">${</span><span class="nv">root</span><span class="si">}</span> <span class="nv">$Operate_Net_File</span>
-</span></span><span class="line"><span class="cl">		sudo /etc/init.d/networking restart
-</span></span><span class="line"><span class="cl">	<span class="k">else</span>
-</span></span><span class="line"><span class="cl">  		<span class="nv">result</span><span class="o">=</span><span class="k">$(</span>ip addr <span class="p">|</span> grep <span class="s2">&#34;eth0&#34;</span><span class="k">)</span>
-</span></span><span class="line"><span class="cl">  		<span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$result</span><span class="s2">&#34;</span> !<span class="o">=</span> <span class="s2">&#34;&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">			<span class="nb">echo</span> <span class="s2">&#34;auto lo&#34;</span> &gt;&gt; <span class="nv">$Operate_Net_File</span>
-</span></span><span class="line"><span class="cl">			<span class="nb">echo</span> <span class="s2">&#34;iface lo inet loopback&#34;</span> &gt;&gt; <span class="nv">$Operate_Net_File</span>
-</span></span><span class="line"><span class="cl">			<span class="nb">echo</span> <span class="s2">&#34;&#34;</span> &gt;&gt; <span class="nv">$Operate_Net_File</span>
-</span></span><span class="line"><span class="cl">			<span class="nb">echo</span> <span class="s2">&#34;auto eth0&#34;</span> &gt;&gt; <span class="nv">$Operate_Net_File</span>
-</span></span><span class="line"><span class="cl">			<span class="nb">echo</span> <span class="s2">&#34;&#34;</span> &gt;&gt; <span class="nv">$Operate_Net_File</span>
-</span></span><span class="line"><span class="cl">			<span class="nb">echo</span> <span class="s2">&#34;auto br0&#34;</span> &gt;&gt; <span class="nv">$Operate_Net_File</span>
-</span></span><span class="line"><span class="cl">			<span class="nb">echo</span> <span class="s2">&#34;iface br0 inet dhcp&#34;</span> &gt;&gt; <span class="nv">$Operate_Net_File</span>
-</span></span><span class="line"><span class="cl">			<span class="nb">echo</span> <span class="s2">&#34;	bridge_ports eth0&#34;</span> &gt;&gt; <span class="nv">$Operate_Net_File</span>
-</span></span><span class="line"><span class="cl">			sudo chown <span class="si">${</span><span class="nv">root</span><span class="si">}</span>:<span class="si">${</span><span class="nv">root</span><span class="si">}</span> <span class="nv">$Operate_Net_File</span>
-</span></span><span class="line"><span class="cl">			sudo /etc/init.d/networking restart
-</span></span><span class="line"><span class="cl">  		<span class="k">fi</span>
-</span></span><span class="line"><span class="cl">	<span class="k">fi</span>
-</span></span><span class="line"><span class="cl"><span class="k">fi</span>
-</span></span><span class="line"><span class="cl"><span class="nv">of_ip_var1</span><span class="o">=</span><span class="k">$(</span>ifconfig <span class="p">|</span> grep -w <span class="s2">&#34;br0&#34;</span> -1 <span class="p">|</span> grep -w <span class="s2">&#34;inet&#34;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span> <span class="p">|</span> tr <span class="s1">&#39;.&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $1}&#39;</span><span class="k">)</span>
-</span></span><span class="line"><span class="cl"><span class="nv">of_ip_var2</span><span class="o">=</span><span class="k">$(</span>ifconfig <span class="p">|</span> grep -w <span class="s2">&#34;br0&#34;</span> -1 <span class="p">|</span> grep -w <span class="s2">&#34;inet&#34;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span> <span class="p">|</span> tr <span class="s1">&#39;.&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span><span class="k">)</span>
-</span></span><span class="line"><span class="cl"><span class="nv">of_ip_var3</span><span class="o">=</span><span class="k">$(</span>ifconfig <span class="p">|</span> grep -w <span class="s2">&#34;br0&#34;</span> -1 <span class="p">|</span> grep -w <span class="s2">&#34;inet&#34;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span> <span class="p">|</span> tr <span class="s1">&#39;.&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $3}&#39;</span><span class="k">)</span>
-</span></span><span class="line"><span class="cl"><span class="nv">of_ip_var4</span><span class="o">=</span><span class="k">$(</span>ifconfig <span class="p">|</span> grep -w <span class="s2">&#34;br0&#34;</span> -1 <span class="p">|</span> grep -w <span class="s2">&#34;inet&#34;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span> <span class="p">|</span> tr <span class="s1">&#39;.&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $4}&#39;</span><span class="k">)</span>
-</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> -f <span class="s2">&#34;</span><span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">uboot</span><span class="si">}</span><span class="s2">/include/configs/vexpress_common.h&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	cp <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span> <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>.old
-</span></span><span class="line"><span class="cl"><span class="k">fi</span>
-</span></span><span class="line"><span class="cl"><span class="nv">result</span><span class="o">=</span><span class="k">$(</span>cat <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>.old <span class="p">|</span> grep <span class="s2">&#34;netmask&#34;</span><span class="k">)</span>
-</span></span><span class="line"><span class="cl"><span class="nv">uboot_config_file_var1</span><span class="o">=</span><span class="k">$(</span>grep -n <span class="s2">&#34;CONFIG_BOOTCOMMAND&#34;</span> <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>.old <span class="p">|</span> tr <span class="s1">&#39;:&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $1}&#39;</span><span class="k">)</span>
-</span></span><span class="line"><span class="cl"><span class="nv">uboot_config_file_var2</span><span class="o">=</span><span class="k">$((</span>uboot_config_file_var1 <span class="o">+</span> <span class="m">1</span><span class="k">))</span>
-</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$result</span><span class="s2">&#34;</span> !<span class="o">=</span> <span class="s2">&#34;&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">  	<span class="nb">echo</span> <span class="s2">&#34;netmask exists.&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="k">else</span>
-</span></span><span class="line"><span class="cl">	
-</span></span><span class="line"><span class="cl">	sed -i <span class="s1">&#39;/CONFIG_BOOTCOMMAND\b/d&#39;</span> <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>
-</span></span><span class="line"><span class="cl">	sed -i <span class="s1">&#39;/run distro_bootcmd\b/d&#39;</span> <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>
-</span></span><span class="line"><span class="cl">  	sed -i <span class="s1">&#39;/run bootflash\b/d&#39;</span> <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>
-</span></span><span class="line"><span class="cl">	sed -i  <span class="s2">&#34;</span><span class="si">${</span><span class="nv">uboot_config_file_var2</span><span class="si">}</span><span class="s2">i\#define CONFIG_SERVERIP </span><span class="si">${</span><span class="nv">of_ip_var1</span><span class="si">}</span><span class="s2">.</span><span class="si">${</span><span class="nv">of_ip_var2</span><span class="si">}</span><span class="s2">.</span><span class="si">${</span><span class="nv">of_ip_var3</span><span class="si">}</span><span class="s2">.</span><span class="si">${</span><span class="nv">of_ip_var4</span><span class="si">}</span><span class="s2">&#34;</span> <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>
-</span></span><span class="line"><span class="cl">	sed -i  <span class="s2">&#34;</span><span class="si">${</span><span class="nv">uboot_config_file_var2</span><span class="si">}</span><span class="s2">i\#define CONFIG_NETMASK 255.255.255.0&#34;</span> <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>
-</span></span><span class="line"><span class="cl">	sed -i  <span class="s2">&#34;</span><span class="si">${</span><span class="nv">uboot_config_file_var2</span><span class="si">}</span><span class="s2">i\#define CONFIG_IPADDR </span><span class="si">${</span><span class="nv">of_ip_var1</span><span class="si">}</span><span class="s2">.</span><span class="si">${</span><span class="nv">of_ip_var2</span><span class="si">}</span><span class="s2">.</span><span class="si">${</span><span class="nv">of_ip_var3</span><span class="si">}</span><span class="s2">.223&#34;</span> <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>
-</span></span><span class="line"><span class="cl">	sed -i  <span class="s2">&#34;</span><span class="si">${</span><span class="nv">uboot_config_file_var2</span><span class="si">}</span><span class="s2">i\/* netmask */&#34;</span> <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>
-</span></span><span class="line"><span class="cl">	sed -i  <span class="s2">&#34;</span><span class="si">${</span><span class="nv">uboot_config_file_var2</span><span class="si">}</span><span class="s2">i\#define CONFIG_BOOTCOMMAND \&#34;tftp 0x60003000 uImage;tftp 0x60500000 vexpress-v2p-ca9.dtb;setenv bootargs &#39;root=/dev/mmcblk0 console=ttyAMA0&#39;;bootm 0x60003000 - 0x60500000;\&#34; \\&#34;</span> <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>
-</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># 搭建网络开发环境</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> -f <span class="s2">&#34;</span><span class="nv">$Operate_Net_File</span><span class="s2">.old&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$Operate_Net_File</span><span class="s2">.old is exists.&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">else</span>
+</span></span><span class="line"><span class="cl">	  sudo cp <span class="nv">$Operate_Net_File</span> <span class="nv">$Operate_Net_File</span>.old
+</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">result</span><span class="o">=</span><span class="k">$(</span>cat /etc/network/interfaces <span class="p">|</span> grep <span class="s2">&#34;br0&#34;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$result</span><span class="s2">&#34;</span> !<span class="o">=</span> <span class="s2">&#34;&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> <span class="s2">&#34;br0 exists.&#34;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># 准备根文件系统</span>
-</span></span><span class="line"><span class="cl"><span class="nb">cd</span> <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">mkdir -p <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/rootfs/<span class="o">{</span>dev,etc/init.d,lib,mnt<span class="o">}</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">cp -av <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">busybox</span><span class="si">}</span>/_install/* <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/rootfs/<span class="p">;</span>
-</span></span><span class="line"><span class="cl">cp -av /usr/arm-linux-gnueabi/lib/* <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/rootfs/lib/<span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="nb">cd</span> <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/rootfs/dev<span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># 创建字符设备类型的设备节点，这些设备节点的主设备号为4,次设备号为1..11</span>
-</span></span><span class="line"><span class="cl">sudo mknod -m <span class="m">666</span> console c <span class="m">4</span> 1<span class="p">;</span> sudo mknod -m <span class="m">666</span> null c <span class="m">4</span> 2<span class="p">;</span> sudo mknod -m <span class="m">666</span> tty1 c <span class="m">4</span> 3<span class="p">;</span> sudo mknod -m <span class="m">666</span> tty2 c <span class="m">4</span> 4<span class="p">;</span> sudo mknod -m <span class="m">666</span> tty3 c <span class="m">4</span> 5<span class="p">;</span> sudo mknod -m <span class="m">666</span> tty4 c <span class="m">4</span> 6<span class="p">;</span> sudo mknod -m <span class="m">666</span> tty5 c <span class="m">4</span> 7<span class="p">;</span> sudo mknod -m <span class="m">666</span> tty6 c <span class="m">4</span> 8<span class="p">;</span> sudo mknod -m <span class="m">666</span> tty7 c <span class="m">4</span> 9<span class="p">;</span> sudo mknod -m <span class="m">666</span> tty8 c <span class="m">4</span> 10<span class="p">;</span> sudo mknod -m <span class="m">666</span> tty9 c <span class="m">4</span> 11<span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># 在rootfs目录下准备挂载NFS脚本</span>
-</span></span><span class="line"><span class="cl">touch <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/rootfs/mountNFS.sh
-</span></span><span class="line"><span class="cl">cat mountNFS.sh &gt; <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/rootfs/mountNFS.sh
-</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;ifconfig eth0 </span><span class="si">${</span><span class="nv">of_ip_var1</span><span class="si">}</span><span class="s2">.</span><span class="si">${</span><span class="nv">of_ip_var2</span><span class="si">}</span><span class="s2">.</span><span class="si">${</span><span class="nv">of_ip_var3</span><span class="si">}</span><span class="s2">.223&#34;</span> &gt;&gt; <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/rootfs/mountNFS.sh 
-</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;mount -t nfs -o nolock </span><span class="si">${</span><span class="nv">of_ip_var1</span><span class="si">}</span><span class="s2">.</span><span class="si">${</span><span class="nv">of_ip_var2</span><span class="si">}</span><span class="s2">.</span><span class="si">${</span><span class="nv">of_ip_var3</span><span class="si">}</span><span class="s2">.223:</span><span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="s2"> /mnt&#34;</span> &gt;&gt; <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/rootfs/mountNFS.sh
-</span></span><span class="line"><span class="cl"><span class="c1"># 进入qemu运行的虚拟机后通过以下命令运行脚本进行挂载nfs：&#34;sh mountNFS.sh&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">else</span>
+</span></span><span class="line"><span class="cl">	  sudo chown <span class="si">${</span><span class="nv">USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">USER</span><span class="si">}</span> <span class="nv">$Operate_Net_File</span>
+</span></span><span class="line"><span class="cl">	  cat <span class="nv">$Operate_Net_File</span> &gt; <span class="nv">$Operate_Net_File</span>
+</span></span><span class="line"><span class="cl">	  <span class="nv">result</span><span class="o">=</span><span class="k">$(</span>ip addr <span class="p">|</span> grep <span class="s2">&#34;ens33&#34;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$result</span><span class="s2">&#34;</span> !<span class="o">=</span> <span class="s2">&#34;&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">		  <span class="nb">echo</span> <span class="s2">&#34;auto lo&#34;</span> &gt;&gt; <span class="nv">$Operate_Net_File</span>
+</span></span><span class="line"><span class="cl">		  <span class="nb">echo</span> <span class="s2">&#34;iface lo inet loopback&#34;</span> &gt;&gt; <span class="nv">$Operate_Net_File</span>
+</span></span><span class="line"><span class="cl">		  <span class="nb">echo</span> <span class="s2">&#34;&#34;</span> &gt;&gt; <span class="nv">$Operate_Net_File</span>
+</span></span><span class="line"><span class="cl">		  <span class="nb">echo</span> <span class="s2">&#34;auto ens33&#34;</span> &gt;&gt; <span class="nv">$Operate_Net_File</span>
+</span></span><span class="line"><span class="cl">		  <span class="nb">echo</span> <span class="s2">&#34;&#34;</span> &gt;&gt; <span class="nv">$Operate_Net_File</span>
+</span></span><span class="line"><span class="cl">		  <span class="nb">echo</span> <span class="s2">&#34;auto br0&#34;</span> &gt;&gt; <span class="nv">$Operate_Net_File</span>
+</span></span><span class="line"><span class="cl">		  <span class="nb">echo</span> <span class="s2">&#34;iface br0 inet dhcp&#34;</span> &gt;&gt; <span class="nv">$Operate_Net_File</span>
+</span></span><span class="line"><span class="cl">		  <span class="nb">echo</span> <span class="s2">&#34;	bridge_ports ens33&#34;</span> &gt;&gt; <span class="nv">$Operate_Net_File</span>
+</span></span><span class="line"><span class="cl">		  sudo chown <span class="si">${</span><span class="nv">root</span><span class="si">}</span>:<span class="si">${</span><span class="nv">root</span><span class="si">}</span> <span class="nv">$Operate_Net_File</span>
+</span></span><span class="line"><span class="cl">		  sudo /etc/init.d/networking restart
+</span></span><span class="line"><span class="cl">	  <span class="k">else</span>
+</span></span><span class="line"><span class="cl">		  <span class="nv">result</span><span class="o">=</span><span class="k">$(</span>ip addr <span class="p">|</span> grep <span class="s2">&#34;eth0&#34;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">		  <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$result</span><span class="s2">&#34;</span> !<span class="o">=</span> <span class="s2">&#34;&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">			  <span class="nb">echo</span> <span class="s2">&#34;auto lo&#34;</span> &gt;&gt; <span class="nv">$Operate_Net_File</span>
+</span></span><span class="line"><span class="cl">			  <span class="nb">echo</span> <span class="s2">&#34;iface lo inet loopback&#34;</span> &gt;&gt; <span class="nv">$Operate_Net_File</span>
+</span></span><span class="line"><span class="cl">			  <span class="nb">echo</span> <span class="s2">&#34;&#34;</span> &gt;&gt; <span class="nv">$Operate_Net_File</span>
+</span></span><span class="line"><span class="cl">			  <span class="nb">echo</span> <span class="s2">&#34;auto eth0&#34;</span> &gt;&gt; <span class="nv">$Operate_Net_File</span>
+</span></span><span class="line"><span class="cl">			  <span class="nb">echo</span> <span class="s2">&#34;&#34;</span> &gt;&gt; <span class="nv">$Operate_Net_File</span>
+</span></span><span class="line"><span class="cl">			  <span class="nb">echo</span> <span class="s2">&#34;auto br0&#34;</span> &gt;&gt; <span class="nv">$Operate_Net_File</span>
+</span></span><span class="line"><span class="cl">			  <span class="nb">echo</span> <span class="s2">&#34;iface br0 inet dhcp&#34;</span> &gt;&gt; <span class="nv">$Operate_Net_File</span>
+</span></span><span class="line"><span class="cl">			  <span class="nb">echo</span> <span class="s2">&#34;	bridge_ports eth0&#34;</span> &gt;&gt; <span class="nv">$Operate_Net_File</span>
+</span></span><span class="line"><span class="cl">			  sudo chown <span class="si">${</span><span class="nv">root</span><span class="si">}</span>:<span class="si">${</span><span class="nv">root</span><span class="si">}</span> <span class="nv">$Operate_Net_File</span>
+</span></span><span class="line"><span class="cl">			  sudo /etc/init.d/networking restart
+</span></span><span class="line"><span class="cl">		  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> <span class="k">$(</span>ifconfig <span class="p">|</span> grep -w -A <span class="m">1</span> <span class="s2">&#34;br0&#34;</span> <span class="p">|</span> grep -v <span class="s2">&#34;br0&#34;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span> <span class="p">|</span> grep <span class="s2">&#34;[0-9]&#34;</span> <span class="p">|</span> grep <span class="s2">&#34;:&#34;</span><span class="k">)</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">	  <span class="nv">of_ip_var1</span><span class="o">=</span><span class="k">$(</span>ifconfig <span class="p">|</span> grep -w -A <span class="m">1</span> <span class="s2">&#34;br0&#34;</span> <span class="p">|</span> grep -v <span class="s2">&#34;br0&#34;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span> <span class="p">|</span> grep <span class="s2">&#34;[0-9]&#34;</span> <span class="p">|</span> tr <span class="s1">&#39;:&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> tr <span class="s1">&#39;.&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">	  <span class="nv">of_ip_var2</span><span class="o">=</span><span class="k">$(</span>ifconfig <span class="p">|</span> grep -w -A <span class="m">1</span> <span class="s2">&#34;br0&#34;</span> <span class="p">|</span> grep -v <span class="s2">&#34;br0&#34;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span> <span class="p">|</span> grep <span class="s2">&#34;[0-9]&#34;</span> <span class="p">|</span> tr <span class="s1">&#39;:&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> tr <span class="s1">&#39;.&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $3}&#39;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">	  <span class="nv">of_ip_var3</span><span class="o">=</span><span class="k">$(</span>ifconfig <span class="p">|</span> grep -w -A <span class="m">1</span> <span class="s2">&#34;br0&#34;</span> <span class="p">|</span> grep -v <span class="s2">&#34;br0&#34;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span> <span class="p">|</span> grep <span class="s2">&#34;[0-9]&#34;</span> <span class="p">|</span> tr <span class="s1">&#39;:&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> tr <span class="s1">&#39;.&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $4}&#39;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">	  <span class="nv">of_ip_var4</span><span class="o">=</span><span class="k">$(</span>ifconfig <span class="p">|</span> grep -w -A <span class="m">1</span> <span class="s2">&#34;br0&#34;</span> <span class="p">|</span> grep -v <span class="s2">&#34;br0&#34;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span> <span class="p">|</span> grep <span class="s2">&#34;[0-9]&#34;</span> <span class="p">|</span> tr <span class="s1">&#39;:&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> tr <span class="s1">&#39;.&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $5}&#39;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">  <span class="k">else</span>
+</span></span><span class="line"><span class="cl">	  <span class="nv">of_ip_var1</span><span class="o">=</span><span class="k">$(</span> ifconfig <span class="p">|</span> grep -w -A <span class="m">1</span> <span class="s2">&#34;br0&#34;</span> <span class="p">|</span> grep -v <span class="s2">&#34;br0&#34;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span> <span class="p">|</span> grep <span class="s2">&#34;[0-9]&#34;</span> <span class="p">|</span> tr <span class="s1">&#39;.&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $1}&#39;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">	  <span class="nv">of_ip_var2</span><span class="o">=</span><span class="k">$(</span> ifconfig <span class="p">|</span> grep -w -A <span class="m">1</span> <span class="s2">&#34;br0&#34;</span> <span class="p">|</span> grep -v <span class="s2">&#34;br0&#34;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span> <span class="p">|</span> grep <span class="s2">&#34;[0-9]&#34;</span> <span class="p">|</span> tr <span class="s1">&#39;.&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">	  <span class="nv">of_ip_var3</span><span class="o">=</span><span class="k">$(</span> ifconfig <span class="p">|</span> grep -w -A <span class="m">1</span> <span class="s2">&#34;br0&#34;</span> <span class="p">|</span> grep -v <span class="s2">&#34;br0&#34;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span> <span class="p">|</span> grep <span class="s2">&#34;[0-9]&#34;</span> <span class="p">|</span> tr <span class="s1">&#39;.&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $3}&#39;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">	  <span class="nv">of_ip_var4</span><span class="o">=</span><span class="k">$(</span> ifconfig <span class="p">|</span> grep -w -A <span class="m">1</span> <span class="s2">&#34;br0&#34;</span> <span class="p">|</span> grep -v <span class="s2">&#34;br0&#34;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span> <span class="p">|</span> grep <span class="s2">&#34;[0-9]&#34;</span> <span class="p">|</span> tr <span class="s1">&#39;.&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $4}&#39;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nb">cd</span> <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># 制作rootfs.ext3，格式化rootfs.ext3为ext3文件系统类型，将rootfs.ext3挂载到/mnt，再将根文件系统拷贝到/mnt，然后解除/mnt挂载的rootfs.ext3，此时rootfs.ext3中已经有根文件系统了</span>
-</span></span><span class="line"><span class="cl">dd <span class="k">if</span><span class="o">=</span>/dev/zero <span class="nv">of</span><span class="o">=</span>rootfs.ext3 <span class="nv">bs</span><span class="o">=</span>1M <span class="nv">count</span><span class="o">=</span>32<span class="p">;</span> mkfs.ext3 rootfs.ext3<span class="p">;</span> sudo mount -t ext3 rootfs.ext3 /mnt -o loop<span class="p">;</span> sudo cp -av <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/rootfs/* /mnt<span class="p">;</span> sudo umount /mnt<span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">uboot_config_file_var1</span><span class="o">=</span><span class="k">$(</span>grep -n <span class="s2">&#34;\/\* Basic environment settings \*\/&#34;</span> <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>.old <span class="p">|</span> tr <span class="s1">&#39;:&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $1}&#39;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">uboot_config_file_var2</span><span class="o">=</span><span class="k">$((</span>uboot_config_file_var1 <span class="o">+</span> <span class="m">1</span><span class="k">))</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">result</span><span class="o">=</span><span class="k">$(</span>cat <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span> <span class="p">|</span> grep <span class="s2">&#34;netmask&#34;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$result</span><span class="s2">&#34;</span> !<span class="o">=</span> <span class="s2">&#34;&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> <span class="s2">&#34;netmask exists.&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">else</span>
+</span></span><span class="line"><span class="cl">	  cat <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>.old &gt; <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">	  sed -i <span class="s1">&#39;/CONFIG_BOOTCOMMAND\b/d&#39;</span> <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">	  sed -i <span class="s1">&#39;/run distro_bootcmd\b/d&#39;</span> <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">	  sed -i <span class="s1">&#39;/run bootflash\b/d&#39;</span> <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">	  sed -i  <span class="s2">&#34;</span><span class="si">${</span><span class="nv">uboot_config_file_var2</span><span class="si">}</span><span class="s2">i\#define CONFIG_SERVERIP </span><span class="si">${</span><span class="nv">of_ip_var1</span><span class="si">}</span><span class="s2">.</span><span class="si">${</span><span class="nv">of_ip_var2</span><span class="si">}</span><span class="s2">.</span><span class="si">${</span><span class="nv">of_ip_var3</span><span class="si">}</span><span class="s2">.</span><span class="si">${</span><span class="nv">of_ip_var4</span><span class="si">}</span><span class="s2">&#34;</span> <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">	  sed -i  <span class="s2">&#34;</span><span class="si">${</span><span class="nv">uboot_config_file_var2</span><span class="si">}</span><span class="s2">i\#define CONFIG_NETMASK 255.255.255.0&#34;</span> <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">	  sed -i  <span class="s2">&#34;</span><span class="si">${</span><span class="nv">uboot_config_file_var2</span><span class="si">}</span><span class="s2">i\#define CONFIG_IPADDR </span><span class="si">${</span><span class="nv">of_ip_var1</span><span class="si">}</span><span class="s2">.</span><span class="si">${</span><span class="nv">of_ip_var2</span><span class="si">}</span><span class="s2">.</span><span class="si">${</span><span class="nv">of_ip_var3</span><span class="si">}</span><span class="s2">.223&#34;</span> <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">	  sed -i  <span class="s2">&#34;</span><span class="si">${</span><span class="nv">uboot_config_file_var2</span><span class="si">}</span><span class="s2">i\/* netmask */&#34;</span> <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">	  sed -i  <span class="s2">&#34;</span><span class="si">${</span><span class="nv">uboot_config_file_var2</span><span class="si">}</span><span class="s2">i\#define CONFIG_BOOTCOMMAND \&#34;tftp 0x60003000 uImage;tftp 0x60500000 vexpress-v2p-ca9.dtb;setenv bootargs &#39;root=/dev/mmcblk0 console=ttyAMA0&#39;;bootm 0x60003000 - 0x60500000;\&#34; \\&#34;</span> <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># tftpboot</span>
-</span></span><span class="line"><span class="cl">sudo cp -av <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">linux</span><span class="si">}</span>/arch/arm/boot/zImage /tftpboot<span class="p">;</span>
-</span></span><span class="line"><span class="cl">sudo cp -av <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">linux</span><span class="si">}</span>/arch/arm/boot/uImage /tftpboot<span class="p">;</span>
-</span></span><span class="line"><span class="cl">sudo cp -av <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">linux</span><span class="si">}</span>/arch/arm/boot/dts/vexpress-v2p-ca9.dtb /tftpboot<span class="p">;</span>
-</span></span><span class="line"><span class="cl">sudo cp -av <span class="nv">$work_dir</span>/<span class="nv">$uboot</span>/u-boot /tftpboot<span class="p">;</span>
-</span></span><span class="line"><span class="cl">sudo cp -av <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/rootfs.ext3 /tftpboot<span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># 准备根文件系统</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">cd</span> <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  mkdir -p <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/rootfs/<span class="o">{</span>dev,etc/init.d,lib,mnt<span class="o">}</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  cp -av <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">busybox</span><span class="si">}</span>/_install/* <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/rootfs/<span class="p">;</span>
+</span></span><span class="line"><span class="cl">  cp -av /usr/arm-linux-gnueabi/lib/* <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/rootfs/lib/<span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">cd</span> <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/rootfs/dev<span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># 创建字符设备类型的设备节点，这些设备节点的主设备号为4,次设备号为1..11</span>
+</span></span><span class="line"><span class="cl">  sudo mknod -m <span class="m">666</span> console c <span class="m">4</span> 1<span class="p">;</span> sudo mknod -m <span class="m">666</span> null c <span class="m">4</span> 2<span class="p">;</span> sudo mknod -m <span class="m">666</span> tty1 c <span class="m">4</span> 3<span class="p">;</span> sudo mknod -m <span class="m">666</span> tty2 c <span class="m">4</span> 4<span class="p">;</span> sudo mknod -m <span class="m">666</span> tty3 c <span class="m">4</span> 5<span class="p">;</span> sudo mknod -m <span class="m">666</span> tty4 c <span class="m">4</span> 6<span class="p">;</span> sudo mknod -m <span class="m">666</span> tty5 c <span class="m">4</span> 7<span class="p">;</span> sudo mknod -m <span class="m">666</span> tty6 c <span class="m">4</span> 8<span class="p">;</span> sudo mknod -m <span class="m">666</span> tty7 c <span class="m">4</span> 9<span class="p">;</span> sudo mknod -m <span class="m">666</span> tty8 c <span class="m">4</span> 10<span class="p">;</span> sudo mknod -m <span class="m">666</span> tty9 c <span class="m">4</span> 11<span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># 在rootfs目录下准备挂载NFS脚本</span>
+</span></span><span class="line"><span class="cl">  touch <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/rootfs/mountNFS.sh
+</span></span><span class="line"><span class="cl">  cat mountNFS.sh &gt; <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/rootfs/mountNFS.sh
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;ifconfig eth0 </span><span class="si">${</span><span class="nv">of_ip_var1</span><span class="si">}</span><span class="s2">.</span><span class="si">${</span><span class="nv">of_ip_var2</span><span class="si">}</span><span class="s2">.</span><span class="si">${</span><span class="nv">of_ip_var3</span><span class="si">}</span><span class="s2">.223&#34;</span> &gt;&gt; <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/rootfs/mountNFS.sh 
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;mount -t nfs -o nolock </span><span class="si">${</span><span class="nv">of_ip_var1</span><span class="si">}</span><span class="s2">.</span><span class="si">${</span><span class="nv">of_ip_var2</span><span class="si">}</span><span class="s2">.</span><span class="si">${</span><span class="nv">of_ip_var3</span><span class="si">}</span><span class="s2">.</span><span class="si">${</span><span class="nv">of_ip_var4</span><span class="si">}</span><span class="s2">:</span><span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="s2"> /mnt&#34;</span> &gt;&gt; <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/rootfs/mountNFS.sh
+</span></span><span class="line"><span class="cl">  <span class="c1"># 进入qemu运行的虚拟机后通过以下命令运行脚本进行挂载nfs：&#34;sh mountNFS.sh&#34;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># QEMU运行虚拟机，加载linux内核</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># qemu-system-arm -M vexpress-a9 -m 256M -kernel ${work_dir}/$linux/arch/arm/boot/zImage -dtb ${work_dir}/$linux/arch/arm/boot/dts/vexpress-v2p-ca9.dtb -nographic -append &#34;root=/dev/mmcblk0 rw console=ttyAMA0&#34; -sd ${work_dir}/rootfs.ext3;</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">cd</span> <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># 制作rootfs.ext3，格式化rootfs.ext3为ext3文件系统类型，将rootfs.ext3挂载到/mnt，再将根文件系统拷贝到/mnt，然后解除/mnt挂载的rootfs.ext3，此时rootfs.ext3中已经有根文件系统了</span>
+</span></span><span class="line"><span class="cl">  dd <span class="k">if</span><span class="o">=</span>/dev/zero <span class="nv">of</span><span class="o">=</span>rootfs.ext3 <span class="nv">bs</span><span class="o">=</span>1M <span class="nv">count</span><span class="o">=</span>32<span class="p">;</span> mkfs.ext3 rootfs.ext3<span class="p">;</span> sudo mount -t ext3 rootfs.ext3 /mnt -o loop<span class="p">;</span> sudo cp -av <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/rootfs/* /mnt<span class="p">;</span> sudo umount /mnt<span class="p">;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># 该命令使用 QEMU 模拟器运行 ARM 架构的虚拟机，并根据指定参数进行配置。下面是各个参数的含义：</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># |----------------------------------------------------------------+--------------------------------------------------------------------------------------|</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># | 参数                                                           | 含义                                                                                 |</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># |----------------------------------------------------------------+--------------------------------------------------------------------------------------|</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># | M vexpress-a9`                                                 | 指定虚拟机的机型为 `vexpress-a9`，即使用 ARMv7 架构的 Versatile Express 开发板模型。 |</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># |----------------------------------------------------------------+--------------------------------------------------------------------------------------|</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># | m 512M`                                                        | 设置虚拟机的内存大小为 512MB。                                                       |</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># |----------------------------------------------------------------+--------------------------------------------------------------------------------------|</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># | kernel ${work_dir}/$linux/arch/arm/boot/zImage`                | 指定 Linux 内核镜像的路径和文件名。                                                  |</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># |----------------------------------------------------------------+--------------------------------------------------------------------------------------|</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># | dtb ${work_dir}/$linux/arch/arm/boot/dts/vexpress-v2p-ca9.dtb` | 指定设备树二进制文件（Device Tree Blob）的路径和文件名。                             |</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># |----------------------------------------------------------------+--------------------------------------------------------------------------------------|</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># | nographic`                                                     | 以无图形界面的方式运行虚拟机。                                                       |</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># |----------------------------------------------------------------+--------------------------------------------------------------------------------------|</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># | append &#34;root=/dev/mmcblk0 rw console=ttyAMA0&#34;`                 | 指定 Linux 内核启动参数，包括根文件系统的设备路径、读写权限和控制台终端。            |</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># |----------------------------------------------------------------+--------------------------------------------------------------------------------------|</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># | sd ${work_dir}/rootfs.ext3`                                    | 指定虚拟机的根文件系统镜像路径和文件名。                                             |</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># |----------------------------------------------------------------+--------------------------------------------------------------------------------------|</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># tftpboot</span>
+</span></span><span class="line"><span class="cl">  sudo cp -av <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">linux</span><span class="si">}</span>/arch/arm/boot/zImage /tftpboot<span class="p">;</span>
+</span></span><span class="line"><span class="cl">  sudo chmod <span class="m">775</span> <span class="nv">$work_dir</span>/<span class="nv">$uboot</span>/uImage<span class="p">;</span>
+</span></span><span class="line"><span class="cl">  sudo cp -av <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">linux</span><span class="si">}</span>/arch/arm/boot/uImage /tftpboot<span class="p">;</span>
+</span></span><span class="line"><span class="cl">  sudo cp -av <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">linux</span><span class="si">}</span>/arch/arm/boot/dts/vexpress-v2p-ca9.dtb /tftpboot<span class="p">;</span>
+</span></span><span class="line"><span class="cl">  sudo cp -av <span class="nv">$work_dir</span>/<span class="nv">$uboot</span>/u-boot /tftpboot<span class="p">;</span>
+</span></span><span class="line"><span class="cl">  sudo cp -av <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/rootfs.ext3 /tftpboot<span class="p">;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># 在脚本外部执行，进入yenao_qemu_test目录执行下面的语句 </span>
-</span></span><span class="line"><span class="cl"><span class="c1"># qemu-system-arm -M vexpress-a9 -m 512M -kernel linux-4.4.232/arch/arm/boot/zImage -dtb linux-4.4.232/arch/arm/boot/dts/vexpress-v2p-ca9.dtb -nographic -append &#34;root=/dev/mmcblk0 rw console=ttyAMA0&#34; -sd rootfs.ext3</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># QEMU运行虚拟机，加载linux内核</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># qemu-system-arm -M vexpress-a9 -m 256M -kernel ${work_dir}/$linux/arch/arm/boot/zImage -dtb ${work_dir}/$linux/arch/arm/boot/dts/vexpress-v2p-ca9.dtb -nographic -append &#34;root=/dev/mmcblk0 rw console=ttyAMA0&#34; -sd ${work_dir}/rootfs.ext3;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># QEMU运行虚拟机，只加载u-boot</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># qemu-system-arm -M vexpress-a9 -m 256M -kernel ${work_dir}/${uboot}/u-boot  -nographic</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># 该命令使用 QEMU 模拟器运行 ARM 架构的虚拟机，并根据指定参数进行配置。下面是各个参数的含义：</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># |----------------------------------------------------------------+--------------------------------------------------------------------------------------|</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># | 参数                                                           | 含义                                                                                 |</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># |----------------------------------------------------------------+--------------------------------------------------------------------------------------|</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># | M vexpress-a9`                                                 | 指定虚拟机的机型为 `vexpress-a9`，即使用 ARMv7 架构的 Versatile Express 开发板模型。 |</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># |----------------------------------------------------------------+--------------------------------------------------------------------------------------|</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># | m 512M`                                                        | 设置虚拟机的内存大小为 512MB。                                                       |</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># |----------------------------------------------------------------+--------------------------------------------------------------------------------------|</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># | kernel ${work_dir}/$linux/arch/arm/boot/zImage`                | 指定 Linux 内核镜像的路径和文件名。                                                  |</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># |----------------------------------------------------------------+--------------------------------------------------------------------------------------|</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># | dtb ${work_dir}/$linux/arch/arm/boot/dts/vexpress-v2p-ca9.dtb` | 指定设备树二进制文件（Device Tree Blob）的路径和文件名。                             |</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># |----------------------------------------------------------------+--------------------------------------------------------------------------------------|</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># | nographic`                                                     | 以无图形界面的方式运行虚拟机。                                                       |</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># |----------------------------------------------------------------+--------------------------------------------------------------------------------------|</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># | append &#34;root=/dev/mmcblk0 rw console=ttyAMA0&#34;`                 | 指定 Linux 内核启动参数，包括根文件系统的设备路径、读写权限和控制台终端。            |</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># |----------------------------------------------------------------+--------------------------------------------------------------------------------------|</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># | sd ${work_dir}/rootfs.ext3`                                    | 指定虚拟机的根文件系统镜像路径和文件名。                                             |</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># |----------------------------------------------------------------+--------------------------------------------------------------------------------------|</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># 通过网络开发环境加载内核，如果第一次运行没有引导成功，可以再运行一次应该就可以成功</span>
-</span></span><span class="line"><span class="cl"><span class="nb">cd</span> /tftpboot
-</span></span><span class="line"><span class="cl">sudo qemu-system-arm -M vexpress-a9 -kernel u-boot -nographic -m 128M -net nic,vlan<span class="o">=</span><span class="m">0</span> -net tap,vlan<span class="o">=</span>0,ifname<span class="o">=</span>tap0 -sd rootfs.ext3</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">  <span class="c1"># 在脚本外部执行，进入yenao_qemu_test目录执行下面的语句 </span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># qemu-system-arm -M vexpress-a9 -m 512M -kernel linux-4.4.232/arch/arm/boot/zImage -dtb linux-4.4.232/arch/arm/boot/dts/vexpress-v2p-ca9.dtb -nographic -append &#34;root=/dev/mmcblk0 rw console=ttyAMA0&#34; -sd rootfs.ext3</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1"># QEMU运行虚拟机，只加载u-boot</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># qemu-system-arm -M vexpress-a9 -m 256M -kernel ${work_dir}/${uboot}/u-boot  -nographic</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1"># 通过网络开发环境加载内核，如果第一次运行没有引导成功，可以再运行一次应该就可以成功</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">cd</span> /tftpboot
+</span></span><span class="line"><span class="cl">  sudo qemu-system-arm -M vexpress-a9 -kernel u-boot -nographic -m 128M -net nic,vlan<span class="o">=</span><span class="m">0</span> -net tap,vlan<span class="o">=</span>0,ifname<span class="o">=</span>tap0 -sd rootfs.ext3</span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
