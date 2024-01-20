@@ -682,11 +682,27 @@
 </span><span class="lnt">286
 </span><span class="lnt">287
 </span><span class="lnt">288
+</span><span class="lnt">289
+</span><span class="lnt">290
+</span><span class="lnt">291
+</span><span class="lnt">292
+</span><span class="lnt">293
+</span><span class="lnt">294
+</span><span class="lnt">295
+</span><span class="lnt">296
+</span><span class="lnt">297
+</span><span class="lnt">298
+</span><span class="lnt">299
+</span><span class="lnt">300
+</span><span class="lnt">301
+</span><span class="lnt">302
+</span><span class="lnt">303
+</span><span class="lnt">304
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nv">linux</span><span class="o">=</span><span class="s2">&#34;linux-4.4.232&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="c1"># linux=&#34;linux-4.4.76&#34;;</span>
-</span></span><span class="line"><span class="cl">  <span class="nv">busybox</span><span class="o">=</span><span class="s2">&#34;busybox-1.32.0&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">busybox</span><span class="o">=</span><span class="s2">&#34;busybox-1.32.0.0&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="nv">uboot</span><span class="o">=</span><span class="s2">&#34;u-boot-2017.05&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="c1"># uboot=&#34;u-boot-2020.07&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="nv">file_linux</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">linux</span><span class="si">}</span><span class="s2">.tar.xz&#34;</span><span class="p">;</span>
@@ -934,6 +950,22 @@
 </span></span><span class="line"><span class="cl">  dd <span class="k">if</span><span class="o">=</span>/dev/zero <span class="nv">of</span><span class="o">=</span>rootfs.ext3 <span class="nv">bs</span><span class="o">=</span>1M <span class="nv">count</span><span class="o">=</span>32<span class="p">;</span> mkfs.ext3 rootfs.ext3<span class="p">;</span> sudo mount -t ext3 rootfs.ext3 /mnt -o loop<span class="p">;</span> sudo cp -av <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/rootfs/* /mnt<span class="p">;</span> sudo umount /mnt<span class="p">;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="c1"># tftpboot</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># rm -rf /tftpboot/*;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> -f <span class="s2">&#34;/tftpboot/u-boot&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">	  rm -rf /tftpboot/u-boot 
+</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> -f <span class="s2">&#34;/tftpboot/zImage&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">	  rm -rf /tftpboot/zImage 
+</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> -f <span class="s2">&#34;/tftpboot/rootfs.ext3&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">	  rm -rf /tftpboot/rootfs.ext3
+</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> -f <span class="s2">&#34;/tftpboot/uImage &#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">	  rm -rf /tftpboot/uImage
+</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> -f <span class="s2">&#34;/tftpboot/vexpress-v2p-ca9.dtb &#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">	  rm -rf /tftpboot/vexpress-v2p-ca9.dtb 
+</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
 </span></span><span class="line"><span class="cl">  sudo cp -av <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">linux</span><span class="si">}</span>/arch/arm/boot/zImage /tftpboot<span class="p">;</span>
 </span></span><span class="line"><span class="cl">  sudo chmod <span class="m">775</span> <span class="nv">$work_dir</span>/<span class="nv">$uboot</span>/uImage<span class="p">;</span>
 </span></span><span class="line"><span class="cl">  sudo cp -av <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">linux</span><span class="si">}</span>/arch/arm/boot/uImage /tftpboot<span class="p">;</span>
