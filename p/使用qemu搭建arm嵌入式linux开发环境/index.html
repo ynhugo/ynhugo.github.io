@@ -276,22 +276,26 @@
 <li><a href="#headline-3">搭建脚本</a>
 <ul>
 <li><a href="#headline-4">调试启动脚本</a>
-</li>
-<li><a href="#headline-5">完整启动脚本</a>
 <ul>
-<li><a href="#headline-6">配置nfs</a>
+<li><a href="#headline-5">挂载NFS文件系统流程，待实现</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-6">完整启动脚本</a>
+<ul>
+<li><a href="#headline-7">配置nfs</a>
 </li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#headline-7">简化的启动脚本</a>
+<li><a href="#headline-8">简化的启动脚本</a>
 </li>
 </ul>
 </li>
-<li><a href="#headline-8">所需资源下载</a>
+<li><a href="#headline-9">所需资源下载</a>
 </li>
-<li><a href="#headline-9">参考链接</a>
+<li><a href="#headline-10">参考链接</a>
 </li>
 </ul>
 </nav>
@@ -682,31 +686,11 @@
 </span><span class="lnt">286
 </span><span class="lnt">287
 </span><span class="lnt">288
-</span><span class="lnt">289
-</span><span class="lnt">290
-</span><span class="lnt">291
-</span><span class="lnt">292
-</span><span class="lnt">293
-</span><span class="lnt">294
-</span><span class="lnt">295
-</span><span class="lnt">296
-</span><span class="lnt">297
-</span><span class="lnt">298
-</span><span class="lnt">299
-</span><span class="lnt">300
-</span><span class="lnt">301
-</span><span class="lnt">302
-</span><span class="lnt">303
-</span><span class="lnt">304
-</span><span class="lnt">305
-</span><span class="lnt">306
-</span><span class="lnt">307
-</span><span class="lnt">308
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nv">linux</span><span class="o">=</span><span class="s2">&#34;linux-4.4.232&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="c1"># linux=&#34;linux-4.4.76&#34;;</span>
-</span></span><span class="line"><span class="cl">  <span class="nv">busybox</span><span class="o">=</span><span class="s2">&#34;busybox-1.32.0.0&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">busybox</span><span class="o">=</span><span class="s2">&#34;busybox-1.32.0&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="nv">uboot</span><span class="o">=</span><span class="s2">&#34;u-boot-2017.05&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="c1"># uboot=&#34;u-boot-2020.07&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="nv">file_linux</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">linux</span><span class="si">}</span><span class="s2">.tar.xz&#34;</span><span class="p">;</span>
@@ -752,19 +736,19 @@
 </span></span><span class="line"><span class="cl">	  sudo chmod <span class="m">777</span> /tftpboot<span class="p">;</span>
 </span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> <span class="s2">&#34;/tftpboot的权限已设置为0777&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="k">fi</span>
-</span></span><span class="line"><span class="cl">  <span class="c1"># 判断/tftpboot/${work_dir_name}是否存在，如果想配置tftp多路径的时候可以这样做</span>
-</span></span><span class="line"><span class="cl">  <span class="c1"># if [ -d &#34;/tftpboot/${work_dir_name}&#34; ]; then</span>
-</span></span><span class="line"><span class="cl">  <span class="c1"># 	echo &#34;tftpboot/${work_dir_name} exists.&#34;;</span>
-</span></span><span class="line"><span class="cl">  <span class="c1"># 	work_dir_name_access=$(stat /tftpboot/ | grep -w &#34;Uid&#34; | tr &#39;(&#39; &#39; &#39; | tr &#39;/&#39; &#39; &#39; | awk &#39;{print $2}&#39;)</span>
-</span></span><span class="line"><span class="cl">  <span class="c1"># 	if [ &#34;$work_dir_name_access&#34; != &#34;0777&#34; ]; then</span>
-</span></span><span class="line"><span class="cl">  <span class="c1"># 		sudo chmod 777 /tftpboot;</span>
-</span></span><span class="line"><span class="cl">  <span class="c1"># 		echo &#34;/tftpboot/${work_dir_name}的权限已设置为0777&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="c1"># 	fi</span>
-</span></span><span class="line"><span class="cl">  <span class="c1"># else</span>
-</span></span><span class="line"><span class="cl">  <span class="c1"># 	sudo mkdir /tftpboot/${work_dir_name};</span>
-</span></span><span class="line"><span class="cl">  <span class="c1"># 	sudo chmod 777 /tftpboot/${work_dir_name};</span>
-</span></span><span class="line"><span class="cl">  <span class="c1"># 	echo &#34;/tftpboot/${work_dir_name}的权限已设置为0777&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="c1"># fi</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># 判断/tftpboot/${work_dir_name}是否存在</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> -d <span class="s2">&#34;/tftpboot/</span><span class="si">${</span><span class="nv">work_dir_name</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> <span class="s2">&#34;tftpboot/</span><span class="si">${</span><span class="nv">work_dir_name</span><span class="si">}</span><span class="s2"> exists.&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	  <span class="nv">work_dir_name_access</span><span class="o">=</span><span class="k">$(</span>stat /tftpboot/ <span class="p">|</span> grep -w <span class="s2">&#34;Uid&#34;</span> <span class="p">|</span> tr <span class="s1">&#39;(&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> tr <span class="s1">&#39;/&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$work_dir_name_access</span><span class="s2">&#34;</span> !<span class="o">=</span> <span class="s2">&#34;0777&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">		  sudo chmod <span class="m">777</span> /tftpboot<span class="p">;</span>
+</span></span><span class="line"><span class="cl">		  <span class="nb">echo</span> <span class="s2">&#34;/tftpboot/</span><span class="si">${</span><span class="nv">work_dir_name</span><span class="si">}</span><span class="s2">的权限已设置为0777&#34;</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">  <span class="k">else</span>
+</span></span><span class="line"><span class="cl">	  sudo mkdir /tftpboot/<span class="si">${</span><span class="nv">work_dir_name</span><span class="si">}</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	  sudo chmod <span class="m">777</span> /tftpboot/<span class="si">${</span><span class="nv">work_dir_name</span><span class="si">}</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> <span class="s2">&#34;/tftpboot/</span><span class="si">${</span><span class="nv">work_dir_name</span><span class="si">}</span><span class="s2">的权限已设置为0777&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="c1"># 允许开发板通过NFS访问Ubuntu的/home/${USER}目录，当然你可以加其他目录</span>
 </span></span><span class="line"><span class="cl">  <span class="nv">result</span><span class="o">=</span><span class="k">$(</span>grep -w <span class="s2">&#34;</span><span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="s2"> \*(rw,nohide,insecure,no_subtree_check,async,no_root_squash)&#34;</span> /etc/exports <span class="p">|</span> grep -v <span class="s2">&#34;#&#34;</span><span class="k">)</span>
@@ -850,9 +834,6 @@
 </span></span><span class="line"><span class="cl">  make zImage -j12<span class="p">;</span>
 </span></span><span class="line"><span class="cl">  make modules -j12<span class="p">;</span>
 </span></span><span class="line"><span class="cl">  make <span class="nv">LOADADDR</span><span class="o">=</span>0x60003000 uImage -j12<span class="p">;</span>
-</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> -f <span class="s2">&#34;</span><span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">linux</span><span class="si">}</span><span class="s2">/arch/arm/boot/dts/vexpress-v2p-ca9.dtb&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	  rm <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">linux</span><span class="si">}</span>/arch/arm/boot/dts/vexpress-v2p-ca9.dtb
-</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
 </span></span><span class="line"><span class="cl">  make dtbs<span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="c1"># mkimage -n &#39;mini2440&#39; -A arm -O linux -T kernel -C none -a 0x30008000 -e 0x30008040 -d  ${work_dir}/$linux/arch/arm/boot/zImage  ${work_dir}/$linux/arch/arm/boot/uImage</span>
 </span></span><span class="line"><span class="cl">
@@ -935,7 +916,6 @@
 </span></span><span class="line"><span class="cl">	  sed -i  <span class="s2">&#34;</span><span class="si">${</span><span class="nv">uboot_config_file_var2</span><span class="si">}</span><span class="s2">i\#define CONFIG_IPADDR </span><span class="si">${</span><span class="nv">of_ip_var1</span><span class="si">}</span><span class="s2">.</span><span class="si">${</span><span class="nv">of_ip_var2</span><span class="si">}</span><span class="s2">.</span><span class="si">${</span><span class="nv">of_ip_var3</span><span class="si">}</span><span class="s2">.223&#34;</span> <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>
 </span></span><span class="line"><span class="cl">	  sed -i  <span class="s2">&#34;</span><span class="si">${</span><span class="nv">uboot_config_file_var2</span><span class="si">}</span><span class="s2">i\/* netmask */&#34;</span> <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>
 </span></span><span class="line"><span class="cl">	  sed -i  <span class="s2">&#34;</span><span class="si">${</span><span class="nv">uboot_config_file_var2</span><span class="si">}</span><span class="s2">i\#define CONFIG_BOOTCOMMAND \&#34;tftp 0x60003000 uImage;tftp 0x60500000 vexpress-v2p-ca9.dtb;setenv bootargs &#39;root=/dev/mmcblk0 console=ttyAMA0&#39;;bootm 0x60003000 - 0x60500000;\&#34; \\&#34;</span> <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>
-</span></span><span class="line"><span class="cl">	  <span class="c1"># sed -i  &#34;${uboot_config_file_var2}i\#define CONFIG_BOOTCOMMAND \&#34;tftp 0x60003000 uImage;tftp 0x60500000 vexpress-v2p-ca9.dtb;setenv bootargs &#39;root=/dev/mmcblk0 console=ttyAMA0&#39;;bootm 0x60003000 - 0x60500000;\&#34; \\&#34; ${uboot_config_file}</span>
 </span></span><span class="line"><span class="cl">  <span class="k">fi</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="c1"># 准备根文件系统</span>
@@ -958,28 +938,12 @@
 </span></span><span class="line"><span class="cl">  dd <span class="k">if</span><span class="o">=</span>/dev/zero <span class="nv">of</span><span class="o">=</span>rootfs.ext3 <span class="nv">bs</span><span class="o">=</span>1M <span class="nv">count</span><span class="o">=</span>32<span class="p">;</span> mkfs.ext3 rootfs.ext3<span class="p">;</span> sudo mount -t ext3 rootfs.ext3 /mnt -o loop<span class="p">;</span> sudo cp -av <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/rootfs/* /mnt<span class="p">;</span> sudo umount /mnt<span class="p">;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="c1"># tftpboot</span>
-</span></span><span class="line"><span class="cl">  <span class="c1"># rm -rf /tftpboot/*;</span>
-</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> -f <span class="s2">&#34;/tftpboot/u-boot&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	  rm -rf /tftpboot/u-boot 
-</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
-</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> -f <span class="s2">&#34;/tftpboot/zImage&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	  rm -rf /tftpboot/zImage 
-</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
-</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> -f <span class="s2">&#34;/tftpboot/rootfs.ext3&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	  rm -rf /tftpboot/rootfs.ext3
-</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
-</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> -f <span class="s2">&#34;/tftpboot/uImage &#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	  rm -rf /tftpboot/uImage
-</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
-</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> -f <span class="s2">&#34;/tftpboot/vexpress-v2p-ca9.dtb &#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	  rm -rf /tftpboot/vexpress-v2p-ca9.dtb 
-</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
 </span></span><span class="line"><span class="cl">  sudo cp -av <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">linux</span><span class="si">}</span>/arch/arm/boot/zImage /tftpboot<span class="p">;</span>
 </span></span><span class="line"><span class="cl">  sudo cp -av <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">linux</span><span class="si">}</span>/arch/arm/boot/uImage /tftpboot<span class="p">;</span>
 </span></span><span class="line"><span class="cl">  sudo cp -av <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">linux</span><span class="si">}</span>/arch/arm/boot/dts/vexpress-v2p-ca9.dtb /tftpboot<span class="p">;</span>
 </span></span><span class="line"><span class="cl">  sudo cp -av <span class="nv">$work_dir</span>/<span class="nv">$uboot</span>/u-boot /tftpboot<span class="p">;</span>
+</span></span><span class="line"><span class="cl">  sudo chmod <span class="m">775</span> <span class="nv">$work_dir</span>/<span class="nv">$uboot</span>/uImage<span class="p">;</span>
 </span></span><span class="line"><span class="cl">  sudo cp -av <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/rootfs.ext3 /tftpboot<span class="p">;</span>
-</span></span><span class="line"><span class="cl">  <span class="c1"># sudo chmod 775 /tftpboot/uImage;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="c1"># QEMU运行虚拟机，加载linux内核</span>
 </span></span><span class="line"><span class="cl">  <span class="c1"># qemu-system-arm -M vexpress-a9 -m 256M -kernel ${work_dir}/$linux/arch/arm/boot/zImage -dtb ${work_dir}/$linux/arch/arm/boot/dts/vexpress-v2p-ca9.dtb -nographic -append &#34;root=/dev/mmcblk0 rw console=ttyAMA0&#34; -sd ${work_dir}/rootfs.ext3;</span>
@@ -1015,13 +979,54 @@
 </div>
 </div>
 </div>
+<div id="outline-container-headline-5" class="outline-5">
+<h5 id="headline-5">
+挂载NFS文件系统流程，待实现
+</h5>
+<div id="outline-text-headline-5" class="outline-text-5">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nb">export</span> <span class="nv">ARCH</span><span class="o">=</span>arm  <span class="nv">CROSS_COMPILE</span><span class="o">=</span>arm-linux-gnueabi-<span class="p">;</span> make vexpress_ca9x4_defconfig<span class="p">;</span> make -j12
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  setenv ipaddr 192.168.1.223<span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  setenv serverip 192.168.1.100<span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  tftp 0x60003000 uImage<span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  tftp 0x60500000 vexpress-v2p-ca9.dtb<span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  setenv bootargs <span class="s1">&#39;root=/dev/nfs rw nfsroot=192.168.1.100:/home/ubt init=/linuxrc ip=192.168.1.223 console=ttyAMA0&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  bootm 0x60003000 - 0x60500000<span class="p">;</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
-<div id="outline-container-headline-5" class="outline-4">
-<h4 id="headline-5">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-6" class="outline-4">
+<h4 id="headline-6">
 完整启动脚本
 </h4>
-<div id="outline-text-headline-5" class="outline-text-4">
+<div id="outline-text-headline-6" class="outline-text-4">
 <div class="src src-emacs-lisp">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1490,11 +1495,11 @@
 </div>
 </div>
 </div>
-<div id="outline-container-headline-6" class="outline-5">
-<h5 id="headline-6">
+<div id="outline-container-headline-7" class="outline-5">
+<h5 id="headline-7">
 配置nfs
 </h5>
-<div id="outline-text-headline-6" class="outline-text-5">
+<div id="outline-text-headline-7" class="outline-text-5">
 <p>
 运行该脚本后，配置网络，这样才能使用nfs</p>
 <p>
@@ -1535,11 +1540,11 @@ Guest中可以使用ifconfig命令查看IP，如果没有IP，可以进行如下
 </div>
 </div>
 </div>
-<div id="outline-container-headline-7" class="outline-3">
-<h3 id="headline-7">
+<div id="outline-container-headline-8" class="outline-3">
+<h3 id="headline-8">
 简化的启动脚本
 </h3>
-<div id="outline-text-headline-7" class="outline-text-3">
+<div id="outline-text-headline-8" class="outline-text-3">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1736,11 +1741,11 @@ Guest中可以使用ifconfig命令查看IP，如果没有IP，可以进行如下
 </div>
 </div>
 </div>
-<div id="outline-container-headline-8" class="outline-2">
-<h2 id="headline-8">
+<div id="outline-container-headline-9" class="outline-2">
+<h2 id="headline-9">
 所需资源下载
 </h2>
-<div id="outline-text-headline-8" class="outline-text-2">
+<div id="outline-text-headline-9" class="outline-text-2">
 <p>
 <a href="\images\使用qemu搭建arm嵌入式linux开发环境/linux-4.4.232.tar.xz">linux-4.4.232.tar.xz</a></p>
 <p>
@@ -1749,11 +1754,11 @@ Guest中可以使用ifconfig命令查看IP，如果没有IP，可以进行如下
 <a href="/images/使用qemu搭建arm嵌入式linux开发环境/u-boot-2020.07.tar.bz2">u-boot-2020.07.tar.bz2</a></p>
 </div>
 </div>
-<div id="outline-container-headline-9" class="outline-2">
-<h2 id="headline-9">
+<div id="outline-container-headline-10" class="outline-2">
+<h2 id="headline-10">
 参考链接
 </h2>
-<div id="outline-text-headline-9" class="outline-text-2">
+<div id="outline-text-headline-10" class="outline-text-2">
 <p>
 <a href="https://blog.csdn.net/zhvngchvng/article/details/107856401">使用qemu搭建arm嵌入式linux开发环境</a></p>
 <p>
