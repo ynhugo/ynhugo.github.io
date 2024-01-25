@@ -684,8 +684,6 @@
 </span><span class="lnt">284
 </span><span class="lnt">285
 </span><span class="lnt">286
-</span><span class="lnt">287
-</span><span class="lnt">288
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nv">linux</span><span class="o">=</span><span class="s2">&#34;linux-4.4.232&#34;</span><span class="p">;</span>
@@ -736,19 +734,19 @@
 </span></span><span class="line"><span class="cl">	  sudo chmod <span class="m">777</span> /tftpboot<span class="p">;</span>
 </span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> <span class="s2">&#34;/tftpboot的权限已设置为0777&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="k">fi</span>
-</span></span><span class="line"><span class="cl">  <span class="c1"># 判断/tftpboot/${work_dir_name}是否存在</span>
-</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> -d <span class="s2">&#34;/tftpboot/</span><span class="si">${</span><span class="nv">work_dir_name</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> <span class="s2">&#34;tftpboot/</span><span class="si">${</span><span class="nv">work_dir_name</span><span class="si">}</span><span class="s2"> exists.&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">	  <span class="nv">work_dir_name_access</span><span class="o">=</span><span class="k">$(</span>stat /tftpboot/ <span class="p">|</span> grep -w <span class="s2">&#34;Uid&#34;</span> <span class="p">|</span> tr <span class="s1">&#39;(&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> tr <span class="s1">&#39;/&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span><span class="k">)</span>
-</span></span><span class="line"><span class="cl">	  <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$work_dir_name_access</span><span class="s2">&#34;</span> !<span class="o">=</span> <span class="s2">&#34;0777&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">		  sudo chmod <span class="m">777</span> /tftpboot<span class="p">;</span>
-</span></span><span class="line"><span class="cl">		  <span class="nb">echo</span> <span class="s2">&#34;/tftpboot/</span><span class="si">${</span><span class="nv">work_dir_name</span><span class="si">}</span><span class="s2">的权限已设置为0777&#34;</span>
-</span></span><span class="line"><span class="cl">	  <span class="k">fi</span>
-</span></span><span class="line"><span class="cl">  <span class="k">else</span>
-</span></span><span class="line"><span class="cl">	  sudo mkdir /tftpboot/<span class="si">${</span><span class="nv">work_dir_name</span><span class="si">}</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">	  sudo chmod <span class="m">777</span> /tftpboot/<span class="si">${</span><span class="nv">work_dir_name</span><span class="si">}</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> <span class="s2">&#34;/tftpboot/</span><span class="si">${</span><span class="nv">work_dir_name</span><span class="si">}</span><span class="s2">的权限已设置为0777&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># 判断/tftpboot/${work_dir_name}是否存在，如果要尝试多目录可以试试</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># if [ -d &#34;/tftpboot/${work_dir_name}&#34; ]; then</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># 	echo &#34;tftpboot/${work_dir_name} exists.&#34;;</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># 	work_dir_name_access=$(stat /tftpboot/ | grep -w &#34;Uid&#34; | tr &#39;(&#39; &#39; &#39; | tr &#39;/&#39; &#39; &#39; | awk &#39;{print $2}&#39;)</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># 	if [ &#34;$work_dir_name_access&#34; != &#34;0777&#34; ]; then</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># 		sudo chmod 777 /tftpboot;</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># 		echo &#34;/tftpboot/${work_dir_name}的权限已设置为0777&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># 	fi</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># else</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># 	sudo mkdir /tftpboot/${work_dir_name};</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># 	sudo chmod 777 /tftpboot/${work_dir_name};</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># 	echo &#34;/tftpboot/${work_dir_name}的权限已设置为0777&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># fi</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="c1"># 允许开发板通过NFS访问Ubuntu的/home/${USER}目录，当然你可以加其他目录</span>
 </span></span><span class="line"><span class="cl">  <span class="nv">result</span><span class="o">=</span><span class="k">$(</span>grep -w <span class="s2">&#34;</span><span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="s2"> \*(rw,nohide,insecure,no_subtree_check,async,no_root_squash)&#34;</span> /etc/exports <span class="p">|</span> grep -v <span class="s2">&#34;#&#34;</span><span class="k">)</span>
@@ -830,6 +828,7 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="c1"># 编译linux内核</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">cd</span>  <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">linux</span><span class="si">}</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  make clean<span class="p">;</span>
 </span></span><span class="line"><span class="cl">  make vexpress_defconfig -j12<span class="p">;</span>
 </span></span><span class="line"><span class="cl">  make zImage -j12<span class="p">;</span>
 </span></span><span class="line"><span class="cl">  make modules -j12<span class="p">;</span>
@@ -839,12 +838,14 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="c1"># 编译busybox，编译之后把&#34;${busybox}/_install/*&#34;拷贝到rootfs目录下</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">cd</span>  <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">busybox</span><span class="si">}</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  make clean<span class="p">;</span>
 </span></span><span class="line"><span class="cl">  make defconfig -j12<span class="p">;</span>
 </span></span><span class="line"><span class="cl">  make -j12<span class="p">;</span>
 </span></span><span class="line"><span class="cl">  make install -j12<span class="p">;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="c1"># 编译u-boot，编译之后会在${uboot}目录下出现u-boot，传真u-boot示例：sudo qemu-system-arm -M vexpress-a9 -m 256 -kernel ./u-boot -nographic</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">cd</span>  <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">uboot</span><span class="si">}</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  make clean<span class="p">;</span>
 </span></span><span class="line"><span class="cl">  make vexpress_ca9x4_defconfig
 </span></span><span class="line"><span class="cl">  make -j12<span class="p">;</span>
 </span></span><span class="line"><span class="cl">
@@ -903,20 +904,15 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="nv">uboot_config_file_var1</span><span class="o">=</span><span class="k">$(</span>grep -n <span class="s2">&#34;\/\* Basic environment settings \*\/&#34;</span> <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>.old <span class="p">|</span> tr <span class="s1">&#39;:&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $1}&#39;</span><span class="k">)</span>
 </span></span><span class="line"><span class="cl">  <span class="nv">uboot_config_file_var2</span><span class="o">=</span><span class="k">$((</span>uboot_config_file_var1 <span class="o">+</span> <span class="m">1</span><span class="k">))</span>
-</span></span><span class="line"><span class="cl">  <span class="nv">result</span><span class="o">=</span><span class="k">$(</span>cat <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span> <span class="p">|</span> grep <span class="s2">&#34;netmask&#34;</span><span class="k">)</span>
-</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$result</span><span class="s2">&#34;</span> !<span class="o">=</span> <span class="s2">&#34;&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> <span class="s2">&#34;netmask exists.&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="k">else</span>
-</span></span><span class="line"><span class="cl">	  cat <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>.old &gt; <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>
-</span></span><span class="line"><span class="cl">	  sed -i <span class="s1">&#39;/CONFIG_BOOTCOMMAND\b/d&#39;</span> <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>
-</span></span><span class="line"><span class="cl">	  sed -i <span class="s1">&#39;/run distro_bootcmd\b/d&#39;</span> <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>
-</span></span><span class="line"><span class="cl">	  sed -i <span class="s1">&#39;/run bootflash\b/d&#39;</span> <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>
-</span></span><span class="line"><span class="cl">	  sed -i  <span class="s2">&#34;</span><span class="si">${</span><span class="nv">uboot_config_file_var2</span><span class="si">}</span><span class="s2">i\#define CONFIG_SERVERIP </span><span class="si">${</span><span class="nv">of_ip_var1</span><span class="si">}</span><span class="s2">.</span><span class="si">${</span><span class="nv">of_ip_var2</span><span class="si">}</span><span class="s2">.</span><span class="si">${</span><span class="nv">of_ip_var3</span><span class="si">}</span><span class="s2">.</span><span class="si">${</span><span class="nv">of_ip_var4</span><span class="si">}</span><span class="s2">&#34;</span> <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>
-</span></span><span class="line"><span class="cl">	  sed -i  <span class="s2">&#34;</span><span class="si">${</span><span class="nv">uboot_config_file_var2</span><span class="si">}</span><span class="s2">i\#define CONFIG_NETMASK 255.255.255.0&#34;</span> <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>
-</span></span><span class="line"><span class="cl">	  sed -i  <span class="s2">&#34;</span><span class="si">${</span><span class="nv">uboot_config_file_var2</span><span class="si">}</span><span class="s2">i\#define CONFIG_IPADDR </span><span class="si">${</span><span class="nv">of_ip_var1</span><span class="si">}</span><span class="s2">.</span><span class="si">${</span><span class="nv">of_ip_var2</span><span class="si">}</span><span class="s2">.</span><span class="si">${</span><span class="nv">of_ip_var3</span><span class="si">}</span><span class="s2">.223&#34;</span> <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>
-</span></span><span class="line"><span class="cl">	  sed -i  <span class="s2">&#34;</span><span class="si">${</span><span class="nv">uboot_config_file_var2</span><span class="si">}</span><span class="s2">i\/* netmask */&#34;</span> <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>
-</span></span><span class="line"><span class="cl">	  sed -i  <span class="s2">&#34;</span><span class="si">${</span><span class="nv">uboot_config_file_var2</span><span class="si">}</span><span class="s2">i\#define CONFIG_BOOTCOMMAND \&#34;tftp 0x60003000 uImage;tftp 0x60500000 vexpress-v2p-ca9.dtb;setenv bootargs &#39;root=/dev/mmcblk0 console=ttyAMA0&#39;;bootm 0x60003000 - 0x60500000;\&#34; \\&#34;</span> <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>
-</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">  cat <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>.old &gt; <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">  sed -i <span class="s1">&#39;/CONFIG_BOOTCOMMAND\b/d&#39;</span> <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">  sed -i <span class="s1">&#39;/run distro_bootcmd\b/d&#39;</span> <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">  sed -i <span class="s1">&#39;/run bootflash\b/d&#39;</span> <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">  sed -i  <span class="s2">&#34;</span><span class="si">${</span><span class="nv">uboot_config_file_var2</span><span class="si">}</span><span class="s2">i\#define CONFIG_SERVERIP </span><span class="si">${</span><span class="nv">of_ip_var1</span><span class="si">}</span><span class="s2">.</span><span class="si">${</span><span class="nv">of_ip_var2</span><span class="si">}</span><span class="s2">.</span><span class="si">${</span><span class="nv">of_ip_var3</span><span class="si">}</span><span class="s2">.</span><span class="si">${</span><span class="nv">of_ip_var4</span><span class="si">}</span><span class="s2">&#34;</span> <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">  sed -i  <span class="s2">&#34;</span><span class="si">${</span><span class="nv">uboot_config_file_var2</span><span class="si">}</span><span class="s2">i\#define CONFIG_NETMASK 255.255.255.0&#34;</span> <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">  sed -i  <span class="s2">&#34;</span><span class="si">${</span><span class="nv">uboot_config_file_var2</span><span class="si">}</span><span class="s2">i\#define CONFIG_IPADDR </span><span class="si">${</span><span class="nv">of_ip_var1</span><span class="si">}</span><span class="s2">.</span><span class="si">${</span><span class="nv">of_ip_var2</span><span class="si">}</span><span class="s2">.</span><span class="si">${</span><span class="nv">of_ip_var3</span><span class="si">}</span><span class="s2">.223&#34;</span> <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">  sed -i  <span class="s2">&#34;</span><span class="si">${</span><span class="nv">uboot_config_file_var2</span><span class="si">}</span><span class="s2">i\/* netmask */&#34;</span> <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">  sed -i  <span class="s2">&#34;</span><span class="si">${</span><span class="nv">uboot_config_file_var2</span><span class="si">}</span><span class="s2">i\#define CONFIG_BOOTCOMMAND \&#34;tftp 0x60003000 uImage;tftp 0x60500000 vexpress-v2p-ca9.dtb;setenv bootargs &#39;root=/dev/mmcblk0 console=ttyAMA0&#39;;bootm 0x60003000 - 0x60500000;\&#34; \\&#34;</span> <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="c1"># 准备根文件系统</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">cd</span> <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="p">;</span>
