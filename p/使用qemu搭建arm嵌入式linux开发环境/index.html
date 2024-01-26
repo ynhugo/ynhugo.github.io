@@ -680,10 +680,6 @@
 </span><span class="lnt">280
 </span><span class="lnt">281
 </span><span class="lnt">282
-</span><span class="lnt">283
-</span><span class="lnt">284
-</span><span class="lnt">285
-</span><span class="lnt">286
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nv">linux</span><span class="o">=</span><span class="s2">&#34;linux-4.4.232&#34;</span><span class="p">;</span>
@@ -695,7 +691,7 @@
 </span></span><span class="line"><span class="cl">  <span class="nv">file_busybox</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">busybox</span><span class="si">}</span><span class="s2">.tar.bz2&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="nv">file_uboot</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">uboot</span><span class="si">}</span><span class="s2">.tar.bz2&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="nv">work_dir_name</span><span class="o">=</span><span class="s2">&#34;yenao_qemu_test&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">  <span class="nv">work_dir</span><span class="o">=</span><span class="s2">&#34;/home/</span><span class="nv">$USER</span><span class="s2">/</span><span class="si">${</span><span class="nv">work_dir_name</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">work_dir</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">work_dir_name</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="nv">Operate_Net_File</span><span class="o">=</span><span class="s2">&#34;/etc/network/interfaces&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="nv">uboot_config_file</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">uboot</span><span class="si">}</span><span class="s2">/include/configs/vexpress_common.h&#34;</span>
 </span></span><span class="line"><span class="cl">  mkdir -p <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="p">;</span>
@@ -734,7 +730,7 @@
 </span></span><span class="line"><span class="cl">	  sudo chmod <span class="m">777</span> /tftpboot<span class="p">;</span>
 </span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> <span class="s2">&#34;/tftpboot的权限已设置为0777&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="k">fi</span>
-</span></span><span class="line"><span class="cl">  <span class="c1"># 判断/tftpboot/${work_dir_name}是否存在，如果要尝试多目录可以试试</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># 判断/tftpboot/${work_dir_name}是否存在，想要配置多个文件夹的话可以取消注释</span>
 </span></span><span class="line"><span class="cl">  <span class="c1"># if [ -d &#34;/tftpboot/${work_dir_name}&#34; ]; then</span>
 </span></span><span class="line"><span class="cl">  <span class="c1"># 	echo &#34;tftpboot/${work_dir_name} exists.&#34;;</span>
 </span></span><span class="line"><span class="cl">  <span class="c1"># 	work_dir_name_access=$(stat /tftpboot/ | grep -w &#34;Uid&#34; | tr &#39;(&#39; &#39; &#39; | tr &#39;/&#39; &#39; &#39; | awk &#39;{print $2}&#39;)</span>
@@ -828,26 +824,23 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="c1"># 编译linux内核</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">cd</span>  <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">linux</span><span class="si">}</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">  make clean<span class="p">;</span>
-</span></span><span class="line"><span class="cl">  make vexpress_defconfig -j12<span class="p">;</span>
-</span></span><span class="line"><span class="cl">  make zImage -j12<span class="p">;</span>
-</span></span><span class="line"><span class="cl">  make modules -j12<span class="p">;</span>
-</span></span><span class="line"><span class="cl">  make <span class="nv">LOADADDR</span><span class="o">=</span>0x60003000 uImage -j12<span class="p">;</span>
+</span></span><span class="line"><span class="cl">  make vexpress_defconfig<span class="p">;</span>
+</span></span><span class="line"><span class="cl">  make zImage<span class="p">;</span>
+</span></span><span class="line"><span class="cl">  make modules<span class="p">;</span>
+</span></span><span class="line"><span class="cl">  make <span class="nv">LOADADDR</span><span class="o">=</span>0x60003000 uImage<span class="p">;</span>
 </span></span><span class="line"><span class="cl">  make dtbs<span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="c1"># mkimage -n &#39;mini2440&#39; -A arm -O linux -T kernel -C none -a 0x30008000 -e 0x30008040 -d  ${work_dir}/$linux/arch/arm/boot/zImage  ${work_dir}/$linux/arch/arm/boot/uImage</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="c1"># 编译busybox，编译之后把&#34;${busybox}/_install/*&#34;拷贝到rootfs目录下</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">cd</span>  <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">busybox</span><span class="si">}</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">  make clean<span class="p">;</span>
-</span></span><span class="line"><span class="cl">  make defconfig -j12<span class="p">;</span>
-</span></span><span class="line"><span class="cl">  make -j12<span class="p">;</span>
-</span></span><span class="line"><span class="cl">  make install -j12<span class="p">;</span>
+</span></span><span class="line"><span class="cl">  make defconfig<span class="p">;</span>
+</span></span><span class="line"><span class="cl">  make<span class="p">;</span>
+</span></span><span class="line"><span class="cl">  make install<span class="p">;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="c1"># 编译u-boot，编译之后会在${uboot}目录下出现u-boot，传真u-boot示例：sudo qemu-system-arm -M vexpress-a9 -m 256 -kernel ./u-boot -nographic</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">cd</span>  <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">uboot</span><span class="si">}</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">  make clean<span class="p">;</span>
 </span></span><span class="line"><span class="cl">  make vexpress_ca9x4_defconfig
-</span></span><span class="line"><span class="cl">  make -j12<span class="p">;</span>
+</span></span><span class="line"><span class="cl">  make<span class="p">;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="c1"># 搭建网络开发环境</span>
 </span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> -f <span class="s2">&#34;</span><span class="nv">$Operate_Net_File</span><span class="s2">.old&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
@@ -858,7 +851,6 @@
 </span></span><span class="line"><span class="cl">  <span class="nv">result</span><span class="o">=</span><span class="k">$(</span>cat /etc/network/interfaces <span class="p">|</span> grep <span class="s2">&#34;br0&#34;</span><span class="k">)</span>
 </span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$result</span><span class="s2">&#34;</span> !<span class="o">=</span> <span class="s2">&#34;&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
 </span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> <span class="s2">&#34;br0 exists.&#34;</span>
-</span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="k">else</span>
 </span></span><span class="line"><span class="cl">	  sudo chown <span class="si">${</span><span class="nv">USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">USER</span><span class="si">}</span> <span class="nv">$Operate_Net_File</span>
 </span></span><span class="line"><span class="cl">	  cat <span class="nv">$Operate_Net_File</span> &gt; <span class="nv">$Operate_Net_File</span>
@@ -917,8 +909,8 @@
 </span></span><span class="line"><span class="cl">  <span class="c1"># 准备根文件系统</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">cd</span> <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  mkdir -p <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/rootfs/<span class="o">{</span>dev,etc/init.d,lib,mnt<span class="o">}</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">  cp -av <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">busybox</span><span class="si">}</span>/_install/* <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/rootfs/<span class="p">;</span>
-</span></span><span class="line"><span class="cl">  cp -av /usr/arm-linux-gnueabi/lib/* <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/rootfs/lib/<span class="p">;</span>
+</span></span><span class="line"><span class="cl">  cp -avf <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">busybox</span><span class="si">}</span>/_install/* <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/rootfs/<span class="p">;</span>
+</span></span><span class="line"><span class="cl">  cp -avf /usr/arm-linux-gnueabi/lib/* <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/rootfs/lib/<span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">cd</span> <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/rootfs/dev<span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="c1"># 创建字符设备类型的设备节点，这些设备节点的主设备号为4,次设备号为1..11</span>
 </span></span><span class="line"><span class="cl">  sudo mknod -m <span class="m">666</span> console c <span class="m">4</span> 1<span class="p">;</span> sudo mknod -m <span class="m">666</span> null c <span class="m">4</span> 2<span class="p">;</span> sudo mknod -m <span class="m">666</span> tty1 c <span class="m">4</span> 3<span class="p">;</span> sudo mknod -m <span class="m">666</span> tty2 c <span class="m">4</span> 4<span class="p">;</span> sudo mknod -m <span class="m">666</span> tty3 c <span class="m">4</span> 5<span class="p">;</span> sudo mknod -m <span class="m">666</span> tty4 c <span class="m">4</span> 6<span class="p">;</span> sudo mknod -m <span class="m">666</span> tty5 c <span class="m">4</span> 7<span class="p">;</span> sudo mknod -m <span class="m">666</span> tty6 c <span class="m">4</span> 8<span class="p">;</span> sudo mknod -m <span class="m">666</span> tty7 c <span class="m">4</span> 9<span class="p">;</span> sudo mknod -m <span class="m">666</span> tty8 c <span class="m">4</span> 10<span class="p">;</span> sudo mknod -m <span class="m">666</span> tty9 c <span class="m">4</span> 11<span class="p">;</span>
@@ -931,15 +923,15 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="nb">cd</span> <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="c1"># 制作rootfs.ext3，格式化rootfs.ext3为ext3文件系统类型，将rootfs.ext3挂载到/mnt，再将根文件系统拷贝到/mnt，然后解除/mnt挂载的rootfs.ext3，此时rootfs.ext3中已经有根文件系统了</span>
-</span></span><span class="line"><span class="cl">  dd <span class="k">if</span><span class="o">=</span>/dev/zero <span class="nv">of</span><span class="o">=</span>rootfs.ext3 <span class="nv">bs</span><span class="o">=</span>1M <span class="nv">count</span><span class="o">=</span>32<span class="p">;</span> mkfs.ext3 rootfs.ext3<span class="p">;</span> sudo mount -t ext3 rootfs.ext3 /mnt -o loop<span class="p">;</span> sudo cp -av <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/rootfs/* /mnt<span class="p">;</span> sudo umount /mnt<span class="p">;</span>
+</span></span><span class="line"><span class="cl">  dd <span class="k">if</span><span class="o">=</span>/dev/zero <span class="nv">of</span><span class="o">=</span>rootfs.ext3 <span class="nv">bs</span><span class="o">=</span>1M <span class="nv">count</span><span class="o">=</span>32<span class="p">;</span> mkfs.ext3 rootfs.ext3<span class="p">;</span> sudo mount -t ext3 rootfs.ext3 /mnt -o loop<span class="p">;</span> sudo cp -avf <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/rootfs/* /mnt<span class="p">;</span> sudo umount /mnt<span class="p">;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="c1"># tftpboot</span>
-</span></span><span class="line"><span class="cl">  sudo cp -av <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">linux</span><span class="si">}</span>/arch/arm/boot/zImage /tftpboot<span class="p">;</span>
-</span></span><span class="line"><span class="cl">  sudo cp -av <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">linux</span><span class="si">}</span>/arch/arm/boot/uImage /tftpboot<span class="p">;</span>
-</span></span><span class="line"><span class="cl">  sudo cp -av <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">linux</span><span class="si">}</span>/arch/arm/boot/dts/vexpress-v2p-ca9.dtb /tftpboot<span class="p">;</span>
-</span></span><span class="line"><span class="cl">  sudo cp -av <span class="nv">$work_dir</span>/<span class="nv">$uboot</span>/u-boot /tftpboot<span class="p">;</span>
-</span></span><span class="line"><span class="cl">  sudo chmod <span class="m">775</span> <span class="nv">$work_dir</span>/<span class="nv">$uboot</span>/uImage<span class="p">;</span>
-</span></span><span class="line"><span class="cl">  sudo cp -av <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/rootfs.ext3 /tftpboot<span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># sudo chmod 775 $work_dir/$uboot/uImage;</span>
+</span></span><span class="line"><span class="cl">  sudo cp -avf <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">linux</span><span class="si">}</span>/arch/arm/boot/zImage /tftpboot<span class="p">;</span>
+</span></span><span class="line"><span class="cl">  sudo cp -avf <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">linux</span><span class="si">}</span>/arch/arm/boot/uImage /tftpboot<span class="p">;</span>
+</span></span><span class="line"><span class="cl">  sudo cp -avf <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">linux</span><span class="si">}</span>/arch/arm/boot/dts/vexpress-v2p-ca9.dtb /tftpboot<span class="p">;</span>
+</span></span><span class="line"><span class="cl">  sudo cp -avf <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">uboot</span><span class="si">}</span>/u-boot /tftpboot<span class="p">;</span>
+</span></span><span class="line"><span class="cl">  sudo cp -avf <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/rootfs.ext3 /tftpboot<span class="p">;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="c1"># QEMU运行虚拟机，加载linux内核</span>
 </span></span><span class="line"><span class="cl">  <span class="c1"># qemu-system-arm -M vexpress-a9 -m 256M -kernel ${work_dir}/$linux/arch/arm/boot/zImage -dtb ${work_dir}/$linux/arch/arm/boot/dts/vexpress-v2p-ca9.dtb -nographic -append &#34;root=/dev/mmcblk0 rw console=ttyAMA0&#34; -sd ${work_dir}/rootfs.ext3;</span>
