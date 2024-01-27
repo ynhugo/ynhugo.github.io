@@ -683,6 +683,9 @@
 </span><span class="lnt">283
 </span><span class="lnt">284
 </span><span class="lnt">285
+</span><span class="lnt">286
+</span><span class="lnt">287
+</span><span class="lnt">288
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nv">linux</span><span class="o">=</span><span class="s2">&#34;linux-4.4.232&#34;</span><span class="p">;</span>
@@ -825,28 +828,31 @@
 </span></span><span class="line"><span class="cl">	  <span class="k">fi</span>
 </span></span><span class="line"><span class="cl">  <span class="k">fi</span>
 </span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nv">cpu_cores</span><span class="o">=</span><span class="si">${</span><span class="nv">nproc</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">jobs</span><span class="o">=</span><span class="k">$((</span>cpu_cores <span class="o">*</span> <span class="m">2</span><span class="k">))</span>
+</span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="c1"># 编译linux内核</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">cd</span>  <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">linux</span><span class="si">}</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">  make distclean<span class="p">;</span>
-</span></span><span class="line"><span class="cl">  make vexpress_defconfig<span class="p">;</span>
-</span></span><span class="line"><span class="cl">  make zImage<span class="p">;</span>
-</span></span><span class="line"><span class="cl">  make modules<span class="p">;</span>
-</span></span><span class="line"><span class="cl">  make <span class="nv">LOADADDR</span><span class="o">=</span>0x60003000 uImage<span class="p">;</span>
-</span></span><span class="line"><span class="cl">  make dtbs<span class="p">;</span>
+</span></span><span class="line"><span class="cl">  make distclean -j<span class="si">${</span><span class="nv">jobs</span><span class="si">}</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  make vexpress_defconfig -j<span class="si">${</span><span class="nv">jobs</span><span class="si">}</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  make zImage -j<span class="si">${</span><span class="nv">jobs</span><span class="si">}</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  make modules -j<span class="si">${</span><span class="nv">jobs</span><span class="si">}</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  make <span class="nv">LOADADDR</span><span class="o">=</span>0x60003000 uImage -j<span class="si">${</span><span class="nv">jobs</span><span class="si">}</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  make dtbs -j<span class="si">${</span><span class="nv">jobs</span><span class="si">}</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="c1"># mkimage -n &#39;mini2440&#39; -A arm -O linux -T kernel -C none -a 0x30008000 -e 0x30008040 -d  ${work_dir}/$linux/arch/arm/boot/zImage  ${work_dir}/$linux/arch/arm/boot/uImage</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="c1"># 编译busybox，编译之后把&#34;${busybox}/_install/*&#34;拷贝到rootfs目录下</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">cd</span>  <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">busybox</span><span class="si">}</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">  make distclean<span class="p">;</span>
-</span></span><span class="line"><span class="cl">  make defconfig<span class="p">;</span>
-</span></span><span class="line"><span class="cl">  make<span class="p">;</span>
-</span></span><span class="line"><span class="cl">  make install<span class="p">;</span>
+</span></span><span class="line"><span class="cl">  make distclean -j<span class="si">${</span><span class="nv">jobs</span><span class="si">}</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  make defconfig -j<span class="si">${</span><span class="nv">jobs</span><span class="si">}</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  make -j<span class="si">${</span><span class="nv">jobs</span><span class="si">}</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  make install -j<span class="si">${</span><span class="nv">jobs</span><span class="si">}</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="c1"># 编译u-boot，编译之后会在${uboot}目录下出现u-boot，传真u-boot示例：sudo qemu-system-arm -M vexpress-a9 -m 256 -kernel ./u-boot -nographic</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">cd</span>  <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">uboot</span><span class="si">}</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">  make distclean<span class="p">;</span>
-</span></span><span class="line"><span class="cl">  make vexpress_ca9x4_defconfig
-</span></span><span class="line"><span class="cl">  make<span class="p">;</span>
+</span></span><span class="line"><span class="cl">  make distclean -j<span class="si">${</span><span class="nv">jobs</span><span class="si">}</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  make vexpress_ca9x4_defconfig -j<span class="si">${</span><span class="nv">jobs</span><span class="si">}</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  make -j<span class="si">${</span><span class="nv">jobs</span><span class="si">}</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="c1"># 搭建网络开发环境</span>
 </span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> -f <span class="s2">&#34;</span><span class="nv">$Operate_Net_File</span><span class="s2">.old&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
