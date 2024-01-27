@@ -973,7 +973,7 @@
 </span></span><span class="line"><span class="cl">  <span class="c1"># QEMU运行虚拟机，只加载u-boot</span>
 </span></span><span class="line"><span class="cl">  <span class="c1"># qemu-system-arm -M vexpress-a9 -m 256M -kernel ${work_dir}/${uboot}/u-boot  -nographic</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="c1"># 通过网络开发环境加载内核，如果第一次运行没有引导成功，可以再运行一次应该就可以成功</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># 通过 u-boot 加载内核</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">cd</span> /tftpboot
 </span></span><span class="line"><span class="cl">  sudo qemu-system-arm -M vexpress-a9 -kernel u-boot -nographic -m 128M -net nic,vlan<span class="o">=</span><span class="m">0</span> -net tap,vlan<span class="o">=</span>0,ifname<span class="o">=</span>tap0 -sd rootfs.ext3</span></span></code></pre></td></tr></table>
 </div>

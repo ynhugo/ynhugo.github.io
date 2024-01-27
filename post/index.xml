@@ -3794,7 +3794,7 @@ Termux 下载页面：&lt;a href=&#34;https://f-droid.org/zh_Hans/packages/xyz.z
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;c1&#34;&gt;# QEMU运行虚拟机，只加载u-boot&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;c1&#34;&gt;# qemu-system-arm -M vexpress-a9 -m 256M -kernel ${work_dir}/${uboot}/u-boot  -nographic&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;c1&#34;&gt;# 通过网络开发环境加载内核，如果第一次运行没有引导成功，可以再运行一次应该就可以成功&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;c1&#34;&gt;# 通过 u-boot 加载内核&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; /tftpboot
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  sudo qemu-system-arm -M vexpress-a9 -kernel u-boot -nographic -m 128M -net nic,vlan&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;0&lt;/span&gt; -net tap,vlan&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;0,ifname&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;tap0 -sd rootfs.ext3&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
