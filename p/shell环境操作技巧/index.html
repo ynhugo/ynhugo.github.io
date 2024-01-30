@@ -279,6 +279,18 @@
 </li>
 <li><a href="#headline-5">find + grep 查找关键词</a>
 </li>
+<li><a href="#headline-6">查看Zynq各工程版本的命令</a>
+</li>
+<li><a href="#headline-7">linux命令将&#34;./&#34;替换为空格</a>
+</li>
+<li><a href="#headline-8">linux命令将&#34;./&#34;删除</a>
+</li>
+<li><a href="#headline-9">查找文件并高亮显示</a>
+</li>
+<li><a href="#headline-10">linux查看cpu核数</a>
+</li>
+<li><a href="#headline-11">通过find查找文件和通过grep查找关键词并排除进制文件</a>
+</li>
 </ul>
 </nav>
         </div>
@@ -322,7 +334,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 1 分钟
+                    阅读时长: 2 分钟
                 </time>
             </div>
         
@@ -432,6 +444,120 @@ find + grep 查找关键词
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">   find ./ -name <span class="s2">&#34;*.cpp&#34;</span> -o -name <span class="s2">&#34;*.h&#34;</span> <span class="p">|</span> xargs grep --color<span class="o">=</span>auto -rwin <span class="s2">&#34;keyword&#34;</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-6" class="outline-4">
+<h4 id="headline-6">
+查看Zynq各工程版本的命令
+</h4>
+<div id="outline-text-headline-6" class="outline-text-4">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  find ./ -maxdepth <span class="m">2</span> -name <span class="s2">&#34;*.xpr&#34;</span> <span class="p">|</span> xargs head -5</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-7" class="outline-4">
+<h4 id="headline-7">
+linux命令将&#34;./&#34;替换为空格
+</h4>
+<div id="outline-text-headline-7" class="outline-text-4">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  find ./ -maxdepth <span class="m">1</span> -type f <span class="p">|</span> sed -e <span class="s1">&#39;s/\.\//\ /g&#39;</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-8" class="outline-4">
+<h4 id="headline-8">
+linux命令将&#34;./&#34;删除
+</h4>
+<div id="outline-text-headline-8" class="outline-text-4">
+<p>
+在sed命令中，替换操作的分隔符可以使用除了反斜杠 (\)、换行符以及所选字符之一以外的任何字符。在上面的命令中，我们使用了竖线 (|) 作为分隔符，因为这个字符不太可能出现在文件路径中，以避免干扰正则表达式的匹配。</p>
+<p>
+在sed命令中，也可以使用斜杠 (/) 作为分隔符。但是，在本例中，文件路径中包含斜杠字符，会引起匹配错误。因此，我们选择使用竖线作为分隔符。</p>
+<p>
+在sed命令中，正则表达式和替换字符串之间用分隔符分隔开来。因为我们使用的是竖线作为分隔符，所以需要在每个竖线字符前后都加上一个竖线字符，即 &#34;s|pattern|replacement|&#34;。</p>
+<p>
+最终，两个竖线字符 (||) 表示空字符串，用于替换字符串为空。在这个命令中，我们使用sed命令将文件路径中开头的 &#34;./&#34; 删除，如下所示：</p>
+<p>
+其中，&#34;^\\./&#34;表示以 &#34;./&#34; 开头的字符串，&#34;|&#34; 是分隔符，&#34;&#34; 表示替换为空字符串。</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  find ./ -maxdepth <span class="m">1</span> -type f <span class="p">|</span> sed -e <span class="s1">&#39;s|^\./||&#39;</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-9" class="outline-4">
+<h4 id="headline-9">
+查找文件并高亮显示
+</h4>
+<div id="outline-text-headline-9" class="outline-text-4">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  find ./ -name <span class="s2">&#34;stm32*&#34;</span> <span class="p">|</span> grep --color <span class="s2">&#34;.&#34;</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-10" class="outline-4">
+<h4 id="headline-10">
+linux查看cpu核数
+</h4>
+<div id="outline-text-headline-10" class="outline-text-4">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  cat /proc/cpuinfo <span class="p">|</span> grep -w <span class="s2">&#34;cpu cores&#34;</span> <span class="p">|</span> head -1 <span class="p">|</span> awk <span class="s1">&#39;{print $4}&#39;</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-11" class="outline-4">
+<h4 id="headline-11">
+通过find查找文件和通过grep查找关键词并排除进制文件
+</h4>
+<div id="outline-text-headline-11" class="outline-text-4">
+<p>
+排除二进制文件：–binary-files=without-match</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  find ./ -type f <span class="p">|</span> xargs grep --color --binary-files<span class="o">=</span>without-match -n <span class="s2">&#34;sit0&#34;</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
