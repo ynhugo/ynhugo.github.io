@@ -291,6 +291,8 @@
 </li>
 <li><a href="#headline-11">通过find查找文件和通过grep查找关键词并排除进制文件</a>
 </li>
+<li><a href="#headline-12">通过find查找最近一天的文件，通过grep命令匹配当天的文件</a>
+</li>
 </ul>
 </nav>
         </div>
@@ -558,6 +560,23 @@ linux查看cpu核数
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  find ./ -type f <span class="p">|</span> xargs grep --color --binary-files<span class="o">=</span>without-match -n <span class="s2">&#34;sit0&#34;</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-12" class="outline-4">
+<h4 id="headline-12">
+通过find查找最近一天的文件，通过grep命令匹配当天的文件
+</h4>
+<div id="outline-text-headline-12" class="outline-text-4">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nb">alias</span> <span class="nv">cr</span><span class="o">=</span><span class="s1">&#39;find ${HOME}/${work_dir}/reports/*.txt -mtime -1 | xargs cat | grep -A 100 &#34;$(date -I | sed -e &#39;</span>s/-//g<span class="s1">&#39;)&#34;&#39;</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
