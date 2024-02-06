@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-cn" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='创建第一个脚本，并拷贝第一个脚本为第二个脚本，再创建第三个脚本，并将第一个脚本的内容输出到第三个脚本 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='创建第一个脚本，并拷贝第一个脚本为第二个脚本，再创建第三个脚本，并将第一个脚本的内容输出到第三个脚本 用&amp;#34;fgets&amp;#34;和&amp;#3'>
 <title>在C语言中运行shell脚本</title>
 
 <link rel='canonical' href='https://ynhugo.github.io/p/%E5%9C%A8c%E8%AF%AD%E8%A8%80%E4%B8%AD%E8%BF%90%E8%A1%8Cshell%E8%84%9A%E6%9C%AC/'>
 
 <link rel="stylesheet" href="/scss/style.min.2328f6a64e9c190e18c4f69895d0081330e55c8210e9395d11068ea1d881517f.css"><meta property='og:title' content='在C语言中运行shell脚本'>
-<meta property='og:description' content='创建第一个脚本，并拷贝第一个脚本为第二个脚本，再创建第三个脚本，并将第一个脚本的内容输出到第三个脚本 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20'>
+<meta property='og:description' content='创建第一个脚本，并拷贝第一个脚本为第二个脚本，再创建第三个脚本，并将第一个脚本的内容输出到第三个脚本 用&amp;#34;fgets&amp;#34;和&amp;#3'>
 <meta property='og:url' content='https://ynhugo.github.io/p/%E5%9C%A8c%E8%AF%AD%E8%A8%80%E4%B8%AD%E8%BF%90%E8%A1%8Cshell%E8%84%9A%E6%9C%AC/'>
 <meta property='og:site_name' content='ynblog'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='c语言' />
 <meta name="twitter:title" content="在C语言中运行shell脚本">
-<meta name="twitter:description" content="创建第一个脚本，并拷贝第一个脚本为第二个脚本，再创建第三个脚本，并将第一个脚本的内容输出到第三个脚本 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20">
+<meta name="twitter:description" content="创建第一个脚本，并拷贝第一个脚本为第二个脚本，再创建第三个脚本，并将第一个脚本的内容输出到第三个脚本 用&amp;#34;fgets&amp;#34;和&amp;#3">
     <link rel="shortcut icon" href="/img/favicon.ico" />
 
     </head>
@@ -270,6 +270,16 @@
             <nav id="TableOfContents">
 <ul>
 <li><a href="#headline-1">创建第一个脚本，并拷贝第一个脚本为第二个脚本，再创建第三个脚本，并将第一个脚本的内容输出到第三个脚本</a>
+<ul>
+<li><a href="#headline-2">用&#34;fgets&#34;和&#34;fputs&#34;将第一个脚本的内容输出到第三个脚本</a>
+</li>
+<li><a href="#headline-3">用&#34;fread&#34;和&#34;fwrite&#34;将第一个脚本的内容输出到第三个脚本</a>
+<ul>
+<li><a href="#headline-4">获取变量&#34;command&#34;对应的缓存区实际字符数</a>
+</li>
+</ul>
+</li>
+</ul>
 </li>
 </ul>
 </nav>
@@ -314,7 +324,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 2 分钟
+                    阅读时长: 4 分钟
                 </time>
             </div>
         
@@ -335,6 +345,11 @@
 创建第一个脚本，并拷贝第一个脚本为第二个脚本，再创建第三个脚本，并将第一个脚本的内容输出到第三个脚本
 </h3>
 <div id="outline-text-headline-1" class="outline-text-3">
+<div id="outline-container-headline-2" class="outline-4">
+<h4 id="headline-2">
+用&#34;fgets&#34;和&#34;fputs&#34;将第一个脚本的内容输出到第三个脚本
+</h4>
+<div id="outline-text-headline-2" class="outline-text-4">
 <div class="src src-c">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -438,6 +453,274 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">	  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-3" class="outline-4">
+<h4 id="headline-3">
+用&#34;fread&#34;和&#34;fwrite&#34;将第一个脚本的内容输出到第三个脚本
+</h4>
+<div id="outline-text-headline-3" class="outline-text-4">
+<div class="src src-c">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">  <span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>  <span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	  <span class="n">FILE</span><span class="o">*</span> <span class="n">fd_1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	  <span class="n">FILE</span><span class="o">*</span> <span class="n">fd_2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	  <span class="kt">char</span><span class="o">*</span> <span class="n">path_1</span> <span class="o">=</span> <span class="s">&#34;./test_1.sh&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	  <span class="kt">char</span><span class="o">*</span> <span class="n">path_2</span> <span class="o">=</span> <span class="s">&#34;./test_2.sh&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	  <span class="kt">char</span><span class="o">*</span> <span class="n">path_3</span> <span class="o">=</span> <span class="s">&#34;./test_3.sh&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	  <span class="kt">char</span> <span class="o">*</span><span class="n">buffer_1</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span><span class="o">*</span><span class="p">)</span><span class="nf">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">char</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1024</span> <span class="o">*</span><span class="mi">1024</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	  <span class="kt">char</span><span class="o">*</span> <span class="n">command</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span><span class="o">*</span><span class="p">)</span><span class="nf">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">char</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	  <span class="cm">/* 创建文件 */</span>
+</span></span><span class="line"><span class="cl">	  <span class="n">fd_1</span> <span class="o">=</span> <span class="nf">fopen</span><span class="p">(</span><span class="n">path_1</span><span class="p">,</span> <span class="s">&#34;w&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	  <span class="cm">/* 输出一个空行 */</span>
+</span></span><span class="line"><span class="cl">	  <span class="nf">sprintf</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="s">&#34;echo </span><span class="se">\&#34;\&#34;</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	  <span class="nf">system</span><span class="p">(</span><span class="n">command</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	  <span class="cm">/* 判断变量&#34;path_2&#34;对应的文件是否存在 */</span>
+</span></span><span class="line"><span class="cl">	  <span class="nf">sprintf</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="s">&#34;echo </span><span class="se">\&#34;</span><span class="s">if [ ! -f %s ]; then</span><span class="se">\&#34;</span><span class="s"> &gt;&gt; %s&#34;</span><span class="p">,</span> <span class="n">path_2</span><span class="p">,</span> <span class="n">path_1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	  <span class="nf">system</span><span class="p">(</span><span class="n">command</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	  <span class="cm">/* 如果变量&#34;path_2&#34;对应的文件不存在，则将变量&#34;path_1&#34;对应的文件拷贝为变量&#34;path_2&#34;对应的文件 */</span>
+</span></span><span class="line"><span class="cl">	  <span class="nf">sprintf</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="s">&#34;echo </span><span class="se">\&#34;</span><span class="s">cp %s %s</span><span class="se">\&#34;</span><span class="s"> &gt;&gt; %s&#34;</span><span class="p">,</span> <span class="n">path_1</span><span class="p">,</span> <span class="n">path_2</span><span class="p">,</span> <span class="n">path_1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	  <span class="nf">system</span><span class="p">(</span><span class="n">command</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	  <span class="nf">sprintf</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="s">&#34;echo </span><span class="se">\&#34;</span><span class="s">fi</span><span class="se">\&#34;</span><span class="s"> &gt;&gt; %s&#34;</span><span class="p">,</span> <span class="n">path_1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	  <span class="nf">system</span><span class="p">(</span><span class="n">command</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	  <span class="cm">/* 运行变量&#34;path_1&#34;对应的脚本 */</span>
+</span></span><span class="line"><span class="cl">	  <span class="nf">sprintf</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="s">&#34;sh %s&#34;</span><span class="p">,</span> <span class="n">path_1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	  <span class="nf">system</span><span class="p">(</span><span class="n">command</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	  <span class="cm">/* 以只读的方式打开变量&#34;path_1&#34;对应的文件 */</span>
+</span></span><span class="line"><span class="cl">	  <span class="n">fd_1</span> <span class="o">=</span> <span class="nf">fopen</span><span class="p">(</span><span class="n">path_1</span><span class="p">,</span> <span class="s">&#34;r&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	  <span class="cm">/* 创建变量&#34;path_3&#34;对应的文件 */</span>
+</span></span><span class="line"><span class="cl">	  <span class="n">fd_2</span> <span class="o">=</span> <span class="nf">fopen</span><span class="p">(</span><span class="n">path_3</span><span class="p">,</span> <span class="s">&#34;w&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	  <span class="cm">/* 读取变量&#34;path_1&#34;对应的文件内容 */</span>
+</span></span><span class="line"><span class="cl">	  <span class="nf">fread</span><span class="p">(</span><span class="n">buffer_1</span><span class="p">,</span> <span class="mi">1024</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">fd_1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	  <span class="cm">/* 将变量&#34;path_1&#34;对应的文件内容写入到变量&#34;path_3&#34;对应的文件中 */</span>
+</span></span><span class="line"><span class="cl">	  <span class="nf">fwrite</span><span class="p">(</span><span class="n">buffer_1</span><span class="p">,</span> <span class="mi">1024</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">fd_2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-4" class="outline-5">
+<h5 id="headline-4">
+获取变量&#34;command&#34;对应的缓存区实际字符数
+</h5>
+<div id="outline-text-headline-4" class="outline-text-5">
+<div class="src src-c">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">  <span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>  <span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	  <span class="n">FILE</span><span class="o">*</span> <span class="n">fd_1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	  <span class="n">FILE</span><span class="o">*</span> <span class="n">fd_2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	  <span class="kt">char</span><span class="o">*</span> <span class="n">path_1</span> <span class="o">=</span> <span class="s">&#34;./test_1.sh&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	  <span class="kt">char</span><span class="o">*</span> <span class="n">path_2</span> <span class="o">=</span> <span class="s">&#34;./test_2.sh&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	  <span class="kt">char</span><span class="o">*</span> <span class="n">path_3</span> <span class="o">=</span> <span class="s">&#34;./test_3.sh&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	  <span class="kt">char</span> <span class="o">*</span><span class="n">buffer_1</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span><span class="o">*</span><span class="p">)</span><span class="nf">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">char</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1024</span> <span class="o">*</span><span class="mi">1024</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	  <span class="kt">char</span><span class="o">*</span> <span class="n">command</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span><span class="o">*</span><span class="p">)</span><span class="nf">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">char</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	  <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	  <span class="cm">/* 创建文件 */</span>
+</span></span><span class="line"><span class="cl">	  <span class="n">fd_1</span> <span class="o">=</span> <span class="nf">fopen</span><span class="p">(</span><span class="n">path_1</span><span class="p">,</span> <span class="s">&#34;w&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	  <span class="cm">/* 输出一个空行 */</span>
+</span></span><span class="line"><span class="cl">	  <span class="nf">sprintf</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="s">&#34;echo </span><span class="se">\&#34;\&#34;</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	  <span class="nf">system</span><span class="p">(</span><span class="n">command</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	  <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">while</span><span class="p">(</span><span class="n">command</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">!=</span> <span class="sc">&#39;\0&#39;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		  <span class="n">j</span><span class="o">++</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">	  <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;cur_line: %d, j: %d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">__LINE__</span><span class="p">,</span> <span class="n">j</span><span class="p">);</span>	
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	  <span class="cm">/* 判断变量&#34;path_2&#34;对应的文件是否存在 */</span>
+</span></span><span class="line"><span class="cl">	  <span class="nf">sprintf</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="s">&#34;echo </span><span class="se">\&#34;</span><span class="s">if [ ! -f %s ]; then</span><span class="se">\&#34;</span><span class="s"> &gt;&gt; %s&#34;</span><span class="p">,</span> <span class="n">path_2</span><span class="p">,</span> <span class="n">path_1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	  <span class="nf">system</span><span class="p">(</span><span class="n">command</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	  <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">while</span><span class="p">(</span><span class="n">command</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">!=</span> <span class="sc">&#39;\0&#39;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		  <span class="n">j</span><span class="o">++</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">	  <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;cur_line: %d, j: %d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">__LINE__</span><span class="p">,</span> <span class="n">j</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	
+</span></span><span class="line"><span class="cl">	  <span class="cm">/* 如果变量&#34;path_2&#34;对应的文件不存在，则将变量&#34;path_1&#34;对应的文件拷贝为变量&#34;path_2&#34;对应的文件 */</span>
+</span></span><span class="line"><span class="cl">	  <span class="nf">sprintf</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="s">&#34;echo </span><span class="se">\&#34;</span><span class="s">cp %s %s</span><span class="se">\&#34;</span><span class="s"> &gt;&gt; %s&#34;</span><span class="p">,</span> <span class="n">path_1</span><span class="p">,</span> <span class="n">path_2</span><span class="p">,</span> <span class="n">path_1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	  <span class="nf">system</span><span class="p">(</span><span class="n">command</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	  <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">while</span><span class="p">(</span><span class="n">command</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">!=</span> <span class="sc">&#39;\0&#39;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		  <span class="n">j</span><span class="o">++</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">	  <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;cur_line: %d, j: %d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">__LINE__</span><span class="p">,</span> <span class="n">j</span><span class="p">);</span>	
+</span></span><span class="line"><span class="cl">	
+</span></span><span class="line"><span class="cl">	  <span class="nf">sprintf</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="s">&#34;echo </span><span class="se">\&#34;</span><span class="s">fi</span><span class="se">\&#34;</span><span class="s"> &gt;&gt; %s&#34;</span><span class="p">,</span> <span class="n">path_1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	  <span class="nf">system</span><span class="p">(</span><span class="n">command</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	  <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">while</span><span class="p">(</span><span class="n">command</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">!=</span> <span class="sc">&#39;\0&#39;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		  <span class="n">j</span><span class="o">++</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">	  <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;cur_line: %d, j: %d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">__LINE__</span><span class="p">,</span> <span class="n">j</span><span class="p">);</span>	
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	  <span class="cm">/* 运行变量&#34;path_1&#34;对应的脚本 */</span>
+</span></span><span class="line"><span class="cl">	  <span class="nf">sprintf</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="s">&#34;sh %s&#34;</span><span class="p">,</span> <span class="n">path_1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	  <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">while</span><span class="p">(</span><span class="n">command</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">!=</span> <span class="sc">&#39;\0&#39;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		  <span class="n">j</span><span class="o">++</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">	  <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;cur_line: %d, j: %d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">__LINE__</span><span class="p">,</span> <span class="n">j</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	  <span class="nf">system</span><span class="p">(</span><span class="n">command</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	  <span class="cm">/* 以只读的方式打开变量&#34;path_1&#34;对应的文件 */</span>
+</span></span><span class="line"><span class="cl">	  <span class="n">fd_1</span> <span class="o">=</span> <span class="nf">fopen</span><span class="p">(</span><span class="n">path_1</span><span class="p">,</span> <span class="s">&#34;r&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	  <span class="cm">/* 创建变量&#34;path_3&#34;对应的文件 */</span>
+</span></span><span class="line"><span class="cl">	  <span class="n">fd_2</span> <span class="o">=</span> <span class="nf">fopen</span><span class="p">(</span><span class="n">path_3</span><span class="p">,</span> <span class="s">&#34;w&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	  <span class="cm">/* 读取变量&#34;path_1&#34;对应的文件内容 */</span>
+</span></span><span class="line"><span class="cl">	  <span class="nf">fread</span><span class="p">(</span><span class="n">buffer_1</span><span class="p">,</span> <span class="mi">1024</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">fd_1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	  <span class="cm">/* 将变量&#34;path_1&#34;对应的文件内容写入到变量&#34;path_3&#34;对应的文件中 */</span>
+</span></span><span class="line"><span class="cl">	  <span class="nf">fwrite</span><span class="p">(</span><span class="n">buffer_1</span><span class="p">,</span> <span class="mi">1024</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">fd_2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
