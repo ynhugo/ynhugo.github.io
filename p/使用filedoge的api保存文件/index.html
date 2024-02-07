@@ -368,12 +368,26 @@
 </span><span class="lnt">62
 </span><span class="lnt">63
 </span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nv">filePath</span><span class="o">=</span><span class="nv">$2</span>
 </span></span><span class="line"><span class="cl">  <span class="nv">token</span><span class="o">=</span><span class="nv">$2</span>
 </span></span><span class="line"><span class="cl">  <span class="nv">delete_token</span><span class="o">=</span><span class="nv">$3</span>
 </span></span><span class="line"><span class="cl">  <span class="nv">log</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span><span class="s2">/.FileDogeLog.txt&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">cmdself</span><span class="o">=</span><span class="nv">$0</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="o">[</span> -z <span class="s2">&#34;</span><span class="nv">$2</span><span class="s2">&#34;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="o">[</span> -z <span class="s2">&#34;</span><span class="nv">$3</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> <span class="s2">&#34;Upload File: </span><span class="si">${</span><span class="nv">cmdself</span><span class="si">}</span><span class="s2"> upload \&#34;filepath\&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> <span class="s2">&#34;File Information: </span><span class="si">${</span><span class="nv">cmdself</span><span class="si">}</span><span class="s2"> file \&#34;token\&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> <span class="s2">&#34;Delete File: </span><span class="si">${</span><span class="nv">cmdself</span><span class="si">}</span><span class="s2"> delete \&#34;token\&#34; \&#34;delete_token\&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="s2">&#34;help&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
 </span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> <span class="s2">&#34;File Doge API&#34;</span>
