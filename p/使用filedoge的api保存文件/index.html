@@ -428,6 +428,10 @@
 </span><span class="lnt">122
 </span><span class="lnt">123
 </span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nv">cmdself</span><span class="o">=</span><span class="nv">$0</span>
@@ -439,6 +443,7 @@
 </span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> <span class="s2">&#34;Download File: </span><span class="si">${</span><span class="nv">cmdself</span><span class="si">}</span><span class="s2"> file \&#34;token\&#34;&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="k">fi</span>  
 </span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1"># Upload File</span>
 </span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="s2">&#34;-upload&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>	  
 </span></span><span class="line"><span class="cl">	  <span class="nv">filePath</span><span class="o">=</span><span class="nv">$2</span>
 </span></span><span class="line"><span class="cl">	  <span class="nv">filePathName</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">filePath</span><span class="si">}</span><span class="s2">&#34;</span> <span class="p">|</span> tr <span class="s1">&#39;\/&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $NF}&#39;</span><span class="k">)</span>
@@ -481,11 +486,14 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="s2">&#34;-file&#34;</span> <span class="o">]</span> <span class="o">||</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="s2">&#34;-download&#34;</span> <span class="o">]</span> <span class="o">||</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="s2">&#34;-delete&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
 </span></span><span class="line"><span class="cl">	  <span class="nv">token</span><span class="o">=</span><span class="nv">$2</span>
+</span></span><span class="line"><span class="cl">	  <span class="c1"># File Information</span>
 </span></span><span class="line"><span class="cl">	  <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="s2">&#34;-file&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
 </span></span><span class="line"><span class="cl">		  curl --location --request GET <span class="s2">&#34;https://api.filedoge.com/info/</span><span class="si">${</span><span class="nv">token</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">		  <span class="c1"># Delete File</span>
 </span></span><span class="line"><span class="cl">	  <span class="k">elif</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="s2">&#34;-delete&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
 </span></span><span class="line"><span class="cl">		  <span class="nv">delete_token</span><span class="o">=</span><span class="nv">$3</span>
 </span></span><span class="line"><span class="cl">		  curl --location --request POST <span class="s2">&#34;https://api.filedoge.com/delete/</span><span class="si">${</span><span class="nv">token</span><span class="si">}</span><span class="s2">/{</span><span class="nv">$delete_token</span><span class="s2">}&#34;</span>
+</span></span><span class="line"><span class="cl">		  <span class="c1"># Download File</span>
 </span></span><span class="line"><span class="cl">	  <span class="k">elif</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="s2">&#34;-download&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>	  
 </span></span><span class="line"><span class="cl">		  <span class="nv">download_file_name</span><span class="o">=</span><span class="k">$(</span><span class="si">${</span><span class="nv">cmdself</span><span class="si">}</span> -file <span class="si">${</span><span class="nv">token</span><span class="si">}</span> <span class="p">|</span> tr <span class="s1">&#39;,&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> tr <span class="s1">&#39; &#39;</span> <span class="s1">&#39;\n&#39;</span> <span class="p">|</span> grep --color <span class="s2">&#34;originalFilename&#34;</span> <span class="p">|</span> tr <span class="s1">&#39;&#34;&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $3}&#39;</span><span class="k">)</span>
 </span></span><span class="line"><span class="cl">		  <span class="nv">download_file_url</span><span class="o">=</span><span class="k">$(</span><span class="si">${</span><span class="nv">cmdself</span><span class="si">}</span> -file <span class="si">${</span><span class="nv">token</span><span class="si">}</span> <span class="p">|</span> tr <span class="s1">&#39;,&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> tr <span class="s1">&#39; &#39;</span> <span class="s1">&#39;\n&#39;</span> <span class="p">|</span> grep --color <span class="s2">&#34;downloadUrl&#34;</span> <span class="p">|</span> tr <span class="s1">&#39;&#34;&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $3}&#39;</span><span class="k">)</span>
