@@ -421,6 +421,13 @@
 </span><span class="lnt">115
 </span><span class="lnt">116
 </span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nv">cmdself</span><span class="o">=</span><span class="nv">$0</span>
@@ -446,6 +453,13 @@
 </span></span><span class="line"><span class="cl">	  <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">compile_file_size</span><span class="si">}</span><span class="s2">&#34;</span> -ge <span class="s2">&#34;</span><span class="si">${</span><span class="nv">compile_size</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
 </span></span><span class="line"><span class="cl">		  split -d -b 199m <span class="si">${</span><span class="nv">filePath</span><span class="si">}</span> <span class="si">${</span><span class="nv">filePath</span><span class="si">}</span>_split_
 </span></span><span class="line"><span class="cl">		  <span class="nv">lookup_var</span><span class="o">=</span><span class="k">$(</span>ls -l <span class="si">${</span><span class="nv">filePath</span><span class="si">}</span>_split_* <span class="p">|</span> sort -nr <span class="p">|</span> nl <span class="p">|</span> tail -n <span class="m">1</span> <span class="p">|</span> awk <span class="s1">&#39;{print $1}&#39;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">		  <span class="k">if</span> <span class="o">[</span> -f <span class="s2">&#34;</span><span class="si">${</span><span class="nv">log</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">			  <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">filePathName</span><span class="si">}</span><span class="s2">_*.txt&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">				  <span class="nv">flag</span><span class="o">=</span><span class="m">0</span>
+</span></span><span class="line"><span class="cl">				  <span class="nv">flag</span><span class="o">=</span><span class="k">$(</span>ls <span class="s2">&#34;</span><span class="si">${</span><span class="nv">FileDogeLogDir</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">filePathName</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">filePathName</span><span class="si">}</span><span class="s2">&#34;</span>.txt.* <span class="p">|</span> tail -n <span class="m">1</span> <span class="p">|</span> awk -F <span class="s1">&#39;.&#39;</span> <span class="s1">&#39;{print $NF}&#39;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">				  <span class="nv">log</span><span class="o">=</span><span class="si">${</span><span class="nv">FileDogeLogDir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">filePathName</span><span class="si">}</span>/<span class="si">${</span><span class="nv">filePathName</span><span class="si">}</span>.txt.<span class="k">$((</span>flag <span class="o">+</span> <span class="m">1</span><span class="k">))</span>
+</span></span><span class="line"><span class="cl">			  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">		  <span class="k">fi</span>
 </span></span><span class="line"><span class="cl">		  <span class="k">for</span> <span class="o">((</span><span class="nv">i</span> <span class="o">=</span> 0<span class="p">;</span> i &lt; <span class="si">${</span><span class="nv">lookup_var</span><span class="si">}</span><span class="p">;</span> i++<span class="o">))</span>
 </span></span><span class="line"><span class="cl">		  <span class="k">do</span>
 </span></span><span class="line"><span class="cl">			  <span class="nv">lookup_num</span><span class="o">=</span><span class="k">$(</span><span class="nb">printf</span> <span class="s2">&#34;%02d\n&#34;</span> <span class="nv">$i</span><span class="k">)</span>
