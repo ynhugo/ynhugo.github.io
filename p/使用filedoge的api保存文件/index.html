@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-cn" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='通过FileDoge的API上传文件，并将上传文件后返回的文件信息保存到本地文件中，该文件保留在家目录下。 运行脚本，如果要上传文件到云端，第'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='说明 通过FileDoge的API上传文件，并将上传文件后返回的文件信息保存到本地文件中，该文件保留在家目录下。 运行脚本，如果要上传文件到云端'>
 <title>使用FileDoge的API保存文件</title>
 
 <link rel='canonical' href='https://ynhugo.github.io/p/%E4%BD%BF%E7%94%A8filedoge%E7%9A%84api%E4%BF%9D%E5%AD%98%E6%96%87%E4%BB%B6/'>
 
 <link rel="stylesheet" href="/scss/style.min.2328f6a64e9c190e18c4f69895d0081330e55c8210e9395d11068ea1d881517f.css"><meta property='og:title' content='使用FileDoge的API保存文件'>
-<meta property='og:description' content='通过FileDoge的API上传文件，并将上传文件后返回的文件信息保存到本地文件中，该文件保留在家目录下。 运行脚本，如果要上传文件到云端，第'>
+<meta property='og:description' content='说明 通过FileDoge的API上传文件，并将上传文件后返回的文件信息保存到本地文件中，该文件保留在家目录下。 运行脚本，如果要上传文件到云端'>
 <meta property='og:url' content='https://ynhugo.github.io/p/%E4%BD%BF%E7%94%A8filedoge%E7%9A%84api%E4%BF%9D%E5%AD%98%E6%96%87%E4%BB%B6/'>
 <meta property='og:site_name' content='ynblog'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='程序员' /><meta property='article:tag' content='tools' />
 <meta name="twitter:title" content="使用FileDoge的API保存文件">
-<meta name="twitter:description" content="通过FileDoge的API上传文件，并将上传文件后返回的文件信息保存到本地文件中，该文件保留在家目录下。 运行脚本，如果要上传文件到云端，第">
+<meta name="twitter:description" content="说明 通过FileDoge的API上传文件，并将上传文件后返回的文件信息保存到本地文件中，该文件保留在家目录下。 运行脚本，如果要上传文件到云端">
     <link rel="shortcut icon" href="/img/favicon.ico" />
 
     </head>
@@ -247,7 +247,43 @@
     </ol>
 </aside>
 
-    
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+<ul>
+<li><a href="#headline-1">说明</a>
+</li>
+<li><a href="#headline-2">代码</a>
+</li>
+<li><a href="#headline-3">deubg</a>
+</li>
+</ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
 
             <main class="main full-width">
     <article class="main-article">
@@ -297,10 +333,23 @@
     <section class="article-content">
     
     
-    <p>
+    
+<div id="outline-container-headline-1" class="outline-3">
+<h3 id="headline-1">
+说明
+</h3>
+<div id="outline-text-headline-1" class="outline-text-3">
+<p>
 通过FileDoge的API上传文件，并将上传文件后返回的文件信息保存到本地文件中，该文件保留在家目录下。</p>
 <p>
 运行脚本，如果要上传文件到云端，第一个选项应为&#34;upload&#34;，则第二个选项为文件路径，上传文件后会返回文件的&#34;token&#34;和&#34;delete_token&#34;等基本信息；如果要查看云端文件的信息，则第一个选项应为&#34;file&#34;，第二个选项应为对应云端的&#34;token&#34;；如果要删除云端文件，则第一个选项应为&#34;delete&#34;，第二个选项为&#34;token&#34;，第三个选项为&#34;delete_token&#34;；如果要下载文件，可以通过file选项查看云端文件返回的下载链接，如果确认了token后想要直接将该文件下载下来，则第一个选项应为&#34;download&#34;，第二选项为&#34;token&#34;；如果要查看帮助手册，则第一个选项应为&#34;help&#34;。</p>
+</div>
+</div>
+<div id="outline-container-headline-2" class="outline-3">
+<h3 id="headline-2">
+代码
+</h3>
+<div id="outline-text-headline-2" class="outline-text-3">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -570,6 +619,83 @@
 </span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> <span class="s2">&#34;	error: errorMessage,&#34;</span>
 </span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> <span class="s2">&#34;}&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="k">fi</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-3" class="outline-2">
+<h2 id="headline-3">
+deubg
+</h2>
+<div id="outline-text-headline-3" class="outline-text-2">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nv">cmdself</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span><span class="s2">/FileDoge/debug/filedoge_debug.sh&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="s2">&#34;-download&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">	  <span class="nv">filePath</span><span class="o">=</span><span class="nv">$2</span>
+</span></span><span class="line"><span class="cl">	  <span class="nv">filePathName</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">filePath</span><span class="si">}</span><span class="s2">&#34;</span> <span class="p">|</span> tr <span class="s1">&#39;\/&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $NF}&#39;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">	  <span class="nv">FileDogeLogDir</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span><span class="s2">/FileDoge/Log&#34;</span>	  
+</span></span><span class="line"><span class="cl">	  <span class="nv">multifile_token</span><span class="o">=</span><span class="nv">$2</span>
+</span></span><span class="line"><span class="cl">	  <span class="nv">multifile_token_num</span><span class="o">=</span><span class="k">$(</span>cat <span class="si">${</span><span class="nv">multifile_token</span><span class="si">}</span> <span class="p">|</span> awk -F <span class="s1">&#39;&#34;&#39;</span> <span class="s1">&#39;{print $4}&#39;</span> <span class="p">|</span> nl <span class="p">|</span> tail -n <span class="m">1</span> <span class="p">|</span> awk <span class="s1">&#39;{print $1}&#39;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">for</span> <span class="o">((</span><span class="nv">i</span> <span class="o">=</span> 1<span class="p">;</span> i &lt;<span class="o">=</span> <span class="si">${</span><span class="nv">multifile_token_num</span><span class="si">}</span><span class="p">;</span> i++<span class="o">))</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">do</span>
+</span></span><span class="line"><span class="cl">		  <span class="nv">token</span><span class="o">=</span><span class="k">$(</span>cat <span class="si">${</span><span class="nv">multifile_token</span><span class="si">}</span> <span class="p">|</span> awk -F <span class="s1">&#39;&#34;&#39;</span> <span class="s1">&#39;{print $4}&#39;</span> <span class="p">|</span> nl <span class="p">|</span> sed -n <span class="s2">&#34;</span><span class="si">${</span><span class="nv">i</span><span class="si">}</span><span class="s2">&#34;</span>p <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span><span class="k">)</span>	  
+</span></span><span class="line"><span class="cl">		  <span class="nv">download_file_name</span><span class="o">=</span><span class="k">$(</span><span class="si">${</span><span class="nv">cmdself</span><span class="si">}</span> -file <span class="si">${</span><span class="nv">token</span><span class="si">}</span> <span class="p">|</span> tr <span class="s1">&#39;,&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> tr <span class="s1">&#39; &#39;</span> <span class="s1">&#39;\n&#39;</span> <span class="p">|</span> grep --color <span class="s2">&#34;originalFilename&#34;</span> <span class="p">|</span> tr <span class="s1">&#39;&#34;&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $3}&#39;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">		  <span class="nv">download_file_url</span><span class="o">=</span><span class="k">$(</span><span class="si">${</span><span class="nv">cmdself</span><span class="si">}</span> -file <span class="si">${</span><span class="nv">token</span><span class="si">}</span> <span class="p">|</span> tr <span class="s1">&#39;,&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> tr <span class="s1">&#39; &#39;</span> <span class="s1">&#39;\n&#39;</span> <span class="p">|</span> grep --color <span class="s2">&#34;downloadUrl&#34;</span> <span class="p">|</span> tr <span class="s1">&#39;&#34;&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $3}&#39;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">		  <span class="nv">FileDogeDownloadDir</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span><span class="s2">/FileDoge/Download/</span><span class="si">${</span><span class="nv">download_file_name</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">		  <span class="k">if</span> <span class="o">[</span> ! -d <span class="s2">&#34;</span><span class="nv">$FileDogeDownloadDir</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">			  mkdir -p <span class="si">${</span><span class="nv">FileDogeDownloadDir</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">		  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">		  wget -P <span class="si">${</span><span class="nv">FileDogeDownloadDir</span><span class="si">}</span> <span class="si">${</span><span class="nv">download_file_url</span><span class="si">}</span>		
+</span></span><span class="line"><span class="cl">		  <span class="k">if</span> <span class="o">[</span> -f <span class="k">$(</span>ls <span class="s2">&#34;</span><span class="si">${</span><span class="nv">FileDogeDownloadDir</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">download_file_name</span><span class="si">}</span><span class="s2">&#34;</span><span class="k">)</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>	
+</span></span><span class="line"><span class="cl">			  <span class="k">if</span> <span class="o">[</span> -f <span class="k">$(</span>ls <span class="s2">&#34;</span><span class="si">${</span><span class="nv">FileDogeDownloadDir</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">download_file_name</span><span class="si">}</span><span class="s2">&#34;</span>.* <span class="p">|</span> tail -n 1<span class="k">)</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">				  <span class="nv">flag</span><span class="o">=</span><span class="m">0</span>
+</span></span><span class="line"><span class="cl">				  <span class="nv">flag</span><span class="o">=</span><span class="k">$(</span>ls <span class="s2">&#34;</span><span class="si">${</span><span class="nv">FileDogeDownloadDir</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">download_file_name</span><span class="si">}</span><span class="s2">&#34;</span>.* <span class="p">|</span> tail -n <span class="m">1</span> <span class="p">|</span> awk -F <span class="s1">&#39;.&#39;</span> <span class="s1">&#39;{print $NF}&#39;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">				  mv <span class="si">${</span><span class="nv">FileDogeDownloadDir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">token</span><span class="si">}</span> <span class="si">${</span><span class="nv">FileDogeDownloadDir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">download_file_name</span><span class="si">}</span>.<span class="k">$((</span>flag <span class="o">+</span> <span class="m">1</span><span class="k">))</span>
+</span></span><span class="line"><span class="cl">			  <span class="k">else</span>
+</span></span><span class="line"><span class="cl">				  mv <span class="si">${</span><span class="nv">FileDogeDownloadDir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">token</span><span class="si">}</span> <span class="si">${</span><span class="nv">FileDogeDownloadDir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">download_file_name</span><span class="si">}</span>.<span class="k">$((</span>flag <span class="o">+</span> <span class="m">1</span><span class="k">))</span>
+</span></span><span class="line"><span class="cl">			  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">		  <span class="k">else</span>			  
+</span></span><span class="line"><span class="cl">			  mv <span class="si">${</span><span class="nv">FileDogeDownloadDir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">token</span><span class="si">}</span> <span class="si">${</span><span class="nv">FileDogeDownloadDir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">download_file_name</span><span class="si">}</span>			  
+</span></span><span class="line"><span class="cl">		  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">done</span>
+</span></span><span class="line"><span class="cl">  <span class="k">fi</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
 </div>
 </div>
 </div>
