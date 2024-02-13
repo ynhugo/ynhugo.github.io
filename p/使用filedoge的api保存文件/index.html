@@ -524,10 +524,6 @@
 </span><span class="lnt">171
 </span><span class="lnt">172
 </span><span class="lnt">173
-</span><span class="lnt">174
-</span><span class="lnt">175
-</span><span class="lnt">176
-</span><span class="lnt">177
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nv">cmdself</span><span class="o">=</span><span class="nv">$0</span>
@@ -640,17 +636,13 @@
 </span></span><span class="line"><span class="cl">			  <span class="k">else</span>
 </span></span><span class="line"><span class="cl">				  mv <span class="si">${</span><span class="nv">FileDogeDownloadDir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">token</span><span class="si">}</span> <span class="si">${</span><span class="nv">FileDogeDownloadDir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">download_file_name</span><span class="si">}</span>			  
 </span></span><span class="line"><span class="cl">			  <span class="k">fi</span>
-</span></span><span class="line"><span class="cl">			  <span class="nb">echo</span> <span class="s2">&#34;debug1: </span><span class="si">${</span><span class="nv">FileDogeDownloadDir</span><span class="si">}</span><span class="s2">&#34;</span>
 </span></span><span class="line"><span class="cl">		  <span class="k">done</span>
-</span></span><span class="line"><span class="cl">		  <span class="k">for</span> <span class="o">((</span><span class="nv">i</span> <span class="o">=</span> 1<span class="p">;</span> i &lt; multifile_token_num<span class="p">;</span> i++<span class="o">))</span>
+</span></span><span class="line"><span class="cl">		  <span class="k">for</span> <span class="o">((</span><span class="nv">i</span> <span class="o">=</span> 0<span class="p">;</span> i &lt; multifile_token_num<span class="p">;</span> i++<span class="o">))</span>
 </span></span><span class="line"><span class="cl">		  <span class="k">do</span>
 </span></span><span class="line"><span class="cl">			  <span class="nv">lookup_num</span><span class="o">=</span><span class="k">$(</span><span class="nb">printf</span> <span class="s2">&#34;%02d\n&#34;</span> <span class="nv">$i</span><span class="k">)</span>
 </span></span><span class="line"><span class="cl">			  <span class="nv">latest_file</span><span class="o">=</span><span class="k">$(</span>ls <span class="s2">&#34;</span><span class="si">${</span><span class="nv">FileDogeDownloadDir</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">download_file_name</span><span class="si">}</span><span class="s2">&#34;</span>.* 2&gt;/dev/null <span class="p">|</span> tail -n 1<span class="k">)</span>
-</span></span><span class="line"><span class="cl">			  <span class="k">if</span> <span class="o">[</span> -n <span class="s2">&#34;</span><span class="si">${</span><span class="nv">latest_file</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">				  <span class="nb">echo</span> <span class="m">111</span>
-</span></span><span class="line"><span class="cl">			  <span class="k">fi</span>
-</span></span><span class="line"><span class="cl">			  cat <span class="si">${</span><span class="nv">FileDogeDownloadDir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">splitFileName</span><span class="si">}</span><span class="k">$(</span><span class="nb">printf</span> <span class="s2">&#34;%02d&#34;</span> <span class="k">$((</span>lookup_num<span class="k">)))</span> &gt;&gt; <span class="si">${</span><span class="nv">FileDogeDownloadDir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">splitFileName</span><span class="si">}</span><span class="k">$(</span><span class="nb">printf</span> <span class="s2">&#34;%02d&#34;</span> <span class="k">$((</span>lookup_num <span class="o">-</span> <span class="m">1</span><span class="k">)))</span>
-</span></span><span class="line"><span class="cl">			  <span class="nb">echo</span> <span class="s2">&#34;debug2: </span><span class="si">${</span><span class="nv">FileDogeDownloadDir</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">			  cat <span class="si">${</span><span class="nv">FileDogeDownloadDir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">splitFileName</span><span class="si">}</span><span class="k">$(</span><span class="nb">printf</span> <span class="s2">&#34;%02d&#34;</span> <span class="k">$((</span>lookup_num<span class="k">)))</span> &gt;&gt; <span class="si">${</span><span class="nv">FileDogeDownloadDir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">catFileName</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">			  <span class="nb">echo</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">FileDogeDownloadDir</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">splitFileName</span><span class="si">}</span><span class="k">$(</span><span class="nb">printf</span> <span class="s2">&#34;%02d&#34;</span> <span class="k">$((</span>lookup_num<span class="k">)))</span><span class="s2">&#34;</span>
 </span></span><span class="line"><span class="cl">		  <span class="k">done</span>
 </span></span><span class="line"><span class="cl">	  <span class="k">fi</span>
 </span></span><span class="line"><span class="cl">  <span class="k">fi</span>
