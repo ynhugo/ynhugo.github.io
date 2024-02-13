@@ -273,8 +273,6 @@
 </li>
 <li><a href="#headline-2">代码</a>
 </li>
-<li><a href="#headline-3">deubg</a>
-</li>
 </ul>
 </nav>
         </div>
@@ -318,7 +316,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 3 分钟
+                    阅读时长: 4 分钟
                 </time>
             </div>
         
@@ -492,6 +490,44 @@
 </span><span class="lnt">137
 </span><span class="lnt">138
 </span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span><span class="lnt">154
+</span><span class="lnt">155
+</span><span class="lnt">156
+</span><span class="lnt">157
+</span><span class="lnt">158
+</span><span class="lnt">159
+</span><span class="lnt">160
+</span><span class="lnt">161
+</span><span class="lnt">162
+</span><span class="lnt">163
+</span><span class="lnt">164
+</span><span class="lnt">165
+</span><span class="lnt">166
+</span><span class="lnt">167
+</span><span class="lnt">168
+</span><span class="lnt">169
+</span><span class="lnt">170
+</span><span class="lnt">171
+</span><span class="lnt">172
+</span><span class="lnt">173
+</span><span class="lnt">174
+</span><span class="lnt">175
+</span><span class="lnt">176
+</span><span class="lnt">177
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nv">cmdself</span><span class="o">=</span><span class="nv">$0</span>
@@ -541,7 +577,7 @@
 </span></span><span class="line"><span class="cl">	  <span class="k">fi</span>
 </span></span><span class="line"><span class="cl">  <span class="k">fi</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="s2">&#34;-file&#34;</span> <span class="o">]</span> <span class="o">||</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="s2">&#34;-download&#34;</span> <span class="o">]</span> <span class="o">||</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="s2">&#34;-delete&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="s2">&#34;-file&#34;</span> <span class="o">]</span> <span class="o">||</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="s2">&#34;-delete&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
 </span></span><span class="line"><span class="cl">	  <span class="nv">token</span><span class="o">=</span><span class="nv">$2</span>
 </span></span><span class="line"><span class="cl">	  <span class="c1"># File Information</span>
 </span></span><span class="line"><span class="cl">	  <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="s2">&#34;-file&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
@@ -550,21 +586,48 @@
 </span></span><span class="line"><span class="cl">	  <span class="k">elif</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="s2">&#34;-delete&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
 </span></span><span class="line"><span class="cl">		  <span class="nv">delete_token</span><span class="o">=</span><span class="nv">$3</span>
 </span></span><span class="line"><span class="cl">		  curl --location --request POST <span class="s2">&#34;https://api.filedoge.com/delete/</span><span class="si">${</span><span class="nv">token</span><span class="si">}</span><span class="s2">/{</span><span class="nv">$delete_token</span><span class="s2">}&#34;</span>
-</span></span><span class="line"><span class="cl">		  <span class="c1"># Download File</span>
-</span></span><span class="line"><span class="cl">	  <span class="k">elif</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="s2">&#34;-download&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># Download File</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="s2">&#34;-download&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">	  <span class="nv">multifile_token</span><span class="o">=</span><span class="nv">$2</span>
+</span></span><span class="line"><span class="cl">	  <span class="nv">multifile_token_num</span><span class="o">=</span><span class="k">$(</span>cat <span class="si">${</span><span class="nv">multifile_token</span><span class="si">}</span> <span class="p">|</span> awk -F <span class="s1">&#39;&#34;&#39;</span> <span class="s1">&#39;{print $4}&#39;</span> <span class="p">|</span> nl <span class="p">|</span> tail -n <span class="m">1</span> <span class="p">|</span> awk <span class="s1">&#39;{print $1}&#39;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">multifile_token_num</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="m">1</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">		  <span class="nv">token</span><span class="o">=</span><span class="k">$(</span>cat <span class="si">${</span><span class="nv">multifile_token</span><span class="si">}</span> <span class="p">|</span> awk -F <span class="s1">&#39;&#34;&#39;</span> <span class="s1">&#39;{print $4}&#39;</span> <span class="p">|</span> nl <span class="p">|</span> sed -n <span class="s2">&#34;</span><span class="si">${</span><span class="nv">i</span><span class="si">}</span><span class="s2">&#34;</span>p <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span><span class="k">)</span>	  
+</span></span><span class="line"><span class="cl">		  <span class="nv">download_file_name</span><span class="o">=</span><span class="k">$(</span><span class="si">${</span><span class="nv">cmdself</span><span class="si">}</span> -file <span class="si">${</span><span class="nv">token</span><span class="si">}</span> <span class="p">|</span> tr <span class="s1">&#39;,&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> tr <span class="s1">&#39; &#39;</span> <span class="s1">&#39;\n&#39;</span> <span class="p">|</span> grep --color <span class="s2">&#34;originalFilename&#34;</span> <span class="p">|</span> tr <span class="s1">&#39;&#34;&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $3}&#39;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">		  <span class="nv">download_file_url</span><span class="o">=</span><span class="k">$(</span><span class="si">${</span><span class="nv">cmdself</span><span class="si">}</span> -file <span class="si">${</span><span class="nv">token</span><span class="si">}</span> <span class="p">|</span> tr <span class="s1">&#39;,&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> tr <span class="s1">&#39; &#39;</span> <span class="s1">&#39;\n&#39;</span> <span class="p">|</span> grep --color <span class="s2">&#34;downloadUrl&#34;</span> <span class="p">|</span> tr <span class="s1">&#39;&#34;&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $3}&#39;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">		  <span class="nv">FileDogeDownloadDir</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span><span class="s2">/FileDoge/Download/</span><span class="si">${</span><span class="nv">download_file_name</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">		  <span class="k">if</span> <span class="o">[</span> ! -d <span class="s2">&#34;</span><span class="nv">$FileDogeDownloadDir</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">			  mkdir -p <span class="si">${</span><span class="nv">FileDogeDownloadDir</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">		  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">		  wget -P <span class="si">${</span><span class="nv">FileDogeDownloadDir</span><span class="si">}</span> <span class="si">${</span><span class="nv">download_file_url</span><span class="si">}</span>		
+</span></span><span class="line"><span class="cl">		  <span class="k">if</span> <span class="o">[</span> -f <span class="s2">&#34;</span><span class="si">${</span><span class="nv">FileDogeDownloadDir</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">download_file_name</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">			  <span class="nv">latest_file</span><span class="o">=</span><span class="k">$(</span>ls <span class="s2">&#34;</span><span class="si">${</span><span class="nv">FileDogeDownloadDir</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">download_file_name</span><span class="si">}</span><span class="s2">&#34;</span>.* 2&gt;/dev/null <span class="p">|</span> tail -n 1<span class="k">)</span>
+</span></span><span class="line"><span class="cl">			  <span class="k">if</span> <span class="o">[</span> -n <span class="s2">&#34;</span><span class="si">${</span><span class="nv">latest_file</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">				  <span class="nv">flag</span><span class="o">=</span><span class="m">0</span>
+</span></span><span class="line"><span class="cl">				  <span class="nv">flag</span><span class="o">=</span><span class="k">$(</span>ls <span class="s2">&#34;</span><span class="si">${</span><span class="nv">FileDogeDownloadDir</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">download_file_name</span><span class="si">}</span><span class="s2">&#34;</span>.* <span class="p">|</span> tail -n <span class="m">1</span> <span class="p">|</span> awk -F <span class="s1">&#39;.&#39;</span> <span class="s1">&#39;{print $NF}&#39;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">				  mv <span class="si">${</span><span class="nv">FileDogeDownloadDir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">token</span><span class="si">}</span> <span class="si">${</span><span class="nv">FileDogeDownloadDir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">download_file_name</span><span class="si">}</span>.<span class="k">$((</span>flag <span class="o">+</span> <span class="m">1</span><span class="k">))</span>
+</span></span><span class="line"><span class="cl">			  <span class="k">else</span>
+</span></span><span class="line"><span class="cl">				  mv <span class="si">${</span><span class="nv">FileDogeDownloadDir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">token</span><span class="si">}</span> <span class="si">${</span><span class="nv">FileDogeDownloadDir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">download_file_name</span><span class="si">}</span>.<span class="k">$((</span>flag <span class="o">+</span> <span class="m">1</span><span class="k">))</span>
+</span></span><span class="line"><span class="cl">			  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">		  <span class="k">else</span>
+</span></span><span class="line"><span class="cl">			  mv <span class="si">${</span><span class="nv">FileDogeDownloadDir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">token</span><span class="si">}</span> <span class="si">${</span><span class="nv">FileDogeDownloadDir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">download_file_name</span><span class="si">}</span>			  
+</span></span><span class="line"><span class="cl">		  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">elif</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">multifile_token_num</span><span class="si">}</span><span class="s2">&#34;</span> &gt; <span class="m">1</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
 </span></span><span class="line"><span class="cl">		  <span class="nv">filePath</span><span class="o">=</span><span class="nv">$2</span>
-</span></span><span class="line"><span class="cl">		  <span class="nv">multifile_token</span><span class="o">=</span><span class="nv">$2</span>
-</span></span><span class="line"><span class="cl">		  <span class="nv">multifile_token_num</span><span class="o">=</span><span class="k">$(</span>cat <span class="si">${</span><span class="nv">multifile_token</span><span class="si">}</span> <span class="p">|</span> awk -F <span class="s1">&#39;&#34;&#39;</span> <span class="s1">&#39;{print $4}&#39;</span> <span class="p">|</span> nl <span class="p">|</span> tail -n <span class="m">1</span> <span class="p">|</span> awk <span class="s1">&#39;{print $1}&#39;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">		  <span class="nv">catFileName</span><span class="o">=</span><span class="k">$(</span>cat <span class="si">${</span><span class="nv">filePath</span><span class="si">}</span> <span class="p">|</span> sed -n <span class="s2">&#34;1&#34;</span>p <span class="p">|</span> awk -F <span class="s1">&#39;&#34;&#39;</span> <span class="s1">&#39;{print $14}&#39;</span> <span class="p">|</span> awk -F <span class="s1">&#39;_&#39;</span> <span class="s1">&#39;{print $1}&#39;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">		  <span class="nv">splitFileName</span><span class="o">=</span><span class="k">$(</span>cat <span class="si">${</span><span class="nv">filePath</span><span class="si">}</span> <span class="p">|</span> sed -n <span class="s2">&#34;1&#34;</span>p <span class="p">|</span> awk -F <span class="s1">&#39;&#34;&#39;</span> <span class="s1">&#39;{print $14}&#39;</span> <span class="p">|</span> tr -d <span class="s1">&#39;0-9&#39;</span><span class="k">)</span>
 </span></span><span class="line"><span class="cl">		  <span class="k">for</span> <span class="o">((</span><span class="nv">i</span> <span class="o">=</span> 1<span class="p">;</span> i &lt;<span class="o">=</span> <span class="si">${</span><span class="nv">multifile_token_num</span><span class="si">}</span><span class="p">;</span> i++<span class="o">))</span>
 </span></span><span class="line"><span class="cl">		  <span class="k">do</span>
 </span></span><span class="line"><span class="cl">			  <span class="nv">token</span><span class="o">=</span><span class="k">$(</span>cat <span class="si">${</span><span class="nv">multifile_token</span><span class="si">}</span> <span class="p">|</span> awk -F <span class="s1">&#39;&#34;&#39;</span> <span class="s1">&#39;{print $4}&#39;</span> <span class="p">|</span> nl <span class="p">|</span> sed -n <span class="s2">&#34;</span><span class="si">${</span><span class="nv">i</span><span class="si">}</span><span class="s2">&#34;</span>p <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span><span class="k">)</span>	  
 </span></span><span class="line"><span class="cl">			  <span class="nv">download_file_name</span><span class="o">=</span><span class="k">$(</span><span class="si">${</span><span class="nv">cmdself</span><span class="si">}</span> -file <span class="si">${</span><span class="nv">token</span><span class="si">}</span> <span class="p">|</span> tr <span class="s1">&#39;,&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> tr <span class="s1">&#39; &#39;</span> <span class="s1">&#39;\n&#39;</span> <span class="p">|</span> grep --color <span class="s2">&#34;originalFilename&#34;</span> <span class="p">|</span> tr <span class="s1">&#39;&#34;&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $3}&#39;</span><span class="k">)</span>
 </span></span><span class="line"><span class="cl">			  <span class="nv">download_file_url</span><span class="o">=</span><span class="k">$(</span><span class="si">${</span><span class="nv">cmdself</span><span class="si">}</span> -file <span class="si">${</span><span class="nv">token</span><span class="si">}</span> <span class="p">|</span> tr <span class="s1">&#39;,&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> tr <span class="s1">&#39; &#39;</span> <span class="s1">&#39;\n&#39;</span> <span class="p">|</span> grep --color <span class="s2">&#34;downloadUrl&#34;</span> <span class="p">|</span> tr <span class="s1">&#39;&#34;&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $3}&#39;</span><span class="k">)</span>
-</span></span><span class="line"><span class="cl">			  <span class="nv">FileDogeDownloadDir</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span><span class="s2">/FileDoge/Download/</span><span class="si">${</span><span class="nv">download_file_name</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">			  <span class="nv">FileDogeDownloadDir</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span><span class="s2">/FileDoge/Download/</span><span class="si">${</span><span class="nv">catFileName</span><span class="si">}</span><span class="s2">&#34;</span>
 </span></span><span class="line"><span class="cl">			  <span class="k">if</span> <span class="o">[</span> ! -d <span class="s2">&#34;</span><span class="nv">$FileDogeDownloadDir</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
 </span></span><span class="line"><span class="cl">				  mkdir -p <span class="si">${</span><span class="nv">FileDogeDownloadDir</span><span class="si">}</span>
 </span></span><span class="line"><span class="cl">			  <span class="k">fi</span>
-</span></span><span class="line"><span class="cl">			  wget -P <span class="si">${</span><span class="nv">FileDogeDownloadDir</span><span class="si">}</span> <span class="si">${</span><span class="nv">download_file_url</span><span class="si">}</span>		
+</span></span><span class="line"><span class="cl">			  wget -P <span class="si">${</span><span class="nv">FileDogeDownloadDir</span><span class="si">}</span> <span class="si">${</span><span class="nv">download_file_url</span><span class="si">}</span>				
 </span></span><span class="line"><span class="cl">			  <span class="k">if</span> <span class="o">[</span> -f <span class="s2">&#34;</span><span class="si">${</span><span class="nv">FileDogeDownloadDir</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">download_file_name</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
 </span></span><span class="line"><span class="cl">				  <span class="nv">latest_file</span><span class="o">=</span><span class="k">$(</span>ls <span class="s2">&#34;</span><span class="si">${</span><span class="nv">FileDogeDownloadDir</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">download_file_name</span><span class="si">}</span><span class="s2">&#34;</span>.* 2&gt;/dev/null <span class="p">|</span> tail -n 1<span class="k">)</span>
 </span></span><span class="line"><span class="cl">				  <span class="k">if</span> <span class="o">[</span> -n <span class="s2">&#34;</span><span class="si">${</span><span class="nv">latest_file</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
@@ -577,6 +640,17 @@
 </span></span><span class="line"><span class="cl">			  <span class="k">else</span>
 </span></span><span class="line"><span class="cl">				  mv <span class="si">${</span><span class="nv">FileDogeDownloadDir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">token</span><span class="si">}</span> <span class="si">${</span><span class="nv">FileDogeDownloadDir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">download_file_name</span><span class="si">}</span>			  
 </span></span><span class="line"><span class="cl">			  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">			  <span class="nb">echo</span> <span class="s2">&#34;debug1: </span><span class="si">${</span><span class="nv">FileDogeDownloadDir</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">		  <span class="k">done</span>
+</span></span><span class="line"><span class="cl">		  <span class="k">for</span> <span class="o">((</span><span class="nv">i</span> <span class="o">=</span> 1<span class="p">;</span> i &lt; multifile_token_num<span class="p">;</span> i++<span class="o">))</span>
+</span></span><span class="line"><span class="cl">		  <span class="k">do</span>
+</span></span><span class="line"><span class="cl">			  <span class="nv">lookup_num</span><span class="o">=</span><span class="k">$(</span><span class="nb">printf</span> <span class="s2">&#34;%02d\n&#34;</span> <span class="nv">$i</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">			  <span class="nv">latest_file</span><span class="o">=</span><span class="k">$(</span>ls <span class="s2">&#34;</span><span class="si">${</span><span class="nv">FileDogeDownloadDir</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">download_file_name</span><span class="si">}</span><span class="s2">&#34;</span>.* 2&gt;/dev/null <span class="p">|</span> tail -n 1<span class="k">)</span>
+</span></span><span class="line"><span class="cl">			  <span class="k">if</span> <span class="o">[</span> -n <span class="s2">&#34;</span><span class="si">${</span><span class="nv">latest_file</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">				  <span class="nb">echo</span> <span class="m">111</span>
+</span></span><span class="line"><span class="cl">			  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">			  cat <span class="si">${</span><span class="nv">FileDogeDownloadDir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">splitFileName</span><span class="si">}</span><span class="k">$(</span><span class="nb">printf</span> <span class="s2">&#34;%02d&#34;</span> <span class="k">$((</span>lookup_num<span class="k">)))</span> &gt;&gt; <span class="si">${</span><span class="nv">FileDogeDownloadDir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">splitFileName</span><span class="si">}</span><span class="k">$(</span><span class="nb">printf</span> <span class="s2">&#34;%02d&#34;</span> <span class="k">$((</span>lookup_num <span class="o">-</span> <span class="m">1</span><span class="k">)))</span>
+</span></span><span class="line"><span class="cl">			  <span class="nb">echo</span> <span class="s2">&#34;debug2: </span><span class="si">${</span><span class="nv">FileDogeDownloadDir</span><span class="si">}</span><span class="s2">&#34;</span>
 </span></span><span class="line"><span class="cl">		  <span class="k">done</span>
 </span></span><span class="line"><span class="cl">	  <span class="k">fi</span>
 </span></span><span class="line"><span class="cl">  <span class="k">fi</span>
@@ -633,22 +707,6 @@
 </span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> <span class="s2">&#34;	error: errorMessage,&#34;</span>
 </span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> <span class="s2">&#34;}&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="k">fi</span></span></span></code></pre></td></tr></table>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div id="outline-container-headline-3" class="outline-2">
-<h2 id="headline-3">
-deubg
-</h2>
-<div id="outline-text-headline-3" class="outline-text-2">
-<div class="src src-bash">
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"></code></pre></td></tr></table>
 </div>
 </div>
 </div>
