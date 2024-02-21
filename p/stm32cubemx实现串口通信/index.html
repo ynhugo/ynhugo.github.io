@@ -305,7 +305,15 @@
 </li>
 </ul>
 </li>
-<li><a href="#headline-15">参考链接</a>
+<li><a href="#headline-15">重写输入/输出函数</a>
+<ul>
+<li><a href="#headline-16">在main.c重写printf函数</a>
+</li>
+<li><a href="#headline-17">在main.c重写scanf函数</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-18">参考链接</a>
 </li>
 </ul>
 </nav>
@@ -713,13 +721,94 @@ Proteus仿真STM32F103C8
 </div>
 <div id="outline-container-headline-15" class="outline-2">
 <h2 id="headline-15">
-参考链接
+重写输入/输出函数
 </h2>
 <div id="outline-text-headline-15" class="outline-text-2">
+<p>
+重写输入/输出函数是在main.c文件中完成的</p>
+<p>
+重写输入/输出函数之前需要先在main.c文件包含一下&#34;stdio.h&#34;头文件</p>
+<div class="src src-c">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">  <span class="cp">#include</span> <span class="cpf">&#34;stdio.h&#34;</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-16" class="outline-3">
+<h3 id="headline-16">
+在main.c重写printf函数
+</h3>
+<div id="outline-text-headline-16" class="outline-text-3">
+<div class="src src-c">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">  <span class="kt">int</span> <span class="nf">fputc</span><span class="p">(</span><span class="kt">int</span> <span class="n">c</span><span class="p">,</span> <span class="n">FILE</span> <span class="o">*</span> <span class="n">f</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">{</span>		
+</span></span><span class="line"><span class="cl">	  <span class="kt">int</span> <span class="n">ch</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	  <span class="n">ch</span><span class="o">=</span><span class="n">c</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	  <span class="nf">HAL_UART_Transmit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">huart1</span><span class="p">,(</span><span class="kt">uint8_t</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">ch</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1000</span><span class="p">);</span><span class="c1">//发送串口
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	  <span class="k">return</span> <span class="n">c</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-17" class="outline-3">
+<h3 id="headline-17">
+在main.c重写scanf函数
+</h3>
+<div id="outline-text-headline-17" class="outline-text-3">
+<div class="src src-c">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">  <span class="kt">int</span> <span class="nf">fgetc</span><span class="p">(</span><span class="n">FILE</span> <span class="o">*</span> <span class="n">F</span><span class="p">)</span>    
+</span></span><span class="line"><span class="cl">  <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	  <span class="kt">int</span> <span class="n">ch_r</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	  <span class="nf">HAL_UART_Receive</span> <span class="p">(</span><span class="o">&amp;</span><span class="n">huart1</span><span class="p">,(</span><span class="kt">uint8_t</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">ch_r</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mh">0xffff</span><span class="p">);</span><span class="c1">//接收
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	  <span class="k">return</span> <span class="n">ch_r</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-18" class="outline-2">
+<h2 id="headline-18">
+参考链接
+</h2>
+<div id="outline-text-headline-18" class="outline-text-2">
 <p>
 <a href="https://blog.csdn.net/qq_45945548/article/details/120984961">STM32CubeMX实现串口通信</a></p>
 <p>
 <a href="https://blog.csdn.net/lijin111222/article/details/123187483">STM32学习：串口通讯（proteus仿真）</a></p>
+<p>
+https://blog.csdn.net/qq_28317769/article/details/106659139</p>
+<p>
+<a href="https://blog.csdn.net/raulcy/article/details/123948637">STM32自学笔记-0-重写printf和scanf</a></p>
 </div>
 </div>
 
