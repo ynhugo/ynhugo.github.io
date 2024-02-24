@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-cn" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='首先无论是付费 vps 还是免费 vps，如果需要自己配置 ssh 连接的话一定要注意配置文件里除了默认允许密码登录授权的配置以外还要确认并配置允许 ssh 公钥登录'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='付费 VPS raksmart 支持最低3美元的 VPS，可以用于搭建 ChatGPT，可以在 web 界面进行开关机和重装系统，重装系统时可以重置密码，配置的话通过 ssh 访问 链接'>
 <title>VPS相关</title>
 
 <link rel='canonical' href='https://ynhugo.github.io/p/vps%E7%9B%B8%E5%85%B3/'>
 
 <link rel="stylesheet" href="/scss/style.min.2328f6a64e9c190e18c4f69895d0081330e55c8210e9395d11068ea1d881517f.css"><meta property='og:title' content='VPS相关'>
-<meta property='og:description' content='首先无论是付费 vps 还是免费 vps，如果需要自己配置 ssh 连接的话一定要注意配置文件里除了默认允许密码登录授权的配置以外还要确认并配置允许 ssh 公钥登录'>
+<meta property='og:description' content='付费 VPS raksmart 支持最低3美元的 VPS，可以用于搭建 ChatGPT，可以在 web 界面进行开关机和重装系统，重装系统时可以重置密码，配置的话通过 ssh 访问 链接'>
 <meta property='og:url' content='https://ynhugo.github.io/p/vps%E7%9B%B8%E5%85%B3/'>
 <meta property='og:site_name' content='ynblog'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='VPS' />
 <meta name="twitter:title" content="VPS相关">
-<meta name="twitter:description" content="首先无论是付费 vps 还是免费 vps，如果需要自己配置 ssh 连接的话一定要注意配置文件里除了默认允许密码登录授权的配置以外还要确认并配置允许 ssh 公钥登录">
+<meta name="twitter:description" content="付费 VPS raksmart 支持最低3美元的 VPS，可以用于搭建 ChatGPT，可以在 web 界面进行开关机和重装系统，重装系统时可以重置密码，配置的话通过 ssh 访问 链接">
     <link rel="shortcut icon" href="/img/favicon.ico" />
 
     </head>
@@ -323,6 +323,8 @@
 </li>
 </ul>
 </li>
+<li><a href="#headline-22">SSH 注意事项</a>
+</li>
 </ul>
 </nav>
         </div>
@@ -382,20 +384,6 @@
     
     
     
-<p>
-首先无论是付费 vps 还是免费 vps，如果需要自己配置 ssh 连接的话一定要注意配置文件里除了默认允许密码登录授权的配置以外还要确认并配置允许 ssh 公钥登录授权</p>
-<div class="src src-bash">
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  PasswordAuthentication yes		<span class="c1"># 允许通过密码进行 ssh 连接</span>
-</span></span><span class="line"><span class="cl">  PubkeyAuthentication yes  		<span class="c1"># 允许通过 ssh 公钥进行 ssh 连接</span></span></span></code></pre></td></tr></table>
-</div>
-</div>
-</div>
 <div id="outline-container-headline-1" class="outline-2">
 <h2 id="headline-1">
 付费 VPS
@@ -625,6 +613,41 @@ VNC 客户端下载链接：<a href="https://www.realvnc.com/en/connect/download
 https://www.thc.org/segfault/</p>
 <p>
 https://www.thc.org/segfault/gui/</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-22" class="outline-2">
+<h2 id="headline-22">
+SSH 注意事项
+</h2>
+<div id="outline-text-headline-22" class="outline-text-2">
+<p>
+首先无论是付费 vps 还是免费 vps，如果需要自己配置 ssh 连接的话一定要注意配置文件里除了默认允许密码登录授权的配置以外还要确认并配置允许 ssh 公钥登录授权，如果 vps 配置这两项都是 yes，那就不需要更改了，其他配置根据自己的需要进行修改</p>
+<p>
+linux 下 ssh 配置文件路径：/etc/ssh/sshd_config</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  PasswordAuthentication yes		<span class="c1"># 允许通过密码进行 ssh 连接</span>
+</span></span><span class="line"><span class="cl">  PubkeyAuthentication yes  		<span class="c1"># 允许通过 ssh 公钥进行 ssh 连接</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+然后改动 ssh 的配置后要重新启动 ssh 服务</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  /etc/init.d/ssh restart</span></span></code></pre></td></tr></table>
+</div>
 </div>
 </div>
 </div>
