@@ -63,7 +63,7 @@ if [ "$1" == "-download" ]; then
 	multifile_token=$2
 	multifile_token_num=$(cat ${multifile_token} | awk -F '"' '{print $4}' | nl | tail -n 1 | awk '{print $1}')
 	if [ "${multifile_token_num}" == 1 ]; then
-		token=$(cat ${multifile_token} | awk -F '"' '{print $4}' | nl | sed -n "${i}"p | awk '{print $2}')	  
+		token=$(cat ${multifile_token} | awk -F '"' '{print $4}')
 		download_file_name=$(${cmdself} -file ${token} | tr ',' ' ' | tr ' ' '\n' | grep --color "originalFilename" | tr '"' ' ' | awk '{print $3}')
 		download_file_url=$(${cmdself} -file ${token} | tr ',' ' ' | tr ' ' '\n' | grep --color "downloadUrl" | tr '"' ' ' | awk '{print $3}')
 		FileDogeDownloadDir="${HOME}/FileDoge/Download/${download_file_name}"
@@ -76,12 +76,12 @@ if [ "$1" == "-download" ]; then
 			if [ -n "${latest_file}" ]; then
 				flag=0
 				flag=$(ls "${FileDogeDownloadDir}/${download_file_name}".* | tail -n 1 | awk -F '.' '{print $NF}')
-				mv ${FileDogeDownloadDir}/${token} ${FileDogeDownloadDir}/${download_file_name}.$((flag + 1))
+				mv -v ${FileDogeDownloadDir}/${token} ${FileDogeDownloadDir}/${download_file_name}.$((flag + 1))
 			else
-				mv ${FileDogeDownloadDir}/${token} ${FileDogeDownloadDir}/${download_file_name}.$((flag + 1))
+				mv -v  ${FileDogeDownloadDir}/${token} ${FileDogeDownloadDir}/${download_file_name}.$((flag + 1))
 			fi
 		else
-			mv ${FileDogeDownloadDir}/${token} ${FileDogeDownloadDir}/${download_file_name}			  
+			mv -v ${FileDogeDownloadDir}/${token} ${FileDogeDownloadDir}/${download_file_name}			  
 		fi
 	elif [ "${multifile_token_num}" -gt "1" ]; then
 		filePath=$2
@@ -102,12 +102,12 @@ if [ "$1" == "-download" ]; then
 				if [ -n "${latest_file}" ]; then
 					flag=0
 					flag=$(ls "${FileDogeDownloadDir}/${download_file_name}".* | tail -n 1 | awk -F '.' '{print $NF}')
-					mv ${FileDogeDownloadDir}/${token} ${FileDogeDownloadDir}/${download_file_name}.$((flag + 1))
+					mv -v ${FileDogeDownloadDir}/${token} ${FileDogeDownloadDir}/${download_file_name}.$((flag + 1))
 				else
-					mv ${FileDogeDownloadDir}/${token} ${FileDogeDownloadDir}/${download_file_name}.$((flag + 1))
+					mv -v ${FileDogeDownloadDir}/${token} ${FileDogeDownloadDir}/${download_file_name}.$((flag + 1))
 				fi
 			else
-				mv ${FileDogeDownloadDir}/${token} ${FileDogeDownloadDir}/${download_file_name}
+				mv -v ${FileDogeDownloadDir}/${token} ${FileDogeDownloadDir}/${download_file_name}
 
 			fi
 		done
