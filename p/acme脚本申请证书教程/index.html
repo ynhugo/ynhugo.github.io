@@ -430,30 +430,24 @@
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="c1">#生成私钥：</span>
 </span></span><span class="line"><span class="cl">  openssl ecparam -genkey -name prime256v1 -out ca.key
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="c1">#生成证书：</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">#生成证书，指定要签给的域名：</span>
 </span></span><span class="line"><span class="cl">  openssl req -new -x509 -days <span class="m">36500</span> -key ca.key -out ca.crt  -subj <span class="s2">&#34;/CN=bing.com&#34;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="c1"># 如果在生成证书的时候提示没有 .rnd 随机种子文件，可以自己生成一个，然后重新生成证书</span>
-</span></span><span class="line"><span class="cl">  openssl rand -out ~/.rnd <span class="m">2048</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="c1">#重新生成证书：</span>
-</span></span><span class="line"><span class="cl">  openssl req -new -x509 -days <span class="m">36500</span> -key ca.key -out ca.crt  -subj <span class="s2">&#34;/CN=bing.com&#34;</span> -rand ~/.rnd</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">  <span class="c1"># 如果在生成证书的时候提示没有 .rnd 随机种子文件，解决方法：在缺少 .rnd 的目录中生成 .rnd，默认是在家目录缺少 .rnd，因此直接将 .rnd 生成在家目录下</span>
+</span></span><span class="line"><span class="cl">  openssl rand -writerand ~/.rnd</span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
