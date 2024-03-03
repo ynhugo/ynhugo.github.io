@@ -575,25 +575,33 @@ C 语言中用 clock() 函数计算程序运行时间只能达到毫秒级,要�
 </span><span class="lnt">16
 </span><span class="lnt">17
 </span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">  <span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span>  <span class="c1">//#include &lt;time.h&gt;//需要包含这bai个头文du件,在C中使用zhi&lt;time.h&gt;
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="cp">#include</span> <span class="cpf">&lt;windows.h&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span>  <span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>  <span class="cp">#include</span> <span class="cpf">&lt;windows.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">  <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	  <span class="n">LARGE_INTEGER</span> <span class="n">fre</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">};</span><span class="c1">//储存本机CPU时钟频率
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	  <span class="n">LARGE_INTEGER</span> <span class="n">startCount</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl">	  <span class="n">LARGE_INTEGER</span> <span class="n">fre</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl">	  <span class="n">LARGE_INTEGER</span> <span class="n">startCount</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>
 </span></span><span class="line"><span class="cl">	  <span class="n">LARGE_INTEGER</span> <span class="n">endCount</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>
-</span></span><span class="line"><span class="cl">	  <span class="nf">QueryPerformanceFrequency</span><span class="p">(</span><span class="o">&amp;</span><span class="n">fre</span><span class="p">);</span><span class="c1">//获取本机cpu频率
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	  <span class="c1">//开始计时
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	  <span class="nf">QueryPerformanceCounter</span><span class="p">(</span><span class="o">&amp;</span><span class="n">startCount</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">	  <span class="cm">/* Sleep(1000);			/\* 单位为毫秒，如果要获取操作时间，可以考虑注释该行 *\/ */</span>
-</span></span><span class="line"><span class="cl">	  <span class="c1">//结束计时
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	  <span class="nf">QueryPerformanceCounter</span><span class="p">(</span><span class="o">&amp;</span><span class="n">endCount</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">	  <span class="c1">//计算时间差
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	  <span class="kt">double</span> <span class="n">dTimeTake</span> <span class="o">=</span> <span class="p">((</span><span class="kt">double</span><span class="p">)</span><span class="n">endCount</span><span class="p">.</span><span class="n">QuadPart</span> <span class="o">-</span> <span class="p">(</span><span class="kt">double</span><span class="p">)</span><span class="n">startCount</span><span class="p">.</span><span class="n">QuadPart</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="kt">double</span><span class="p">)</span><span class="n">fre</span><span class="p">.</span><span class="n">QuadPart</span><span class="p">;</span> <span class="cm">/* 单位为微秒 */</span>
-</span></span><span class="line"><span class="cl">	  <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;用时%f</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">dTimeTake</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	  <span class="nf">QueryPerformanceFrequency</span><span class="p">(</span><span class="o">&amp;</span><span class="n">fre</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	  <span class="nf">QueryPerformanceCounter</span><span class="p">(</span><span class="o">&amp;</span><span class="n">startCount</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	  <span class="cm">/* Sleep(2000);				/\* 单位为毫秒 *\/ */</span>
+</span></span><span class="line"><span class="cl">	  <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;Hello.</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	  <span class="nf">QueryPerformanceCounter</span><span class="p">(</span><span class="o">&amp;</span><span class="n">endCount</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	  <span class="kt">double</span> <span class="n">dTimeTake</span> <span class="o">=</span> <span class="p">((</span><span class="kt">double</span><span class="p">)</span><span class="n">endCount</span><span class="p">.</span><span class="n">QuadPart</span> <span class="o">-</span> <span class="p">(</span><span class="kt">double</span><span class="p">)</span><span class="n">startCount</span><span class="p">.</span><span class="n">QuadPart</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="kt">double</span><span class="p">)</span><span class="n">fre</span><span class="p">.</span><span class="n">QuadPart</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	  <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;用时 %f 秒</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">dTimeTake</span><span class="p">);</span> <span class="cm">/* 单位为秒 */</span>
+</span></span><span class="line"><span class="cl">	  <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;用时 %f 微秒</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="p">(</span><span class="n">dTimeTake</span> <span class="o">*</span> <span class="mi">1000000</span><span class="p">));</span> <span class="cm">/* 单位为微秒 */</span>
+</span></span><span class="line"><span class="cl">	
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
