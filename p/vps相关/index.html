@@ -657,6 +657,108 @@ VNC 客户端下载链接：<a href="https://www.realvnc.com/en/connect/download
 <h4 id="headline-22">
 Segfault 提示信息
 </h4>
+<div id="outline-text-headline-22" class="outline-text-4">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  ┌──<span class="o">(</span>root💀adm-RecipeKit<span class="o">)</span>-<span class="o">[</span>~<span class="o">]</span>
+</span></span><span class="line"><span class="cl">  └─# info
+</span></span><span class="line"><span class="cl">  :Cut <span class="p">&amp;</span> Paste these lines to your workstation<span class="s1">&#39;s shell to retain access:
+</span></span></span><span class="line"><span class="cl"><span class="s1">  ######################################################################
+</span></span></span><span class="line"><span class="cl"><span class="s1">  cat &gt;~/.ssh/id_sf-adm-segfault-net &lt;&lt;&#39;</span>__EOF__<span class="s1">&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">  -----BEGIN OPENSSH PRIVATE KEY-----
+</span></span></span><span class="line"><span class="cl"><span class="s1">  b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW
+</span></span></span><span class="line"><span class="cl"><span class="s1">  QyNTUxOQAAACBJFPbVdK92w4fHGb7vaG2c7XhlRTdZErUPW3Ag7lqVJAAAAIjxT/9z8U//
+</span></span></span><span class="line"><span class="cl"><span class="s1">  cwAAAAtzc2gtZWQyNTUxOQAAACBJFPbVdK92w4fHGb7vaG2c7XhlRTdZErUPW3Ag7lqVJA
+</span></span></span><span class="line"><span class="cl"><span class="s1">  AAAEA9D69K0YYMDbh6ZcWfmcZ1CdYk6Yryx28zc5ira9opkEkU9tV0r3bDh8cZvu9obZzt
+</span></span></span><span class="line"><span class="cl"><span class="s1">  eGVFN1kStQ9bcCDuWpUkAAAAAAECAwQF
+</span></span></span><span class="line"><span class="cl"><span class="s1">  -----END OPENSSH PRIVATE KEY-----
+</span></span></span><span class="line"><span class="cl"><span class="s1">  __EOF__
+</span></span></span><span class="line"><span class="cl"><span class="s1">  cat &gt;&gt;~/.ssh/config &lt;&lt;&#39;</span>__EOF__<span class="err">&#39;</span>
+</span></span><span class="line"><span class="cl">  host recipekit
+</span></span><span class="line"><span class="cl">	  User root
+</span></span><span class="line"><span class="cl">	  HostName adm.segfault.net
+</span></span><span class="line"><span class="cl">	  IdentityFile ~/.ssh/id_sf-adm-segfault-net
+</span></span><span class="line"><span class="cl">	  SetEnv <span class="nv">SECRET</span><span class="o">=</span>W7NHhPqWvpNKPTcpEgkez4P2
+</span></span><span class="line"><span class="cl">  __EOF__
+</span></span><span class="line"><span class="cl">  chmod <span class="m">600</span> ~/.ssh/config ~/.ssh/id_sf-adm-segfault-net
+</span></span><span class="line"><span class="cl">  <span class="c1">######################################################################</span>
+</span></span><span class="line"><span class="cl">  Thereafter use these commands:
+</span></span><span class="line"><span class="cl">  --&gt; ssh  recipekit
+</span></span><span class="line"><span class="cl">  --&gt; sftp recipekit
+</span></span><span class="line"><span class="cl">  --&gt; scp  recipekit:stuff.tar.gz ~/
+</span></span><span class="line"><span class="cl">  --&gt; sshfs -o reconnect recipekit:/sec ~/sec
+</span></span><span class="line"><span class="cl">  ----------------------------------------------------------------------
+</span></span><span class="line"><span class="cl">  Token             : No See https://thc.org/segfault/token
+</span></span><span class="line"><span class="cl">  Your workstation  : 120.245.112.110 <span class="o">(</span>Beijing/China<span class="o">)</span>
+</span></span><span class="line"><span class="cl">  Reverse Port      : Type curl sf/port <span class="k">for</span> reverse port.
+</span></span><span class="line"><span class="cl">  Exit CryptoStorm  : 128.127.104.110 <span class="o">(</span>Sweden<span class="o">)</span>
+</span></span><span class="line"><span class="cl">  Exit Mullvad      : 185.77.218.15   <span class="o">(</span>Helsinki/Finland<span class="o">)</span>
+</span></span><span class="line"><span class="cl">  Exit NordVPN      : 185.255.128.233 <span class="o">(</span>Zurich/Switzerland<span class="o">)</span>
+</span></span><span class="line"><span class="cl">  TOR Proxy         : 172.20.0.111:9050
+</span></span><span class="line"><span class="cl">  Shared storage    : /everyone/RecipeKit        <span class="o">(</span>encrypted<span class="o">)</span>
+</span></span><span class="line"><span class="cl">  Your storage      : /sec                       <span class="o">(</span>encrypted<span class="o">)</span>
+</span></span><span class="line"><span class="cl">  Your Onion WWW    : /onion                     <span class="o">(</span>encrypted<span class="o">)</span>
+</span></span><span class="line"><span class="cl">  Your Web Page     : http://2xyr7jug4b5uhndzelsf7vgrxygttutc6h5mqzpwp7y6blk6owhxliqd.onion/recipekit/
+</span></span><span class="line"><span class="cl">  SSH               : ssh -o <span class="s2">&#34;SetEnv SECRET=W7NHhPqWvpNKPTcpEgkez4P2&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>						 root@adm.segfault.net
+</span></span><span class="line"><span class="cl">  SSH <span class="o">(</span>TOR<span class="o">)</span>         : torsocks ssh -o <span class="s2">&#34;SetEnv SECRET=W7NHhPqWvpNKPTcpEgkez4P2&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>						 root@w5wc42fbltkdxpycsurj4zwxouhb3es3t2334lyte6euewrebjx4ryid.onion
+</span></span><span class="line"><span class="cl">  SSH <span class="o">(</span>gsocket<span class="o">)</span>     : gsocket -s NGExNzFhNMYm ssh -o <span class="s2">&#34;SetEnv SECRET=W7NHhPqWvpNKPTcpEgkez4P2&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>						 root@adm.segfault.gsocket
+</span></span><span class="line"><span class="cl">  SECRET            : W7NHhPqWvpNKPTcpEgkez4P2</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="outline-container-headline-23" class="outline-4">
 <h4 id="headline-23">
