@@ -321,13 +321,15 @@
 </li>
 <li><a href="#headline-22">Segfault 提示信息</a>
 </li>
-<li><a href="#headline-23">参考链接</a>
+<li><a href="#headline-23">startfb 教程</a>
+</li>
+<li><a href="#headline-24">参考链接</a>
 </li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#headline-24">SSH 注意事项</a>
+<li><a href="#headline-25">SSH 注意事项</a>
 </li>
 </ul>
 </nav>
@@ -762,9 +764,56 @@ Segfault 提示信息
 </div>
 <div id="outline-container-headline-23" class="outline-4">
 <h4 id="headline-23">
-参考链接
+startfb 教程
 </h4>
 <div id="outline-text-headline-23" class="outline-text-4">
+<p>
+使用下面所示的端口转发登录，密码还是 segfault，登录后在vps终端键入 startfb，保持登录状态，然后将浏览器指向 <a href="http://127.0.0.1:2900">http://127.0.0.1:2900</a></p>
+<p>
+不要退出终端，不然本地无法访问 <a href="http://127.0.0.1:2900">http://127.0.0.1:2900</a></p>
+<p>
+<img src="/images/segfault_vps教程/png12.png" alt="/images/segfault_vps教程/png12.png" title="/images/segfault_vps教程/png12.png" /></p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  ssh -L2900:0:2900 -o <span class="s1">&#39;SetEnv SECRET=W7NHhPqWvpNKPTcpEgkez4P2&#39;</span> root@adm.segfault.net
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  startfb</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+然后在本地访问如下链接</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">http://127.0.0.1:2900</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+进入如下页面</p>
+<p>
+<img src="/images/segfault_vps教程/png13.png" alt="/images/segfault_vps教程/png13.png" title="/images/segfault_vps教程/png13.png" /></p>
+<p>
+本地浏览器访问 VPS 的文件浏览器界面默认显示的是 VPS 根目录下的内容，而终端登录进 VPS 默认是在家目录下，在 VPS 的文件浏览器中要进入家目录下需要双击进入 sec/root</p>
+<p>
+<img src="/images/segfault_vps教程/png14.png" alt="/images/segfault_vps教程/png14.png" title="/images/segfault_vps教程/png14.png" /></p>
+</div>
+</div>
+<div id="outline-container-headline-24" class="outline-4">
+<h4 id="headline-24">
+参考链接
+</h4>
+<div id="outline-text-headline-24" class="outline-text-4">
 <p>
 https://www.thc.org/segfault/</p>
 <p>
@@ -775,11 +824,11 @@ https://www.thc.org/segfault/gui/</p>
 </div>
 </div>
 </div>
-<div id="outline-container-headline-24" class="outline-2">
-<h2 id="headline-24">
+<div id="outline-container-headline-25" class="outline-2">
+<h2 id="headline-25">
 SSH 注意事项
 </h2>
-<div id="outline-text-headline-24" class="outline-text-2">
+<div id="outline-text-headline-25" class="outline-text-2">
 <p>
 首先无论是付费 vps 还是免费 vps，如果需要自己配置 ssh 连接的话一定要注意配置文件里除了默认允许密码登录授权的配置以外还要确认并配置允许 ssh 公钥登录授权，如果 vps 配置这两项都是 yes，那就不需要更改了，其他配置根据自己的需要进行修改</p>
 <p>
