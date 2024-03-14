@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-cn" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='## 如果想要运行的话，在文件开头设置好运行语言，然后再加载一下该文件 ``` (org-babel-do-load-languages &amp;#39;org-babel-load-languages &amp;#39;((C . t) )) ``` 加载命令是：`load-file` 以我正在的编辑的 `ts.org` 文件为'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='如果想要运行的话，在文件开头设置好运行语言，然后再加载一下该文件 1 2 3 4 (org-babel-do-load-languages &amp;#39;org-babel-load-languages &amp;#39;((C . t) )) 加载命令是： load-file 以我正在的编辑的 ts.org 文件为例 添加运行语言后，'>
 <title>emacs的org-mode下插入代码块教程</title>
 
 <link rel='canonical' href='https://ynhugo.github.io/p/emacs%E7%9A%84org-mode%E4%B8%8B%E6%8F%92%E5%85%A5%E4%BB%A3%E7%A0%81%E5%9D%97%E6%95%99%E7%A8%8B/'>
 
 <link rel="stylesheet" href="/scss/style.min.2328f6a64e9c190e18c4f69895d0081330e55c8210e9395d11068ea1d881517f.css"><meta property='og:title' content='emacs的org-mode下插入代码块教程'>
-<meta property='og:description' content='## 如果想要运行的话，在文件开头设置好运行语言，然后再加载一下该文件 ``` (org-babel-do-load-languages &amp;#39;org-babel-load-languages &amp;#39;((C . t) )) ``` 加载命令是：`load-file` 以我正在的编辑的 `ts.org` 文件为'>
+<meta property='og:description' content='如果想要运行的话，在文件开头设置好运行语言，然后再加载一下该文件 1 2 3 4 (org-babel-do-load-languages &amp;#39;org-babel-load-languages &amp;#39;((C . t) )) 加载命令是： load-file 以我正在的编辑的 ts.org 文件为例 添加运行语言后，'>
 <meta property='og:url' content='https://ynhugo.github.io/p/emacs%E7%9A%84org-mode%E4%B8%8B%E6%8F%92%E5%85%A5%E4%BB%A3%E7%A0%81%E5%9D%97%E6%95%99%E7%A8%8B/'>
 <meta property='og:site_name' content='ynblog'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='emacs' />
 <meta name="twitter:title" content="emacs的org-mode下插入代码块教程">
-<meta name="twitter:description" content="## 如果想要运行的话，在文件开头设置好运行语言，然后再加载一下该文件 ``` (org-babel-do-load-languages &amp;#39;org-babel-load-languages &amp;#39;((C . t) )) ``` 加载命令是：`load-file` 以我正在的编辑的 `ts.org` 文件为">
+<meta name="twitter:description" content="如果想要运行的话，在文件开头设置好运行语言，然后再加载一下该文件 1 2 3 4 (org-babel-do-load-languages &amp;#39;org-babel-load-languages &amp;#39;((C . t) )) 加载命令是： load-file 以我正在的编辑的 ts.org 文件为例 添加运行语言后，">
     <link rel="shortcut icon" href="/img/favicon.ico" />
 
     </head>
@@ -269,11 +269,15 @@
         <div class="widget--toc">
             <nav id="TableOfContents">
 <ul>
-<li><a href="#headline-1">conditional tangling</a>
-<ul>
-<li><a href="#headline-2">first subheading</a>
+<li><a href="#headline-1">如果想要运行的话，在文件开头设置好运行语言，然后再加载一下该文件</a>
 </li>
-<li><a href="#headline-3">second subheading</a>
+<li><a href="#headline-2">org-mode 根据不同条件tangle不同代码块</a>
+</li>
+<li><a href="#headline-3">conditional tangling</a>
+<ul>
+<li><a href="#headline-4">first subheading</a>
+</li>
+<li><a href="#headline-5">second subheading</a>
 </li>
 </ul>
 </li>
@@ -336,69 +340,58 @@
     
     
     
-<p>
-## 如果想要运行的话，在文件开头设置好运行语言，然后再加载一下该文件
-```
-(org-babel-do-load-languages
-&#39;org-babel-load-languages
-&#39;((C . t)
-))
-```
-加载命令是：`load-file`
-以我正在的编辑的 `ts.org` 文件为例
-添加运行语言后，加载文件，执行`M-x`，输入`load-file`后回车，输入当前文件名`ts.org`并回车加载成功。</p>
-<p>
-## 然后写代码块，以下是加了运行语言并运行的效果
-```</p>
-<div class="src src-c">
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span>  <span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">  <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	  <span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">	  <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;%d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">	  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}</span></span></span></code></pre></td></tr></table>
-</div>
-</div>
-</div>
-<pre class="example">
-2
-</pre>
-<p>```</p>
-<p>
-## org-mode根据不同条件tangle不同代码块
-```</p>
 <div id="outline-container-headline-1" class="outline-3">
 <h3 id="headline-1">
-conditional tangling
+如果想要运行的话，在文件开头设置好运行语言，然后再加载一下该文件
 </h3>
 <div id="outline-text-headline-1" class="outline-text-3">
 <div class="src src-emacs-lisp">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl">  <span class="p">(</span><span class="nb">setq</span> <span class="nv">tangle-tag</span> <span class="s">&#34;right&#34;</span><span class="p">)</span></span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl">  <span class="p">(</span><span class="nv">org-babel-do-load-languages</span>
+</span></span><span class="line"><span class="cl">   <span class="ss">&#39;org-babel-load-languages</span>
+</span></span><span class="line"><span class="cl">   <span class="o">&#39;</span><span class="p">((</span><span class="nv">C</span> <span class="o">.</span> <span class="no">t</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	 <span class="p">))</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
-<div id="outline-container-headline-2" class="outline-4">
-<h4 id="headline-2">
+<p>
+加载命令是： load-file
+以我正在的编辑的  ts.org 文件为例
+添加运行语言后，并设置 tangle，加载文件，执行 M-x，输入 load-file 后回车，输入当前文件名 ts.org 并回车加载成功。</p>
+</div>
+</div>
+<div id="outline-container-headline-2" class="outline-3">
+<h3 id="headline-2">
+org-mode 根据不同条件tangle不同代码块
+</h3>
+</div>
+<div id="outline-container-headline-3" class="outline-3">
+<h3 id="headline-3">
+conditional tangling
+</h3>
+<div id="outline-text-headline-3" class="outline-text-3">
+<div class="src src-emacs-lisp">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl">  <span class="p">(</span><span class="nb">setq</span> <span class="nv">tangle-tag</span> <span class="s">&#34;test&#34;</span><span class="p">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-4" class="outline-4">
+<h4 id="headline-4">
 first subheading&#xa0;&#xa0;&#xa0;<span class="tags"><span>left</span></span>
 </h4>
-<div id="outline-text-headline-2" class="outline-text-4">
+<div id="outline-text-headline-4" class="outline-text-4">
 <div class="src src-r">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -411,11 +404,11 @@ first subheading&#xa0;&#xa0;&#xa0;<span class="tags"><span>left</span></span>
 </div>
 </div>
 </div>
-<div id="outline-container-headline-3" class="outline-4">
-<h4 id="headline-3">
+<div id="outline-container-headline-5" class="outline-4">
+<h4 id="headline-5">
 second subheading&#xa0;&#xa0;&#xa0;<span class="tags"><span>right</span></span>
 </h4>
-<div id="outline-text-headline-3" class="outline-text-4">
+<div id="outline-text-headline-5" class="outline-text-4">
 <div class="src src-r">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -426,7 +419,6 @@ second subheading&#xa0;&#xa0;&#xa0;<span class="tags"><span>right</span></span>
 </div>
 </div>
 </div>
-<p>```</p>
 </div>
 </div>
 </div>
