@@ -642,14 +642,14 @@ linux 下 ssh 配置文件路径：/etc/ssh/sshd_config&lt;/p&gt;
 &lt;/h2&gt;
 &lt;div id=&#34;outline-text-headline-1&#34; class=&#34;outline-text-2&#34;&gt;
 &lt;p&gt;
-访问链接：&lt;a href=&#34;https://pastebin.com/hYY15zqV&#34;&gt;https://pastebin.com/hYY15zqV&lt;/a&gt;
-密码：i97pMawtP7
+访问链接：&lt;a href=&#34;https://pastebin.com/TsjFZdci&#34;&gt;https://pastebin.com/TsjFZdci&lt;/a&gt;
+密码：S9cB2uDuYW
 访问之后应首先拷贝代码内容，保存到本地为.sh脚本并授予执行权限
 脚本功能：优选 IP 并获取 CF 的分流节点
 执行方式：./yenao_ccf.sh | sed -n &amp;#34;13p&amp;#34; | cat &amp;gt; nodes.txt，通过这样的方式将节点保存到本地文件，如果要将本地文件中的节点拷贝出来，可以通过管道命令将节点内容导出到剪切板，如 cat nodes.txt | 由于 ssh 连接不稳定，如果想不断连接 vps 直到获取到节点为止，则可以这样执行脚本：
 while true; do ./yenao_ccf.sh | sed -n &amp;#34;13p&amp;#34; | cat &amp;gt; nodes.txt; if [ ! -s nodes.txt ]; then continue; else break; fi; done
 也可以这样执行脚本：
-while true; do  curl &lt;a href=&#34;https://api.filedoge.com/download/b4a69553782beab9fa5fd24a0a73ec1408ee07f0e2fff4434a919f84707697858d2b38cda794783cd8b6&#34;&gt;https://api.filedoge.com/download/b4a69553782beab9fa5fd24a0a73ec1408ee07f0e2fff4434a919f84707697858d2b38cda794783cd8b6&lt;/a&gt; | bash | sed -n &amp;#34;13p&amp;#34; | cat &amp;gt; nodes.txt; if [ ! -s nodes.txt ]; then continue; else break; fi; done
+while true; do  curl &lt;a href=&#34;https://api.filedoge.com/download/2af83d9416b14905c64356581b4273c7ef5bad05a2ff018d507a80fe9e55f17e89d1e87b2d1204926c9f&#34;&gt;https://api.filedoge.com/download/2af83d9416b14905c64356581b4273c7ef5bad05a2ff018d507a80fe9e55f17e89d1e87b2d1204926c9f&lt;/a&gt; | bash | sed -n &amp;#34;13p&amp;#34; | cat &amp;gt; nodes.txt; if [ ! -s nodes.txt ]; then continue; else break; fi; done
 节点转换查看：for i in $(cat nodes.txt | base64 -d); do echo $i | awk -F &amp;#34;//&amp;#34; &amp;#39;{print $2}&amp;#39; | base64 -d | jq; sleep 1; done
 支持终端：Termux、Cygwin、Linux&lt;/p&gt;
 &lt;/div&gt;
