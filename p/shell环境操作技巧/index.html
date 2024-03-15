@@ -295,6 +295,8 @@
 </li>
 <li><a href="#headline-13">在Shell脚本中，单个等号 `=` 和双等号 `==` 在条件判断时有一些区别</a>
 </li>
+<li><a href="#headline-14">处理 URL 中获取的变量的乱码 </a>
+</li>
 </ul>
 </nav>
         </div>
@@ -338,7 +340,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 3 分钟
+                    阅读时长: 4 分钟
                 </time>
             </div>
         
@@ -447,7 +449,7 @@ find + grep 查找关键词
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">   find ./ -name <span class="s2">&#34;*.cpp&#34;</span> -o -name <span class="s2">&#34;*.h&#34;</span> <span class="p">|</span> xargs grep --color<span class="o">=</span>auto -rwin <span class="s2">&#34;keyword&#34;</span></span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  find ./ -name <span class="s2">&#34;*.cpp&#34;</span> -o -name <span class="s2">&#34;*.h&#34;</span> <span class="p">|</span> xargs grep --color<span class="o">=</span>auto -rwin <span class="s2">&#34;keyword&#34;</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
@@ -613,6 +615,33 @@ linux查看cpu核数
 <li>双等号 `==` 支持更多高级的模式匹配功能，例如正则表达式匹配。</li>
 </ul>
 <p>总的来说，在Bash脚本中推荐使用双等号 `==` 来进行字符串比较，更加灵活且符合习惯。如果你不确定当前环境是否支持双等号 `==`，可以使用单个等号 `=` 来进行字符串比较。</p>
+</div>
+</div>
+<div id="outline-container-headline-14" class="outline-4">
+<h4 id="headline-14">
+处理 URL 中获取的变量的乱码 
+</h4>
+<div id="outline-text-headline-14" class="outline-text-4">
+<p>
+例如变量 cfv 打印到终端上的是&#34;v2.2.5&#34;，但是在用 wget 下载的时候，链接中 cfv 的值就变成了&#34;v2.2.5%0D&#34;这是为什么呢</p>
+<p>
+在这样的情况下，出现链接中包含了 `%0D` 的原因可能是因为在获取 `cfv` 变量的过程中，字符串结尾包含了回车符（Carriage Return）。</p>
+<p>
+回车符通常用 `\r` 表示，在 URL 中，`\r` 会被转义成 `%0D`。这可能是由于在从网页内容中提取 `cfv` 变量时，结尾包含了回车符导致的。在处理字符串时，特别是从网页内容中提取的字符串，需要格外注意是否包含了不可见的控制字符，如回车符或换行符。</p>
+<p>
+为了解决这个问题，可以在提取 `cfv` 变量后，对其进行处理以去除结尾的回车符或其他不可见字符。在 Bash 脚本中，可以使用 `sed` 命令来去除结尾的回车符，例如：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nv">cfv</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$cfv</span> <span class="p">|</span> sed <span class="s1">&#39;s/\r//g&#39;</span><span class="k">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+这样处理后，`cfv` 变量中就不会包含回车符，从而避免在 URL 中出现 `%0D` 的情况。</p>
 </div>
 </div>
 
