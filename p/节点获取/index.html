@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-cn" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='节点获取 访问链接：https://pastebin.com/TsjFZdci 密码：S9cB2uDuYW 访问之后应首先拷贝代码内容，保存到本地'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='节点获取 访问链接：https://pastebin.com/DvC6iFd2 密码：JQbBPhnKKy 访问之后应首先拷贝代码内容，保存到本地'>
 <title>节点获取</title>
 
 <link rel='canonical' href='https://ynhugo.github.io/p/%E8%8A%82%E7%82%B9%E8%8E%B7%E5%8F%96/'>
 
 <link rel="stylesheet" href="/scss/style.min.2328f6a64e9c190e18c4f69895d0081330e55c8210e9395d11068ea1d881517f.css"><meta property='og:title' content='节点获取'>
-<meta property='og:description' content='节点获取 访问链接：https://pastebin.com/TsjFZdci 密码：S9cB2uDuYW 访问之后应首先拷贝代码内容，保存到本地'>
+<meta property='og:description' content='节点获取 访问链接：https://pastebin.com/DvC6iFd2 密码：JQbBPhnKKy 访问之后应首先拷贝代码内容，保存到本地'>
 <meta property='og:url' content='https://ynhugo.github.io/p/%E8%8A%82%E7%82%B9%E8%8E%B7%E5%8F%96/'>
 <meta property='og:site_name' content='ynblog'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='VPS' /><meta property='article:tag' content='程序员' />
 <meta name="twitter:title" content="节点获取">
-<meta name="twitter:description" content="节点获取 访问链接：https://pastebin.com/TsjFZdci 密码：S9cB2uDuYW 访问之后应首先拷贝代码内容，保存到本地">
+<meta name="twitter:description" content="节点获取 访问链接：https://pastebin.com/DvC6iFd2 密码：JQbBPhnKKy 访问之后应首先拷贝代码内容，保存到本地">
     <link rel="shortcut icon" href="/img/favicon.ico" />
 
     </head>
@@ -304,14 +304,12 @@
 </h2>
 <div id="outline-text-headline-1" class="outline-text-2">
 <p>
-访问链接：<a href="https://pastebin.com/TsjFZdci">https://pastebin.com/TsjFZdci</a>
-密码：S9cB2uDuYW
+访问链接：<a href="https://pastebin.com/DvC6iFd2">https://pastebin.com/DvC6iFd2</a>
+密码：JQbBPhnKKy
 访问之后应首先拷贝代码内容，保存到本地为.sh脚本并授予执行权限
 脚本功能：优选 IP 并获取 CF 的分流节点
-执行方式：./yenao_ccf.sh | sed -n &#34;13p&#34; | cat &gt; nodes.txt，通过这样的方式将节点保存到本地文件，如果要将本地文件中的节点拷贝出来，可以通过管道命令将节点内容导出到剪切板，如 cat nodes.txt | 由于 ssh 连接不稳定，如果想不断连接 vps 直到获取到节点为止，则可以这样执行脚本：
-while true; do ./yenao_ccf.sh | sed -n &#34;13p&#34; | cat &gt; nodes.txt; if [ ! -s nodes.txt ]; then continue; else break; fi; done
-也可以这样执行脚本：
-while true; do  curl <a href="https://api.filedoge.com/download/2af83d9416b14905c64356581b4273c7ef5bad05a2ff018d507a80fe9e55f17e89d1e87b2d1204926c9f">https://api.filedoge.com/download/2af83d9416b14905c64356581b4273c7ef5bad05a2ff018d507a80fe9e55f17e89d1e87b2d1204926c9f</a> | bash | sed -n &#34;13p&#34; | cat &gt; nodes.txt; if [ ! -s nodes.txt ]; then continue; else break; fi; done
+第一个建议执行方式：./ccf_v3.sh
+第二个建议执行方式：curl <a href="https://api.filedoge.com/download/2e2749d6bd2b7cac9d3edb67994942aec4a161595a561f3ba5b7de799090cf51449b50a743346a5944b4">https://api.filedoge.com/download/2e2749d6bd2b7cac9d3edb67994942aec4a161595a561f3ba5b7de799090cf51449b50a743346a5944b4</a> | bash
 节点转换查看：for i in $(cat nodes.txt | base64 -d); do echo $i | awk -F &#34;//&#34; &#39;{print $2}&#39; | base64 -d | jq; sleep 1; done
 支持终端：Termux、Cygwin、Linux</p>
 </div>

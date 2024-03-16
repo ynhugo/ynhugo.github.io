@@ -484,25 +484,54 @@ nc 是 Linux 下强大的网络命令行工具，主要用于 TCP、UDP、UNIX�
 它被设计成可以由其他程序灵活驱动可靠的后台工具，拥有 &amp;#34;瑞士军刀&amp;#34; 的美称，每个系统管理员都应该掌握它&lt;/p&gt;
 &lt;div id=&#34;outline-container-headline-2&#34; class=&#34;outline-4&#34;&gt;
 &lt;h4 id=&#34;headline-2&#34;&gt;
-安装
+nc -h
 &lt;/h4&gt;
 &lt;div id=&#34;outline-text-headline-2&#34; class=&#34;outline-text-4&#34;&gt;
 &lt;p&gt;
-以下是 nc工具的安装,完成后执行 nc –version命令, 如果返回nc的版本信息表示安装成功&lt;/p&gt;
-&lt;div class=&#34;src src-bash&#34;&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  yum install nc
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;root@ecs-centos-7 ~&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;# nc --version&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  Ncat: Version 7.50 &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt; https://nmap.org/ncat &lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
+&lt;code class=&#34;verbatim&#34;&gt;nc&lt;/code&gt; 命令的帮助手册提供了以下信息：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;连接到某处：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;语法：=nc [-options] hostname port[s] [ports] …=&lt;/li&gt;
+&lt;li&gt;说明：用于向指定主机和端口发起连接。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;监听传入连接：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;语法：=nc -l -p port [-options] [hostname] [port]=&lt;/li&gt;
+&lt;li&gt;说明：在指定端口上监听传入连接。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;选项包括：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code class=&#34;verbatim&#34;&gt;-c shell commands&lt;/code&gt; ：作为 &lt;code class=&#34;verbatim&#34;&gt;-e&lt;/code&gt; 使用，用于执行 shell 命令（潜在危险）&lt;/li&gt;
+&lt;li&gt;&lt;code class=&#34;verbatim&#34;&gt;-e filename&lt;/code&gt; ：连接后执行指定程序（潜在危险）&lt;/li&gt;
+&lt;li&gt;&lt;code class=&#34;verbatim&#34;&gt;-b&lt;/code&gt; ：允许广播&lt;/li&gt;
+&lt;li&gt;&lt;code class=&#34;verbatim&#34;&gt;-g gateway&lt;/code&gt; ：指定源站点路由跳数，最多 8 个&lt;/li&gt;
+&lt;li&gt;&lt;code class=&#34;verbatim&#34;&gt;-G num&lt;/code&gt; ：设置源站点路由指针：4、8、12 等&lt;/li&gt;
+&lt;li&gt;&lt;code class=&#34;verbatim&#34;&gt;-h&lt;/code&gt; ：显示帮助信息&lt;/li&gt;
+&lt;li&gt;&lt;code class=&#34;verbatim&#34;&gt;-i secs&lt;/code&gt; ：发送行或扫描端口的延迟间隔&lt;/li&gt;
+&lt;li&gt;&lt;code class=&#34;verbatim&#34;&gt;-k&lt;/code&gt; ：在套接字上设置保持活动选项&lt;/li&gt;
+&lt;li&gt;&lt;code class=&#34;verbatim&#34;&gt;-l&lt;/code&gt; ：监听模式，用于接受传入连接&lt;/li&gt;
+&lt;li&gt;&lt;code class=&#34;verbatim&#34;&gt;-n&lt;/code&gt; ：仅使用数字 IP 地址，不进行 DNS 解析&lt;/li&gt;
+&lt;li&gt;&lt;code class=&#34;verbatim&#34;&gt;-o file&lt;/code&gt; ：以十六进制转储流量&lt;/li&gt;
+&lt;li&gt;&lt;code class=&#34;verbatim&#34;&gt;-p port&lt;/code&gt; ：本地端口号&lt;/li&gt;
+&lt;li&gt;&lt;code class=&#34;verbatim&#34;&gt;-r&lt;/code&gt; ：随机化本地和远程端口&lt;/li&gt;
+&lt;li&gt;&lt;code class=&#34;verbatim&#34;&gt;-q secs&lt;/code&gt; ：在标准输入 EOF 后退出，并延迟指定秒数&lt;/li&gt;
+&lt;li&gt;&lt;code class=&#34;verbatim&#34;&gt;-s addr&lt;/code&gt; ：本地源地址&lt;/li&gt;
+&lt;li&gt;&lt;code class=&#34;verbatim&#34;&gt;-T tos&lt;/code&gt; ：设置服务类型&lt;/li&gt;
+&lt;li&gt;&lt;code class=&#34;verbatim&#34;&gt;-t&lt;/code&gt; ：应答 TELNET 协商&lt;/li&gt;
+&lt;li&gt;&lt;code class=&#34;verbatim&#34;&gt;-u&lt;/code&gt; ：UDP 模式&lt;/li&gt;
+&lt;li&gt;&lt;code class=&#34;verbatim&#34;&gt;-v&lt;/code&gt; ：详细输出（使用两次更详细）&lt;/li&gt;
+&lt;li&gt;&lt;code class=&#34;verbatim&#34;&gt;-w secs&lt;/code&gt; ：连接和最终网络读取的超时时间&lt;/li&gt;
+&lt;li&gt;&lt;code class=&#34;verbatim&#34;&gt;-C&lt;/code&gt; ：将 CRLF 发送为行结束符&lt;/li&gt;
+&lt;li&gt;&lt;code class=&#34;verbatim&#34;&gt;-z&lt;/code&gt; ：零 I/O 模式（用于扫描）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id=&#34;outline-container-headline-3&#34; class=&#34;outline-4&#34;&gt;
@@ -522,15 +551,19 @@ nc 是 Linux 下强大的网络命令行工具，主要用于 TCP、UDP、UNIX�
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;9
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;root@ecs-centos-7 ~&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;# nc -z -v -w 3 10.3.3.3 22&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  Ncat: Version 7.50 &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt; https://nmap.org/ncat &lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  Ncat: Connected to 10.3.3.3 22:22.
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  Ncat: &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt; bytes sent, &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt; bytes received in 0.03 seconds.
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;root@ecs-centos-7 ~&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;# nc -z -v -w 3 10.3.3.3 22 6000&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  Ncat: Version 7.50 &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt; https://nmap.org/ncat &lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  Ncat: Connection refused.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ┌──&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;root💀adm-RecipeKit&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;~&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  └─# nc -z -v -w &lt;span class=&#34;m&#34;&gt;3&lt;/span&gt; segfault.net &lt;span class=&#34;m&#34;&gt;22&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  DNS fwd/rev mismatch: segfault.net !&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; one.one.one.one
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  segfault.net &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;144.76.220.20&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;22&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;ssh&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; open
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ┌──&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;root💀adm-RecipeKit&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;~&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  └─# nc -z -v -w &lt;span class=&#34;m&#34;&gt;3&lt;/span&gt; segfault.net &lt;span class=&#34;m&#34;&gt;6000&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  DNS fwd/rev mismatch: segfault.net !&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; one.one.one.one
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  segfault.net &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;144.76.220.20&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;6000&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;x11&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; : Connection refused&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -543,7 +576,7 @@ nc 是 Linux 下强大的网络命令行工具，主要用于 TCP、UDP、UNIX�
 &lt;p&gt;
 从上面的结果可以看出，目标服务器上 22 端口是开启的，6000 端口是关闭的&lt;/p&gt;
 &lt;p&gt;
-例子中扫描的是 TCP 协议的端口，如果要扫描 UDP 协议的端口，需要加上 -u 选项，如果换成 UDP端口的话，上面的命令就会变成 nc -uz -v -w 3 10.3.3.3 22 &lt;/p&gt;
+例子中扫描的是 TCP 协议的端口，如果要扫描 UDP 协议的端口，需要加上 -u 选项，如果换成 UDP 端口的话，上面的命令就会变成 nc -uz -v -w 3 segfault.net 22 &lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id=&#34;outline-container-headline-4&#34; class=&#34;outline-4&#34;&gt;
@@ -552,51 +585,252 @@ nc 是 Linux 下强大的网络命令行工具，主要用于 TCP、UDP、UNIX�
 &lt;/h4&gt;
 &lt;div id=&#34;outline-text-headline-4&#34; class=&#34;outline-text-4&#34;&gt;
 &lt;p&gt;
-机器A的终端开启端口侦听，机器B连接A侦听的端口并向A发送数据。具体过程如下：&lt;/p&gt;
-&lt;p&gt;
-63 机器相当于一个简易的命令行聊天服务器，64机器相当于客户端的功能，默认使用 TCP 协议连接服务器&lt;/p&gt;
-&lt;p&gt;
-可以看到，63 机器在本地开启一个侦听 8000 端口的服务，64 机器连接 63 机器的 8000 端口，连接成功之后可以互相发送数据了&lt;/p&gt;
+机器 A 的终端开启端口侦听，机器 B 连接 A 侦听的端口并向A发送数据。具体过程如下：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;机器 A 相当于一个简易的命令行聊天服务器，机器 B 相当于客户端的功能，默认使用 TCP 协议连接服务器&lt;/li&gt;
+&lt;li&gt;机器 A 在本地开启一个侦听 8000 端口的服务，机器 B 连接 机器 A 的 8000 端口，连接成功之后可以互相发送数据了&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div id=&#34;outline-container-headline-5&#34; class=&#34;outline-5&#34;&gt;
+&lt;h5 id=&#34;headline-5&#34;&gt;
+机器 A
+&lt;/h5&gt;
+&lt;div id=&#34;outline-text-headline-5&#34; class=&#34;outline-text-5&#34;&gt;
+&lt;div class=&#34;src src-bash&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ┌──&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;root💀adm-RecipeKit&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;~&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  └─# nc -l -p &lt;span class=&#34;m&#34;&gt;8000&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nb&#34;&gt;test&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;m&#34;&gt;2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;m&#34;&gt;3&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;m&#34;&gt;4&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;m&#34;&gt;5&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-5&#34; class=&#34;outline-4&#34;&gt;
-&lt;h4 id=&#34;headline-5&#34;&gt;
-传输文件
-&lt;/h4&gt;
-&lt;div id=&#34;outline-text-headline-5&#34; class=&#34;outline-text-4&#34;&gt;
-&lt;p&gt;
-机器A和机器B之间可以通过 nc 命令传输文件,具体步骤如下：&lt;/p&gt;
-&lt;p&gt;
-63 机器作为服务器，侦听 8000 端口并重定向到 out.txt 文件, 64 机器连接 63 成功之后，自动把 input.txt 文件传输到服务器&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-6&#34; class=&#34;outline-4&#34;&gt;
-&lt;h4 id=&#34;headline-6&#34;&gt;
-创建后门
-&lt;/h4&gt;
-&lt;div id=&#34;outline-text-headline-6&#34; class=&#34;outline-text-4&#34;&gt;
-&lt;p&gt;
-可以在系统中创建后门执行bash命令的服务,因为涉及到系统安全性问题，所以生产环境要慎用，不过平时在内网开发环境中用
-来测试的话就很方便了，具体的使用步骤如下：&lt;/p&gt;
-&lt;p&gt;
-上面的例子中，63 机器开启端口 8000 的本地服务，服务会使用 /bin/bash 执行收到的命令，64 机器客户端连上 63 机器后，输入任意的命令，都相当于在63机器上执行，命令结果返回给64机器&lt;/p&gt;
-&lt;p&gt;
-说明：-e 选项默认使用的是 /bin/bash 执行命令, 这里的 -e 也可以换成 -c ,唯一区别是 -c 默认使用的是 /bin/sh 执行命令&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-6&#34; class=&#34;outline-5&#34;&gt;
+&lt;h5 id=&#34;headline-6&#34;&gt;
+机器 B
+&lt;/h5&gt;
+&lt;div id=&#34;outline-text-headline-6&#34; class=&#34;outline-text-5&#34;&gt;
+&lt;div class=&#34;src src-bash&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ┌──&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;root💀adm-RecipeKit&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;~&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  └─# nc 100.126.224.24 &lt;span class=&#34;m&#34;&gt;8000&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nb&#34;&gt;test&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;m&#34;&gt;2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;m&#34;&gt;3&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;m&#34;&gt;4&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;m&#34;&gt;5&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id=&#34;outline-container-headline-7&#34; class=&#34;outline-4&#34;&gt;
 &lt;h4 id=&#34;headline-7&#34;&gt;
-远程执行脚本
+传输文件
 &lt;/h4&gt;
 &lt;div id=&#34;outline-text-headline-7&#34; class=&#34;outline-text-4&#34;&gt;
 &lt;p&gt;
-nc 支持远程执行 shell 脚本和 lua 脚本&lt;/p&gt;
+机器 A 和机器 B 之间可以通过 nc 命令传输文件,具体步骤如下：&lt;/p&gt;
+&lt;p&gt;
+机器 A 作为服务器，侦听 8000 端口并重定向到 out.txt 文件, 机器 B 连接机器 A  成功之后，自动把 input.txt 文件传输到服务器&lt;/p&gt;
 &lt;div id=&#34;outline-container-headline-8&#34; class=&#34;outline-5&#34;&gt;
 &lt;h5 id=&#34;headline-8&#34;&gt;
-shell 脚本
+机器 A
 &lt;/h5&gt;
 &lt;div id=&#34;outline-text-headline-8&#34; class=&#34;outline-text-5&#34;&gt;
-&lt;p&gt;脚本 s.sh 脚本内容如下：&lt;/p&gt;
+&lt;div class=&#34;src src-bash&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  nc -l -p &lt;span class=&#34;m&#34;&gt;8000&lt;/span&gt; &amp;gt; out.txt&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-9&#34; class=&#34;outline-5&#34;&gt;
+&lt;h5 id=&#34;headline-9&#34;&gt;
+机器 B
+&lt;/h5&gt;
+&lt;div id=&#34;outline-text-headline-9&#34; class=&#34;outline-text-5&#34;&gt;
+&lt;div class=&#34;src src-bash&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  nc 100.126.224.24 &lt;span class=&#34;m&#34;&gt;8000&lt;/span&gt; &amp;lt; ts.sh&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-10&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-10&#34;&gt;
+创建后门
+&lt;/h4&gt;
+&lt;div id=&#34;outline-text-headline-10&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;p&gt;
+可以在系统中创建后门执行 bash 命令的服务,因为涉及到系统安全性问题，所以生产环境要慎用，不过平时在内网开发环境中用
+来测试的话就很方便了，具体的使用步骤如下：&lt;/p&gt;
+&lt;p&gt;
+上面的例子中，机器 A 开启端口 8000 的本地服务，服务会使用 /bin/bash 执行收到的命令，机器 B 客户端连上 机器 A 后，输入任意的命令，都相当于在63机器上执行，命令结果返回给64机器&lt;/p&gt;
+&lt;p&gt;
+说明：-e 选项默认使用的是 /bin/bash 执行命令, 这里的 -e 也可以换成 -c ,唯一区别是 -c 默认使用的是 /bin/sh 执行命令&lt;/p&gt;
+&lt;div id=&#34;outline-container-headline-11&#34; class=&#34;outline-5&#34;&gt;
+&lt;h5 id=&#34;headline-11&#34;&gt;
+机器 A
+&lt;/h5&gt;
+&lt;div id=&#34;outline-text-headline-11&#34; class=&#34;outline-text-5&#34;&gt;
+&lt;div class=&#34;src src-bash&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ┌──&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;root💀adm-RecipeKit&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;~&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  └─# nc -l -p &lt;span class=&#34;m&#34;&gt;8000&lt;/span&gt; -e /bin/bash&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-12&#34; class=&#34;outline-5&#34;&gt;
+&lt;h5 id=&#34;headline-12&#34;&gt;
+机器 B
+&lt;/h5&gt;
+&lt;div id=&#34;outline-text-headline-12&#34; class=&#34;outline-text-5&#34;&gt;
+&lt;div class=&#34;src src-bash&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;26
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;27
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;28
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;29
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;30
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;31
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;32
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;33
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;34
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;35
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ┌──&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;root💀adm-RecipeKit&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;~&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  └─# nc 100.126.224.24 &lt;span class=&#34;m&#34;&gt;8000&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ls
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  CloudflareST
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  Desktop
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  Documents
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  Downloads
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  Music
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  Pictures
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  Public
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  Templates
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  Videos
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  info.txt
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  out.txt
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  test.bin
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ts.sh
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  wordlists
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  yenao_ccf.sh
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ls -l
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  total &lt;span class=&#34;m&#34;&gt;28&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  drwxr-xr-x &lt;span class=&#34;m&#34;&gt;2&lt;/span&gt; root root      &lt;span class=&#34;m&#34;&gt;4096&lt;/span&gt; Mar &lt;span class=&#34;m&#34;&gt;14&lt;/span&gt; 18:13 CloudflareST
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  drwxr-xr-x &lt;span class=&#34;m&#34;&gt;2&lt;/span&gt; root root      &lt;span class=&#34;m&#34;&gt;4096&lt;/span&gt; Feb &lt;span class=&#34;m&#34;&gt;22&lt;/span&gt; 05:30 Desktop
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  drwxr-xr-x &lt;span class=&#34;m&#34;&gt;2&lt;/span&gt; root root        &lt;span class=&#34;m&#34;&gt;10&lt;/span&gt; Feb &lt;span class=&#34;m&#34;&gt;22&lt;/span&gt; 05:48 Documents
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  drwxr-xr-x &lt;span class=&#34;m&#34;&gt;2&lt;/span&gt; root root        &lt;span class=&#34;m&#34;&gt;10&lt;/span&gt; Feb &lt;span class=&#34;m&#34;&gt;22&lt;/span&gt; 05:48 Downloads
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  drwxr-xr-x &lt;span class=&#34;m&#34;&gt;2&lt;/span&gt; root root        &lt;span class=&#34;m&#34;&gt;10&lt;/span&gt; Feb &lt;span class=&#34;m&#34;&gt;22&lt;/span&gt; 05:48 Music
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  drwxr-xr-x &lt;span class=&#34;m&#34;&gt;2&lt;/span&gt; root root        &lt;span class=&#34;m&#34;&gt;10&lt;/span&gt; Feb &lt;span class=&#34;m&#34;&gt;22&lt;/span&gt; 05:48 Pictures
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  drwxr-xr-x &lt;span class=&#34;m&#34;&gt;2&lt;/span&gt; root root        &lt;span class=&#34;m&#34;&gt;10&lt;/span&gt; Feb &lt;span class=&#34;m&#34;&gt;22&lt;/span&gt; 05:48 Public
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  drwxr-xr-x &lt;span class=&#34;m&#34;&gt;2&lt;/span&gt; root root        &lt;span class=&#34;m&#34;&gt;10&lt;/span&gt; Feb &lt;span class=&#34;m&#34;&gt;22&lt;/span&gt; 05:48 Templates
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  drwxr-xr-x &lt;span class=&#34;m&#34;&gt;2&lt;/span&gt; root root        &lt;span class=&#34;m&#34;&gt;10&lt;/span&gt; Feb &lt;span class=&#34;m&#34;&gt;22&lt;/span&gt; 05:48 Videos
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  -rw-r--r-- &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; root root         &lt;span class=&#34;m&#34;&gt;7&lt;/span&gt; Mar &lt;span class=&#34;m&#34;&gt;15&lt;/span&gt; 01:46 info.txt
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  -rw-r--r-- &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; root root         &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt; Mar &lt;span class=&#34;m&#34;&gt;16&lt;/span&gt; 08:48 out.txt
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  -rw-r--r-- &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; root root &lt;span class=&#34;m&#34;&gt;209715200&lt;/span&gt; Mar &lt;span class=&#34;m&#34;&gt;14&lt;/span&gt; 03:17 test.bin
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  -rwxr-xr-x &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; root root       &lt;span class=&#34;m&#34;&gt;427&lt;/span&gt; Mar &lt;span class=&#34;m&#34;&gt;14&lt;/span&gt; 17:49 ts.sh
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  lrwxrwxrwx &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; root root        &lt;span class=&#34;m&#34;&gt;20&lt;/span&gt; Feb &lt;span class=&#34;m&#34;&gt;22&lt;/span&gt; 05:30 wordlists -&amp;gt; /usr/share/wordlists
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  -rwxr-xr-x &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; root root      &lt;span class=&#34;m&#34;&gt;3596&lt;/span&gt; Mar &lt;span class=&#34;m&#34;&gt;15&lt;/span&gt; 02:17 yenao_ccf.sh&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-13&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-13&#34;&gt;
+远程执行脚本
+&lt;/h4&gt;
+&lt;div id=&#34;outline-text-headline-13&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;p&gt;
+nc 支持远程执行 shell 脚本和 lua 脚本&lt;/p&gt;
+&lt;div id=&#34;outline-container-headline-14&#34; class=&#34;outline-5&#34;&gt;
+&lt;h5 id=&#34;headline-14&#34;&gt;
+shell 脚本
+&lt;/h5&gt;
+&lt;div id=&#34;outline-text-headline-14&#34; class=&#34;outline-text-5&#34;&gt;
+&lt;p&gt;
+脚本 s.sh 脚本内容如下：&lt;/p&gt;
 &lt;div class=&#34;src src-bash&#34;&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -613,28 +847,11 @@ shell 脚本
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-9&#34; class=&#34;outline-5&#34;&gt;
-&lt;h5 id=&#34;headline-9&#34;&gt;
+&lt;div id=&#34;outline-container-headline-15&#34; class=&#34;outline-5&#34;&gt;
+&lt;h5 id=&#34;headline-15&#34;&gt;
 服务器端
 &lt;/h5&gt;
-&lt;div id=&#34;outline-text-headline-9&#34; class=&#34;outline-text-5&#34;&gt;
-&lt;div class=&#34;src src-bash&#34;&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  nc -l 192.168.70.63 &lt;span class=&#34;m&#34;&gt;8000&lt;/span&gt; --sh-exec ./s.sh&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-10&#34; class=&#34;outline-5&#34;&gt;
-&lt;h5 id=&#34;headline-10&#34;&gt;
-客户端
-&lt;/h5&gt;
-&lt;div id=&#34;outline-text-headline-10&#34; class=&#34;outline-text-5&#34;&gt;
+&lt;div id=&#34;outline-text-headline-15&#34; class=&#34;outline-text-5&#34;&gt;
 &lt;div class=&#34;src src-bash&#34;&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -642,7 +859,28 @@ shell 脚本
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;cgyx@cghost35 ~&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;$ nc 192.168.70.63 &lt;span class=&#34;m&#34;&gt;8000&lt;/span&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ┌──&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;root💀adm-RecipeKit&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;~&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  └─# nc -l 100.126.224.24 -p &lt;span class=&#34;m&#34;&gt;8000&lt;/span&gt; -e ./s.sh&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-16&#34; class=&#34;outline-5&#34;&gt;
+&lt;h5 id=&#34;headline-16&#34;&gt;
+客户端
+&lt;/h5&gt;
+&lt;div id=&#34;outline-text-headline-16&#34; class=&#34;outline-text-5&#34;&gt;
+&lt;div class=&#34;src src-bash&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ┌──&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;root💀adm-RecipeKit&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;~&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  └─# nc 100.126.224.24 &lt;span class=&#34;m&#34;&gt;8000&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  this is a shell programming...&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -651,72 +889,11 @@ shell 脚本
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-11&#34; class=&#34;outline-4&#34;&gt;
-&lt;h4 id=&#34;headline-11&#34;&gt;
-lua 脚本
-&lt;/h4&gt;
-&lt;div id=&#34;outline-text-headline-11&#34; class=&#34;outline-text-4&#34;&gt;
-&lt;p&gt;
-脚本 t.lua 内容如下:&lt;/p&gt;
-&lt;div class=&#34;src src-bash&#34;&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nv&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;5&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nv&#34;&gt;y&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;3&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nv&#34;&gt;h&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; x + y
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  print&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;this is a lua test..h:&amp;#39;&lt;/span&gt;,h&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-12&#34; class=&#34;outline-5&#34;&gt;
-&lt;h5 id=&#34;headline-12&#34;&gt;
-服务器端
-&lt;/h5&gt;
-&lt;div id=&#34;outline-text-headline-12&#34; class=&#34;outline-text-5&#34;&gt;
-&lt;div class=&#34;src src-bash&#34;&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  nc -l 192.168.70.63 &lt;span class=&#34;m&#34;&gt;8000&lt;/span&gt; --lua-exec t.lua&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-13&#34; class=&#34;outline-5&#34;&gt;
-&lt;h5 id=&#34;headline-13&#34;&gt;
-客户端
-&lt;/h5&gt;
-&lt;div id=&#34;outline-text-headline-13&#34; class=&#34;outline-text-5&#34;&gt;
-&lt;div class=&#34;src src-bash&#34;&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;cgyx@cghost35 ~&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;$ nc 192.168.70.63 &lt;span class=&#34;m&#34;&gt;8000&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  this is a lua test..h:  &lt;span class=&#34;m&#34;&gt;8&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-14&#34; class=&#34;outline-4&#34;&gt;
-&lt;h4 id=&#34;headline-14&#34;&gt;
+&lt;div id=&#34;outline-container-headline-17&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-17&#34;&gt;
 Web服务器
 &lt;/h4&gt;
-&lt;div id=&#34;outline-text-headline-14&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;div id=&#34;outline-text-headline-17&#34; class=&#34;outline-text-4&#34;&gt;
 &lt;p&gt;
 nc 可以当做简易的 web 服务器，现服务器本地有一个 index.html 文件，内容如下&lt;/p&gt;
 &lt;div class=&#34;src src-html&#34;&gt;
@@ -753,13 +930,59 @@ nc 可以当做简易的 web 服务器，现服务器本地有一个 index.html 
 此时，服务器端的输出如下：&lt;/p&gt;
 &lt;p&gt;
 注意：-k 选项是指监听模式接受多个连接,如果没有指定 -k 选项的话，浏览器访问一次，服务器就会退出了&lt;/p&gt;
+&lt;div id=&#34;outline-container-headline-18&#34; class=&#34;outline-5&#34;&gt;
+&lt;h5 id=&#34;headline-18&#34;&gt;
+机器 A
+&lt;/h5&gt;
+&lt;div id=&#34;outline-text-headline-18&#34; class=&#34;outline-text-5&#34;&gt;
+&lt;div class=&#34;src src-bash&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ┌──&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;root💀adm-RecipeKit&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;~&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  └─# nc -l 100.126.224.24 -p &lt;span class=&#34;m&#34;&gt;80&lt;/span&gt; &amp;lt; index.html
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  GET / HTTP/1.1
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  Host: 100.126.224.24
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  User-Agent: Mozilla/5.0 &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;Windows NT 10.0&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; Win64&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; x64&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; AppleWebKit/537.36 &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;KHTML, like Gecko&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; Chrome/58.0.3029.110 Safari/537.3
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  Accept: */*&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-15&#34; class=&#34;outline-4&#34;&gt;
-&lt;h4 id=&#34;headline-15&#34;&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-19&#34; class=&#34;outline-5&#34;&gt;
+&lt;h5 id=&#34;headline-19&#34;&gt;
+机器 B
+&lt;/h5&gt;
+&lt;div id=&#34;outline-text-headline-19&#34; class=&#34;outline-text-5&#34;&gt;
+&lt;div class=&#34;src src-bash&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ┌──&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;root💀adm-RecipeKit&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;~&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  └─# curl -A &lt;span class=&#34;s2&#34;&gt;&amp;#34;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3&amp;#34;&lt;/span&gt; 100.126.224.24 &lt;span class=&#34;m&#34;&gt;80&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-20&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-20&#34;&gt;
 作为浏览器
 &lt;/h4&gt;
-&lt;div id=&#34;outline-text-headline-15&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;div id=&#34;outline-text-headline-20&#34; class=&#34;outline-text-4&#34;&gt;
 &lt;p&gt;
 nc 不仅可以当作web服务器，还可以当作浏览器发送HTTP请求&lt;/p&gt;
 &lt;p&gt;
@@ -780,17 +1003,19 @@ nc 不仅可以当作web服务器，还可以当作浏览器发送HTTP请求&lt;
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;cgyx@cghost35 ~&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;$ nc www.baidu.com &lt;span class=&#34;m&#34;&gt;80&lt;/span&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ┌──&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;root💀adm-RecipeKit&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;~&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  └─# nc www.baidu.com &lt;span class=&#34;m&#34;&gt;80&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  GET / HTTP/1.0
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  HTTP/1.0 &lt;span class=&#34;m&#34;&gt;200&lt;/span&gt; OK
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  Accept-Ranges: bytes
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  Cache-Control: no-cache
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  Content-Length: &lt;span class=&#34;m&#34;&gt;14615&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  Content-Length: &lt;span class=&#34;m&#34;&gt;9508&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  Content-Type: text/html
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  Date: Thu, &lt;span class=&#34;m&#34;&gt;16&lt;/span&gt; Jul &lt;span class=&#34;m&#34;&gt;2020&lt;/span&gt; 06:49:16 GMT
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  Date: Sat, &lt;span class=&#34;m&#34;&gt;16&lt;/span&gt; Mar &lt;span class=&#34;m&#34;&gt;2024&lt;/span&gt; 09:19:44 GMT
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  P3p: &lt;span class=&#34;nv&#34;&gt;CP&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34; OTI DSP COR IVA OUR IND COM &amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  P3p: &lt;span class=&#34;nv&#34;&gt;CP&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34; OTI DSP COR IVA OUR IND COM &amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  Pragma: no-cache
@@ -800,11 +1025,11 @@ nc 不仅可以当作web服务器，还可以当作浏览器发送HTTP请求&lt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-16&#34; class=&#34;outline-4&#34;&gt;
-&lt;h4 id=&#34;headline-16&#34;&gt;
+&lt;div id=&#34;outline-container-headline-21&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-21&#34;&gt;
 查找运行在端口上的服务
 &lt;/h4&gt;
-&lt;div id=&#34;outline-text-headline-16&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;div id=&#34;outline-text-headline-21&#34; class=&#34;outline-text-4&#34;&gt;
 &lt;p&gt;
 nc 可以扫描指定IP上指定端口是否开启，那能否查找到指定IP上运行于指定端口上的服务呢？ 答案是肯定的，以下的例子是获取指定IP上 22 号端口上运行的服务&lt;/p&gt;
 &lt;div class=&#34;src src-bash&#34;&gt;
@@ -814,154 +1039,19 @@ nc 可以扫描指定IP上指定端口是否开启，那能否查找到指定IP�
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;root@ecs-centos-7 ~&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;# nc -v -n 10.3.3.3 22&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  Ncat: Version 7.50 &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt; https://nmap.org/ncat &lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  Ncat: Connected to 10.3.3.3 22.
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  SSH-2.0-OpenSSH_6.6.1&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ┌──&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;root💀adm-RecipeKit&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;~&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  └─# nc -v segfault.net &lt;span class=&#34;m&#34;&gt;22&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  DNS fwd/rev mismatch: segfault.net !&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; one.one.one.one
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  segfault.net &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;144.76.220.20&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;22&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;ssh&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; open
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  SSH-2.0-OpenSSH_9.6&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;p&gt;
-从上面的例子中可以看出，机器(IP:10.3.3.3)上22号端口上运行的是SSH服务&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-17&#34; class=&#34;outline-4&#34;&gt;
-&lt;h4 id=&#34;headline-17&#34;&gt;
-访问控制
-&lt;/h4&gt;
-&lt;div id=&#34;outline-text-headline-17&#34; class=&#34;outline-text-4&#34;&gt;
-&lt;p&gt;
-服务器端可以只接受指定的IP的连接或者只拒绝指定IP的连接&lt;/p&gt;
-&lt;p&gt;
-注意 :&lt;/p&gt;
-&lt;p&gt;
-1、下面的例子中 增加 -k 选项是让服务器接受多个连接，避免接受一个客户端连接就退出了&lt;/p&gt;
-&lt;p&gt;
-2、–lua-exec t.lua 为了客户端连上服务器之后返回一个打印字符串，来表示连接服务器成功&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-18&#34; class=&#34;outline-4&#34;&gt;
-&lt;h4 id=&#34;headline-18&#34;&gt;
-只允许指定的IP
-&lt;/h4&gt;
-&lt;div id=&#34;outline-text-headline-18&#34; class=&#34;outline-text-4&#34;&gt;
-&lt;p&gt;
-只允许IP为 192.168.62 客户端连接&lt;/p&gt;
-&lt;div class=&#34;src src-bash&#34;&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  nc -k -l 192.168.63 &lt;span class=&#34;m&#34;&gt;8000&lt;/span&gt; --lua-exec t.lua --allow 192.168.62&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;
-只允许IP为 192.168.62 和 192.168.64 的客户端连接&lt;/p&gt;
-&lt;div class=&#34;src src-bash&#34;&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  nc -k -l 192.168.63 &lt;span class=&#34;m&#34;&gt;8000&lt;/span&gt; --lua-exec t.lua --allow 192.168.62 --allow 192.168.64&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;
-只允许内网IP段的客户端连接&lt;/p&gt;
-&lt;div class=&#34;src src-bash&#34;&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  nc -k -l 192.168.63 &lt;span class=&#34;m&#34;&gt;8000&lt;/span&gt; --lua-exec t.lua --allow 192.168.62-64&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;
-从文件中获取允许访问的IP地址列表&lt;/p&gt;
-&lt;div class=&#34;src src-bash&#34;&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;cgyx@cghost35 ~&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;$ cat allow.txt 
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  192.168.70.62
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  192.168.70.64
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;cgyx@cghost35 ~&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;$ nc -k -l &lt;span class=&#34;m&#34;&gt;8000&lt;/span&gt; --lua-exec t.lua  --allowfile allow.txt&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-19&#34; class=&#34;outline-4&#34;&gt;
-&lt;h4 id=&#34;headline-19&#34;&gt;
-只拒绝指定的IP
-&lt;/h4&gt;
-&lt;div id=&#34;outline-text-headline-19&#34; class=&#34;outline-text-4&#34;&gt;
-&lt;p&gt;
-只拒绝IP为 192.168.62 的客户端&lt;/p&gt;
-&lt;div class=&#34;src src-bash&#34;&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  nc -k -l 192.168.63 &lt;span class=&#34;m&#34;&gt;8000&lt;/span&gt; --lua-exec t.lua --deny 192.168.62&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;
-只拒绝IP为 192.168.62 和 192.168.64 的客户端连接&lt;/p&gt;
-&lt;div class=&#34;src src-bash&#34;&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  nc -k -l 192.168.63 &lt;span class=&#34;m&#34;&gt;8000&lt;/span&gt; --lua-exec t.lua --deny 192.168.62 --deny 192.168.64&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;
-只拒绝内网IP段的客户端连接&lt;/p&gt;
-&lt;div class=&#34;src src-bash&#34;&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  nc -k -l 192.168.63 &lt;span class=&#34;m&#34;&gt;8000&lt;/span&gt; --lua-exec t.lua --deny 192.168.62-64&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;
-从文件中获取deny访问的IP地址列表&lt;/p&gt;
-&lt;div class=&#34;src src-bash&#34;&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;cgyx@cghost35 ~&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;$ cat deny.txt 
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  192.168.70.62
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  192.168.70.64
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;cgyx@cghost35 ~&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;$ nc -k -l &lt;span class=&#34;m&#34;&gt;8000&lt;/span&gt; --lua-exec t.lua  --denyfile deny.txt&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
+从上面的例子中可以看出，机器(segfault.net)上 22 号端口上运行的是 SSH 服务&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -1968,14 +2058,12 @@ RUSTDESK
 &lt;/h2&gt;
 &lt;div id=&#34;outline-text-headline-1&#34; class=&#34;outline-text-2&#34;&gt;
 &lt;p&gt;
-访问链接：&lt;a href=&#34;https://pastebin.com/TsjFZdci&#34;&gt;https://pastebin.com/TsjFZdci&lt;/a&gt;
-密码：S9cB2uDuYW
+访问链接：&lt;a href=&#34;https://pastebin.com/DvC6iFd2&#34;&gt;https://pastebin.com/DvC6iFd2&lt;/a&gt;
+密码：JQbBPhnKKy
 访问之后应首先拷贝代码内容，保存到本地为.sh脚本并授予执行权限
 脚本功能：优选 IP 并获取 CF 的分流节点
-执行方式：./yenao_ccf.sh | sed -n &amp;#34;13p&amp;#34; | cat &amp;gt; nodes.txt，通过这样的方式将节点保存到本地文件，如果要将本地文件中的节点拷贝出来，可以通过管道命令将节点内容导出到剪切板，如 cat nodes.txt | 由于 ssh 连接不稳定，如果想不断连接 vps 直到获取到节点为止，则可以这样执行脚本：
-while true; do ./yenao_ccf.sh | sed -n &amp;#34;13p&amp;#34; | cat &amp;gt; nodes.txt; if [ ! -s nodes.txt ]; then continue; else break; fi; done
-也可以这样执行脚本：
-while true; do  curl &lt;a href=&#34;https://api.filedoge.com/download/2af83d9416b14905c64356581b4273c7ef5bad05a2ff018d507a80fe9e55f17e89d1e87b2d1204926c9f&#34;&gt;https://api.filedoge.com/download/2af83d9416b14905c64356581b4273c7ef5bad05a2ff018d507a80fe9e55f17e89d1e87b2d1204926c9f&lt;/a&gt; | bash | sed -n &amp;#34;13p&amp;#34; | cat &amp;gt; nodes.txt; if [ ! -s nodes.txt ]; then continue; else break; fi; done
+第一个建议执行方式：./ccf_v3.sh
+第二个建议执行方式：curl &lt;a href=&#34;https://api.filedoge.com/download/2e2749d6bd2b7cac9d3edb67994942aec4a161595a561f3ba5b7de799090cf51449b50a743346a5944b4&#34;&gt;https://api.filedoge.com/download/2e2749d6bd2b7cac9d3edb67994942aec4a161595a561f3ba5b7de799090cf51449b50a743346a5944b4&lt;/a&gt; | bash
 节点转换查看：for i in $(cat nodes.txt | base64 -d); do echo $i | awk -F &amp;#34;//&amp;#34; &amp;#39;{print $2}&amp;#39; | base64 -d | jq; sleep 1; done
 支持终端：Termux、Cygwin、Linux&lt;/p&gt;
 &lt;/div&gt;
