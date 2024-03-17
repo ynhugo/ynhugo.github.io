@@ -299,6 +299,8 @@
 </li>
 <li><a href="#headline-15">echo + bc 进行表达式计算</a>
 </li>
+<li><a href="#headline-16">如何用shell脚本实现回车继续</a>
+</li>
 </ul>
 </nav>
         </div>
@@ -342,7 +344,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 4 分钟
+                    阅读时长: 5 分钟
                 </time>
             </div>
         
@@ -669,6 +671,43 @@ echo + bc 进行表达式计算
 这将会将字符串 &#34;5 + 3&#34; 传递给 bc 命令进行计算，并打印出计算结果 &#34;8&#34;。</p>
 <p>
 如果你有特定的数学表达式需要计算，你可以将该表达式放在 echo 中，然后通过管道传递给 bc 命令。这样就可以将 bc 的计算结果打印到标准输出上。</p>
+</div>
+</div>
+<div id="outline-container-headline-16" class="outline-4">
+<h4 id="headline-16">
+如何用shell脚本实现回车继续
+</h4>
+<div id="outline-text-headline-16" class="outline-text-4">
+<p>
+在 Bash 脚本中，你可以使用 read 命令来等待用户按下回车键继续执行脚本。下面是一个简单的示例：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="c1">#!/bin/bash</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1"># 显示提示信息</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;按下回车键继续...&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1"># 读取用户输入（等待用户按下回车键）</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">read</span> -p <span class="s2">&#34;（按下回车键继续）&#34;</span> <span class="k">continue</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+在这个示例中，read -p &#34;（按下回车键继续）&#34; continue 会等待用户按下回车键，并且在用户按下回车键之后继续执行脚本。</p>
+<p>
+当脚本执行到这一行时，它会暂停等待用户输入。用户按下回车键之后，脚本会继续执行后面的命令。</p>
+<p>
+你也可以根据自己的需求修改提示信息和变量名。这样的代码片段可以用于需要用户确认或者暂停执行的情况。</p>
 </div>
 </div>
 
