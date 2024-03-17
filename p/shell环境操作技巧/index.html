@@ -297,6 +297,8 @@
 </li>
 <li><a href="#headline-14">处理 URL 中获取的变量的乱码 </a>
 </li>
+<li><a href="#headline-15">echo + bc 进行表达式计算</a>
+</li>
 </ul>
 </nav>
         </div>
@@ -595,26 +597,26 @@ linux查看cpu核数
 <div id="outline-text-headline-13" class="outline-text-4">
 <ol>
 <li>
-<p>单个等号 `=`</p>
+<p>单个等号 =</p>
 <ul>
 <li>在条件判断中，单个等号用于判断字符串是否相等。</li>
-<li>用法示例：`[ &#34;$var&#34; = &#34;value&#34; ]`，表示变量 `$var` 的值是否等于字符串 `&#34;value&#34;`。</li>
+<li>用法示例：[ &#34;$var&#34; = &#34;value&#34; ]，表示变量 $var 的值是否等于字符串 &#34;value&#34;。</li>
 </ul>
 </li>
 <li>
-<p>双等号 `==`</p>
+<p>双等号 ==</p>
 <ul>
 <li>在条件判断中，双等号也用于判断字符串是否相等，但是推荐在 Bash 中使用双等号进行字符串比较。</li>
-<li>用法示例：`<a href=" &#34;$var&#34; == &#34;value&#34; "> &#34;$var&#34; == &#34;value&#34; </a>`，表示变量 `$var` 的值是否等于字符串 `&#34;value&#34;`。</li>
+<li>用法示例：<a href=" &#34;$var&#34; == &#34;value&#34; "> &#34;$var&#34; == &#34;value&#34; </a>，表示变量 $var 的值是否等于字符串 &#34;value&#34;。</li>
 </ul>
 </li>
 </ol>
 <p>主要区别在于：</p>
 <ul>
-<li>单个等号 `=` 可以在绝大多数的Shell中使用，而双等号 `==` 是Bash特有的语法。</li>
-<li>双等号 `==` 支持更多高级的模式匹配功能，例如正则表达式匹配。</li>
+<li>单个等号 = 可以在绝大多数的Shell中使用，而双等号 == 是Bash特有的语法。</li>
+<li>双等号 == 支持更多高级的模式匹配功能，例如正则表达式匹配。</li>
 </ul>
-<p>总的来说，在Bash脚本中推荐使用双等号 `==` 来进行字符串比较，更加灵活且符合习惯。如果你不确定当前环境是否支持双等号 `==`，可以使用单个等号 `=` 来进行字符串比较。</p>
+<p>总的来说，在Bash脚本中推荐使用双等号 == 来进行字符串比较，更加灵活且符合习惯。如果你不确定当前环境是否支持双等号 ==，可以使用单个等号 = 来进行字符串比较。</p>
 </div>
 </div>
 <div id="outline-container-headline-14" class="outline-4">
@@ -625,11 +627,11 @@ linux查看cpu核数
 <p>
 例如变量 cfv 打印到终端上的是&#34;v2.2.5&#34;，但是在用 wget 下载的时候，链接中 cfv 的值就变成了&#34;v2.2.5%0D&#34;这是为什么呢</p>
 <p>
-在这样的情况下，出现链接中包含了 `%0D` 的原因可能是因为在获取 `cfv` 变量的过程中，字符串结尾包含了回车符（Carriage Return）。</p>
+在这样的情况下，出现链接中包含了 %0D 的原因可能是因为在获取 cfv 变量的过程中，字符串结尾包含了回车符（Carriage Return）。</p>
 <p>
-回车符通常用 `\r` 表示，在 URL 中，`\r` 会被转义成 `%0D`。这可能是由于在从网页内容中提取 `cfv` 变量时，结尾包含了回车符导致的。在处理字符串时，特别是从网页内容中提取的字符串，需要格外注意是否包含了不可见的控制字符，如回车符或换行符。</p>
+回车符通常用 \r 表示，在 URL 中，\r 会被转义成 %0D。这可能是由于在从网页内容中提取 cfv 变量时，结尾包含了回车符导致的。在处理字符串时，特别是从网页内容中提取的字符串，需要格外注意是否包含了不可见的控制字符，如回车符或换行符。</p>
 <p>
-为了解决这个问题，可以在提取 `cfv` 变量后，对其进行处理以去除结尾的回车符或其他不可见字符。在 Bash 脚本中，可以使用 `sed` 命令来去除结尾的回车符，例如：</p>
+为了解决这个问题，可以在提取 cfv 变量后，对其进行处理以去除结尾的回车符或其他不可见字符。在 Bash 脚本中，可以使用 sed 命令来去除结尾的回车符，例如：</p>
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -641,7 +643,32 @@ linux查看cpu核数
 </div>
 </div>
 <p>
-这样处理后，`cfv` 变量中就不会包含回车符，从而避免在 URL 中出现 `%0D` 的情况。</p>
+这样处理后，cfv 变量中就不会包含回车符，从而避免在 URL 中出现 %0D 的情况。</p>
+</div>
+</div>
+<div id="outline-container-headline-15" class="outline-4">
+<h4 id="headline-15">
+echo + bc 进行表达式计算
+</h4>
+<div id="outline-text-headline-15" class="outline-text-4">
+<p>
+在Shell脚本中，echo 命令用于打印文本或变量的值到标准输出。而 bc 命令是一个用于数学计算的命令行工具，可以进行数学表达式的计算。</p>
+<p>
+如果你想将 bc 命令的计算结果通过 echo 命令打印出来，你可以使用管道 | 将两个命令连接起来。例如，下面是一个简单的示例：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;5 + 3&#34;</span> <span class="p">|</span> bc -l</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+这将会将字符串 &#34;5 + 3&#34; 传递给 bc 命令进行计算，并打印出计算结果 &#34;8&#34;。</p>
+<p>
+如果你有特定的数学表达式需要计算，你可以将该表达式放在 echo 中，然后通过管道传递给 bc 命令。这样就可以将 bc 的计算结果打印到标准输出上。</p>
 </div>
 </div>
 
