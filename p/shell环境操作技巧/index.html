@@ -301,6 +301,20 @@
 </li>
 <li><a href="#headline-16">如何用shell脚本实现回车继续</a>
 </li>
+<li><a href="#headline-17">shell 如何只刷新当前行</a>
+<ul>
+<li><a href="#headline-18">shell 通过只刷新当前行显示时间</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-19">显示 grep 匹配关键词之前或之后指定行数</a>
+<ul>
+<li><a href="#headline-20">显示 grep 匹配关键词之前指定行数</a>
+</li>
+<li><a href="#headline-21">显示 grep 匹配关键词之后指定行数</a>
+</li>
+</ul>
+</li>
 </ul>
 </nav>
         </div>
@@ -344,7 +358,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 5 分钟
+                    阅读时长: 6 分钟
                 </time>
             </div>
         
@@ -708,6 +722,138 @@ echo + bc 进行表达式计算
 当脚本执行到这一行时，它会暂停等待用户输入。用户按下回车键之后，脚本会继续执行后面的命令。</p>
 <p>
 你也可以根据自己的需求修改提示信息和变量名。这样的代码片段可以用于需要用户确认或者暂停执行的情况。</p>
+</div>
+</div>
+<div id="outline-container-headline-17" class="outline-4">
+<h4 id="headline-17">
+shell 如何只刷新当前行
+</h4>
+<div id="outline-text-headline-17" class="outline-text-4">
+<p>
+在 shell 中，要实现只刷新当前行而不换行，可以使用 ANSI 控制码 \r。这个控制码会将光标移动到当前行的开头，然后你可以输出新的内容，从而实现只刷新当前行而不换行。示例代码如下：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="c1">#!/usr/bin/bash</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> -n <span class="s2">&#34;Loading: 10%&#34;</span>
+</span></span><span class="line"><span class="cl">  sleep <span class="m">1</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> -en <span class="s2">&#34;\rLoading: 20%&#34;</span>
+</span></span><span class="line"><span class="cl">  sleep <span class="m">1</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> -en <span class="s2">&#34;\rLoading: 30%&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># 以此类推</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+在这个例子中，-n 参数用于禁止echo命令自动换行，而\r用于将光标移动到行首，然后输出新的内容，实现了只刷新当前行的效果。</p>
+<p>
+在 Bash 中，-e 选项用于启用反斜杠转义（enable escape characters），它允许 echo 命令解释特定的转义序列。</p>
+<p>
+具体来说，当你在 echo 命令中使用 -e 选项时，可以在输出中使用以下特殊的转义序列：</p>
+<ul>
+<li>\n：换行</li>
+<li>\t：制表符</li>
+<li>\r：回车</li>
+<li>\\：反斜杠</li>
+</ul>
+<p>举个例子，如果你想在输出中包含一个换行符，你可以这样使用 -e 选项：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nb">echo</span> -e <span class="s2">&#34;Hello\nWorld&#34;</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+这将会输出以下内容：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  Hello
+</span></span><span class="line"><span class="cl">  World</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+如果不使用 -e 选项，\n 将会被当作普通字符输出，而不会被解释为换行符。</p>
+<div id="outline-container-headline-18" class="outline-5">
+<h5 id="headline-18">
+shell 通过只刷新当前行显示时间
+</h5>
+<div id="outline-text-headline-18" class="outline-text-5">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">	$ <span class="k">while</span> true<span class="p">;</span> <span class="k">do</span> <span class="nb">echo</span> -en <span class="s2">&#34;\r\e[34m</span><span class="k">$(</span>date<span class="k">)</span><span class="s2">\e[0m&#34;</span><span class="p">;</span> sleep 1<span class="p">;</span> <span class="k">done</span>
+</span></span><span class="line"><span class="cl">	2024年03月18日 11:10:40</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-19" class="outline-4">
+<h4 id="headline-19">
+显示 grep 匹配关键词之前或之后指定行数
+</h4>
+<div id="outline-text-headline-19" class="outline-text-4">
+<div id="outline-container-headline-20" class="outline-5">
+<h5 id="headline-20">
+显示 grep 匹配关键词之前指定行数
+</h5>
+<div id="outline-text-headline-20" class="outline-text-5">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  grep <span class="s2">&#34;MODULE_LICENSE&#34;</span> -B <span class="m">27</span> /usr/src/linux-headers-<span class="sb">`</span>uname -r<span class="sb">`</span>/include/linux/module.h</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-21" class="outline-5">
+<h5 id="headline-21">
+显示 grep 匹配关键词之后指定行数
+</h5>
+<div id="outline-text-headline-21" class="outline-text-5">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  grep <span class="s2">&#34;MODULE_LICENSE&#34;</span> -A <span class="m">27</span> /usr/src/linux-headers-<span class="sb">`</span>uname -r<span class="sb">`</span>/include/linux/module.h</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 
