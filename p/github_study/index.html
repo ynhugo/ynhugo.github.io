@@ -278,26 +278,30 @@
 <li><a href="#headline-4">推送</a>
 </li>
 <li><a href="#headline-5">拉取</a>
+<ul>
+<li><a href="#headline-6">git pull 命令时出现了冲突</a>
 </li>
 </ul>
 </li>
-<li><a href="#headline-6">查看和删除分支</a>
+</ul>
 </li>
-<li><a href="#headline-7">修改远程仓库地址</a>
+<li><a href="#headline-7">查看和删除分支</a>
+</li>
+<li><a href="#headline-8">修改远程仓库地址</a>
 <ul>
-<li><a href="#headline-8">方法1</a>
+<li><a href="#headline-9">方法1</a>
 </li>
-<li><a href="#headline-9">方法2(先删后加)</a>
+<li><a href="#headline-10">方法2(先删后加)</a>
 </li>
-<li><a href="#headline-10">方法3(直接修改配置文件)</a>
+<li><a href="#headline-11">方法3(直接修改配置文件)</a>
 </li>
 </ul>
 </li>
-<li><a href="#headline-11">构建github代码文件链接的方法</a>
+<li><a href="#headline-12">构建github代码文件链接的方法</a>
 </li>
-<li><a href="#headline-12">其他操作</a>
+<li><a href="#headline-13">其他操作</a>
 <ul>
-<li><a href="#headline-13">参考链接</a>
+<li><a href="#headline-14">参考链接</a>
 </li>
 </ul>
 </li>
@@ -532,15 +536,54 @@ git fatal: 拒绝合并无关的历史的错误解决方法</p>
 </div>
 </div>
 </div>
+<div id="outline-container-headline-6" class="outline-4">
+<h4 id="headline-6">
+git pull 命令时出现了冲突
+</h4>
+<div id="outline-text-headline-6" class="outline-text-4">
+<p>
+这通常是因为远程仓库和本地仓库的历史记录不一致导致的。</p>
+<ol>
+<li>执行 git status 命令查看当前的状态，确认哪些文件存在冲突。</li>
+<li>手动编辑冲突的文件，解决冲突。冲突通常会被标记为类似以下内容的标记：</li>
+</ol>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  plaintext
+</span></span><span class="line"><span class="cl">  <span class="o">&lt;&lt;&lt;&lt;&lt;&lt;</span>&lt; HEAD
+</span></span><span class="line"><span class="cl">  // 本地仓库中的代码
+</span></span><span class="line"><span class="cl">  <span class="o">=======</span>
+</span></span><span class="line"><span class="cl">  // 远程仓库中的代码
+</span></span><span class="line"><span class="cl">  &gt;&gt;&gt;&gt;&gt;&gt;&gt; FETCH_HEAD</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+您需要手动选择保留哪些代码，并删除冲突标记，直到文件中所有的冲突都得到解决。</p>
+<ol>
+<li>解决冲突后，执行 git add &lt;冲突文件&gt; 将已解决冲突的文件标记为已解决。</li>
+<li>最后执行 git commit 提交解决冲突后的修改。</li>
+</ol>
 </div>
 </div>
 </div>
 </div>
-<div id="outline-container-headline-6" class="outline-2">
-<h2 id="headline-6">
+</div>
+</div>
+<div id="outline-container-headline-7" class="outline-2">
+<h2 id="headline-7">
 查看和删除分支
 </h2>
-<div id="outline-text-headline-6" class="outline-text-2">
+<div id="outline-text-headline-7" class="outline-text-2">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -573,16 +616,16 @@ git fatal: 拒绝合并无关的历史的错误解决方法</p>
 </div>
 </div>
 </div>
-<div id="outline-container-headline-7" class="outline-2">
-<h2 id="headline-7">
+<div id="outline-container-headline-8" class="outline-2">
+<h2 id="headline-8">
 修改远程仓库地址
 </h2>
-<div id="outline-text-headline-7" class="outline-text-2">
-<div id="outline-container-headline-8" class="outline-3">
-<h3 id="headline-8">
+<div id="outline-text-headline-8" class="outline-text-2">
+<div id="outline-container-headline-9" class="outline-3">
+<h3 id="headline-9">
 方法1
 </h3>
-<div id="outline-text-headline-8" class="outline-text-3">
+<div id="outline-text-headline-9" class="outline-text-3">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -603,11 +646,11 @@ git fatal: 拒绝合并无关的历史的错误解决方法</p>
 </div>
 </div>
 </div>
-<div id="outline-container-headline-9" class="outline-3">
-<h3 id="headline-9">
+<div id="outline-container-headline-10" class="outline-3">
+<h3 id="headline-10">
 方法2(先删后加)
 </h3>
-<div id="outline-text-headline-9" class="outline-text-3">
+<div id="outline-text-headline-10" class="outline-text-3">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -624,11 +667,11 @@ git fatal: 拒绝合并无关的历史的错误解决方法</p>
 </div>
 </div>
 </div>
-<div id="outline-container-headline-10" class="outline-3">
-<h3 id="headline-10">
+<div id="outline-container-headline-11" class="outline-3">
+<h3 id="headline-11">
 方法3(直接修改配置文件)
 </h3>
-<div id="outline-text-headline-10" class="outline-text-3">
+<div id="outline-text-headline-11" class="outline-text-3">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -687,11 +730,11 @@ git fatal: 拒绝合并无关的历史的错误解决方法</p>
 </div>
 </div>
 </div>
-<div id="outline-container-headline-11" class="outline-2">
-<h2 id="headline-11">
+<div id="outline-container-headline-12" class="outline-2">
+<h2 id="headline-12">
 构建github代码文件链接的方法
 </h2>
-<div id="outline-text-headline-11" class="outline-text-2">
+<div id="outline-text-headline-12" class="outline-text-2">
 <div class="src src-emacs-lisp">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -716,11 +759,11 @@ git fatal: 拒绝合并无关的历史的错误解决方法</p>
 </div>
 </div>
 </div>
-<div id="outline-container-headline-12" class="outline-2">
-<h2 id="headline-12">
+<div id="outline-container-headline-13" class="outline-2">
+<h2 id="headline-13">
 其他操作
 </h2>
-<div id="outline-text-headline-12" class="outline-text-2">
+<div id="outline-text-headline-13" class="outline-text-2">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -739,11 +782,11 @@ git fatal: 拒绝合并无关的历史的错误解决方法</p>
 </div>
 </div>
 </div>
-<div id="outline-container-headline-13" class="outline-3">
-<h3 id="headline-13">
+<div id="outline-container-headline-14" class="outline-3">
+<h3 id="headline-14">
 参考链接
 </h3>
-<div id="outline-text-headline-13" class="outline-text-3">
+<div id="outline-text-headline-14" class="outline-text-3">
 <p>
 https://blog.csdn.net/xiaoxgongzs/article/details/105099281</p>
 </div>

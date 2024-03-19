@@ -315,6 +315,8 @@
 </li>
 </ul>
 </li>
+<li><a href="#headline-22">Ubuntu 匹配 IP 地址</a>
+</li>
 </ul>
 </nav>
         </div>
@@ -358,7 +360,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 6 分钟
+                    阅读时长: 7 分钟
                 </time>
             </div>
         
@@ -806,8 +808,8 @@ shell 通过只刷新当前行显示时间
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">	$ <span class="k">while</span> true<span class="p">;</span> <span class="k">do</span> <span class="nb">echo</span> -en <span class="s2">&#34;\r\e[34m</span><span class="k">$(</span>date<span class="k">)</span><span class="s2">\e[0m&#34;</span><span class="p">;</span> sleep 1<span class="p">;</span> <span class="k">done</span>
-</span></span><span class="line"><span class="cl">	2024年03月18日 11:10:40</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  $ <span class="k">while</span> true<span class="p">;</span> <span class="k">do</span> <span class="nb">echo</span> -en <span class="s2">&#34;\r\e[34m</span><span class="k">$(</span>date<span class="k">)</span><span class="s2">\e[0m&#34;</span><span class="p">;</span> sleep 1<span class="p">;</span> <span class="k">done</span>
+</span></span><span class="line"><span class="cl">  2024年03月18日 11:10:40</span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
@@ -854,6 +856,40 @@ shell 通过只刷新当前行显示时间
 </div>
 </div>
 </div>
+</div>
+</div>
+<div id="outline-container-headline-22" class="outline-4">
+<h4 id="headline-22">
+Ubuntu 匹配 IP 地址
+</h4>
+<div id="outline-text-headline-22" class="outline-text-4">
+<p>
+只打印匹配到的内容，不打印多余的内容</p>
+<p>
+如果您需要提取出 IP 地址，可以使用正则表达式来匹配并提取 IP 地址。以下是一个示例命令，可以从文本中提取出 IP 地址：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  ifconfig <span class="p">|</span> grep -w -A <span class="m">1</span> <span class="s2">&#34;br0&#34;</span> <span class="p">|</span> grep -v <span class="s2">&#34;br0&#34;</span> <span class="p">|</span> awk <span class="s1">&#39;$1==&#34;inet&#34; {print $2}&#39;</span> <span class="p">|</span> grep -oE <span class="s2">&#34;\b([0-9]{1,3}\.){3}[0-9]{1,3}\b&#34;</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+在这个命令中，我们使用了 grep -oE 结合正则表达式 \b([0-9]{1,3}\.){3}[0-9]{1,3}\b 来提取文本中的 IP 地址。这个正则表达式可以匹配标准的 IPv4 地址格式。</p>
+<p>
+当处理 IP 地址时，常见的 IPv4 地址由四个小节组成，每个小节是 0 到 255 之间的数字。在正则表达式中，可以使用以下模式来匹配一个标准的 IPv4 地址：</p>
+<ul>
+<li>\b：表示单词边界，用于确保匹配的是完整的 IP 地址而不是部分匹配。</li>
+<li>([0-9]{1,3}\.){3}：匹配三个由数字组成的小节，每个小节包含 1 到 3 个数字（{1,3} 表示重复 1 到 3 次），并且每个小节之间用点号分隔。</li>
+<li>[0-9]{1,3}：匹配最后一个小节，同样包含 1 到 3 个数字。</li>
+<li>\b：再次使用单词边界，以确保 IP 地址的结尾是一个单词边界。</li>
+</ul>
+<p>因此，这个正则表达式 \b([0-9]{1,3}\.){3}[0-9]{1,3}\b 可以准确地匹配一个标准的 IPv4 地址格式。</p>
+<p>
+在命令中使用 grep -oE 来执行正则表达式匹配操作，-o 选项表示只输出匹配到的部分，-E 表示使用扩展的正则表达式语法。</p>
 </div>
 </div>
 
