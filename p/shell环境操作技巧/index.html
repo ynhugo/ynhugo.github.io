@@ -323,6 +323,8 @@
 </li>
 </ul>
 </li>
+<li><a href="#headline-25">如何找到文件安装位置</a>
+</li>
 </ul>
 </nav>
         </div>
@@ -366,7 +368,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 8 分钟
+                    阅读时长: 9 分钟
                 </time>
             </div>
         
@@ -1056,6 +1058,75 @@ shell脚本如何创建数组或列表
 这样就可以自动获取数组和列表中元素的个数，方便您在脚本中进行后续处理。</p>
 </div>
 </div>
+</div>
+</div>
+<div id="outline-container-headline-25" class="outline-4">
+<h4 id="headline-25">
+如何找到文件安装位置
+</h4>
+<div id="outline-text-headline-25" class="outline-text-4">
+<p>
+要找到软件包的安装位置，可以使用 dpkg 命令来查询已安装软件包的安装信息。以下是一些常用的命令和选项：</p>
+<ol>
+<li>列出所有已安装的软件包及其安装路径：</li>
+</ol>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">dpkg -l</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+这条命令会列出系统上所有已安装的软件包以及它们的版本号、描述等信息，其中包含了软件包的安装路径。</p>
+<ol>
+<li>查询特定软件包的安装路径：</li>
+</ol>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">dpkg -L package_name</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+将 package_name 替换为你想要查询的软件包名称，这条命令会列出指定软件包的安装路径。</p>
+<ol>
+<li>查询文件属于哪个软件包：</li>
+</ol>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">dpkg -S /path/to/file</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+将 /path/to/file 替换为你想要查询的文件路径，这条命令会告诉你该文件属于哪个软件包。</p>
+<ol>
+<li>要获取软件包的精确安装路径，可以使用以下命令来查询软件包的安装位置：</li>
+</ol>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">dpkg-query -L package_name</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+将 package_name 替换为你想要查询的软件包名称。这条命令会列出指定软件包的安装路径，包括所有安装文件和目录的详细路径信息。</p>
 </div>
 </div>
 
