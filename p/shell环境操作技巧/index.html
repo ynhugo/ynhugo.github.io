@@ -317,6 +317,12 @@
 </li>
 <li><a href="#headline-22">Ubuntu 匹配 IP 地址</a>
 </li>
+<li><a href="#headline-23">shell脚本如何创建数组或列表</a>
+<ul>
+<li><a href="#headline-24">如何自动获取数组个数</a>
+</li>
+</ul>
+</li>
 </ul>
 </nav>
         </div>
@@ -360,7 +366,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 7 分钟
+                    阅读时长: 8 分钟
                 </time>
             </div>
         
@@ -890,6 +896,166 @@ Ubuntu 匹配 IP 地址
 <p>因此，这个正则表达式 \b([0-9]{1,3}\.){3}[0-9]{1,3}\b 可以准确地匹配一个标准的 IPv4 地址格式。</p>
 <p>
 在命令中使用 grep -oE 来执行正则表达式匹配操作，-o 选项表示只输出匹配到的部分，-E 表示使用扩展的正则表达式语法。</p>
+</div>
+</div>
+<div id="outline-container-headline-23" class="outline-4">
+<h4 id="headline-23">
+shell脚本如何创建数组或列表
+</h4>
+<div id="outline-text-headline-23" class="outline-text-4">
+<p>
+在 shell 脚本中，您可以使用类似以下的语法来创建数组：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="c1"># 创建一个包含多个元素的数组</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">my_array</span><span class="o">=(</span>element1 element2 element3<span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1"># 或者逐个添加元素到数组中</span>
+</span></span><span class="line"><span class="cl">  my_array<span class="o">[</span>0<span class="o">]=</span>element1
+</span></span><span class="line"><span class="cl">  my_array<span class="o">[</span>1<span class="o">]=</span>element2
+</span></span><span class="line"><span class="cl">  my_array<span class="o">[</span>2<span class="o">]=</span>element3</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+另外，您也可以使用 declare 命令来声明一个数组：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nb">declare</span> -a my_array
+</span></span><span class="line"><span class="cl">  <span class="nv">my_array</span><span class="o">=(</span>element1 element2 element3<span class="o">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+要访问数组中的元素，可以使用下标来引用：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="si">${</span><span class="nv">my_array</span><span class="p">[0]</span><span class="si">}</span>  <span class="c1"># 输出第一个元素</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="si">${</span><span class="nv">my_array</span><span class="p">[1]</span><span class="si">}</span>  <span class="c1"># 输出第二个元素</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="si">${</span><span class="nv">my_array</span><span class="p">[2]</span><span class="si">}</span>  <span class="c1"># 输出第三个元素</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1"># 输出整个数组</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="si">${</span><span class="nv">my_array</span><span class="p">[@]</span><span class="si">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+除了数组，您也可以使用空格分隔的列表，如下所示：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nv">my_list</span><span class="o">=</span><span class="s2">&#34;item1 item2 item3&#34;</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+然后，您可以使用变量来引用整个列表或者单独的元素：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="nv">$my_list</span>   <span class="c1"># 输出整个列表</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="nv">$my_list</span>   <span class="c1"># 输出第一个元素</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+这是在 shell 脚本中创建数组和列表的简单方法。根据您的需求选择合适的数据结构来存储元素。</p>
+<div id="outline-container-headline-24" class="outline-5">
+<h5 id="headline-24">
+如何自动获取数组个数
+</h5>
+<div id="outline-text-headline-24" class="outline-text-5">
+<p>
+在 shell 脚本中，您可以使用 ${#array[@]} 来获取数组中元素的个数。以下是一个示例：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="c1"># 创建一个包含多个元素的数组</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">my_array</span><span class="o">=(</span>element1 element2 element3<span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1"># 获取数组中元素的个数</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">array_length</span><span class="o">=</span><span class="si">${#</span><span class="nv">my_array</span><span class="p">[@]</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1"># 输出数组中元素的个数</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;数组中元素的个数为: </span><span class="nv">$array_length</span><span class="s2">&#34;</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+通过 ${#my_array[@]}，您可以轻松地获取数组 my_array 中元素的个数，并将其存储在变量 array_length 中以供后续使用。</p>
+<p>
+如果您需要获取列表的元素个数，可以使用类似的方法：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="c1"># 创建一个空格分隔的列表</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">my_list</span><span class="o">=</span><span class="s2">&#34;item1 item2 item3&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1"># 将列表转换为数组（以便使用相同的方式获取元素个数）</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">list_array</span><span class="o">=(</span><span class="nv">$my_list</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">list_length</span><span class="o">=</span><span class="si">${#</span><span class="nv">list_array</span><span class="p">[@]</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1"># 输出列表中元素的个数</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;列表中元素的个数为: </span><span class="nv">$list_length</span><span class="s2">&#34;</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+这样就可以自动获取数组和列表中元素的个数，方便您在脚本中进行后续处理。</p>
+</div>
+</div>
 </div>
 </div>
 
