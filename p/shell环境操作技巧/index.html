@@ -325,6 +325,8 @@
 </li>
 <li><a href="#headline-25">如何找到文件安装位置</a>
 </li>
+<li><a href="#headline-26">如何将多行数据存储到数组中</a>
+</li>
 </ul>
 </nav>
         </div>
@@ -1127,6 +1129,45 @@ shell脚本如何创建数组或列表
 </div>
 <p>
 将 package_name 替换为你想要查询的软件包名称。这条命令会列出指定软件包的安装路径，包括所有安装文件和目录的详细路径信息。</p>
+</div>
+</div>
+<div id="outline-container-headline-26" class="outline-4">
+<h4 id="headline-26">
+如何将多行数据存储到数组中
+</h4>
+<div id="outline-text-headline-26" class="outline-text-4">
+<p>
+你可以使用循环来逐行读取并存储到数组中。在Bash中，可以按照以下方式操作：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="c1"># 初始化一个空数组</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">myArray</span><span class="o">=()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1"># 使用循环逐行读取数据并存储到数组中</span>
+</span></span><span class="line"><span class="cl">  <span class="k">while</span> <span class="nv">IFS</span><span class="o">=</span> <span class="nb">read</span> -r line<span class="p">;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">	  <span class="nv">myArray</span><span class="o">+=(</span><span class="s2">&#34;</span><span class="nv">$line</span><span class="s2">&#34;</span><span class="o">)</span>  <span class="c1"># 将每行数据添加到数组中</span>
+</span></span><span class="line"><span class="cl">  <span class="k">done</span> &lt; &lt;<span class="o">(</span>find ./ -name <span class="s1">&#39;*.org&#39;</span> -exec head -n <span class="m">5</span> <span class="o">{}</span> <span class="se">\;</span> <span class="p">|</span> grep -w <span class="s2">&#34;^date:&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1"># 打印整个数组</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">printf</span> <span class="s1">&#39;%s\n&#39;</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">myArray</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+这段代码会从find命令和grep命令中获取多行数据，并逐行存储到名为myArray的数组中。最后，通过 printf 将整个数组打印出来。</p>
 </div>
 </div>
 
