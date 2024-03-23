@@ -107,7 +107,7 @@ do
 		wget https://cdn.kernel.org/pub/linux/kernel/v4.x/${file_linux}
 		echo -e  "\e[0m"
 	else
-		if [ "$(sha256sum ${file_linux} | awk '{print $1}')" = "4eae8865deaf03f0d13bf5056e258d451a468cabc5158757b247b0e43518fd34  ${file_linux}" ]; then
+		if [ "$(sha256sum ${file_linux} | awk '{print $1}')" != "4eae8865deaf03f0d13bf5056e258d451a468cabc5158757b247b0e43518fd34  ${file_linux}" ]; then
 			rm -rf ${file_linux}
 			continue
 		else
