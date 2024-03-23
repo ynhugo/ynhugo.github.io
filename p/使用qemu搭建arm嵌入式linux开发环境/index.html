@@ -816,6 +816,21 @@
 </span><span class="lnt">396
 </span><span class="lnt">397
 </span><span class="lnt">398
+</span><span class="lnt">399
+</span><span class="lnt">400
+</span><span class="lnt">401
+</span><span class="lnt">402
+</span><span class="lnt">403
+</span><span class="lnt">404
+</span><span class="lnt">405
+</span><span class="lnt">406
+</span><span class="lnt">407
+</span><span class="lnt">408
+</span><span class="lnt">409
+</span><span class="lnt">410
+</span><span class="lnt">411
+</span><span class="lnt">412
+</span><span class="lnt">413
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nv">cmdself</span><span class="o">=</span><span class="nv">$0</span>
@@ -920,14 +935,28 @@
 </span></span><span class="line"><span class="cl">  <span class="c1"># 判断linux内核是否准备好</span>
 </span></span><span class="line"><span class="cl">  <span class="k">while</span> true<span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="k">do</span>
-</span></span><span class="line"><span class="cl">	  <span class="k">if</span> <span class="o">[</span> ! -f <span class="s2">&#34;</span><span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="s2">/</span><span class="nv">$file_linux</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">		  <span class="nb">echo</span> -e  <span class="s2">&#34;\e[32m&#34;</span>
-</span></span><span class="line"><span class="cl">		  <span class="c1"># wget https://cdn.kernel.org/pub/linux/kernel/v4.x/${file_linux}</span>
-</span></span><span class="line"><span class="cl">		  <span class="c1"># wget https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.4.232.tar.xz</span>
-</span></span><span class="line"><span class="cl">		  wget https://cdn.kernel.org/pub/linux/kernel/v4.x/<span class="si">${</span><span class="nv">file_linux</span><span class="si">}</span>
-</span></span><span class="line"><span class="cl">		  <span class="nb">echo</span> -e  <span class="s2">&#34;\e[0m&#34;</span>
+</span></span><span class="line"><span class="cl">	  <span class="nv">result</span><span class="o">=</span><span class="k">$(</span>curl ipinfo.io <span class="p">|</span> grep <span class="s2">&#34;country&#34;</span> <span class="p">|</span> tr <span class="s1">&#39;&#34;&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $3}&#39;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&#34;</span><span class="si">${</span><span class="nv">result</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">		  <span class="k">continue</span>
 </span></span><span class="line"><span class="cl">	  <span class="k">else</span>
-</span></span><span class="line"><span class="cl">		  <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="k">$(</span>sha256sum <span class="si">${</span><span class="nv">file_linux</span><span class="si">}</span> <span class="p">|</span> awk <span class="s1">&#39;{print $1}&#39;</span><span class="k">)</span><span class="s2">&#34;</span> !<span class="o">=</span> <span class="s2">&#34;4eae8865deaf03f0d13bf5056e258d451a468cabc5158757b247b0e43518fd34  </span><span class="si">${</span><span class="nv">file_linux</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">		  <span class="nb">echo</span> -e <span class="s2">&#34;\e[32mcountry: </span><span class="si">${</span><span class="nv">result</span><span class="si">}</span><span class="s2">\e[0m&#34;</span>
+</span></span><span class="line"><span class="cl">		  <span class="nb">break</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">  <span class="k">done</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">while</span> true<span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">do</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">if</span> <span class="o">[</span> ! -f <span class="s2">&#34;</span><span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="s2">/</span><span class="nv">$file_linux</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>		  
+</span></span><span class="line"><span class="cl">		  <span class="nb">echo</span> -e <span class="s2">&#34;\e[32m&#34;</span>
+</span></span><span class="line"><span class="cl">		  <span class="k">if</span> <span class="o">[</span> <span class="si">${</span><span class="nv">result</span><span class="si">}</span> !<span class="o">=</span> <span class="s2">&#34;CN&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>				  
+</span></span><span class="line"><span class="cl">			  <span class="c1"># wget https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.4.232.tar.xz</span>
+</span></span><span class="line"><span class="cl">			  wget https://cdn.kernel.org/pub/linux/kernel/v4.x/<span class="si">${</span><span class="nv">file_linux</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">		  <span class="k">else</span>
+</span></span><span class="line"><span class="cl">			  <span class="c1"># wget https://mirrors.ustc.edu.cn/kernel.org/linux/kernel/v4.x/linux-4.4.232.tar.xz</span>
+</span></span><span class="line"><span class="cl">			  wget https://mirrors.ustc.edu.cn/kernel.org/linux/kernel/v4.x/<span class="si">${</span><span class="nv">file_linux</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">		  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">else</span>
+</span></span><span class="line"><span class="cl">		  <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="k">$(</span>sha256sum <span class="si">${</span><span class="nv">file_linux</span><span class="si">}</span><span class="k">)</span><span class="s2">&#34;</span> !<span class="o">=</span> <span class="s2">&#34;4eae8865deaf03f0d13bf5056e258d451a468cabc5158757b247b0e43518fd34  </span><span class="si">${</span><span class="nv">file_linux</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
 </span></span><span class="line"><span class="cl">			  rm -rf <span class="si">${</span><span class="nv">file_linux</span><span class="si">}</span>
 </span></span><span class="line"><span class="cl">			  <span class="k">continue</span>
 </span></span><span class="line"><span class="cl">		  <span class="k">else</span>
@@ -935,6 +964,7 @@
 </span></span><span class="line"><span class="cl">			  break<span class="p">;</span>
 </span></span><span class="line"><span class="cl">		  <span class="k">fi</span>
 </span></span><span class="line"><span class="cl">	  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> -e  <span class="s2">&#34;\e[0m&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="k">done</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="c1"># 判断busybox文件是否准备好</span>
@@ -1692,6 +1722,21 @@
 </span><span class="lnt">396
 </span><span class="lnt">397
 </span><span class="lnt">398
+</span><span class="lnt">399
+</span><span class="lnt">400
+</span><span class="lnt">401
+</span><span class="lnt">402
+</span><span class="lnt">403
+</span><span class="lnt">404
+</span><span class="lnt">405
+</span><span class="lnt">406
+</span><span class="lnt">407
+</span><span class="lnt">408
+</span><span class="lnt">409
+</span><span class="lnt">410
+</span><span class="lnt">411
+</span><span class="lnt">412
+</span><span class="lnt">413
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nv">cmdself</span><span class="o">=</span><span class="nv">$0</span>
@@ -1796,14 +1841,28 @@
 </span></span><span class="line"><span class="cl">  <span class="c1"># 判断linux内核是否准备好</span>
 </span></span><span class="line"><span class="cl">  <span class="k">while</span> true<span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="k">do</span>
-</span></span><span class="line"><span class="cl">	  <span class="k">if</span> <span class="o">[</span> ! -f <span class="s2">&#34;</span><span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="s2">/</span><span class="nv">$file_linux</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">		  <span class="nb">echo</span> -e  <span class="s2">&#34;\e[32m&#34;</span>
-</span></span><span class="line"><span class="cl">		  <span class="c1"># wget https://cdn.kernel.org/pub/linux/kernel/v4.x/${file_linux}</span>
-</span></span><span class="line"><span class="cl">		  <span class="c1"># wget https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.4.232.tar.xz</span>
-</span></span><span class="line"><span class="cl">		  wget https://cdn.kernel.org/pub/linux/kernel/v4.x/<span class="si">${</span><span class="nv">file_linux</span><span class="si">}</span>
-</span></span><span class="line"><span class="cl">		  <span class="nb">echo</span> -e  <span class="s2">&#34;\e[0m&#34;</span>
+</span></span><span class="line"><span class="cl">	  <span class="nv">result</span><span class="o">=</span><span class="k">$(</span>curl ipinfo.io <span class="p">|</span> grep <span class="s2">&#34;country&#34;</span> <span class="p">|</span> tr <span class="s1">&#39;&#34;&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $3}&#39;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&#34;</span><span class="si">${</span><span class="nv">result</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">		  <span class="k">continue</span>
 </span></span><span class="line"><span class="cl">	  <span class="k">else</span>
-</span></span><span class="line"><span class="cl">		  <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="k">$(</span>sha256sum <span class="si">${</span><span class="nv">file_linux</span><span class="si">}</span> <span class="p">|</span> awk <span class="s1">&#39;{print $1}&#39;</span><span class="k">)</span><span class="s2">&#34;</span> <span class="o">=</span> <span class="s2">&#34;4eae8865deaf03f0d13bf5056e258d451a468cabc5158757b247b0e43518fd34  </span><span class="si">${</span><span class="nv">file_linux</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">		  <span class="nb">echo</span> -e <span class="s2">&#34;\e[32mcountry: </span><span class="si">${</span><span class="nv">result</span><span class="si">}</span><span class="s2">\e[0m&#34;</span>
+</span></span><span class="line"><span class="cl">		  <span class="nb">break</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">  <span class="k">done</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">while</span> true<span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">do</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">if</span> <span class="o">[</span> ! -f <span class="s2">&#34;</span><span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="s2">/</span><span class="nv">$file_linux</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>		  
+</span></span><span class="line"><span class="cl">		  <span class="nb">echo</span> -e <span class="s2">&#34;\e[32m&#34;</span>
+</span></span><span class="line"><span class="cl">		  <span class="k">if</span> <span class="o">[</span> <span class="si">${</span><span class="nv">result</span><span class="si">}</span> !<span class="o">=</span> <span class="s2">&#34;CN&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>				  
+</span></span><span class="line"><span class="cl">			  <span class="c1"># wget https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.4.232.tar.xz</span>
+</span></span><span class="line"><span class="cl">			  wget https://cdn.kernel.org/pub/linux/kernel/v4.x/<span class="si">${</span><span class="nv">file_linux</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">		  <span class="k">else</span>
+</span></span><span class="line"><span class="cl">			  <span class="c1"># wget https://mirrors.ustc.edu.cn/kernel.org/linux/kernel/v4.x/linux-4.4.232.tar.xz</span>
+</span></span><span class="line"><span class="cl">			  wget https://mirrors.ustc.edu.cn/kernel.org/linux/kernel/v4.x/<span class="si">${</span><span class="nv">file_linux</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">		  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">else</span>
+</span></span><span class="line"><span class="cl">		  <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="k">$(</span>sha256sum <span class="si">${</span><span class="nv">file_linux</span><span class="si">}</span><span class="k">)</span><span class="s2">&#34;</span> !<span class="o">=</span> <span class="s2">&#34;4eae8865deaf03f0d13bf5056e258d451a468cabc5158757b247b0e43518fd34  </span><span class="si">${</span><span class="nv">file_linux</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
 </span></span><span class="line"><span class="cl">			  rm -rf <span class="si">${</span><span class="nv">file_linux</span><span class="si">}</span>
 </span></span><span class="line"><span class="cl">			  <span class="k">continue</span>
 </span></span><span class="line"><span class="cl">		  <span class="k">else</span>
@@ -1811,6 +1870,7 @@
 </span></span><span class="line"><span class="cl">			  break<span class="p">;</span>
 </span></span><span class="line"><span class="cl">		  <span class="k">fi</span>
 </span></span><span class="line"><span class="cl">	  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> -e  <span class="s2">&#34;\e[0m&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="k">done</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="c1"># 判断busybox文件是否准备好</span>
@@ -2169,6 +2229,21 @@
 </span><span class="lnt">62
 </span><span class="lnt">63
 </span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nv">linux</span><span class="o">=</span><span class="s2">&#34;linux-4.4.232&#34;</span><span class="p">;</span>
@@ -2191,14 +2266,28 @@
 </span></span><span class="line"><span class="cl">  <span class="c1"># 判断linux内核是否准备好</span>
 </span></span><span class="line"><span class="cl">  <span class="k">while</span> true<span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="k">do</span>
-</span></span><span class="line"><span class="cl">	  <span class="k">if</span> <span class="o">[</span> ! -f <span class="s2">&#34;</span><span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="s2">/</span><span class="nv">$file_linux</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">		  <span class="nb">echo</span> -e  <span class="s2">&#34;\e[32m&#34;</span>
-</span></span><span class="line"><span class="cl">		  <span class="c1"># wget https://cdn.kernel.org/pub/linux/kernel/v4.x/${file_linux}</span>
-</span></span><span class="line"><span class="cl">		  <span class="c1"># wget https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.4.232.tar.xz</span>
-</span></span><span class="line"><span class="cl">		  wget https://cdn.kernel.org/pub/linux/kernel/v4.x/<span class="si">${</span><span class="nv">file_linux</span><span class="si">}</span>
-</span></span><span class="line"><span class="cl">		  <span class="nb">echo</span> -e  <span class="s2">&#34;\e[0m&#34;</span>
+</span></span><span class="line"><span class="cl">	  <span class="nv">result</span><span class="o">=</span><span class="k">$(</span>curl ipinfo.io <span class="p">|</span> grep <span class="s2">&#34;country&#34;</span> <span class="p">|</span> tr <span class="s1">&#39;&#34;&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $3}&#39;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&#34;</span><span class="si">${</span><span class="nv">result</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">		  <span class="k">continue</span>
 </span></span><span class="line"><span class="cl">	  <span class="k">else</span>
-</span></span><span class="line"><span class="cl">		  <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="k">$(</span>sha256sum <span class="si">${</span><span class="nv">file_linux</span><span class="si">}</span> <span class="p">|</span> awk <span class="s1">&#39;{print $1}&#39;</span><span class="k">)</span><span class="s2">&#34;</span> !<span class="o">=</span> <span class="s2">&#34;4eae8865deaf03f0d13bf5056e258d451a468cabc5158757b247b0e43518fd34  </span><span class="si">${</span><span class="nv">file_linux</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">		  <span class="nb">echo</span> -e <span class="s2">&#34;\e[32mcountry: </span><span class="si">${</span><span class="nv">result</span><span class="si">}</span><span class="s2">\e[0m&#34;</span>
+</span></span><span class="line"><span class="cl">		  <span class="nb">break</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">  <span class="k">done</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">while</span> true<span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">do</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">if</span> <span class="o">[</span> ! -f <span class="s2">&#34;</span><span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="s2">/</span><span class="nv">$file_linux</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>		  
+</span></span><span class="line"><span class="cl">		  <span class="nb">echo</span> -e <span class="s2">&#34;\e[32m&#34;</span>
+</span></span><span class="line"><span class="cl">		  <span class="k">if</span> <span class="o">[</span> <span class="si">${</span><span class="nv">result</span><span class="si">}</span> !<span class="o">=</span> <span class="s2">&#34;CN&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>				  
+</span></span><span class="line"><span class="cl">			  <span class="c1"># wget https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.4.232.tar.xz</span>
+</span></span><span class="line"><span class="cl">			  wget https://cdn.kernel.org/pub/linux/kernel/v4.x/<span class="si">${</span><span class="nv">file_linux</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">		  <span class="k">else</span>
+</span></span><span class="line"><span class="cl">			  <span class="c1"># wget https://mirrors.ustc.edu.cn/kernel.org/linux/kernel/v4.x/linux-4.4.232.tar.xz</span>
+</span></span><span class="line"><span class="cl">			  wget https://mirrors.ustc.edu.cn/kernel.org/linux/kernel/v4.x/<span class="si">${</span><span class="nv">file_linux</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">		  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">else</span>
+</span></span><span class="line"><span class="cl">		  <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="k">$(</span>sha256sum <span class="si">${</span><span class="nv">file_linux</span><span class="si">}</span><span class="k">)</span><span class="s2">&#34;</span> !<span class="o">=</span> <span class="s2">&#34;4eae8865deaf03f0d13bf5056e258d451a468cabc5158757b247b0e43518fd34  </span><span class="si">${</span><span class="nv">file_linux</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
 </span></span><span class="line"><span class="cl">			  rm -rf <span class="si">${</span><span class="nv">file_linux</span><span class="si">}</span>
 </span></span><span class="line"><span class="cl">			  <span class="k">continue</span>
 </span></span><span class="line"><span class="cl">		  <span class="k">else</span>
@@ -2206,6 +2295,7 @@
 </span></span><span class="line"><span class="cl">			  break<span class="p">;</span>
 </span></span><span class="line"><span class="cl">		  <span class="k">fi</span>
 </span></span><span class="line"><span class="cl">	  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> -e  <span class="s2">&#34;\e[0m&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="k">done</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="c1"># 临时配置交叉编译环境</span>
@@ -2984,65 +3074,6 @@ qemu_ts
 </span><span class="lnt">14
 </span><span class="lnt">15
 </span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span><span class="lnt">36
-</span><span class="lnt">37
-</span><span class="lnt">38
-</span><span class="lnt">39
-</span><span class="lnt">40
-</span><span class="lnt">41
-</span><span class="lnt">42
-</span><span class="lnt">43
-</span><span class="lnt">44
-</span><span class="lnt">45
-</span><span class="lnt">46
-</span><span class="lnt">47
-</span><span class="lnt">48
-</span><span class="lnt">49
-</span><span class="lnt">50
-</span><span class="lnt">51
-</span><span class="lnt">52
-</span><span class="lnt">53
-</span><span class="lnt">54
-</span><span class="lnt">55
-</span><span class="lnt">56
-</span><span class="lnt">57
-</span><span class="lnt">58
-</span><span class="lnt">59
-</span><span class="lnt">60
-</span><span class="lnt">61
-</span><span class="lnt">62
-</span><span class="lnt">63
-</span><span class="lnt">64
-</span><span class="lnt">65
-</span><span class="lnt">66
-</span><span class="lnt">67
-</span><span class="lnt">68
-</span><span class="lnt">69
-</span><span class="lnt">70
-</span><span class="lnt">71
-</span><span class="lnt">72
-</span><span class="lnt">73
-</span><span class="lnt">74
-</span><span class="lnt">75
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nv">linux</span><span class="o">=</span><span class="s2">&#34;linux-4.4.232&#34;</span><span class="p">;</span>
@@ -3060,66 +3091,7 @@ qemu_ts
 </span></span><span class="line"><span class="cl">  mkdir -p <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">cd</span> <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="nv">cpu_cores</span><span class="o">=</span><span class="k">$(</span>nproc<span class="k">)</span>
-</span></span><span class="line"><span class="cl">  <span class="nv">jobs</span><span class="o">=</span><span class="k">$((</span>cpu_cores <span class="o">*</span> <span class="m">2</span><span class="k">))</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="c1"># 判断linux内核是否准备好</span>
-</span></span><span class="line"><span class="cl">  <span class="k">while</span> true<span class="p">;</span>
-</span></span><span class="line"><span class="cl">  <span class="k">do</span>
-</span></span><span class="line"><span class="cl">	  <span class="k">if</span> <span class="o">[</span> ! -f <span class="s2">&#34;</span><span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="s2">/</span><span class="nv">$file_linux</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">		  <span class="nb">echo</span> -e  <span class="s2">&#34;\e[32m&#34;</span>
-</span></span><span class="line"><span class="cl">		  <span class="c1"># wget https://cdn.kernel.org/pub/linux/kernel/v4.x/${file_linux}</span>
-</span></span><span class="line"><span class="cl">		  <span class="c1"># wget https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.4.232.tar.xz</span>
-</span></span><span class="line"><span class="cl">		  wget https://cdn.kernel.org/pub/linux/kernel/v4.x/<span class="si">${</span><span class="nv">file_linux</span><span class="si">}</span>
-</span></span><span class="line"><span class="cl">		  <span class="nb">echo</span> -e  <span class="s2">&#34;\e[0m&#34;</span>
-</span></span><span class="line"><span class="cl">	  <span class="k">else</span>
-</span></span><span class="line"><span class="cl">		  <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="k">$(</span>sha256sum <span class="si">${</span><span class="nv">file_linux</span><span class="si">}</span> <span class="p">|</span> awk <span class="s1">&#39;{print $1}&#39;</span><span class="k">)</span><span class="s2">&#34;</span> <span class="o">=</span> <span class="s2">&#34;4eae8865deaf03f0d13bf5056e258d451a468cabc5158757b247b0e43518fd34  </span><span class="si">${</span><span class="nv">file_linux</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">			  rm -rf <span class="si">${</span><span class="nv">file_linux</span><span class="si">}</span>
-</span></span><span class="line"><span class="cl">			  <span class="k">continue</span>
-</span></span><span class="line"><span class="cl">		  <span class="k">else</span>
-</span></span><span class="line"><span class="cl">			  <span class="nb">echo</span> -e <span class="s2">&#34;\e[32m</span><span class="si">${</span><span class="nv">file_linux</span><span class="si">}</span><span class="s2"> 已下载\e[0m&#34;</span>
-</span></span><span class="line"><span class="cl">			  break<span class="p">;</span>
-</span></span><span class="line"><span class="cl">		  <span class="k">fi</span>
-</span></span><span class="line"><span class="cl">	  <span class="k">fi</span>
-</span></span><span class="line"><span class="cl">  <span class="k">done</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="c1"># 判断busybox文件是否准备好</span>
-</span></span><span class="line"><span class="cl">  <span class="k">while</span> true<span class="p">;</span>
-</span></span><span class="line"><span class="cl">  <span class="k">do</span>
-</span></span><span class="line"><span class="cl">	  <span class="k">if</span> <span class="o">[</span> ! -f <span class="s2">&#34;</span><span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="s2">/</span><span class="nv">$file_busybox</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">		  <span class="nb">echo</span> -e  <span class="s2">&#34;\e[33m&#34;</span>
-</span></span><span class="line"><span class="cl">		  <span class="c1"># wget --no-check-certificate https://busybox.net/downloads/busybox-1.32.0.tar.bz2</span>
-</span></span><span class="line"><span class="cl">		  wget --no-check-certificate https://busybox.net/downloads/<span class="si">${</span><span class="nv">file_busybox</span><span class="si">}</span>
-</span></span><span class="line"><span class="cl">		  <span class="nb">echo</span> -e  <span class="s2">&#34;\e[0m&#34;</span>
-</span></span><span class="line"><span class="cl">	  <span class="k">else</span>
-</span></span><span class="line"><span class="cl">		  <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="k">$(</span>sha256sum <span class="si">${</span><span class="nv">file_busybox</span><span class="si">}</span><span class="k">)</span><span class="s2">&#34;</span> !<span class="o">=</span> <span class="s2">&#34;c35d87f1d04b2b153d33c275c2632e40d388a88f19a9e71727e0bbbff51fe689  </span><span class="si">${</span><span class="nv">file_busybox</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">			  rm -rf <span class="si">${</span><span class="nv">file_busybo</span><span class="si">}</span>
-</span></span><span class="line"><span class="cl">			  <span class="k">continue</span>
-</span></span><span class="line"><span class="cl">		  <span class="k">else</span>
-</span></span><span class="line"><span class="cl">			  <span class="nb">echo</span> -e <span class="s2">&#34;\e[32m</span><span class="nv">$file_busybox</span><span class="s2"> 已下载\e[0m&#34;</span>
-</span></span><span class="line"><span class="cl">			  break<span class="p">;</span>
-</span></span><span class="line"><span class="cl">		  <span class="k">fi</span>
-</span></span><span class="line"><span class="cl">	  <span class="k">fi</span>	  	  
-</span></span><span class="line"><span class="cl">  <span class="k">done</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="c1"># 判断u-boot文件是否准备好</span>
-</span></span><span class="line"><span class="cl">  <span class="k">while</span> true<span class="p">;</span>
-</span></span><span class="line"><span class="cl">  <span class="k">do</span>
-</span></span><span class="line"><span class="cl">	  <span class="k">if</span> <span class="o">[</span> ! -f <span class="s2">&#34;</span><span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="s2">/</span><span class="nv">$file_uboot</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">		  <span class="nb">echo</span> -e  <span class="s2">&#34;\e[34m&#34;</span>
-</span></span><span class="line"><span class="cl">		  <span class="c1"># wget --no-check-certificate https://ftp.denx.de/pub/u-boot/u-boot-2017.05.tar.bz2</span>
-</span></span><span class="line"><span class="cl">		  <span class="c1"># wget --no-check-certificate https://ftp.denx.de/pub/u-boot/u-boot-2020.07.tar.bz2</span>
-</span></span><span class="line"><span class="cl">		  wget --no-check-certificate https://ftp.denx.de/pub/u-boot/<span class="si">${</span><span class="nv">file_uboot</span><span class="si">}</span>
-</span></span><span class="line"><span class="cl">		  <span class="nb">echo</span> -e  <span class="s2">&#34;\e[0m&#34;</span>
-</span></span><span class="line"><span class="cl">	  <span class="k">else</span>
-</span></span><span class="line"><span class="cl">		  <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="k">$(</span>sha256sum <span class="si">${</span><span class="nv">file_uboot</span><span class="si">}</span><span class="k">)</span><span class="s2">&#34;</span> !<span class="o">=</span> <span class="s2">&#34;c8373949d7f0de1059e507b83a655d4cea539f75dc66ccdbb27adbd38d83095e  u-boot-2017.05.tar.bz2&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">			  rm -rf <span class="si">${</span><span class="nv">file_uboot</span><span class="si">}</span>
-</span></span><span class="line"><span class="cl">			  <span class="k">continue</span>
-</span></span><span class="line"><span class="cl">		  <span class="k">else</span>
-</span></span><span class="line"><span class="cl">			  <span class="nb">echo</span> -e <span class="s2">&#34;\e[32m</span><span class="nv">$file_uboot</span><span class="s2"> 已下载\e[0m&#34;</span>
-</span></span><span class="line"><span class="cl">			  <span class="nb">break</span>
-</span></span><span class="line"><span class="cl">		  <span class="k">fi</span>
-</span></span><span class="line"><span class="cl">	  <span class="k">fi</span>
-</span></span><span class="line"><span class="cl">  <span class="k">done</span></span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">  <span class="nv">jobs</span><span class="o">=</span><span class="k">$((</span>cpu_cores <span class="o">*</span> <span class="m">2</span><span class="k">))</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>

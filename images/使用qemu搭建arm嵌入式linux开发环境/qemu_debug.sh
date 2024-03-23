@@ -100,14 +100,28 @@ fi
 # 判断linux内核是否准备好
 while true;
 do
-	if [ ! -f "${work_dir}/$file_linux" ]; then
-		echo -e  "\e[32m"
-		# wget https://cdn.kernel.org/pub/linux/kernel/v4.x/${file_linux}
-		# wget https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.4.232.tar.xz
-		wget https://cdn.kernel.org/pub/linux/kernel/v4.x/${file_linux}
-		echo -e  "\e[0m"
+	result=$(curl ipinfo.io | grep "country" | tr '"' ' ' | awk '{print $3}')
+	if [ -z "${result}" ]; then
+		continue
 	else
-		if [ "$(sha256sum ${file_linux} | awk '{print $1}')" != "4eae8865deaf03f0d13bf5056e258d451a468cabc5158757b247b0e43518fd34  ${file_linux}" ]; then
+		echo -e "\e[32mcountry: ${result}\e[0m"
+		break
+	fi
+done
+
+while true;
+do
+	if [ ! -f "${work_dir}/$file_linux" ]; then		  
+		echo -e "\e[32m"
+		if [ ${result} != "CN" ]; then				  
+			# wget https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.4.232.tar.xz
+			wget https://cdn.kernel.org/pub/linux/kernel/v4.x/${file_linux}
+		else
+			# wget https://mirrors.ustc.edu.cn/kernel.org/linux/kernel/v4.x/linux-4.4.232.tar.xz
+			wget https://mirrors.ustc.edu.cn/kernel.org/linux/kernel/v4.x/${file_linux}
+		fi
+	else
+		if [ "$(sha256sum ${file_linux})" != "4eae8865deaf03f0d13bf5056e258d451a468cabc5158757b247b0e43518fd34  ${file_linux}" ]; then
 			rm -rf ${file_linux}
 			continue
 		else
@@ -115,6 +129,7 @@ do
 			break;
 		fi
 	fi
+	echo -e  "\e[0m"
 done
 
 # 判断busybox文件是否准备好
