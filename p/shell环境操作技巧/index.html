@@ -329,6 +329,8 @@
 </li>
 <li><a href="#headline-27">查看文件创建时间，并把创建时间组成使用hugo命令创建博客时生成的时间戳：</a>
 </li>
+<li><a href="#headline-28">在 awk 中，可以使用字符串连接符来连接多个关键词或字段</a>
+</li>
 </ul>
 </nav>
         </div>
@@ -372,7 +374,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 9 分钟
+                    阅读时长: 10 分钟
                 </time>
             </div>
         
@@ -1189,6 +1191,65 @@ shell脚本如何创建数组或列表
 </div>
 </div>
 </div>
+</div>
+</div>
+<div id="outline-container-headline-28" class="outline-4">
+<h4 id="headline-28">
+在 awk 中，可以使用字符串连接符来连接多个关键词或字段
+</h4>
+<div id="outline-text-headline-28" class="outline-text-4">
+<p>
+你可以使用逗号 , 来连接多个字段或字符串，并通过空格或其他字符来分隔它们。下面是一个示例，演示了如何在 awk 中连接多个关键词：</p>
+<p>
+假设我们有一个名为 data.txt 的文本文件，内容如下：</p>
+<div class="src src-txt">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-txt" data-lang="txt"><span class="line"><span class="cl">Alice 25
+</span></span><span class="line"><span class="cl">Bob 30
+</span></span><span class="line"><span class="cl">Charlie 27
+</span></span><span class="line"><span class="cl">David 22
+</span></span><span class="line"><span class="cl">Eve 35</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+现在假设我们想要使用 awk 命令来输出年龄大于 25 的人的姓名和年龄，并在输出时添加一些额外的描述性文字。我们可以这样做：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  awk <span class="s1">&#39;$2 &gt; 25 {print &#34;Name: &#34; $1 &#34;, Age: &#34; $2}&#39;</span> data.txt</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+这个命令的含义是，对于每一行数据，如果第二列（年龄）大于 25，则输出 &#34;Name: &#34;、姓名、&#34;, Age: &#34;、年龄。运行这个命令后，输出将会是：</p>
+<div class="src src-txt">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-txt" data-lang="txt"><span class="line"><span class="cl">Name: Bob, Age: 30
+</span></span><span class="line"><span class="cl">Name: Charlie, Age: 27
+</span></span><span class="line"><span class="cl">Name: Eve, Age: 35</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+在这个示例中，我们使用了字符串连接符 , 来连接固定的文字和字段，以便形成输出的完整描述。你可以根据自己的需求使用不同的连接方式和格式来构建输出。</p>
 </div>
 </div>
 
