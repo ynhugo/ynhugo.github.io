@@ -27613,6 +27613,69 @@ shell脚本如何创建数组或列表
 在这个示例中，我们使用了字符串连接符 , 来连接固定的文字和字段，以便形成输出的完整描述。你可以根据自己的需求使用不同的连接方式和格式来构建输出。&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-29&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-29&#34;&gt;
+要使用 AWK 输出指定行
+&lt;/h4&gt;
+&lt;div id=&#34;outline-text-headline-29&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;p&gt;
+你可以结合 AWK 的条件判断功能来实现。以下是一个简单的示例：&lt;/p&gt;
+&lt;p&gt;
+假设有一个名为 example.txt 的文本文件，内容如下：&lt;/p&gt;
+&lt;p&gt;#+end_src
+Line 1: This is the first line
+Line 2: This is the second line
+Line 3: This is the third line
+Line 4: This is the fourth line
+Line 5: This is the fifth line&lt;/p&gt;
+&lt;p&gt;#+end_src&lt;/p&gt;
+&lt;p&gt;
+如果要输出第3行的内容，可以使用以下命令：&lt;/p&gt;
+&lt;div class=&#34;src src-bash&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;awk &lt;span class=&#34;s1&#34;&gt;&amp;#39;NR==3&amp;#39;&lt;/span&gt; example.txt&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;
+这行命令中，NR==3 表示当前行号等于3时执行相应操作，example.txt 是输入文件。&lt;/p&gt;
+&lt;p&gt;
+如果要输出多行（比如输出第2行到第4行的内容），可以使用类似的方式：&lt;/p&gt;
+&lt;div class=&#34;src src-bash&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;awk &lt;span class=&#34;s1&#34;&gt;&amp;#39;NR&amp;gt;=2 &amp;amp;&amp;amp; NR&amp;lt;=4&amp;#39;&lt;/span&gt; example.txt&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;
+这样会输出第2行到第4行的内容。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-30&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-30&#34;&gt;
+hugo 批量插入文件的 Linux 脚本参考
+&lt;/h4&gt;
+&lt;div id=&#34;outline-text-headline-30&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;div class=&#34;src src-bash&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  find ./ -type f &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; xargs readlink -f&lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; awk -F &lt;span class=&#34;s1&#34;&gt;&amp;#39;/&amp;#39;&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;{print &amp;#34;[[/&amp;#34;$8&amp;#34;/&amp;#34;$9&amp;#34;/&amp;#34;$10&amp;#34;/&amp;#34;$11&amp;#34;/&amp;#34;$12&amp;#34;][&amp;#34;$12&amp;#34;]]&amp;#34;}&amp;#39;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
 </description>
         </item>
         <item>

@@ -125,15 +125,6 @@
                 
                 
                 
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="7" r="4" />
-  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
-</svg>
-
-
-
-                
                 <span>book</span>
             </a>
         </li>
@@ -349,6 +340,10 @@
 <li><a href="#headline-27">查看文件创建时间，并把创建时间组成使用hugo命令创建博客时生成的时间戳：</a>
 </li>
 <li><a href="#headline-28">在 awk 中，可以使用字符串连接符来连接多个关键词或字段</a>
+</li>
+<li><a href="#headline-29">要使用 AWK 输出指定行</a>
+</li>
+<li><a href="#headline-30">hugo 批量插入文件的 Linux 脚本参考</a>
 </li>
 </ul>
 </nav>
@@ -1269,6 +1264,69 @@ shell脚本如何创建数组或列表
 </div>
 <p>
 在这个示例中，我们使用了字符串连接符 , 来连接固定的文字和字段，以便形成输出的完整描述。你可以根据自己的需求使用不同的连接方式和格式来构建输出。</p>
+</div>
+</div>
+<div id="outline-container-headline-29" class="outline-4">
+<h4 id="headline-29">
+要使用 AWK 输出指定行
+</h4>
+<div id="outline-text-headline-29" class="outline-text-4">
+<p>
+你可以结合 AWK 的条件判断功能来实现。以下是一个简单的示例：</p>
+<p>
+假设有一个名为 example.txt 的文本文件，内容如下：</p>
+<p>#+end_src
+Line 1: This is the first line
+Line 2: This is the second line
+Line 3: This is the third line
+Line 4: This is the fourth line
+Line 5: This is the fifth line</p>
+<p>#+end_src</p>
+<p>
+如果要输出第3行的内容，可以使用以下命令：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">awk <span class="s1">&#39;NR==3&#39;</span> example.txt</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+这行命令中，NR==3 表示当前行号等于3时执行相应操作，example.txt 是输入文件。</p>
+<p>
+如果要输出多行（比如输出第2行到第4行的内容），可以使用类似的方式：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">awk <span class="s1">&#39;NR&gt;=2 &amp;&amp; NR&lt;=4&#39;</span> example.txt</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+这样会输出第2行到第4行的内容。</p>
+</div>
+</div>
+<div id="outline-container-headline-30" class="outline-4">
+<h4 id="headline-30">
+hugo 批量插入文件的 Linux 脚本参考
+</h4>
+<div id="outline-text-headline-30" class="outline-text-4">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  find ./ -type f <span class="p">|</span> xargs readlink -f<span class="p">|</span> awk -F <span class="s1">&#39;/&#39;</span> <span class="s1">&#39;{print &#34;[[/&#34;$8&#34;/&#34;$9&#34;/&#34;$10&#34;/&#34;$11&#34;/&#34;$12&#34;][&#34;$12&#34;]]&#34;}&#39;</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
 </div>
 </div>
 
