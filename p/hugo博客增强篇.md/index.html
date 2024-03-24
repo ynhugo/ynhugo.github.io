@@ -121,6 +121,25 @@
         
         
         <li >
+            <a href='/book/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>book</span>
+            </a>
+        </li>
+        
+        
+        <li >
             <a href='/%E5%85%B3%E4%BA%8E/' >
                 
                 
@@ -193,16 +212,6 @@
 
                 
                 <span>Links</span>
-            </a>
-        </li>
-        
-        
-        <li >
-            <a href='/' >
-                
-                
-                
-                <span>首页</span>
             </a>
         </li>
         
@@ -335,7 +344,7 @@ draft: false</a></li>
 
 
                 <time class="article-time--reading">
-                    阅读时长: 15 分钟
+                    阅读时长: 17 分钟
                 </time>
             </div>
         
@@ -2565,6 +2574,79 @@ draft: false</h2>
 <li>**查看效果：**保存配置文件并重新生成 Hugo 网站，查看菜单是否显示了相应的图标。</li>
 </ol>
 <p>记得根据实际情况调整图标库和图标类名，确保图标能够正确显示在你的网站上。</p>
+<h1 id="在-hugo-中创建对应菜单的首页文件通常是通过创建-content-文件来实现的">在 Hugo 中，创建对应菜单的首页文件通常是通过创建 content 文件来实现的</h1>
+<p>你可以按照以下步骤来创建对应菜单的首页文件：</p>
+<ol>
+<li>
+<p><strong>确定菜单对应的内容页面：</strong> 首先确定菜单项所对应的内容页面。比如，如果你创建了一个 &ldquo;blog&rdquo; 菜单，那么你可能需要创建一个用于显示博客列表的页面。</p>
+</li>
+<li>
+<p><strong>创建内容文件：</strong> 在 Hugo 网站的 <code>content</code> 目录下，根据菜单对应的内容类型创建相应的 Markdown 文件。假设你要创建一个 &ldquo;blog&rdquo; 菜单对应的页面，可以在 <code>content</code> 目录下创建一个名为 <code>blog.md</code> 的文件。</p>
+</li>
+<li>
+<p><strong>编辑内容文件：</strong> 编辑刚创建的 Markdown 文件，添加页面所需的 Front Matter 和内容。Front Matter 是位于文件开头的一组 YAML 元数据，用于定义页面的属性，比如标题、日期、标签等。</p>
+<p>例如，一个简单的 <code>blog.md</code> 文件可能如下所示：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-markdown" data-lang="markdown"><span class="line"><span class="cl">---
+</span></span><span class="line"><span class="cl">title: &#34;博客&#34;
+</span></span><span class="line"><span class="cl">date: 2024-03-24
+</span></span><span class="line"><span class="cl">description: &#34;这是我的博客页面&#34;
+</span></span><span class="line"><span class="cl">---
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">这里是博客页面的内容。
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong>保存文件并生成网站：</strong> 保存 <code>blog.md</code> 文件并重新生成 Hugo 网站。在生成的网站中，你应该能够在菜单中看到相应的 &ldquo;博客&rdquo; 链接，并且点击链接后会跳转到你刚创建的内容页面。</p>
+</li>
+</ol>
+<p>根据你的网站主题和页面结构，有时候不同的主题可能需要在不同的位置进行配置或创建文件，具体操作可能会有些许差异。请根据你使用的主题及其文档说明进行相应的操作。</p>
+<h1 id="添加about-栏">添加About 栏</h1>
+<p>如果 ~/hugo_blog/content/ 下面没有about 文件夹的话</p>
+<p>在 ~/hugo_blog/content/ 创建 about 目录，并在该目录下添加 index.md 文件</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nn">---</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">title </span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;About&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">lastmod </span><span class="p">:</span><span class="w"> </span><span class="ld">2022-03-10T19:36:26</span><span class="m">+08</span><span class="p">:</span><span class="m">00</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">draft </span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">menu</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">main</span><span class="p">:</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">weight</span><span class="p">:</span><span class="w"> </span>-<span class="m">90</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">params</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">icon</span><span class="p">:</span><span class="w"> </span><span class="l">user</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nn">---</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">Hellow, World!</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>:@ 注意: Even 主题中 文件头部是用 +++ +++ 包起来的 而Stack 主题中 文件头部是用 &mdash; &mdash; 包起来的
+而且在Stack 中 menu: 到时user 部分不能动, 哪怕是改了缩进都会导致识别不出About</p>
 
 </section>
 
