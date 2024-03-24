@@ -335,7 +335,7 @@ draft: false</a></li>
 
 
                 <time class="article-time--reading">
-                    阅读时长: 14 分钟
+                    阅读时长: 15 分钟
                 </time>
             </div>
         
@@ -2514,6 +2514,57 @@ draft: false</h2>
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>这样就会在网站的主菜单中添加一个指向首页的链接。记得根据自己的网站需求和页面结构来调整菜单配置。对于其他文件，通常不需要额外的配置来支持菜单的显示，只需在 <code>config.yaml</code> 中正确配置即可。</p>
+<h1 id="在-hugo-的配置文件中添加图标通常需要使用图标库或者自定义图标">在 Hugo 的配置文件中添加图标通常需要使用图标库或者自定义图标</h1>
+<p>在你提供的配置文件中，看到有一个示例使用了 <code>icon: brand-github</code> 和 <code>icon: brand-twitter</code> 来指定图标。这里使用的是 FontAwesome 图标库中的图标类名。</p>
+<p>如果你想使用其他图标库或自定义图标，可以按照以下步骤进行：</p>
+<ol>
+<li>
+<p>**选择图标库：**选择一个适合你需求的图标库，比如 Font Awesome、Material Icons 等。确保你能够获取到所需图标的类名或标识符。</p>
+</li>
+<li>
+<p>**下载或引入图标库：**根据图标库的要求，下载相应的图标文件或通过 CDN 引入。将图标库的 CSS 文件或 JavaScript 文件链接添加到你的 Hugo 主题中。</p>
+</li>
+<li>
+<p>**配置图标：**在 Hugo 的配置文件中，为菜单项指定相应的图标类名或标识符。例如，如果你选择了 Font Awesome 图标库，可以像下面这样配置：</p>
+</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">menu</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">social</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span>- <span class="nt">identifier</span><span class="p">:</span><span class="w"> </span><span class="l">github</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">GitHub</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l">https://github.com/ynhugo</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">params</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">              </span><span class="nt">icon</span><span class="p">:</span><span class="w"> </span><span class="l">fab fa-github</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span>- <span class="nt">identifier</span><span class="p">:</span><span class="w"> </span><span class="l">twitter</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Twitter</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l">https://twitter.com</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">params</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">              </span><span class="nt">icon</span><span class="p">:</span><span class="w"> </span><span class="l">fab fa-twitter</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>在上述示例中，<code>fab</code> 表示 Font Awesome 的品牌图标系列，后面跟着具体的图标名称。根据你选择的图标库和图标名称，替换 <code>fab fa-github</code> 和 <code>fab fa-twitter</code> 部分即可。</p>
+<ol start="4">
+<li>**查看效果：**保存配置文件并重新生成 Hugo 网站，查看菜单是否显示了相应的图标。</li>
+</ol>
+<p>记得根据实际情况调整图标库和图标类名，确保图标能够正确显示在你的网站上。</p>
 
 </section>
 
