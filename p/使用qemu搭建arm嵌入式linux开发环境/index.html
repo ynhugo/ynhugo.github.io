@@ -1737,17 +1737,53 @@
 </span><span class="lnt">411
 </span><span class="lnt">412
 </span><span class="lnt">413
+</span><span class="lnt">414
+</span><span class="lnt">415
+</span><span class="lnt">416
+</span><span class="lnt">417
+</span><span class="lnt">418
+</span><span class="lnt">419
+</span><span class="lnt">420
+</span><span class="lnt">421
+</span><span class="lnt">422
+</span><span class="lnt">423
+</span><span class="lnt">424
+</span><span class="lnt">425
+</span><span class="lnt">426
+</span><span class="lnt">427
+</span><span class="lnt">428
+</span><span class="lnt">429
+</span><span class="lnt">430
+</span><span class="lnt">431
+</span><span class="lnt">432
+</span><span class="lnt">433
+</span><span class="lnt">434
+</span><span class="lnt">435
+</span><span class="lnt">436
+</span><span class="lnt">437
+</span><span class="lnt">438
+</span><span class="lnt">439
+</span><span class="lnt">440
+</span><span class="lnt">441
+</span><span class="lnt">442
+</span><span class="lnt">443
+</span><span class="lnt">444
+</span><span class="lnt">445
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nv">cmdself</span><span class="o">=</span><span class="nv">$0</span>
-</span></span><span class="line"><span class="cl">  <span class="nv">linux</span><span class="o">=</span><span class="s2">&#34;linux-4.4.232&#34;</span><span class="p">;</span>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nv">linux</span><span class="o">=</span><span class="s2">&#34;linux-4.4.232&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="c1"># linux=&#34;linux-4.4.76&#34;;</span>
 </span></span><span class="line"><span class="cl">  <span class="nv">busybox</span><span class="o">=</span><span class="s2">&#34;busybox-1.32.0&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="nv">uboot</span><span class="o">=</span><span class="s2">&#34;u-boot-2017.05&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="c1"># uboot=&#34;u-boot-2020.07&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">vuboot</span><span class="o">=</span><span class="s2">&#34;v2017.05&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">git_uboot</span><span class="o">=</span><span class="s2">&#34;v&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="nv">file_linux</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">linux</span><span class="si">}</span><span class="s2">.tar.xz&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="nv">file_busybox</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">busybox</span><span class="si">}</span><span class="s2">.tar.bz2&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="nv">file_uboot</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">uboot</span><span class="si">}</span><span class="s2">.tar.bz2&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">file_vuboot</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">vuboot</span><span class="si">}</span><span class="s2">.tar.gz&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">bz2_uboot</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">file_uboot</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">gz_uboot</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">file_vuboot</span><span class="si">}</span><span class="s2">&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="nv">work_dir_name</span><span class="o">=</span><span class="s2">&#34;yenao_qemu_test&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="nv">work_dir</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">work_dir_name</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="nv">Operate_Net_File</span><span class="o">=</span><span class="s2">&#34;/etc/network/interfaces&#34;</span>
@@ -1895,14 +1931,34 @@
 </span></span><span class="line"><span class="cl">  <span class="c1"># 判断u-boot文件是否准备好</span>
 </span></span><span class="line"><span class="cl">  <span class="k">while</span> true<span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="k">do</span>
+</span></span><span class="line"><span class="cl">	  <span class="nv">result</span><span class="o">=</span><span class="k">$(</span>curl ipinfo.io <span class="p">|</span> grep <span class="s2">&#34;country&#34;</span> <span class="p">|</span> tr <span class="s1">&#39;&#34;&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $3}&#39;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&#34;</span><span class="si">${</span><span class="nv">result</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">		  <span class="k">continue</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">else</span>
+</span></span><span class="line"><span class="cl">		  <span class="nb">echo</span> -e <span class="s2">&#34;\e[32mcountry: </span><span class="si">${</span><span class="nv">result</span><span class="si">}</span><span class="s2">\e[0m&#34;</span>
+</span></span><span class="line"><span class="cl">		  <span class="nb">break</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">  <span class="k">done</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nv">file_uboot</span><span class="o">=</span><span class="si">${</span><span class="nv">file_vuboot</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># echo &#34;https://codeload.github.com/u-boot/u-boot/tar.gz/refs/tags/v2017.05&#34; | awk -F &#39;/&#39; &#39;{print $5&#34;-&#34;$9&#34;.&#34;$6}&#39; | tr -d &#39;v&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">while</span> true<span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">do</span>
 </span></span><span class="line"><span class="cl">	  <span class="k">if</span> <span class="o">[</span> ! -f <span class="s2">&#34;</span><span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="s2">/</span><span class="nv">$file_uboot</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
 </span></span><span class="line"><span class="cl">		  <span class="nb">echo</span> -e  <span class="s2">&#34;\e[34m&#34;</span>
-</span></span><span class="line"><span class="cl">		  <span class="c1"># wget --no-check-certificate https://ftp.denx.de/pub/u-boot/u-boot-2017.05.tar.bz2</span>
-</span></span><span class="line"><span class="cl">		  <span class="c1"># wget --no-check-certificate https://ftp.denx.de/pub/u-boot/u-boot-2020.07.tar.bz2</span>
-</span></span><span class="line"><span class="cl">		  wget --no-check-certificate https://ftp.denx.de/pub/u-boot/<span class="si">${</span><span class="nv">file_uboot</span><span class="si">}</span>
-</span></span><span class="line"><span class="cl">		  <span class="nb">echo</span> -e  <span class="s2">&#34;\e[0m&#34;</span>
+</span></span><span class="line"><span class="cl">		  <span class="k">if</span> <span class="o">[</span> <span class="si">${</span><span class="nv">result</span><span class="si">}</span> !<span class="o">=</span> <span class="s2">&#34;CN&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">			  <span class="c1"># wget --no-check-certificate https://ftp.denx.de/pub/u-boot/u-boot-2017.05.tar.bz2 </span>
+</span></span><span class="line"><span class="cl">			  <span class="c1"># wget --no-check-certificate https://ftp.denx.de/pub/u-boot/u-boot-2020.07.tar.bz2</span>
+</span></span><span class="line"><span class="cl">			  <span class="c1"># wget --no-check-certificate https://ftp.denx.de/pub/u-boot/${file_uboot}</span>
+</span></span><span class="line"><span class="cl">			  <span class="c1"># wget https://github.com/u-boot/u-boot/archive/refs/tags/v2017.05.tar.gz</span>
+</span></span><span class="line"><span class="cl">			  wget  https://github.com/u-boot/u-boot/archive/refs/tags/<span class="si">${</span><span class="nv">file_uboot</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">		  <span class="k">else</span>
+</span></span><span class="line"><span class="cl">			  wget https://hub.nuaa.cf/u-boot/u-boot/archive/refs/tags/<span class="si">${</span><span class="nv">file_uboot</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">		  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">	  <span class="k">else</span>
-</span></span><span class="line"><span class="cl">		  <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="k">$(</span>sha256sum <span class="si">${</span><span class="nv">file_uboot</span><span class="si">}</span><span class="k">)</span><span class="s2">&#34;</span> !<span class="o">=</span> <span class="s2">&#34;c8373949d7f0de1059e507b83a655d4cea539f75dc66ccdbb27adbd38d83095e  u-boot-2017.05.tar.bz2&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">		  <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="k">$(</span>sha256sum <span class="si">${</span><span class="nv">file_uboot</span><span class="si">}</span><span class="k">)</span><span class="s2">&#34;</span> !<span class="o">=</span> <span class="s2">&#34;0f94a62c460fc136aeca9bcd9fde3bb1d3f25b953e1bee96be4497a06a39ae81  </span><span class="si">${</span><span class="nv">file_uboot</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
 </span></span><span class="line"><span class="cl">			  rm -rf <span class="si">${</span><span class="nv">file_uboot</span><span class="si">}</span>
 </span></span><span class="line"><span class="cl">			  <span class="k">continue</span>
 </span></span><span class="line"><span class="cl">		  <span class="k">else</span>
@@ -1910,7 +1966,8 @@
 </span></span><span class="line"><span class="cl">			  <span class="nb">break</span>
 </span></span><span class="line"><span class="cl">		  <span class="k">fi</span>
 </span></span><span class="line"><span class="cl">	  <span class="k">fi</span>
-</span></span><span class="line"><span class="cl">  <span class="k">done</span>
+</span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> -e  <span class="s2">&#34;\e[0m&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">done</span>  
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="c1"># 临时配置交叉编译环境</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">export</span> <span class="nv">ARCH</span><span class="o">=</span>arm <span class="o">&amp;&amp;</span> <span class="nb">export</span> <span class="nv">CROSS_COMPILE</span><span class="o">=</span>arm-linux-gnueabi-<span class="p">;</span>
@@ -1935,16 +1992,23 @@
 </span></span><span class="line"><span class="cl">  <span class="nb">echo</span> -e  <span class="s2">&#34;\e[0m&#34;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="c1"># 判断u-boot文件是否解压</span>
-</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> -e  <span class="s2">&#34;\e[34m&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> -e <span class="s2">&#34;\e[34m&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> -d <span class="s2">&#34;</span><span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">uboot</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
 </span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$uboot</span><span class="s2"> exists.&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="k">else</span>
-</span></span><span class="line"><span class="cl">	  tar xvf <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="nv">$file_uboot</span> -C <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">	  <span class="k">if</span> <span class="o">[</span> -f <span class="s2">&#34;</span><span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">uboot</span><span class="si">}</span><span class="s2">/include/configs/vexpress_common.h&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">		  cp <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span> <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>.old
+</span></span><span class="line"><span class="cl">	  <span class="k">if</span> <span class="o">[</span> -f <span class="s2">&#34;</span><span class="si">${</span><span class="nv">bz2_uboot</span><span class="si">}</span><span class="s2">&#34;</span>  <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">		  tar xvf <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="nv">$file_uboot</span> -C <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		  <span class="k">if</span> <span class="o">[</span> -f <span class="s2">&#34;</span><span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">uboot</span><span class="si">}</span><span class="s2">/include/configs/vexpress_common.h&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">			  cp <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span> <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>.old
+</span></span><span class="line"><span class="cl">		  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">elif</span> <span class="o">[</span> -f <span class="s2">&#34;</span><span class="si">${</span><span class="nv">gz_uboot</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">		  tar zxvf <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="nv">$file_uboot</span> -C <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		  <span class="k">if</span> <span class="o">[</span> -f <span class="s2">&#34;</span><span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">uboot</span><span class="si">}</span><span class="s2">/include/configs/vexpress_common.h&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">			  cp <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span> <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>.old
+</span></span><span class="line"><span class="cl">		  <span class="k">fi</span>
 </span></span><span class="line"><span class="cl">	  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> -e <span class="s2">&#34;\e[0m&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="k">fi</span>
-</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> -e  <span class="s2">&#34;\e[0m&#34;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="c1"># 编译linux内核</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">echo</span> -e  <span class="s2">&#34;\e[32m&#34;</span>
@@ -2244,6 +2308,10 @@
 </span><span class="lnt">77
 </span><span class="lnt">78
 </span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nv">linux</span><span class="o">=</span><span class="s2">&#34;linux-4.4.232&#34;</span><span class="p">;</span>
@@ -2302,17 +2370,20 @@
 </span></span><span class="line"><span class="cl">  <span class="nb">export</span> <span class="nv">ARCH</span><span class="o">=</span>arm <span class="o">&amp;&amp;</span> <span class="nb">export</span> <span class="nv">CROSS_COMPILE</span><span class="o">=</span>arm-linux-gnueabi-<span class="p">;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="c1"># 判断linux内核是否解压</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> -e  <span class="s2">&#34;\e[34m&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="c1"># kernel</span>
 </span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> -d <span class="s2">&#34;</span><span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="s2">/</span><span class="nv">$linux</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
 </span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$linux</span><span class="s2"> exists.&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="k">else</span>
 </span></span><span class="line"><span class="cl">	  tar xvf <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="nv">$file_linux</span> -C <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> -e  <span class="s2">&#34;\e[0m&#34;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="nv">cpu_cores</span><span class="o">=</span><span class="k">$(</span>nproc<span class="k">)</span>
 </span></span><span class="line"><span class="cl">  <span class="nv">jobs</span><span class="o">=</span><span class="k">$((</span>cpu_cores <span class="o">*</span> <span class="m">2</span><span class="k">))</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="c1"># 编译linux内核</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> -e  <span class="s2">&#34;\e[32m&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">cd</span>  <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">linux</span><span class="si">}</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  make distclean -j<span class="si">${</span><span class="nv">jobs</span><span class="si">}</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  make vexpress_defconfig -j<span class="si">${</span><span class="nv">jobs</span><span class="si">}</span><span class="p">;</span>
@@ -2321,6 +2392,7 @@
 </span></span><span class="line"><span class="cl">  make <span class="nv">LOADADDR</span><span class="o">=</span>0x60003000 uImage -j<span class="si">${</span><span class="nv">jobs</span><span class="si">}</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  make dtbs -j<span class="si">${</span><span class="nv">jobs</span><span class="si">}</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="c1"># mkimage -n &#39;mini2440&#39; -A arm -O linux -T kernel -C none -a 0x30008000 -e 0x30008040 -d  ${work_dir}/$linux/arch/arm/boot/zImage  ${work_dir}/$linux/arch/arm/boot/uImage</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> -e  <span class="s2">&#34;\e[0m&#34;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  sudo cp -vf <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">linux</span><span class="si">}</span>/arch/arm/boot/zImage /tftpboot<span class="p">;</span>
 </span></span><span class="line"><span class="cl">  sudo cp -vf <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">linux</span><span class="si">}</span>/arch/arm/boot/uImage /tftpboot<span class="p">;</span>
@@ -2393,6 +2465,8 @@ busybox 编译
 </span><span class="lnt">53
 </span><span class="lnt">54
 </span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nv">linux</span><span class="o">=</span><span class="s2">&#34;linux-4.4.232&#34;</span><span class="p">;</span>
@@ -2435,16 +2509,18 @@ busybox 编译
 </span></span><span class="line"><span class="cl">  <span class="nb">export</span> <span class="nv">ARCH</span><span class="o">=</span>arm <span class="o">&amp;&amp;</span> <span class="nb">export</span> <span class="nv">CROSS_COMPILE</span><span class="o">=</span>arm-linux-gnueabi-<span class="p">;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="c1"># 判断busybox文件是否解压</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> -e  <span class="s2">&#34;\e[33m&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> -d <span class="s2">&#34;</span><span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="s2">/</span><span class="nv">$busybox</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
 </span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$busybox</span><span class="s2"> exists.&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="k">else</span>
 </span></span><span class="line"><span class="cl">	  tar xvf <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="nv">$file_busybox</span> -C <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> -e  <span class="s2">&#34;\e[0m&#34;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="nv">cpu_cores</span><span class="o">=</span><span class="k">$(</span>nproc<span class="k">)</span>
 </span></span><span class="line"><span class="cl">  <span class="nv">jobs</span><span class="o">=</span><span class="k">$((</span>cpu_cores <span class="o">*</span> <span class="m">2</span><span class="k">))</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="c1"># 编译busybox，编译之后把&#34;${busybox}/_install/*&#34;拷贝到rootfs目录下</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># 编译busybox</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">cd</span>  <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">busybox</span><span class="si">}</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  make distclean -j<span class="si">${</span><span class="nv">jobs</span><span class="si">}</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  make defconfig -j<span class="si">${</span><span class="nv">jobs</span><span class="si">}</span><span class="p">;</span>
@@ -2664,6 +2740,41 @@ u-boot 编译
 </span><span class="lnt">58
 </span><span class="lnt">59
 </span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span><span class="lnt">90
+</span><span class="lnt">91
+</span><span class="lnt">92
+</span><span class="lnt">93
+</span><span class="lnt">94
+</span><span class="lnt">95
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nv">linux</span><span class="o">=</span><span class="s2">&#34;linux-4.4.232&#34;</span><span class="p">;</span>
@@ -2671,9 +2782,14 @@ u-boot 编译
 </span></span><span class="line"><span class="cl">  <span class="nv">busybox</span><span class="o">=</span><span class="s2">&#34;busybox-1.32.0&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="nv">uboot</span><span class="o">=</span><span class="s2">&#34;u-boot-2017.05&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="c1"># uboot=&#34;u-boot-2020.07&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">vuboot</span><span class="o">=</span><span class="s2">&#34;v2017.05&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">git_uboot</span><span class="o">=</span><span class="s2">&#34;v&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="nv">file_linux</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">linux</span><span class="si">}</span><span class="s2">.tar.xz&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="nv">file_busybox</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">busybox</span><span class="si">}</span><span class="s2">.tar.bz2&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="nv">file_uboot</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">uboot</span><span class="si">}</span><span class="s2">.tar.bz2&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">file_vuboot</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">vuboot</span><span class="si">}</span><span class="s2">.tar.gz&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">bz2_uboot</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">file_uboot</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">gz_uboot</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">file_vuboot</span><span class="si">}</span><span class="s2">&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="nv">work_dir_name</span><span class="o">=</span><span class="s2">&#34;yenao_qemu_test&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="nv">work_dir</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">work_dir_name</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="nv">Operate_Net_File</span><span class="o">=</span><span class="s2">&#34;/etc/network/interfaces&#34;</span>
@@ -2689,14 +2805,34 @@ u-boot 编译
 </span></span><span class="line"><span class="cl">  <span class="c1"># 判断u-boot文件是否准备好</span>
 </span></span><span class="line"><span class="cl">  <span class="k">while</span> true<span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="k">do</span>
+</span></span><span class="line"><span class="cl">	  <span class="nv">result</span><span class="o">=</span><span class="k">$(</span>curl ipinfo.io <span class="p">|</span> grep <span class="s2">&#34;country&#34;</span> <span class="p">|</span> tr <span class="s1">&#39;&#34;&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $3}&#39;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&#34;</span><span class="si">${</span><span class="nv">result</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">		  <span class="k">continue</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">else</span>
+</span></span><span class="line"><span class="cl">		  <span class="nb">echo</span> -e <span class="s2">&#34;\e[32mcountry: </span><span class="si">${</span><span class="nv">result</span><span class="si">}</span><span class="s2">\e[0m&#34;</span>
+</span></span><span class="line"><span class="cl">		  <span class="nb">break</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">  <span class="k">done</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nv">file_uboot</span><span class="o">=</span><span class="si">${</span><span class="nv">file_vuboot</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># echo &#34;https://codeload.github.com/u-boot/u-boot/tar.gz/refs/tags/v2017.05&#34; | awk -F &#39;/&#39; &#39;{print $5&#34;-&#34;$9&#34;.&#34;$6}&#39; | tr -d &#39;v&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">while</span> true<span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">do</span>
 </span></span><span class="line"><span class="cl">	  <span class="k">if</span> <span class="o">[</span> ! -f <span class="s2">&#34;</span><span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="s2">/</span><span class="nv">$file_uboot</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
 </span></span><span class="line"><span class="cl">		  <span class="nb">echo</span> -e  <span class="s2">&#34;\e[34m&#34;</span>
-</span></span><span class="line"><span class="cl">		  <span class="c1"># wget --no-check-certificate https://ftp.denx.de/pub/u-boot/u-boot-2017.05.tar.bz2</span>
-</span></span><span class="line"><span class="cl">		  <span class="c1"># wget --no-check-certificate https://ftp.denx.de/pub/u-boot/u-boot-2020.07.tar.bz2</span>
-</span></span><span class="line"><span class="cl">		  wget --no-check-certificate https://ftp.denx.de/pub/u-boot/<span class="si">${</span><span class="nv">file_uboot</span><span class="si">}</span>
-</span></span><span class="line"><span class="cl">		  <span class="nb">echo</span> -e  <span class="s2">&#34;\e[0m&#34;</span>
+</span></span><span class="line"><span class="cl">		  <span class="k">if</span> <span class="o">[</span> <span class="si">${</span><span class="nv">result</span><span class="si">}</span> !<span class="o">=</span> <span class="s2">&#34;CN&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">			  <span class="c1"># wget --no-check-certificate https://ftp.denx.de/pub/u-boot/u-boot-2017.05.tar.bz2 </span>
+</span></span><span class="line"><span class="cl">			  <span class="c1"># wget --no-check-certificate https://ftp.denx.de/pub/u-boot/u-boot-2020.07.tar.bz2</span>
+</span></span><span class="line"><span class="cl">			  <span class="c1"># wget --no-check-certificate https://ftp.denx.de/pub/u-boot/${file_uboot}</span>
+</span></span><span class="line"><span class="cl">			  <span class="c1"># wget https://github.com/u-boot/u-boot/archive/refs/tags/v2017.05.tar.gz</span>
+</span></span><span class="line"><span class="cl">			  wget  https://github.com/u-boot/u-boot/archive/refs/tags/<span class="si">${</span><span class="nv">file_uboot</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">		  <span class="k">else</span>
+</span></span><span class="line"><span class="cl">			  wget https://hub.nuaa.cf/u-boot/u-boot/archive/refs/tags/<span class="si">${</span><span class="nv">file_uboot</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">		  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">	  <span class="k">else</span>
-</span></span><span class="line"><span class="cl">		  <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="k">$(</span>sha256sum <span class="si">${</span><span class="nv">file_uboot</span><span class="si">}</span><span class="k">)</span><span class="s2">&#34;</span> !<span class="o">=</span> <span class="s2">&#34;c8373949d7f0de1059e507b83a655d4cea539f75dc66ccdbb27adbd38d83095e  u-boot-2017.05.tar.bz2&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">		  <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="k">$(</span>sha256sum <span class="si">${</span><span class="nv">file_uboot</span><span class="si">}</span><span class="k">)</span><span class="s2">&#34;</span> !<span class="o">=</span> <span class="s2">&#34;0f94a62c460fc136aeca9bcd9fde3bb1d3f25b953e1bee96be4497a06a39ae81  </span><span class="si">${</span><span class="nv">file_uboot</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
 </span></span><span class="line"><span class="cl">			  rm -rf <span class="si">${</span><span class="nv">file_uboot</span><span class="si">}</span>
 </span></span><span class="line"><span class="cl">			  <span class="k">continue</span>
 </span></span><span class="line"><span class="cl">		  <span class="k">else</span>
@@ -2704,16 +2840,26 @@ u-boot 编译
 </span></span><span class="line"><span class="cl">			  <span class="nb">break</span>
 </span></span><span class="line"><span class="cl">		  <span class="k">fi</span>
 </span></span><span class="line"><span class="cl">	  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> -e  <span class="s2">&#34;\e[0m&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="k">done</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="c1"># 判断u-boot文件是否解压</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> -e <span class="s2">&#34;\e[34m&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> -d <span class="s2">&#34;</span><span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">uboot</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
 </span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$uboot</span><span class="s2"> exists.&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="k">else</span>
-</span></span><span class="line"><span class="cl">	  tar xvf <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="nv">$file_uboot</span> -C <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">	  <span class="k">if</span> <span class="o">[</span> -f <span class="s2">&#34;</span><span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">uboot</span><span class="si">}</span><span class="s2">/include/configs/vexpress_common.h&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">		  cp <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span> <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>.old
+</span></span><span class="line"><span class="cl">	  <span class="k">if</span> <span class="o">[</span> -f <span class="s2">&#34;</span><span class="si">${</span><span class="nv">bz2_uboot</span><span class="si">}</span><span class="s2">&#34;</span>  <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">		  tar xvf <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="nv">$file_uboot</span> -C <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		  <span class="k">if</span> <span class="o">[</span> -f <span class="s2">&#34;</span><span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">uboot</span><span class="si">}</span><span class="s2">/include/configs/vexpress_common.h&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">			  cp <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span> <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>.old
+</span></span><span class="line"><span class="cl">		  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">elif</span> <span class="o">[</span> -f <span class="s2">&#34;</span><span class="si">${</span><span class="nv">gz_uboot</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">		  tar zxvf <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span>/<span class="nv">$file_uboot</span> -C <span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		  <span class="k">if</span> <span class="o">[</span> -f <span class="s2">&#34;</span><span class="si">${</span><span class="nv">work_dir</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">uboot</span><span class="si">}</span><span class="s2">/include/configs/vexpress_common.h&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">			  cp <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span> <span class="si">${</span><span class="nv">uboot_config_file</span><span class="si">}</span>.old
+</span></span><span class="line"><span class="cl">		  <span class="k">fi</span>
 </span></span><span class="line"><span class="cl">	  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> -e <span class="s2">&#34;\e[0m&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="k">fi</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="nv">cpu_cores</span><span class="o">=</span><span class="k">$(</span>nproc<span class="k">)</span>

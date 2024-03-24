@@ -1,12 +1,16 @@
-cmdself=$0
 linux="linux-4.4.232";
 # linux="linux-4.4.76";
 busybox="busybox-1.32.0";
 uboot="u-boot-2017.05"
 # uboot="u-boot-2020.07"
+vuboot="v2017.05"
+git_uboot="v"
 file_linux="${linux}.tar.xz";
 file_busybox="${busybox}.tar.bz2";
 file_uboot="${uboot}.tar.bz2"
+file_vuboot="${vuboot}.tar.gz"
+bz2_uboot="${file_uboot}"
+gz_uboot="${file_vuboot}"
 work_dir_name="yenao_qemu_test";
 work_dir="${HOME}/${work_dir_name}";
 Operate_Net_File="/etc/network/interfaces"
@@ -154,14 +158,34 @@ done
 # 判断u-boot文件是否准备好
 while true;
 do
+	result=$(curl ipinfo.io | grep "country" | tr '"' ' ' | awk '{print $3}')
+	if [ -z "${result}" ]; then
+		continue
+	else
+		echo -e "\e[32mcountry: ${result}\e[0m"
+		break
+	fi
+done
+
+file_uboot=${file_vuboot}
+# echo "https://codeload.github.com/u-boot/u-boot/tar.gz/refs/tags/v2017.05" | awk -F '/' '{print $5"-"$9"."$6}' | tr -d 'v'
+
+while true;
+do
 	if [ ! -f "${work_dir}/$file_uboot" ]; then
 		echo -e  "\e[34m"
-		# wget --no-check-certificate https://ftp.denx.de/pub/u-boot/u-boot-2017.05.tar.bz2
-		# wget --no-check-certificate https://ftp.denx.de/pub/u-boot/u-boot-2020.07.tar.bz2
-		wget --no-check-certificate https://ftp.denx.de/pub/u-boot/${file_uboot}
-		echo -e  "\e[0m"
+		if [ ${result} != "CN" ]; then
+			# wget --no-check-certificate https://ftp.denx.de/pub/u-boot/u-boot-2017.05.tar.bz2 
+			# wget --no-check-certificate https://ftp.denx.de/pub/u-boot/u-boot-2020.07.tar.bz2
+			# wget --no-check-certificate https://ftp.denx.de/pub/u-boot/${file_uboot}
+			# wget https://github.com/u-boot/u-boot/archive/refs/tags/v2017.05.tar.gz
+			wget  https://github.com/u-boot/u-boot/archive/refs/tags/${file_uboot}
+		else
+			wget https://hub.nuaa.cf/u-boot/u-boot/archive/refs/tags/${file_uboot}
+		fi
+
 	else
-		if [ "$(sha256sum ${file_uboot})" != "c8373949d7f0de1059e507b83a655d4cea539f75dc66ccdbb27adbd38d83095e  u-boot-2017.05.tar.bz2" ]; then
+		if [ "$(sha256sum ${file_uboot})" != "0f94a62c460fc136aeca9bcd9fde3bb1d3f25b953e1bee96be4497a06a39ae81  ${file_uboot}" ]; then
 			rm -rf ${file_uboot}
 			continue
 		else
@@ -169,7 +193,8 @@ do
 			break
 		fi
 	fi
-done
+	echo -e  "\e[0m"
+done  
 
 # 临时配置交叉编译环境
 export ARCH=arm && export CROSS_COMPILE=arm-linux-gnueabi-;
@@ -194,16 +219,23 @@ fi
 echo -e  "\e[0m"
 
 # 判断u-boot文件是否解压
-echo -e  "\e[34m"
+echo -e "\e[34m"
 if [ -d "${work_dir}/${uboot}" ]; then
 	echo "$uboot exists."
 else
-	tar xvf ${work_dir}/$file_uboot -C ${work_dir};
-	if [ -f "${work_dir}/${uboot}/include/configs/vexpress_common.h" ]; then
-		cp ${uboot_config_file} ${uboot_config_file}.old
+	if [ -f "${bz2_uboot}"  ]; then
+		tar xvf ${work_dir}/$file_uboot -C ${work_dir};
+		if [ -f "${work_dir}/${uboot}/include/configs/vexpress_common.h" ]; then
+			cp ${uboot_config_file} ${uboot_config_file}.old
+		fi
+	elif [ -f "${gz_uboot}" ]; then
+		tar zxvf ${work_dir}/$file_uboot -C ${work_dir};
+		if [ -f "${work_dir}/${uboot}/include/configs/vexpress_common.h" ]; then
+			cp ${uboot_config_file} ${uboot_config_file}.old
+		fi
 	fi
+	echo -e "\e[0m"
 fi
-echo -e  "\e[0m"
 
 # 编译linux内核
 echo -e  "\e[32m"
