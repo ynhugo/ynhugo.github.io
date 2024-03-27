@@ -345,6 +345,18 @@
 </li>
 <li><a href="#headline-30">hugo 批量插入文件的 Linux 脚本参考</a>
 </li>
+<li><a href="#headline-31">批量创建文件并添加指定内容到文件中</a>
+</li>
+<li><a href="#headline-32">如果您想要使用 grep 命令从文件中的指定范围检索内容，可以结合使用 head 和 tail 命令来实现。下面是一个示例：</a>
+</li>
+<li><a href="#headline-33">想办法将文件存入数组</a>
+</li>
+<li><a href="#headline-34">sftp 批量执行命令教程</a>
+<ul>
+<li><a href="#headline-35">sftp 批量执行命令教程-示例</a>
+</li>
+</ul>
+</li>
 </ul>
 </nav>
         </div>
@@ -388,7 +400,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 10 分钟
+                    阅读时长: 13 分钟
                 </time>
             </div>
         
@@ -1186,6 +1198,25 @@ shell脚本如何创建数组或列表
 </div>
 <p>
 这段代码会从find命令和grep命令中获取多行数据，并逐行存储到名为myArray的数组中。最后，通过 printf 将整个数组打印出来。</p>
+<p>
+在 Bash 中，IFS（Internal Field Separator）是一个特殊的环境变量，用于指定字段的分隔符，默认情况下包含空格、制表符和换行符。当对 IFS 进行设置时，会影响到后续命令中对字段的解析方式，例如 read 命令。</p>
+<p>
+在 Bash 的 read 命令中，-r 和 -a 都是选项（或称为标志），用于对输入进行处理和赋值。它们的作用如下：</p>
+<ol>
+<li>
+<p>-r 选项：</p>
+<ul>
+<li>当使用 -r 选项时，read 命令会禁用反斜杠转义。这意味着如果输入中包含反斜杠字符 \，它不会被特殊对待，而是按照原样赋值给变量。通常情况下，建议在使用 read 命令时始终加上 -r 选项，以避免意外的反斜杠转义。</li>
+</ul>
+</li>
+<li>
+<p>-a 选项：</p>
+<ul>
+<li>当使用 -a 选项时，read 命令会将读取的输入赋值给指定的数组变量，而不是普通的字符串变量。这样可以方便地将输入按照特定的分隔符（如空格）分割成多个部分，并存储到数组中的各个元素中。</li>
+</ul>
+</li>
+</ol>
+<p>因此，-r 选项用于禁用反斜杠转义，而 -a 选项用于将输入赋值给数组变量。</p>
 </div>
 </div>
 <div id="outline-container-headline-27" class="outline-4">
@@ -1193,15 +1224,27 @@ shell脚本如何创建数组或列表
 查看文件创建时间，并把创建时间组成使用hugo命令创建博客时生成的时间戳：
 </h4>
 <div id="outline-text-headline-27" class="outline-text-4">
+<p>
+以 ssh配置.org 为例，查看该文件的创建时间，然后组成时间戳</p>
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  $ <span class="nv">test</span><span class="o">=</span><span class="s2">&#34;&#34;</span><span class="p">;</span> <span class="nv">test</span><span class="o">+=</span><span class="s2">&#34;date: &#34;</span><span class="p">;</span> <span class="nv">test</span><span class="o">+=</span><span class="k">$(</span>stat software.org <span class="p">|</span> tail -n <span class="m">1</span> <span class="p">|</span> grep -Eo <span class="s2">&#34;\b[0-9]{4}-[0-9]{2}-[0-9]{2}\b&#34;</span><span class="k">)</span><span class="p">;</span> <span class="nv">test</span><span class="o">+=</span><span class="s2">&#34;T&#34;</span><span class="p">;</span> <span class="nv">test</span><span class="o">+=</span><span class="k">$(</span>stat software.org <span class="p">|</span> tail -n <span class="m">1</span> <span class="p">|</span> grep -Eo <span class="s2">&#34;\b[0-9]{2}:[0-9]{2}:[0-9]{2}\b&#34;</span><span class="k">)</span><span class="p">;</span> <span class="nv">test</span><span class="o">+=</span><span class="s2">&#34;+08:00&#34;</span><span class="p">;</span> <span class="nb">echo</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">test</span><span class="si">}</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">  date: 2024-03-22T09:47:54+08:00</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">   <span class="nv">target</span><span class="o">=</span><span class="s2">&#34;ssh配置.org&#34;</span><span class="p">;</span> <span class="nv">fileCreateTime</span><span class="o">=</span><span class="s2">&#34;date: </span><span class="k">$(</span>stat <span class="si">${</span><span class="nv">target</span><span class="si">}</span> <span class="p">|</span> tail -n <span class="m">1</span> <span class="p">|</span> grep -Eo <span class="s2">&#34;\b[0-9]{4}-[0-9]{2}-[0-9]{2}\b&#34;</span><span class="k">)</span><span class="s2">T</span><span class="k">$(</span>stat <span class="si">${</span><span class="nv">target</span><span class="si">}</span> <span class="p">|</span> tail -n <span class="m">1</span> <span class="p">|</span> grep -Eo <span class="s2">&#34;\b[0-9]{2}:[0-9]{2}:[0-9]{2}\b&#34;</span><span class="k">)</span><span class="s2">+08:00&#34;</span><span class="p">;</span> <span class="nb">echo</span> <span class="si">${</span><span class="nv">fileCreateTime</span><span class="si">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+运行后，打印如下时间戳</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  date: 2024-03-26T00:24:29+08:00</span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
@@ -1290,7 +1333,7 @@ Line 5: This is the fifth line</p>
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">awk <span class="s1">&#39;NR==3&#39;</span> example.txt</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  awk <span class="s1">&#39;NR==3&#39;</span> example.txt</span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
@@ -1304,7 +1347,7 @@ Line 5: This is the fifth line</p>
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">awk <span class="s1">&#39;NR&gt;=2 &amp;&amp; NR&lt;=4&#39;</span> example.txt</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  awk <span class="s1">&#39;NR&gt;=2 &amp;&amp; NR&lt;=4&#39;</span> example.txt</span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
@@ -1324,6 +1367,153 @@ hugo 批量插入文件的 Linux 脚本参考
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  find ./ -type f <span class="p">|</span> xargs readlink -f<span class="p">|</span> awk -F <span class="s1">&#39;/&#39;</span> <span class="s1">&#39;{print &#34;[[/&#34;$8&#34;/&#34;$9&#34;/&#34;$10&#34;/&#34;$11&#34;/&#34;$12&#34;][&#34;$12&#34;]]&#34;}&#39;</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-31" class="outline-4">
+<h4 id="headline-31">
+批量创建文件并添加指定内容到文件中
+</h4>
+<div id="outline-text-headline-31" class="outline-text-4">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="k">for</span> i in <span class="o">{</span>1..5<span class="o">}</span><span class="p">;</span> <span class="k">do</span> touch <span class="nv">$i</span>.org<span class="p">;</span> <span class="nb">echo</span> -e <span class="s2">&#34;1\n2\n3\n4\n5\n&#34;</span> &gt;&gt; <span class="nv">$i</span>.org<span class="p">;</span> <span class="k">done</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-32" class="outline-4">
+<h4 id="headline-32">
+如果您想要使用 grep 命令从文件中的指定范围检索内容，可以结合使用 head 和 tail 命令来实现。下面是一个示例：
+</h4>
+<div id="outline-text-headline-32" class="outline-text-4">
+<p>
+假设您想在文件 example.txt 的第 10 行到第 20 行之间检索包含特定内容的行，可以按照以下步骤进行：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  head -n <span class="m">20</span> example.txt <span class="p">|</span> tail -n +10 <span class="p">|</span> grep <span class="s2">&#34;要查找的内容&#34;</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+这个命令的含义是先使用 head 命令获取文件前 20 行，然后再通过 tail 命令取其中的第 10 行到最后一行，最后使用 grep 命令在这个范围内查找包含特定内容的行。</p>
+<p>
+请将上述命令中的 &#34;要查找的内容&#34; 替换为您需要查找的实际内容。</p>
+</div>
+</div>
+<div id="outline-container-headline-33" class="outline-4">
+<h4 id="headline-33">
+想办法将文件存入数组
+</h4>
+<div id="outline-text-headline-33" class="outline-text-4">
+<p>
+将文件存入数组，然后查看数组成员个数，再将数组的第四个成员值打印出来</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  mapfile -t file_array &lt; &lt;<span class="o">(</span>find ./ -name <span class="s2">&#34;*.org&#34;</span> -type f -exec readlink -f <span class="o">{}</span> +<span class="o">)</span><span class="p">;</span> <span class="nb">echo</span> <span class="s2">&#34;</span><span class="si">${#</span><span class="nv">file_array</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span> <span class="nb">echo</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">file_array</span><span class="p">[3]</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+mapfile 是一个 Bash 内置命令，用于将输入按行分割并存储到数组中。</p>
+<p>
+具体来说，mapfile 命令会从标准输入中读取数据，并将每一行作为数组的一个元素存储起来。这在处理文本文件、命令输出或其他需要按行进行处理的情况下非常有用。</p>
+<p>
+Here 文档（&lt;&lt;）是用来输入多行字符串的，而不是用来处理命令替换的。</p>
+<p>
+以下是 mapfile 命令的一般语法：</p>
+<p>
+bash
+mapfile [-n count] [-O origin] [-s count] [-t] [-u fd] [-C callback] array</p>
+<ul>
+<li>-n count：指定要读取的行数。</li>
+<li>-O origin：从数组的哪个索引位置开始存储数据。</li>
+<li>-s count：跳过输入的前几行。</li>
+<li>-t：去掉每个元素末尾的换行符。</li>
+<li>-u fd：从指定文件描述符读取输入。</li>
+<li>-C callback：对每个读取的行调用一个回调函数进行处理。</li>
+</ul>
+<p>使用 mapfile 命令可以简化将文本文件内容读入数组的过程，同时避免了使用循环逐行读取的繁琐操作。</p>
+<p>
+总之，mapfile 命令的作用是将输入按行分割并存储到数组中，为处理大量文本数据提供了便利的方法。</p>
+</div>
+</div>
+<div id="outline-container-headline-34" class="outline-4">
+<h4 id="headline-34">
+sftp 批量执行命令教程
+</h4>
+<div id="outline-text-headline-34" class="outline-text-4">
+<p>
+通过以下方式批量执行命令</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  sftp ssh <span class="s">&lt;&lt; __EOF__
+</span></span></span><span class="line"><span class="cl"><span class="s">  cd /
+</span></span></span><span class="line"><span class="cl"><span class="s">  ls
+</span></span></span><span class="line"><span class="cl"><span class="s">  __EOF__</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-35" class="outline-5">
+<h5 id="headline-35">
+sftp 批量执行命令教程-示例
+</h5>
+<div id="outline-text-headline-35" class="outline-text-5">
+<p>
+将运行命令粘贴到终端并回车直接运行，也可以以脚本的形式运行</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  $ sftp sdf <span class="s">&lt;&lt; __EOF__
+</span></span></span><span class="line"><span class="cl"><span class="s">  cd /
+</span></span></span><span class="line"><span class="cl"><span class="s">  ls
+</span></span></span><span class="line"><span class="cl"><span class="s">  __EOF__</span>
+</span></span><span class="line"><span class="cl">  Connected to sdf.
+</span></span><span class="line"><span class="cl">  sftp&gt; <span class="nb">cd</span> /
+</span></span><span class="line"><span class="cl">  sftp&gt; ls
+</span></span><span class="line"><span class="cl">  arpa         bin          boot         boot.cfg     com          dev
+</span></span><span class="line"><span class="cl">  etc          ftp          lib          libdata      libexec      lost+found
+</span></span><span class="line"><span class="cl">  mail         mnt          netbsd       proc         sbin         sdf
+</span></span><span class="line"><span class="cl">  stand        sys          tmp          udd          usr          var
+</span></span><span class="line"><span class="cl">  www</span></span></code></pre></td></tr></table>
+</div>
+</div>
 </div>
 </div>
 </div>

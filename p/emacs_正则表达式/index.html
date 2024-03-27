@@ -283,6 +283,8 @@
 </li>
 <li><a href="#headline-2">使用方法</a>
 </li>
+<li><a href="#headline-3">要匹配多个换行符并直到以指定内容结尾，你可以使用以下正则表达式</a>
+</li>
 </ul>
 </nav>
         </div>
@@ -373,6 +375,32 @@ emacs使用正则表达式
 <div id="outline-text-headline-2" class="outline-text-3">
 <p>
 先执行&#34;M-x isearch-forward-regexp &lt;RET&gt;&#34;，然后用emacs的正则表达式规则匹配内容，匹配好内容后直接无缝衔接执行&#34;M-%&#34;对前边正则表达式匹配的内容进行替换。</p>
+</div>
+</div>
+<div id="outline-container-headline-3" class="outline-3">
+<h3 id="headline-3">
+要匹配多个换行符并直到以指定内容结尾，你可以使用以下正则表达式
+</h3>
+<div id="outline-text-headline-3" class="outline-text-3">
+<p>
+要匹配多个换行符并直到以指定内容结尾，你可以使用以下正则表达式</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="o">[[</span>:ascii:<span class="o">]</span><span class="se">\n\r</span><span class="o">]</span>*指定内容$</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+在这里：</p>
+<ul>
+<li>[[:ascii:]\n\r]* 匹配任意ASCII字符、换行符（\n）、回车符（\r）零次或多次。</li>
+<li>指定内容$ 表示以 &#34;指定内容&#34; 结尾的文本行。</li>
+</ul>
+<p>在 Emacs 中，你可以使用 query-replace-regexp 或 replace-regexp 命令来执行基于正则表达式的替换操作。你可以按下 M-% 进入交互式查找替换模式，然后输入上述正则表达式进行匹配和替换操作。</p>
 </div>
 </div>
 

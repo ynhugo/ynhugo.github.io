@@ -6,7 +6,96 @@
         <description>Recent content on ynblog</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
-        <lastBuildDate>Thu, 28 Mar 2024 00:02:35 +0800</lastBuildDate><atom:link href="https://ynhugo.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Thu, 28 Mar 2024 01:04:36 +0800</lastBuildDate><atom:link href="https://ynhugo.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>bc计算器</title>
+        <link>https://ynhugo.github.io/p/bc%E8%AE%A1%E7%AE%97%E5%99%A8/</link>
+        <pubDate>Thu, 28 Mar 2024 01:04:36 +0800</pubDate>
+        
+        <guid>https://ynhugo.github.io/p/bc%E8%AE%A1%E7%AE%97%E5%99%A8/</guid>
+        <description>
+&lt;div id=&#34;outline-container-headline-1&#34; class=&#34;outline-2&#34;&gt;
+&lt;h2 id=&#34;headline-1&#34;&gt;
+使用方式
+&lt;/h2&gt;
+&lt;div id=&#34;outline-text-headline-1&#34; class=&#34;outline-text-2&#34;&gt;
+&lt;p&gt;
+最简单的使用方式是在终端执行 bc 命令，然后就进入计算环境，直接输入计算式子进行计算即可&lt;/p&gt;
+&lt;p&gt;
+还有一种是通过管道进行计算的，也是我比较喜欢的，如果要计算复杂的式子，用管道会比较方便&lt;/p&gt;
+&lt;p&gt;
+以下是一个运行示例，输出十六进制，输入十进制，将十进制256转换为十六进制100&lt;/p&gt;
+&lt;div class=&#34;src src-bash&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  $ &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;obase=16;ibase=10;256&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; bc
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;m&#34;&gt;100&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-2&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-2&#34;&gt;
+注意事项
+&lt;/h3&gt;
+&lt;div id=&#34;outline-text-headline-2&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;p&gt;
+先设置 obase 在设置 ibase，计算器正常。&lt;/p&gt;
+&lt;p&gt;
+在 bc 计算器中，obase 与 ibase 的赋值有先后顺序。&lt;/p&gt;
+&lt;p&gt;
+且在计算过程中 obase 与 ibase 只能赋值一次。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+        </item>
+        <item>
+        <title>浏览器开发者工具去掉网页中代码块的行号</title>
+        <link>https://ynhugo.github.io/p/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7%E5%8E%BB%E6%8E%89%E7%BD%91%E9%A1%B5%E4%B8%AD%E4%BB%A3%E7%A0%81%E5%9D%97%E7%9A%84%E8%A1%8C%E5%8F%B7/</link>
+        <pubDate>Thu, 28 Mar 2024 00:14:00 +0800</pubDate>
+        
+        <guid>https://ynhugo.github.io/p/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7%E5%8E%BB%E6%8E%89%E7%BD%91%E9%A1%B5%E4%B8%AD%E4%BB%A3%E7%A0%81%E5%9D%97%E7%9A%84%E8%A1%8C%E5%8F%B7/</guid>
+        <description>
+&lt;div id=&#34;outline-container-headline-1&#34; class=&#34;outline-2&#34;&gt;
+&lt;h2 id=&#34;headline-1&#34;&gt;
+浏览器开发者工具去掉网页中代码块的行号
+&lt;/h2&gt;
+&lt;div id=&#34;outline-text-headline-1&#34; class=&#34;outline-text-2&#34;&gt;
+&lt;p&gt;
+依次执行以下代码&lt;/p&gt;
+&lt;div class=&#34;src src-html&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  var elements = document.querySelectorAll(&amp;#39;span.lnt&amp;#39;);&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&#34;src src-html&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  elements.forEach(function(element) {
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  element.innerHTML = &amp;#39;&amp;#39;;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  });&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+        </item>
+        <item>
         <title>windows热键大全</title>
         <link>https://ynhugo.github.io/p/windows%E7%83%AD%E9%94%AE%E5%A4%A7%E5%85%A8/</link>
         <pubDate>Thu, 28 Mar 2024 00:02:35 +0800</pubDate>
@@ -6261,6 +6350,53 @@ Emacs 中更换文件的换行符格式
 &lt;li&gt;在弹出的提示中输入 unix，然后按 Enter。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;这样就可以将文件的换行符格式从 Windows 格式（\r\n）转换为 Unix 格式（\n）了。如果您希望将文件的换行符格式从 Unix 转换为 Windows 格式，可以在第三步中输入 dos。&lt;/p&gt;
+&lt;div id=&#34;outline-container-headline-9&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-9&#34;&gt;
+Emacs 选中内容后用 eww 搜索技巧
+&lt;/h4&gt;
+&lt;div id=&#34;outline-text-headline-9&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;p&gt;
+Emacs 中选择内容后执行如下命令&lt;/p&gt;
+&lt;div class=&#34;src src-emacs-lisp&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-emacs-lisp&#34; data-lang=&#34;emacs-lisp&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nv&#34;&gt;&amp;lt;M-s,M-w&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-10&#34; class=&#34;outline-5&#34;&gt;
+&lt;h5 id=&#34;headline-10&#34;&gt;
+emacs导出html文件如何忽略不存在的文件路径
+&lt;/h5&gt;
+&lt;div id=&#34;outline-text-headline-10&#34; class=&#34;outline-text-5&#34;&gt;
+&lt;p&gt;
+在Emacs中导出HTML文件时，如果需要忽略不存在的文件路径，你可以使用org-mode提供的一些选项来控制导出的行为。具体来说，你可以在org文件中使用以下选项：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;这将告诉org-mode在导出HTML时忽略不存在的文件路径，避免在导出时出现错误或警告。&lt;/p&gt;
+&lt;p&gt;
+下面是一个示例：&lt;/p&gt;
+&lt;div class=&#34;src src-txt&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-txt&#34; data-lang=&#34;txt&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;#+OPTIONS: broken-links:nil&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;
+通过设置这个选项，当你在Emacs中导出HTML文件时，org-mode会忽略不存在的文件路径，从而避免出现问题。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -6292,6 +6428,32 @@ emacs使用正则表达式
 &lt;div id=&#34;outline-text-headline-2&#34; class=&#34;outline-text-3&#34;&gt;
 &lt;p&gt;
 先执行&amp;#34;M-x isearch-forward-regexp &amp;lt;RET&amp;gt;&amp;#34;，然后用emacs的正则表达式规则匹配内容，匹配好内容后直接无缝衔接执行&amp;#34;M-%&amp;#34;对前边正则表达式匹配的内容进行替换。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-3&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-3&#34;&gt;
+要匹配多个换行符并直到以指定内容结尾，你可以使用以下正则表达式
+&lt;/h3&gt;
+&lt;div id=&#34;outline-text-headline-3&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;p&gt;
+要匹配多个换行符并直到以指定内容结尾，你可以使用以下正则表达式&lt;/p&gt;
+&lt;div class=&#34;src src-bash&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;o&#34;&gt;[[&lt;/span&gt;:ascii:&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;\n\r&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;*指定内容$&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;
+在这里：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;[[:ascii:]\n\r]* 匹配任意ASCII字符、换行符（\n）、回车符（\r）零次或多次。&lt;/li&gt;
+&lt;li&gt;指定内容$ 表示以 &amp;#34;指定内容&amp;#34; 结尾的文本行。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;在 Emacs 中，你可以使用 query-replace-regexp 或 replace-regexp 命令来执行基于正则表达式的替换操作。你可以按下 M-% 进入交互式查找替换模式，然后输入上述正则表达式进行匹配和替换操作。&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 </description>
@@ -16720,6 +16882,7 @@ b站将服务器地址与串流密钥拼接在一起形成推流服务器地址&
 &lt;p&gt;wget&lt;/p&gt;
 &lt;p&gt;curl&lt;/p&gt;
 &lt;p&gt;zip&lt;/p&gt;
+&lt;p&gt;bc&lt;/p&gt;
 &lt;h1 id=&#34;配置apt-cyg&#34;&gt;配置apt-cyg&lt;/h1&gt;
 &lt;p&gt;用记事本创建一个名为apt-cyg的文件，复制粘贴进去如下内容，并且文本写完后，用vscode打开，把windows下的换行符CRLF改成linux下的LF
 接下来，把刚刚的apt-cyg文件剪贴到Cygwin安装目录的bin文件夹里&lt;/p&gt;
@@ -27134,6 +27297,25 @@ shell脚本如何创建数组或列表
 &lt;/div&gt;
 &lt;p&gt;
 这段代码会从find命令和grep命令中获取多行数据，并逐行存储到名为myArray的数组中。最后，通过 printf 将整个数组打印出来。&lt;/p&gt;
+&lt;p&gt;
+在 Bash 中，IFS（Internal Field Separator）是一个特殊的环境变量，用于指定字段的分隔符，默认情况下包含空格、制表符和换行符。当对 IFS 进行设置时，会影响到后续命令中对字段的解析方式，例如 read 命令。&lt;/p&gt;
+&lt;p&gt;
+在 Bash 的 read 命令中，-r 和 -a 都是选项（或称为标志），用于对输入进行处理和赋值。它们的作用如下：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;-r 选项：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;当使用 -r 选项时，read 命令会禁用反斜杠转义。这意味着如果输入中包含反斜杠字符 \，它不会被特殊对待，而是按照原样赋值给变量。通常情况下，建议在使用 read 命令时始终加上 -r 选项，以避免意外的反斜杠转义。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;-a 选项：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;当使用 -a 选项时，read 命令会将读取的输入赋值给指定的数组变量，而不是普通的字符串变量。这样可以方便地将输入按照特定的分隔符（如空格）分割成多个部分，并存储到数组中的各个元素中。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;因此，-r 选项用于禁用反斜杠转义，而 -a 选项用于将输入赋值给数组变量。&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id=&#34;outline-container-headline-27&#34; class=&#34;outline-4&#34;&gt;
@@ -27141,15 +27323,27 @@ shell脚本如何创建数组或列表
 查看文件创建时间，并把创建时间组成使用hugo命令创建博客时生成的时间戳：
 &lt;/h4&gt;
 &lt;div id=&#34;outline-text-headline-27&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;p&gt;
+以 ssh配置.org 为例，查看该文件的创建时间，然后组成时间戳&lt;/p&gt;
 &lt;div class=&#34;src src-bash&#34;&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  $ &lt;span class=&#34;nv&#34;&gt;test&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;test&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;date: &amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;test&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;stat software.org &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; tail -n &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; grep -Eo &lt;span class=&#34;s2&#34;&gt;&amp;#34;\b[0-9]{4}-[0-9]{2}-[0-9]{2}\b&amp;#34;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;test&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;T&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;test&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;stat software.org &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; tail -n &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; grep -Eo &lt;span class=&#34;s2&#34;&gt;&amp;#34;\b[0-9]{2}:[0-9]{2}:[0-9]{2}\b&amp;#34;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;test&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;+08:00&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;test&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  date: 2024-03-22T09:47:54+08:00&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;   &lt;span class=&#34;nv&#34;&gt;target&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;ssh配置.org&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;fileCreateTime&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;date: &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;stat &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;target&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; tail -n &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; grep -Eo &lt;span class=&#34;s2&#34;&gt;&amp;#34;\b[0-9]{4}-[0-9]{2}-[0-9]{2}\b&amp;#34;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;T&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;stat &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;target&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; tail -n &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; grep -Eo &lt;span class=&#34;s2&#34;&gt;&amp;#34;\b[0-9]{2}:[0-9]{2}:[0-9]{2}\b&amp;#34;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;+08:00&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;fileCreateTime&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;
+运行后，打印如下时间戳&lt;/p&gt;
+&lt;div class=&#34;src src-bash&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  date: 2024-03-26T00:24:29+08:00&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -27238,7 +27432,7 @@ Line 5: This is the fifth line&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;awk &lt;span class=&#34;s1&#34;&gt;&amp;#39;NR==3&amp;#39;&lt;/span&gt; example.txt&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  awk &lt;span class=&#34;s1&#34;&gt;&amp;#39;NR==3&amp;#39;&lt;/span&gt; example.txt&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -27252,7 +27446,7 @@ Line 5: This is the fifth line&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;awk &lt;span class=&#34;s1&#34;&gt;&amp;#39;NR&amp;gt;=2 &amp;amp;&amp;amp; NR&amp;lt;=4&amp;#39;&lt;/span&gt; example.txt&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  awk &lt;span class=&#34;s1&#34;&gt;&amp;#39;NR&amp;gt;=2 &amp;amp;&amp;amp; NR&amp;lt;=4&amp;#39;&lt;/span&gt; example.txt&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -27272,6 +27466,153 @@ hugo 批量插入文件的 Linux 脚本参考
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  find ./ -type f &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; xargs readlink -f&lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; awk -F &lt;span class=&#34;s1&#34;&gt;&amp;#39;/&amp;#39;&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;{print &amp;#34;[[/&amp;#34;$8&amp;#34;/&amp;#34;$9&amp;#34;/&amp;#34;$10&amp;#34;/&amp;#34;$11&amp;#34;/&amp;#34;$12&amp;#34;][&amp;#34;$12&amp;#34;]]&amp;#34;}&amp;#39;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-31&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-31&#34;&gt;
+批量创建文件并添加指定内容到文件中
+&lt;/h4&gt;
+&lt;div id=&#34;outline-text-headline-31&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;div class=&#34;src src-bash&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; i in &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;1..5&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;do&lt;/span&gt; touch &lt;span class=&#34;nv&#34;&gt;$i&lt;/span&gt;.org&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; -e &lt;span class=&#34;s2&#34;&gt;&amp;#34;1\n2\n3\n4\n5\n&amp;#34;&lt;/span&gt; &amp;gt;&amp;gt; &lt;span class=&#34;nv&#34;&gt;$i&lt;/span&gt;.org&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;done&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-32&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-32&#34;&gt;
+如果您想要使用 grep 命令从文件中的指定范围检索内容，可以结合使用 head 和 tail 命令来实现。下面是一个示例：
+&lt;/h4&gt;
+&lt;div id=&#34;outline-text-headline-32&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;p&gt;
+假设您想在文件 example.txt 的第 10 行到第 20 行之间检索包含特定内容的行，可以按照以下步骤进行：&lt;/p&gt;
+&lt;div class=&#34;src src-bash&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  head -n &lt;span class=&#34;m&#34;&gt;20&lt;/span&gt; example.txt &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; tail -n +10 &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; grep &lt;span class=&#34;s2&#34;&gt;&amp;#34;要查找的内容&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;
+这个命令的含义是先使用 head 命令获取文件前 20 行，然后再通过 tail 命令取其中的第 10 行到最后一行，最后使用 grep 命令在这个范围内查找包含特定内容的行。&lt;/p&gt;
+&lt;p&gt;
+请将上述命令中的 &amp;#34;要查找的内容&amp;#34; 替换为您需要查找的实际内容。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-33&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-33&#34;&gt;
+想办法将文件存入数组
+&lt;/h4&gt;
+&lt;div id=&#34;outline-text-headline-33&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;p&gt;
+将文件存入数组，然后查看数组成员个数，再将数组的第四个成员值打印出来&lt;/p&gt;
+&lt;div class=&#34;src src-bash&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  mapfile -t file_array &amp;lt; &amp;lt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;find ./ -name &lt;span class=&#34;s2&#34;&gt;&amp;#34;*.org&amp;#34;&lt;/span&gt; -type f -exec readlink -f &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt; +&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;${#&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;file_array&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[@]&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;file_array&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[3]&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;
+mapfile 是一个 Bash 内置命令，用于将输入按行分割并存储到数组中。&lt;/p&gt;
+&lt;p&gt;
+具体来说，mapfile 命令会从标准输入中读取数据，并将每一行作为数组的一个元素存储起来。这在处理文本文件、命令输出或其他需要按行进行处理的情况下非常有用。&lt;/p&gt;
+&lt;p&gt;
+Here 文档（&amp;lt;&amp;lt;）是用来输入多行字符串的，而不是用来处理命令替换的。&lt;/p&gt;
+&lt;p&gt;
+以下是 mapfile 命令的一般语法：&lt;/p&gt;
+&lt;p&gt;
+bash
+mapfile [-n count] [-O origin] [-s count] [-t] [-u fd] [-C callback] array&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;-n count：指定要读取的行数。&lt;/li&gt;
+&lt;li&gt;-O origin：从数组的哪个索引位置开始存储数据。&lt;/li&gt;
+&lt;li&gt;-s count：跳过输入的前几行。&lt;/li&gt;
+&lt;li&gt;-t：去掉每个元素末尾的换行符。&lt;/li&gt;
+&lt;li&gt;-u fd：从指定文件描述符读取输入。&lt;/li&gt;
+&lt;li&gt;-C callback：对每个读取的行调用一个回调函数进行处理。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;使用 mapfile 命令可以简化将文本文件内容读入数组的过程，同时避免了使用循环逐行读取的繁琐操作。&lt;/p&gt;
+&lt;p&gt;
+总之，mapfile 命令的作用是将输入按行分割并存储到数组中，为处理大量文本数据提供了便利的方法。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-34&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-34&#34;&gt;
+sftp 批量执行命令教程
+&lt;/h4&gt;
+&lt;div id=&#34;outline-text-headline-34&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;p&gt;
+通过以下方式批量执行命令&lt;/p&gt;
+&lt;div class=&#34;src src-bash&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  sftp ssh &lt;span class=&#34;s&#34;&gt;&amp;lt;&amp;lt; __EOF__
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s&#34;&gt;  cd /
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s&#34;&gt;  ls
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s&#34;&gt;  __EOF__&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-35&#34; class=&#34;outline-5&#34;&gt;
+&lt;h5 id=&#34;headline-35&#34;&gt;
+sftp 批量执行命令教程-示例
+&lt;/h5&gt;
+&lt;div id=&#34;outline-text-headline-35&#34; class=&#34;outline-text-5&#34;&gt;
+&lt;p&gt;
+将运行命令粘贴到终端并回车直接运行，也可以以脚本的形式运行&lt;/p&gt;
+&lt;div class=&#34;src src-bash&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  $ sftp sdf &lt;span class=&#34;s&#34;&gt;&amp;lt;&amp;lt; __EOF__
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s&#34;&gt;  cd /
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s&#34;&gt;  ls
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s&#34;&gt;  __EOF__&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  Connected to sdf.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  sftp&amp;gt; &lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; /
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  sftp&amp;gt; ls
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  arpa         bin          boot         boot.cfg     com          dev
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  etc          ftp          lib          libdata      libexec      lost+found
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  mail         mnt          netbsd       proc         sbin         sdf
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  stand        sys          tmp          udd          usr          var
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  www&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -27594,7 +27935,8 @@ client.c
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
         <guid>https://ynhugo.github.io/p/software/</guid>
-        <description>&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://ynhugo.github.io/software/%e7%a7%8b%e5%88%80%e9%b1%bc%e7%bb%bf%e8%89%b2%e7%b2%be%e7%ae%80%e7%89%88.exe&#34; &gt;秋刀鱼绿色精简版&lt;/a&gt;&lt;/p&gt;
+        <description>&lt;h1 id=&#34;下载列表&#34;&gt;下载列表&lt;/h1&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://ynhugo.github.io/software/%e7%a7%8b%e5%88%80%e9%b1%bc%e7%bb%bf%e8%89%b2%e7%b2%be%e7%ae%80%e7%89%88.exe&#34; &gt;秋刀鱼绿色精简版&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://ynhugo.github.io/software/%e6%bf%80%e6%b4%bb%e5%b7%a5%e5%85%b7.zip&#34; &gt;windows 激活工具&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://ynhugo.github.io/software/Windows%e4%b8%80%e9%94%ae%e6%bf%80%e6%b4%bb%e8%84%9a%e6%9c%ac.zip&#34; &gt;Windows一键激活脚本&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://ynhugo.github.io/software/%e8%99%9a%e6%8b%9f%e5%85%89%e9%a9%b1.exe&#34; &gt;微软 虚拟光驱&lt;/a&gt;&lt;/p&gt;
@@ -27626,6 +27968,9 @@ client.c
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.resilio.com/platforms/desktop/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;Download Resilio Sync for Windows, Mac, Linux &amp;amp; FreeBSD&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://ynhugo.github.io/software/ResilioSyncPro.btskey.zip&#34; &gt;ResilioSyncPro.btskey.zip&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&#34;下载-google-历史版本&#34;&gt;下载 google 历史版本&lt;/h1&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://commondatastorage.googleapis.com/chromium-browser-snapshots/index.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://commondatastorage.googleapis.com/chromium-browser-snapshots/index.html&lt;/a&gt;&lt;/p&gt;
 </description>
         </item>
         <item>
