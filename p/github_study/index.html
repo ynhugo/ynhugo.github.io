@@ -281,7 +281,7 @@
 <ul>
 <li><a href="#headline-1">学习git-bash的网站</a>
 </li>
-<li><a href="#headline-2">git初始化本地仓库</a>
+<li><a href="#headline-2">git初始化本地仓库和基本操作</a>
 </li>
 <li><a href="#headline-3">推送和拉取</a>
 <ul>
@@ -416,7 +416,7 @@
 </div>
 <div id="outline-container-headline-2" class="outline-2">
 <h2 id="headline-2">
-git初始化本地仓库
+git初始化本地仓库和基本操作
 </h2>
 <div id="outline-text-headline-2" class="outline-text-2">
 <div class="src src-bash">
@@ -441,6 +441,14 @@ git初始化本地仓库
 </span><span class="lnt">17
 </span><span class="lnt">18
 </span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  mkdir cangku					<span class="c1"># 建一个空文件夹</span>
@@ -461,7 +469,15 @@ git初始化本地仓库
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  git commit -m <span class="s2">&#34;Commit a file.&#34;</span>	<span class="c1"># 对添加到文件暂存区的内容添加文件描述</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  git push -u origin main			<span class="c1"># 将文件暂存区的内容推送到远程的&#34;main&#34;分支</span></span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">  git checkout -b main			<span class="c1"># 创建本地分支</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  git push -u origin main			<span class="c1"># 将文件暂存区的内容推送到远程的&#34;main&#34;分支</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  git checkout -b develop master	<span class="c1"># 创建一个基于 master 的叫做 develop 的新分支</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  git checkout main 				<span class="c1"># 切换到 main 分支</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  git merge --no-ff develop		<span class="c1"># Git执行&#34;快进式合并&#34;（fast-farward merge），会直接将 Master 分支指向 Develop 分支</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
