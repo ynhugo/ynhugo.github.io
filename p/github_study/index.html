@@ -282,38 +282,44 @@
 <li><a href="#headline-1">学习git-bash的网站</a>
 </li>
 <li><a href="#headline-2">git初始化本地仓库和基本操作</a>
-</li>
-<li><a href="#headline-3">推送和拉取</a>
 <ul>
-<li><a href="#headline-4">推送</a>
+<li><a href="#headline-3">.gitmodules 内容展示</a>
 </li>
-<li><a href="#headline-5">拉取</a>
+</ul>
+</li>
+<li><a href="#headline-4">推送和拉取</a>
 <ul>
-<li><a href="#headline-6">git pull 命令时出现了冲突</a>
+<li><a href="#headline-5">推送</a>
+</li>
+<li><a href="#headline-6">拉取</a>
+<ul>
+<li><a href="#headline-7">git pull 命令时出现了冲突</a>
 </li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#headline-7">查看和删除分支</a>
+<li><a href="#headline-8">查看和删除分支</a>
 </li>
-<li><a href="#headline-8">修改远程仓库地址</a>
+<li><a href="#headline-9">修改远程仓库地址</a>
 <ul>
-<li><a href="#headline-9">方法1</a>
+<li><a href="#headline-10">方法1</a>
 </li>
-<li><a href="#headline-10">方法2(先删后加)</a>
+<li><a href="#headline-11">方法2(先删后加)</a>
 </li>
-<li><a href="#headline-11">方法3(直接修改配置文件)</a>
+<li><a href="#headline-12">方法3(直接修改配置文件)</a>
 </li>
 </ul>
 </li>
-<li><a href="#headline-12">构建github代码文件链接的方法</a>
+<li><a href="#headline-13">构建github代码文件链接的方法</a>
 </li>
-<li><a href="#headline-13">其他操作</a>
+<li><a href="#headline-14">其他操作</a>
 <ul>
-<li><a href="#headline-14">参考链接</a>
+<li><a href="#headline-15">参考链接</a>
 </li>
 </ul>
+</li>
+<li><a href="#headline-16">要将一个 Git 仓库作为子模块添加到另一个 Git 仓库中，你可以按照以下步骤操作：</a>
 </li>
 </ul>
 </nav>
@@ -371,7 +377,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 3 分钟
+                    阅读时长: 4 分钟
                 </time>
             </div>
         
@@ -449,6 +455,8 @@ git初始化本地仓库和基本操作
 </span><span class="lnt">25
 </span><span class="lnt">26
 </span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  mkdir cangku					<span class="c1"># 建一个空文件夹</span>
@@ -477,22 +485,40 @@ git初始化本地仓库和基本操作
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  git checkout main 				<span class="c1"># 切换到 main 分支</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  git merge --no-ff develop		<span class="c1"># Git执行&#34;快进式合并&#34;（fast-farward merge），会直接将 Master 分支指向 Develop 分支</span></span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">  git merge --no-ff develop		<span class="c1"># Git执行&#34;快进式合并&#34;（fast-farward merge），会直接将 Master 分支指向 Develop 分支</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  git submodule add https://github.com/theNewDynamic/gohugo-theme-ananke themes/ananke <span class="c1"># 将一个仓库克隆到子某一子目录下，并且会添加子模块到当前目录，这样的操作不会影响主目录的 git 仓库操作</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-3" class="outline-3">
+<h3 id="headline-3">
+.gitmodules 内容展示
+</h3>
+<div id="outline-text-headline-3" class="outline-text-3">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"></code></pre></td></tr></table>
 </div>
 </div>
 </div>
 </div>
 </div>
-<div id="outline-container-headline-3" class="outline-2">
-<h2 id="headline-3">
+</div>
+</div>
+<div id="outline-container-headline-4" class="outline-2">
+<h2 id="headline-4">
 推送和拉取
 </h2>
-<div id="outline-text-headline-3" class="outline-text-2">
-<div id="outline-container-headline-4" class="outline-3">
-<h3 id="headline-4">
+<div id="outline-text-headline-4" class="outline-text-2">
+<div id="outline-container-headline-5" class="outline-3">
+<h3 id="headline-5">
 推送
 </h3>
-<div id="outline-text-headline-4" class="outline-text-3">
+<div id="outline-text-headline-5" class="outline-text-3">
 <div class="table-wrapper"><table>
 <thead>
 </thead>
@@ -525,11 +551,11 @@ git初始化本地仓库和基本操作
 </div>
 </div>
 </div>
-<div id="outline-container-headline-5" class="outline-3">
-<h3 id="headline-5">
+<div id="outline-container-headline-6" class="outline-3">
+<h3 id="headline-6">
 拉取
 </h3>
-<div id="outline-text-headline-5" class="outline-text-3">
+<div id="outline-text-headline-6" class="outline-text-3">
 <div class="table-wrapper"><table>
 <thead>
 </thead>
@@ -562,11 +588,11 @@ git fatal: 拒绝合并无关的历史的错误解决方法</p>
 </div>
 </div>
 </div>
-<div id="outline-container-headline-6" class="outline-4">
-<h4 id="headline-6">
+<div id="outline-container-headline-7" class="outline-4">
+<h4 id="headline-7">
 git pull 命令时出现了冲突
 </h4>
-<div id="outline-text-headline-6" class="outline-text-4">
+<div id="outline-text-headline-7" class="outline-text-4">
 <p>
 这通常是因为远程仓库和本地仓库的历史记录不一致导致的。</p>
 <ol>
@@ -605,11 +631,11 @@ git pull 命令时出现了冲突
 </div>
 </div>
 </div>
-<div id="outline-container-headline-7" class="outline-2">
-<h2 id="headline-7">
+<div id="outline-container-headline-8" class="outline-2">
+<h2 id="headline-8">
 查看和删除分支
 </h2>
-<div id="outline-text-headline-7" class="outline-text-2">
+<div id="outline-text-headline-8" class="outline-text-2">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -642,16 +668,16 @@ git pull 命令时出现了冲突
 </div>
 </div>
 </div>
-<div id="outline-container-headline-8" class="outline-2">
-<h2 id="headline-8">
+<div id="outline-container-headline-9" class="outline-2">
+<h2 id="headline-9">
 修改远程仓库地址
 </h2>
-<div id="outline-text-headline-8" class="outline-text-2">
-<div id="outline-container-headline-9" class="outline-3">
-<h3 id="headline-9">
+<div id="outline-text-headline-9" class="outline-text-2">
+<div id="outline-container-headline-10" class="outline-3">
+<h3 id="headline-10">
 方法1
 </h3>
-<div id="outline-text-headline-9" class="outline-text-3">
+<div id="outline-text-headline-10" class="outline-text-3">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -672,11 +698,11 @@ git pull 命令时出现了冲突
 </div>
 </div>
 </div>
-<div id="outline-container-headline-10" class="outline-3">
-<h3 id="headline-10">
+<div id="outline-container-headline-11" class="outline-3">
+<h3 id="headline-11">
 方法2(先删后加)
 </h3>
-<div id="outline-text-headline-10" class="outline-text-3">
+<div id="outline-text-headline-11" class="outline-text-3">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -693,11 +719,11 @@ git pull 命令时出现了冲突
 </div>
 </div>
 </div>
-<div id="outline-container-headline-11" class="outline-3">
-<h3 id="headline-11">
+<div id="outline-container-headline-12" class="outline-3">
+<h3 id="headline-12">
 方法3(直接修改配置文件)
 </h3>
-<div id="outline-text-headline-11" class="outline-text-3">
+<div id="outline-text-headline-12" class="outline-text-3">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -756,11 +782,11 @@ git pull 命令时出现了冲突
 </div>
 </div>
 </div>
-<div id="outline-container-headline-12" class="outline-2">
-<h2 id="headline-12">
+<div id="outline-container-headline-13" class="outline-2">
+<h2 id="headline-13">
 构建github代码文件链接的方法
 </h2>
-<div id="outline-text-headline-12" class="outline-text-2">
+<div id="outline-text-headline-13" class="outline-text-2">
 <div class="src src-emacs-lisp">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -785,11 +811,11 @@ git pull 命令时出现了冲突
 </div>
 </div>
 </div>
-<div id="outline-container-headline-13" class="outline-2">
-<h2 id="headline-13">
+<div id="outline-container-headline-14" class="outline-2">
+<h2 id="headline-14">
 其他操作
 </h2>
-<div id="outline-text-headline-13" class="outline-text-2">
+<div id="outline-text-headline-14" class="outline-text-2">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -808,15 +834,110 @@ git pull 命令时出现了冲突
 </div>
 </div>
 </div>
-<div id="outline-container-headline-14" class="outline-3">
-<h3 id="headline-14">
+<div id="outline-container-headline-15" class="outline-3">
+<h3 id="headline-15">
 参考链接
 </h3>
-<div id="outline-text-headline-14" class="outline-text-3">
+<div id="outline-text-headline-15" class="outline-text-3">
 <p>
 https://blog.csdn.net/xiaoxgongzs/article/details/105099281</p>
 </div>
 </div>
+</div>
+</div>
+<div id="outline-container-headline-16" class="outline-2">
+<h2 id="headline-16">
+要将一个 Git 仓库作为子模块添加到另一个 Git 仓库中，你可以按照以下步骤操作：
+</h2>
+<div id="outline-text-headline-16" class="outline-text-2">
+<ol>
+<li>在父项目中初始化子模块：
+在父项目的根目录下打开命令行或终端，并执行以下命令：</li>
+</ol>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  git submodule add &lt;子模块的远程仓库地址&gt; &lt;子模块的存放路径&gt;</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+例如：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  git submodule add https://github.com/CaiJimmy/hugo-theme-stack/ themes/hugo-theme-stack</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+这将把 hugo-theme-stack 作为子模块添加到 themes/hugo-theme-stack 路径中。</p>
+<ol>
+<li>提交更新：
+添加子模块后，父项目会有一些变动，需要提交到版本控制系统中：</li>
+</ol>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  git commit -m <span class="s2">&#34;Add hugo-theme-stack submodule&#34;</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<ol>
+<li>初始化子模块（如果有必要）：
+在父项目的根目录下执行以下命令来初始化子模块：</li>
+</ol>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  git submodule update --init --recursive</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+这会将子模块的代码拉取到本地，使得父项目能够使用它。</p>
+<ol>
+<li>提交更新：
+如果你初始化了子模块，那么子模块的代码也会被拉取到本地，需要将这些变动提交到版本控制系统中：</li>
+</ol>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  git commit -m <span class="s2">&#34;Initialize hugo-theme-stack submodule&#34;</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<ol>
+<li>推送更新（可选）：
+如果需要，将父项目的更新推送到远程仓库：</li>
+</ol>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  git push</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+以上步骤将会在父项目中成功添加一个子模块。在执行这些步骤之前，请确保你对子模块的路径和远程仓库地址有正确的了解，并且你有权限访问这些仓库。</p>
 </div>
 </div>
 
