@@ -321,6 +321,8 @@
 </li>
 <li><a href="#headline-16">要将一个 Git 仓库作为子模块添加到另一个 Git 仓库中，你可以按照以下步骤操作：</a>
 </li>
+<li><a href="#headline-17">子模块索引过，如何再次索引</a>
+</li>
 </ul>
 </nav>
         </div>
@@ -377,7 +379,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 4 分钟
+                    阅读时长: 5 分钟
                 </time>
             </div>
         
@@ -938,6 +940,75 @@ https://blog.csdn.net/xiaoxgongzs/article/details/105099281</p>
 </div>
 <p>
 以上步骤将会在父项目中成功添加一个子模块。在执行这些步骤之前，请确保你对子模块的路径和远程仓库地址有正确的了解，并且你有权限访问这些仓库。</p>
+</div>
+</div>
+<div id="outline-container-headline-17" class="outline-2">
+<h2 id="headline-17">
+子模块索引过，如何再次索引
+</h2>
+<div id="outline-text-headline-17" class="outline-text-2">
+<p>
+如果你已经删除了相关的索引文件（比如.gitmodules文件）并且配置文件中也不包含索引信息，但仍然无法添加子模块，可能是由于Git仓库中还存在一些缓存或其他问题导致的。</p>
+<p>
+你可以尝试以下步骤来清除可能导致无法添加子模块的问题：</p>
+<ol>
+<li>
+<p>**清除子模块缓存**：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git rm --cached hugo1/themes/hugo-theme-stack</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</li>
+<li>
+<p>**删除子模块目录**：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rm -rf hugo1/themes/hugo-theme-stack</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</li>
+<li>
+<p>**提交更改**：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git add .
+</span></span><span class="line"><span class="cl">git commit -m <span class="s2">&#34;Remove submodule hugo-theme-stack&#34;</span>
+</span></span><span class="line"><span class="cl">git push</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</li>
+</ol>
+<p>完成以上步骤后，你可以尝试重新添加子模块：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git submodule add https://github.com/CaiJimmy/hugo-theme-stack/ hugo1/themes/hugo-theme-stack</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+以上步骤来源于 chatgpt，而我实际操作的时候只执行了第一步，即清除子模块缓存，然后执行最后一步，即重新添加子模块</p>
 </div>
 </div>
 
