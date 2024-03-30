@@ -104,29 +104,43 @@
         <description>
 &lt;div id=&#34;outline-container-headline-1&#34; class=&#34;outline-2&#34;&gt;
 &lt;h2 id=&#34;headline-1&#34;&gt;
-方法一
+开篇赘述
 &lt;/h2&gt;
 &lt;div id=&#34;outline-text-headline-1&#34; class=&#34;outline-text-2&#34;&gt;
+&lt;p&gt;
+ARM 架构主要有两种不同的位数变体：ARM32 和 ARM64。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;ARM32：也称为 ARMv7 架构，通常用于较旧的嵌入式系统和移动设备。ARM32 架构有 32 位寻址空间和指令集，适用于需要较低功耗和资源占用的场景。&lt;/li&gt;
+&lt;li&gt;ARM64：也称为 ARMv8 架构，是较新的 ARM 架构版本，提供了更高性能、更大内存寻址范围和更多的寄存器。ARM64 架构支持 64 位寻址空间和指令集，适用于需要更高性能和更大内存支持的系统，比如现代的智能手机、平板电脑和服务器等设备。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;因此，当选择交叉编译工具链时，需要确保选用的工具链与目标设备的架构兼容，以确保生成的可执行文件能够在目标设备上正确运行。对于 ARM32 和 ARM64 架构，你会发现相应的工具链，比如 `gcc-arm-linux-gnueabi` 用于 ARM32 架构，而 `gcc-aarch64-linux-gnu` 则用于 ARM64 架构。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-2&#34; class=&#34;outline-2&#34;&gt;
+&lt;h2 id=&#34;headline-2&#34;&gt;
+方法一
+&lt;/h2&gt;
+&lt;div id=&#34;outline-text-headline-2&#34; class=&#34;outline-text-2&#34;&gt;
 &lt;p&gt;
 官网页面：&lt;a href=&#34;https://www.linaro.org/downloads/&#34;&gt;https://www.linaro.org/downloads/&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;
 以下访问官网子页面&lt;/p&gt;
-&lt;div id=&#34;outline-container-headline-2&#34; class=&#34;outline-3&#34;&gt;
-&lt;h3 id=&#34;headline-2&#34;&gt;
+&lt;div id=&#34;outline-container-headline-3&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-3&#34;&gt;
 ARM-Linux交叉编译工具链下载
 &lt;/h3&gt;
-&lt;div id=&#34;outline-text-headline-2&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;div id=&#34;outline-text-headline-3&#34; class=&#34;outline-text-3&#34;&gt;
 &lt;p&gt;
 下载页面：&lt;a href=&#34;https://snapshots.linaro.org/gnu-toolchain/14.0-2023.06-1/arm-linux-gnueabihf/&#34;&gt;https://snapshots.linaro.org/gnu-toolchain/14.0-2023.06-1/arm-linux-gnueabihf/&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;
 下载链接：&lt;a href=&#34;https://snapshots.linaro.org/gnu-toolchain/14.0-2023.06-1/arm-linux-gnueabihf/gcc-linaro-14.0.0-2023.06-x86_64_arm-linux-gnueabihf.tar.xz&#34;&gt;https://snapshots.linaro.org/gnu-toolchain/14.0-2023.06-1/arm-linux-gnueabihf/gcc-linaro-14.0.0-2023.06-x86_64_arm-linux-gnueabihf.tar.xz&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-3&#34; class=&#34;outline-3&#34;&gt;
-&lt;h3 id=&#34;headline-3&#34;&gt;
+&lt;div id=&#34;outline-container-headline-4&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-4&#34;&gt;
 aarch64-Linux交叉编译工具链下载
 &lt;/h3&gt;
-&lt;div id=&#34;outline-text-headline-3&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;div id=&#34;outline-text-headline-4&#34; class=&#34;outline-text-3&#34;&gt;
 &lt;p&gt;
 下载页面：&lt;a href=&#34;https://snapshots.linaro.org/gnu-toolchain/14.0-2023.06-1/aarch64-linux-gnu/&#34;&gt;https://snapshots.linaro.org/gnu-toolchain/14.0-2023.06-1/aarch64-linux-gnu/&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;
@@ -135,11 +149,11 @@ aarch64-Linux交叉编译工具链下载
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-4&#34; class=&#34;outline-2&#34;&gt;
-&lt;h2 id=&#34;headline-4&#34;&gt;
+&lt;div id=&#34;outline-container-headline-5&#34; class=&#34;outline-2&#34;&gt;
+&lt;h2 id=&#34;headline-5&#34;&gt;
 不同的系统架构对应不同版本的gcc for arm编译工具
 &lt;/h2&gt;
-&lt;div id=&#34;outline-text-headline-4&#34; class=&#34;outline-text-2&#34;&gt;
+&lt;div id=&#34;outline-text-headline-5&#34; class=&#34;outline-text-2&#34;&gt;
 &lt;table&gt;
 &lt;thead&gt;
 &lt;/thead&gt;
@@ -365,11 +379,11 @@ aarch64-Linux交叉编译工具链下载
 &lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-5&#34; class=&#34;outline-2&#34;&gt;
-&lt;h2 id=&#34;headline-5&#34;&gt;
+&lt;div id=&#34;outline-container-headline-6&#34; class=&#34;outline-2&#34;&gt;
+&lt;h2 id=&#34;headline-6&#34;&gt;
 参考链接
 &lt;/h2&gt;
-&lt;div id=&#34;outline-text-headline-5&#34; class=&#34;outline-text-2&#34;&gt;
+&lt;div id=&#34;outline-text-headline-6&#34; class=&#34;outline-text-2&#34;&gt;
 &lt;p&gt;
 &lt;a href=&#34;https://blog.csdn.net/Qiuhongim/article/details/124137192&#34;&gt;ARM-Linux 交叉编译工具链安装&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;
