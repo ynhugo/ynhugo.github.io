@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-cn" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='5 分钟，使用内网穿透快速实现远程手机桌面！ 初识adb adb shell下载链接：https://wws.lanzoui.com/iNYNiq9l3'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='我的OneDrive_应用(提取码：9527) 多个绿色软件下载站 破解软件 激活版 去广告 绿色版 免安装版 全网好资源 https://www.downgc.com/ http://www.downxia.com/ https://www.ghxi.com/ https://www.ypojie.com/ https://www.freedownloadmanager.org/zh/ https://www.onlinedown.net/ https://www.pcsoft.com.cn/ https://sourceforge.net/ keil使用技巧'>
 <title>note</title>
 
 <link rel='canonical' href='https://ynhugo.github.io/p/note/'>
 
 <link rel="stylesheet" href="/scss/style.min.2328f6a64e9c190e18c4f69895d0081330e55c8210e9395d11068ea1d881517f.css"><meta property='og:title' content='note'>
-<meta property='og:description' content='5 分钟，使用内网穿透快速实现远程手机桌面！ 初识adb adb shell下载链接：https://wws.lanzoui.com/iNYNiq9l3'>
+<meta property='og:description' content='我的OneDrive_应用(提取码：9527) 多个绿色软件下载站 破解软件 激活版 去广告 绿色版 免安装版 全网好资源 https://www.downgc.com/ http://www.downxia.com/ https://www.ghxi.com/ https://www.ypojie.com/ https://www.freedownloadmanager.org/zh/ https://www.onlinedown.net/ https://www.pcsoft.com.cn/ https://sourceforge.net/ keil使用技巧'>
 <meta property='og:url' content='https://ynhugo.github.io/p/note/'>
 <meta property='og:site_name' content='ynblog'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='note' /><meta property='article:published_time' content='2023-07-30T14:52:08&#43;08:00'/><meta property='article:modified_time' content='2023-07-30T14:52:08&#43;08:00'/>
 <meta name="twitter:title" content="note">
-<meta name="twitter:description" content="5 分钟，使用内网穿透快速实现远程手机桌面！ 初识adb adb shell下载链接：https://wws.lanzoui.com/iNYNiq9l3">
+<meta name="twitter:description" content="我的OneDrive_应用(提取码：9527) 多个绿色软件下载站 破解软件 激活版 去广告 绿色版 免安装版 全网好资源 https://www.downgc.com/ http://www.downxia.com/ https://www.ghxi.com/ https://www.ypojie.com/ https://www.freedownloadmanager.org/zh/ https://www.onlinedown.net/ https://www.pcsoft.com.cn/ https://sourceforge.net/ keil使用技巧">
     <link rel="shortcut icon" href="/img/favicon.ico" />
 
     </head>
@@ -279,23 +279,6 @@
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ol>
-    <li><a href="#1用expect实现与shell交互用ssh连接termxu实例">1.用expect实现与shell交互，用ssh连接termxu实例：</a></li>
-    <li><a href="#2用expect登录termux并执行脚本实例">2.用expect登录termux并执行脚本实例：</a></li>
-    <li><a href="#3expect-eof与interact的区别">3.<code>expect eof</code>与<code>interact</code>的区别：</a></li>
-    <li><a href="#4注意事项">4.注意事项：</a></li>
-  </ol>
-
-  <ol>
-    <li><a href="#termux的下载安装及使用教程">termux的下载安装及使用教程</a></li>
-    <li><a href="#初始化操作">初始化操作</a></li>
-    <li><a href="#其它工具的安装">其它工具的安装</a></li>
-  </ol>
-
-  <ol>
-    <li><a href="#参考链接">参考链接</a></li>
-  </ol>
-
-  <ol>
     <li><a href="#hexo-及-next-基本配置与使用">Hexo 及 NexT 基本配置与使用</a>
       <ol>
         <li><a href="#主题下载与应用">主题下载与应用</a></li>
@@ -440,7 +423,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 50 分钟
+                    阅读时长: 42 分钟
                 </time>
             </div>
         
@@ -455,335 +438,7 @@
     <section class="article-content">
     
     
-    <h1 id="5-分钟使用内网穿透快速实现远程手机桌面httpsblogcsdnnethsh881025articledetails124161932"><a class="link" href="https://blog.csdn.net/hsh881025/article/details/124161932"  target="_blank" rel="noopener"
-    >5 分钟，使用内网穿透快速实现远程手机桌面！</a></h1>
-<h1 id="初识adb">初识adb</h1>
-<p>adb shell下载链接：https://wws.lanzoui.com/iNYNiq9l3yd
-打开文件所在文件夹，将地址栏清空并键入cmd，然后回车，在cmd窗口键入adb shell测试use调试是否连接成功，如果出现美元符号表示连接成功。
-adb shell am monitor                       #执行该命令后在手机上打开要卸载的应用，获取包名
-adb shell pm disable-user 包名           #停用应用
-adb shell pm enable 包名                 #恢复应用
-adb install -r apk文件路径               #安装应用，直接将文件拖入cmd窗口可直接实现插入路径
-adb shell pm list packages               #显示包名列表
-adb uninstall 包名                       #卸载应用</p>
-<p>adb命令</p>
-<p>有些手机需要解锁system分区（如小米）</p>
-<p>输入：adb root</p>
-<p>输入：adb disable-verity</p>
-<p>查看手机连接状态：adb device</p>
-<p>获得root权限：root</p>
-<p>设置超级用户模式 : su</p>
-<p>退出su : exit</p>
-<p>重启命令：adb reboot</p>
-<p>重启到Rec：adb reboot recovery</p>
-<p>重启到Fastboot：adb reboot bootloader</p>
-<p>推送ROM包：adb sideload &lt;Rom包&gt;</p>
-<p>把文件从手机中复制到电脑上 : adb pull &lt;手机路径&gt; &lt;电脑路径&gt;</p>
-<p>把文件从电脑复制到手机上 : adb push &lt;电脑路径&gt; &lt;手机路径&gt;</p>
-<p>重新挂载文件系统 : adb remount</p>
-<p>安装软件 : adb install apk文件名称.apk</p>
-<p>卸载apk软件 : adb uninstall apk包名.apk</p>
-<p>Fastboot命令：</p>
-<p>查看连接状态 ：fastboot devices</p>
-<p>重启 ：fastboot reboot</p>
-<p>重启到Fastboot ：fastboot reboot-bootloader</p>
-<p>除非你很了解该命令，否则以下命令请谨慎使用：</p>
-<p>解锁 ：fastboot flashing unlock或fastboot oem unlock</p>
-<p>上锁 ：fastboot flashing lock或fastboot oem lock</p>
-<p>清除分区数据 ：fastboot erase &lt;boot/system/data/cache/userdata/recovery&gt;</p>
-<p>清除分区(四清) ：fastboot erase system -w</p>
-<p>格式化分区数据 ：fastboot format &lt;boot/system/data/cache/userdata/recovery&gt;</p>
-<p>烧写分区 ：fastboot flash &lt; boot/system /recovery/radio/bootloader/ splash1/&gt; &lt;*.img&gt;</p>
-<p>以下是常用命令，可供大家查阅：</p>
-<p>启动 adb server 命令：adb start-server
-停止 adb server 命令：adb kill-server
-查看 adb 版本：adb version
-安装 APK命令：adb install [-lrtsdg] &lt;path_to_apk&gt;
-卸载应用命令：adb uninstall [-k] <!-- raw HTML omitted -->
-清除应用数据与缓存：adb shell pm clear <!-- raw HTML omitted -->
-查看正在运行的 Services命令：adb shell dumpsys activity services [<!-- raw HTML omitted -->]
-查看应用详细信息命令：adb shell dumpsys package <!-- raw HTML omitted -->
-发送广播，命令格式：adb shell am broadcast [options] <!-- raw HTML omitted -->
-强制停止应用命令：adb shell am force-stop <!-- raw HTML omitted -->
-文件管理复制设备里的文件到电脑：adb pull &lt;设备里的文件路径&gt; [电脑上的目录]
-复制电脑里的文件到设备：adb push &lt;电脑上的文件路径&gt; &lt;设备里的目录&gt;
-电池状况命令：adb shell dumpsys battery
-adb help, 列出所有的选项说明及子命令</p>
-<p>已停用应用包名(个人某手机已停用应用)：
-com.ivvi.browser 自带浏览器
-com.android.fmradio FM电台
-com.upgadata.ivvi 游戏电台
-com.iflytek.inputmethod 讯飞输入法
-com.yulong.freezeroom 应用冻结
-com.icoolme.android.weather 最美天气
-com.yulong.android.videoplayer 视频
-com.redstone.ota.ui 系统更新
-com.coolpad.music 音乐
-com.android.stk sim卡应用
-com.yulong.android.backup 备份与恢复</p>
-<h1 id="expect">expect</h1>
-<h2 id="1用expect实现与shell交互用ssh连接termxu实例">1.用expect实现与shell交互，用ssh连接termxu实例：</h2>
-<p>#!/usr/bin/expect       #这一句为声明，声明的方式为<code>#</code> + <code>!</code> + <code>expect路径</code>果不知道expectr的路径，可以执行<code>which expect</code>来查看
-set host &ldquo;192.168.0.0&rdquo;  #非本人ip，随便编的ip地址
-set password &ldquo;123456&rdquo;
-spawn ssh -p 8022 $host
-expect
-{</p>
-<p>&ldquo;<em>yes/no</em>\r&rdquo;    #如果检测到包含部分字符串，输出内容与shell交互
-{
-send &ldquo;yes\r&rdquo;
-}</p>
-<p>&ldquo;*assword:&rdquo;
-{
-send &ldquo;$password\r&rdquo;
-}</p>
-<p>}
-interact       #连接后保持连接状态</p>
-<h2 id="2用expect登录termux并执行脚本实例">2.用expect登录termux并执行脚本实例：</h2>
-<p>#!/usr/bin/expect
-set host &ldquo;192.168.0.0&rdquo;
-set password &ldquo;..Qq1ssh..&rdquo;
-set script &ldquo;touch 54545455454545454544545545445455545454454454.sh&rdquo; #假设脚本内容只是创建一个文件
-spawn ssh -p 8022 $host
-expect {
-&ldquo;<em>yes/no</em>\r&rdquo;
-{
-send &ldquo;yes\r&rdquo;
-}
-&ldquo;<em>assword:&rdquo;
-{
-send &ldquo;$password\r&rdquo;
-}
-}
-expect &ldquo;</em>&rdquo;              #匹配到任意字符
-send &ldquo;$script\r&rdquo;        #执行脚本
-expect &ldquo;*&rdquo;              #匹配到任意内容
-send &ldquo;exit\r&rdquo;           #退出
-send &ldquo;\r&rdquo;               #换行
-expect eof              #执行完后退出</p>
-<h2 id="3expect-eof与interact的区别">3.<code>expect eof</code>与<code>interact</code>的区别：</h2>
-<p>这两个命令作为结束语句用的，如果只是执行一次任务就退出，那么可以用<code>expect eof</code>，如果连接后想要保持连接状态，那么就用<code>interact</code></p>
-<h2 id="4注意事项">4.注意事项：</h2>
-<p>有一点需要注意，执行脚本的方式有很多种，但是执行expect脚本的时候只能用<code>expect</code> <code>./</code>的方式执行，目前我知道的两种方式，不然会执行失败。</p>
-<h1 id="如何使用wget下载整个网站">如何使用wget下载整个网站</h1>
-<pre><code>wget 是用于从网站下载资源的 linux 命令，基本用法是 wget url:
-
-wget http://www.w3schools.com/
-
-一般来说，网站的页面会有很多链接，点击之后可以链接到其他页面，其他页面也可能有链接，就这样一级一级链接下去，如果要把这些所有关联的页面都下载下来，用法是：
-
-wget -r http://www.w3schools.com/
-
-但是大部分网站不允许你下载所有网站的内容，如果网站检测不到浏览器标识，会拒绝你的下载连接或者给你发送回一个空白网页。这个时候在 wget 后面加上 user-agent 就可以：
-
-wget -r -p -U Mozilla http://www.w3schools.com/
-为了避免被网站加入黑名单，我们可以限制下载的速度以及两次下载之间的等待时间：
-wget --wait=20 --limit-rate=20K -r -p -U Mozilla http://www.w3schools.com/
-
-如何只是想下载特定文件夹下的网页，使用 --no-parent 只下载 /js 下的所有页面
-
-wget --wait=20 --limit-rate=20K --no-parent -r -p -U Mozilla http://www.w3schools.com/js/default.asp	
-</code></pre>
-<p><a class="link" href="https://blog.csdn.net/github_37483541/article/details/54955425"  target="_blank" rel="noopener"
-    >原文链接</a></p>
-<h1 id="sdf">sdf</h1>
-<p>Welcome to the SDF.ORG and Remote Learning Lab!</p>
-<p>Your class instructor or SDF.ORG has set up the following:
-SDF Username:<br>
-SDF Password:</p>
-<p>Please login to your account via the following methods:</p>
-<p>Linux or UNIX use:  ssh <a class="link" href="mailto:passwd@tty.sdf.org" >passwd@tty.sdf.org</a>
-MacOS: use Terminal.App and follow the method above
-Windows: use putty.exe and enter the Host Name &ldquo;tty.sdf.org&rdquo;
-Mobile: Find an SSH app for your device</p>
-<p>Need help NOW? Check out irc.sdf.org #helpdesk
-Join our QQ Chat Group: 513706123
-and the SDF Member Contributed Tutorials at <a class="link" href="https://sdf.org/?tutorials"  target="_blank" rel="noopener"
-    >https://sdf.org/?tutorials</a></p>
-<p>We also host social Mastodon, PixelFed, Peertube, Matrix and GIT instances:
-You can join at
-<a class="link" href="https://mastodon.sdf.org"  target="_blank" rel="noopener"
-    >https://mastodon.sdf.org</a></p>
-<p><a class="link" href="https://pixelfed.sdf.org"  target="_blank" rel="noopener"
-    >https://pixelfed.sdf.org</a></p>
-<p><a class="link" href="https://toobnix.org"  target="_blank" rel="noopener"
-    >https://toobnix.org</a></p>
-<p><a class="link" href="https://matrix.sdf.org"  target="_blank" rel="noopener"
-    >https://matrix.sdf.org</a></p>
-<p><a class="link" href="https://git.sdf.org"  target="_blank" rel="noopener"
-    >https://git.sdf.org</a></p>
-<p>Are you a DJ or music lover? Check out our free RADIO service: <a class="link" href="https://aNONradio.net"  target="_blank" rel="noopener"
-    >https://aNONradio.net</a></p>
-<p>Are you an Amateur Radio Operator (HAM)? Check out <a class="link" href="https://sdfarc.org"  target="_blank" rel="noopener"
-    >https://sdfarc.org</a></p>
-<p>See you on SDF soon!</p>
-<h1 id="安装termux">安装termux</h1>
-<h2 id="termux的下载安装及使用教程">termux的下载安装及使用教程</h2>
-<p><a class="link" href="https://termux.com/"  target="_blank" rel="noopener"
-    >termux官网</a>
-<a class="link" href="https://www.sqlsec.com/2018/05/termux.html"  target="_blank" rel="noopener"
-    >termux教程</a></p>
-<h2 id="初始化操作">初始化操作</h2>
-<pre><code>termux-setup-storage #给访问权限
-apt-update &amp;&amp; apt grade &amp;&amp; pkg update &amp;&amp; pkg grade #检查更新并升级
-pkg install vim #文本编辑工具
-</code></pre>
-<h2 id="其它工具的安装">其它工具的安装</h2>
-<pre><code>pkg install git #根据个人需要选择性安装
-pkg install nodejs-lts -g #用来安装各种插件，根据个人需要选择性安装
-npm install hexo-cli -g #必须先安装nodejs再执行，用来搭建博客，根据个人需要选择性安装
-pkg install proot-distro #可用来安装linux系统，根据个人需要选择性安装
-</code></pre>
-<h1 id="termux-openssh">termux-openssh</h1>
-<p>安装好termux之后，想尝试一下termux的ssh，以我为例，做一个总结。
-注意：以下操作需要保证电脑跟手机保持在同一个局域网，且是电脑连接手机。</p>
-<p>pkg install openssh #安装openssh
-passwd #电脑在连接termux时会提示输入密码，所以需要在termux中提前设置，执行passwd后会提示设置密码并确认密码。
-whoami #查看termux的用户名。
-ifconfig #查看termux的ip，我的是wlan1部分，看inet的后的ip地址。
-ssh -p user@ip #user为termux执行whoami后看到的用户名，ip为执行ifconfig后看到的wlan1部分inet对应的ip。
-接下来会询问&quot;yes or no&quot;,输入yes，输入密码，然后连接成功。</p>
-<h1 id="通过termux和vnc实现以手机为服务器的桌面办公">通过Termux和VNC实现以手机为服务器的桌面办公</h1>
-<h2 id="参考链接">参考链接</h2>
-<p><a class="link" href="https://blog.csdn.net/phaste/article/details/123616645"  target="_blank" rel="noopener"
-    >通过Termux和VNC实现以手机为服务器的桌面办公</a>
-<a class="link" href="https://superigbt_superigbt.gitee.io/2020/09/28/termux-proot-distro/"  target="_blank" rel="noopener"
-    >termux利用工作proot-distro安装linux</a>
-解决了termux安装ubuntu系统和安装系统的中文支持问题</p>
-<pre><code>## 安装ubuntu和图形界面
-现在安装ubuntu，我是通过proot-distro来安装的
-```
-apt install proot-distro
-```
-然后键入proot-distro list来显示可安装包，这个方法不但可以方便的安装ubuntu可以看到你还可以用它来安装其它linux的发行版。
-这里我们安装ubuntu
-```
-proot-distro install ubuntu
-```
-这时候会从外网下载几十M的大文件(没听错几十兆而已，但很慢)，有时候网络不好，多试几次。
-显示安装成功后就可以登入了
-```
-proot-distro login ubuntu
-```
-当然你也可以把这条命令加入到自启动项里面，每次就可以自动登陆了。
-
-## 连接VNC图形化操作
-进入ubuntu后先更新软件源
-```
-apt update
-```
-然后安装需要用到的图形化服务软件
-```
-apt install xfce4 xfce4-goodies
-```
-会安装xfc4轻量级图形界面服务，这一步大概会消耗1G的空间，当然也可以试着去安装其他的图形界面服务如gnome
-安装xfc4参考：https://blog.csdn.net/cunchi4221/article/details/107471665
-然后安装tigervnc。tigervnc感觉比tightvnc要配置简单一些
-```
-apt install tigervnc-standalone-server tigervnc-common
-```
-然后做一下简单的配置
-运行
-```
-vncserver
-```
-来设置密码
-然后创建启动脚本：
-```
-nano .vnc/xstartup
-```
-如上命令就是用文本编辑器nano(当然你可以用其他文本编辑器)编辑用户文件夹下的.vnc文件夹下的xstartup文件(如果没有就创建一个)内容如下：
-```
-#!/usr/bin/bash
-xfce4-session
-```
-
-注意xfce4-session后面不要跟&amp;号，不然会在运行vncserver时提示过早退出，然后记得给它加执行的权限。
-```
-chmod +x .vnc/xstartup
-```
-首次设置VNC时，它将在端口5901上启动默认服务器实例。
-如下是一个启动vnc服务器的例子：
-```
-vncserver :1 -localhost no -geometry 1920x1080
-```
-然后就可以通过vnc的客户端登陆了，为了能够远端登陆不仅仅是本机登陆，设置-localhost no 是必要的。由于VNC是不加密的，会在登陆时提示如下，当然也可以自行百度实现在此基础上的外加SSH通道的加密。
-
-输入刚才设置的密码就可以登陆了
-
-之后就是熟悉的ubuntu界面了，可以自由安装自己喜欢的程序了
-
-## 中文语言设置
-```
-apt install language-pack-zh-hans* 安装中文包
-apt install language-pack-gnome-zh-hans* 安装中文包
-apt install fonts-wqy-*
-  # $ apt install fonts-wqy-microhei 安装中文字体
-  # $ apt install fronts-wqy-zenhei 另一个中文字体
-```
-```  
-vim /etc/default/locale
-```
-更改内容如下：
-```
-LANG=”zh_CN.UTF-8”
-LANGUAGE=”zh_CN:en_US:en”
-LC_NUMERIC=”zh_CN.UTF-8”
-LC_TIME=”zh_CN.UTF-8”
-LC_MONETARY=”zh_CN.UTF-8”
-LC_PAPER=”zh_CN.UTF-8”
-LC_IDENTIFICATION=”zh_CN.UTF-8”
-LC_NAME=”zh_CN.UTF-8”
-LC_ADDRESS=”zh_CN.UTF-8”
-LC_TELEPHONE=”zh_CN.UTF-8”
-LC_MEASUREMENT=”zh_CN.UTF-8”
-```
-保存后执行
-```
-fc-cache -fv  #最好进行这一步后再安装fcitx，否则有可能输入法不起做用。
-```
-则控制台终端己经会出现中文了
-
-## 如果安装过程中发现一些缺失的东东
-
-```
-apt install dialog
-apt install apt-utils
-```
-
-## 关于中文输入法
-```
-apt install fcitx
-apt install fcitx-config-*
-apt install fcitx-table-wbpy # 五笔拼音
-```
-
-### 如果通过VNC或别的XDSL进入XFCE，有fcitx图标，也能看到拼音，五笔输入法，但是却输入不了中文
-```
-vim ~/.profile
-```
-在结尾加入
-```
-#fcitx
-export GTK_IM_MODULE=fcitx
-export QT_IM_MODULE=fcitx
-export XMODIFIERS=”@im=fcitx”
-```
-然后退出图形界面后，重启动。中文输入法可用了。
-
-## 如果要一进入桌面就有fcitx，则可
-
-```
-cp /usr/share/applications/fcitx.desktop /etc/xdg/autostart/
-```
-</code></pre>
-<h1 id="cat命令">cat命令</h1>
-<p><code>cat a &gt; b</code> #将a中文件覆盖到文件b中
-<code>cat a &gt;&gt; b</code> #将a中文件追加到文件b中</p>
-<h1 id="hugo的本地搭建参考">hugo的本地搭建参考</h1>
-<p><a class="link" href="https://blog.csdn.net/qq_41408081/article/details/120890571"  target="_blank" rel="noopener"
-    >hugo 建站（本地搭建）</a></p>
-<h1 id="我的onedrive_应用提取码9527httpspanbaiducoms1syojl_y2lud0cn9lp9de-qpwd9527"><a class="link" href="https://pan.baidu.com/s/1SYOJl_Y2lUd0cn9lp9De-Q?pwd=9527"  target="_blank" rel="noopener"
+    <h1 id="我的onedrive_应用提取码9527httpspanbaiducoms1syojl_y2lud0cn9lp9de-qpwd9527"><a class="link" href="https://pan.baidu.com/s/1SYOJl_Y2lUd0cn9lp9De-Q?pwd=9527"  target="_blank" rel="noopener"
     >我的OneDrive_应用(提取码：9527)</a></h1>
 <h1 id="多个绿色软件下载站-破解软件-激活版-去广告-绿色版-免安装版-全网好资源">多个绿色软件下载站 破解软件 激活版 去广告 绿色版 免安装版 全网好资源</h1>
 <pre><code>https://www.downgc.com/
