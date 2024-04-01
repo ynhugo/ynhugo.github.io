@@ -27915,13 +27915,32 @@ shell脚本如何创建数组或列表
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;因此，-r 选项用于禁用反斜杠转义，而 -a 选项用于将输入赋值给数组变量。&lt;/p&gt;
+&lt;div id=&#34;outline-container-headline-27&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-27&#34;&gt;
+在终端执行示例
+&lt;/h3&gt;
+&lt;div id=&#34;outline-text-headline-27&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;p&gt;
+查找&amp;#34;*.org&amp;#34;文件并存入数组，然后打印数组第一个元素到终端验证效果&lt;/p&gt;
+&lt;div class=&#34;src src-bash&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  mapfile -t file_array &amp;lt; &amp;lt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;find ./ -name &lt;span class=&#34;s2&#34;&gt;&amp;#34;*.org&amp;#34;&lt;/span&gt; -type f -exec readlink -f &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt; +&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;file_array&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[0]&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-27&#34; class=&#34;outline-2&#34;&gt;
-&lt;h2 id=&#34;headline-27&#34;&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-28&#34; class=&#34;outline-2&#34;&gt;
+&lt;h2 id=&#34;headline-28&#34;&gt;
 查看文件创建时间，并把创建时间组成使用hugo命令创建博客时生成的时间戳：
 &lt;/h2&gt;
-&lt;div id=&#34;outline-text-headline-27&#34; class=&#34;outline-text-2&#34;&gt;
+&lt;div id=&#34;outline-text-headline-28&#34; class=&#34;outline-text-2&#34;&gt;
 &lt;p&gt;
 以 ssh配置.org 为例，查看该文件的创建时间，然后组成时间戳&lt;/p&gt;
 &lt;div class=&#34;src src-bash&#34;&gt;
@@ -27948,11 +27967,11 @@ shell脚本如何创建数组或列表
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-28&#34; class=&#34;outline-2&#34;&gt;
-&lt;h2 id=&#34;headline-28&#34;&gt;
+&lt;div id=&#34;outline-container-headline-29&#34; class=&#34;outline-2&#34;&gt;
+&lt;h2 id=&#34;headline-29&#34;&gt;
 在 awk 中，可以使用字符串连接符来连接多个关键词或字段
 &lt;/h2&gt;
-&lt;div id=&#34;outline-text-headline-28&#34; class=&#34;outline-text-2&#34;&gt;
+&lt;div id=&#34;outline-text-headline-29&#34; class=&#34;outline-text-2&#34;&gt;
 &lt;p&gt;
 你可以使用逗号 , 来连接多个字段或字符串，并通过空格或其他字符来分隔它们。下面是一个示例，演示了如何在 awk 中连接多个关键词：&lt;/p&gt;
 &lt;p&gt;
@@ -28007,11 +28026,11 @@ shell脚本如何创建数组或列表
 在这个示例中，我们使用了字符串连接符 , 来连接固定的文字和字段，以便形成输出的完整描述。你可以根据自己的需求使用不同的连接方式和格式来构建输出。&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-29&#34; class=&#34;outline-2&#34;&gt;
-&lt;h2 id=&#34;headline-29&#34;&gt;
+&lt;div id=&#34;outline-container-headline-30&#34; class=&#34;outline-2&#34;&gt;
+&lt;h2 id=&#34;headline-30&#34;&gt;
 要使用 AWK 输出指定行
 &lt;/h2&gt;
-&lt;div id=&#34;outline-text-headline-29&#34; class=&#34;outline-text-2&#34;&gt;
+&lt;div id=&#34;outline-text-headline-30&#34; class=&#34;outline-text-2&#34;&gt;
 &lt;p&gt;
 你可以结合 AWK 的条件判断功能来实现。以下是一个简单的示例：&lt;/p&gt;
 &lt;p&gt;
@@ -28053,11 +28072,11 @@ Line 5: This is the fifth line&lt;/p&gt;
 这样会输出第2行到第4行的内容。&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-30&#34; class=&#34;outline-2&#34;&gt;
-&lt;h2 id=&#34;headline-30&#34;&gt;
+&lt;div id=&#34;outline-container-headline-31&#34; class=&#34;outline-2&#34;&gt;
+&lt;h2 id=&#34;headline-31&#34;&gt;
 hugo 批量插入文件的 Linux 脚本参考
 &lt;/h2&gt;
-&lt;div id=&#34;outline-text-headline-30&#34; class=&#34;outline-text-2&#34;&gt;
+&lt;div id=&#34;outline-text-headline-31&#34; class=&#34;outline-text-2&#34;&gt;
 &lt;div class=&#34;src src-bash&#34;&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -28070,11 +28089,11 @@ hugo 批量插入文件的 Linux 脚本参考
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-31&#34; class=&#34;outline-2&#34;&gt;
-&lt;h2 id=&#34;headline-31&#34;&gt;
+&lt;div id=&#34;outline-container-headline-32&#34; class=&#34;outline-2&#34;&gt;
+&lt;h2 id=&#34;headline-32&#34;&gt;
 批量创建文件并添加指定内容到文件中
 &lt;/h2&gt;
-&lt;div id=&#34;outline-text-headline-31&#34; class=&#34;outline-text-2&#34;&gt;
+&lt;div id=&#34;outline-text-headline-32&#34; class=&#34;outline-text-2&#34;&gt;
 &lt;div class=&#34;src src-bash&#34;&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -28087,11 +28106,11 @@ hugo 批量插入文件的 Linux 脚本参考
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-32&#34; class=&#34;outline-2&#34;&gt;
-&lt;h2 id=&#34;headline-32&#34;&gt;
+&lt;div id=&#34;outline-container-headline-33&#34; class=&#34;outline-2&#34;&gt;
+&lt;h2 id=&#34;headline-33&#34;&gt;
 如果您想要使用 grep 命令从文件中的指定范围检索内容，可以结合使用 head 和 tail 命令来实现。下面是一个示例：
 &lt;/h2&gt;
-&lt;div id=&#34;outline-text-headline-32&#34; class=&#34;outline-text-2&#34;&gt;
+&lt;div id=&#34;outline-text-headline-33&#34; class=&#34;outline-text-2&#34;&gt;
 &lt;p&gt;
 假设您想在文件 example.txt 的第 10 行到第 20 行之间检索包含特定内容的行，可以按照以下步骤进行：&lt;/p&gt;
 &lt;div class=&#34;src src-bash&#34;&gt;
@@ -28110,11 +28129,11 @@ hugo 批量插入文件的 Linux 脚本参考
 请将上述命令中的 &amp;#34;要查找的内容&amp;#34; 替换为您需要查找的实际内容。&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-33&#34; class=&#34;outline-2&#34;&gt;
-&lt;h2 id=&#34;headline-33&#34;&gt;
+&lt;div id=&#34;outline-container-headline-34&#34; class=&#34;outline-2&#34;&gt;
+&lt;h2 id=&#34;headline-34&#34;&gt;
 想办法将文件存入数组
 &lt;/h2&gt;
-&lt;div id=&#34;outline-text-headline-33&#34; class=&#34;outline-text-2&#34;&gt;
+&lt;div id=&#34;outline-text-headline-34&#34; class=&#34;outline-text-2&#34;&gt;
 &lt;p&gt;
 将文件存入数组，然后查看数组成员个数，再将数组的第四个成员值打印出来&lt;/p&gt;
 &lt;div class=&#34;src src-bash&#34;&gt;
@@ -28151,11 +28170,11 @@ mapfile [-n count] [-O origin] [-s count] [-t] [-u fd] [-C callback] array&lt;/p
 总之，mapfile 命令的作用是将输入按行分割并存储到数组中，为处理大量文本数据提供了便利的方法。&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-34&#34; class=&#34;outline-2&#34;&gt;
-&lt;h2 id=&#34;headline-34&#34;&gt;
+&lt;div id=&#34;outline-container-headline-35&#34; class=&#34;outline-2&#34;&gt;
+&lt;h2 id=&#34;headline-35&#34;&gt;
 sftp 批量执行命令教程
 &lt;/h2&gt;
-&lt;div id=&#34;outline-text-headline-34&#34; class=&#34;outline-text-2&#34;&gt;
+&lt;div id=&#34;outline-text-headline-35&#34; class=&#34;outline-text-2&#34;&gt;
 &lt;p&gt;
 通过以下方式批量执行命令&lt;/p&gt;
 &lt;div class=&#34;src src-bash&#34;&gt;
@@ -28174,11 +28193,11 @@ sftp 批量执行命令教程
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-35&#34; class=&#34;outline-3&#34;&gt;
-&lt;h3 id=&#34;headline-35&#34;&gt;
+&lt;div id=&#34;outline-container-headline-36&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-36&#34;&gt;
 sftp 批量执行命令教程-示例
 &lt;/h3&gt;
-&lt;div id=&#34;outline-text-headline-35&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;div id=&#34;outline-text-headline-36&#34; class=&#34;outline-text-3&#34;&gt;
 &lt;p&gt;
 将运行命令粘贴到终端并回车直接运行，也可以以脚本的形式运行&lt;/p&gt;
 &lt;div class=&#34;src src-bash&#34;&gt;
@@ -28217,16 +28236,16 @@ sftp 批量执行命令教程-示例
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-36&#34; class=&#34;outline-2&#34;&gt;
-&lt;h2 id=&#34;headline-36&#34;&gt;
+&lt;div id=&#34;outline-container-headline-37&#34; class=&#34;outline-2&#34;&gt;
+&lt;h2 id=&#34;headline-37&#34;&gt;
 expect
 &lt;/h2&gt;
-&lt;div id=&#34;outline-text-headline-36&#34; class=&#34;outline-text-2&#34;&gt;
-&lt;div id=&#34;outline-container-headline-37&#34; class=&#34;outline-3&#34;&gt;
-&lt;h3 id=&#34;headline-37&#34;&gt;
+&lt;div id=&#34;outline-text-headline-37&#34; class=&#34;outline-text-2&#34;&gt;
+&lt;div id=&#34;outline-container-headline-38&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-38&#34;&gt;
 1.用expect实现与shell交互，用ssh连接termxu实例：
 &lt;/h3&gt;
-&lt;div id=&#34;outline-text-headline-37&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;div id=&#34;outline-text-headline-38&#34; class=&#34;outline-text-3&#34;&gt;
 &lt;div class=&#34;src src-bash&#34;&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -28275,11 +28294,11 @@ expect
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-38&#34; class=&#34;outline-3&#34;&gt;
-&lt;h3 id=&#34;headline-38&#34;&gt;
+&lt;div id=&#34;outline-container-headline-39&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-39&#34;&gt;
 2.用 expect 登录 termux 并执行脚本实例：
 &lt;/h3&gt;
-&lt;div id=&#34;outline-text-headline-38&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;div id=&#34;outline-text-headline-39&#34; class=&#34;outline-text-3&#34;&gt;
 &lt;div class=&#34;src src-bash&#34;&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -28328,31 +28347,31 @@ expect
 &lt;/ul&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-39&#34; class=&#34;outline-3&#34;&gt;
-&lt;h3 id=&#34;headline-39&#34;&gt;
+&lt;div id=&#34;outline-container-headline-40&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-40&#34;&gt;
 3. expect eof 与 interact 的区别：
 &lt;/h3&gt;
-&lt;div id=&#34;outline-text-headline-39&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;div id=&#34;outline-text-headline-40&#34; class=&#34;outline-text-3&#34;&gt;
 &lt;p&gt;
 这两个命令作为结束语句用的，如果只是执行一次任务就退出，那么可以用expect eof，如果连接后想要保持连接状态，那么就用interact&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-40&#34; class=&#34;outline-3&#34;&gt;
-&lt;h3 id=&#34;headline-40&#34;&gt;
+&lt;div id=&#34;outline-container-headline-41&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-41&#34;&gt;
 4.注意事项：
 &lt;/h3&gt;
-&lt;div id=&#34;outline-text-headline-40&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;div id=&#34;outline-text-headline-41&#34; class=&#34;outline-text-3&#34;&gt;
 &lt;p&gt;
 有一点需要注意，执行脚本的方式有很多种，但是执行expect脚本的时候只能用 expect ./ 的方式执行，目前我知道的两种方式，不然会执行失败。&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-41&#34; class=&#34;outline-2&#34;&gt;
-&lt;h2 id=&#34;headline-41&#34;&gt;
+&lt;div id=&#34;outline-container-headline-42&#34; class=&#34;outline-2&#34;&gt;
+&lt;h2 id=&#34;headline-42&#34;&gt;
 如何使用wget下载整个网站
 &lt;/h2&gt;
-&lt;div id=&#34;outline-text-headline-41&#34; class=&#34;outline-text-2&#34;&gt;
+&lt;div id=&#34;outline-text-headline-42&#34; class=&#34;outline-text-2&#34;&gt;
 &lt;p&gt;
 wget 是用于从网站下载资源的 linux 命令，基本用法是 wget url:&lt;/p&gt;
 &lt;div class=&#34;src src-bash&#34;&gt;
@@ -28413,22 +28432,22 @@ wget 是用于从网站下载资源的 linux 命令，基本用法是 wget url:&
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-42&#34; class=&#34;outline-3&#34;&gt;
-&lt;h3 id=&#34;headline-42&#34;&gt;
+&lt;div id=&#34;outline-container-headline-43&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-43&#34;&gt;
 参考链接
 &lt;/h3&gt;
-&lt;div id=&#34;outline-text-headline-42&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;div id=&#34;outline-text-headline-43&#34; class=&#34;outline-text-3&#34;&gt;
 &lt;p&gt;
 &lt;a href=&#34;https://blog.csdn.net/github_37483541/article/details/54955425&#34;&gt;Linux 如何使用 wget 下载整个网站&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-43&#34; class=&#34;outline-2&#34;&gt;
-&lt;h2 id=&#34;headline-43&#34;&gt;
+&lt;div id=&#34;outline-container-headline-44&#34; class=&#34;outline-2&#34;&gt;
+&lt;h2 id=&#34;headline-44&#34;&gt;
 cat命令
 &lt;/h2&gt;
-&lt;div id=&#34;outline-text-headline-43&#34; class=&#34;outline-text-2&#34;&gt;
+&lt;div id=&#34;outline-text-headline-44&#34; class=&#34;outline-text-2&#34;&gt;
 &lt;div class=&#34;src src-bash&#34;&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -28443,11 +28462,11 @@ cat命令
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-44&#34; class=&#34;outline-2&#34;&gt;
-&lt;h2 id=&#34;headline-44&#34;&gt;
+&lt;div id=&#34;outline-container-headline-45&#34; class=&#34;outline-2&#34;&gt;
+&lt;h2 id=&#34;headline-45&#34;&gt;
 在SSH命令中，使用-D参数来创建动态端口转发时
 &lt;/h2&gt;
-&lt;div id=&#34;outline-text-headline-44&#34; class=&#34;outline-text-2&#34;&gt;
+&lt;div id=&#34;outline-text-headline-45&#34; class=&#34;outline-text-2&#34;&gt;
 &lt;p&gt;
 不需要指定本地地址。正确的用法是只指定端口号，例如：&lt;/p&gt;
 &lt;div class=&#34;src src-bash&#34;&gt;

@@ -336,48 +336,52 @@
 <li><a href="#headline-25">如何找到文件安装位置</a>
 </li>
 <li><a href="#headline-26">如何将多行数据存储到数组中</a>
-</li>
-<li><a href="#headline-27">查看文件创建时间，并把创建时间组成使用hugo命令创建博客时生成的时间戳：</a>
-</li>
-<li><a href="#headline-28">在 awk 中，可以使用字符串连接符来连接多个关键词或字段</a>
-</li>
-<li><a href="#headline-29">要使用 AWK 输出指定行</a>
-</li>
-<li><a href="#headline-30">hugo 批量插入文件的 Linux 脚本参考</a>
-</li>
-<li><a href="#headline-31">批量创建文件并添加指定内容到文件中</a>
-</li>
-<li><a href="#headline-32">如果您想要使用 grep 命令从文件中的指定范围检索内容，可以结合使用 head 和 tail 命令来实现。下面是一个示例：</a>
-</li>
-<li><a href="#headline-33">想办法将文件存入数组</a>
-</li>
-<li><a href="#headline-34">sftp 批量执行命令教程</a>
 <ul>
-<li><a href="#headline-35">sftp 批量执行命令教程-示例</a>
+<li><a href="#headline-27">在终端执行示例</a>
 </li>
 </ul>
 </li>
-<li><a href="#headline-36">expect</a>
+<li><a href="#headline-28">查看文件创建时间，并把创建时间组成使用hugo命令创建博客时生成的时间戳：</a>
+</li>
+<li><a href="#headline-29">在 awk 中，可以使用字符串连接符来连接多个关键词或字段</a>
+</li>
+<li><a href="#headline-30">要使用 AWK 输出指定行</a>
+</li>
+<li><a href="#headline-31">hugo 批量插入文件的 Linux 脚本参考</a>
+</li>
+<li><a href="#headline-32">批量创建文件并添加指定内容到文件中</a>
+</li>
+<li><a href="#headline-33">如果您想要使用 grep 命令从文件中的指定范围检索内容，可以结合使用 head 和 tail 命令来实现。下面是一个示例：</a>
+</li>
+<li><a href="#headline-34">想办法将文件存入数组</a>
+</li>
+<li><a href="#headline-35">sftp 批量执行命令教程</a>
 <ul>
-<li><a href="#headline-37">1.用expect实现与shell交互，用ssh连接termxu实例：</a>
-</li>
-<li><a href="#headline-38">2.用 expect 登录 termux 并执行脚本实例：</a>
-</li>
-<li><a href="#headline-39">3. expect eof 与 interact 的区别：</a>
-</li>
-<li><a href="#headline-40">4.注意事项：</a>
+<li><a href="#headline-36">sftp 批量执行命令教程-示例</a>
 </li>
 </ul>
 </li>
-<li><a href="#headline-41">如何使用wget下载整个网站</a>
+<li><a href="#headline-37">expect</a>
 <ul>
-<li><a href="#headline-42">参考链接</a>
+<li><a href="#headline-38">1.用expect实现与shell交互，用ssh连接termxu实例：</a>
+</li>
+<li><a href="#headline-39">2.用 expect 登录 termux 并执行脚本实例：</a>
+</li>
+<li><a href="#headline-40">3. expect eof 与 interact 的区别：</a>
+</li>
+<li><a href="#headline-41">4.注意事项：</a>
 </li>
 </ul>
 </li>
-<li><a href="#headline-43">cat命令</a>
+<li><a href="#headline-42">如何使用wget下载整个网站</a>
+<ul>
+<li><a href="#headline-43">参考链接</a>
 </li>
-<li><a href="#headline-44">在SSH命令中，使用-D参数来创建动态端口转发时</a>
+</ul>
+</li>
+<li><a href="#headline-44">cat命令</a>
+</li>
+<li><a href="#headline-45">在SSH命令中，使用-D参数来创建动态端口转发时</a>
 </li>
 </ul>
 </nav>
@@ -1239,13 +1243,32 @@ shell脚本如何创建数组或列表
 </li>
 </ol>
 <p>因此，-r 选项用于禁用反斜杠转义，而 -a 选项用于将输入赋值给数组变量。</p>
+<div id="outline-container-headline-27" class="outline-3">
+<h3 id="headline-27">
+在终端执行示例
+</h3>
+<div id="outline-text-headline-27" class="outline-text-3">
+<p>
+查找&#34;*.org&#34;文件并存入数组，然后打印数组第一个元素到终端验证效果</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  mapfile -t file_array &lt; &lt;<span class="o">(</span>find ./ -name <span class="s2">&#34;*.org&#34;</span> -type f -exec readlink -f <span class="o">{}</span> +<span class="o">)</span><span class="p">;</span> <span class="nb">echo</span> <span class="si">${</span><span class="nv">file_array</span><span class="p">[0]</span><span class="si">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
-<div id="outline-container-headline-27" class="outline-2">
-<h2 id="headline-27">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-28" class="outline-2">
+<h2 id="headline-28">
 查看文件创建时间，并把创建时间组成使用hugo命令创建博客时生成的时间戳：
 </h2>
-<div id="outline-text-headline-27" class="outline-text-2">
+<div id="outline-text-headline-28" class="outline-text-2">
 <p>
 以 ssh配置.org 为例，查看该文件的创建时间，然后组成时间戳</p>
 <div class="src src-bash">
@@ -1272,11 +1295,11 @@ shell脚本如何创建数组或列表
 </div>
 </div>
 </div>
-<div id="outline-container-headline-28" class="outline-2">
-<h2 id="headline-28">
+<div id="outline-container-headline-29" class="outline-2">
+<h2 id="headline-29">
 在 awk 中，可以使用字符串连接符来连接多个关键词或字段
 </h2>
-<div id="outline-text-headline-28" class="outline-text-2">
+<div id="outline-text-headline-29" class="outline-text-2">
 <p>
 你可以使用逗号 , 来连接多个字段或字符串，并通过空格或其他字符来分隔它们。下面是一个示例，演示了如何在 awk 中连接多个关键词：</p>
 <p>
@@ -1331,11 +1354,11 @@ shell脚本如何创建数组或列表
 在这个示例中，我们使用了字符串连接符 , 来连接固定的文字和字段，以便形成输出的完整描述。你可以根据自己的需求使用不同的连接方式和格式来构建输出。</p>
 </div>
 </div>
-<div id="outline-container-headline-29" class="outline-2">
-<h2 id="headline-29">
+<div id="outline-container-headline-30" class="outline-2">
+<h2 id="headline-30">
 要使用 AWK 输出指定行
 </h2>
-<div id="outline-text-headline-29" class="outline-text-2">
+<div id="outline-text-headline-30" class="outline-text-2">
 <p>
 你可以结合 AWK 的条件判断功能来实现。以下是一个简单的示例：</p>
 <p>
@@ -1377,11 +1400,11 @@ Line 5: This is the fifth line</p>
 这样会输出第2行到第4行的内容。</p>
 </div>
 </div>
-<div id="outline-container-headline-30" class="outline-2">
-<h2 id="headline-30">
+<div id="outline-container-headline-31" class="outline-2">
+<h2 id="headline-31">
 hugo 批量插入文件的 Linux 脚本参考
 </h2>
-<div id="outline-text-headline-30" class="outline-text-2">
+<div id="outline-text-headline-31" class="outline-text-2">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1394,11 +1417,11 @@ hugo 批量插入文件的 Linux 脚本参考
 </div>
 </div>
 </div>
-<div id="outline-container-headline-31" class="outline-2">
-<h2 id="headline-31">
+<div id="outline-container-headline-32" class="outline-2">
+<h2 id="headline-32">
 批量创建文件并添加指定内容到文件中
 </h2>
-<div id="outline-text-headline-31" class="outline-text-2">
+<div id="outline-text-headline-32" class="outline-text-2">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1411,11 +1434,11 @@ hugo 批量插入文件的 Linux 脚本参考
 </div>
 </div>
 </div>
-<div id="outline-container-headline-32" class="outline-2">
-<h2 id="headline-32">
+<div id="outline-container-headline-33" class="outline-2">
+<h2 id="headline-33">
 如果您想要使用 grep 命令从文件中的指定范围检索内容，可以结合使用 head 和 tail 命令来实现。下面是一个示例：
 </h2>
-<div id="outline-text-headline-32" class="outline-text-2">
+<div id="outline-text-headline-33" class="outline-text-2">
 <p>
 假设您想在文件 example.txt 的第 10 行到第 20 行之间检索包含特定内容的行，可以按照以下步骤进行：</p>
 <div class="src src-bash">
@@ -1434,11 +1457,11 @@ hugo 批量插入文件的 Linux 脚本参考
 请将上述命令中的 &#34;要查找的内容&#34; 替换为您需要查找的实际内容。</p>
 </div>
 </div>
-<div id="outline-container-headline-33" class="outline-2">
-<h2 id="headline-33">
+<div id="outline-container-headline-34" class="outline-2">
+<h2 id="headline-34">
 想办法将文件存入数组
 </h2>
-<div id="outline-text-headline-33" class="outline-text-2">
+<div id="outline-text-headline-34" class="outline-text-2">
 <p>
 将文件存入数组，然后查看数组成员个数，再将数组的第四个成员值打印出来</p>
 <div class="src src-bash">
@@ -1475,11 +1498,11 @@ mapfile [-n count] [-O origin] [-s count] [-t] [-u fd] [-C callback] array</p>
 总之，mapfile 命令的作用是将输入按行分割并存储到数组中，为处理大量文本数据提供了便利的方法。</p>
 </div>
 </div>
-<div id="outline-container-headline-34" class="outline-2">
-<h2 id="headline-34">
+<div id="outline-container-headline-35" class="outline-2">
+<h2 id="headline-35">
 sftp 批量执行命令教程
 </h2>
-<div id="outline-text-headline-34" class="outline-text-2">
+<div id="outline-text-headline-35" class="outline-text-2">
 <p>
 通过以下方式批量执行命令</p>
 <div class="src src-bash">
@@ -1498,11 +1521,11 @@ sftp 批量执行命令教程
 </div>
 </div>
 </div>
-<div id="outline-container-headline-35" class="outline-3">
-<h3 id="headline-35">
+<div id="outline-container-headline-36" class="outline-3">
+<h3 id="headline-36">
 sftp 批量执行命令教程-示例
 </h3>
-<div id="outline-text-headline-35" class="outline-text-3">
+<div id="outline-text-headline-36" class="outline-text-3">
 <p>
 将运行命令粘贴到终端并回车直接运行，也可以以脚本的形式运行</p>
 <div class="src src-bash">
@@ -1541,16 +1564,16 @@ sftp 批量执行命令教程-示例
 </div>
 </div>
 </div>
-<div id="outline-container-headline-36" class="outline-2">
-<h2 id="headline-36">
+<div id="outline-container-headline-37" class="outline-2">
+<h2 id="headline-37">
 expect
 </h2>
-<div id="outline-text-headline-36" class="outline-text-2">
-<div id="outline-container-headline-37" class="outline-3">
-<h3 id="headline-37">
+<div id="outline-text-headline-37" class="outline-text-2">
+<div id="outline-container-headline-38" class="outline-3">
+<h3 id="headline-38">
 1.用expect实现与shell交互，用ssh连接termxu实例：
 </h3>
-<div id="outline-text-headline-37" class="outline-text-3">
+<div id="outline-text-headline-38" class="outline-text-3">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1599,11 +1622,11 @@ expect
 </div>
 </div>
 </div>
-<div id="outline-container-headline-38" class="outline-3">
-<h3 id="headline-38">
+<div id="outline-container-headline-39" class="outline-3">
+<h3 id="headline-39">
 2.用 expect 登录 termux 并执行脚本实例：
 </h3>
-<div id="outline-text-headline-38" class="outline-text-3">
+<div id="outline-text-headline-39" class="outline-text-3">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1652,31 +1675,31 @@ expect
 </ul>
 </div>
 </div>
-<div id="outline-container-headline-39" class="outline-3">
-<h3 id="headline-39">
+<div id="outline-container-headline-40" class="outline-3">
+<h3 id="headline-40">
 3. expect eof 与 interact 的区别：
 </h3>
-<div id="outline-text-headline-39" class="outline-text-3">
+<div id="outline-text-headline-40" class="outline-text-3">
 <p>
 这两个命令作为结束语句用的，如果只是执行一次任务就退出，那么可以用expect eof，如果连接后想要保持连接状态，那么就用interact</p>
 </div>
 </div>
-<div id="outline-container-headline-40" class="outline-3">
-<h3 id="headline-40">
+<div id="outline-container-headline-41" class="outline-3">
+<h3 id="headline-41">
 4.注意事项：
 </h3>
-<div id="outline-text-headline-40" class="outline-text-3">
+<div id="outline-text-headline-41" class="outline-text-3">
 <p>
 有一点需要注意，执行脚本的方式有很多种，但是执行expect脚本的时候只能用 expect ./ 的方式执行，目前我知道的两种方式，不然会执行失败。</p>
 </div>
 </div>
 </div>
 </div>
-<div id="outline-container-headline-41" class="outline-2">
-<h2 id="headline-41">
+<div id="outline-container-headline-42" class="outline-2">
+<h2 id="headline-42">
 如何使用wget下载整个网站
 </h2>
-<div id="outline-text-headline-41" class="outline-text-2">
+<div id="outline-text-headline-42" class="outline-text-2">
 <p>
 wget 是用于从网站下载资源的 linux 命令，基本用法是 wget url:</p>
 <div class="src src-bash">
@@ -1737,22 +1760,22 @@ wget 是用于从网站下载资源的 linux 命令，基本用法是 wget url:<
 </div>
 </div>
 </div>
-<div id="outline-container-headline-42" class="outline-3">
-<h3 id="headline-42">
+<div id="outline-container-headline-43" class="outline-3">
+<h3 id="headline-43">
 参考链接
 </h3>
-<div id="outline-text-headline-42" class="outline-text-3">
+<div id="outline-text-headline-43" class="outline-text-3">
 <p>
 <a href="https://blog.csdn.net/github_37483541/article/details/54955425">Linux 如何使用 wget 下载整个网站</a></p>
 </div>
 </div>
 </div>
 </div>
-<div id="outline-container-headline-43" class="outline-2">
-<h2 id="headline-43">
+<div id="outline-container-headline-44" class="outline-2">
+<h2 id="headline-44">
 cat命令
 </h2>
-<div id="outline-text-headline-43" class="outline-text-2">
+<div id="outline-text-headline-44" class="outline-text-2">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1767,11 +1790,11 @@ cat命令
 </div>
 </div>
 </div>
-<div id="outline-container-headline-44" class="outline-2">
-<h2 id="headline-44">
+<div id="outline-container-headline-45" class="outline-2">
+<h2 id="headline-45">
 在SSH命令中，使用-D参数来创建动态端口转发时
 </h2>
-<div id="outline-text-headline-44" class="outline-text-2">
+<div id="outline-text-headline-45" class="outline-text-2">
 <p>
 不需要指定本地地址。正确的用法是只指定端口号，例如：</p>
 <div class="src src-bash">
