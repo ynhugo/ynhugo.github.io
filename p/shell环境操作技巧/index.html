@@ -377,6 +377,8 @@
 </li>
 <li><a href="#headline-43">cat命令</a>
 </li>
+<li><a href="#headline-44">在SSH命令中，使用-D参数来创建动态端口转发时</a>
+</li>
 </ul>
 </nav>
         </div>
@@ -1763,6 +1765,27 @@ cat命令
 </div>
 </div>
 </div>
+</div>
+</div>
+<div id="outline-container-headline-44" class="outline-2">
+<h2 id="headline-44">
+在SSH命令中，使用-D参数来创建动态端口转发时
+</h2>
+<div id="outline-text-headline-44" class="outline-text-2">
+<p>
+不需要指定本地地址。正确的用法是只指定端口号，例如：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ssh -D <span class="m">1080</span> root@segfault.net</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+这将在本地主机上创建一个SOCKS代理，监听在端口1080上，并将流量通过SSH通道转发到远程主机segfault.net。在这个命令中，root是远程主机的用户名，segfault.net是远程主机的地址。</p>
 </div>
 </div>
 
