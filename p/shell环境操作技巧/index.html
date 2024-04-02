@@ -385,6 +385,10 @@
 </li>
 <li><a href="#headline-46">在SSH命令中，使用-D参数来创建动态端口转发时</a>
 </li>
+<li><a href="#headline-47">find命令查找并复制文件到指定路径</a>
+</li>
+<li><a href="#headline-48">ffmpeg-ffplay自动播放视频列表</a>
+</li>
 </ul>
 </nav>
         </div>
@@ -1830,6 +1834,44 @@ cat命令
 </div>
 <p>
 这将在本地主机上创建一个SOCKS代理，监听在端口1080上，并将流量通过SSH通道转发到远程主机segfault.net。在这个命令中，root是远程主机的用户名，segfault.net是远程主机的地址。</p>
+</div>
+</div>
+<div id="outline-container-headline-47" class="outline-2">
+<h2 id="headline-47">
+find命令查找并复制文件到指定路径
+</h2>
+<div id="outline-text-headline-47" class="outline-text-2">
+<p>
+提取视频到“视频提取”这个目录中</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  find ./ -name <span class="s2">&#34;*.mp4&#34;</span> -type f -exec cp <span class="s1">&#39;{}&#39;</span> 视频提取 <span class="se">\;</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-48" class="outline-2">
+<h2 id="headline-48">
+ffmpeg-ffplay自动播放视频列表
+</h2>
+<div id="outline-text-headline-48" class="outline-text-2">
+<p>
+将当前中路径下的视频文件名称保存到数组中，然后通过for循环和ffplay依次播放数组中的文件</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  mapfile -t file_array &lt; &lt;<span class="o">(</span>ls <span class="p">|</span> sort<span class="o">)</span><span class="p">;</span> <span class="k">for</span> i in <span class="s2">&#34;</span><span class="si">${</span><span class="nv">file_array</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span> <span class="k">do</span> ffplay -autoexit <span class="s2">&#34;</span><span class="si">${</span><span class="nv">i</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span> <span class="k">done</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
 </div>
 </div>
 
