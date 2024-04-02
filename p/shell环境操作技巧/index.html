@@ -434,7 +434,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 16 分钟
+                    阅读时长: 17 分钟
                 </time>
             </div>
         
@@ -1887,10 +1887,42 @@ ffmpeg-ffplay自动播放视频列表
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nv">files</span><span class="o">=</span><span class="k">$(</span>find ./ -name <span class="s2">&#34;*&#34;</span> -type f<span class="k">)</span><span class="p">;</span> <span class="nb">echo</span> <span class="s1">&#39;${files}&#39;</span> <span class="p">|</span> ls -lt</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  find ./ -type f -exec ls -l --time-style<span class="o">=</span>+%s <span class="o">{}</span> <span class="se">\;</span> <span class="p">|</span> sort -k6n <span class="p">|</span> awk <span class="s1">&#39;{print $1, $2, $3, $4, $5, strftime(&#34;%Y-%m-%d %H:%M:%S&#34;, $6), $7}&#39;</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
+<p>
+这个命令是一个复杂的管道命令，它主要用于列出当前目录及其子目录中所有文件的详细信息，并按文件修改时间进行排序。让我们一步步拆解这个命令：</p>
+<ol>
+<li>
+<p>find ./ -type f -exec ls -l –time-style=+%s {} \;：</p>
+<ul>
+<li>find ./ -type f：使用 find 命令查找当前目录 (./) 及其子目录中的所有文件 (-type f)。</li>
+<li>-exec ls -l –time-style=+%s {} \;：对于找到的每一个文件，执行 ls -l 命令来显示详细信息，并使用 –time-style=+%s 选项以秒数的形式显示修改时间。</li>
+</ul>
+</li>
+<li>
+<p>sort -k6n：</p>
+<ul>
+<li>sort 命令用于排序输入的行。</li>
+<li>-k6n：指定排序的关键字为第6列（修改时间），并使用数字方式进行排序。</li>
+</ul>
+</li>
+<li>
+<p>awk &#39;{print $1, $2, $3, $4, $5, strftime(&#34;%Y-%m-%d %H:%M:%S&#34;, $6), $7}&#39;：</p>
+<ul>
+<li>awk 是一种文本处理工具，用于对文本进行逐行处理。</li>
+<li>&#39;{print $1, $2, $3, $4, $5, strftime(&#34;%Y-%m-%d %H:%M:%S&#34;, $6), $7}&#39;：对输入的每一行进行处理，打印出第1到第7列的内容，并将第6列的时间戳转换为指定格式的日期时间字符串。</li>
+</ul>
+</li>
+</ol>
+<p>综合起来，这个命令的作用是列出当前目录及其子目录中所有文件的详细信息，并按文件修改时间进行排序，最后以指定的格式输出。</p>
+<p>
+在这个命令中，find 和 ls 是结合使用的，但它们的工作方式是分开的。find 命令是用来查找文件的，它会递归地遍历指定目录及其子目录，找到符合条件的文件。而 -exec ls -l –time-style=+%s {} \; 这部分则是在找到每一个文件后都会执行一次 ls -l 命令来获取文件的详细信息。</p>
+<p>
+换句话说，find 命令是逐个找到文件，然后立即通过 -exec 选项将每个找到的文件传递给 ls -l 命令进行处理。这意味着，不是等到所有文件都找到后再一次性地通过 ls -l 命令处理，而是边找到文件边处理。</p>
+<p>
+这样做的好处是可以实时获取每个文件的详细信息，并且可以在处理每个文件时进行额外的操作，例如这里的 –time-style=+%s 选项用来显示文件的修改时间戳。</p>
 </div>
 </div>
 
