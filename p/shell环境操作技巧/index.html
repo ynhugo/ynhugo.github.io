@@ -389,6 +389,8 @@
 </li>
 <li><a href="#headline-48">ffmpeg-ffplay自动播放视频列表</a>
 </li>
+<li><a href="#headline-49">查找文件并进行排序</a>
+</li>
 </ul>
 </nav>
         </div>
@@ -432,7 +434,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 15 分钟
+                    阅读时长: 16 分钟
                 </time>
             </div>
         
@@ -1869,6 +1871,23 @@ ffmpeg-ffplay自动播放视频列表
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  mapfile -t file_array &lt; &lt;<span class="o">(</span>ls <span class="p">|</span> sort<span class="o">)</span><span class="p">;</span> <span class="k">for</span> i in <span class="s2">&#34;</span><span class="si">${</span><span class="nv">file_array</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span> <span class="k">do</span> ffplay -autoexit <span class="s2">&#34;</span><span class="si">${</span><span class="nv">i</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span> <span class="k">done</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-49" class="outline-2">
+<h2 id="headline-49">
+查找文件并进行排序
+</h2>
+<div id="outline-text-headline-49" class="outline-text-2">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nv">files</span><span class="o">=</span><span class="k">$(</span>find ./ -name <span class="s2">&#34;*&#34;</span> -type f<span class="k">)</span><span class="p">;</span> <span class="nb">echo</span> <span class="s1">&#39;${files}&#39;</span> <span class="p">|</span> ls -lt</span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
