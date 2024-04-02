@@ -520,12 +520,12 @@ linux如何只复制目录结构而不复制数据
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  find . ! -type f <span class="p">|</span> xargs tar -cvf /1/anna.tar --no-recursion</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  find ./ -type d <span class="p">|</span> xargs tar -cvf anna.tar --no-recursion</span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
 <p>
-将目录结构压缩到指定目录，然后手动解压即可得到目录结构，解压的时候直接解压即可，不需要指定解压的路径</p>
+将目录结构压缩到指定目录，然后手动解压即可得到目录结构</p>
 <p>
 &#34;–no-recursion&#34;表示不递归</p>
 </div>
