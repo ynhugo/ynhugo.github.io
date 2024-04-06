@@ -391,6 +391,12 @@
 </li>
 <li><a href="#headline-49">查找文件并进行排序</a>
 </li>
+<li><a href="#headline-50">Linux 环境启用 extglob 扩展 </a>
+<ul>
+<li><a href="#headline-51">shopt -s extglob 与 shopt -u extglob 有区别吗</a>
+</li>
+</ul>
+</li>
 </ul>
 </nav>
         </div>
@@ -434,7 +440,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 17 分钟
+                    阅读时长: 18 分钟
                 </time>
             </div>
         
@@ -1923,6 +1929,35 @@ ffmpeg-ffplay自动播放视频列表
 换句话说，find 命令是逐个找到文件，然后立即通过 -exec 选项将每个找到的文件传递给 ls -l 命令进行处理。这意味着，不是等到所有文件都找到后再一次性地通过 ls -l 命令处理，而是边找到文件边处理。</p>
 <p>
 这样做的好处是可以实时获取每个文件的详细信息，并且可以在处理每个文件时进行额外的操作，例如这里的 –time-style=+%s 选项用来显示文件的修改时间戳。</p>
+</div>
+</div>
+<div id="outline-container-headline-50" class="outline-2">
+<h2 id="headline-50">
+Linux 环境启用 extglob 扩展 
+</h2>
+<div id="outline-text-headline-50" class="outline-text-2">
+<p>
+例如在 bash shell 中，rm -rf !(file) 无效，因为 !(pattern) 是 extglob 扩展，需要打开扩展模式才能使用。要配置 shopt 来启用 extglob 扩展，可以按照以下步骤进行：</p>
+<ol>
+<li>打开终端。</li>
+<li>运行 shopt -s extglob 命令来启用 extglob 扩展。</li>
+<li>现在你应该可以使用 !(pattern) 这样的模式来排除某些文件，例如 rm -rf !(file)。</li>
+</ol>
+<p>请注意，在使用 extglob 扩展时要格外小心，确保不会意外删除重要文件。</p>
+<div id="outline-container-headline-51" class="outline-3">
+<h3 id="headline-51">
+shopt -s extglob 与 shopt -u extglob 有区别吗
+</h3>
+<div id="outline-text-headline-51" class="outline-text-3">
+<p>
+shopt -s extglob 和 shopt -u extglob 是 bash shell 中的两个不同命令，它们分别用于启用和禁用 extglob 扩展。这两个命令的作用如下：</p>
+<ul>
+<li>shopt -s extglob：这个命令用于启用 extglob 扩展，允许在 bash shell 中使用扩展模式，比如 !(pattern)、*(pattern)、+(pattern)、?(pattern) 和 @(pattern)。</li>
+<li>shopt -u extglob：这个命令用于禁用 extglob 扩展，即关闭扩展模式，使得在 bash shell 中不能再使用上述提到的扩展模式。</li>
+</ul>
+<p>因此，这两个命令的区别在于一个用于启用扩展模式，另一个用于禁用扩展模式。</p>
+</div>
+</div>
 </div>
 </div>
 
