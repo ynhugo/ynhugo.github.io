@@ -28826,9 +28826,14 @@ ffmpeg-ffplay自动播放视频列表
 &lt;/div&gt;
 &lt;div id=&#34;outline-container-headline-50&#34; class=&#34;outline-2&#34;&gt;
 &lt;h2 id=&#34;headline-50&#34;&gt;
-Linux 环境启用 extglob 扩展 
+shopt 使用技巧
 &lt;/h2&gt;
 &lt;div id=&#34;outline-text-headline-50&#34; class=&#34;outline-text-2&#34;&gt;
+&lt;div id=&#34;outline-container-headline-51&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-51&#34;&gt;
+Linux 环境启用 extglob 扩展 
+&lt;/h3&gt;
+&lt;div id=&#34;outline-text-headline-51&#34; class=&#34;outline-text-3&#34;&gt;
 &lt;p&gt;
 例如在 bash shell 中，rm -rf !(file) 无效，因为 !(pattern) 是 extglob 扩展，需要打开扩展模式才能使用。要配置 shopt 来启用 extglob 扩展，可以按照以下步骤进行：&lt;/p&gt;
 &lt;ol&gt;
@@ -28837,11 +28842,13 @@ Linux 环境启用 extglob 扩展
 &lt;li&gt;现在你应该可以使用 !(pattern) 这样的模式来排除某些文件，例如 rm -rf !(file)。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;请注意，在使用 extglob 扩展时要格外小心，确保不会意外删除重要文件。&lt;/p&gt;
-&lt;div id=&#34;outline-container-headline-51&#34; class=&#34;outline-3&#34;&gt;
-&lt;h3 id=&#34;headline-51&#34;&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-52&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-52&#34;&gt;
 shopt -s extglob 与 shopt -u extglob 有区别吗
 &lt;/h3&gt;
-&lt;div id=&#34;outline-text-headline-51&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;div id=&#34;outline-text-headline-52&#34; class=&#34;outline-text-3&#34;&gt;
 &lt;p&gt;
 shopt -s extglob 和 shopt -u extglob 是 bash shell 中的两个不同命令，它们分别用于启用和禁用 extglob 扩展。这两个命令的作用如下：&lt;/p&gt;
 &lt;ul&gt;
@@ -28849,6 +28856,15 @@ shopt -s extglob 和 shopt -u extglob 是 bash shell 中的两个不同命令，
 &lt;li&gt;shopt -u extglob：这个命令用于禁用 extglob 扩展，即关闭扩展模式，使得在 bash shell 中不能再使用上述提到的扩展模式。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;因此，这两个命令的区别在于一个用于启用扩展模式，另一个用于禁用扩展模式。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-53&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-53&#34;&gt;
+Linux 下切换目录省略 cd 命令
+&lt;/h3&gt;
+&lt;div id=&#34;outline-text-headline-53&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;p&gt;
+shopt -s autocd：启用 Bash 的 autocd 选项，使得在输入目录路径时可以省略 cd 命令，直接切换到该目录。&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
