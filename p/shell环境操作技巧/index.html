@@ -411,6 +411,8 @@
 </li>
 <li><a href="#headline-57">Linux命令中短横线的作用</a>
 </li>
+<li><a href="#headline-58">Linux下如何查看当前用的是zsh还是bash</a>
+</li>
 </ul>
 </nav>
         </div>
@@ -454,7 +456,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 19 分钟
+                    阅读时长: 20 分钟
                 </time>
             </div>
         
@@ -2119,6 +2121,27 @@ Linux命令中短横线的作用
 <li>tar -xpzf - -C dir：这部分将从标准输入（stdin）读取tar文件，并将其解压缩到指定的目录。-x 表示提取文件，-p 保留文件权限和属性，-z 使用gzip进行解压缩，-f - 从标准输入读取归档文件，-C dir表示将文件提取到指定的目录。</li>
 </ol>
 <p>综合起来，整个命令的作用是将当前目录中的所有文件和子目录打包成一个tar文件，并通过管道传输给另一个命令，该命令将tar文件解压缩到指定的目录（dir）。这样就实现了将当前目录中的文件和子目录传输到指定目录并进行解压缩的操作。</p>
+</div>
+</div>
+<div id="outline-container-headline-58" class="outline-2">
+<h2 id="headline-58">
+Linux下如何查看当前用的是zsh还是bash
+</h2>
+<div id="outline-text-headline-58" class="outline-text-2">
+<p>
+要查看当前正在使用的是 zsh 还是 bash，可以使用以下命令：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="nv">$SHELL</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+这个命令会输出当前 shell 的路径。通常情况下，如果你的 shell 是 bash，它会输出 /bin/bash；如果是 zsh，它会输出 /bin/zsh。</p>
 </div>
 </div>
 
