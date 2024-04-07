@@ -29119,6 +29119,32 @@ shell脚本如何获取参数数量
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-57&#34; class=&#34;outline-2&#34;&gt;
+&lt;h2 id=&#34;headline-57&#34;&gt;
+Linux命令中短横线的作用
+&lt;/h2&gt;
+&lt;div id=&#34;outline-text-headline-57&#34; class=&#34;outline-text-2&#34;&gt;
+&lt;p&gt;
+用以下命令举例&lt;/p&gt;
+&lt;div class=&#34;src src-bash&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  tar -cpzf - ./ &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; tar -xpzf - -C dir&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;
+这个命令可以分解为两个部分：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;tar -cpzf - ./：这部分将当前目录中的所有文件和子目录打包成一个tar文件，并通过标准输出（stdout）输出。 -c 表示创建归档文件，-p 保留文件权限和属性，-z 使用gzip进行压缩，-f - 将归档文件输出到标准输出。&lt;/li&gt;
+&lt;li&gt;tar -xpzf - -C dir：这部分将从标准输入（stdin）读取tar文件，并将其解压缩到指定的目录。-x 表示提取文件，-p 保留文件权限和属性，-z 使用gzip进行解压缩，-f - 从标准输入读取归档文件，-C dir表示将文件提取到指定的目录。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;综合起来，整个命令的作用是将当前目录中的所有文件和子目录打包成一个tar文件，并通过管道传输给另一个命令，该命令将tar文件解压缩到指定的目录（dir）。这样就实现了将当前目录中的文件和子目录传输到指定目录并进行解压缩的操作。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
 </description>
         </item>
         <item>
