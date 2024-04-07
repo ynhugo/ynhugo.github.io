@@ -295,9 +295,15 @@
 </li>
 </ul>
 </li>
+<li><a href="#headline-7">翻译句子-脚本实现</a>
+<ul>
+<li><a href="#headline-8">使用示例</a>
+</li>
 </ul>
 </li>
-<li><a href="#headline-7">参考链接</a>
+</ul>
+</li>
+<li><a href="#headline-9">参考链接</a>
 </li>
 </ul>
 </nav>
@@ -355,7 +361,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 1 分钟
+                    阅读时长: 2 分钟
                 </time>
             </div>
         
@@ -479,7 +485,65 @@
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  ┌──<span class="o">(</span>root💀adm-RecipeKit<span class="o">)</span>-<span class="o">[</span>~<span class="o">]</span>
 </span></span><span class="line"><span class="cl">  └─# ./translate.sh <span class="s2">&#34;HOW old are you?&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="o">[[[</span><span class="s2">&#34;你今年多大？&#34;</span>,<span class="s2">&#34;HOW old are you.&#34;</span>,null,null,10<span class="o">]]</span>,null,<span class="s2">&#34;en&#34;</span>,null,null,null,null,<span class="o">[]]</span></span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">  <span class="o">[[[</span><span class="s2">&#34;你今年多大&#34;</span>,<span class="s2">&#34;HOW old are you.&#34;</span>,null,null,10<span class="o">]]</span>,null,<span class="s2">&#34;en&#34;</span>,null,null,null,null,<span class="o">[]]</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-7" class="outline-4">
+<h4 id="headline-7">
+翻译句子-脚本实现
+</h4>
+<div id="outline-text-headline-7" class="outline-text-4">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="c1">#!/usr/bin/bash</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nv">args</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$#</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="o">((</span><span class="nv">i</span> <span class="o">=</span> 1<span class="p">;</span> i &lt; args<span class="p">;</span> i++<span class="o">))</span><span class="p">;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">	  <span class="nv">data</span><span class="o">+=</span><span class="s2">&#34;</span><span class="si">${</span><span class="p">!i</span><span class="si">}</span><span class="s2">%20&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">done</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1"># echo &#34;${data}${!#}&#34;</span>
+</span></span><span class="line"><span class="cl">  curl <span class="s2">&#34;http://translate.google.com/translate_a/single?client=gtx&amp;sl=en&amp;tl=zh-CN&amp;dt=t&amp;q=</span><span class="si">${</span><span class="nv">data</span><span class="si">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-8" class="outline-5">
+<h5 id="headline-8">
+使用示例
+</h5>
+<div id="outline-text-headline-8" class="outline-text-5">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  ┌──<span class="o">(</span>root💀adm-RecipeKit<span class="o">)</span>-<span class="o">[</span>~<span class="o">]</span>
+</span></span><span class="line"><span class="cl">  └─# <span class="nb">echo</span> <span class="s2">&#34;How old are you?&#34;</span> <span class="p">|</span> xargs ./translate.sh
+</span></span><span class="line"><span class="cl">  <span class="o">[[[</span><span class="s2">&#34;几岁了&#34;</span>,<span class="s2">&#34;How old are&#34;</span>,null,null,3,null,null,<span class="o">[[]]</span>,<span class="o">[[[</span><span class="s2">&#34;6ffafab0da7e640be86ac09d0d5e539c&#34;</span>,<span class="s2">&#34;en_zh_2023q1.md&#34;</span><span class="o">]]]]]</span>,null,<span class="s2">&#34;en&#34;</span>,null,null,null,null,<span class="o">[]]</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
@@ -489,11 +553,11 @@
 </div>
 </div>
 </div>
-<div id="outline-container-headline-7" class="outline-3">
-<h3 id="headline-7">
+<div id="outline-container-headline-9" class="outline-3">
+<h3 id="headline-9">
 参考链接
 </h3>
-<div id="outline-text-headline-7" class="outline-text-3">
+<div id="outline-text-headline-9" class="outline-text-3">
 <p>
 <a href="https://gist.github.com/ringsaturn/6060788b9cfb697f9187fecec7952fe2">Google 单词翻译 API.py</a></p>
 </div>

@@ -405,6 +405,8 @@
 <ul>
 <li><a href="#headline-55">如何获取最后一个参数</a>
 </li>
+<li><a href="#headline-56">如何获取多个参数的内容</a>
+</li>
 </ul>
 </li>
 </ul>
@@ -450,7 +452,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 18 分钟
+                    阅读时长: 19 分钟
                 </time>
             </div>
         
@@ -2030,6 +2032,63 @@ shell脚本如何获取参数数量
 <div id="outline-text-headline-55" class="outline-text-3">
 <p>
 要获取最后一个参数，你可以使用特殊变量 $ 后跟参数的索引。在 Bash 中，$# 表示参数的总数，而 ${!#} 表示最后一个参数。</p>
+</div>
+</div>
+<div id="outline-container-headline-56" class="outline-3">
+<h3 id="headline-56">
+如何获取多个参数的内容
+</h3>
+<div id="outline-text-headline-56" class="outline-text-3">
+<p>
+要获取多个参数的内容，你可以使用 $1, $2, $3 等等来访问每个参数的值。如果你不确定要获取多少个参数，可以使用循环来处理它们。</p>
+<p>
+以下是一个示例脚本，演示如何获取并打印所有参数的内容：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="c1">#!/usr/bin/bash</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nv">args</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$#</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;Total arguments: </span><span class="nv">$args</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="o">((</span><span class="nv">i</span> <span class="o">=</span> 1<span class="p">;</span> i &lt;<span class="o">=</span> args<span class="p">;</span> i++<span class="o">))</span><span class="p">;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> <span class="s2">&#34;Argument </span><span class="nv">$i</span><span class="s2">: </span><span class="si">${</span><span class="p">!i</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">done</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+当你执行 ./script.sh arg1 arg2 arg3 时，它将输出：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  Total arguments: <span class="m">3</span>
+</span></span><span class="line"><span class="cl">  Argument 1: arg1
+</span></span><span class="line"><span class="cl">  Argument 2: arg2
+</span></span><span class="line"><span class="cl">  Argument 3: arg3</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+这表明脚本正确地获取并打印了所有参数的内容。</p>
 </div>
 </div>
 </div>
