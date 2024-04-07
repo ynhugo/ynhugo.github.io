@@ -401,6 +401,8 @@
 </li>
 </ul>
 </li>
+<li><a href="#headline-54">shell脚本如何获取参数数量</a>
+</li>
 </ul>
 </nav>
         </div>
@@ -1978,6 +1980,45 @@ Linux 下切换目录省略 cd 命令
 shopt -s autocd：启用 Bash 的 autocd 选项，使得在输入目录路径时可以省略 cd 命令，直接切换到该目录。</p>
 </div>
 </div>
+</div>
+</div>
+<div id="outline-container-headline-54" class="outline-2">
+<h2 id="headline-54">
+shell脚本如何获取参数数量
+</h2>
+<div id="outline-text-headline-54" class="outline-text-2">
+<p>
+在Shell脚本中，你可以使用内置变量 $# 来获取传递给脚本或函数的参数数量。这个变量表示传递给脚本或函数的参数数量。</p>
+<p>
+例如，假设你有一个名为 script.sh 的Shell脚本，可以通过 $# 来获取传递给该脚本的参数数量，如下所示：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="c1">#!/bin/bash</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;Number of arguments: </span><span class="nv">$#</span><span class="s2">&#34;</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+当你执行 ./script.sh arg1 arg2 arg3 时，它将输出：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  Number of arguments: <span class="m">3</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+这表明传递给脚本的参数数量为3。</p>
 </div>
 </div>
 
