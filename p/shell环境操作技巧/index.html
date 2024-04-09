@@ -413,6 +413,8 @@
 </li>
 <li><a href="#headline-58">Linux下如何查看当前用的是zsh还是bash</a>
 </li>
+<li><a href="#headline-59">通过lshw命令确定系统是否支持 ECC 内存</a>
+</li>
 </ul>
 </nav>
         </div>
@@ -2142,6 +2144,25 @@ Linux下如何查看当前用的是zsh还是bash
 </div>
 <p>
 这个命令会输出当前 shell 的路径。通常情况下，如果你的 shell 是 bash，它会输出 /bin/bash；如果是 zsh，它会输出 /bin/zsh。</p>
+</div>
+</div>
+<div id="outline-container-headline-59" class="outline-2">
+<h2 id="headline-59">
+通过lshw命令确定系统是否支持 ECC 内存
+</h2>
+<div id="outline-text-headline-59" class="outline-text-2">
+<p>
+使用 lshw 命令： lshw 是一个用于列出系统硬件信息的工具，可以使用它来查看系统的内存信息，包括 ECC 支持情况。运行以下命令：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  sudo lshw -class memory <span class="p">|</span> grep -i ecc</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
 </div>
 </div>
 
