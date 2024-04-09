@@ -29374,6 +29374,72 @@ linux如何查看内存大小
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-62&#34; class=&#34;outline-2&#34;&gt;
+&lt;h2 id=&#34;headline-62&#34;&gt;
+使用 dd 命令来测试硬盘的写入速度，并且采用一些优化参数来减少系统缓存的影响
+&lt;/h2&gt;
+&lt;div id=&#34;outline-text-headline-62&#34; class=&#34;outline-text-2&#34;&gt;
+&lt;div id=&#34;outline-container-headline-63&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-63&#34;&gt;
+示例
+&lt;/h3&gt;
+&lt;div id=&#34;outline-text-headline-63&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;div class=&#34;src src-bash&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  $ &lt;span class=&#34;nb&#34;&gt;time&lt;/span&gt; dd &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;/dev/zero &lt;span class=&#34;nv&#34;&gt;of&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;/testw.dbf &lt;span class=&#34;nv&#34;&gt;bs&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;1M &lt;span class=&#34;nv&#34;&gt;count&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;1000&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;oflag&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;direct
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  记录了1000+0 的读入
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  记录了1000+0 的写出
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  1048576000字节（1.0 GB，1000 MiB）已复制，6.8299 s，154 MB/s
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  real    0m6.876s
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  user    0m0.046s
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  sys     0m0.108s&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;time dd if=/dev/zero of=/testw.dbf bs=1M count=1000 oflag=direct：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;time：用于测量命令执行的时间。&lt;/li&gt;
+&lt;li&gt;dd：数据传输命令。&lt;/li&gt;
+&lt;li&gt;if=/dev/zero：输入文件指定为 /dev/zero，该文件会产生无限的零字节流。&lt;/li&gt;
+&lt;li&gt;of=/testw.dbf：输出文件指定为 /testw.dbf，这是测试中要写入的文件。&lt;/li&gt;
+&lt;li&gt;bs=1M：块大小设置为 1 MB，表示每次读取或写入的数据块大小为 1 MB。&lt;/li&gt;
+&lt;li&gt;count=1000：指定了写入的块数为 1000，因此总共要写入 1000 × 1 MB = 1000 MB 的数据。&lt;/li&gt;
+&lt;li&gt;oflag=direct：该参数指示 dd 命令在执行时绕过系统缓存，直接与硬盘进行数据交换。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;记录了1000+0 的读入：表示成功读取了 1000 个数据块。&lt;/li&gt;
+&lt;li&gt;记录了1000+0 的写出：表示成功写入了 1000 个数据块。&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;1048576000字节（1.0 GB，1000 MiB）已复制，6.8299 s，154 MB/s：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;表示总共复制了 1,048,576,000 字节，即 1.0 GB 的数据。&lt;/li&gt;
+&lt;li&gt;6.8299 s 是命令执行的实际时间。&lt;/li&gt;
+&lt;li&gt;154 MB/s 是写入速度，即每秒写入 154 MB 的数据量。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;real    0m6.876s：实际时间，即命令的总执行时间。&lt;/li&gt;
+&lt;li&gt;user    0m0.046s：用户 CPU 时间，即命令在用户态消耗的 CPU 时间。&lt;/li&gt;
+&lt;li&gt;sys     0m0.108s：系统 CPU 时间，即命令在内核态消耗的 CPU 时间。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;综合来看，该命令测试了硬盘的写入速度，并显示了每秒写入的数据量为 154 MB，这是在绕过系统缓存的情况下测得的结果。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
 </description>
         </item>
         <item>

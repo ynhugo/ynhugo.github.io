@@ -421,6 +421,12 @@
 </li>
 </ul>
 </li>
+<li><a href="#headline-62">使用 dd 命令来测试硬盘的写入速度，并且采用一些优化参数来减少系统缓存的影响</a>
+<ul>
+<li><a href="#headline-63">示例</a>
+</li>
+</ul>
+</li>
 </ul>
 </nav>
         </div>
@@ -464,7 +470,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 21 分钟
+                    阅读时长: 22 分钟
                 </time>
             </div>
         
@@ -2357,6 +2363,72 @@ linux如何查看内存大小
 <div id="outline-text-headline-61" class="outline-text-5">
 <p>
 <a href="https://blog.csdn.net/bulucc/article/details/130204908">linux如何查看内存大小</a></p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-62" class="outline-2">
+<h2 id="headline-62">
+使用 dd 命令来测试硬盘的写入速度，并且采用一些优化参数来减少系统缓存的影响
+</h2>
+<div id="outline-text-headline-62" class="outline-text-2">
+<div id="outline-container-headline-63" class="outline-3">
+<h3 id="headline-63">
+示例
+</h3>
+<div id="outline-text-headline-63" class="outline-text-3">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  $ <span class="nb">time</span> dd <span class="k">if</span><span class="o">=</span>/dev/zero <span class="nv">of</span><span class="o">=</span>/testw.dbf <span class="nv">bs</span><span class="o">=</span>1M <span class="nv">count</span><span class="o">=</span><span class="m">1000</span> <span class="nv">oflag</span><span class="o">=</span>direct
+</span></span><span class="line"><span class="cl">  记录了1000+0 的读入
+</span></span><span class="line"><span class="cl">  记录了1000+0 的写出
+</span></span><span class="line"><span class="cl">  1048576000字节（1.0 GB，1000 MiB）已复制，6.8299 s，154 MB/s
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  real    0m6.876s
+</span></span><span class="line"><span class="cl">  user    0m0.046s
+</span></span><span class="line"><span class="cl">  sys     0m0.108s</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<ol>
+<li>
+<p>time dd if=/dev/zero of=/testw.dbf bs=1M count=1000 oflag=direct：</p>
+<ul>
+<li>time：用于测量命令执行的时间。</li>
+<li>dd：数据传输命令。</li>
+<li>if=/dev/zero：输入文件指定为 /dev/zero，该文件会产生无限的零字节流。</li>
+<li>of=/testw.dbf：输出文件指定为 /testw.dbf，这是测试中要写入的文件。</li>
+<li>bs=1M：块大小设置为 1 MB，表示每次读取或写入的数据块大小为 1 MB。</li>
+<li>count=1000：指定了写入的块数为 1000，因此总共要写入 1000 × 1 MB = 1000 MB 的数据。</li>
+<li>oflag=direct：该参数指示 dd 命令在执行时绕过系统缓存，直接与硬盘进行数据交换。</li>
+</ul>
+</li>
+<li>记录了1000+0 的读入：表示成功读取了 1000 个数据块。</li>
+<li>记录了1000+0 的写出：表示成功写入了 1000 个数据块。</li>
+<li>
+<p>1048576000字节（1.0 GB，1000 MiB）已复制，6.8299 s，154 MB/s：</p>
+<ul>
+<li>表示总共复制了 1,048,576,000 字节，即 1.0 GB 的数据。</li>
+<li>6.8299 s 是命令执行的实际时间。</li>
+<li>154 MB/s 是写入速度，即每秒写入 154 MB 的数据量。</li>
+</ul>
+</li>
+<li>real    0m6.876s：实际时间，即命令的总执行时间。</li>
+<li>user    0m0.046s：用户 CPU 时间，即命令在用户态消耗的 CPU 时间。</li>
+<li>sys     0m0.108s：系统 CPU 时间，即命令在内核态消耗的 CPU 时间。</li>
+</ol>
+<p>综合来看，该命令测试了硬盘的写入速度，并显示了每秒写入的数据量为 154 MB，这是在绕过系统缓存的情况下测得的结果。</p>
 </div>
 </div>
 </div>
