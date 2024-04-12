@@ -427,6 +427,26 @@
 </li>
 </ul>
 </li>
+<li><a href="#headline-64">xxd使用技巧</a>
+<ul>
+<li><a href="#headline-65">将文本转换为ASCII对应的16进制输出</a>
+<ul>
+<li><a href="#headline-66">操作命令</a>
+</li>
+<li><a href="#headline-67">使用实例</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-68">将ASCII对应的16进制转换为ASCII输出</a>
+<ul>
+<li><a href="#headline-69">操作命令</a>
+</li>
+<li><a href="#headline-70">使用实例</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </nav>
         </div>
@@ -470,7 +490,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 22 分钟
+                    阅读时长: 23 分钟
                 </time>
             </div>
         
@@ -2429,6 +2449,101 @@ linux如何查看内存大小
 <li>sys     0m0.108s：系统 CPU 时间，即命令在内核态消耗的 CPU 时间。</li>
 </ol>
 <p>综合来看，该命令测试了硬盘的写入速度，并显示了每秒写入的数据量为 154 MB，这是在绕过系统缓存的情况下测得的结果。</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-64" class="outline-2">
+<h2 id="headline-64">
+xxd使用技巧
+</h2>
+<div id="outline-text-headline-64" class="outline-text-2">
+<div id="outline-container-headline-65" class="outline-3">
+<h3 id="headline-65">
+将文本转换为ASCII对应的16进制输出
+</h3>
+<div id="outline-text-headline-65" class="outline-text-3">
+<div id="outline-container-headline-66" class="outline-4">
+<h4 id="headline-66">
+操作命令
+</h4>
+<div id="outline-text-headline-66" class="outline-text-4">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s1">&#39;0&#39;</span> <span class="p">|</span> xxd -p</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-67" class="outline-4">
+<h4 id="headline-67">
+使用实例
+</h4>
+<div id="outline-text-headline-67" class="outline-text-4">
+<p>
+结果用ASCII表示，30表示字符0，0a表示换行符</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  $ <span class="nb">echo</span> <span class="s1">&#39;0&#39;</span> <span class="p">|</span> xxd -p
+</span></span><span class="line"><span class="cl">  300a</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-68" class="outline-3">
+<h3 id="headline-68">
+将ASCII对应的16进制转换为ASCII输出
+</h3>
+<div id="outline-text-headline-68" class="outline-text-3">
+<div id="outline-container-headline-69" class="outline-4">
+<h4 id="headline-69">
+操作命令
+</h4>
+<div id="outline-text-headline-69" class="outline-text-4">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s1">&#39;300a&#39;</span> <span class="p">|</span> xxd -r -p</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-70" class="outline-4">
+<h4 id="headline-70">
+使用实例
+</h4>
+<div id="outline-text-headline-70" class="outline-text-4">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  $ <span class="nb">echo</span> <span class="s1">&#39;300a&#39;</span> <span class="p">|</span> xxd -r -p
+</span></span><span class="line"><span class="cl">  <span class="m">0</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
