@@ -323,6 +323,22 @@
 </li>
 <li><a href="#headline-17">子模块索引过，如何再次索引</a>
 </li>
+<li><a href="#headline-18">Git 如何解决从GitHub克隆仓库时出现的SSL证书自签名问题</a>
+<ul>
+<li><a href="#headline-19">解决方案</a>
+</li>
+<li><a href="#headline-20">方案一：忽略SSL证书验证</a>
+<ul>
+<li><a href="#headline-21">操作方式</a>
+</li>
+<li><a href="#headline-22">使用实例</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-23">参考链接</a>
+</li>
+</ul>
+</li>
 </ul>
 </nav>
         </div>
@@ -379,7 +395,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 5 分钟
+                    阅读时长: 6 分钟
                 </time>
             </div>
         
@@ -1009,6 +1025,81 @@ https://blog.csdn.net/xiaoxgongzs/article/details/105099281</p>
 </div>
 <p>
 以上步骤来源于 chatgpt，而我实际操作的时候只执行了第一步，即清除子模块缓存，然后执行最后一步，即重新添加子模块</p>
+</div>
+</div>
+<div id="outline-container-headline-18" class="outline-2">
+<h2 id="headline-18">
+Git 如何解决从GitHub克隆仓库时出现的SSL证书自签名问题
+</h2>
+<div id="outline-text-headline-18" class="outline-text-2">
+<div id="outline-container-headline-19" class="outline-3">
+<h3 id="headline-19">
+解决方案
+</h3>
+<div id="outline-text-headline-19" class="outline-text-3">
+<p>
+在解决SSL证书自签名问题前，我们先要了解一下Git配置中和SSL有关的几个关键属性：</p>
+<ul>
+<li>http.sslVerify：该属性用于指定是否验证SSL证书，默认值为true，表示验证证书。</li>
+<li>http.sslCAInfo：该属性用于指定SSL证书的位置，提供自定义的CA证书进行验证。</li>
+<li>http.sslCAPath：该属性用于指定SSL证书的路径，提供自定义的CA证书进行验证。</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-headline-20" class="outline-3">
+<h3 id="headline-20">
+方案一：忽略SSL证书验证
+</h3>
+<div id="outline-text-headline-20" class="outline-text-3">
+<p>
+当您确定从GitHub上克隆仓库的过程中，SSL证书问题不会对仓库的安全性产生威胁时，您可以选择忽略SSL证书验证。在使用Git命令进行克隆操作时，可以添加-c选项，并指定http.sslVerify=false参数</p>
+<div id="outline-container-headline-21" class="outline-4">
+<h4 id="headline-21">
+操作方式
+</h4>
+<div id="outline-text-headline-21" class="outline-text-4">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  git -c http.sslVerify<span class="o">=</span><span class="nb">false</span> clone https://github.com/username/repo.git</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+通过设置http.sslVerify为false，Git会跳过证书验证，并将通信与GitHub建立起来。</p>
+</div>
+</div>
+<div id="outline-container-headline-22" class="outline-4">
+<h4 id="headline-22">
+使用实例
+</h4>
+<div id="outline-text-headline-22" class="outline-text-4">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  git -c Http.sslVerify<span class="o">=</span><span class="nb">false</span> clone https://hub.nuaa.cf/hexgio/emacs_config.git</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-23" class="outline-3">
+<h3 id="headline-23">
+参考链接
+</h3>
+<div id="outline-text-headline-23" class="outline-text-3">
+<p>
+<a href="https://deepinout.com/git/git-questions/63_git_how_to_solve_ssl_certificate_self_signed_certificate_when_cloning_repo_from_github.html">Git 如何解决从GitHub克隆仓库时出现的SSL证书自签名问题</a></p>
+</div>
+</div>
 </div>
 </div>
 
