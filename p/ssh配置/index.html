@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-cn" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='ssh基本配置 /etc/ssh/sshd_config 1 2 3 4 5 PermitRootLogin yes PubkeyAuthentication yes AuthorizedKeysFile .ssh/authorized_keys .ssh/authorized_keys2 PasswordAuthentication yes PubkeyAuthentication yes ssh配置文件结构 .ssh/config 1 2 3 4 5 6 7 8 9 Host * ServerAliveInterval 60 ServerAliveCountMax 120 Host HostName User Port IdentityFile 如何不让ssh连接断开 在客户端设'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='ssh基本配置 /etc/ssh/sshd_config 1 2 3 4 5 6 Port 22 PermitRootLogin yes PubkeyAuthentication yes AuthorizedKeysFile .ssh/authorized_keys .ssh/authorized_keys2 PasswordAuthentication yes PubkeyAuthentication yes 客户端.ssh目录下config文件基本配置 .ssh/config 1 2 3 4 5 6 7 8 9 Host * ServerAliveInterval 60 ServerAliveCountMax 120 Host HostName User Port IdentityFile'>
 <title>SSH配置</title>
 
 <link rel='canonical' href='https://ynhugo.github.io/p/ssh%E9%85%8D%E7%BD%AE/'>
 
 <link rel="stylesheet" href="/scss/style.min.2328f6a64e9c190e18c4f69895d0081330e55c8210e9395d11068ea1d881517f.css"><meta property='og:title' content='SSH配置'>
-<meta property='og:description' content='ssh基本配置 /etc/ssh/sshd_config 1 2 3 4 5 PermitRootLogin yes PubkeyAuthentication yes AuthorizedKeysFile .ssh/authorized_keys .ssh/authorized_keys2 PasswordAuthentication yes PubkeyAuthentication yes ssh配置文件结构 .ssh/config 1 2 3 4 5 6 7 8 9 Host * ServerAliveInterval 60 ServerAliveCountMax 120 Host HostName User Port IdentityFile 如何不让ssh连接断开 在客户端设'>
+<meta property='og:description' content='ssh基本配置 /etc/ssh/sshd_config 1 2 3 4 5 6 Port 22 PermitRootLogin yes PubkeyAuthentication yes AuthorizedKeysFile .ssh/authorized_keys .ssh/authorized_keys2 PasswordAuthentication yes PubkeyAuthentication yes 客户端.ssh目录下config文件基本配置 .ssh/config 1 2 3 4 5 6 7 8 9 Host * ServerAliveInterval 60 ServerAliveCountMax 120 Host HostName User Port IdentityFile'>
 <meta property='og:url' content='https://ynhugo.github.io/p/ssh%E9%85%8D%E7%BD%AE/'>
 <meta property='og:site_name' content='ynblog'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='ssh' />
 <meta name="twitter:title" content="SSH配置">
-<meta name="twitter:description" content="ssh基本配置 /etc/ssh/sshd_config 1 2 3 4 5 PermitRootLogin yes PubkeyAuthentication yes AuthorizedKeysFile .ssh/authorized_keys .ssh/authorized_keys2 PasswordAuthentication yes PubkeyAuthentication yes ssh配置文件结构 .ssh/config 1 2 3 4 5 6 7 8 9 Host * ServerAliveInterval 60 ServerAliveCountMax 120 Host HostName User Port IdentityFile 如何不让ssh连接断开 在客户端设">
+<meta name="twitter:description" content="ssh基本配置 /etc/ssh/sshd_config 1 2 3 4 5 6 Port 22 PermitRootLogin yes PubkeyAuthentication yes AuthorizedKeysFile .ssh/authorized_keys .ssh/authorized_keys2 PasswordAuthentication yes PubkeyAuthentication yes 客户端.ssh目录下config文件基本配置 .ssh/config 1 2 3 4 5 6 7 8 9 Host * ServerAliveInterval 60 ServerAliveCountMax 120 Host HostName User Port IdentityFile">
     <link rel="shortcut icon" href="/img/favicon.ico" />
 
     </head>
@@ -281,7 +281,7 @@
 <ul>
 <li><a href="#headline-1">ssh基本配置</a>
 </li>
-<li><a href="#headline-2">ssh配置文件结构</a>
+<li><a href="#headline-2">客户端.ssh目录下config文件基本配置</a>
 </li>
 <li><a href="#headline-3">如何不让ssh连接断开</a>
 <ul>
@@ -350,7 +350,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 3 分钟
+                    阅读时长: 4 分钟
                 </time>
             </div>
         
@@ -381,9 +381,11 @@ ssh基本配置
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
+</span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  PermitRootLogin yes
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  Port <span class="m">22</span>
+</span></span><span class="line"><span class="cl">  PermitRootLogin yes
 </span></span><span class="line"><span class="cl">  PubkeyAuthentication yes
 </span></span><span class="line"><span class="cl">  AuthorizedKeysFile      .ssh/authorized_keys .ssh/authorized_keys2
 </span></span><span class="line"><span class="cl">  PasswordAuthentication yes
@@ -395,7 +397,7 @@ ssh基本配置
 </div>
 <div id="outline-container-headline-2" class="outline-2">
 <h2 id="headline-2">
-ssh配置文件结构
+客户端.ssh目录下config文件基本配置
 </h2>
 <div id="outline-text-headline-2" class="outline-text-2">
 <p>
@@ -426,6 +428,43 @@ ssh配置文件结构
 </div>
 </div>
 </div>
+<p>
+这个配置是一个 SSH 配置文件（通常是 ~/.ssh/config）。在这个配置中，ServerAliveInterval 和 ServerAliveCountMax 是全局参数，会应用到所有的主机连接上，而其他的部分是针对特定主机的配置。</p>
+<ul>
+<li>ServerAliveInterval 设置为 60 秒表示，无论连接的是哪个主机，客户端都会每隔 60 秒发送一个空闲检查以确认服务器是否活动。</li>
+<li>ServerAliveCountMax 设置为 120 表示，无论连接的是哪个主机，客户端都会允许服务器连续未响应 120 次空闲检查，然后才会断开连接。</li>
+</ul>
+<p>其他部分（Host、HostName、User、Port、IdentityFile）是用于指定特定主机连接的配置，其中：</p>
+<ul>
+<li>Host 是用于指定主机别名的标识符。</li>
+<li>HostName 是指定主机的域名或 IP 地址。</li>
+<li>User 是指定连接主机时要使用的用户名。</li>
+<li>Port 是指定连接主机时要使用的端口号。</li>
+<li>IdentityFile 是指定用于身份验证的私钥文件路径。</li>
+</ul>
+<p>如果你想为特定主机设置这些参数，你可以在 Host 后面指定主机别名，然后在其后设置相应的参数。例如：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  Host example.com
+</span></span><span class="line"><span class="cl">  ServerAliveInterval <span class="m">60</span>
+</span></span><span class="line"><span class="cl">  ServerAliveCountMax <span class="m">120</span>
+</span></span><span class="line"><span class="cl">  User username
+</span></span><span class="line"><span class="cl">  Port <span class="m">22</span>
+</span></span><span class="line"><span class="cl">  IdentityFile ~/.ssh/id_rsa</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+这样的话，上述的 ServerAliveInterval 和 ServerAliveCountMax 参数将只会应用到 example.com 主机的连接上，而其他主机的连接则不受影响。</p>
 </div>
 </div>
 <div id="outline-container-headline-3" class="outline-2">

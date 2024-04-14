@@ -331,9 +331,11 @@ ssh基本配置
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  PermitRootLogin yes
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  Port &lt;span class=&#34;m&#34;&gt;22&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  PermitRootLogin yes
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  PubkeyAuthentication yes
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  AuthorizedKeysFile      .ssh/authorized_keys .ssh/authorized_keys2
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  PasswordAuthentication yes
@@ -345,7 +347,7 @@ ssh基本配置
 &lt;/div&gt;
 &lt;div id=&#34;outline-container-headline-2&#34; class=&#34;outline-2&#34;&gt;
 &lt;h2 id=&#34;headline-2&#34;&gt;
-ssh配置文件结构
+客户端.ssh目录下config文件基本配置
 &lt;/h2&gt;
 &lt;div id=&#34;outline-text-headline-2&#34; class=&#34;outline-text-2&#34;&gt;
 &lt;p&gt;
@@ -376,6 +378,43 @@ ssh配置文件结构
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
+&lt;p&gt;
+这个配置是一个 SSH 配置文件（通常是 ~/.ssh/config）。在这个配置中，ServerAliveInterval 和 ServerAliveCountMax 是全局参数，会应用到所有的主机连接上，而其他的部分是针对特定主机的配置。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;ServerAliveInterval 设置为 60 秒表示，无论连接的是哪个主机，客户端都会每隔 60 秒发送一个空闲检查以确认服务器是否活动。&lt;/li&gt;
+&lt;li&gt;ServerAliveCountMax 设置为 120 表示，无论连接的是哪个主机，客户端都会允许服务器连续未响应 120 次空闲检查，然后才会断开连接。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;其他部分（Host、HostName、User、Port、IdentityFile）是用于指定特定主机连接的配置，其中：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Host 是用于指定主机别名的标识符。&lt;/li&gt;
+&lt;li&gt;HostName 是指定主机的域名或 IP 地址。&lt;/li&gt;
+&lt;li&gt;User 是指定连接主机时要使用的用户名。&lt;/li&gt;
+&lt;li&gt;Port 是指定连接主机时要使用的端口号。&lt;/li&gt;
+&lt;li&gt;IdentityFile 是指定用于身份验证的私钥文件路径。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如果你想为特定主机设置这些参数，你可以在 Host 后面指定主机别名，然后在其后设置相应的参数。例如：&lt;/p&gt;
+&lt;div class=&#34;src src-bash&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  Host example.com
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ServerAliveInterval &lt;span class=&#34;m&#34;&gt;60&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ServerAliveCountMax &lt;span class=&#34;m&#34;&gt;120&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  User username
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  Port &lt;span class=&#34;m&#34;&gt;22&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  IdentityFile ~/.ssh/id_rsa&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;
+这样的话，上述的 ServerAliveInterval 和 ServerAliveCountMax 参数将只会应用到 example.com 主机的连接上，而其他主机的连接则不受影响。&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id=&#34;outline-container-headline-3&#34; class=&#34;outline-2&#34;&gt;
