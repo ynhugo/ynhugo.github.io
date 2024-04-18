@@ -447,6 +447,8 @@
 </li>
 </ul>
 </li>
+<li><a href="#headline-71">linux环境如何合并两个文件夹，两个目录名相同，文件有相同的也有不相同的，遇到同名文件跳过</a>
+</li>
 </ul>
 </nav>
         </div>
@@ -2546,6 +2548,51 @@ xxd使用技巧
 </div>
 </div>
 </div>
+</div>
+</div>
+<div id="outline-container-headline-71" class="outline-2">
+<h2 id="headline-71">
+linux环境如何合并两个文件夹，两个目录名相同，文件有相同的也有不相同的，遇到同名文件跳过
+</h2>
+<div id="outline-text-headline-71" class="outline-text-2">
+<p>
+在 Linux 环境中，你可以使用 rsync 命令来合并两个文件夹，并在遇到同名文件时跳过。rsync 是一个强大的文件同步工具，可以用于在本地或远程系统之间同步文件和目录。</p>
+<p>
+以下是使用 rsync 命令合并两个目录的基本语法：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  rsync -av --ignore-existing 源目录/ 目标目录/</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+这里的参数含义如下：</p>
+<ul>
+<li>-a, –archive：以归档模式进行同步，包括递归地复制子目录、保持文件权限、保持文件修改时间等。</li>
+<li>-v, –verbose：显示详细的输出信息，让你知道正在发生什么。</li>
+<li>–ignore-existing：忽略已经存在于目标目录中的文件，不进行覆盖，这样就能实现遇到同名文件时跳过的效果。</li>
+<li>源目录/：指定源目录的路径。</li>
+<li>目标目录/：指定目标目录的路径。</li>
+</ul>
+<p>例如，假设你有两个目录 folder1 和 folder2，你想将它们合并到一个目录 merged_folder 中，可以使用以下命令：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  rsync -av --ignore-existing folder1/ merged_folder/
+</span></span><span class="line"><span class="cl">  rsync -av --ignore-existing folder2/ merged_folder/</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+这样就会将 folder1 和 folder2 中的文件合并到 merged_folder 中，并在遇到同名文件时跳过。</p>
 </div>
 </div>
 
