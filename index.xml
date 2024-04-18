@@ -553,6 +553,167 @@
 </description>
         </item>
         <item>
+        <title>adb教程</title>
+        <link>https://ynhugo.github.io/p/adb%E6%95%99%E7%A8%8B/</link>
+        <pubDate>Sun, 31 Mar 2024 15:56:35 +0800</pubDate>
+        
+        <guid>https://ynhugo.github.io/p/adb%E6%95%99%E7%A8%8B/</guid>
+        <description>
+&lt;div id=&#34;outline-container-headline-1&#34; class=&#34;outline-2&#34;&gt;
+&lt;h2 id=&#34;headline-1&#34;&gt;
+初识adb
+&lt;/h2&gt;
+&lt;div id=&#34;outline-text-headline-1&#34; class=&#34;outline-text-2&#34;&gt;
+&lt;p&gt;adb shell下载链接：&lt;a href=&#34;https://wws.lanzoui.com/iNYNiq9l3yd&#34;&gt;https://wws.lanzoui.com/iNYNiq9l3yd&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;
+打开文件所在文件夹，将地址栏清空并键入cmd，然后回车，在cmd窗口键入adb shell测试use调试是否连接成功，如果出现美元符号表示连接成功。&lt;/p&gt;
+&lt;div id=&#34;outline-container-headline-2&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-2&#34;&gt;
+adb命令
+&lt;/h3&gt;
+&lt;div id=&#34;outline-text-headline-2&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;p&gt;
+adb shell am monitor                       #执行该命令后在手机上打开要卸载的应用，获取包名&lt;/p&gt;
+&lt;p&gt;
+adb shell pm disable-user 包名           #停用应用&lt;/p&gt;
+&lt;p&gt;
+adb shell pm enable 包名                 #恢复应用&lt;/p&gt;
+&lt;p&gt;
+adb install -r apk文件路径               #安装应用，直接将文件拖入cmd窗口可直接实现插入路径&lt;/p&gt;
+&lt;p&gt;
+adb shell pm list packages               #显示包名列表&lt;/p&gt;
+&lt;p&gt;
+adb uninstall 包名                       #卸载应用&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-3&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-3&#34;&gt;
+有些手机需要解锁system分区（如小米）
+&lt;/h3&gt;
+&lt;div id=&#34;outline-text-headline-3&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;p&gt;
+输入：adb root&lt;/p&gt;
+&lt;p&gt;
+输入：adb disable-verity&lt;/p&gt;
+&lt;p&gt;
+查看手机连接状态：adb device&lt;/p&gt;
+&lt;p&gt;
+获得root权限：root&lt;/p&gt;
+&lt;p&gt;
+设置超级用户模式 : su&lt;/p&gt;
+&lt;p&gt;
+退出su : exit&lt;/p&gt;
+&lt;p&gt;
+重启命令：adb reboot&lt;/p&gt;
+&lt;p&gt;
+重启到Rec：adb reboot recovery&lt;/p&gt;
+&lt;p&gt;
+重启到Fastboot：adb reboot bootloader&lt;/p&gt;
+&lt;p&gt;
+推送ROM包：adb sideload &amp;lt;Rom包&amp;gt;&lt;/p&gt;
+&lt;p&gt;
+把文件从手机中复制到电脑上 : adb pull &amp;lt;手机路径&amp;gt; &amp;lt;电脑路径&amp;gt;&lt;/p&gt;
+&lt;p&gt;
+把文件从电脑复制到手机上 : adb push &amp;lt;电脑路径&amp;gt; &amp;lt;手机路径&amp;gt;&lt;/p&gt;
+&lt;p&gt;
+重新挂载文件系统 : adb remount&lt;/p&gt;
+&lt;p&gt;
+安装软件 : adb install apk文件名称.apk&lt;/p&gt;
+&lt;p&gt;
+卸载apk软件 : adb uninstall apk包名.apk&lt;/p&gt;
+&lt;p&gt;
+Fastboot命令：&lt;/p&gt;
+&lt;p&gt;
+查看连接状态 ：fastboot devices&lt;/p&gt;
+&lt;p&gt;
+重启 ：fastboot reboot&lt;/p&gt;
+&lt;p&gt;
+重启到Fastboot ：fastboot reboot-bootloader&lt;/p&gt;
+&lt;p&gt;
+除非你很了解该命令，否则以下命令请谨慎使用：&lt;/p&gt;
+&lt;p&gt;
+解锁 ：fastboot flashing unlock或fastboot oem unlock&lt;/p&gt;
+&lt;p&gt;
+上锁 ：fastboot flashing lock或fastboot oem lock&lt;/p&gt;
+&lt;p&gt;
+清除分区数据 ：fastboot erase &amp;lt;boot/system/data/cache/userdata/recovery&amp;gt;&lt;/p&gt;
+&lt;p&gt;
+清除分区(四清) ：fastboot erase system -w&lt;/p&gt;
+&lt;p&gt;
+格式化分区数据 ：fastboot format &amp;lt;boot/system/data/cache/userdata/recovery&amp;gt;&lt;/p&gt;
+&lt;p&gt;
+烧写分区 ：fastboot flash &amp;lt; boot/system &lt;em&gt;recovery/radio/bootloader&lt;/em&gt; splash1/&amp;gt; &amp;lt;*.img&amp;gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-4&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-4&#34;&gt;
+以下是常用命令，可供大家查阅：
+&lt;/h3&gt;
+&lt;div id=&#34;outline-text-headline-4&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;p&gt;
+启动 adb server 命令：adb start-server&lt;/p&gt;
+&lt;p&gt;
+停止 adb server 命令：adb kill-server&lt;/p&gt;
+&lt;p&gt;
+查看 adb 版本：adb version&lt;/p&gt;
+&lt;p&gt;
+安装 APK命令：adb install [-lrtsdg] &amp;lt;path_to_apk&amp;gt;&lt;/p&gt;
+&lt;p&gt;
+卸载应用命令：adb uninstall [-k] &amp;lt;packagename&amp;gt;&lt;/p&gt;
+&lt;p&gt;
+清除应用数据与缓存：adb shell pm clear &amp;lt;packagename&amp;gt;&lt;/p&gt;
+&lt;p&gt;
+查看正在运行的 Services命令：adb shell dumpsys activity services [&amp;lt;packagename&amp;gt;]&lt;/p&gt;
+&lt;p&gt;
+查看应用详细信息命令：adb shell dumpsys package &amp;lt;packagename&amp;gt;&lt;/p&gt;
+&lt;p&gt;
+发送广播，命令格式：adb shell am broadcast [options] &amp;lt;INTENT&amp;gt;&lt;/p&gt;
+&lt;p&gt;
+强制停止应用命令：adb shell am force-stop &amp;lt;packagename&amp;gt;&lt;/p&gt;
+&lt;p&gt;
+文件管理复制设备里的文件到电脑：adb pull &amp;lt;设备里的文件路径&amp;gt; [电脑上的目录]&lt;/p&gt;
+&lt;p&gt;
+复制电脑里的文件到设备：adb push &amp;lt;电脑上的文件路径&amp;gt; &amp;lt;设备里的目录&amp;gt;&lt;/p&gt;
+&lt;p&gt;
+电池状况命令：adb shell dumpsys battery&lt;/p&gt;
+&lt;p&gt;
+adb help, 列出所有的选项说明及子命令&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-5&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-5&#34;&gt;
+已停用应用包名(个人某手机已停用应用)：
+&lt;/h3&gt;
+&lt;div id=&#34;outline-text-headline-5&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;p&gt;
+com.ivvi.browser 自带浏览器&lt;/p&gt;
+&lt;p&gt;
+com.android.fmradio FM电台&lt;/p&gt;
+&lt;p&gt;
+com.upgadata.ivvi 游戏电台&lt;/p&gt;
+&lt;p&gt;
+com.iflytek.inputmethod 讯飞输入法&lt;/p&gt;
+&lt;p&gt;
+com.yulong.freezeroom 应用冻结&lt;/p&gt;
+&lt;p&gt;
+com.icoolme.android.weather 最美天气&lt;/p&gt;
+&lt;p&gt;
+com.yulong.android.videoplayer 视频&lt;/p&gt;
+&lt;p&gt;
+com.redstone.ota.ui 系统更新&lt;/p&gt;
+&lt;p&gt;
+com.coolpad.music 音乐&lt;/p&gt;
+&lt;p&gt;
+com.android.stk sim卡应用&lt;/p&gt;
+&lt;p&gt;
+com.yulong.android.backup 备份与恢复&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+        </item>
+        <item>
         <title>网页操作</title>
         <link>https://ynhugo.github.io/p/%E7%BD%91%E9%A1%B5%E6%93%8D%E4%BD%9C/</link>
         <pubDate>Sun, 31 Mar 2024 15:39:23 +0800</pubDate>
@@ -1207,11 +1368,9 @@ hosts文件
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;c1&#34;&gt;# Copyright (c) 1993-2009 Microsoft Corp.&lt;/span&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;c1&#34;&gt;# Copyright (c) 1993-2009 Microsoft Corp.&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;c1&#34;&gt;#&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;c1&#34;&gt;# This is a sample HOSTS file used by Microsoft TCP/IP for Windows.&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;c1&#34;&gt;#&lt;/span&gt;
@@ -1799,11 +1958,9 @@ init.el 文件尾
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-emacs-lisp&#34; data-lang=&#34;emacs-lisp&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;provide&lt;/span&gt; &lt;span class=&#34;ss&#34;&gt;&amp;#39;init&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-emacs-lisp&#34; data-lang=&#34;emacs-lisp&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;provide&lt;/span&gt; &lt;span class=&#34;ss&#34;&gt;&amp;#39;init&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;c1&#34;&gt;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;c1&#34;&gt;;;; init.el ends here&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
@@ -2482,11 +2639,9 @@ init-ui.el 文件尾
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-emacs-lisp&#34; data-lang=&#34;emacs-lisp&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;provide&lt;/span&gt; &lt;span class=&#34;ss&#34;&gt;&amp;#39;init-ui&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-emacs-lisp&#34; data-lang=&#34;emacs-lisp&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;provide&lt;/span&gt; &lt;span class=&#34;ss&#34;&gt;&amp;#39;init-ui&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;c1&#34;&gt;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;c1&#34;&gt;;;; init-ui.el ends here&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
@@ -2699,11 +2854,9 @@ init-base.el 文件尾
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-emacs-lisp&#34; data-lang=&#34;emacs-lisp&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;provide&lt;/span&gt; &lt;span class=&#34;ss&#34;&gt;&amp;#39;init-base&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-emacs-lisp&#34; data-lang=&#34;emacs-lisp&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;provide&lt;/span&gt; &lt;span class=&#34;ss&#34;&gt;&amp;#39;init-base&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;c1&#34;&gt;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;c1&#34;&gt;;;; init-base.el ends here&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
@@ -4696,11 +4849,9 @@ init-org.el 文件尾
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-emacs-lisp&#34; data-lang=&#34;emacs-lisp&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;provide&lt;/span&gt; &lt;span class=&#34;ss&#34;&gt;&amp;#39;init-org&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-emacs-lisp&#34; data-lang=&#34;emacs-lisp&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;provide&lt;/span&gt; &lt;span class=&#34;ss&#34;&gt;&amp;#39;init-org&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;c1&#34;&gt;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;c1&#34;&gt;;;; init-org.el ends here&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
@@ -5363,11 +5514,9 @@ init-completion.el 文件尾
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-emacs-lisp&#34; data-lang=&#34;emacs-lisp&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;provide&lt;/span&gt; &lt;span class=&#34;ss&#34;&gt;&amp;#39;init-completion&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-emacs-lisp&#34; data-lang=&#34;emacs-lisp&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;provide&lt;/span&gt; &lt;span class=&#34;ss&#34;&gt;&amp;#39;init-completion&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;c1&#34;&gt;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;c1&#34;&gt;;;; init-completion.el ends here&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
@@ -5418,11 +5567,9 @@ init-dired.el 文件尾
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-emacs-lisp&#34; data-lang=&#34;emacs-lisp&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;provide&lt;/span&gt; &lt;span class=&#34;ss&#34;&gt;&amp;#39;init-dired&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-emacs-lisp&#34; data-lang=&#34;emacs-lisp&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;provide&lt;/span&gt; &lt;span class=&#34;ss&#34;&gt;&amp;#39;init-dired&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;c1&#34;&gt;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;c1&#34;&gt;;;; init-dired.el ends here&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
@@ -5837,11 +5984,9 @@ init-tools.el 文件尾
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-emacs-lisp&#34; data-lang=&#34;emacs-lisp&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;provide&lt;/span&gt; &lt;span class=&#34;ss&#34;&gt;&amp;#39;init-tools&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-emacs-lisp&#34; data-lang=&#34;emacs-lisp&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;provide&lt;/span&gt; &lt;span class=&#34;ss&#34;&gt;&amp;#39;init-tools&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;c1&#34;&gt;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;c1&#34;&gt;;;; init-tools.el ends here&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
@@ -6052,11 +6197,9 @@ init-rss.el 文件尾
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-emacs-lisp&#34; data-lang=&#34;emacs-lisp&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;provide&lt;/span&gt; &lt;span class=&#34;ss&#34;&gt;&amp;#39;init-rss&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-emacs-lisp&#34; data-lang=&#34;emacs-lisp&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;provide&lt;/span&gt; &lt;span class=&#34;ss&#34;&gt;&amp;#39;init-rss&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;c1&#34;&gt;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;c1&#34;&gt;;;; init-rss.el ends here&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
@@ -6528,11 +6671,9 @@ init-shell.el 文件尾
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-emacs-lisp&#34; data-lang=&#34;emacs-lisp&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;provide&lt;/span&gt; &lt;span class=&#34;ss&#34;&gt;&amp;#39;init-shell&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-emacs-lisp&#34; data-lang=&#34;emacs-lisp&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;provide&lt;/span&gt; &lt;span class=&#34;ss&#34;&gt;&amp;#39;init-shell&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;c1&#34;&gt;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;c1&#34;&gt;;;; init-shell.el ends here&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
@@ -6654,11 +6795,9 @@ init-browser.el 文件尾
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-emacs-lisp&#34; data-lang=&#34;emacs-lisp&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;provide&lt;/span&gt; &lt;span class=&#34;ss&#34;&gt;&amp;#39;init-browser&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-emacs-lisp&#34; data-lang=&#34;emacs-lisp&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;provide&lt;/span&gt; &lt;span class=&#34;ss&#34;&gt;&amp;#39;init-browser&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;c1&#34;&gt;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;c1&#34;&gt;;;; init-browser.el ends here&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
@@ -10392,19 +10531,19 @@ mysql安装教程
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-emacs-lisp&#34; data-lang=&#34;emacs-lisp&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;err&#34;&gt;输入安装命令&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;mysqld&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;--install&lt;/span&gt; 
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-emacs-lisp&#34; data-lang=&#34;emacs-lisp&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nv&#34;&gt;输入安装命令mysqld&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;--install&lt;/span&gt; 
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;err&#34;&gt;出现问题&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;The&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;service&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;already&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;exists&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nv&#34;&gt;出现问题The&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;service&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;already&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;exists&lt;/span&gt; 
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;err&#34;&gt;这是由于之前已经安装过&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;mysql&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;并且没有删除干净&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nv&#34;&gt;这是由于之前已经安装过mysql并且没有删除干净&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;err&#34;&gt;重新以管理员身份运行，输入&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;sc query mysql&amp;#34;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;，查看一下名为&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;mysql&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;的服务：&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nv&#34;&gt;重新以管理员身份运行&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;，&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;输入&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;sc query mysql&amp;#34;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;，&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;查看一下名为mysql的服务&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;：&lt;/span&gt; 
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;err&#34;&gt;发现之前确实有安装过。&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nv&#34;&gt;发现之前确实有安装过&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;。&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;err&#34;&gt;命令&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;sc delete mysql&amp;#34;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;，删除该&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;mysql&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nv&#34;&gt;命令&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;sc delete mysql&amp;#34;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;，&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;删除该mysql&lt;/span&gt; 
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;err&#34;&gt;之后继续安装，就能成功&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nv&#34;&gt;之后继续安装&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;，&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;就能成功&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -10441,11 +10580,11 @@ mysql安装教程
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-emacs-lisp&#34; data-lang=&#34;emacs-lisp&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;找到&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;MySQL&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;的安装目录&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;将&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;data&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;删除&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;注意该文件下会有一些你自己建立的数据库的数据&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;!&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;然后复制&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;bin&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;文件的路径&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;从开始里搜索&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;cmd&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;右键以管理员身份运行&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;cd&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;bin&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;文件的路径&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;进入后输入&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;mysqld&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;--initialize&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;关闭&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;cmd&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;重新启动&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;输入&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;net&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;start&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;mysql&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;即可启动成功&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;!&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-emacs-lisp&#34; data-lang=&#34;emacs-lisp&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;找到MySQL的安装目录,将data删除&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;注意该文件下会有一些你自己建立的数据库的数据!&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;然后复制bin文件的路径&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;从开始里搜索cmd&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;右键以管理员身份运行&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;cd&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;bin文件的路径&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;进入后输入mysqld&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;--initialize&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;关闭cmd&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;重新启动&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;输入net&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;start&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;mysql即可启动成功!&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -10503,28 +10642,28 @@ mysql安装教程
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-emacs-lisp&#34; data-lang=&#34;emacs-lisp&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nv&#34;&gt;mysqld&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;err&#34;&gt;#设置&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;MySQL&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;默认端口号&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;err&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;设置MySQL默认端口号&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nv&#34;&gt;port=3306&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;err&#34;&gt;#设置&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;mysql&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;的安装目录&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;你的文件路径，如果&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;mysql&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;要存放的目录不存在，可以创建一下&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;err&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;设置mysql的安装目录-你的文件路径&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;，&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;如果mysql要存放的目录不存在&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;，&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;可以创建一下&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nv&#34;&gt;basedir=D:\ProgramFiles\mysql-8.0.34-winx64&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;err&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;mysql&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;数据库的数据的存放目录&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;err&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;mysql数据库的数据的存放目录&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nv&#34;&gt;datadir=D:\ProgramFiles\mysql-8.0.34-winx64\data&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;err&#34;&gt;#允许最大连接数&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;err&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;允许最大连接数&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nv&#34;&gt;max_connections=200&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;err&#34;&gt;#允许连接失败的次数。可防止有人从该主机试图攻击数据库系统&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;err&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;允许连接失败的次数&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;。&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;可防止有人从该主机试图攻击数据库系统&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nv&#34;&gt;max_connect_errors=10&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;err&#34;&gt;#服务端使用的字符集默认为&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;UTF8&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;err&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;服务端使用的字符集默认为UTF8&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nv&#34;&gt;character-set-server=utf8&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;err&#34;&gt;#创建新表时将使用的默认存储引擎&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;err&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;创建新表时将使用的默认存储引擎&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; 
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nv&#34;&gt;default-storage-engine=INNODB&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;err&#34;&gt;#默认使用“&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;mysql_native_password&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;”插件认证&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;err&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;默认使用&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;“&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;mysql_native_password&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;”&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;插件认证&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nv&#34;&gt;default_authentication_plugin=mysql_native_password&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nv&#34;&gt;mysql&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;err&#34;&gt;#设置&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;mysql&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;客户端默认字符集&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;err&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;设置mysql客户端默认字符集&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nv&#34;&gt;default-character-set=utf8&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nv&#34;&gt;client&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;err&#34;&gt;#设置&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;mysql&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;客户端连接服务端时默认使用的端口&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;err&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;设置mysql客户端连接服务端时默认使用的端口&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nv&#34;&gt;port=3306&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nv&#34;&gt;default-character-set=utf8&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
@@ -10575,7 +10714,7 @@ MySQL修改、忘记root密码（8.0版本）
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-mysql&#34; data-lang=&#34;mysql&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;mysql&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;set&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;password&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;for&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;err&#34;&gt;用户名&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;@&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;localhost&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;password&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;新密码&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;例如（将用户&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;root&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;的密码更改为&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;root&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;）：&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;例如（将用户&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;root的密码更改为root&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;）：&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;mysql&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;set&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;password&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;for&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;root&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;@&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;localhost&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;password&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;root&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -16663,7 +16802,7 @@ git pull 命令时出现了冲突
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&lt;/span&gt;&amp;lt; HEAD
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  // 本地仓库中的代码
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  // &lt;span class=&#34;nv&#34;&gt;本地仓库中的代码&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;o&#34;&gt;=======&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  // 远程仓库中的代码
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt; FETCH_HEAD&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
@@ -16850,13 +16989,13 @@ git pull 命令时出现了冲突
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-emacs-lisp&#34; data-lang=&#34;emacs-lisp&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;err&#34;&gt;对于&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;GitHub&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;上的代码文件&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;可以通过以下方式构建它的&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;raw&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;格式链接&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-emacs-lisp&#34; data-lang=&#34;emacs-lisp&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nv&#34;&gt;对于&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;GitHub&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;上的代码文件,可以通过以下方式构建它的&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;raw&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;格式链接:&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nv&#34;&gt;https://raw.githubusercontent.com/:owner/:repo/:branch/:path/to/file&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;err&#34;&gt;其中&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nf&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;:owner&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;仓库所属的用户或组织名&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nf&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;:repo&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;仓库的名称&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nf&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;:branch&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;代码所在的分支&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;通常是&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;master&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nf&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;:path/to/file&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;仓库内文件的路径&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nv&#34;&gt;其中:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nf&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;:owner&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;仓库所属的用户或组织名&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nf&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;:repo&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;仓库的名称&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nf&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;:branch&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;代码所在的分支,通常是&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;master&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nf&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;:path/to/file&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;仓库内文件的路径&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -17797,167 +17936,6 @@ termux使用技巧
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-</description>
-        </item>
-        <item>
-        <title></title>
-        <link>https://ynhugo.github.io/p/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>https://ynhugo.github.io/p/</guid>
-        <description>
-&lt;div id=&#34;outline-container-headline-1&#34; class=&#34;outline-2&#34;&gt;
-&lt;h2 id=&#34;headline-1&#34;&gt;
-初识adb
-&lt;/h2&gt;
-&lt;div id=&#34;outline-text-headline-1&#34; class=&#34;outline-text-2&#34;&gt;
-&lt;p&gt;adb shell下载链接：&lt;a href=&#34;https://wws.lanzoui.com/iNYNiq9l3yd&#34;&gt;https://wws.lanzoui.com/iNYNiq9l3yd&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;
-打开文件所在文件夹，将地址栏清空并键入cmd，然后回车，在cmd窗口键入adb shell测试use调试是否连接成功，如果出现美元符号表示连接成功。&lt;/p&gt;
-&lt;div id=&#34;outline-container-headline-2&#34; class=&#34;outline-3&#34;&gt;
-&lt;h3 id=&#34;headline-2&#34;&gt;
-adb命令
-&lt;/h3&gt;
-&lt;div id=&#34;outline-text-headline-2&#34; class=&#34;outline-text-3&#34;&gt;
-&lt;p&gt;
-adb shell am monitor                       #执行该命令后在手机上打开要卸载的应用，获取包名&lt;/p&gt;
-&lt;p&gt;
-adb shell pm disable-user 包名           #停用应用&lt;/p&gt;
-&lt;p&gt;
-adb shell pm enable 包名                 #恢复应用&lt;/p&gt;
-&lt;p&gt;
-adb install -r apk文件路径               #安装应用，直接将文件拖入cmd窗口可直接实现插入路径&lt;/p&gt;
-&lt;p&gt;
-adb shell pm list packages               #显示包名列表&lt;/p&gt;
-&lt;p&gt;
-adb uninstall 包名                       #卸载应用&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-3&#34; class=&#34;outline-3&#34;&gt;
-&lt;h3 id=&#34;headline-3&#34;&gt;
-有些手机需要解锁system分区（如小米）
-&lt;/h3&gt;
-&lt;div id=&#34;outline-text-headline-3&#34; class=&#34;outline-text-3&#34;&gt;
-&lt;p&gt;
-输入：adb root&lt;/p&gt;
-&lt;p&gt;
-输入：adb disable-verity&lt;/p&gt;
-&lt;p&gt;
-查看手机连接状态：adb device&lt;/p&gt;
-&lt;p&gt;
-获得root权限：root&lt;/p&gt;
-&lt;p&gt;
-设置超级用户模式 : su&lt;/p&gt;
-&lt;p&gt;
-退出su : exit&lt;/p&gt;
-&lt;p&gt;
-重启命令：adb reboot&lt;/p&gt;
-&lt;p&gt;
-重启到Rec：adb reboot recovery&lt;/p&gt;
-&lt;p&gt;
-重启到Fastboot：adb reboot bootloader&lt;/p&gt;
-&lt;p&gt;
-推送ROM包：adb sideload &amp;lt;Rom包&amp;gt;&lt;/p&gt;
-&lt;p&gt;
-把文件从手机中复制到电脑上 : adb pull &amp;lt;手机路径&amp;gt; &amp;lt;电脑路径&amp;gt;&lt;/p&gt;
-&lt;p&gt;
-把文件从电脑复制到手机上 : adb push &amp;lt;电脑路径&amp;gt; &amp;lt;手机路径&amp;gt;&lt;/p&gt;
-&lt;p&gt;
-重新挂载文件系统 : adb remount&lt;/p&gt;
-&lt;p&gt;
-安装软件 : adb install apk文件名称.apk&lt;/p&gt;
-&lt;p&gt;
-卸载apk软件 : adb uninstall apk包名.apk&lt;/p&gt;
-&lt;p&gt;
-Fastboot命令：&lt;/p&gt;
-&lt;p&gt;
-查看连接状态 ：fastboot devices&lt;/p&gt;
-&lt;p&gt;
-重启 ：fastboot reboot&lt;/p&gt;
-&lt;p&gt;
-重启到Fastboot ：fastboot reboot-bootloader&lt;/p&gt;
-&lt;p&gt;
-除非你很了解该命令，否则以下命令请谨慎使用：&lt;/p&gt;
-&lt;p&gt;
-解锁 ：fastboot flashing unlock或fastboot oem unlock&lt;/p&gt;
-&lt;p&gt;
-上锁 ：fastboot flashing lock或fastboot oem lock&lt;/p&gt;
-&lt;p&gt;
-清除分区数据 ：fastboot erase &amp;lt;boot/system/data/cache/userdata/recovery&amp;gt;&lt;/p&gt;
-&lt;p&gt;
-清除分区(四清) ：fastboot erase system -w&lt;/p&gt;
-&lt;p&gt;
-格式化分区数据 ：fastboot format &amp;lt;boot/system/data/cache/userdata/recovery&amp;gt;&lt;/p&gt;
-&lt;p&gt;
-烧写分区 ：fastboot flash &amp;lt; boot/system &lt;em&gt;recovery/radio/bootloader&lt;/em&gt; splash1/&amp;gt; &amp;lt;*.img&amp;gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-4&#34; class=&#34;outline-3&#34;&gt;
-&lt;h3 id=&#34;headline-4&#34;&gt;
-以下是常用命令，可供大家查阅：
-&lt;/h3&gt;
-&lt;div id=&#34;outline-text-headline-4&#34; class=&#34;outline-text-3&#34;&gt;
-&lt;p&gt;
-启动 adb server 命令：adb start-server&lt;/p&gt;
-&lt;p&gt;
-停止 adb server 命令：adb kill-server&lt;/p&gt;
-&lt;p&gt;
-查看 adb 版本：adb version&lt;/p&gt;
-&lt;p&gt;
-安装 APK命令：adb install [-lrtsdg] &amp;lt;path_to_apk&amp;gt;&lt;/p&gt;
-&lt;p&gt;
-卸载应用命令：adb uninstall [-k] &amp;lt;packagename&amp;gt;&lt;/p&gt;
-&lt;p&gt;
-清除应用数据与缓存：adb shell pm clear &amp;lt;packagename&amp;gt;&lt;/p&gt;
-&lt;p&gt;
-查看正在运行的 Services命令：adb shell dumpsys activity services [&amp;lt;packagename&amp;gt;]&lt;/p&gt;
-&lt;p&gt;
-查看应用详细信息命令：adb shell dumpsys package &amp;lt;packagename&amp;gt;&lt;/p&gt;
-&lt;p&gt;
-发送广播，命令格式：adb shell am broadcast [options] &amp;lt;INTENT&amp;gt;&lt;/p&gt;
-&lt;p&gt;
-强制停止应用命令：adb shell am force-stop &amp;lt;packagename&amp;gt;&lt;/p&gt;
-&lt;p&gt;
-文件管理复制设备里的文件到电脑：adb pull &amp;lt;设备里的文件路径&amp;gt; [电脑上的目录]&lt;/p&gt;
-&lt;p&gt;
-复制电脑里的文件到设备：adb push &amp;lt;电脑上的文件路径&amp;gt; &amp;lt;设备里的目录&amp;gt;&lt;/p&gt;
-&lt;p&gt;
-电池状况命令：adb shell dumpsys battery&lt;/p&gt;
-&lt;p&gt;
-adb help, 列出所有的选项说明及子命令&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-5&#34; class=&#34;outline-3&#34;&gt;
-&lt;h3 id=&#34;headline-5&#34;&gt;
-已停用应用包名(个人某手机已停用应用)：
-&lt;/h3&gt;
-&lt;div id=&#34;outline-text-headline-5&#34; class=&#34;outline-text-3&#34;&gt;
-&lt;p&gt;
-com.ivvi.browser 自带浏览器&lt;/p&gt;
-&lt;p&gt;
-com.android.fmradio FM电台&lt;/p&gt;
-&lt;p&gt;
-com.upgadata.ivvi 游戏电台&lt;/p&gt;
-&lt;p&gt;
-com.iflytek.inputmethod 讯飞输入法&lt;/p&gt;
-&lt;p&gt;
-com.yulong.freezeroom 应用冻结&lt;/p&gt;
-&lt;p&gt;
-com.icoolme.android.weather 最美天气&lt;/p&gt;
-&lt;p&gt;
-com.yulong.android.videoplayer 视频&lt;/p&gt;
-&lt;p&gt;
-com.redstone.ota.ui 系统更新&lt;/p&gt;
-&lt;p&gt;
-com.coolpad.music 音乐&lt;/p&gt;
-&lt;p&gt;
-com.android.stk sim卡应用&lt;/p&gt;
-&lt;p&gt;
-com.yulong.android.backup 备份与恢复&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -20209,7 +20187,7 @@ wsl-ubuntu18.04.6安装最新版本emamcs教程
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-emacs-lisp&#34; data-lang=&#34;emacs-lisp&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nv&#34;&gt;$sudo&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;add-apt-repository&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;ppa:ubuntu-elisp/ppa&lt;/span&gt;      
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nv&#34;&gt;$sudo&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;apt&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;update&lt;/span&gt;                                   
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nv&#34;&gt;$sudo&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;apt&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;install&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;emacs-snapshot&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;emacs-snapshot-el&lt;/span&gt; 
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nv&#34;&gt;$emacs&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;--version&lt;/span&gt;    &lt;span class=&#34;err&#34;&gt;#查看&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;emacs&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;版本&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nv&#34;&gt;$emacs&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;--version&lt;/span&gt;    &lt;span class=&#34;err&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;查看emacs版本&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -31461,9 +31439,9 @@ UART结构体定义&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nf&#34;&gt;HAL_UART_Receive_IT&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;：串口中断模式接收&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nf&#34;&gt;HAL_UART_Transmit_DMA&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;：串口&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;DMA&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;模式发送&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nf&#34;&gt;HAL_UART_Transmit_DMA&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;：串口&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;DMA模式发送&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nf&#34;&gt;HAL_UART_Transmit_DMA&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;：串口&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;DMA&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;模式接收&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nf&#34;&gt;HAL_UART_Transmit_DMA&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;：串口&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;DMA模式接收&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;

@@ -279,15 +279,43 @@
         <div class="widget--toc">
             <nav id="TableOfContents">
 <ul>
-<li><a href="#headline-1">初识adb</a>
+<li><a href="#headline-1">安装termux</a>
 <ul>
-<li><a href="#headline-2">adb命令</a>
+<li><a href="#headline-2">termux的下载安装及使用教程</a>
 </li>
-<li><a href="#headline-3">有些手机需要解锁system分区（如小米）</a>
+<li><a href="#headline-3">初始化操作</a>
 </li>
-<li><a href="#headline-4">以下是常用命令，可供大家查阅：</a>
+<li><a href="#headline-4">其它工具的安装</a>
 </li>
-<li><a href="#headline-5">已停用应用包名(个人某手机已停用应用)：</a>
+</ul>
+</li>
+<li><a href="#headline-5">termux-openssh</a>
+</li>
+<li><a href="#headline-6">通过Termux和VNC实现以手机为服务器的桌面办公</a>
+<ul>
+<li><a href="#headline-7">参考链接</a>
+</li>
+<li><a href="#headline-8">安装ubuntu和图形界面</a>
+</li>
+<li><a href="#headline-9">连接VNC图形化操作</a>
+</li>
+<li><a href="#headline-10">中文语言设置</a>
+</li>
+<li><a href="#headline-11">如果安装过程中发现一些缺失的东东</a>
+</li>
+<li><a href="#headline-12">关于中文输入法</a>
+<ul>
+<li><a href="#headline-13">如果通过VNC或别的XDSL进入XFCE，有fcitx图标，也能看到拼音，五笔输入法，但是却输入不了中文</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-14">如果要一进入桌面就有fcitx，则可</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-15">termux使用技巧</a>
+<ul>
+<li><a href="#headline-16">在termux查看手机内置存储</a>
 </li>
 </ul>
 </li>
@@ -365,152 +393,456 @@
     
 <div id="outline-container-headline-1" class="outline-2">
 <h2 id="headline-1">
-初识adb
+安装termux
 </h2>
 <div id="outline-text-headline-1" class="outline-text-2">
-<p>adb shell下载链接：<a href="https://wws.lanzoui.com/iNYNiq9l3yd">https://wws.lanzoui.com/iNYNiq9l3yd</a></p>
-<p>
-打开文件所在文件夹，将地址栏清空并键入cmd，然后回车，在cmd窗口键入adb shell测试use调试是否连接成功，如果出现美元符号表示连接成功。</p>
 <div id="outline-container-headline-2" class="outline-3">
 <h3 id="headline-2">
-adb命令
+termux的下载安装及使用教程
 </h3>
 <div id="outline-text-headline-2" class="outline-text-3">
 <p>
-adb shell am monitor                       #执行该命令后在手机上打开要卸载的应用，获取包名</p>
+<a href="https://termux.com/">termux官网</a></p>
 <p>
-adb shell pm disable-user 包名           #停用应用</p>
-<p>
-adb shell pm enable 包名                 #恢复应用</p>
-<p>
-adb install -r apk文件路径               #安装应用，直接将文件拖入cmd窗口可直接实现插入路径</p>
-<p>
-adb shell pm list packages               #显示包名列表</p>
-<p>
-adb uninstall 包名                       #卸载应用</p>
+<a href="https://www.sqlsec.com/2018/05/termux.html">termux教程</a></p>
 </div>
 </div>
 <div id="outline-container-headline-3" class="outline-3">
 <h3 id="headline-3">
-有些手机需要解锁system分区（如小米）
+初始化操作
 </h3>
 <div id="outline-text-headline-3" class="outline-text-3">
 <p>
-输入：adb root</p>
+termux-setup-storage #给访问权限</p>
 <p>
-输入：adb disable-verity</p>
+apt-update &amp;&amp; apt grade &amp;&amp; pkg update &amp;&amp; pkg grade #检查更新并升级</p>
 <p>
-查看手机连接状态：adb device</p>
-<p>
-获得root权限：root</p>
-<p>
-设置超级用户模式 : su</p>
-<p>
-退出su : exit</p>
-<p>
-重启命令：adb reboot</p>
-<p>
-重启到Rec：adb reboot recovery</p>
-<p>
-重启到Fastboot：adb reboot bootloader</p>
-<p>
-推送ROM包：adb sideload &lt;Rom包&gt;</p>
-<p>
-把文件从手机中复制到电脑上 : adb pull &lt;手机路径&gt; &lt;电脑路径&gt;</p>
-<p>
-把文件从电脑复制到手机上 : adb push &lt;电脑路径&gt; &lt;手机路径&gt;</p>
-<p>
-重新挂载文件系统 : adb remount</p>
-<p>
-安装软件 : adb install apk文件名称.apk</p>
-<p>
-卸载apk软件 : adb uninstall apk包名.apk</p>
-<p>
-Fastboot命令：</p>
-<p>
-查看连接状态 ：fastboot devices</p>
-<p>
-重启 ：fastboot reboot</p>
-<p>
-重启到Fastboot ：fastboot reboot-bootloader</p>
-<p>
-除非你很了解该命令，否则以下命令请谨慎使用：</p>
-<p>
-解锁 ：fastboot flashing unlock或fastboot oem unlock</p>
-<p>
-上锁 ：fastboot flashing lock或fastboot oem lock</p>
-<p>
-清除分区数据 ：fastboot erase &lt;boot/system/data/cache/userdata/recovery&gt;</p>
-<p>
-清除分区(四清) ：fastboot erase system -w</p>
-<p>
-格式化分区数据 ：fastboot format &lt;boot/system/data/cache/userdata/recovery&gt;</p>
-<p>
-烧写分区 ：fastboot flash &lt; boot/system <em>recovery/radio/bootloader</em> splash1/&gt; &lt;*.img&gt;</p>
+pkg install vim #文本编辑工具</p>
 </div>
 </div>
 <div id="outline-container-headline-4" class="outline-3">
 <h3 id="headline-4">
-以下是常用命令，可供大家查阅：
+其它工具的安装
 </h3>
 <div id="outline-text-headline-4" class="outline-text-3">
 <p>
-启动 adb server 命令：adb start-server</p>
+pkg install git #根据个人需要选择性安装</p>
 <p>
-停止 adb server 命令：adb kill-server</p>
+pkg install nodejs-lts -g #用来安装各种插件，根据个人需要选择性安装</p>
 <p>
-查看 adb 版本：adb version</p>
+npm install hexo-cli -g #必须先安装nodejs再执行，用来搭建博客，根据个人需要选择性安装</p>
 <p>
-安装 APK命令：adb install [-lrtsdg] &lt;path_to_apk&gt;</p>
-<p>
-卸载应用命令：adb uninstall [-k] &lt;packagename&gt;</p>
-<p>
-清除应用数据与缓存：adb shell pm clear &lt;packagename&gt;</p>
-<p>
-查看正在运行的 Services命令：adb shell dumpsys activity services [&lt;packagename&gt;]</p>
-<p>
-查看应用详细信息命令：adb shell dumpsys package &lt;packagename&gt;</p>
-<p>
-发送广播，命令格式：adb shell am broadcast [options] &lt;INTENT&gt;</p>
-<p>
-强制停止应用命令：adb shell am force-stop &lt;packagename&gt;</p>
-<p>
-文件管理复制设备里的文件到电脑：adb pull &lt;设备里的文件路径&gt; [电脑上的目录]</p>
-<p>
-复制电脑里的文件到设备：adb push &lt;电脑上的文件路径&gt; &lt;设备里的目录&gt;</p>
-<p>
-电池状况命令：adb shell dumpsys battery</p>
-<p>
-adb help, 列出所有的选项说明及子命令</p>
+pkg install proot-distro #可用来安装linux系统，根据个人需要选择性安装</p>
 </div>
 </div>
-<div id="outline-container-headline-5" class="outline-3">
-<h3 id="headline-5">
-已停用应用包名(个人某手机已停用应用)：
+</div>
+</div>
+<div id="outline-container-headline-5" class="outline-2">
+<h2 id="headline-5">
+termux-openssh
+</h2>
+<div id="outline-text-headline-5" class="outline-text-2">
+<p>
+安装好termux之后，想尝试一下termux的ssh，以我为例，做一个总结。</p>
+<p>
+注意：以下操作需要保证电脑跟手机保持在同一个局域网，且是电脑连接手机。</p>
+<p>
+pkg install openssh #安装openssh</p>
+<p>
+passwd #电脑在连接termux时会提示输入密码，所以需要在termux中提前设置，执行passwd后会提示设置密码并确认密码。</p>
+<p>
+whoami #查看termux的用户名。</p>
+<p>
+ifconfig #查看termux的ip，我的是wlan1部分，看inet的后的ip地址。</p>
+<p>
+ssh -p user@ip #user为termux执行whoami后看到的用户名，ip为执行ifconfig后看到的wlan1部分inet对应的ip。</p>
+<p>
+接下来会询问&#34;yes or no&#34;,输入yes，输入密码，然后连接成功。</p>
+</div>
+</div>
+<div id="outline-container-headline-6" class="outline-2">
+<h2 id="headline-6">
+通过Termux和VNC实现以手机为服务器的桌面办公
+</h2>
+<div id="outline-text-headline-6" class="outline-text-2">
+<div id="outline-container-headline-7" class="outline-3">
+<h3 id="headline-7">
+参考链接
 </h3>
-<div id="outline-text-headline-5" class="outline-text-3">
+<div id="outline-text-headline-7" class="outline-text-3">
 <p>
-com.ivvi.browser 自带浏览器</p>
+<a href="https://blog.csdn.net/phaste/article/details/123616645">通过Termux和VNC实现以手机为服务器的桌面办公</a></p>
 <p>
-com.android.fmradio FM电台</p>
+<a href="https://superigbt_superigbt.gitee.io/2020/09/28/termux-proot-distro/">termux利用工作proot-distro安装linux</a></p>
 <p>
-com.upgadata.ivvi 游戏电台</p>
+解决了termux安装ubuntu系统和安装系统的中文支持问题</p>
+</div>
+</div>
+<div id="outline-container-headline-8" class="outline-3">
+<h3 id="headline-8">
+安装ubuntu和图形界面
+</h3>
+<div id="outline-text-headline-8" class="outline-text-3">
 <p>
-com.iflytek.inputmethod 讯飞输入法</p>
+现在安装ubuntu，我是通过proot-distro来安装的</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  apt install proot-distro</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
 <p>
-com.yulong.freezeroom 应用冻结</p>
+然后键入proot-distro list来显示可安装包，这个方法不但可以方便的安装ubuntu可以看到你还可以用它来安装其它linux的发行版。
+这里我们安装ubuntu</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  proot-distro install ubuntu</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
 <p>
-com.icoolme.android.weather 最美天气</p>
+这时候会从外网下载几十M的大文件(没听错几十兆而已，但很慢)，有时候网络不好，多试几次。
+显示安装成功后就可以登入了</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  proot-distro login ubuntu</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
 <p>
-com.yulong.android.videoplayer 视频</p>
+当然你也可以把这条命令加入到自启动项里面，每次就可以自动登陆了。</p>
+</div>
+</div>
+<div id="outline-container-headline-9" class="outline-3">
+<h3 id="headline-9">
+连接VNC图形化操作
+</h3>
+<div id="outline-text-headline-9" class="outline-text-3">
 <p>
-com.redstone.ota.ui 系统更新</p>
+进入ubuntu后先更新软件源</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  apt update</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
 <p>
-com.coolpad.music 音乐</p>
+然后安装需要用到的图形化服务软件</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">apt install xfce4 xfce4-goodies</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
 <p>
-com.android.stk sim卡应用</p>
+会安装xfc4轻量级图形界面服务，这一步大概会消耗1G的空间，当然也可以试着去安装其他的图形界面服务如gnome</p>
 <p>
-com.yulong.android.backup 备份与恢复</p>
+安装xfc4参考：<a href="https://blog.csdn.net/cunchi4221/article/details/107471665">https://blog.csdn.net/cunchi4221/article/details/107471665</a></p>
+<p>
+然后安装tigervnc。tigervnc感觉比tightvnc要配置简单一些</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  apt install tigervnc-standalone-server tigervnc-common</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+然后做一下简单的配置</p>
+<p>
+运行</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  vncserver</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+来设置密码</p>
+<p>
+然后创建启动脚本：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  nano .vnc/xstartup</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+如上命令就是用文本编辑器nano(当然你可以用其他文本编辑器)编辑用户文件夹下的.vnc文件夹下的xstartup文件(如果没有就创建一个)内容如下：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="c1">#!/usr/bin/bash</span>
+</span></span><span class="line"><span class="cl">  xfce4-session</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+注意xfce4-session后面不要跟&amp;号，不然会在运行vncserver时提示过早退出，然后记得给它加执行的权限。</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  chmod +x .vnc/xstartup</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+首次设置VNC时，它将在端口5901上启动默认服务器实例。</p>
+<p>
+如下是一个启动vnc服务器的例子：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  vncserver :1 -localhost no -geometry 1920x1080</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+然后就可以通过vnc的客户端登陆了，为了能够远端登陆不仅仅是本机登陆，设置-localhost no 是必要的。由于VNC是不加密的，会在登陆时提示如下，当然也可以自行百度实现在此基础上的外加SSH通道的加密。</p>
+<p>
+输入刚才设置的密码就可以登陆了</p>
+<p>
+之后就是熟悉的ubuntu界面了，可以自由安装自己喜欢的程序了</p>
+</div>
+</div>
+<div id="outline-container-headline-10" class="outline-3">
+<h3 id="headline-10">
+中文语言设置
+</h3>
+<div id="outline-text-headline-10" class="outline-text-3">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  apt install language-pack-zh-hans* 安装中文包
+</span></span><span class="line"><span class="cl">  apt install language-pack-gnome-zh-hans* 安装中文包
+</span></span><span class="line"><span class="cl">  apt install fonts-wqy-*
+</span></span><span class="line"><span class="cl">  <span class="c1"># $ apt install fonts-wqy-microhei 安装中文字体</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># $ apt install fronts-wqy-zenhei 另一个中文字体</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  vim /etc/default/locale</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+更改内容如下：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nv">LANG</span><span class="o">=</span><span class="s2">&#34;zh_CN.UTF-8&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">LANGUAGE</span><span class="o">=</span><span class="s2">&#34;zh_CN:en_US:en&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">LC_NUMERIC</span><span class="o">=</span><span class="s2">&#34;zh_CN.UTF-8&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">LC_TIME</span><span class="o">=</span><span class="s2">&#34;zh_CN.UTF-8&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">LC_MONETARY</span><span class="o">=</span><span class="s2">&#34;zh_CN.UTF-8&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">LC_PAPER</span><span class="o">=</span><span class="s2">&#34;zh_CN.UTF-8&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">LC_IDENTIFICATION</span><span class="o">=</span><span class="s2">&#34;zh_CN.UTF-8&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">LC_NAME</span><span class="o">=</span><span class="s2">&#34;zh_CN.UTF-8&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">LC_ADDRESS</span><span class="o">=</span><span class="s2">&#34;zh_CN.UTF-8&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">LC_TELEPHONE</span><span class="o">=</span><span class="s2">&#34;zh_CN.UTF-8&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">LC_MEASUREMENT</span><span class="o">=</span><span class="s2">&#34;zh_CN.UTF-8&#34;</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+保存后执行</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  fc-cache -fv  <span class="c1">#最好进行这一步后再安装fcitx，否则有可能输入法不起做用。</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+则控制台终端己经会出现中文了</p>
+</div>
+</div>
+<div id="outline-container-headline-11" class="outline-3">
+<h3 id="headline-11">
+如果安装过程中发现一些缺失的东东
+</h3>
+<div id="outline-text-headline-11" class="outline-text-3">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  apt install dialog
+</span></span><span class="line"><span class="cl">  apt install apt-utils</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-12" class="outline-3">
+<h3 id="headline-12">
+关于中文输入法
+</h3>
+<div id="outline-text-headline-12" class="outline-text-3">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  apt install fcitx
+</span></span><span class="line"><span class="cl">  apt install fcitx-config-*
+</span></span><span class="line"><span class="cl">  apt install fcitx-table-wbpy <span class="c1"># 五笔拼音</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-13" class="outline-4">
+<h4 id="headline-13">
+如果通过VNC或别的XDSL进入XFCE，有fcitx图标，也能看到拼音，五笔输入法，但是却输入不了中文
+</h4>
+<div id="outline-text-headline-13" class="outline-text-4">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  vim ~/.profile</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+在结尾加入</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="c1">#fcitx</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">export</span> <span class="nv">GTK_IM_MODULE</span><span class="o">=</span>fcitx
+</span></span><span class="line"><span class="cl">  <span class="nb">export</span> <span class="nv">QT_IM_MODULE</span><span class="o">=</span>fcitx
+</span></span><span class="line"><span class="cl">  <span class="nb">export</span> <span class="nv">XMODIFIERS</span><span class="o">=</span>”@im<span class="o">=</span>fcitx”</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+然后退出图形界面后，重启动。中文输入法可用了。</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-14" class="outline-3">
+<h3 id="headline-14">
+如果要一进入桌面就有fcitx，则可
+</h3>
+<div id="outline-text-headline-14" class="outline-text-3">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  cp /usr/share/applications/fcitx.desktop /etc/xdg/autostart/</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-15" class="outline-2">
+<h2 id="headline-15">
+termux使用技巧
+</h2>
+<div id="outline-text-headline-15" class="outline-text-2">
+<div id="outline-container-headline-16" class="outline-3">
+<h3 id="headline-16">
+在termux查看手机内置存储
+</h3>
+<div id="outline-text-headline-16" class="outline-text-3">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  ls <span class="nv">$EXTERNAL_STORAGE</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
