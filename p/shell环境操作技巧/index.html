@@ -451,6 +451,8 @@
 </li>
 <li><a href="#headline-72">Linux history 命令详解：如何查看、显示时间、清空、重复和控制历史记录</a>
 </li>
+<li><a href="#headline-73">Linux终端打印如何删除指定列或多列</a>
+</li>
 </ul>
 </nav>
         </div>
@@ -494,7 +496,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 24 分钟
+                    阅读时长: 26 分钟
                 </time>
             </div>
         
@@ -2660,6 +2662,83 @@ Linux history 命令详解：如何查看、显示时间、清空、重复和控
 ### 5. 控制历史记录</p>
 <p>
 你可以使用 HISTSIZE 和 HISTFILESIZE 环境变量来控制历史记录的大小。HISTSIZE 定义了保存在内存中的历史记录数目，HISTFILESIZE 定义了保存在历史记录文件中的历史记录数目。如果 HISTFILESIZE 比 HISTSIZE 小，那么当 shell 退出时，会将 HISTSIZE 指定的数量的命令写入历史记录文件中。</p>
+</div>
+</div>
+<div id="outline-container-headline-73" class="outline-2">
+<h2 id="headline-73">
+Linux终端打印如何删除指定列或多列
+</h2>
+<div id="outline-text-headline-73" class="outline-text-2">
+<p>
+要删除Linux终端中的指定列或多列，你可以使用一些命令和技巧。以下是几种方法：</p>
+<ol>
+<li>
+<p><strong><strong>使用awk命令删除指定列：</strong></strong>
+如果你知道要删除的列的位置，你可以使用awk命令来实现。例如，如果要删除第3列，你可以使用以下命令：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">awk <span class="s1">&#39;{$3=&#34;&#34;; print}&#39;</span> input_file</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>这将从input_file中删除第3列并输出结果。你还可以使用逗号分隔多个列的位置，例如：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">awk <span class="s1">&#39;{$2=&#34;&#34;; $4=&#34;&#34;; print}&#39;</span> input_file</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>这将删除第2列和第4列，并输出结果。</p>
+</li>
+<li>
+<p><strong><strong>使用cut命令删除指定列：</strong></strong>
+如果你知道要删除的列的位置，你也可以使用cut命令。例如，如果要删除第3列，你可以使用以下命令：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">cut -d<span class="s1">&#39; &#39;</span> -f1,2,4- input_file</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>这将从input_file中删除第3列并输出结果。你可以通过指定列的位置来删除多列。</p>
+</li>
+</ol>
+<p>这个命令是用来在Linux终端中删除指定列的。让我们一步步解析：</p>
+<ul>
+<li>cut：这是用于剪切文本的命令。</li>
+<li>-d&#39; &#39;：这个选项指定了字段的分隔符。在这里，-d 后跟着一个空格 (&#39; &#39;) 表示字段是以空格作为分隔符的。</li>
+<li>-f1,2,4-：这个选项指定了要保留的字段。在这里，-f 表示字段，后面跟着的 1,2,4- 表示要保留第1、第2列以及第4列及之后的所有列。</li>
+<li>input_file：这是要进行操作的输入文件的名称。</li>
+</ul>
+<p>因此，整个命令的含义是从input_file中剪切出第1、第2、第4列及之后的所有列，并将结果输出到终端。</p>
+<ol>
+<li>
+<p><strong><strong>使用sed命令删除指定列：</strong></strong>
+sed命令可以用来对文本进行替换和删除操作。例如，如果要删除第3列，你可以使用以下命令：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sed <span class="s1">&#39;s/\([^ ]* *\)\{2\}[^ ]* *//&#39;</span> input_file</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>这将从input_file中删除第3列并输出结果。你可以通过调整正则表达式来删除多列。</p>
+</li>
+</ol>
 </div>
 </div>
 
