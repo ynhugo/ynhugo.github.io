@@ -29888,6 +29888,71 @@ linux环境如何合并两个文件夹，两个目录名相同，文件有相同
 这样就会将 folder1 和 folder2 中的文件合并到 merged_folder 中，并在遇到同名文件时跳过。&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-72&#34; class=&#34;outline-2&#34;&gt;
+&lt;h2 id=&#34;headline-72&#34;&gt;
+Linux history 命令详解：如何查看、显示时间、清空、重复和控制历史记录
+&lt;/h2&gt;
+&lt;div id=&#34;outline-text-headline-72&#34; class=&#34;outline-text-2&#34;&gt;
+&lt;p&gt;
+当然，让我们详细解释 history 命令的各个方面：&lt;/p&gt;
+&lt;p&gt;
+### 1. 查看历史记录&lt;/p&gt;
+&lt;p&gt;
+使用 history 命令可以查看 Bash shell 中执行过的命令历史记录。这将显示按照执行顺序排列的历史记录列表，每个命令前面带有一个数字。&lt;/p&gt;
+&lt;p&gt;
+### 2. 显示时间戳&lt;/p&gt;
+&lt;p&gt;
+默认情况下，history 命令不会显示每个命令执行的时间戳。但是，你可以通过设置 HISTTIMEFORMAT 环境变量来显示时间戳。例如：&lt;/p&gt;
+&lt;div class=&#34;src src-bash&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;HISTTIMEFORMAT&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;%F %T &amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;
+这将在历史记录中显示日期和时间。&lt;/p&gt;
+&lt;p&gt;
+### 3. 清空历史记录&lt;/p&gt;
+&lt;p&gt;
+要清空 Bash shell 中的命令历史记录，可以使用 history -c 命令：&lt;/p&gt;
+&lt;div class=&#34;src src-bash&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;history&lt;/span&gt; -c&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;
+这将删除当前会话中的所有历史记录。要永久删除历史记录，可以编辑或者删除历史记录文件，通常是 ~/.bash_history。&lt;/p&gt;
+&lt;p&gt;
+### 4. 重复执行历史命令&lt;/p&gt;
+&lt;p&gt;
+要重复执行历史记录中的命令，可以使用 ! 后跟命令的历史编号。例如，要重新执行历史记录中编号为 123 的命令：&lt;/p&gt;
+&lt;div class=&#34;src src-bash&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;!123&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;
+你还可以使用 !! 来重复执行上一条命令。&lt;/p&gt;
+&lt;p&gt;
+### 5. 控制历史记录&lt;/p&gt;
+&lt;p&gt;
+你可以使用 HISTSIZE 和 HISTFILESIZE 环境变量来控制历史记录的大小。HISTSIZE 定义了保存在内存中的历史记录数目，HISTFILESIZE 定义了保存在历史记录文件中的历史记录数目。如果 HISTFILESIZE 比 HISTSIZE 小，那么当 shell 退出时，会将 HISTSIZE 指定的数量的命令写入历史记录文件中。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
 </description>
         </item>
         <item>
