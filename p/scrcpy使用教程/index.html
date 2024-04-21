@@ -283,7 +283,9 @@
 </li>
 <li><a href="#headline-2">无线投屏</a>
 </li>
-<li><a href="#headline-3">参考链接</a>
+<li><a href="#headline-3">通过脚本连接</a>
+</li>
+<li><a href="#headline-4">参考链接</a>
 </li>
 </ul>
 </nav>
@@ -374,7 +376,7 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  adb devices						<span class="c1"># 连接usb数据线后查看是否有设备</span>
-</span></span><span class="line"><span class="cl">  adb tcpip 5555					<span class="c1"># 在有设备的情况下设置端口</span>
+</span></span><span class="line"><span class="cl">  adb tcpip 5555					<span class="c1"># 在有设备的情况下设置端口，事实上这里似乎也可以不设置，那么可以尝试跳过这一步</span>
 </span></span><span class="line"><span class="cl">  adb connect 192.168.*.*:5555		<span class="c1"># 设置连接方式</span>
 </span></span><span class="line"><span class="cl">  scrcpy -s 192.168.*.*:5555		<span class="c1"># 使用scrcpy进行连接</span></span></span></code></pre></td></tr></table>
 </div>
@@ -393,9 +395,34 @@
 </div>
 <div id="outline-container-headline-3" class="outline-2">
 <h2 id="headline-3">
-参考链接
+通过脚本连接
 </h2>
 <div id="outline-text-headline-3" class="outline-text-2">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  adb kill-server
+</span></span><span class="line"><span class="cl">  adb start-server  
+</span></span><span class="line"><span class="cl">  <span class="nv">ssh_host</span><span class="o">=</span>rog8<span class="p">;</span> mapfile -t ip_array &lt; &lt;<span class="o">(</span>ssh <span class="nv">$ssh_host</span> ifconfig <span class="p">|</span> grep -oE <span class="s2">&#34;inet ?192.168.[0-9]{0,3}.[0-9]{0,3}&#34;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span><span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  adb connect <span class="s2">&#34;</span><span class="si">${</span><span class="nv">ip_array</span><span class="p">[0]</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">  scrcpy -s <span class="k">$(</span>adb devices <span class="p">|</span> grep -Ew <span class="s2">&#34;.*device&#34;</span> <span class="p">|</span> awk <span class="s1">&#39;{$2=&#34;&#34;; print}&#39;</span> <span class="p">|</span> head -n 1<span class="k">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-4" class="outline-2">
+<h2 id="headline-4">
+参考链接
+</h2>
+<div id="outline-text-headline-4" class="outline-text-2">
 <p>
 <a href="https://zhuanlan.zhihu.com/p/80264357">scrcpy - 手机无线投屏到电脑</a></p>
 <p>
