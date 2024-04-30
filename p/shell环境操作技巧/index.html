@@ -455,6 +455,16 @@
 </li>
 <li><a href="#headline-74">shell排序，强大的sort</a>
 </li>
+<li><a href="#headline-75">当前目录下多文件根据排序顺序一对一对的依次进行比较</a>
+</li>
+<li><a href="#headline-76">从当前目前进入到一个子目录过滤文件字符串并返回到当前目录</a>
+<ul>
+<li><a href="#headline-77">单次手动操作</a>
+</li>
+<li><a href="#headline-78">多次自动操作</a>
+</li>
+</ul>
+</li>
 </ul>
 </nav>
         </div>
@@ -2832,6 +2842,64 @@ shell排序，强大的sort
 </div>
 <p>
 这些只是 sort 命令的一些基本用法示例。根据你的需求，你可以结合使用不同的选项来实现各种排序操作。</p>
+</div>
+</div>
+<div id="outline-container-headline-75" class="outline-2">
+<h2 id="headline-75">
+当前目录下多文件根据排序顺序一对一对的依次进行比较
+</h2>
+<div id="outline-text-headline-75" class="outline-text-2">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  mapfile -t files &lt; &lt;<span class="o">(</span>ls<span class="o">)</span><span class="p">;</span> <span class="k">for</span><span class="o">((</span><span class="nv">i</span><span class="o">=</span>0<span class="p">;</span> i&lt;7<span class="p">;</span> i++<span class="o">))</span><span class="p">;</span> <span class="k">do</span> diff <span class="s2">&#34;</span><span class="si">${</span><span class="nv">files</span><span class="p">[i]</span><span class="si">}</span><span class="s2">&#34;</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">files</span><span class="p">[i+1]</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span> <span class="k">done</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-76" class="outline-2">
+<h2 id="headline-76">
+从当前目前进入到一个子目录过滤文件字符串并返回到当前目录
+</h2>
+<div id="outline-text-headline-76" class="outline-text-2">
+<div id="outline-container-headline-77" class="outline-3">
+<h3 id="headline-77">
+单次手动操作
+</h3>
+<div id="outline-text-headline-77" class="outline-text-3">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nb">cd</span> <span class="k">$(</span>ls <span class="p">|</span> awk <span class="s1">&#39;NR==15&#39;</span><span class="k">)</span><span class="p">;</span> find ./ -name <span class="s2">&#34;*.c&#34;</span> -o -name <span class="s2">&#34;*.h&#34;</span> <span class="p">|</span> xargs grep --color<span class="o">=</span>always -n <span class="s2">&#34;keyword&#34;</span><span class="p">;</span> <span class="nb">cd</span> ../</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-78" class="outline-3">
+<h3 id="headline-78">
+多次自动操作
+</h3>
+<div id="outline-text-headline-78" class="outline-text-3">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="k">for</span> <span class="o">((</span><span class="nv">i</span><span class="o">=</span>15<span class="p">;</span> i&lt;21<span class="p">;</span> i++<span class="o">))</span><span class="p">;</span> <span class="k">do</span> <span class="nb">cd</span> <span class="k">$(</span>ls <span class="p">|</span> awk <span class="s2">&#34;NR==</span><span class="si">${</span><span class="nv">i</span><span class="si">}</span><span class="s2">&#34;</span><span class="k">)</span><span class="p">;</span> find ./ -name <span class="s2">&#34;*.c&#34;</span> -o -name <span class="s2">&#34;*.h&#34;</span> <span class="p">|</span> xargs grep --color<span class="o">=</span>always -n <span class="s2">&#34;keyword&#34;</span><span class="p">;</span> <span class="nb">cd</span> ../<span class="p">;</span> <span class="k">done</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 
