@@ -473,6 +473,18 @@
 </li>
 </ul>
 </li>
+<li><a href="#headline-81">Linux下gh批量下载github某仓库中Release所有版本文件</a>
+<ul>
+<li><a href="#headline-82">工具官网</a>
+</li>
+<li><a href="#headline-83">查看指定仓库中的所有版本</a>
+</li>
+<li><a href="#headline-84">下载所有版本的Release</a>
+</li>
+<li><a href="#headline-85">参考链接</a>
+</li>
+</ul>
+</li>
 </ul>
 </nav>
         </div>
@@ -2942,6 +2954,65 @@ shell排序，强大的sort
 </div>
 </div>
 </div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-81" class="outline-2">
+<h2 id="headline-81">
+Linux下gh批量下载github某仓库中Release所有版本文件
+</h2>
+<div id="outline-text-headline-81" class="outline-text-2">
+<div id="outline-container-headline-82" class="outline-3">
+<h3 id="headline-82">
+工具官网
+</h3>
+<div id="outline-text-headline-82" class="outline-text-3">
+<p>
+https://github.com/cli/cli</p>
+</div>
+</div>
+<div id="outline-container-headline-83" class="outline-3">
+<h3 id="headline-83">
+查看指定仓库中的所有版本
+</h3>
+<div id="outline-text-headline-83" class="outline-text-3">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  gh release list -R 201853910/VMwareWorkstation</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-84" class="outline-3">
+<h3 id="headline-84">
+下载所有版本的Release
+</h3>
+<div id="outline-text-headline-84" class="outline-text-3">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  mapfile -t file_version &lt; &lt;<span class="o">(</span>gh release list -R 201853910/VMwareWorkstation <span class="p">|</span> grep -v <span class="s2">&#34;Latest&#34;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $3}&#39;</span><span class="o">)</span><span class="p">;</span> <span class="k">for</span> i in <span class="s2">&#34;</span><span class="si">${</span><span class="nv">file_version</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span> <span class="k">do</span> gh release download <span class="s2">&#34;</span><span class="si">${</span><span class="nv">i</span><span class="si">}</span><span class="s2">&#34;</span> -D Vmwares/ -R 201853910/VMwareWorkstation<span class="p">;</span> <span class="k">done</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-85" class="outline-3">
+<h3 id="headline-85">
+参考链接
+</h3>
+<div id="outline-text-headline-85" class="outline-text-3">
+<p>
+<a href="https://zhuanlan.zhihu.com/p/667880441">使用cli批量下载GitHub仓库中所有的release</a></p>
 </div>
 </div>
 </div>
