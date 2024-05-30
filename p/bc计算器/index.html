@@ -280,8 +280,10 @@
             <nav id="TableOfContents">
 <ul>
 <li><a href="#headline-1">使用方式</a>
+</li>
+<li><a href="#headline-2">三角函数、开方和幂次运算</a>
 <ul>
-<li><a href="#headline-2">注意事项</a>
+<li><a href="#headline-3">注意事项</a>
 </li>
 </ul>
 </li>
@@ -341,7 +343,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 1 分钟
+                    阅读时长: 2 分钟
                 </time>
             </div>
         
@@ -407,17 +409,96 @@
 </div>
 </div>
 </div>
-<div id="outline-container-headline-2" class="outline-3">
-<h3 id="headline-2">
+</div>
+</div>
+<div id="outline-container-headline-2" class="outline-2">
+<h2 id="headline-2">
+三角函数、开方和幂次运算
+</h2>
+<div id="outline-text-headline-2" class="outline-text-2">
+<p>
+bc在使用参数-l指定代数运算模式下也支持三角函数、开方、幂次等操作。
+但是与matlab等语言不同的是，为了简化代码，bc中三角函数与数学上的函数名字有所不同，具体如下：</p>
+<p>
+s(x) 计算 sin(x)，以下x皆为弧度表示
+c(x) 计算 cos(x)
+a(x) 计算arctangent(x)
+l(x) 计算ln(x)
+e(x) 计算e的x次方，其中e为自然底数
+x^y 计算x的y次方
+sqrt(x) 计算根号下x</p>
+<p>
+例如：
+分别计算sin(1)，cos(0)，arctan(1.0):</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  ~$ <span class="nb">echo</span> <span class="s2">&#34;s(1)&#34;</span> <span class="p">|</span> bc -l
+</span></span><span class="line"><span class="cl">  .84147098480789650665
+</span></span><span class="line"><span class="cl">  ~$ <span class="nb">echo</span> <span class="s2">&#34;c(0.0)&#34;</span> <span class="p">|</span> bc -l
+</span></span><span class="line"><span class="cl">  1.00000000000000000000
+</span></span><span class="line"><span class="cl">  ~$ <span class="nb">echo</span> <span class="s2">&#34;a(1.0)&#34;</span> <span class="p">|</span> bc -l
+</span></span><span class="line"><span class="cl">  .78539816339744830961</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+分别计算ln(2)，pow(e,1):</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  ~$ <span class="nb">echo</span> <span class="s2">&#34;l(2)&#34;</span> <span class="p">|</span> bc -l
+</span></span><span class="line"><span class="cl">  .69314718055994530941
+</span></span><span class="line"><span class="cl">  ~$ <span class="nb">echo</span> <span class="s2">&#34;e(1)&#34;</span> <span class="p">|</span> bc -l
+</span></span><span class="line"><span class="cl">  2.71828182845904523536</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+分别计算pow(2,3)，sqrt(9.0)：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  ~$ <span class="nb">echo</span> <span class="s2">&#34;2^3&#34;</span> <span class="p">|</span> bc -l
+</span></span><span class="line"><span class="cl">  <span class="m">8</span>
+</span></span><span class="line"><span class="cl">  ~$ <span class="nb">echo</span> <span class="s2">&#34;sqrt(9.0)&#34;</span> <span class="p">|</span> bc -l
+</span></span><span class="line"><span class="cl">  3.00000000000000000000</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-3" class="outline-3">
+<h3 id="headline-3">
 注意事项
 </h3>
-<div id="outline-text-headline-2" class="outline-text-3">
+<div id="outline-text-headline-3" class="outline-text-3">
 <p>
 先设置 obase 在设置 ibase，计算器正常。</p>
 <p>
 在 bc 计算器中，obase 与 ibase 的赋值有先后顺序。</p>
 <p>
 且在计算过程中 obase 与 ibase 只能赋值一次。</p>
+<p>
+进行三角函数、开方，幂次等代数运算时，一定要加上参数-l，表示进行代数运算，不然无法使用内置的三角函数、开方等函数。</p>
 </div>
 </div>
 </div>
