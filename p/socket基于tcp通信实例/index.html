@@ -287,6 +287,16 @@
 </li>
 <li><a href="#headline-4">client.c</a>
 </li>
+<li><a href="#headline-5">编译过程</a>
+</li>
+<li><a href="#headline-6">运行方式</a>
+<ul>
+<li><a href="#headline-7">server端</a>
+</li>
+<li><a href="#headline-8">client端</a>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -641,6 +651,98 @@ client.c
 </span></span><span class="line"><span class="cl">	  <span class="nf">close</span><span class="p">(</span><span class="n">sockfd</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">	  <span class="nf">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">  <span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-5" class="outline-3">
+<h3 id="headline-5">
+编译过程
+</h3>
+<div id="outline-text-headline-5" class="outline-text-3">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  make server
+</span></span><span class="line"><span class="cl">  make client</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-6" class="outline-3">
+<h3 id="headline-6">
+运行方式
+</h3>
+<div id="outline-text-headline-6" class="outline-text-3">
+<div id="outline-container-headline-7" class="outline-4">
+<h4 id="headline-7">
+server端
+</h4>
+<div id="outline-text-headline-7" class="outline-text-4">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  ./server</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+显示结果并等待客户端连接</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="o">======</span>waiting <span class="k">for</span> client<span class="err">&#39;</span>s <span class="nv">request</span><span class="o">======</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-8" class="outline-4">
+<h4 id="headline-8">
+client端
+</h4>
+<div id="outline-text-headline-8" class="outline-text-4">
+<p>
+运行客户端并等待输入消息</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  $ <span class="k">while</span> true<span class="p">;</span> <span class="k">do</span> ./client 127.0.0.1<span class="p">;</span> <span class="k">done</span>
+</span></span><span class="line"><span class="cl">  send msg to server:</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+发送一条消息，输入&#34;testSocket&#34;，此时服务器端看到客户端发送过来的消息</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  $ ./server
+</span></span><span class="line"><span class="cl">  <span class="o">======</span>waiting <span class="k">for</span> client<span class="err">&#39;</span>s <span class="nv">request</span><span class="o">======</span>
+</span></span><span class="line"><span class="cl">  recv msg from client: testSocket</span></span></code></pre></td></tr></table>
+</div>
+</div>
 </div>
 </div>
 </div>
