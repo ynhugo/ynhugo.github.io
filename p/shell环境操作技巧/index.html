@@ -489,6 +489,8 @@
 </li>
 <li><a href="#headline-87">Linux 下计算圆周率</a>
 </li>
+<li><a href="#headline-88">查找文件关键词并替换</a>
+</li>
 </ul>
 </nav>
         </div>
@@ -3059,6 +3061,47 @@ time命令：指令执行时所消耗的时间</p>
 bc -l：设置标准数学库</p>
 <p>
 bc -q：显示正常的GNU bc环境信息</p>
+</div>
+</div>
+<div id="outline-container-headline-88" class="outline-2">
+<h2 id="headline-88">
+查找文件关键词并替换
+</h2>
+<div id="outline-text-headline-88" class="outline-text-2">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="c1">#!/bin/bash</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1"># 将var2变量值替换掉var1变量值</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">var1</span><span class="o">=</span><span class="s2">&#34;10.8.98.80&#34;</span>				<span class="c1"># 待被替换的关键词</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">var2</span><span class="o">=</span><span class="s2">&#34;192.168.0.64&#34;</span>				<span class="c1"># 作为替换的关键词</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  mapfile -t files &lt; &lt;<span class="o">(</span>find ./ -name <span class="s2">&#34;*.cpp&#34;</span> <span class="p">|</span> xargs readlink -f <span class="p">|</span> xargs grep -l <span class="s2">&#34;</span><span class="si">${</span><span class="nv">var1</span><span class="si">}</span><span class="s2">&#34;</span><span class="o">)</span> <span class="c1"># 查找包含var1变量值的文件存入数组</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nv">fileNum</span><span class="o">=</span><span class="si">${#</span><span class="nv">files</span><span class="p">[@]</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="o">((</span><span class="nv">i</span> <span class="o">=</span> 0<span class="p">;</span> i &lt; fileNum<span class="p">;</span> i++<span class="o">))</span><span class="p">;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">	  sed -i <span class="s2">&#34;s/</span><span class="si">${</span><span class="nv">var1</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">var2</span><span class="si">}</span><span class="s2">/g&#34;</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">files</span><span class="p">[i]</span><span class="si">}</span><span class="s2">&#34;</span> <span class="c1"># 将var1替换为var2</span>
+</span></span><span class="line"><span class="cl">  <span class="k">done</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
 </div>
 </div>
 
