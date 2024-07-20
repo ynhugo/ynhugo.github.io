@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-cn" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='安装 ffmpeg windows 安装 ffmpeg 下载页面：https://ffmpeg.org/download.html 播放 yuv 格式的视频 将yuv文件转换为mp4文件 1 ffmpeg -s:v 640x480'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='ffmpeg使用教程 安装 ffmpeg windows 安装 ffmpeg 下载页面：https://ffmpeg.org/download.html 播放 yuv 格式的视频 将yuv文件转换'>
 <title>ffmpeg 教程</title>
 
 <link rel='canonical' href='https://ynhugo.github.io/p/ffmpeg-%E6%95%99%E7%A8%8B/'>
 
 <link rel="stylesheet" href="/scss/style.min.2328f6a64e9c190e18c4f69895d0081330e55c8210e9395d11068ea1d881517f.css"><meta property='og:title' content='ffmpeg 教程'>
-<meta property='og:description' content='安装 ffmpeg windows 安装 ffmpeg 下载页面：https://ffmpeg.org/download.html 播放 yuv 格式的视频 将yuv文件转换为mp4文件 1 ffmpeg -s:v 640x480'>
+<meta property='og:description' content='ffmpeg使用教程 安装 ffmpeg windows 安装 ffmpeg 下载页面：https://ffmpeg.org/download.html 播放 yuv 格式的视频 将yuv文件转换'>
 <meta property='og:url' content='https://ynhugo.github.io/p/ffmpeg-%E6%95%99%E7%A8%8B/'>
 <meta property='og:site_name' content='ynblog'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='tools' /><meta property='article:tag' content='ffmpeg' />
 <meta name="twitter:title" content="ffmpeg 教程">
-<meta name="twitter:description" content="安装 ffmpeg windows 安装 ffmpeg 下载页面：https://ffmpeg.org/download.html 播放 yuv 格式的视频 将yuv文件转换为mp4文件 1 ffmpeg -s:v 640x480">
+<meta name="twitter:description" content="ffmpeg使用教程 安装 ffmpeg windows 安装 ffmpeg 下载页面：https://ffmpeg.org/download.html 播放 yuv 格式的视频 将yuv文件转换">
     <link rel="shortcut icon" href="/img/favicon.ico" />
 
     </head>
@@ -279,23 +279,77 @@
         <div class="widget--toc">
             <nav id="TableOfContents">
 <ul>
-<li><a href="#headline-1">安装 ffmpeg</a>
+<li><a href="#headline-1">ffmpeg使用教程</a>
 <ul>
-<li><a href="#headline-2">windows 安装 ffmpeg</a>
+<li><a href="#headline-2">安装 ffmpeg</a>
+<ul>
+<li><a href="#headline-3">windows 安装 ffmpeg</a>
 </li>
 </ul>
 </li>
-<li><a href="#headline-3">播放 yuv 格式的视频</a>
+<li><a href="#headline-4">播放 yuv 格式的视频</a>
 <ul>
-<li><a href="#headline-4">将yuv文件转换为mp4文件</a>
+<li><a href="#headline-5">将yuv文件转换为mp4文件</a>
 </li>
-<li><a href="#headline-5">直接播放yuv文件</a>
+<li><a href="#headline-6">直接播放yuv文件</a>
 </li>
 </ul>
 </li>
-<li><a href="#headline-6">使用 ffplay 一帧一帧地播放视频</a>
+<li><a href="#headline-7">使用 ffplay 一帧一帧地播放视频</a>
 </li>
-<li><a href="#headline-7">参考链接</a>
+<li><a href="#headline-8">参考链接</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-9">windows环境下实现ffmpeg本地视频进行rtsp推流</a>
+<ul>
+<li><a href="#headline-10">环境搭建</a>
+<ul>
+<li><a href="#headline-11">系统环境</a>
+</li>
+<li><a href="#headline-12">下载rtsp</a>
+</li>
+<li><a href="#headline-13">下载ffmpeg</a>
+</li>
+<li><a href="#headline-14">把rtsp和ffmpeg解压到同一个文件夹</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-15">ffmpeg对本地视频进行rtsp推流</a>
+<ul>
+<li><a href="#headline-16">启动rtsp</a>
+</li>
+<li><a href="#headline-17">ffpmeg推流本地视频</a>
+<ul>
+<li><a href="#headline-18">ffpmeg常用参数</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-19">使用vlc验证是否推流成功</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-20">参考链接</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-21">在Windows操作系统上使用mediamtx和ffmpeg推送录屏视频流</a>
+<ul>
+<li><a href="#headline-22">搭建启动rtsp server</a>
+</li>
+<li><a href="#headline-23">推送录屏视频流</a>
+</li>
+<li><a href="#headline-24">检验</a>
+<ul>
+<li><a href="#headline-25">获取本机IP</a>
+</li>
+<li><a href="#headline-26">检测</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-27">参考链接</a>
+</li>
+</ul>
 </li>
 </ul>
 </nav>
@@ -340,7 +394,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 1 分钟
+                    阅读时长: 4 分钟
                 </time>
             </div>
         
@@ -356,32 +410,37 @@
     
     
     
-<div id="outline-container-headline-1" class="outline-3">
-<h3 id="headline-1">
+<div id="outline-container-headline-1" class="outline-2">
+<h2 id="headline-1">
+ffmpeg使用教程
+</h2>
+<div id="outline-text-headline-1" class="outline-text-2">
+<div id="outline-container-headline-2" class="outline-3">
+<h3 id="headline-2">
 安装 ffmpeg
 </h3>
-<div id="outline-text-headline-1" class="outline-text-3">
-<div id="outline-container-headline-2" class="outline-4">
-<h4 id="headline-2">
+<div id="outline-text-headline-2" class="outline-text-3">
+<div id="outline-container-headline-3" class="outline-4">
+<h4 id="headline-3">
 windows 安装 ffmpeg
 </h4>
-<div id="outline-text-headline-2" class="outline-text-4">
+<div id="outline-text-headline-3" class="outline-text-4">
 <p>
 下载页面：<a href="https://ffmpeg.org/download.html">https://ffmpeg.org/download.html</a></p>
 </div>
 </div>
 </div>
 </div>
-<div id="outline-container-headline-3" class="outline-3">
-<h3 id="headline-3">
+<div id="outline-container-headline-4" class="outline-3">
+<h3 id="headline-4">
 播放 yuv 格式的视频
 </h3>
-<div id="outline-text-headline-3" class="outline-text-3">
-<div id="outline-container-headline-4" class="outline-4">
-<h4 id="headline-4">
+<div id="outline-text-headline-4" class="outline-text-3">
+<div id="outline-container-headline-5" class="outline-4">
+<h4 id="headline-5">
 将yuv文件转换为mp4文件
 </h4>
-<div id="outline-text-headline-4" class="outline-text-4">
+<div id="outline-text-headline-5" class="outline-text-4">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -394,11 +453,11 @@ windows 安装 ffmpeg
 </div>
 </div>
 </div>
-<div id="outline-container-headline-5" class="outline-4">
-<h4 id="headline-5">
+<div id="outline-container-headline-6" class="outline-4">
+<h4 id="headline-6">
 直接播放yuv文件
 </h4>
-<div id="outline-text-headline-5" class="outline-text-4">
+<div id="outline-text-headline-6" class="outline-text-4">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -413,11 +472,11 @@ windows 安装 ffmpeg
 </div>
 </div>
 </div>
-<div id="outline-container-headline-6" class="outline-3">
-<h3 id="headline-6">
+<div id="outline-container-headline-7" class="outline-3">
+<h3 id="headline-7">
 使用 ffplay 一帧一帧地播放视频
 </h3>
-<div id="outline-text-headline-6" class="outline-text-3">
+<div id="outline-text-headline-7" class="outline-text-3">
 <p>
 要使用 ffplay 一帧一帧地播放视频，您可以通过在命令行中逐帧显示视频帧的方式来实现。以下是一种常见的方法：</p>
 <div class="src src-bash">
@@ -438,13 +497,310 @@ windows 安装 ffmpeg
 需要注意的是，ffplay 是一个简单的用于播放视频和音频的工具，如果您需要更多交互性或者更复杂的播放控制，可能需要借助其他工具或编程语言来实现。</p>
 </div>
 </div>
-<div id="outline-container-headline-7" class="outline-3">
-<h3 id="headline-7">
+<div id="outline-container-headline-8" class="outline-3">
+<h3 id="headline-8">
 参考链接
 </h3>
-<div id="outline-text-headline-7" class="outline-text-3">
+<div id="outline-text-headline-8" class="outline-text-3">
 <p>
 <a href="https://blog.csdn.net/m0_47449768/article/details/130102406">ffmpeg安装教程（windows版）</a></p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-9" class="outline-2">
+<h2 id="headline-9">
+windows环境下实现ffmpeg本地视频进行rtsp推流
+</h2>
+<div id="outline-text-headline-9" class="outline-text-2">
+<p>
+摘要：有时候服务端（如linux）或者边缘端（jetson盒子）需要接受摄像头的视频流输入，而摄像头的输入视频流一般为rtsp，测试时需要搭建摄像头环境，很不方便，因此需要对本地视频进行rtsp推流，模拟摄像头的rtsp输入。</p>
+<div id="outline-container-headline-10" class="outline-3">
+<h3 id="headline-10">
+环境搭建
+</h3>
+<div id="outline-text-headline-10" class="outline-text-3">
+<div id="outline-container-headline-11" class="outline-4">
+<h4 id="headline-11">
+系统环境
+</h4>
+<div id="outline-text-headline-11" class="outline-text-4">
+<p>
+本地使用windows11 64位</p>
+</div>
+</div>
+<div id="outline-container-headline-12" class="outline-4">
+<h4 id="headline-12">
+下载rtsp
+</h4>
+<div id="outline-text-headline-12" class="outline-text-4">
+<p>
+<a href="https://github.com/bluenviron/mediamtx/releases/latest">rtsp下载地址</a></p>
+<p>
+<img src="/images/ffmpeg教程/png1.png" alt="/images/ffmpeg教程/png1.png" title="/images/ffmpeg教程/png1.png" /></p>
+</div>
+</div>
+<div id="outline-container-headline-13" class="outline-4">
+<h4 id="headline-13">
+下载ffmpeg
+</h4>
+<div id="outline-text-headline-13" class="outline-text-4">
+<p>
+<a href="https://github.com/BtbN/FFmpeg-Builds/releases/latest">ffmpeg下载地址</a></p>
+<p>
+<img src="/images/ffmpeg教程/png2.png" alt="/images/ffmpeg教程/png2.png" title="/images/ffmpeg教程/png2.png" /></p>
+</div>
+</div>
+<div id="outline-container-headline-14" class="outline-4">
+<h4 id="headline-14">
+把rtsp和ffmpeg解压到同一个文件夹
+</h4>
+<div id="outline-text-headline-14" class="outline-text-4">
+<p>
+把上面下载的两个压缩包解压到同一个文件夹，视频也放到该文件夹目录下，如下图所示：</p>
+<p>
+<img src="/images/ffmpeg教程/png3.png" alt="/images/ffmpeg教程/png3.png" title="/images/ffmpeg教程/png3.png" /></p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-15" class="outline-3">
+<h3 id="headline-15">
+ffmpeg对本地视频进行rtsp推流
+</h3>
+<div id="outline-text-headline-15" class="outline-text-3">
+<div id="outline-container-headline-16" class="outline-4">
+<h4 id="headline-16">
+启动rtsp
+</h4>
+<div id="outline-text-headline-16" class="outline-text-4">
+<p>
+双击点开mediamtx.exe，得到如下图画面：</p>
+<p>
+<img src="/images/ffmpeg教程/png4.png" alt="/images/ffmpeg教程/png4.png" title="/images/ffmpeg教程/png4.png" /></p>
+</div>
+</div>
+<div id="outline-container-headline-17" class="outline-4">
+<h4 id="headline-17">
+ffpmeg推流本地视频
+</h4>
+<div id="outline-text-headline-17" class="outline-text-4">
+<p>
+打开cmd终端(win+r，输入cmd, 回车)，进入到ffmpeg.exe所在路径，使用以下命令：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  ffmpeg -re -stream_loop -1 -i normal_78.mp4 -c copy -f rtsp rtsp://127.0.0.1:8554/video</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+<img src="/images/ffmpeg教程/png5.png" alt="/images/ffmpeg教程/png5.png" title="/images/ffmpeg教程/png5.png" /></p>
+<p>
+注意：这里ip为本地环境IP，可以在cmd终端输入ipconfig查看。</p>
+<div id="outline-container-headline-18" class="outline-5">
+<h5 id="headline-18">
+ffpmeg常用参数
+</h5>
+<div id="outline-text-headline-18" class="outline-text-5">
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>-re</th>
+<th>以流的方式读取</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-i</td>
+<td>输入视频</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>-f</td>
+<td>格式化输出到哪里</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>-stream_loop</td>
+<td>循环读取视频源的次数，-l为无线循环</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>-c</td>
+<td>指定编码器</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>-c copy</td>
+<td>直接复制，不经过重新编码（较快）</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>-c:v</td>
+<td>指定视频编码器</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>-c:a</td>
+<td>指定音频编码器</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>-vn</td>
+<td>去除视频流</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>-an</td>
+<td>去除音频流</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-19" class="outline-4">
+<h4 id="headline-19">
+使用vlc验证是否推流成功
+</h4>
+<div id="outline-text-headline-19" class="outline-text-4">
+<ol>
+<li>下载vlc软件并安装:</li>
+</ol>
+<p><img src="/images/ffmpeg教程/png6.png" alt="/images/ffmpeg教程/png6.png" title="/images/ffmpeg教程/png6.png" /></p>
+<ol>
+<li>打开vlc，点击媒体-&gt;打开网络串流-&gt;输入网路url：rtsp://127.0.0.1:8554/video</li>
+</ol>
+<p><img src="/images/ffmpeg教程/png7.png" alt="/images/ffmpeg教程/png7.png" title="/images/ffmpeg教程/png7.png" /></p>
+<p>
+如果能正常播放视频，证明推流成功，服务端或者边缘端可以使用ur进行rtsp来推流。</p>
+<p>
+<img src="/images/ffmpeg教程/png8.png" alt="/images/ffmpeg教程/png8.png" title="/images/ffmpeg教程/png8.png" /></p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-20" class="outline-3">
+<h3 id="headline-20">
+参考链接
+</h3>
+<div id="outline-text-headline-20" class="outline-text-3">
+<p>
+<a href="https://blog.csdn.net/Caesar6666/article/details/137512406">windows环境下实现ffmpeg本地视频进行rtsp推流</a></p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-21" class="outline-2">
+<h2 id="headline-21">
+在Windows操作系统上使用mediamtx和ffmpeg推送录屏视频流
+</h2>
+<div id="outline-text-headline-21" class="outline-text-2">
+<div id="outline-container-headline-22" class="outline-3">
+<h3 id="headline-22">
+搭建启动rtsp server
+</h3>
+<div id="outline-text-headline-22" class="outline-text-3">
+<p>
+从<a href="https://github.com/bluenviron/mediamtx/releases/latest">https://github.com/bluenviron/mediamtx/releases/latest</a>下载Windows版本的编译结果。</p>
+<p>
+<img src="/images/ffmpeg教程/png1.png" alt="/images/ffmpeg教程/png1.png" title="/images/ffmpeg教程/png1.png" /></p>
+<p>
+解压，然后启动该程序</p>
+<p>
+<img src="/images/ffmpeg教程/png4.png" alt="/images/ffmpeg教程/png4.png" title="/images/ffmpeg教程/png4.png" /></p>
+</div>
+</div>
+<div id="outline-container-headline-23" class="outline-3">
+<h3 id="headline-23">
+推送录屏视频流
+</h3>
+<div id="outline-text-headline-23" class="outline-text-3">
+<p>
+下载FFmpeg</p>
+<p>
+从<a href="https://github.com/BtbN/FFmpeg-Builds/releases/latest">https://github.com/BtbN/FFmpeg-Builds/releases/latest</a>下载Windows版本的编译结果。</p>
+<p>
+<img src="/images/ffmpeg教程/png2.png" alt="/images/ffmpeg教程/png2.png" title="/images/ffmpeg教程/png2.png" /></p>
+<p>
+解压后，通过cmd进入FFmpeg所在的目录，执行下面的命令（其中rtsp://localhost:8554/mystream是上一步生成的地址）。</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  ffmpeg -f gdigrab -framerate <span class="m">10</span> -i desktop -f rtsp -g <span class="m">5</span> -an rtsp://localhost:8554/mystream</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+我们可以看到console会出现下面的变化。</p>
+<p>
+<img src="/images/ffmpeg教程/png9.png" alt="/images/ffmpeg教程/png9.png" title="/images/ffmpeg教程/png9.png" /></p>
+<p>
+rstp simple server的窗口会发生下面的变化。</p>
+<p>
+<img src="/images/ffmpeg教程/png10.png" alt="/images/ffmpeg教程/png10.png" title="/images/ffmpeg教程/png10.png" /></p>
+</div>
+</div>
+<div id="outline-container-headline-24" class="outline-3">
+<h3 id="headline-24">
+检验
+</h3>
+<div id="outline-text-headline-24" class="outline-text-3">
+<div id="outline-container-headline-25" class="outline-4">
+<h4 id="headline-25">
+获取本机IP
+</h4>
+<div id="outline-text-headline-25" class="outline-text-4">
+<p>
+在cmd中使用ipconfig获取本机IP</p>
+</div>
+</div>
+<div id="outline-container-headline-26" class="outline-4">
+<h4 id="headline-26">
+检测
+</h4>
+<div id="outline-text-headline-26" class="outline-text-4">
+<p>
+可以使用VLC播放器测试流地址是否有效。</p>
+<p>
+<img src="/images/ffmpeg教程/png11.png" alt="/images/ffmpeg教程/png11.png" title="/images/ffmpeg教程/png11.png" /></p>
+<p>
+填入rtsp://127.0.0.1:8554/mystream。注意此处不能再使用localhost了，而是要用本机的IP。</p>
+<p>
+<img src="/images/ffmpeg教程/png12.png" alt="/images/ffmpeg教程/png12.png" title="/images/ffmpeg教程/png12.png" /></p>
+<p>
+在VCL中能看到屏幕就代表我们方案是通过的。</p>
+<p>
+<img src="/images/ffmpeg教程/png13.png" alt="/images/ffmpeg教程/png13.png" title="/images/ffmpeg教程/png13.png" /></p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-27" class="outline-3">
+<h3 id="headline-27">
+参考链接
+</h3>
+<div id="outline-text-headline-27" class="outline-text-3">
+<p>
+<a href="https://blog.csdn.net/wujiesunlirong/article/details/134804329">在Windows操作系统上使用mediamtx和ffmpeg推送录屏视频流</a></p>
+</div>
+</div>
 </div>
 </div>
 
