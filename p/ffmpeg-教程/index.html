@@ -351,6 +351,94 @@
 </li>
 </ul>
 </li>
+<li><a href="#headline-28">RTSP 和 RTMP原理 &amp; 通过ffmpeg实现将本地摄像头推流到RTSP服务器</a>
+<ul>
+<li><a href="#headline-29">流媒体：RTSP 和 RTMP</a>
+<ul>
+<li><a href="#headline-30">参考资料</a>
+</li>
+<li><a href="#headline-31">RTSP 和 RTMP的工作原理</a>
+<ul>
+<li><a href="#headline-32">RTSP工作原理</a>
+<ul>
+<li><a href="#headline-33">这里解释一下RTSP中是如何用到UDP和TCP的：</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-34">RTMP工作原理</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-35">RTSP 和 RTMP的优缺点</a>
+<ul>
+<li><a href="#headline-36">RTSP的优缺点</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-37">RTMP的优缺点</a>
+<ul>
+<li><a href="#headline-38">RTMP的优点：</a>
+</li>
+<li><a href="#headline-39">RTMP的缺点：</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-40">RTSP和RTMP的比较</a>
+<ul>
+<li><a href="#headline-41">RTMP 和 RTSP协议 的区别：</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-42">RTSP和RTMP如何选择</a>
+</li>
+<li><a href="#headline-43">如何在浏览器上播放RTSP</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-44">ffmpeg将本地摄像头推流到RTSP服务器</a>
+<ul>
+<li><a href="#headline-45">ffmpeg参考资料</a>
+<ul>
+<li><a href="#headline-46">ffmpeg将本地摄像头推流到RTSP服务器</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-47">安装ffmpeg和rtsp-simple-server</a>
+<ul>
+<li><a href="#headline-48">windows安装rtsp-simple-server和ffmpeg</a>
+</li>
+<li><a href="#headline-49">linux安装rtsp-simple-server和ffmpeg</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-50">将本地摄像头推流到RTSP服务器</a>
+<ul>
+<li><a href="#headline-51">写客户端：ffmpeg</a>
+</li>
+<li><a href="#headline-52">服务器端：RTSP服务器</a>
+</li>
+<li><a href="#headline-53">读客户端：读客户端可以通过两种方式来实现</a>
+</li>
+<li><a href="#headline-54">存在问题：视频读取时延大</a>
+<ul>
+<li><a href="#headline-55">可能原因1：视频编码导致延迟高（亲测效果不明显）</a>
+</li>
+<li><a href="#headline-56">可能原因2：设置ffmpeg参数（亲测效果不明显）</a>
+</li>
+<li><a href="#headline-57">可能原因3：tcp连接导致延迟高</a>
+</li>
+<li><a href="#headline-58">原因4：逐帧读取时需要逐帧解码，导致输入和输出速率不匹配导致延迟高（有效 - 抽帧读取）</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#headline-59">参考链接</a>
+</li>
+</ul>
+</li>
 </ul>
 </nav>
         </div>
@@ -394,7 +482,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 4 分钟
+                    阅读时长: 15 分钟
                 </time>
             </div>
         
@@ -799,6 +887,648 @@ rstp simple server的窗口会发生下面的变化。</p>
 <div id="outline-text-headline-27" class="outline-text-3">
 <p>
 <a href="https://blog.csdn.net/wujiesunlirong/article/details/134804329">在Windows操作系统上使用mediamtx和ffmpeg推送录屏视频流</a></p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-28" class="outline-2">
+<h2 id="headline-28">
+RTSP 和 RTMP原理 &amp; 通过ffmpeg实现将本地摄像头推流到RTSP服务器
+</h2>
+<div id="outline-text-headline-28" class="outline-text-2">
+<div id="outline-container-headline-29" class="outline-3">
+<h3 id="headline-29">
+流媒体：RTSP 和 RTMP
+</h3>
+<div id="outline-text-headline-29" class="outline-text-3">
+<div id="outline-container-headline-30" class="outline-4">
+<h4 id="headline-30">
+参考资料
+</h4>
+<div id="outline-text-headline-30" class="outline-text-4">
+<p>
+<a href="https://blog.csdn.net/weixin_43025343/article/details/124957360">秒懂流媒体协议 RTMP 与 RTSP</a></p>
+<p>
+<a href="https://blog.csdn.net/daocaokafei/article/details/127098972">什么是RTMP 和 RTSP？它们之间有什么区别？</a></p>
+<p>
+<a href="https://www.cnblogs.com/biao-wu/articles/13064243.html">RTSP和RTMP的区别是什么？</a></p>
+</div>
+</div>
+<div id="outline-container-headline-31" class="outline-4">
+<h4 id="headline-31">
+RTSP 和 RTMP的工作原理
+</h4>
+<div id="outline-text-headline-31" class="outline-text-4">
+<div id="outline-container-headline-32" class="outline-5">
+<h5 id="headline-32">
+RTSP工作原理
+</h5>
+<div id="outline-text-headline-32" class="outline-text-5">
+<ol>
+<li>用户设备向视频流平台发送 RTSP 请求</li>
+<li>视频流平台返回可以操作的请求列表，比如播放、暂停等</li>
+<li>用户设备向视频流平台发送具体的请求，比如播放</li>
+<li>视频流平台解析请求并调用指定机制启动视频流处理</li>
+<li>由于 RTSP 依赖于专用服务器，并且依赖于 RTP（底层用到了UDP），因此该协议不支持加密视频内容或重传丢失的数据包。</li>
+</ol>
+<div id="outline-container-headline-33" class="outline-6">
+<h6 id="headline-33">
+这里解释一下RTSP中是如何用到UDP和TCP的：
+</h6>
+<div id="outline-text-headline-33" class="outline-text-6">
+<ol>
+<li>RTP协议，英文全称：Real-time Transport Protocol，中文就是实时传输协议，它的底层其实就是UDP，这样一来就可以实现低延迟。</li>
+<li>
+<p>除了RTP协议，为确保流畅和一致的流传输，RTSP 还使用另外两种网络通信协议：</p>
+<ol>
+<li>TCP 收发控制命令（例如播放或停止请求）：TCP可靠传输，比如用户按下播放或者停止播放的时候，这个是个准确的请求，这个需要保证可靠性，这个时候TCP作用就体现了。</li>
+<li>UDP传送音频、视频和数据：UDP是低延迟的协议，那么用于传送音频、视频和数据可以达到非常高效的效果。</li>
+</ol>
+</li>
+</ol>
+<p>这里可以通过<a href="https://github.com/aler9/rtsp-simple-server/releases">开源的rtsp服务器</a>可以简单理解：TCP监听端口为8554，UDP监听端口为8000</p>
+<p>
+<img src="/images/ffmpeg教程/png4.png" alt="/images/ffmpeg教程/png4.png" title="/images/ffmpeg教程/png4.png" /></p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-34" class="outline-5">
+<h5 id="headline-34">
+RTMP工作原理
+</h5>
+<div id="outline-text-headline-34" class="outline-text-5">
+<ol>
+<li>摄像头捕获视频</li>
+<li>通过编码器将视频流传输到视频平台服务器</li>
+<li>视频平台处理视频流</li>
+<li>通过CDN分发到离用户最近的服务器上</li>
+<li>最后视频流就能成功的到达用户设备</li>
+</ol>
+<p><img src="/images/ffmpeg教程/png15.png" alt="/images/ffmpeg教程/png15.png" title="/images/ffmpeg教程/png15.png" /></p>
+<p>
+在视频从摄像头到服务器的过程中，RTMP将大量数据分割成小块并跨多个虚拟通道传输（内容分发网络CDN），在视频源和 RTMP 服务器之间提供了稳定和流畅的视频流。</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-35" class="outline-4">
+<h4 id="headline-35">
+RTSP 和 RTMP的优缺点
+</h4>
+<div id="outline-text-headline-35" class="outline-text-4">
+<div id="outline-container-headline-36" class="outline-5">
+<h5 id="headline-36">
+RTSP的优缺点
+</h5>
+<div id="outline-text-headline-36" class="outline-text-5">
+<p>
+RTSP的优点：</p>
+<ol>
+<li>轻松自定义流：可以通过结合不同的协议来开发自己的视频流解决方案。</li>
+<li>分段流式传输：RTSP 流使观看者能够在下载完成之前访问的视频内容，而不必下载完整的视频以流式传输内容。</li>
+</ol>
+<p>RTSP的缺点：</p>
+<ol>
+<li>与 HTTP不兼容：没有简单的解决方案可以在 Web 浏览器中播放 RTSP流，因为 RTSP 旨在通过私有网络流式传输视频，必须借用额外软件。</li>
+<li>使用率低：由于视频播放器和流媒体服务并未广泛支持 RTSP 流媒体，因为使用率比较低。</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-37" class="outline-4">
+<h4 id="headline-37">
+RTMP的优缺点
+</h4>
+<div id="outline-text-headline-37" class="outline-text-4">
+<div id="outline-container-headline-38" class="outline-5">
+<h5 id="headline-38">
+RTMP的优点：
+</h5>
+<div id="outline-text-headline-38" class="outline-text-5">
+<ol>
+<li>低延迟：RTMP使用独占的 1935 端口，无需缓冲，可以实现低延迟。</li>
+<li>适应性强：所有 RTMP 服务器都可以录制直播媒体流，同时还允许观众跳过部分广播并在直播开始后加入直播流。</li>
+<li>灵活性：RTMP 支持整合文本、视频和音频，支持 MP3 和 AAC 音频流，也支持MP4、FLV 和 F4V 视频。</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-headline-39" class="outline-5">
+<h5 id="headline-39">
+RTMP的缺点：
+</h5>
+<div id="outline-text-headline-39" class="outline-text-5">
+<ol>
+<li>HTML5 不支持：标准HTML5 播放器不支持 RTMP 流。</li>
+<li>容易受到带宽问题的影响：RTMP 流经常会出现低带宽问题，造成视频中断。</li>
+<li>HTTP 不兼容：无法通过 HTTP 流式传输 RTMP，必须需要实现一个特殊的服务器，并使用第三方内容交付网络或使用流媒体视频平台。</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-40" class="outline-4">
+<h4 id="headline-40">
+RTSP和RTMP的比较
+</h4>
+<div id="outline-text-headline-40" class="outline-text-4">
+<p>
+RTMP 和 RTSP协议 都是流媒体协议：</p>
+<ol>
+<li>RTMP（Real Time Message Protocol 实时消息传递协议） 有 Adobe 公司提出，用来解决多媒体数据传输流的多路复用（Multiplexing）和分包（packetizing）的问题，优势在于低延迟，稳定性高，支持所有摄像头格式，浏览器加载 flash插件就可以直接播放。</li>
+<li>RTSP （Real-Time Stream Protocol 实时流协议）由Real Networks 和 Netscape共同提出的，基于文本的多媒体播放控制协议。RTSP定义流格式，流数据经由RTP传输；RTSP实时效果非常好，适合视频聊天，视频监控等方向。</li>
+</ol>
+<div id="outline-container-headline-41" class="outline-5">
+<h5 id="headline-41">
+RTMP 和 RTSP协议 的区别：
+</h5>
+<div id="outline-text-headline-41" class="outline-text-5">
+<p>
+RTSP虽然实时性最好，但是实现复杂，适合视频聊天和视频监控；</p>
+<p>
+RTMP强在浏览器支持好，加载flash插件后就能直接播放，所以非常火，相反在浏览器里播放rtsp就很困难了。</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-42" class="outline-4">
+<h4 id="headline-42">
+RTSP和RTMP如何选择
+</h4>
+<div id="outline-text-headline-42" class="outline-text-4">
+<ol>
+<li>IP 摄像机选择RTSP：几乎所有 IP 摄像机都支持 RTSP，这是因为 IP 摄像机早在 RTMP 协议创建之前就已经存在，与 RTSP 和 IP 摄像机结合使用时，IP 摄像机本身充当 RTSP 服务器，这意味着要将摄像机连接到 IP 摄像机服务器并广播视频。</li>
+<li>物联网设备选择RTSP：RTSP 通常内置在无人机或物联网软件中，从而可以访问视频源，它的好处之一是低延迟，确保视频中没有延迟，这对于无人机来说至关重要。</li>
+<li>流媒体应用程序选择RTMP：比如各种短视频软件、视频直播软件等都内置了RTMP，RTMP 是为满足现代流媒体需求而设计的。</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-headline-43" class="outline-4">
+<h4 id="headline-43">
+如何在浏览器上播放RTSP
+</h4>
+<div id="outline-text-headline-43" class="outline-text-4">
+<ol>
+<li>直播的协议有：rtmp, http, rtsp等等。最常用的有二种：http, rtmp，当使用http协议的时候视频格式需要是m3u8或flv，下面作详细说明各种环境的优缺点。首先，rtsp不能使用于网页环境（包含PC端和移动端），那么直播只能选择rtmp或http。</li>
+<li>rtmp协议只支持flashplayer，也就是只能在PC端（或安卓环境中安装了flashplayer组件，这种环境比较少）安装了flashplayer的情况下使用。按现在的趋势，flashplayer是要逐渐被淘汰掉的。当然，在中国还会存在相对长时间。</li>
+<li>http协议的直播分二种格式，m3u8和flv。flv是一种即将被淘汰的直播格式。用来做直播已显的力不从心了。所以综合考虑，m3u8相对的比较好点，优点是支持移动端，并且支持PC端上安装了flashplayer的环境。缺点就如同rtmp一样。flashplayer并不是未来的发展趋势。另外一个缺点就是m3u8是有延迟的。并不能实时，实时传输方面不如rtmp协议。因为 m3u8的直播原理是将直播源不停的压缩成指定时长的ts文件（比如9秒，10秒一个ts文件）并同时实时更新m3u8文件里的列表以达到直播的效果。这样就会有一个至少9,10秒的时间延迟。如果压缩的过小，可能导致客户端网络原因致视频变卡。</li>
+<li>实现rtsp转http并使用m3u8格式进行直播 可以参考<a href="https://www.youtube.com/watch?v=rgWVm_j3llo&amp;list=LL">RTSP Webcam to HLS Live Streaming using FFMPEG and XAMPP | PART 1</a></li>
+</ol>
+<p>具体过程：外接支持rtsp的webcam；使用ffplay命令来播放rtsp流，可以根据参数将实时视频写入到指定文件夹中（分段写入）；xampp开启apache（开启80端口），可以让页面通过保存的m3u8文件实时访问webcam的监控界面。</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-44" class="outline-3">
+<h3 id="headline-44">
+ffmpeg将本地摄像头推流到RTSP服务器
+</h3>
+<div id="outline-text-headline-44" class="outline-text-3">
+<div id="outline-container-headline-45" class="outline-4">
+<h4 id="headline-45">
+ffmpeg参考资料
+</h4>
+<div id="outline-text-headline-45" class="outline-text-4">
+<p>
+<a href="https://ffmpeg.org/ffmpeg-protocols.html">FFmpeg Protocols Documentation</a></p>
+<p>
+<a href="https://ffmpeg.org/ffmpeg-protocols.html">FFmpeg中文文档</a></p>
+<p>
+<a href="https://zhuanlan.zhihu.com/p/545070185">FFmpeg流媒体处理-收流与推流</a></p>
+<p>
+<a href="https://blog.51cto.com/u_3619476/5019788">FFmpeg发送流媒体的命令（UDP，RTP，RTMP）</a></p>
+<div id="outline-container-headline-46" class="outline-5">
+<h5 id="headline-46">
+ffmpeg将本地摄像头推流到RTSP服务器
+</h5>
+<div id="outline-text-headline-46" class="outline-text-5">
+<p>
+<a href="https://blog.csdn.net/fkbiubiubiu/article/details/124028614">ffmpeg–使用命令+EasyDarwin推流笔记本摄像头</a></p>
+<p>
+<a href="https://blog.csdn.net/EthanCo/article/details/125321957">windows环境下，搭建RTSP视频推流服务器</a></p>
+<p>
+<a href="https://blog.csdn.net/qq_43994782/article/details/118941373">windows环境下python使用ffmpeg rtsp推流</a></p>
+<p>
+<a href="https://blog.csdn.net/yinshipin007/article/details/125982017">一个RtspServer的设计与实现和RTSP2.0简介</a></p>
+<p>
+<a href="https://www.youtube.com/watch?v=rgWVm_j3llo&amp;list=LL">RTSP Webcam to HLS Live Streaming using FFMPEG and XAMPP | PART 1</a></p>
+<p>
+Note：ffmpeg将本地摄像头推流到rtsp的8554端口上（rtsp-simple-server在处理rtsp时，监听的是8554端口，指定其他端口ffmpeg推流会失败)</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-47" class="outline-4">
+<h4 id="headline-47">
+安装ffmpeg和rtsp-simple-server
+</h4>
+<div id="outline-text-headline-47" class="outline-text-4">
+<p>
+大致实现过程：使用rtsp-simple-server作为中转服务器，用于ffmpeg（写客户端）推流，后台服务（读客户端）拉流</p>
+<div id="outline-container-headline-48" class="outline-5">
+<h5 id="headline-48">
+windows安装rtsp-simple-server和ffmpeg
+</h5>
+<div id="outline-text-headline-48" class="outline-text-5">
+<p>
+参考<a href="https://blog.csdn.net/EthanCo/article/details/125321957">windows环境下，搭建RTSP视频推流服务器</a>即可（记得修改rtsp-simple-server.yml配置文件中的ip地址）</p>
+</div>
+</div>
+<div id="outline-container-headline-49" class="outline-5">
+<h5 id="headline-49">
+linux安装rtsp-simple-server和ffmpeg
+</h5>
+<div id="outline-text-headline-49" class="outline-text-5">
+<p>
+安装<a href="https://github.com/aler9/rtsp-simple-server/releases/download/v0.20.2/rtsp-simple-server_v0.20.2_linux_amd64.tar.gz">rtsp-simple-server_v0.20.2_linux_amd64.tar.gz</a>（这里以x86 CPU为例），解压后修改rtsp-simple-server.yml配置文件中的ip地址（vim替换命令为%s:/127.0.0.1/192.168.132.100/g），执行./rtsp-simple-server即可启动rtsp服务器。</p>
+<p>
+如果要想在后台启动rtsp服务器，执行如下命令</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  nohup ./rtsp-simple-server &gt;&gt; rtsp_server.log 2&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="p">&amp;</span>  <span class="c1">#非挂起启动命令</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+tail rtsp_server.log  #查看rtsp-simple-server启动日志文件</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  ps -aux <span class="p">|</span> grep rtsp_simple_server  <span class="c1">#查看rtsp-simple-server进程</span>
+</span></span><span class="line"><span class="cl">  dpf        <span class="m">2116</span>  0.0  0.0  <span class="m">13140</span>  <span class="m">1016</span> pts/0    S+   04:54   0:00 grep --color<span class="o">=</span>auto rtsp_simple_server</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+ffmpeg安装地址如下<a href="https://johnvansickle.com/ffmpeg/">https://johnvansickle.com/ffmpeg/</a>，解压后执行./ffmpeg即可使用ffmpeg，参考<a href="https://blog.csdn.net/weixin_42010722/article/details/126951341">在linux下使用ffmpeg方法</a></p>
+<p>
+Note：在linux中关于tar.gz，xz，tar的解压操作请自行上网查阅。</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-50" class="outline-4">
+<h4 id="headline-50">
+将本地摄像头推流到RTSP服务器
+</h4>
+<div id="outline-text-headline-50" class="outline-text-4">
+<p>
+大致实现过程：使用rtsp-simple-server作为中转服务器，用于ffmpeg（写客户端）推流，后台服务（读客户端）拉流</p>
+<p>
+这里以windows系统作为演示，先解压<a href="https://github.com/aler9/rtsp-simple-server/releases">rtsp-simple-server_v0.19.1_windows_amd64.zip</a>，打开rtsp-simple-server.exe监听RTSP下TCP的8554端口，然后通过ffmpeg将指定摄像头采集到的图像帧向该端口进行推流（即多个客户端与服务器端的socket通信）</p>
+<div id="outline-container-headline-51" class="outline-5">
+<h5 id="headline-51">
+写客户端：ffmpeg
+</h5>
+<div id="outline-text-headline-51" class="outline-text-5">
+<p>
+ffmpeg推流视频文件到指定ip + 端口上（-stream_loop -1）：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  ffmpeg -re -stream_loop -1 -i 你视频的文件名 -c copy -f rtsp rtsp://127.0.0.1:8554/videoFile_test</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+ffmpeg将本地摄像头的视频流推送到指定ip + 端口上，则需要</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  //获取本地摄像头名称
+</span></span><span class="line"><span class="cl">  ffmpeg -list_devices <span class="nb">true</span> -f dshow -i dummy  
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  //ffmpeg向指定端口推流（我的是Integrated Camera）
+</span></span><span class="line"><span class="cl">  ffmpeg -f dshow -i <span class="nv">video</span><span class="o">=</span><span class="s2">&#34;自己的摄像头驱动名称&#34;</span> -vcodec libx264 -preset:v ultrafast -tune:v zerolatency -rtsp_transport tcp -f rtsp rtsp://127.0.0.1:8554/camera_test
+</span></span><span class="line"><span class="cl">  //libx264编码
+</span></span><span class="line"><span class="cl">  ffmpeg -f dshow -i <span class="nv">video</span><span class="o">=</span><span class="s2">&#34;Integrated Camera&#34;</span> -vcodec libx264 -preset:v ultrafast -tune:v zerolatency -rtsp_transport tcp -f rtsp rtsp://127.0.0.1:8554/camera_test</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-52" class="outline-5">
+<h5 id="headline-52">
+服务器端：RTSP服务器
+</h5>
+<div id="outline-text-headline-52" class="outline-text-5">
+<p>
+初启动效果如下：</p>
+<p>
+<img src="/images/ffmpeg教程/png4.png" alt="/images/ffmpeg教程/png4.png" title="/images/ffmpeg教程/png4.png" /></p>
+<p>
+开启两个ffmpeg模拟两个写客户端，完成摄像头采集视频帧的推流和本地视频文件的推流</p>
+<p>
+该过程会出现两个createby和publishing，在不同文件路径下写入图像帧，可以通过指定进程（ip+端口）来处理（这里新创建了56725和56732两个进程来处理），而RTSP的监听端口仍然是8554，这样可以实现非阻塞通信。</p>
+<p>
+<img src="/images/ffmpeg教程/png16.png" alt="/images/ffmpeg教程/png16.png" title="/images/ffmpeg教程/png16.png" /></p>
+</div>
+</div>
+<div id="outline-container-headline-53" class="outline-5">
+<h5 id="headline-53">
+读客户端：读客户端可以通过两种方式来实现
+</h5>
+<div id="outline-text-headline-53" class="outline-text-5">
+<p>
+安装VLC，选择流数据播放模式，输入rtsp://127.0.0.1:8554/camera_test，rtsp://127.0.0.1:8554/videoFile_test即可播放；</p>
+<p>
+<code class="verbatim">通过OBS的虚拟摄像头，将终端打印信息接入到虚拟摄像头中，再通过ffmpeg将虚拟摄像头中的内容推流出来，最后通过VLC拉流查看效果</code></p>
+<p>
+<img src="/images/ffmpeg教程/png17.png" alt="/images/ffmpeg教程/png17.png" title="/images/ffmpeg教程/png17.png" /></p>
+<p>
+亦或者使用如下python代码：</p>
+<div class="src src-python">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">cv2</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">capture_video</span><span class="p">(</span><span class="n">rtsp_path</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">name</span> <span class="o">=</span> <span class="n">rtsp_path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&#34;/&#34;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">capture</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">VideoCapture</span><span class="p">(</span><span class="n">rtsp_path</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="n">capture</span><span class="o">.</span><span class="n">isOpened</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ret</span><span class="p">,</span> <span class="n">frame</span> <span class="o">=</span> <span class="n">capture</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="ow">not</span> <span class="n">ret</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">break</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">frame</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span> <span class="o">==</span> <span class="mi">27</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">break</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># rtsp_paths = [&#39;rtsp://127.0.0.1:8554/videoFile_test&#39;,&#39;rtsp://127.0.0.1:8554/camera_test&#39;]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">rtsp_paths</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;rtsp://127.0.0.1:8554/videoFile_test&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">rtsp_path</span> <span class="ow">in</span> <span class="n">rtsp_paths</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">capture_video</span><span class="p">(</span><span class="n">rtsp_path</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cv2</span><span class="o">.</span><span class="n">destroyAllWindows</span><span class="p">()</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+此时会出现两个createby和reading，即开启两个进程进行视频流的读取</p>
+</div>
+</div>
+<div id="outline-container-headline-54" class="outline-5">
+<h5 id="headline-54">
+存在问题：视频读取时延大
+</h5>
+<div id="outline-text-headline-54" class="outline-text-5">
+<p>
+基于tcp和RTP的rtsp直播延迟很高，一开始延迟只有7s，由于TCP的拥塞控制，导致随着时间推移，延迟越来越高，有14s之多。</p>
+<div id="outline-container-headline-55" class="outline-6">
+<h6 id="headline-55">
+可能原因1：视频编码导致延迟高（亲测效果不明显）
+</h6>
+<div id="outline-text-headline-55" class="outline-text-6">
+<p>
+参考<a href="https://blog.csdn.net/yuxinaibiancheng/article/details/119884095">ffmpeg直播解决延时的关键方法</a>，主要原因是使用libx264或者h264对视频进行编码的问题。</p>
+<p>
+解决方法参考<a href="https://blog.csdn.net/fkbiubiubiu/article/details/124028614">ffmpeg–使用命令+EasyDarwin推流笔记本摄像头</a></p>
+<p>
+//h264_qsv编码（比libx264编码快点）</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  ffmpeg -f dshow -i <span class="nv">video</span><span class="o">=</span><span class="s2">&#34;Integrated Camera&#34;</span> -vcodec h264_qsv -tune:v zerolatency -rtsp_transport tcp -f rtsp rtsp://127.0.0.1:8554/camera_test</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+//不使用编码器，直接推送（但是很模糊）</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ffmpeg -f dshow -i <span class="nv">video</span><span class="o">=</span><span class="s2">&#34;Integrated Camera&#34;</span> -rtsp_transport tcp -f rtsp rtsp://127.0.0.1:8554/camera_test</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-56" class="outline-6">
+<h6 id="headline-56">
+可能原因2：设置ffmpeg参数（亲测效果不明显）
+</h6>
+<div id="outline-text-headline-56" class="outline-text-6">
+<p>
+参考<a href="https://www.cnblogs.com/sk777/p/16831556.html">解决ffmpeg的播放摄像头的延时优化问题(项目案例使用有效)</a></p>
+<p>
+原参数：</p>
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">-vcodec libx264,
+</span></span><span class="line"><span class="cl">-r 25,
+</span></span><span class="line"><span class="cl">-video_size 1280x720,</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+优化参数1：</p>
+<p>
+-tune zerolatency  <em>/设置零延时
+-preset ultrafast  /</em>–preset的参数主要调节编码速度和质量的平衡，有ultrafast（转码速度最快，视频往往也最模糊）、superfast、veryfast、faster、fast、medium、slow、slower、veryslow、placebo这10个选项，从快到慢</p>
+<p>
+优化参数2：</p>
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">-threads 4,
+</span></span><span class="line"><span class="cl">-c:a copy,
+</span></span><span class="line"><span class="cl">-fflags nobuffer,
+</span></span><span class="line"><span class="cl">-max_delay 1,
+</span></span><span class="line"><span class="cl">-vprofile baseline,
+</span></span><span class="line"><span class="cl">-rtsp_transport tcp,
+</span></span><span class="line"><span class="cl">-crf 30,
+</span></span><span class="line"><span class="cl">-vsync 2,
+</span></span><span class="line"><span class="cl">-f flv</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+ffmpeg完整命令如下：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  ffmpeg -f dshow -i <span class="nv">video</span><span class="o">=</span><span class="s2">&#34;Integrated Camera&#34;</span> -vcodec libx264 -r <span class="m">25</span> -video_size 640x480 -tune:v zerolatency -preset:v ultrafast -threads <span class="m">4</span> -c:a copy -fflags nobuffer -max_delay <span class="m">1</span> -rtsp_transport tcp -crf <span class="m">30</span> -vsync <span class="m">2</span> -f flv -f rtsp rtsp://127.0.0.1:8554/camera_test</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-57" class="outline-6">
+<h6 id="headline-57">
+可能原因3：tcp连接导致延迟高
+</h6>
+<div id="outline-text-headline-57" class="outline-text-6">
+<p>
+参考<a href="https://github.com/aler9/rtsp-simple-server/issues/902">RTSP end to end latency will be increasing when use tcp #902</a></p>
+<p>
+ffmpeg在通过rtsp实现推流时默认是遵循tcp协议的，目的是为了保证消息可靠传输。对于实时音视频通信，如果要想实现低延迟，要么增加带宽，要么使用UDP进行传输。</p>
+</div>
+</div>
+<div id="outline-container-headline-58" class="outline-6">
+<h6 id="headline-58">
+原因4：逐帧读取时需要逐帧解码，导致输入和输出速率不匹配导致延迟高（有效 - 抽帧读取）
+</h6>
+<div id="outline-text-headline-58" class="outline-text-6">
+<p>
+解决方法：对于读客户端，采用抽帧读取的方法来解决。如果采用逐帧读取并完成解码的方式，会让写客户端不停地推流，而读客户端来不及解码导致缓存区拥塞。</p>
+<p>
+参考<a href="http://www.yaotu.net/biancheng/21985.html">Opencv—视频跳帧处理，OpenCV笔记：cv2.VideoCapture 完成视频的跳帧输出操作</a></p>
+<p>
+ffmpeg写客户端命令无需修改：</p>
+<p>
+//获取本地摄像头名称</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  ffmpeg -list_devices <span class="nb">true</span> -f dshow -i dummy</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  ffmpeg -f dshow -i <span class="nv">video</span><span class="o">=</span><span class="s2">&#34;Integrated Camera&#34;</span> -vcodec libx264 -r <span class="m">25</span> -video_size 640x480 -tune:v zerolatency -preset:v ultrafast -threads <span class="m">4</span> -c:a copy -fflags nobuffer -max_delay <span class="m">1</span> -rtsp_transport tcp -crf <span class="m">30</span> -vsync <span class="m">2</span> -f flv -f rtsp rtsp://127.0.0.1:8554/camera_test</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+python读客户端代码修改如下：</p>
+<div class="src src-python">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">capture_video</span><span class="p">(</span><span class="n">rtsp_path</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">name</span> <span class="o">=</span> <span class="n">rtsp_path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&#34;/&#34;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">capture</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">VideoCapture</span><span class="p">(</span><span class="n">rtsp_path</span><span class="p">)</span>  <span class="c1">#不用带cv2.CAP_DSHOW</span>
+</span></span><span class="line"><span class="cl">    <span class="n">now_fps</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="n">capture</span><span class="o">.</span><span class="n">isOpened</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 设置每 10 帧输出一次</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">now_fps</span> <span class="o">==</span> <span class="mi">3</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">now_fps</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">            <span class="n">ret</span><span class="p">,</span> <span class="n">frame</span> <span class="o">=</span> <span class="n">capture</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="ow">not</span> <span class="n">ret</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="k">break</span>
+</span></span><span class="line"><span class="cl">            <span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">frame</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span> <span class="o">==</span> <span class="mi">27</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="k">break</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># 跳帧，仅获取帧但不做解码处理</span>
+</span></span><span class="line"><span class="cl">            <span class="n">ret</span> <span class="o">=</span> <span class="n">capture</span><span class="o">.</span><span class="n">grab</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">            <span class="n">now_fps</span> <span class="o">+=</span> <span class="mi">1</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-59" class="outline-3">
+<h3 id="headline-59">
+参考链接
+</h3>
+<div id="outline-text-headline-59" class="outline-text-3">
+<p>
+<a href="https://blog.csdn.net/qq_33934427/article/details/128009659">RTSP 和 RTMP原理 &amp; 通过ffmpeg实现将本地摄像头推流到RTSP服务器</a></p>
 </div>
 </div>
 </div>
