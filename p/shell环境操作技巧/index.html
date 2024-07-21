@@ -491,6 +491,8 @@
 </li>
 <li><a href="#headline-88">查找文件关键词并替换</a>
 </li>
+<li><a href="#headline-89">输出累加数+时间戳，按回车继续</a>
+</li>
 </ul>
 </nav>
         </div>
@@ -3099,6 +3101,23 @@ bc -q：显示正常的GNU bc环境信息</p>
 </span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="o">((</span><span class="nv">i</span> <span class="o">=</span> 0<span class="p">;</span> i &lt; fileNum<span class="p">;</span> i++<span class="o">))</span><span class="p">;</span> <span class="k">do</span>
 </span></span><span class="line"><span class="cl">	  sed -i <span class="s2">&#34;s/</span><span class="si">${</span><span class="nv">var1</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">var2</span><span class="si">}</span><span class="s2">/g&#34;</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">files</span><span class="p">[i]</span><span class="si">}</span><span class="s2">&#34;</span> <span class="c1"># 将var1替换为var2</span>
 </span></span><span class="line"><span class="cl">  <span class="k">done</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-89" class="outline-2">
+<h2 id="headline-89">
+输出累加数+时间戳，按回车继续
+</h2>
+<div id="outline-text-headline-89" class="outline-text-2">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nv">count</span><span class="o">=</span>0<span class="p">;</span> <span class="k">while</span> true<span class="p">;</span> <span class="k">do</span> <span class="o">((</span>count++<span class="o">))</span><span class="p">;</span> <span class="nb">echo</span> -en <span class="s2">&#34;\r</span><span class="si">${</span><span class="nv">count</span><span class="si">}</span><span class="s2">\n</span><span class="k">$(</span>date<span class="k">)</span><span class="s2">&#34;</span><span class="p">;</span> <span class="nb">read</span> -p <span class="s2">&#34;&#34;</span> <span class="k">continue</span><span class="p">;</span> <span class="k">done</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
