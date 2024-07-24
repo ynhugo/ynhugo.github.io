@@ -345,35 +345,37 @@
 </li>
 <li><a href="#headline-27">adb</a>
 <ul>
-<li><a href="#headline-28">adb shell input keyevent (具体操作) – 模拟按键事件 KeyCode</a>
+<li><a href="#headline-28">唤醒屏幕+划动屏幕</a>
 </li>
-<li><a href="#headline-29">每个数字与keycode对应表如下：</a>
+<li><a href="#headline-29">adb shell input keyevent (具体操作) – 模拟按键事件 KeyCode</a>
 </li>
-<li><a href="#headline-30">电话键</a>
+<li><a href="#headline-30">每个数字与keycode对应表如下：</a>
 </li>
-<li><a href="#headline-31">控制键</a>
+<li><a href="#headline-31">电话键</a>
 </li>
-<li><a href="#headline-32">按键</a>
+<li><a href="#headline-32">控制键</a>
 </li>
-<li><a href="#headline-33">多媒体键</a>
+<li><a href="#headline-33">按键</a>
 </li>
-<li><a href="#headline-34">F1~F12功能键</a>
+<li><a href="#headline-34">多媒体键</a>
 </li>
-<li><a href="#headline-35">符号按键</a>
+<li><a href="#headline-35">F1~F12功能键</a>
 </li>
-<li><a href="#headline-36">小键盘按键</a>
+<li><a href="#headline-36">符号按键</a>
 </li>
-<li><a href="#headline-37">参考链接</a>
+<li><a href="#headline-37">小键盘按键</a>
+</li>
+<li><a href="#headline-38">参考链接</a>
 </li>
 </ul>
 </li>
-<li><a href="#headline-38">解锁手机</a>
+<li><a href="#headline-39">解锁手机</a>
 <ul>
-<li><a href="#headline-39">测试</a>
+<li><a href="#headline-40">测试</a>
 </li>
-<li><a href="#headline-40">实操命令</a>
+<li><a href="#headline-41">实操命令</a>
 </li>
-<li><a href="#headline-41">参考链接</a>
+<li><a href="#headline-42">参考链接</a>
 </li>
 </ul>
 </li>
@@ -531,9 +533,11 @@ ssh_host是ssh配置文件中的host，也可以改为user@hostname的形式，�
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span><span class="lnt">6
+</span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;adb shell input keyevent 82; adb shell input keyevent 82; sleep 0.4; adb shell input text password&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;adb shell input keyevent 224; adb shell input keyevent 82;&#34;</span>
 </span></span><span class="line"><span class="cl">  adb kill-server
 </span></span><span class="line"><span class="cl">  adb start-server  
 </span></span><span class="line"><span class="cl">  <span class="nv">ssh_host</span><span class="o">=</span><span class="s2">&#34;rog8&#34;</span><span class="p">;</span> mapfile -t ip_array &lt; &lt;<span class="o">(</span>ssh <span class="nv">$ssh_host</span> ifconfig <span class="p">|</span> grep -oE <span class="s2">&#34;inet ?192.168.[0-9]{0,3}.[0-9]{0,3}&#34;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span><span class="o">)</span><span class="p">;</span>
@@ -860,9 +864,26 @@ adb
 <div id="outline-text-headline-27" class="outline-text-3">
 <div id="outline-container-headline-28" class="outline-4">
 <h4 id="headline-28">
-adb shell input keyevent (具体操作) – 模拟按键事件 KeyCode
+唤醒屏幕+划动屏幕
 </h4>
 <div id="outline-text-headline-28" class="outline-text-4">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  adb shell input keyevent 224<span class="p">;</span> adb shell input keyevent 82<span class="p">;</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-29" class="outline-4">
+<h4 id="headline-29">
+adb shell input keyevent (具体操作) – 模拟按键事件 KeyCode
+</h4>
+<div id="outline-text-headline-29" class="outline-text-4">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -877,11 +898,11 @@ adb shell input keyevent (具体操作) – 模拟按键事件 KeyCode
 </div>
 </div>
 </div>
-<div id="outline-container-headline-29" class="outline-4">
-<h4 id="headline-29">
+<div id="outline-container-headline-30" class="outline-4">
+<h4 id="headline-30">
 每个数字与keycode对应表如下：
 </h4>
-<div id="outline-text-headline-29" class="outline-text-4">
+<div id="outline-text-headline-30" class="outline-text-4">
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1402,11 +1423,11 @@ adb shell input keyevent (具体操作) – 模拟按键事件 KeyCode
 </table></div>
 </div>
 </div>
-<div id="outline-container-headline-30" class="outline-4">
-<h4 id="headline-30">
+<div id="outline-container-headline-31" class="outline-4">
+<h4 id="headline-31">
 电话键
 </h4>
-<div id="outline-text-headline-30" class="outline-text-4">
+<div id="outline-text-headline-31" class="outline-text-4">
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1509,11 +1530,11 @@ adb shell input keyevent (具体操作) – 模拟按键事件 KeyCode
 </table></div>
 </div>
 </div>
-<div id="outline-container-headline-31" class="outline-4">
-<h4 id="headline-31">
+<div id="outline-container-headline-32" class="outline-4">
+<h4 id="headline-32">
 控制键
 </h4>
-<div id="outline-text-headline-31" class="outline-text-4">
+<div id="outline-text-headline-32" class="outline-text-4">
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1665,11 +1686,11 @@ adb shell input keyevent (具体操作) – 模拟按键事件 KeyCode
 </table></div>
 </div>
 </div>
-<div id="outline-container-headline-32" class="outline-4">
-<h4 id="headline-32">
+<div id="outline-container-headline-33" class="outline-4">
+<h4 id="headline-33">
 按键
 </h4>
-<div id="outline-text-headline-32" class="outline-text-4">
+<div id="outline-text-headline-33" class="outline-text-4">
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1926,11 +1947,11 @@ adb shell input keyevent (具体操作) – 模拟按键事件 KeyCode
 </table></div>
 </div>
 </div>
-<div id="outline-container-headline-33" class="outline-4">
-<h4 id="headline-33">
+<div id="outline-container-headline-34" class="outline-4">
+<h4 id="headline-34">
 多媒体键
 </h4>
-<div id="outline-text-headline-33" class="outline-text-4">
+<div id="outline-text-headline-34" class="outline-text-4">
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -2001,11 +2022,11 @@ adb shell input keyevent (具体操作) – 模拟按键事件 KeyCode
 </table></div>
 </div>
 </div>
-<div id="outline-container-headline-34" class="outline-4">
-<h4 id="headline-34">
+<div id="outline-container-headline-35" class="outline-4">
+<h4 id="headline-35">
 F1~F12功能键
 </h4>
-<div id="outline-text-headline-34" class="outline-text-4">
+<div id="outline-text-headline-35" class="outline-text-4">
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -2082,11 +2103,11 @@ F1~F12功能键
 </table></div>
 </div>
 </div>
-<div id="outline-container-headline-35" class="outline-4">
-<h4 id="headline-35">
+<div id="outline-container-headline-36" class="outline-4">
+<h4 id="headline-36">
 符号按键
 </h4>
-<div id="outline-text-headline-35" class="outline-text-4">
+<div id="outline-text-headline-36" class="outline-text-4">
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -2187,11 +2208,11 @@ F1~F12功能键
 </table></div>
 </div>
 </div>
-<div id="outline-container-headline-36" class="outline-4">
-<h4 id="headline-36">
+<div id="outline-container-headline-37" class="outline-4">
+<h4 id="headline-37">
 小键盘按键
 </h4>
-<div id="outline-text-headline-36" class="outline-text-4">
+<div id="outline-text-headline-37" class="outline-text-4">
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -2316,22 +2337,22 @@ F1~F12功能键
 </table></div>
 </div>
 </div>
-<div id="outline-container-headline-37" class="outline-4">
-<h4 id="headline-37">
+<div id="outline-container-headline-38" class="outline-4">
+<h4 id="headline-38">
 参考链接
 </h4>
-<div id="outline-text-headline-37" class="outline-text-4">
+<div id="outline-text-headline-38" class="outline-text-4">
 <p>
 <a href="https://blog.csdn.net/h_bpdwn/article/details/91425599">adb shell input keyevent (具体操作) – 模拟按键事件 KeyCode</a></p>
 </div>
 </div>
 </div>
 </div>
-<div id="outline-container-headline-38" class="outline-3">
-<h3 id="headline-38">
+<div id="outline-container-headline-39" class="outline-3">
+<h3 id="headline-39">
 解锁手机
 </h3>
-<div id="outline-text-headline-38" class="outline-text-3">
+<div id="outline-text-headline-39" class="outline-text-3">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -2342,11 +2363,11 @@ F1~F12功能键
 </div>
 </div>
 </div>
-<div id="outline-container-headline-39" class="outline-4">
-<h4 id="headline-39">
+<div id="outline-container-headline-40" class="outline-4">
+<h4 id="headline-40">
 测试
 </h4>
-<div id="outline-text-headline-39" class="outline-text-4">
+<div id="outline-text-headline-40" class="outline-text-4">
 <p>
 手机密码：123456</p>
 <div class="src src-bash">
@@ -2369,11 +2390,11 @@ F1~F12功能键
 锁屏：adb shell input keyevent 26</p>
 </div>
 </div>
-<div id="outline-container-headline-40" class="outline-4">
-<h4 id="headline-40">
+<div id="outline-container-headline-41" class="outline-4">
+<h4 id="headline-41">
 实操命令
 </h4>
-<div id="outline-text-headline-40" class="outline-text-4">
+<div id="outline-text-headline-41" class="outline-text-4">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -2386,11 +2407,11 @@ F1~F12功能键
 </div>
 </div>
 </div>
-<div id="outline-container-headline-41" class="outline-4">
-<h4 id="headline-41">
+<div id="outline-container-headline-42" class="outline-4">
+<h4 id="headline-42">
 参考链接
 </h4>
-<div id="outline-text-headline-41" class="outline-text-4">
+<div id="outline-text-headline-42" class="outline-text-4">
 <p>
 <a href="https://exp-blog.com/tools/adb-jie-suo-shou-ji-zhi-yin/">利用 ADB 解锁手机指引</a></p>
 <p>
