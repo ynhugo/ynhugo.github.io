@@ -493,6 +493,18 @@
 </li>
 <li><a href="#headline-89">输出累加数+时间戳，按回车继续</a>
 </li>
+<li><a href="#headline-90">要仅查找 driver 目录下的 Pciedma_DLL.h 文件，可以使用以下 find 命令：</a>
+</li>
+<li><a href="#headline-91">Linux tar命令解压时提示时间戳异常的处理办法</a>
+<ul>
+<li><a href="#headline-92">方法一</a>
+</li>
+<li><a href="#headline-93">方法二</a>
+</li>
+<li><a href="#headline-94">参考链接</a>
+</li>
+</ul>
+</li>
 </ul>
 </nav>
         </div>
@@ -536,7 +548,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 27 分钟
+                    阅读时长: 28 分钟
                 </time>
             </div>
         
@@ -3119,6 +3131,77 @@ bc -q：显示正常的GNU bc环境信息</p>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nv">count</span><span class="o">=</span>0<span class="p">;</span> <span class="k">while</span> true<span class="p">;</span> <span class="k">do</span> <span class="o">((</span>count++<span class="o">))</span><span class="p">;</span> <span class="nb">echo</span> -en <span class="s2">&#34;\r\n</span><span class="k">$(</span>date<span class="k">)</span><span class="s2">-----\e[31m</span><span class="si">${</span><span class="nv">count</span><span class="si">}</span><span class="s2">\e[0m&#34;</span><span class="p">;</span> <span class="nb">read</span> -p <span class="s2">&#34;&#34;</span> <span class="k">continue</span><span class="p">;</span> <span class="k">done</span></span></span></code></pre></td></tr></table>
 </div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-90" class="outline-2">
+<h2 id="headline-90">
+要仅查找 driver 目录下的 Pciedma_DLL.h 文件，可以使用以下 find 命令：
+</h2>
+<div id="outline-text-headline-90" class="outline-text-2">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  find *SGDMA* -type d -name <span class="s2">&#34;driver&#34;</span> -exec find <span class="o">{}</span> -name <span class="s2">&#34;Pciedma_DLL.h&#34;</span> <span class="se">\;</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+这个命令首先在包含 SGDMA 的目录下找到所有名为 driver 的目录，然后在这些目录中查找 Pciedma_DLL.h 文件。</p>
+</div>
+</div>
+<div id="outline-container-headline-91" class="outline-2">
+<h2 id="headline-91">
+Linux tar命令解压时提示时间戳异常的处理办法
+</h2>
+<div id="outline-text-headline-91" class="outline-text-2">
+<div id="outline-container-headline-92" class="outline-3">
+<h3 id="headline-92">
+方法一
+</h3>
+<div id="outline-text-headline-92" class="outline-text-3">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  tar zxvf --touch test.tar.gz</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-93" class="outline-3">
+<h3 id="headline-93">
+方法二
+</h3>
+<div id="outline-text-headline-93" class="outline-text-3">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  tar zxvf -m test.tar.gz</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+-m或–modification-time 还原文件时，不变更文件的更改时间。</p>
+</div>
+</div>
+<div id="outline-container-headline-94" class="outline-3">
+<h3 id="headline-94">
+参考链接
+</h3>
+<div id="outline-text-headline-94" class="outline-text-3">
+<p>
+<a href="https://www.cnblogs.com/chenjinxi/p/7468824.html">Linux tar命令解压时提示时间戳异常的处理办法</a></p>
 </div>
 </div>
 </div>
