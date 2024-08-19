@@ -590,6 +590,8 @@ ssh_host是ssh配置文件中的host，也可以改为user@hostname的形式，�
 通过脚本解锁手机并连接-2
 </h4>
 <div id="outline-text-headline-11" class="outline-text-4">
+<p>
+脚本名称：auto_android_scrcpy.sh</p>
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -606,6 +608,13 @@ ssh_host是ssh配置文件中的host，也可以改为user@hostname的形式，�
 </span><span class="lnt">11
 </span><span class="lnt">12
 </span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nv">num_args</span><span class="o">=</span><span class="nv">$#</span>						<span class="c1"># 获取参数数量    </span>
@@ -613,12 +622,19 @@ ssh_host是ssh配置文件中的host，也可以改为user@hostname的形式，�
 </span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">num_args</span><span class="si">}</span><span class="s2">&#34;</span> -eq <span class="m">0</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
 </span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> -e <span class="s2">&#34;Usage: \n</span><span class="nv">$0</span><span class="s2"> IPV4:Port&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="k">elif</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">num_args</span><span class="si">}</span><span class="s2">&#34;</span> -eq <span class="m">1</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	  adb connect <span class="nv">$1</span>
+</span></span><span class="line"><span class="cl">	  adb connect <span class="nv">$1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	  scrcpy -s <span class="nv">$1</span> --no-audio -S <span class="p">&amp;</span>
 </span></span><span class="line"><span class="cl">  <span class="k">elif</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$2</span><span class="s2">&#34;</span> <span class="o">=</span> <span class="s2">&#34;unlock&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
 </span></span><span class="line"><span class="cl">	  <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$3</span><span class="s2">&#34;</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
 </span></span><span class="line"><span class="cl">		  <span class="nb">echo</span> -e <span class="s2">&#34;Usage: \n</span><span class="nv">$0</span><span class="s2"> unlock passward&#34;</span>
 </span></span><span class="line"><span class="cl">	  <span class="k">else</span>
-</span></span><span class="line"><span class="cl">		  adb -s <span class="nv">$1</span> shell input keyevent 82<span class="p">;</span> adb -s <span class="nv">$1</span> shell input keyevent 82<span class="p">;</span> sleep 0.4<span class="p">;</span> adb -s <span class="nv">$1</span> shell input text <span class="nv">$3</span> <span class="o">&amp;&amp;</span> clear <span class="o">&amp;&amp;</span> scrcpy -s <span class="nv">$1</span> --no-audio -S <span class="p">&amp;</span>
+</span></span><span class="line"><span class="cl">		  adb -s <span class="nv">$1</span> shell input keyevent 82<span class="p">;</span> adb -s <span class="nv">$1</span> shell input keyevent 82<span class="p">;</span> sleep 0.4<span class="p">;</span> adb -s <span class="nv">$1</span> shell input text <span class="nv">$3</span> <span class="o">&amp;&amp;</span> clear
+</span></span><span class="line"><span class="cl">	  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">  <span class="k">elif</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$2</span><span class="s2">&#34;</span> <span class="o">=</span> <span class="s2">&#34;rescrcpy&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$3</span><span class="s2">&#34;</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">		  <span class="nb">echo</span> -e <span class="s2">&#34;Usage: \n</span><span class="nv">$0</span><span class="s2"> unlock passward&#34;</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">else</span>
+</span></span><span class="line"><span class="cl">		  adb -s <span class="nv">$1</span> shell input keyevent 82<span class="p">;</span> adb -s <span class="nv">$1</span> shell input keyevent 82<span class="p">;</span> sleep 0.4<span class="p">;</span> adb -s <span class="nv">$1</span> shell input text <span class="nv">$3</span> <span class="o">&amp;&amp;</span> scrcpy -s <span class="nv">$1</span> --no-audio -S <span class="o">&amp;&amp;</span> clear <span class="p">&amp;</span>
 </span></span><span class="line"><span class="cl">	  <span class="k">fi</span>
 </span></span><span class="line"><span class="cl">  <span class="k">fi</span></span></span></code></pre></td></tr></table>
 </div>
