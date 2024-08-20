@@ -505,6 +505,22 @@
 </li>
 </ul>
 </li>
+<li><a href="#headline-95">Linux终端批量造数</a>
+<ul>
+<li><a href="#headline-96">Linux终端批量造十进制数</a>
+</li>
+<li><a href="#headline-97">Linux终端批量造十六进制数</a>
+<ul>
+<li><a href="#headline-98">Linux终端批量造十六进制数-16位</a>
+</li>
+<li><a href="#headline-99">Linux终端批量造十六进制数-32位</a>
+</li>
+<li><a href="#headline-100">Linux终端批量造十六进制数-64位</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </nav>
         </div>
@@ -3202,6 +3218,98 @@ Linux tar命令解压时提示时间戳异常的处理办法
 <div id="outline-text-headline-94" class="outline-text-3">
 <p>
 <a href="https://www.cnblogs.com/chenjinxi/p/7468824.html">Linux tar命令解压时提示时间戳异常的处理办法</a></p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-95" class="outline-2">
+<h2 id="headline-95">
+Linux终端批量造数
+</h2>
+<div id="outline-text-headline-95" class="outline-text-2">
+<div id="outline-container-headline-96" class="outline-3">
+<h3 id="headline-96">
+Linux终端批量造十进制数
+</h3>
+<div id="outline-text-headline-96" class="outline-text-3">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  clear <span class="o">&amp;&amp;</span> clear <span class="o">&amp;&amp;</span> <span class="k">for</span> <span class="o">((</span><span class="nv">i</span> <span class="o">=</span> 0<span class="p">;</span> i &lt; 65536<span class="p">;</span> i++<span class="o">))</span><span class="p">;</span> <span class="k">do</span> <span class="nb">echo</span> -en <span class="s2">&#34;</span><span class="si">${</span><span class="nv">i</span><span class="si">}</span><span class="s2"> &#34;</span><span class="p">;</span> <span class="k">done</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-97" class="outline-3">
+<h3 id="headline-97">
+Linux终端批量造十六进制数
+</h3>
+<div id="outline-text-headline-97" class="outline-text-3">
+<p>
+%x：小写</p>
+<p>
+%X：大写</p>
+<p>
+0x%04X：十六位大写，4*4=16</p>
+<p>
+0x%08X：三十二位大写，8*4=32</p>
+<p>
+0x%016X：六十四位大写，16*4=64，依次类推</p>
+<div id="outline-container-headline-98" class="outline-4">
+<h4 id="headline-98">
+Linux终端批量造十六进制数-16位
+</h4>
+<div id="outline-text-headline-98" class="outline-text-4">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  clear <span class="o">&amp;&amp;</span> clear <span class="o">&amp;&amp;</span> <span class="k">for</span> <span class="o">((</span><span class="nv">i</span> <span class="o">=</span> 0<span class="p">;</span> i &lt; 65536<span class="p">;</span> i++<span class="o">))</span><span class="p">;</span> <span class="k">do</span> <span class="nb">printf</span> <span class="s2">&#34;0x%04X &#34;</span> <span class="nv">$i</span><span class="p">;</span> <span class="k">done</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-99" class="outline-4">
+<h4 id="headline-99">
+Linux终端批量造十六进制数-32位
+</h4>
+<div id="outline-text-headline-99" class="outline-text-4">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  clear <span class="o">&amp;&amp;</span> clear <span class="o">&amp;&amp;</span> <span class="k">for</span> <span class="o">((</span><span class="nv">i</span> <span class="o">=</span> 0<span class="p">;</span> i &lt; 65536<span class="p">;</span> i++<span class="o">))</span><span class="p">;</span> <span class="k">do</span> <span class="nb">printf</span> <span class="s2">&#34;0x%08X &#34;</span> <span class="nv">$i</span><span class="p">;</span> <span class="k">done</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-100" class="outline-4">
+<h4 id="headline-100">
+Linux终端批量造十六进制数-64位
+</h4>
+<div id="outline-text-headline-100" class="outline-text-4">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  clear <span class="o">&amp;&amp;</span> clear <span class="o">&amp;&amp;</span> <span class="k">for</span> <span class="o">((</span><span class="nv">i</span> <span class="o">=</span> 0<span class="p">;</span> i &lt; 65536<span class="p">;</span> i++<span class="o">))</span><span class="p">;</span> <span class="k">do</span> <span class="nb">printf</span> <span class="s2">&#34;0x%016X &#34;</span> <span class="nv">$i</span><span class="p">;</span> <span class="k">done</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
