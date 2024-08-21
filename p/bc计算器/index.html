@@ -282,10 +282,18 @@
 <li><a href="#headline-1">使用方式</a>
 </li>
 <li><a href="#headline-2">三角函数、开方和幂次运算</a>
+</li>
+<li><a href="#headline-3">如何进行移位运算</a>
 <ul>
-<li><a href="#headline-3">注意事项</a>
+<li><a href="#headline-4">进行移位运算</a>
+</li>
+<li><a href="#headline-5">进制转换</a>
+</li>
+<li><a href="#headline-6">参考链接</a>
 </li>
 </ul>
+</li>
+<li><a href="#headline-7">注意事项</a>
 </li>
 </ul>
 </nav>
@@ -486,11 +494,77 @@ sqrt(x) 计算根号下x</p>
 </div>
 </div>
 </div>
-<div id="outline-container-headline-3" class="outline-3">
-<h3 id="headline-3">
-注意事项
+</div>
+</div>
+<div id="outline-container-headline-3" class="outline-2">
+<h2 id="headline-3">
+如何进行移位运算
+</h2>
+<div id="outline-text-headline-3" class="outline-text-2">
+<div id="outline-container-headline-4" class="outline-3">
+<h3 id="headline-4">
+进行移位运算
 </h3>
-<div id="outline-text-headline-3" class="outline-text-3">
+<div id="outline-text-headline-4" class="outline-text-3">
+<p>
+以十六进制输出</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;obase=16; </span><span class="k">$(</span><span class="nb">echo</span> <span class="k">$((</span><span class="m">1</span>&lt;&lt;<span class="m">29</span><span class="k">)))</span><span class="s2">&#34;</span> <span class="p">|</span> bc</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+以二进制输出</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;obase=2; </span><span class="k">$(</span><span class="nb">echo</span> <span class="k">$((</span><span class="m">1</span>&lt;&lt;<span class="m">29</span><span class="k">)))</span><span class="s2">&#34;</span> <span class="p">|</span> bc</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-5" class="outline-3">
+<h3 id="headline-5">
+进制转换
+</h3>
+<div id="outline-text-headline-5" class="outline-text-3">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;0x</span><span class="k">$(</span><span class="nb">echo</span> <span class="s2">&#34;ibase=16;obase=2;3A&#34;</span> <span class="p">|</span> bc<span class="k">)</span><span class="s2">&#34;</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-6" class="outline-3">
+<h3 id="headline-6">
+参考链接
+</h3>
+<div id="outline-text-headline-6" class="outline-text-3">
+<p>
+<a href="https://blog.csdn.net/qq_45503700/article/details/100678500">第八篇 shell位运算，左移，右移，与运算，进制转换</a></p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-7" class="outline-2">
+<h2 id="headline-7">
+注意事项
+</h2>
+<div id="outline-text-headline-7" class="outline-text-2">
 <p>
 先设置 obase 在设置 ibase，计算器正常。</p>
 <p>
@@ -499,8 +573,6 @@ sqrt(x) 计算根号下x</p>
 且在计算过程中 obase 与 ibase 只能赋值一次。</p>
 <p>
 进行三角函数、开方，幂次等代数运算时，一定要加上参数-l，表示进行代数运算，不然无法使用内置的三角函数、开方等函数。</p>
-</div>
-</div>
 </div>
 </div>
 
