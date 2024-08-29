@@ -349,6 +349,14 @@
 </li>
 </ul>
 </li>
+<li><a href="#headline-28">Git在检出代码时遇到了问题，可能是由于网络问题或Git版本不兼容</a>
+<ul>
+<li><a href="#headline-29">异常现象</a>
+</li>
+<li><a href="#headline-30">解决方式</a>
+</li>
+</ul>
+</li>
 </ul>
 </nav>
         </div>
@@ -1191,6 +1199,69 @@ git reset 命令在 Git 中有三种常见的重置模式，它们是：
 </li>
 </ol>
 <p>这些模式允许你根据需要选择不同级别的重置操作。在选择使用 –soft、–mixed 或 –hard 时，务必注意其影响范围，以免意外丢失或保留不必要的更改。</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-28" class="outline-2">
+<h2 id="headline-28">
+Git在检出代码时遇到了问题，可能是由于网络问题或Git版本不兼容
+</h2>
+<div id="outline-text-headline-28" class="outline-text-2">
+<div id="outline-container-headline-29" class="outline-3">
+<h3 id="headline-29">
+异常现象
+</h3>
+<div id="outline-text-headline-29" class="outline-text-3">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ git clone https://www.modelscope.cn/pzc163/chatTTS.git
+</span></span><span class="line"><span class="cl">正克隆到 <span class="s1">&#39;chatTTS&#39;</span>...
+</span></span><span class="line"><span class="cl">remote: Enumerating objects: 49, <span class="k">done</span>.
+</span></span><span class="line"><span class="cl">remote: Counting objects: 100% <span class="o">(</span>49/49<span class="o">)</span>, <span class="k">done</span>.
+</span></span><span class="line"><span class="cl">remote: Compressing objects: 100% <span class="o">(</span>39/39<span class="o">)</span>, <span class="k">done</span>.
+</span></span><span class="line"><span class="cl">remote: Total <span class="m">49</span> <span class="o">(</span>delta 15<span class="o">)</span>, reused <span class="m">29</span> <span class="o">(</span>delta 8<span class="o">)</span>, pack-reused <span class="m">0</span>
+</span></span><span class="line"><span class="cl">接收对象中: 100% <span class="o">(</span>49/49<span class="o">)</span>, 6.23 KiB <span class="p">|</span> 398.00 KiB/s, 完成.
+</span></span><span class="line"><span class="cl">处理 delta 中: 100% <span class="o">(</span>15/15<span class="o">)</span>, 完成.
+</span></span><span class="line"><span class="cl">致命错误：协议错误：错误的行长度字符串：Not
+</span></span><span class="line"><span class="cl">警告：克隆成功，但是检出失败。
+</span></span><span class="line"><span class="cl">您可以通过 <span class="s1">&#39;git status&#39;</span> 检查哪些已被检出，然后使用命令
+</span></span><span class="line"><span class="cl"><span class="s1">&#39;git restore --source=HEAD :/&#39;</span> 重试</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-30" class="outline-3">
+<h3 id="headline-30">
+解决方式
+</h3>
+<div id="outline-text-headline-30" class="outline-text-3">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  git restore --source<span class="o">=</span>HEAD :/</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>

@@ -787,6 +787,69 @@ git reset 命令在 Git 中有三种常见的重置模式，它们是：
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-28&#34; class=&#34;outline-2&#34;&gt;
+&lt;h2 id=&#34;headline-28&#34;&gt;
+Git在检出代码时遇到了问题，可能是由于网络问题或Git版本不兼容
+&lt;/h2&gt;
+&lt;div id=&#34;outline-text-headline-28&#34; class=&#34;outline-text-2&#34;&gt;
+&lt;div id=&#34;outline-container-headline-29&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-29&#34;&gt;
+异常现象
+&lt;/h3&gt;
+&lt;div id=&#34;outline-text-headline-29&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;div class=&#34;src src-bash&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;$ git clone https://www.modelscope.cn/pzc163/chatTTS.git
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;正克隆到 &lt;span class=&#34;s1&#34;&gt;&amp;#39;chatTTS&amp;#39;&lt;/span&gt;...
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;remote: Enumerating objects: 49, &lt;span class=&#34;k&#34;&gt;done&lt;/span&gt;.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;remote: Counting objects: 100% &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;49/49&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;, &lt;span class=&#34;k&#34;&gt;done&lt;/span&gt;.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;remote: Compressing objects: 100% &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;39/39&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;, &lt;span class=&#34;k&#34;&gt;done&lt;/span&gt;.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;remote: Total &lt;span class=&#34;m&#34;&gt;49&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;delta 15&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;, reused &lt;span class=&#34;m&#34;&gt;29&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;delta 8&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;, pack-reused &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;接收对象中: 100% &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;49/49&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;, 6.23 KiB &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; 398.00 KiB/s, 完成.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;处理 delta 中: 100% &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;15/15&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;, 完成.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;致命错误：协议错误：错误的行长度字符串：Not
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;警告：克隆成功，但是检出失败。
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;您可以通过 &lt;span class=&#34;s1&#34;&gt;&amp;#39;git status&amp;#39;&lt;/span&gt; 检查哪些已被检出，然后使用命令
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;git restore --source=HEAD :/&amp;#39;&lt;/span&gt; 重试&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-30&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-30&#34;&gt;
+解决方式
+&lt;/h3&gt;
+&lt;div id=&#34;outline-text-headline-30&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;div class=&#34;src src-bash&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  git restore --source&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;HEAD :/&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
 </description>
         </item>
         
