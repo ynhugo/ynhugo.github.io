@@ -998,14 +998,933 @@ windows 安装 ffmpeg
 &lt;/div&gt;
 &lt;div id=&#34;outline-container-headline-4&#34; class=&#34;outline-3&#34;&gt;
 &lt;h3 id=&#34;headline-4&#34;&gt;
-播放 yuv 格式的视频
+查看设备列表
 &lt;/h3&gt;
 &lt;div id=&#34;outline-text-headline-4&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;div class=&#34;src src-bash&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ffmpeg -list_devices &lt;span class=&#34;nb&#34;&gt;true&lt;/span&gt; -f dshow -i dummy&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
 &lt;div id=&#34;outline-container-headline-5&#34; class=&#34;outline-4&#34;&gt;
 &lt;h4 id=&#34;headline-5&#34;&gt;
-将yuv文件转换为mp4文件
+查看设备列表结果
 &lt;/h4&gt;
 &lt;div id=&#34;outline-text-headline-5&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;p&gt;
+像我的主机上只有audio相关设备，没有video相关设备&lt;/p&gt;
+&lt;div class=&#34;src src-bash&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;$ ffmpeg -list_devices &lt;span class=&#34;nb&#34;&gt;true&lt;/span&gt; -f dshow -i dummy
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ffmpeg version N-112134-g9ef20920ab-20230920 Copyright &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;c&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; 2000-2023 the FFmpeg developers
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  built with gcc 13.1.0 &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;crosstool-NG 1.25.0.196_227d99d&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  configuration: --prefix&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;/ffbuild/prefix --pkg-config-flags&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;--static --pkg-config&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;pkg-config --cross-prefix&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;x86_64-w64-mingw32- --arch&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;x86_64 --target-os&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;mingw32 --enable-gpl --enable-version3 --disable-debug --disable-w32threads --enable-pthreads --enable-iconv --enable-libxml2 --enable-zlib --enable-libfreetype --enable-libfribidi --enable-gmp --enable-lzma --enable-fontconfig --enable-libharfbuzz --enable-libvorbis --enable-opencl --disable-libpulse --enable-libvmaf --disable-libxcb --disable-xlib --enable-amf --enable-libaom --enable-libaribb24 --enable-avisynth --enable-chromaprint --enable-libdav1d --enable-libdavs2 --disable-libfdk-aac --enable-ffnvcodec --enable-cuda-llvm --enable-frei0r --enable-libgme --enable-libkvazaar --enable-libass --enable-libbluray --enable-libjxl --enable-libmp3lame --enable-libopus --enable-librist --enable-libssh --enable-libtheora --enable-libvpx --enable-libwebp --enable-lv2 --enable-libvpl --enable-openal --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-libopenh264 --enable-libopenjpeg --enable-libopenmpt --enable-librav1e --enable-librubberband --enable-schannel --enable-sdl2 --enable-libsoxr --enable-libsrt --enable-libsvtav1 --enable-libtwolame --enable-libuavs3d --disable-libdrm --enable-vaapi --enable-libvidstab --enable-vulkan --enable-libshaderc --enable-libplacebo --enable-libx264 --enable-libx265 --enable-libxavs2 --enable-libxvid --enable-libzimg --enable-libzvbi --extra-cflags&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;-DLIBTWOLAME_STATIC --extra-cxxflags&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; --extra-ldflags&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;-pthread --extra-ldexeflags&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; --extra-libs&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;-lgomp --extra-version&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;20230920&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  libavutil      58. 25.100 / 58. 25.100
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  libavcodec     60. 26.100 / 60. 26.100
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  libavformat    60. 13.100 / 60. 13.100
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  libavdevice    60.  2.101 / 60.  2.101
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  libavfilter     9. 11.100 /  9. 11.100
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  libswscale      7.  3.100 /  7.  3.100
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  libswresample   4. 11.100 /  4. 11.100
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  libpostproc    57.  2.100 / 57.  2.100
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;dshow @ 0000025ec2e24e80&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;OBS Virtual Camera&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;video&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;dshow @ 0000025ec2e24e80&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;   Alternative name &lt;span class=&#34;s2&#34;&gt;&amp;#34;@device_sw_{860BB310-5D01-11D0-BD3B-00A0C911CE86}\{A3FCE0F5-3493-419F-958A-ABA1250EC20B}&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;dshow @ 0000025ec2e24e80&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;麦克风 (Realtek(R) Audio)&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;audio&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;dshow @ 0000025ec2e24e80&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;   Alternative name &lt;span class=&#34;s2&#34;&gt;&amp;#34;@device_cm_{33D9A762-90C8-11D0-BD43-00A0C911CE86}\wave_{8E507121-E2A9-415D-9EC9-B975D91463F7}&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;dshow @ 0000025ec2e24e80&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;立体声混音 (Realtek(R) Audio)&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;audio&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;dshow @ 0000025ec2e24e80&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;   Alternative name &lt;span class=&#34;s2&#34;&gt;&amp;#34;@device_cm_{33D9A762-90C8-11D0-BD43-00A0C911CE86}\wave_{56D3F882-71A2-4A0B-BF2A-404379259FF8}&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;in#0 @ 0000025ec2e1f4c0&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Error opening input: Immediate &lt;span class=&#34;nb&#34;&gt;exit&lt;/span&gt; requested
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Error opening input file dummy.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-6&#34; class=&#34;outline-5&#34;&gt;
+&lt;h5 id=&#34;headline-6&#34;&gt;
+查看视频录制的可选参数
+&lt;/h5&gt;
+&lt;div id=&#34;outline-text-headline-6&#34; class=&#34;outline-text-5&#34;&gt;
+&lt;div class=&#34;src src-bash&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ffmpeg -f dshow -list_options &lt;span class=&#34;nb&#34;&gt;true&lt;/span&gt; -i &lt;span class=&#34;nv&#34;&gt;video&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;OBS Virtual Camera&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-7&#34; class=&#34;outline-6&#34;&gt;
+&lt;h6 id=&#34;headline-7&#34;&gt;
+查看视频录制的可选参数结果
+&lt;/h6&gt;
+&lt;div id=&#34;outline-text-headline-7&#34; class=&#34;outline-text-6&#34;&gt;
+&lt;div class=&#34;src src-bash&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  $ ffmpeg -f dshow -list_options &lt;span class=&#34;nb&#34;&gt;true&lt;/span&gt; -i &lt;span class=&#34;nv&#34;&gt;video&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;OBS Virtual Camera&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ffmpeg version N-112134-g9ef20920ab-20230920 Copyright &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;c&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; 2000-2023 the FFmpeg developers
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  built with gcc 13.1.0 &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;crosstool-NG 1.25.0.196_227d99d&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  configuration: --prefix&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;/ffbuild/prefix --pkg-config-flags&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;--static --pkg-config&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;pkg-config --cross-prefix&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;x86_64-w64-mingw32- --arch&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;x86_64 --target-os&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;mingw32 --enable-gpl --enable-version3 --disable-debug --disable-w32threads --enable-pthreads --enable-iconv --enable-libxml2 --enable-zlib --enable-libfreetype --enable-libfribidi --enable-gmp --enable-lzma --enable-fontconfig --enable-libharfbuzz --enable-libvorbis --enable-opencl --disable-libpulse --enable-libvmaf --disable-libxcb --disable-xlib --enable-amf --enable-libaom --enable-libaribb24 --enable-avisynth --enable-chromaprint --enable-libdav1d --enable-libdavs2 --disable-libfdk-aac --enable-ffnvcodec --enable-cuda-llvm --enable-frei0r --enable-libgme --enable-libkvazaar --enable-libass --enable-libbluray --enable-libjxl --enable-libmp3lame --enable-libopus --enable-librist --enable-libssh --enable-libtheora --enable-libvpx --enable-libwebp --enable-lv2 --enable-libvpl --enable-openal --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-libopenh264 --enable-libopenjpeg --enable-libopenmpt --enable-librav1e --enable-librubberband --enable-schannel --enable-sdl2 --enable-libsoxr --enable-libsrt --enable-libsvtav1 --enable-libtwolame --enable-libuavs3d --disable-libdrm --enable-vaapi --enable-libvidstab --enable-vulkan --enable-libshaderc --enable-libplacebo --enable-libx264 --enable-libx265 --enable-libxavs2 --enable-libxvid --enable-libzimg --enable-libzvbi --extra-cflags&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;-DLIBTWOLAME_STATIC --extra-cxxflags&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; --extra-ldflags&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;-pthread --extra-ldexeflags&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; --extra-libs&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;-lgomp --extra-version&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;20230920&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  libavutil      58. 25.100 / 58. 25.100
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  libavcodec     60. 26.100 / 60. 26.100
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  libavformat    60. 13.100 / 60. 13.100
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  libavdevice    60.  2.101 / 60.  2.101
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  libavfilter     9. 11.100 /  9. 11.100
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  libswscale      7.  3.100 /  7.  3.100
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  libswresample   4. 11.100 /  4. 11.100
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  libpostproc    57.  2.100 / 57.  2.100
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;dshow @ 000002a9577d4180&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; DirectShow video device options &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;from video devices&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;dshow @ 000002a9577d4180&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  Pin &lt;span class=&#34;s2&#34;&gt;&amp;#34;Video Output&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;alternative pin name &lt;span class=&#34;s2&#34;&gt;&amp;#34;Output Pin&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;dshow @ 000002a9577d4180&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;   &lt;span class=&#34;nv&#34;&gt;pixel_format&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;nv12  min &lt;span class=&#34;nv&#34;&gt;s&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;1920x1080 &lt;span class=&#34;nv&#34;&gt;fps&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;30&lt;/span&gt; max &lt;span class=&#34;nv&#34;&gt;s&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;1920x1080 &lt;span class=&#34;nv&#34;&gt;fps&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;30&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;dshow @ 000002a9577d4180&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;   &lt;span class=&#34;nv&#34;&gt;pixel_format&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;yuv420p  min &lt;span class=&#34;nv&#34;&gt;s&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;1920x1080 &lt;span class=&#34;nv&#34;&gt;fps&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;30&lt;/span&gt; max &lt;span class=&#34;nv&#34;&gt;s&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;1920x1080 &lt;span class=&#34;nv&#34;&gt;fps&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;30&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;dshow @ 000002a9577d4180&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;   &lt;span class=&#34;nv&#34;&gt;pixel_format&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;yuyv422  min &lt;span class=&#34;nv&#34;&gt;s&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;1920x1080 &lt;span class=&#34;nv&#34;&gt;fps&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;30&lt;/span&gt; max &lt;span class=&#34;nv&#34;&gt;s&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;1920x1080 &lt;span class=&#34;nv&#34;&gt;fps&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;30&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;in#0 @ 000002a9577ce5c0&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Error opening input: Immediate &lt;span class=&#34;nb&#34;&gt;exit&lt;/span&gt; requested
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  Error opening input file &lt;span class=&#34;nv&#34;&gt;video&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;OBS Virtual Camera.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-8&#34; class=&#34;outline-5&#34;&gt;
+&lt;h5 id=&#34;headline-8&#34;&gt;
+查看音频录制的可选参数
+&lt;/h5&gt;
+&lt;div id=&#34;outline-text-headline-8&#34; class=&#34;outline-text-5&#34;&gt;
+&lt;div class=&#34;src src-bash&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ffmpeg -f dshow -list_options &lt;span class=&#34;nb&#34;&gt;true&lt;/span&gt; -i &lt;span class=&#34;nv&#34;&gt;audio&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;麦克风 (Realtek(R) Audio)&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-9&#34; class=&#34;outline-6&#34;&gt;
+&lt;h6 id=&#34;headline-9&#34;&gt;
+查看音频录制的可选参数结果
+&lt;/h6&gt;
+&lt;div id=&#34;outline-text-headline-9&#34; class=&#34;outline-text-6&#34;&gt;
+&lt;div class=&#34;src src-bash&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;26
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;27
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;28
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;29
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;30
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;31
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;32
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;33
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;34
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;35
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;36
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;37
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;38
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;39
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  $ ffmpeg -f dshow -list_options &lt;span class=&#34;nb&#34;&gt;true&lt;/span&gt; -i &lt;span class=&#34;nv&#34;&gt;audio&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;麦克风 (Realtek(R) Audio)&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ffmpeg version N-112134-g9ef20920ab-20230920 Copyright &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;c&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; 2000-2023 the FFmpeg developers
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  built with gcc 13.1.0 &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;crosstool-NG 1.25.0.196_227d99d&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  configuration: --prefix&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;/ffbuild/prefix --pkg-config-flags&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;--static --pkg-config&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;pkg-config --cross-prefix&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;x86_64-w64-mingw32- --arch&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;x86_64 --target-os&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;mingw32 --enable-gpl --enable-version3 --disable-debug --disable-w32threads --enable-pthreads --enable-iconv --enable-libxml2 --enable-zlib --enable-libfreetype --enable-libfribidi --enable-gmp --enable-lzma --enable-fontconfig --enable-libharfbuzz --enable-libvorbis --enable-opencl --disable-libpulse --enable-libvmaf --disable-libxcb --disable-xlib --enable-amf --enable-libaom --enable-libaribb24 --enable-avisynth --enable-chromaprint --enable-libdav1d --enable-libdavs2 --disable-libfdk-aac --enable-ffnvcodec --enable-cuda-llvm --enable-frei0r --enable-libgme --enable-libkvazaar --enable-libass --enable-libbluray --enable-libjxl --enable-libmp3lame --enable-libopus --enable-librist --enable-libssh --enable-libtheora --enable-libvpx --enable-libwebp --enable-lv2 --enable-libvpl --enable-openal --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-libopenh264 --enable-libopenjpeg --enable-libopenmpt --enable-librav1e --enable-librubberband --enable-schannel --enable-sdl2 --enable-libsoxr --enable-libsrt --enable-libsvtav1 --enable-libtwolame --enable-libuavs3d --disable-libdrm --enable-vaapi --enable-libvidstab --enable-vulkan --enable-libshaderc --enable-libplacebo --enable-libx264 --enable-libx265 --enable-libxavs2 --enable-libxvid --enable-libzimg --enable-libzvbi --extra-cflags&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;-DLIBTWOLAME_STATIC --extra-cxxflags&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; --extra-ldflags&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;-pthread --extra-ldexeflags&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; --extra-libs&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;-lgomp --extra-version&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;20230920&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  libavutil      58. 25.100 / 58. 25.100
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  libavcodec     60. 26.100 / 60. 26.100
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  libavformat    60. 13.100 / 60. 13.100
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  libavdevice    60.  2.101 / 60.  2.101
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  libavfilter     9. 11.100 /  9. 11.100
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  libswscale      7.  3.100 /  7.  3.100
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  libswresample   4. 11.100 /  4. 11.100
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  libpostproc    57.  2.100 / 57.  2.100
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;dshow @ 000001a1c5a65e00&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; DirectShow audio only device options &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;from audio devices&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;dshow @ 000001a1c5a65e00&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  Pin &lt;span class=&#34;s2&#34;&gt;&amp;#34;Capture&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;alternative pin name &lt;span class=&#34;s2&#34;&gt;&amp;#34;Capture&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;dshow @ 000001a1c5a65e00&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;   &lt;span class=&#34;nv&#34;&gt;ch&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; 2, &lt;span class=&#34;nv&#34;&gt;bits&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;16, &lt;span class=&#34;nv&#34;&gt;rate&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;44100&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  Last message repeated &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;times&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;dshow @ 000001a1c5a65e00&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;   &lt;span class=&#34;nv&#34;&gt;ch&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; 1, &lt;span class=&#34;nv&#34;&gt;bits&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;16, &lt;span class=&#34;nv&#34;&gt;rate&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;44100&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;dshow @ 000001a1c5a65e00&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;   &lt;span class=&#34;nv&#34;&gt;ch&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; 2, &lt;span class=&#34;nv&#34;&gt;bits&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;16, &lt;span class=&#34;nv&#34;&gt;rate&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;32000&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;dshow @ 000001a1c5a65e00&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;   &lt;span class=&#34;nv&#34;&gt;ch&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; 1, &lt;span class=&#34;nv&#34;&gt;bits&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;16, &lt;span class=&#34;nv&#34;&gt;rate&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;32000&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;dshow @ 000001a1c5a65e00&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;   &lt;span class=&#34;nv&#34;&gt;ch&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; 2, &lt;span class=&#34;nv&#34;&gt;bits&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;16, &lt;span class=&#34;nv&#34;&gt;rate&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;22050&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;dshow @ 000001a1c5a65e00&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;   &lt;span class=&#34;nv&#34;&gt;ch&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; 1, &lt;span class=&#34;nv&#34;&gt;bits&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;16, &lt;span class=&#34;nv&#34;&gt;rate&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;22050&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;dshow @ 000001a1c5a65e00&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;   &lt;span class=&#34;nv&#34;&gt;ch&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; 2, &lt;span class=&#34;nv&#34;&gt;bits&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;16, &lt;span class=&#34;nv&#34;&gt;rate&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;11025&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;dshow @ 000001a1c5a65e00&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;   &lt;span class=&#34;nv&#34;&gt;ch&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; 1, &lt;span class=&#34;nv&#34;&gt;bits&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;16, &lt;span class=&#34;nv&#34;&gt;rate&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;11025&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;dshow @ 000001a1c5a65e00&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;   &lt;span class=&#34;nv&#34;&gt;ch&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; 2, &lt;span class=&#34;nv&#34;&gt;bits&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;16, &lt;span class=&#34;nv&#34;&gt;rate&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;  &lt;span class=&#34;m&#34;&gt;8000&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;dshow @ 000001a1c5a65e00&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;   &lt;span class=&#34;nv&#34;&gt;ch&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; 1, &lt;span class=&#34;nv&#34;&gt;bits&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;16, &lt;span class=&#34;nv&#34;&gt;rate&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;  &lt;span class=&#34;m&#34;&gt;8000&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;dshow @ 000001a1c5a65e00&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;   &lt;span class=&#34;nv&#34;&gt;ch&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; 2, &lt;span class=&#34;nv&#34;&gt;bits&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; 8, &lt;span class=&#34;nv&#34;&gt;rate&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;44100&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;dshow @ 000001a1c5a65e00&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;   &lt;span class=&#34;nv&#34;&gt;ch&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; 1, &lt;span class=&#34;nv&#34;&gt;bits&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; 8, &lt;span class=&#34;nv&#34;&gt;rate&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;44100&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;dshow @ 000001a1c5a65e00&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;   &lt;span class=&#34;nv&#34;&gt;ch&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; 2, &lt;span class=&#34;nv&#34;&gt;bits&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; 8, &lt;span class=&#34;nv&#34;&gt;rate&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;22050&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;dshow @ 000001a1c5a65e00&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;   &lt;span class=&#34;nv&#34;&gt;ch&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; 1, &lt;span class=&#34;nv&#34;&gt;bits&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; 8, &lt;span class=&#34;nv&#34;&gt;rate&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;22050&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;dshow @ 000001a1c5a65e00&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;   &lt;span class=&#34;nv&#34;&gt;ch&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; 2, &lt;span class=&#34;nv&#34;&gt;bits&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; 8, &lt;span class=&#34;nv&#34;&gt;rate&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;11025&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;dshow @ 000001a1c5a65e00&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;   &lt;span class=&#34;nv&#34;&gt;ch&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; 1, &lt;span class=&#34;nv&#34;&gt;bits&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; 8, &lt;span class=&#34;nv&#34;&gt;rate&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;11025&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;dshow @ 000001a1c5a65e00&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;   &lt;span class=&#34;nv&#34;&gt;ch&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; 2, &lt;span class=&#34;nv&#34;&gt;bits&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; 8, &lt;span class=&#34;nv&#34;&gt;rate&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;  &lt;span class=&#34;m&#34;&gt;8000&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;dshow @ 000001a1c5a65e00&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;   &lt;span class=&#34;nv&#34;&gt;ch&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; 1, &lt;span class=&#34;nv&#34;&gt;bits&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; 8, &lt;span class=&#34;nv&#34;&gt;rate&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;  &lt;span class=&#34;m&#34;&gt;8000&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;dshow @ 000001a1c5a65e00&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;   &lt;span class=&#34;nv&#34;&gt;ch&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; 2, &lt;span class=&#34;nv&#34;&gt;bits&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;16, &lt;span class=&#34;nv&#34;&gt;rate&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;48000&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;dshow @ 000001a1c5a65e00&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;   &lt;span class=&#34;nv&#34;&gt;ch&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; 1, &lt;span class=&#34;nv&#34;&gt;bits&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;16, &lt;span class=&#34;nv&#34;&gt;rate&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;48000&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;dshow @ 000001a1c5a65e00&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;   &lt;span class=&#34;nv&#34;&gt;ch&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; 2, &lt;span class=&#34;nv&#34;&gt;bits&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;16, &lt;span class=&#34;nv&#34;&gt;rate&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;96000&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;dshow @ 000001a1c5a65e00&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;   &lt;span class=&#34;nv&#34;&gt;ch&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; 1, &lt;span class=&#34;nv&#34;&gt;bits&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;16, &lt;span class=&#34;nv&#34;&gt;rate&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;96000&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;in#0 @ 000001a1c5a5bd00&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Error opening input: Immediate &lt;span class=&#34;nb&#34;&gt;exit&lt;/span&gt; requested
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  Error opening input file &lt;span class=&#34;nv&#34;&gt;audio&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;麦克风 &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;Realtek&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;R&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; Audio&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-10&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-10&#34;&gt;
+屏幕录制
+&lt;/h3&gt;
+&lt;div id=&#34;outline-text-headline-10&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;div id=&#34;outline-container-headline-11&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-11&#34;&gt;
+只录制画面，没有声音
+&lt;/h4&gt;
+&lt;div id=&#34;outline-text-headline-11&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;div class=&#34;src src-bash&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ffmpeg -f gdigrab -i desktop -f mp4 out.mp4&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-12&#34; class=&#34;outline-5&#34;&gt;
+&lt;h5 id=&#34;headline-12&#34;&gt;
+播放视频
+&lt;/h5&gt;
+&lt;div id=&#34;outline-text-headline-12&#34; class=&#34;outline-text-5&#34;&gt;
+&lt;div class=&#34;src src-bash&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ffplay out.mp4&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-13&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-13&#34;&gt;
+只录制声音，没有画面
+&lt;/h4&gt;
+&lt;div id=&#34;outline-text-headline-13&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;div class=&#34;src src-bash&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ffmpeg -f dshow -i &lt;span class=&#34;nv&#34;&gt;audio&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;麦克风 (Realtek(R) Audio)&amp;#34;&lt;/span&gt; -f mp3 out.mp3 -y&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-14&#34; class=&#34;outline-5&#34;&gt;
+&lt;h5 id=&#34;headline-14&#34;&gt;
+播放音频
+&lt;/h5&gt;
+&lt;div id=&#34;outline-text-headline-14&#34; class=&#34;outline-text-5&#34;&gt;
+&lt;div class=&#34;src src-bash&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ffplay out.mp3&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-15&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-15&#34;&gt;
+同时录制声音和画面-1
+&lt;/h4&gt;
+&lt;div id=&#34;outline-text-headline-15&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;div class=&#34;src src-bash&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ffmpeg -f dshow -i &lt;span class=&#34;nv&#34;&gt;audio&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;麦克风 (Realtek(R) Audio)&amp;#34;&lt;/span&gt; -f gdigrab -i desktop -f mp4 out.mp4 -y&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-16&#34; class=&#34;outline-5&#34;&gt;
+&lt;h5 id=&#34;headline-16&#34;&gt;
+以下是录制命令的说明：
+&lt;/h5&gt;
+&lt;div id=&#34;outline-text-headline-16&#34; class=&#34;outline-text-5&#34;&gt;
+&lt;p&gt;
+-f gdigrab 使用 FFmpeg 内置的 Windows 屏幕录制命令gdigrab，录制对象可为全屏、指定范围和指定程序。MacOS 录屏方法为AVFoundation，Linux 录屏方法为x11grab。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-17&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-17&#34;&gt;
+同时录制声音和画面-2
+&lt;/h4&gt;
+&lt;div id=&#34;outline-text-headline-17&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;div class=&#34;src src-bash&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ffmpeg -f dshow -i &lt;span class=&#34;nv&#34;&gt;audio&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;麦克风 (Realtek(R) Audio)&amp;#34;&lt;/span&gt; -f dshow -i &lt;span class=&#34;nv&#34;&gt;video&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;OBS Virtual Camera&amp;#34;&lt;/span&gt; -f mp4 out.mp4 -y&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-18&#34; class=&#34;outline-5&#34;&gt;
+&lt;h5 id=&#34;headline-18&#34;&gt;
+以下是录制命令的说明：
+&lt;/h5&gt;
+&lt;div id=&#34;outline-text-headline-18&#34; class=&#34;outline-text-5&#34;&gt;
+&lt;p&gt;
+&amp;#34;OBS Virtual Camera&amp;#34; 是电脑安装了OBS，然后将OBS的虚拟摄像机打开并设置输出类型为&amp;#34;来源&amp;#34;，输出选择为&amp;#34;显示器采集&amp;#34;，打开了虚拟摄像机后可以再次使用命令查看设备列表可以看到多出一个OBS的虚拟摄像机&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-19&#34; class=&#34;outline-5&#34;&gt;
+&lt;h5 id=&#34;headline-19&#34;&gt;
+播放视频
+&lt;/h5&gt;
+&lt;div id=&#34;outline-text-headline-19&#34; class=&#34;outline-text-5&#34;&gt;
+&lt;div class=&#34;src src-bash&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ffplay out.mp4&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-20&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-20&#34;&gt;
+多参数录屏示例
+&lt;/h4&gt;
+&lt;div id=&#34;outline-text-headline-20&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;div class=&#34;src src-bash&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ffmpeg -f gdigrab -t &lt;span class=&#34;m&#34;&gt;30&lt;/span&gt; -framerate &lt;span class=&#34;m&#34;&gt;15&lt;/span&gt; -i desktop -f dshow -i &lt;span class=&#34;nv&#34;&gt;audio&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;麦克风 (Realtek(R) Audio)&amp;#34;&lt;/span&gt; -b:v 3M -pixel_format yuv420p -vcodec libx264 -s 1366x768 -y test.flv&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-21&#34; class=&#34;outline-5&#34;&gt;
+&lt;h5 id=&#34;headline-21&#34;&gt;
+命令详解
+&lt;/h5&gt;
+&lt;div id=&#34;outline-text-headline-21&#34; class=&#34;outline-text-5&#34;&gt;
+&lt;p&gt;
+-f 指定采集数据方式，一般为dshow 或 gdigrab。gdigrab为系统自带，只能录屏幕，没声音；dshow需装directX，优点是可以指定多个输入，比如下载安装screen capture recorder后，可将其作为dshow模式下的视频输入，可将virtual-audio-capturer作为dshow模式下的音频输入，实现录屏的同时录音。
+-i 指定输入，desktop表示gdigrab采集模式输入全部桌面。dshow模式下自己指定，如：-i video=&amp;#34;screen-capture-recorder&amp;#34; -i audio=&amp;#34;virtual-audio-capturer&amp;#34; 
+-t 表示录屏时间，缺省则没有录屏时间限制，会一直录，录到手动停止或强制关闭
+-framerate 表示帧率。对屏幕录制来说，一般15帧就够了，太大的话会很占资源，cpu占用率、内存、存储空间占用等都会很高。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;s 表示分辨率&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;-b:v 表示码率，如：-b:v 3M。大一点清楚，但是占资源，自己权衡吧。
+-pixel_format 表示像素格式，如yuv420p等，注意选择不同的像素格式会影响资源占用率和视频质量，自己研究吧。
+-vcodec 表示编码方式。libx264表示软编码，编码器的库为x264。你可以选择其他的，不同的编码方式也会影响资源占用率和视频质量，自己研究吧。此外可以用硬件加速，硬编解码有3种常见的方式，例如：-vcodec h264_qsv，即使用集显加速；例如： -vcodec h264_nvenc，即使用N卡加速；例如： -vcodec h264_amf，即使用A卡加速。开启硬件加速的情况下可大大降低CPU的占用率
+-y 表示覆盖同名文件
+test.flv为输出文件名，格式虽然mp4较为常见，但我建议用flv格式，因为如果中间有录制损坏，mp4整个就播放不了了，但flv能。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-22&#34; class=&#34;outline-5&#34;&gt;
+&lt;h5 id=&#34;headline-22&#34;&gt;
+播放视频
+&lt;/h5&gt;
+&lt;div id=&#34;outline-text-headline-22&#34; class=&#34;outline-text-5&#34;&gt;
+&lt;div class=&#34;src src-bash&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ffplay test.flv&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-23&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-23&#34;&gt;
+参考链接
+&lt;/h4&gt;
+&lt;div id=&#34;outline-text-headline-23&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://blog.csdn.net/awangdea99/article/details/114555743&#34;&gt;FFmpeg屏幕录制&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://www.zhihu.com/zvideo/1240037588020662272&#34;&gt;15-ffmpeg常用 命令视频录制&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://zhuanlan.zhihu.com/p/580624916&#34;&gt;3 分钟入门 FFmpeg，抛弃又贵又难用的录屏软件&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-24&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-24&#34;&gt;
+编辑字幕
+&lt;/h3&gt;
+&lt;div id=&#34;outline-text-headline-24&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;div id=&#34;outline-container-headline-25&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-25&#34;&gt;
+SRT和ASS字幕格式的简介
+&lt;/h4&gt;
+&lt;div id=&#34;outline-text-headline-25&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;div id=&#34;outline-container-headline-26&#34; class=&#34;outline-5&#34;&gt;
+&lt;h5 id=&#34;headline-26&#34;&gt;
+SRT（SubRip Subtitle）
+&lt;/h5&gt;
+&lt;div id=&#34;outline-text-headline-26&#34; class=&#34;outline-text-5&#34;&gt;
+&lt;p&gt;
+是一种简单的字幕格式，主要由时间戳和文本组成。它通常用于简单的字幕文件，如电影聚会之类。SRT字幕格式的参数如下：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;标题的计数器/索引&lt;/li&gt;
+&lt;li&gt;START和END：字幕开始和字幕结束的时间戳，格式为 “小时：分钟：毫秒”。&lt;/li&gt;
+&lt;li&gt;TEXT：在此时间戳范围内显示的字幕文本&lt;/li&gt;
+&lt;li&gt;一行空白表示一个结束&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;src src-text&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;1
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;00:00:0,000 --&amp;gt; 00:00:2,000
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;这是0到2秒显示的字幕
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;00:00:2,000 --&amp;gt; 00:00:4,000 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;这是2到4秒显示的字幕
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;3
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;00:00:4,000 --&amp;gt; 00:00:7,000
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;这是4到7秒显示的字幕&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-27&#34; class=&#34;outline-5&#34;&gt;
+&lt;h5 id=&#34;headline-27&#34;&gt;
+ASS（Advanced SubStation Alpha）
+&lt;/h5&gt;
+&lt;div id=&#34;outline-text-headline-27&#34; class=&#34;outline-text-5&#34;&gt;
+&lt;p&gt;
+是一个高级的字幕格式，它可以支持更多的样式和控制，比如，更改颜色、字体和大小，还可以通过几何变换来控制字幕的位置。ASS字幕格式包含以下参数：&lt;/p&gt;
+&lt;div id=&#34;outline-container-headline-28&#34; class=&#34;outline-6&#34;&gt;
+&lt;h6 id=&#34;headline-28&#34;&gt;
+样式
+&lt;/h6&gt;
+&lt;div id=&#34;outline-text-headline-28&#34; class=&#34;outline-text-6&#34;&gt;
+&lt;div class=&#34;src src-text&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Style: 序号, 字体名称, 字号, 颜色, 阴影, 边框, 描边, 阴影, 抗锯齿, 倾斜度, weight, underline
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;例子：Style: Top, Microsoft YaHei,40,&amp;amp;H00F5FF&amp;amp;,-1,2,0,0,1,0,0&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-29&#34; class=&#34;outline-6&#34;&gt;
+&lt;h6 id=&#34;headline-29&#34;&gt;
+对齐
+&lt;/h6&gt;
+&lt;div id=&#34;outline-text-headline-29&#34; class=&#34;outline-text-6&#34;&gt;
+&lt;div class=&#34;src src-text&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Dialogue: 0,0:00:03.42,0:00:04.91,Top,,0,0,0,,{\an6}本字幕居右上&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-30&#34; class=&#34;outline-6&#34;&gt;
+&lt;h6 id=&#34;headline-30&#34;&gt;
+触发器
+&lt;/h6&gt;
+&lt;div id=&#34;outline-text-headline-30&#34; class=&#34;outline-text-6&#34;&gt;
+&lt;div class=&#34;src src-text&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Dialogue: 0,0:00:03.42,0:00:04.91,Top,,0,0,0,,{\t(0,300,\fade(400,400))}三秒内渐入渐出&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-31&#34; class=&#34;outline-6&#34;&gt;
+&lt;h6 id=&#34;headline-31&#34;&gt;
+动画
+&lt;/h6&gt;
+&lt;div id=&#34;outline-text-headline-31&#34; class=&#34;outline-text-6&#34;&gt;
+&lt;div class=&#34;src src-text&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Dialogue: 0,0:00:03.42,0:00:04.91,Top,,0,0,0,,{\move(0,0,100,100)}右下角移动&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-32&#34; class=&#34;outline-6&#34;&gt;
+&lt;h6 id=&#34;headline-32&#34;&gt;
+特殊效果
+&lt;/h6&gt;
+&lt;div id=&#34;outline-text-headline-32&#34; class=&#34;outline-text-6&#34;&gt;
+&lt;div class=&#34;src src-text&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Dialogue: 0,0:00:03.42,0:00:05.62,Top,,0,0,0,,{\fad(500,500)\blur3}左右淡入淡出，模糊度3&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-33&#34; class=&#34;outline-6&#34;&gt;
+&lt;h6 id=&#34;headline-33&#34;&gt;
+合的ASS字幕案例
+&lt;/h6&gt;
+&lt;div id=&#34;outline-text-headline-33&#34; class=&#34;outline-text-6&#34;&gt;
+&lt;div class=&#34;src src-text&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;[Script Info]
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;; Script generated by FFmpeg/Lavc59.18.100
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Title: 某电影
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Original Script: 某人
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ScriptType: v4.00+
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;WrapStyle: 0
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Collisions: Normal
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;PlayResX: 1920
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;PlayResY: 1080
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Timer: 100.0000
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;[V4 Styles]
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Style: Default,Arial,30,&amp;amp;Hffffff,&amp;amp;Hffffff,&amp;amp;H0,&amp;amp;H0,0,0,0,0,100,100,0,0,1,1,0,2,10,10,50,0
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;[Events]
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Dialogue: 0,0:00:00.00,0:00:02.00,Default,,0,0,0,,这是0到2秒显示的{\b1}{\i1}字幕{\i0}{\b0}
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Dialogue: 0,0:00:02.00,0:00:04.00,Default,,0,0,0,,这是2到4秒显示的字幕
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Dialogue: 0,0:00:04.00,0:00:07.00,Default,,0,0,0,,这是4到7秒显示的字幕
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Dialogue: 0,0:00:07.00,0:00:10.00,Default,,0,0,0,,这是7到10秒显示的字幕
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Dialogue: 0,0:00:10.00,0:00:30.00,Default,,0,0,0,,这是10到30秒显示的字幕{\an5\move(960,700,960,900)\t(\fscx200\fscy200\frx360\fry360\fad(200,200))\fs60\p5\t(\fscx100\fscy100\frx0\fry0\fad(200,200))\c&amp;amp;HFFFFFF&amp;amp;\3c&amp;amp;HA000&amp;amp;}高级操作.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-34&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-34&#34;&gt;
+生成字幕的命令
+&lt;/h4&gt;
+&lt;div id=&#34;outline-text-headline-34&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;div id=&#34;outline-container-headline-35&#34; class=&#34;outline-5&#34;&gt;
+&lt;h5 id=&#34;headline-35&#34;&gt;
+SRT硬字幕命令
+&lt;/h5&gt;
+&lt;div id=&#34;outline-text-headline-35&#34; class=&#34;outline-text-5&#34;&gt;
+&lt;div class=&#34;src src-text&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ffmpeg -i input.mp4 -vf subtitles=subtitle.srt output_srt.mp4&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-36&#34; class=&#34;outline-5&#34;&gt;
+&lt;h5 id=&#34;headline-36&#34;&gt;
+ASS硬字幕命令
+&lt;/h5&gt;
+&lt;div id=&#34;outline-text-headline-36&#34; class=&#34;outline-text-5&#34;&gt;
+&lt;div class=&#34;src src-text&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ffmpeg -i input.mp4 -vf ass=subtitle.ass output_ass.mp4&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-37&#34; class=&#34;outline-5&#34;&gt;
+&lt;h5 id=&#34;headline-37&#34;&gt;
+SRT和ASS软字幕命令
+&lt;/h5&gt;
+&lt;div id=&#34;outline-text-headline-37&#34; class=&#34;outline-text-5&#34;&gt;
+&lt;div class=&#34;src src-text&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ffmpeg -i input.mp4 -i subtitle.srt -c copy -c:s mov_text -metadata:s:s:0 language=chi ouptut_chi.mp4
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;or
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ffmpeg -i input.mp4 -i subtitle.ass -c copy -c:s mov_text -metadata:s:s:0 language=chi ouptut_chi.mp4&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-38&#34; class=&#34;outline-5&#34;&gt;
+&lt;h5 id=&#34;headline-38&#34;&gt;
+SRT可以转ASS命令
+&lt;/h5&gt;
+&lt;div id=&#34;outline-text-headline-38&#34; class=&#34;outline-text-5&#34;&gt;
+&lt;div class=&#34;src src-text&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ffmpeg -i subtitle.srt subtitle.ass&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-39&#34; class=&#34;outline-5&#34;&gt;
+&lt;h5 id=&#34;headline-39&#34;&gt;
+多通道(软)字幕，中英字幕实现
+&lt;/h5&gt;
+&lt;div id=&#34;outline-text-headline-39&#34; class=&#34;outline-text-5&#34;&gt;
+&lt;div id=&#34;outline-container-headline-40&#34; class=&#34;outline-6&#34;&gt;
+&lt;h6 id=&#34;headline-40&#34;&gt;
+准备字幕文件：假设有中英文字幕文件为ch_en.srt，英文字幕文件为en.srt。
+&lt;/h6&gt;
+&lt;div id=&#34;outline-text-headline-40&#34; class=&#34;outline-text-6&#34;&gt;
+&lt;div id=&#34;outline-container-headline-41&#34; class=&#34;outline-7&#34;&gt;
+&lt;h7 id=&#34;headline-41&#34;&gt;
+中文字幕文件：ch_en.srt
+&lt;/h7&gt;
+&lt;div id=&#34;outline-text-headline-41&#34; class=&#34;outline-text-7&#34;&gt;
+&lt;div class=&#34;src src-text&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;9
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;1
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;00:00:0,000 --&amp;gt; 00:00:5,000
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;这里是视频的标题 1
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Here&amp;#39;s the video&amp;#39;s title 1
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;00:00:5,000 --&amp;gt; 00:00:10,000 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;这里是视频的标题 2
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Here&amp;#39;s the video&amp;#39;s title 2&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-42&#34; class=&#34;outline-7&#34;&gt;
+&lt;h7 id=&#34;headline-42&#34;&gt;
+英文字幕文件：en.srt
+&lt;/h7&gt;
+&lt;div id=&#34;outline-text-headline-42&#34; class=&#34;outline-text-7&#34;&gt;
+&lt;div class=&#34;src src-text&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;1
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;00:00:0,000 --&amp;gt; 00:00:5,000
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Here&amp;#39;s the video&amp;#39;s title 1
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;00:00:5,000 --&amp;gt; 00:00:10,000 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Here&amp;#39;s the video&amp;#39;s title 2&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-43&#34; class=&#34;outline-7&#34;&gt;
+&lt;h7 id=&#34;headline-43&#34;&gt;
+命令
+&lt;/h7&gt;
+&lt;div id=&#34;outline-text-headline-43&#34; class=&#34;outline-text-7&#34;&gt;
+&lt;div class=&#34;src src-text&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ffmpeg -i input.mp4 -i ch_en.srt -i en.srt -map 0 -map 1 -map 2 -c copy -c:s mov_text -metadata:s:s:0 language=chi_eng -metadata:s:s:1 language=eng output_chi_eng_eng.mp4&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-44&#34; class=&#34;outline-7&#34;&gt;
+&lt;h7 id=&#34;headline-44&#34;&gt;
+最后使用ffprobe查看一下生成文件的内容
+&lt;/h7&gt;
+&lt;div id=&#34;outline-text-headline-44&#34; class=&#34;outline-text-7&#34;&gt;
+&lt;div class=&#34;src src-text&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Input #0, mov,mp4,m4a,3gp,3g2,mj2, from &amp;#39;output_chi_eng_eng.mp4&amp;#39;:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  Metadata:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    major_brand     : isom
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    minor_version   : 512
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    compatible_brands: isomiso2avc1mp41
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    encoder         : Lavf60.3.100
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    description     : Bilibili VXCode Swarm Transcoder v0.6.11
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  Duration: 00:05:24.20, start: 0.000000, bitrate: 531 kb/s
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(progressive), 852x480, 397 kb/s, 25 fps, 25 tbr, 12800 tbn (default)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    Metadata:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      handler_name    : VideoHandler
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      vendor_id       : [0][0][0][0]
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  Stream #0:1[0x2](und): Audio: aac (LC) (mp4a / 0x6134706D), 48000 Hz, stereo, fltp, 127 kb/s (default)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    Metadata:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      handler_name    : SoundHandler
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      vendor_id       : [0][0][0][0]
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  Stream #0:2[0x3](chi): Subtitle: mov_text (tx3g / 0x67337874), 0 kb/s (default)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    Metadata:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      handler_name    : SubtitleHandler
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  Stream #0:3[0x4](eng): Subtitle: mov_text (tx3g / 0x67337874), 0 kb/s
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    Metadata:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      handler_name    : SubtitleHandler&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-45&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-45&#34;&gt;
+参考链接
+&lt;/h4&gt;
+&lt;div id=&#34;outline-text-headline-45&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://blog.csdn.net/github_38117599/article/details/129976196&#34;&gt;FFmpeg添加字幕的详细操作&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-46&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-46&#34;&gt;
+播放 yuv 格式的视频
+&lt;/h3&gt;
+&lt;div id=&#34;outline-text-headline-46&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;div id=&#34;outline-container-headline-47&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-47&#34;&gt;
+将yuv文件转换为mp4文件
+&lt;/h4&gt;
+&lt;div id=&#34;outline-text-headline-47&#34; class=&#34;outline-text-4&#34;&gt;
 &lt;div class=&#34;src src-bash&#34;&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -1018,11 +1937,11 @@ windows 安装 ffmpeg
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-6&#34; class=&#34;outline-4&#34;&gt;
-&lt;h4 id=&#34;headline-6&#34;&gt;
+&lt;div id=&#34;outline-container-headline-48&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-48&#34;&gt;
 直接播放yuv文件
 &lt;/h4&gt;
-&lt;div id=&#34;outline-text-headline-6&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;div id=&#34;outline-text-headline-48&#34; class=&#34;outline-text-4&#34;&gt;
 &lt;div class=&#34;src src-bash&#34;&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -1037,11 +1956,11 @@ windows 安装 ffmpeg
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-7&#34; class=&#34;outline-3&#34;&gt;
-&lt;h3 id=&#34;headline-7&#34;&gt;
+&lt;div id=&#34;outline-container-headline-49&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-49&#34;&gt;
 使用 ffplay 一帧一帧地播放视频
 &lt;/h3&gt;
-&lt;div id=&#34;outline-text-headline-7&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;div id=&#34;outline-text-headline-49&#34; class=&#34;outline-text-3&#34;&gt;
 &lt;p&gt;
 要使用 ffplay 一帧一帧地播放视频，您可以通过在命令行中逐帧显示视频帧的方式来实现。以下是一种常见的方法：&lt;/p&gt;
 &lt;div class=&#34;src src-bash&#34;&gt;
@@ -1062,22 +1981,22 @@ windows 安装 ffmpeg
 需要注意的是，ffplay 是一个简单的用于播放视频和音频的工具，如果您需要更多交互性或者更复杂的播放控制，可能需要借助其他工具或编程语言来实现。&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-8&#34; class=&#34;outline-3&#34;&gt;
-&lt;h3 id=&#34;headline-8&#34;&gt;
+&lt;div id=&#34;outline-container-headline-50&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-50&#34;&gt;
 参考链接
 &lt;/h3&gt;
-&lt;div id=&#34;outline-text-headline-8&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;div id=&#34;outline-text-headline-50&#34; class=&#34;outline-text-3&#34;&gt;
 &lt;p&gt;
 &lt;a href=&#34;https://blog.csdn.net/m0_47449768/article/details/130102406&#34;&gt;ffmpeg安装教程（windows版）&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-9&#34; class=&#34;outline-2&#34;&gt;
-&lt;h2 id=&#34;headline-9&#34;&gt;
+&lt;div id=&#34;outline-container-headline-51&#34; class=&#34;outline-2&#34;&gt;
+&lt;h2 id=&#34;headline-51&#34;&gt;
 使用ffplay拉流RSTP-海康威视摄像机
 &lt;/h2&gt;
-&lt;div id=&#34;outline-text-headline-9&#34; class=&#34;outline-text-2&#34;&gt;
+&lt;div id=&#34;outline-text-headline-51&#34; class=&#34;outline-text-2&#34;&gt;
 &lt;div class=&#34;src src-bash&#34;&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -1090,54 +2009,54 @@ windows 安装 ffmpeg
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-10&#34; class=&#34;outline-2&#34;&gt;
-&lt;h2 id=&#34;headline-10&#34;&gt;
+&lt;div id=&#34;outline-container-headline-52&#34; class=&#34;outline-2&#34;&gt;
+&lt;h2 id=&#34;headline-52&#34;&gt;
 windows环境下实现ffmpeg本地视频进行rtsp推流
 &lt;/h2&gt;
-&lt;div id=&#34;outline-text-headline-10&#34; class=&#34;outline-text-2&#34;&gt;
+&lt;div id=&#34;outline-text-headline-52&#34; class=&#34;outline-text-2&#34;&gt;
 &lt;p&gt;
 摘要：有时候服务端（如linux）或者边缘端（jetson盒子）需要接受摄像头的视频流输入，而摄像头的输入视频流一般为rtsp，测试时需要搭建摄像头环境，很不方便，因此需要对本地视频进行rtsp推流，模拟摄像头的rtsp输入。&lt;/p&gt;
-&lt;div id=&#34;outline-container-headline-11&#34; class=&#34;outline-3&#34;&gt;
-&lt;h3 id=&#34;headline-11&#34;&gt;
+&lt;div id=&#34;outline-container-headline-53&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-53&#34;&gt;
 环境搭建
 &lt;/h3&gt;
-&lt;div id=&#34;outline-text-headline-11&#34; class=&#34;outline-text-3&#34;&gt;
-&lt;div id=&#34;outline-container-headline-12&#34; class=&#34;outline-4&#34;&gt;
-&lt;h4 id=&#34;headline-12&#34;&gt;
+&lt;div id=&#34;outline-text-headline-53&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;div id=&#34;outline-container-headline-54&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-54&#34;&gt;
 系统环境
 &lt;/h4&gt;
-&lt;div id=&#34;outline-text-headline-12&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;div id=&#34;outline-text-headline-54&#34; class=&#34;outline-text-4&#34;&gt;
 &lt;p&gt;
 本地使用windows11 64位&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-13&#34; class=&#34;outline-4&#34;&gt;
-&lt;h4 id=&#34;headline-13&#34;&gt;
+&lt;div id=&#34;outline-container-headline-55&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-55&#34;&gt;
 下载rtsp
 &lt;/h4&gt;
-&lt;div id=&#34;outline-text-headline-13&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;div id=&#34;outline-text-headline-55&#34; class=&#34;outline-text-4&#34;&gt;
 &lt;p&gt;
 &lt;a href=&#34;https://github.com/bluenviron/mediamtx/releases/latest&#34;&gt;rtsp下载地址&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;
 &lt;img src=&#34;https://ynhugo.github.io/images/ffmpeg教程/png1.png&#34; alt=&#34;/images/ffmpeg教程/png1.png&#34; title=&#34;/images/ffmpeg教程/png1.png&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-14&#34; class=&#34;outline-4&#34;&gt;
-&lt;h4 id=&#34;headline-14&#34;&gt;
+&lt;div id=&#34;outline-container-headline-56&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-56&#34;&gt;
 下载ffmpeg
 &lt;/h4&gt;
-&lt;div id=&#34;outline-text-headline-14&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;div id=&#34;outline-text-headline-56&#34; class=&#34;outline-text-4&#34;&gt;
 &lt;p&gt;
 &lt;a href=&#34;https://github.com/BtbN/FFmpeg-Builds/releases/latest&#34;&gt;ffmpeg下载地址&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;
 &lt;img src=&#34;https://ynhugo.github.io/images/ffmpeg教程/png2.png&#34; alt=&#34;/images/ffmpeg教程/png2.png&#34; title=&#34;/images/ffmpeg教程/png2.png&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-15&#34; class=&#34;outline-4&#34;&gt;
-&lt;h4 id=&#34;headline-15&#34;&gt;
+&lt;div id=&#34;outline-container-headline-57&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-57&#34;&gt;
 把rtsp和ffmpeg解压到同一个文件夹
 &lt;/h4&gt;
-&lt;div id=&#34;outline-text-headline-15&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;div id=&#34;outline-text-headline-57&#34; class=&#34;outline-text-4&#34;&gt;
 &lt;p&gt;
 把上面下载的两个压缩包解压到同一个文件夹，视频也放到该文件夹目录下，如下图所示：&lt;/p&gt;
 &lt;p&gt;
@@ -1146,27 +2065,27 @@ windows环境下实现ffmpeg本地视频进行rtsp推流
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-16&#34; class=&#34;outline-3&#34;&gt;
-&lt;h3 id=&#34;headline-16&#34;&gt;
+&lt;div id=&#34;outline-container-headline-58&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-58&#34;&gt;
 ffmpeg对本地视频进行rtsp推流
 &lt;/h3&gt;
-&lt;div id=&#34;outline-text-headline-16&#34; class=&#34;outline-text-3&#34;&gt;
-&lt;div id=&#34;outline-container-headline-17&#34; class=&#34;outline-4&#34;&gt;
-&lt;h4 id=&#34;headline-17&#34;&gt;
+&lt;div id=&#34;outline-text-headline-58&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;div id=&#34;outline-container-headline-59&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-59&#34;&gt;
 启动rtsp
 &lt;/h4&gt;
-&lt;div id=&#34;outline-text-headline-17&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;div id=&#34;outline-text-headline-59&#34; class=&#34;outline-text-4&#34;&gt;
 &lt;p&gt;
 双击点开mediamtx.exe，得到如下图画面：&lt;/p&gt;
 &lt;p&gt;
 &lt;img src=&#34;https://ynhugo.github.io/images/ffmpeg教程/png4.png&#34; alt=&#34;/images/ffmpeg教程/png4.png&#34; title=&#34;/images/ffmpeg教程/png4.png&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-18&#34; class=&#34;outline-4&#34;&gt;
-&lt;h4 id=&#34;headline-18&#34;&gt;
+&lt;div id=&#34;outline-container-headline-60&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-60&#34;&gt;
 ffpmeg推流本地视频
 &lt;/h4&gt;
-&lt;div id=&#34;outline-text-headline-18&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;div id=&#34;outline-text-headline-60&#34; class=&#34;outline-text-4&#34;&gt;
 &lt;p&gt;
 打开cmd终端(win+r，输入cmd, 回车)，进入到ffmpeg.exe所在路径，使用以下命令：&lt;/p&gt;
 &lt;div class=&#34;src src-bash&#34;&gt;
@@ -1183,11 +2102,11 @@ ffpmeg推流本地视频
 &lt;img src=&#34;https://ynhugo.github.io/images/ffmpeg教程/png5.png&#34; alt=&#34;/images/ffmpeg教程/png5.png&#34; title=&#34;/images/ffmpeg教程/png5.png&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;
 注意：这里ip为本地环境IP，可以在cmd终端输入ipconfig查看。&lt;/p&gt;
-&lt;div id=&#34;outline-container-headline-19&#34; class=&#34;outline-5&#34;&gt;
-&lt;h5 id=&#34;headline-19&#34;&gt;
+&lt;div id=&#34;outline-container-headline-61&#34; class=&#34;outline-5&#34;&gt;
+&lt;h5 id=&#34;headline-61&#34;&gt;
 ffpmeg常用参数
 &lt;/h5&gt;
-&lt;div id=&#34;outline-text-headline-19&#34; class=&#34;outline-text-5&#34;&gt;
+&lt;div id=&#34;outline-text-headline-61&#34; class=&#34;outline-text-5&#34;&gt;
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
@@ -1254,11 +2173,11 @@ ffpmeg常用参数
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-20&#34; class=&#34;outline-4&#34;&gt;
-&lt;h4 id=&#34;headline-20&#34;&gt;
+&lt;div id=&#34;outline-container-headline-62&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-62&#34;&gt;
 使用vlc验证是否推流成功
 &lt;/h4&gt;
-&lt;div id=&#34;outline-text-headline-20&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;div id=&#34;outline-text-headline-62&#34; class=&#34;outline-text-4&#34;&gt;
 &lt;ol&gt;
 &lt;li&gt;下载vlc软件并安装:&lt;/li&gt;
 &lt;/ol&gt;
@@ -1275,27 +2194,27 @@ ffpmeg常用参数
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-21&#34; class=&#34;outline-3&#34;&gt;
-&lt;h3 id=&#34;headline-21&#34;&gt;
+&lt;div id=&#34;outline-container-headline-63&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-63&#34;&gt;
 参考链接
 &lt;/h3&gt;
-&lt;div id=&#34;outline-text-headline-21&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;div id=&#34;outline-text-headline-63&#34; class=&#34;outline-text-3&#34;&gt;
 &lt;p&gt;
 &lt;a href=&#34;https://blog.csdn.net/Caesar6666/article/details/137512406&#34;&gt;windows环境下实现ffmpeg本地视频进行rtsp推流&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-22&#34; class=&#34;outline-2&#34;&gt;
-&lt;h2 id=&#34;headline-22&#34;&gt;
+&lt;div id=&#34;outline-container-headline-64&#34; class=&#34;outline-2&#34;&gt;
+&lt;h2 id=&#34;headline-64&#34;&gt;
 在Windows操作系统上使用mediamtx和ffmpeg推送录屏视频流
 &lt;/h2&gt;
-&lt;div id=&#34;outline-text-headline-22&#34; class=&#34;outline-text-2&#34;&gt;
-&lt;div id=&#34;outline-container-headline-23&#34; class=&#34;outline-3&#34;&gt;
-&lt;h3 id=&#34;headline-23&#34;&gt;
+&lt;div id=&#34;outline-text-headline-64&#34; class=&#34;outline-text-2&#34;&gt;
+&lt;div id=&#34;outline-container-headline-65&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-65&#34;&gt;
 搭建启动rtsp server
 &lt;/h3&gt;
-&lt;div id=&#34;outline-text-headline-23&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;div id=&#34;outline-text-headline-65&#34; class=&#34;outline-text-3&#34;&gt;
 &lt;p&gt;
 从&lt;a href=&#34;https://github.com/bluenviron/mediamtx/releases/latest&#34;&gt;https://github.com/bluenviron/mediamtx/releases/latest&lt;/a&gt;下载Windows版本的编译结果。&lt;/p&gt;
 &lt;p&gt;
@@ -1306,11 +2225,11 @@ ffpmeg常用参数
 &lt;img src=&#34;https://ynhugo.github.io/images/ffmpeg教程/png4.png&#34; alt=&#34;/images/ffmpeg教程/png4.png&#34; title=&#34;/images/ffmpeg教程/png4.png&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-24&#34; class=&#34;outline-3&#34;&gt;
-&lt;h3 id=&#34;headline-24&#34;&gt;
+&lt;div id=&#34;outline-container-headline-66&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-66&#34;&gt;
 推送录屏视频流
 &lt;/h3&gt;
-&lt;div id=&#34;outline-text-headline-24&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;div id=&#34;outline-text-headline-66&#34; class=&#34;outline-text-3&#34;&gt;
 &lt;p&gt;
 下载FFmpeg&lt;/p&gt;
 &lt;p&gt;
@@ -1339,25 +2258,25 @@ rstp simple server的窗口会发生下面的变化。&lt;/p&gt;
 &lt;img src=&#34;https://ynhugo.github.io/images/ffmpeg教程/png10.png&#34; alt=&#34;/images/ffmpeg教程/png10.png&#34; title=&#34;/images/ffmpeg教程/png10.png&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-25&#34; class=&#34;outline-3&#34;&gt;
-&lt;h3 id=&#34;headline-25&#34;&gt;
+&lt;div id=&#34;outline-container-headline-67&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-67&#34;&gt;
 检验
 &lt;/h3&gt;
-&lt;div id=&#34;outline-text-headline-25&#34; class=&#34;outline-text-3&#34;&gt;
-&lt;div id=&#34;outline-container-headline-26&#34; class=&#34;outline-4&#34;&gt;
-&lt;h4 id=&#34;headline-26&#34;&gt;
+&lt;div id=&#34;outline-text-headline-67&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;div id=&#34;outline-container-headline-68&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-68&#34;&gt;
 获取本机IP
 &lt;/h4&gt;
-&lt;div id=&#34;outline-text-headline-26&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;div id=&#34;outline-text-headline-68&#34; class=&#34;outline-text-4&#34;&gt;
 &lt;p&gt;
 在cmd中使用ipconfig获取本机IP&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-27&#34; class=&#34;outline-4&#34;&gt;
-&lt;h4 id=&#34;headline-27&#34;&gt;
+&lt;div id=&#34;outline-container-headline-69&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-69&#34;&gt;
 检测
 &lt;/h4&gt;
-&lt;div id=&#34;outline-text-headline-27&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;div id=&#34;outline-text-headline-69&#34; class=&#34;outline-text-4&#34;&gt;
 &lt;p&gt;
 可以使用VLC播放器测试流地址是否有效。&lt;/p&gt;
 &lt;p&gt;
@@ -1374,32 +2293,32 @@ rstp simple server的窗口会发生下面的变化。&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-28&#34; class=&#34;outline-3&#34;&gt;
-&lt;h3 id=&#34;headline-28&#34;&gt;
+&lt;div id=&#34;outline-container-headline-70&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-70&#34;&gt;
 参考链接
 &lt;/h3&gt;
-&lt;div id=&#34;outline-text-headline-28&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;div id=&#34;outline-text-headline-70&#34; class=&#34;outline-text-3&#34;&gt;
 &lt;p&gt;
 &lt;a href=&#34;https://blog.csdn.net/wujiesunlirong/article/details/134804329&#34;&gt;在Windows操作系统上使用mediamtx和ffmpeg推送录屏视频流&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-29&#34; class=&#34;outline-2&#34;&gt;
-&lt;h2 id=&#34;headline-29&#34;&gt;
+&lt;div id=&#34;outline-container-headline-71&#34; class=&#34;outline-2&#34;&gt;
+&lt;h2 id=&#34;headline-71&#34;&gt;
 RTSP 和 RTMP原理 &amp;amp; 通过ffmpeg实现将本地摄像头推流到RTSP服务器
 &lt;/h2&gt;
-&lt;div id=&#34;outline-text-headline-29&#34; class=&#34;outline-text-2&#34;&gt;
-&lt;div id=&#34;outline-container-headline-30&#34; class=&#34;outline-3&#34;&gt;
-&lt;h3 id=&#34;headline-30&#34;&gt;
+&lt;div id=&#34;outline-text-headline-71&#34; class=&#34;outline-text-2&#34;&gt;
+&lt;div id=&#34;outline-container-headline-72&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-72&#34;&gt;
 流媒体：RTSP 和 RTMP
 &lt;/h3&gt;
-&lt;div id=&#34;outline-text-headline-30&#34; class=&#34;outline-text-3&#34;&gt;
-&lt;div id=&#34;outline-container-headline-31&#34; class=&#34;outline-4&#34;&gt;
-&lt;h4 id=&#34;headline-31&#34;&gt;
+&lt;div id=&#34;outline-text-headline-72&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;div id=&#34;outline-container-headline-73&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-73&#34;&gt;
 参考资料
 &lt;/h4&gt;
-&lt;div id=&#34;outline-text-headline-31&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;div id=&#34;outline-text-headline-73&#34; class=&#34;outline-text-4&#34;&gt;
 &lt;p&gt;
 &lt;a href=&#34;https://blog.csdn.net/weixin_43025343/article/details/124957360&#34;&gt;秒懂流媒体协议 RTMP 与 RTSP&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;
@@ -1408,16 +2327,16 @@ RTSP 和 RTMP原理 &amp;amp; 通过ffmpeg实现将本地摄像头推流到RTSP�
 &lt;a href=&#34;https://www.cnblogs.com/biao-wu/articles/13064243.html&#34;&gt;RTSP和RTMP的区别是什么？&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-32&#34; class=&#34;outline-4&#34;&gt;
-&lt;h4 id=&#34;headline-32&#34;&gt;
+&lt;div id=&#34;outline-container-headline-74&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-74&#34;&gt;
 RTSP 和 RTMP的工作原理
 &lt;/h4&gt;
-&lt;div id=&#34;outline-text-headline-32&#34; class=&#34;outline-text-4&#34;&gt;
-&lt;div id=&#34;outline-container-headline-33&#34; class=&#34;outline-5&#34;&gt;
-&lt;h5 id=&#34;headline-33&#34;&gt;
+&lt;div id=&#34;outline-text-headline-74&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;div id=&#34;outline-container-headline-75&#34; class=&#34;outline-5&#34;&gt;
+&lt;h5 id=&#34;headline-75&#34;&gt;
 RTSP工作原理
 &lt;/h5&gt;
-&lt;div id=&#34;outline-text-headline-33&#34; class=&#34;outline-text-5&#34;&gt;
+&lt;div id=&#34;outline-text-headline-75&#34; class=&#34;outline-text-5&#34;&gt;
 &lt;ol&gt;
 &lt;li&gt;用户设备向视频流平台发送 RTSP 请求&lt;/li&gt;
 &lt;li&gt;视频流平台返回可以操作的请求列表，比如播放、暂停等&lt;/li&gt;
@@ -1425,11 +2344,11 @@ RTSP工作原理
 &lt;li&gt;视频流平台解析请求并调用指定机制启动视频流处理&lt;/li&gt;
 &lt;li&gt;由于 RTSP 依赖于专用服务器，并且依赖于 RTP（底层用到了UDP），因此该协议不支持加密视频内容或重传丢失的数据包。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;div id=&#34;outline-container-headline-34&#34; class=&#34;outline-6&#34;&gt;
-&lt;h6 id=&#34;headline-34&#34;&gt;
+&lt;div id=&#34;outline-container-headline-76&#34; class=&#34;outline-6&#34;&gt;
+&lt;h6 id=&#34;headline-76&#34;&gt;
 这里解释一下RTSP中是如何用到UDP和TCP的：
 &lt;/h6&gt;
-&lt;div id=&#34;outline-text-headline-34&#34; class=&#34;outline-text-6&#34;&gt;
+&lt;div id=&#34;outline-text-headline-76&#34; class=&#34;outline-text-6&#34;&gt;
 &lt;ol&gt;
 &lt;li&gt;RTP协议，英文全称：Real-time Transport Protocol，中文就是实时传输协议，它的底层其实就是UDP，这样一来就可以实现低延迟。&lt;/li&gt;
 &lt;li&gt;
@@ -1447,11 +2366,11 @@ RTSP工作原理
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-35&#34; class=&#34;outline-5&#34;&gt;
-&lt;h5 id=&#34;headline-35&#34;&gt;
+&lt;div id=&#34;outline-container-headline-77&#34; class=&#34;outline-5&#34;&gt;
+&lt;h5 id=&#34;headline-77&#34;&gt;
 RTMP工作原理
 &lt;/h5&gt;
-&lt;div id=&#34;outline-text-headline-35&#34; class=&#34;outline-text-5&#34;&gt;
+&lt;div id=&#34;outline-text-headline-77&#34; class=&#34;outline-text-5&#34;&gt;
 &lt;ol&gt;
 &lt;li&gt;摄像头捕获视频&lt;/li&gt;
 &lt;li&gt;通过编码器将视频流传输到视频平台服务器&lt;/li&gt;
@@ -1466,16 +2385,16 @@ RTMP工作原理
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-36&#34; class=&#34;outline-4&#34;&gt;
-&lt;h4 id=&#34;headline-36&#34;&gt;
+&lt;div id=&#34;outline-container-headline-78&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-78&#34;&gt;
 RTSP 和 RTMP的优缺点
 &lt;/h4&gt;
-&lt;div id=&#34;outline-text-headline-36&#34; class=&#34;outline-text-4&#34;&gt;
-&lt;div id=&#34;outline-container-headline-37&#34; class=&#34;outline-5&#34;&gt;
-&lt;h5 id=&#34;headline-37&#34;&gt;
+&lt;div id=&#34;outline-text-headline-78&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;div id=&#34;outline-container-headline-79&#34; class=&#34;outline-5&#34;&gt;
+&lt;h5 id=&#34;headline-79&#34;&gt;
 RTSP的优缺点
 &lt;/h5&gt;
-&lt;div id=&#34;outline-text-headline-37&#34; class=&#34;outline-text-5&#34;&gt;
+&lt;div id=&#34;outline-text-headline-79&#34; class=&#34;outline-text-5&#34;&gt;
 &lt;p&gt;
 RTSP的优点：&lt;/p&gt;
 &lt;ol&gt;
@@ -1491,16 +2410,16 @@ RTSP的优点：&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-38&#34; class=&#34;outline-4&#34;&gt;
-&lt;h4 id=&#34;headline-38&#34;&gt;
+&lt;div id=&#34;outline-container-headline-80&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-80&#34;&gt;
 RTMP的优缺点
 &lt;/h4&gt;
-&lt;div id=&#34;outline-text-headline-38&#34; class=&#34;outline-text-4&#34;&gt;
-&lt;div id=&#34;outline-container-headline-39&#34; class=&#34;outline-5&#34;&gt;
-&lt;h5 id=&#34;headline-39&#34;&gt;
+&lt;div id=&#34;outline-text-headline-80&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;div id=&#34;outline-container-headline-81&#34; class=&#34;outline-5&#34;&gt;
+&lt;h5 id=&#34;headline-81&#34;&gt;
 RTMP的优点：
 &lt;/h5&gt;
-&lt;div id=&#34;outline-text-headline-39&#34; class=&#34;outline-text-5&#34;&gt;
+&lt;div id=&#34;outline-text-headline-81&#34; class=&#34;outline-text-5&#34;&gt;
 &lt;ol&gt;
 &lt;li&gt;低延迟：RTMP使用独占的 1935 端口，无需缓冲，可以实现低延迟。&lt;/li&gt;
 &lt;li&gt;适应性强：所有 RTMP 服务器都可以录制直播媒体流，同时还允许观众跳过部分广播并在直播开始后加入直播流。&lt;/li&gt;
@@ -1508,11 +2427,11 @@ RTMP的优点：
 &lt;/ol&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-40&#34; class=&#34;outline-5&#34;&gt;
-&lt;h5 id=&#34;headline-40&#34;&gt;
+&lt;div id=&#34;outline-container-headline-82&#34; class=&#34;outline-5&#34;&gt;
+&lt;h5 id=&#34;headline-82&#34;&gt;
 RTMP的缺点：
 &lt;/h5&gt;
-&lt;div id=&#34;outline-text-headline-40&#34; class=&#34;outline-text-5&#34;&gt;
+&lt;div id=&#34;outline-text-headline-82&#34; class=&#34;outline-text-5&#34;&gt;
 &lt;ol&gt;
 &lt;li&gt;HTML5 不支持：标准HTML5 播放器不支持 RTMP 流。&lt;/li&gt;
 &lt;li&gt;容易受到带宽问题的影响：RTMP 流经常会出现低带宽问题，造成视频中断。&lt;/li&gt;
@@ -1522,22 +2441,22 @@ RTMP的缺点：
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-41&#34; class=&#34;outline-4&#34;&gt;
-&lt;h4 id=&#34;headline-41&#34;&gt;
+&lt;div id=&#34;outline-container-headline-83&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-83&#34;&gt;
 RTSP和RTMP的比较
 &lt;/h4&gt;
-&lt;div id=&#34;outline-text-headline-41&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;div id=&#34;outline-text-headline-83&#34; class=&#34;outline-text-4&#34;&gt;
 &lt;p&gt;
 RTMP 和 RTSP协议 都是流媒体协议：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;RTMP（Real Time Message Protocol 实时消息传递协议） 有 Adobe 公司提出，用来解决多媒体数据传输流的多路复用（Multiplexing）和分包（packetizing）的问题，优势在于低延迟，稳定性高，支持所有摄像头格式，浏览器加载 flash插件就可以直接播放。&lt;/li&gt;
 &lt;li&gt;RTSP （Real-Time Stream Protocol 实时流协议）由Real Networks 和 Netscape共同提出的，基于文本的多媒体播放控制协议。RTSP定义流格式，流数据经由RTP传输；RTSP实时效果非常好，适合视频聊天，视频监控等方向。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;div id=&#34;outline-container-headline-42&#34; class=&#34;outline-5&#34;&gt;
-&lt;h5 id=&#34;headline-42&#34;&gt;
+&lt;div id=&#34;outline-container-headline-84&#34; class=&#34;outline-5&#34;&gt;
+&lt;h5 id=&#34;headline-84&#34;&gt;
 RTMP 和 RTSP协议 的区别：
 &lt;/h5&gt;
-&lt;div id=&#34;outline-text-headline-42&#34; class=&#34;outline-text-5&#34;&gt;
+&lt;div id=&#34;outline-text-headline-84&#34; class=&#34;outline-text-5&#34;&gt;
 &lt;p&gt;
 RTSP虽然实时性最好，但是实现复杂，适合视频聊天和视频监控；&lt;/p&gt;
 &lt;p&gt;
@@ -1546,11 +2465,11 @@ RTMP强在浏览器支持好，加载flash插件后就能直接播放，所以�
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-43&#34; class=&#34;outline-4&#34;&gt;
-&lt;h4 id=&#34;headline-43&#34;&gt;
+&lt;div id=&#34;outline-container-headline-85&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-85&#34;&gt;
 RTSP和RTMP如何选择
 &lt;/h4&gt;
-&lt;div id=&#34;outline-text-headline-43&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;div id=&#34;outline-text-headline-85&#34; class=&#34;outline-text-4&#34;&gt;
 &lt;ol&gt;
 &lt;li&gt;IP 摄像机选择RTSP：几乎所有 IP 摄像机都支持 RTSP，这是因为 IP 摄像机早在 RTMP 协议创建之前就已经存在，与 RTSP 和 IP 摄像机结合使用时，IP 摄像机本身充当 RTSP 服务器，这意味着要将摄像机连接到 IP 摄像机服务器并广播视频。&lt;/li&gt;
 &lt;li&gt;物联网设备选择RTSP：RTSP 通常内置在无人机或物联网软件中，从而可以访问视频源，它的好处之一是低延迟，确保视频中没有延迟，这对于无人机来说至关重要。&lt;/li&gt;
@@ -1558,11 +2477,11 @@ RTSP和RTMP如何选择
 &lt;/ol&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-44&#34; class=&#34;outline-4&#34;&gt;
-&lt;h4 id=&#34;headline-44&#34;&gt;
+&lt;div id=&#34;outline-container-headline-86&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-86&#34;&gt;
 如何在浏览器上播放RTSP
 &lt;/h4&gt;
-&lt;div id=&#34;outline-text-headline-44&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;div id=&#34;outline-text-headline-86&#34; class=&#34;outline-text-4&#34;&gt;
 &lt;ol&gt;
 &lt;li&gt;直播的协议有：rtmp, http, rtsp等等。最常用的有二种：http, rtmp，当使用http协议的时候视频格式需要是m3u8或flv，下面作详细说明各种环境的优缺点。首先，rtsp不能使用于网页环境（包含PC端和移动端），那么直播只能选择rtmp或http。&lt;/li&gt;
 &lt;li&gt;rtmp协议只支持flashplayer，也就是只能在PC端（或安卓环境中安装了flashplayer组件，这种环境比较少）安装了flashplayer的情况下使用。按现在的趋势，flashplayer是要逐渐被淘汰掉的。当然，在中国还会存在相对长时间。&lt;/li&gt;
@@ -1574,16 +2493,16 @@ RTSP和RTMP如何选择
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-45&#34; class=&#34;outline-3&#34;&gt;
-&lt;h3 id=&#34;headline-45&#34;&gt;
+&lt;div id=&#34;outline-container-headline-87&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-87&#34;&gt;
 ffmpeg将本地摄像头推流到RTSP服务器
 &lt;/h3&gt;
-&lt;div id=&#34;outline-text-headline-45&#34; class=&#34;outline-text-3&#34;&gt;
-&lt;div id=&#34;outline-container-headline-46&#34; class=&#34;outline-4&#34;&gt;
-&lt;h4 id=&#34;headline-46&#34;&gt;
+&lt;div id=&#34;outline-text-headline-87&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;div id=&#34;outline-container-headline-88&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-88&#34;&gt;
 ffmpeg参考资料
 &lt;/h4&gt;
-&lt;div id=&#34;outline-text-headline-46&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;div id=&#34;outline-text-headline-88&#34; class=&#34;outline-text-4&#34;&gt;
 &lt;p&gt;
 &lt;a href=&#34;https://ffmpeg.org/ffmpeg-protocols.html&#34;&gt;FFmpeg Protocols Documentation&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;
@@ -1592,11 +2511,11 @@ ffmpeg参考资料
 &lt;a href=&#34;https://zhuanlan.zhihu.com/p/545070185&#34;&gt;FFmpeg流媒体处理-收流与推流&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;
 &lt;a href=&#34;https://blog.51cto.com/u_3619476/5019788&#34;&gt;FFmpeg发送流媒体的命令（UDP，RTP，RTMP）&lt;/a&gt;&lt;/p&gt;
-&lt;div id=&#34;outline-container-headline-47&#34; class=&#34;outline-5&#34;&gt;
-&lt;h5 id=&#34;headline-47&#34;&gt;
+&lt;div id=&#34;outline-container-headline-89&#34; class=&#34;outline-5&#34;&gt;
+&lt;h5 id=&#34;headline-89&#34;&gt;
 ffmpeg将本地摄像头推流到RTSP服务器
 &lt;/h5&gt;
-&lt;div id=&#34;outline-text-headline-47&#34; class=&#34;outline-text-5&#34;&gt;
+&lt;div id=&#34;outline-text-headline-89&#34; class=&#34;outline-text-5&#34;&gt;
 &lt;p&gt;
 &lt;a href=&#34;https://blog.csdn.net/fkbiubiubiu/article/details/124028614&#34;&gt;ffmpeg–使用命令+EasyDarwin推流笔记本摄像头&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;
@@ -1613,27 +2532,27 @@ Note：ffmpeg将本地摄像头推流到rtsp的8554端口上（rtsp-simple-serve
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-48&#34; class=&#34;outline-4&#34;&gt;
-&lt;h4 id=&#34;headline-48&#34;&gt;
+&lt;div id=&#34;outline-container-headline-90&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-90&#34;&gt;
 安装ffmpeg和rtsp-simple-server
 &lt;/h4&gt;
-&lt;div id=&#34;outline-text-headline-48&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;div id=&#34;outline-text-headline-90&#34; class=&#34;outline-text-4&#34;&gt;
 &lt;p&gt;
 大致实现过程：使用rtsp-simple-server作为中转服务器，用于ffmpeg（写客户端）推流，后台服务（读客户端）拉流&lt;/p&gt;
-&lt;div id=&#34;outline-container-headline-49&#34; class=&#34;outline-5&#34;&gt;
-&lt;h5 id=&#34;headline-49&#34;&gt;
+&lt;div id=&#34;outline-container-headline-91&#34; class=&#34;outline-5&#34;&gt;
+&lt;h5 id=&#34;headline-91&#34;&gt;
 windows安装rtsp-simple-server和ffmpeg
 &lt;/h5&gt;
-&lt;div id=&#34;outline-text-headline-49&#34; class=&#34;outline-text-5&#34;&gt;
+&lt;div id=&#34;outline-text-headline-91&#34; class=&#34;outline-text-5&#34;&gt;
 &lt;p&gt;
 参考&lt;a href=&#34;https://blog.csdn.net/EthanCo/article/details/125321957&#34;&gt;windows环境下，搭建RTSP视频推流服务器&lt;/a&gt;即可（记得修改rtsp-simple-server.yml配置文件中的ip地址）&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-50&#34; class=&#34;outline-5&#34;&gt;
-&lt;h5 id=&#34;headline-50&#34;&gt;
+&lt;div id=&#34;outline-container-headline-92&#34; class=&#34;outline-5&#34;&gt;
+&lt;h5 id=&#34;headline-92&#34;&gt;
 linux安装rtsp-simple-server和ffmpeg
 &lt;/h5&gt;
-&lt;div id=&#34;outline-text-headline-50&#34; class=&#34;outline-text-5&#34;&gt;
+&lt;div id=&#34;outline-text-headline-92&#34; class=&#34;outline-text-5&#34;&gt;
 &lt;p&gt;
 安装&lt;a href=&#34;https://github.com/aler9/rtsp-simple-server/releases/download/v0.20.2/rtsp-simple-server_v0.20.2_linux_amd64.tar.gz&#34;&gt;rtsp-simple-server_v0.20.2_linux_amd64.tar.gz&lt;/a&gt;（这里以x86 CPU为例），解压后修改rtsp-simple-server.yml配置文件中的ip地址（vim替换命令为%s:/127.0.0.1/192.168.132.100/g），执行./rtsp-simple-server即可启动rtsp服务器。&lt;/p&gt;
 &lt;p&gt;
@@ -1670,20 +2589,20 @@ Note：在linux中关于tar.gz，xz，tar的解压操作请自行上网查阅。
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-51&#34; class=&#34;outline-4&#34;&gt;
-&lt;h4 id=&#34;headline-51&#34;&gt;
+&lt;div id=&#34;outline-container-headline-93&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-93&#34;&gt;
 将本地摄像头推流到RTSP服务器
 &lt;/h4&gt;
-&lt;div id=&#34;outline-text-headline-51&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;div id=&#34;outline-text-headline-93&#34; class=&#34;outline-text-4&#34;&gt;
 &lt;p&gt;
 大致实现过程：使用rtsp-simple-server作为中转服务器，用于ffmpeg（写客户端）推流，后台服务（读客户端）拉流&lt;/p&gt;
 &lt;p&gt;
 这里以windows系统作为演示，先解压&lt;a href=&#34;https://github.com/aler9/rtsp-simple-server/releases&#34;&gt;rtsp-simple-server_v0.19.1_windows_amd64.zip&lt;/a&gt;，打开rtsp-simple-server.exe监听RTSP下TCP的8554端口，然后通过ffmpeg将指定摄像头采集到的图像帧向该端口进行推流（即多个客户端与服务器端的socket通信）&lt;/p&gt;
-&lt;div id=&#34;outline-container-headline-52&#34; class=&#34;outline-5&#34;&gt;
-&lt;h5 id=&#34;headline-52&#34;&gt;
+&lt;div id=&#34;outline-container-headline-94&#34; class=&#34;outline-5&#34;&gt;
+&lt;h5 id=&#34;headline-94&#34;&gt;
 写客户端：ffmpeg
 &lt;/h5&gt;
-&lt;div id=&#34;outline-text-headline-52&#34; class=&#34;outline-text-5&#34;&gt;
+&lt;div id=&#34;outline-text-headline-94&#34; class=&#34;outline-text-5&#34;&gt;
 &lt;p&gt;
 ffmpeg推流视频文件到指定ip + 端口上（-stream_loop -1）：&lt;/p&gt;
 &lt;div class=&#34;src src-bash&#34;&gt;
@@ -1722,11 +2641,11 @@ ffmpeg将本地摄像头的视频流推送到指定ip + 端口上，则需要&lt
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-53&#34; class=&#34;outline-5&#34;&gt;
-&lt;h5 id=&#34;headline-53&#34;&gt;
+&lt;div id=&#34;outline-container-headline-95&#34; class=&#34;outline-5&#34;&gt;
+&lt;h5 id=&#34;headline-95&#34;&gt;
 服务器端：RTSP服务器
 &lt;/h5&gt;
-&lt;div id=&#34;outline-text-headline-53&#34; class=&#34;outline-text-5&#34;&gt;
+&lt;div id=&#34;outline-text-headline-95&#34; class=&#34;outline-text-5&#34;&gt;
 &lt;p&gt;
 初启动效果如下：&lt;/p&gt;
 &lt;p&gt;
@@ -1739,11 +2658,11 @@ ffmpeg将本地摄像头的视频流推送到指定ip + 端口上，则需要&lt
 &lt;img src=&#34;https://ynhugo.github.io/images/ffmpeg教程/png16.png&#34; alt=&#34;/images/ffmpeg教程/png16.png&#34; title=&#34;/images/ffmpeg教程/png16.png&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-54&#34; class=&#34;outline-5&#34;&gt;
-&lt;h5 id=&#34;headline-54&#34;&gt;
+&lt;div id=&#34;outline-container-headline-96&#34; class=&#34;outline-5&#34;&gt;
+&lt;h5 id=&#34;headline-96&#34;&gt;
 读客户端：读客户端可以通过两种方式来实现
 &lt;/h5&gt;
-&lt;div id=&#34;outline-text-headline-54&#34; class=&#34;outline-text-5&#34;&gt;
+&lt;div id=&#34;outline-text-headline-96&#34; class=&#34;outline-text-5&#34;&gt;
 &lt;p&gt;
 安装VLC，选择流数据播放模式，输入rtsp://127.0.0.1:8554/camera_test，rtsp://127.0.0.1:8554/videoFile_test即可播放；&lt;/p&gt;
 &lt;p&gt;
@@ -1806,18 +2725,18 @@ ffmpeg将本地摄像头的视频流推送到指定ip + 端口上，则需要&lt
 此时会出现两个createby和reading，即开启两个进程进行视频流的读取&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-55&#34; class=&#34;outline-5&#34;&gt;
-&lt;h5 id=&#34;headline-55&#34;&gt;
+&lt;div id=&#34;outline-container-headline-97&#34; class=&#34;outline-5&#34;&gt;
+&lt;h5 id=&#34;headline-97&#34;&gt;
 存在问题：视频读取时延大
 &lt;/h5&gt;
-&lt;div id=&#34;outline-text-headline-55&#34; class=&#34;outline-text-5&#34;&gt;
+&lt;div id=&#34;outline-text-headline-97&#34; class=&#34;outline-text-5&#34;&gt;
 &lt;p&gt;
 基于tcp和RTP的rtsp直播延迟很高，一开始延迟只有7s，由于TCP的拥塞控制，导致随着时间推移，延迟越来越高，有14s之多。&lt;/p&gt;
-&lt;div id=&#34;outline-container-headline-56&#34; class=&#34;outline-6&#34;&gt;
-&lt;h6 id=&#34;headline-56&#34;&gt;
+&lt;div id=&#34;outline-container-headline-98&#34; class=&#34;outline-6&#34;&gt;
+&lt;h6 id=&#34;headline-98&#34;&gt;
 可能原因1：视频编码导致延迟高（亲测效果不明显）
 &lt;/h6&gt;
-&lt;div id=&#34;outline-text-headline-56&#34; class=&#34;outline-text-6&#34;&gt;
+&lt;div id=&#34;outline-text-headline-98&#34; class=&#34;outline-text-6&#34;&gt;
 &lt;p&gt;
 参考&lt;a href=&#34;https://blog.csdn.net/yuxinaibiancheng/article/details/119884095&#34;&gt;ffmpeg直播解决延时的关键方法&lt;/a&gt;，主要原因是使用libx264或者h264对视频进行编码的问题。&lt;/p&gt;
 &lt;p&gt;
@@ -1848,11 +2767,11 @@ ffmpeg将本地摄像头的视频流推送到指定ip + 端口上，则需要&lt
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-57&#34; class=&#34;outline-6&#34;&gt;
-&lt;h6 id=&#34;headline-57&#34;&gt;
+&lt;div id=&#34;outline-container-headline-99&#34; class=&#34;outline-6&#34;&gt;
+&lt;h6 id=&#34;headline-99&#34;&gt;
 可能原因2：设置ffmpeg参数（亲测效果不明显）
 &lt;/h6&gt;
-&lt;div id=&#34;outline-text-headline-57&#34; class=&#34;outline-text-6&#34;&gt;
+&lt;div id=&#34;outline-text-headline-99&#34; class=&#34;outline-text-6&#34;&gt;
 &lt;p&gt;
 参考&lt;a href=&#34;https://www.cnblogs.com/sk777/p/16831556.html&#34;&gt;解决ffmpeg的播放摄像头的延时优化问题(项目案例使用有效)&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;
@@ -1918,22 +2837,22 @@ ffmpeg完整命令如下：&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-58&#34; class=&#34;outline-6&#34;&gt;
-&lt;h6 id=&#34;headline-58&#34;&gt;
+&lt;div id=&#34;outline-container-headline-100&#34; class=&#34;outline-6&#34;&gt;
+&lt;h6 id=&#34;headline-100&#34;&gt;
 可能原因3：tcp连接导致延迟高
 &lt;/h6&gt;
-&lt;div id=&#34;outline-text-headline-58&#34; class=&#34;outline-text-6&#34;&gt;
+&lt;div id=&#34;outline-text-headline-100&#34; class=&#34;outline-text-6&#34;&gt;
 &lt;p&gt;
 参考&lt;a href=&#34;https://github.com/aler9/rtsp-simple-server/issues/902&#34;&gt;RTSP end to end latency will be increasing when use tcp #902&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;
 ffmpeg在通过rtsp实现推流时默认是遵循tcp协议的，目的是为了保证消息可靠传输。对于实时音视频通信，如果要想实现低延迟，要么增加带宽，要么使用UDP进行传输。&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-59&#34; class=&#34;outline-6&#34;&gt;
-&lt;h6 id=&#34;headline-59&#34;&gt;
+&lt;div id=&#34;outline-container-headline-101&#34; class=&#34;outline-6&#34;&gt;
+&lt;h6 id=&#34;headline-101&#34;&gt;
 原因4：逐帧读取时需要逐帧解码，导致输入和输出速率不匹配导致延迟高（有效 - 抽帧读取）
 &lt;/h6&gt;
-&lt;div id=&#34;outline-text-headline-59&#34; class=&#34;outline-text-6&#34;&gt;
+&lt;div id=&#34;outline-text-headline-101&#34; class=&#34;outline-text-6&#34;&gt;
 &lt;p&gt;
 解决方法：对于读客户端，采用抽帧读取的方法来解决。如果采用逐帧读取并完成解码的方式，会让写客户端不停地推流，而读客户端来不及解码导致缓存区拥塞。&lt;/p&gt;
 &lt;p&gt;
@@ -2016,11 +2935,11 @@ python读客户端代码修改如下：&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-60&#34; class=&#34;outline-3&#34;&gt;
-&lt;h3 id=&#34;headline-60&#34;&gt;
+&lt;div id=&#34;outline-container-headline-102&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-102&#34;&gt;
 参考链接
 &lt;/h3&gt;
-&lt;div id=&#34;outline-text-headline-60&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;div id=&#34;outline-text-headline-102&#34; class=&#34;outline-text-3&#34;&gt;
 &lt;p&gt;
 &lt;a href=&#34;https://blog.csdn.net/qq_33934427/article/details/128009659&#34;&gt;RTSP 和 RTMP原理 &amp;amp; 通过ffmpeg实现将本地摄像头推流到RTSP服务器&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
