@@ -589,22 +589,45 @@ git-bash链接：https://registry.npmmirror.com/binary.html?path=git-for-windows
 
 		修改配置文件
 			准备一个qq邮箱之外的邮箱，邮箱的实用性越高越好，因此我建议的邮箱是微软的Outlook邮箱，官网是 outlook.live.com 可以在注册一个Outlook邮箱,注册完Outlook邮箱之后就可以到 github.com官网 注册了，搭建hexo的前提是在github.com官网 注册并搭建一个用于部署hexo的仓库。
-			在github注册并新建一个仓库，仓库格式为 仓库名.github.io，然后将该仓库生成的	ssh链接复制下来，打开刚刚创建的站点目录下的 _config.yml
+			在github注册并新建一个仓库，仓库格式为 用户名.github.io，然后将该仓库生成的	ssh链接复制下来，打开刚刚创建的站点目录下的 _config.yml
 				vim _config.yml
 				在该文件的最下面，有一段代码：
-
-					# Deployment
-					## Docs: https://hexo.io/docs/one-command-deployment
-					deploy:
-					  type: ' '
-				将代码更改为：
-					# Deployment
-					## Docs: https://hexo.io/docs/one-command-deployment
-					deploy:
-					  type: 'git'	#部署博客类型
-					 repo: git@github.com:zzfxdyn/zzfxdyn.github.io.git	#仓库生成的链接
-					 branch: main		#仓库默认分支
-				同时将该文件中url：http://example.com改为 https://仓库名
+</code></pre>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># Deployment
+</span></span><span class="line"><span class="cl">## Docs: https://hexo.io/docs/one-command-deployment
+</span></span><span class="line"><span class="cl">deploy:
+</span></span><span class="line"><span class="cl">  type: &#39; &#39;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>				将代码更改为：
+</code></pre>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># Deployment
+</span></span><span class="line"><span class="cl">## Docs: https://hexo.io/docs/one-command-deployment
+</span></span><span class="line"><span class="cl">deploy:
+</span></span><span class="line"><span class="cl">  type: &#39;git&#39;	#部署博客类型
+</span></span><span class="line"><span class="cl">  repo: git@github.com:zzfxdyn/zzfxdyn.github.io.git	#仓库生成的链接
+</span></span><span class="line"><span class="cl">  branch: main		#仓库默认分支
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>				同时将该文件中url：http://example.com改为 https://仓库名
 				
 		npm install hexo-deployer-git --save	#安装博客部署插件
 
