@@ -3184,6 +3184,41 @@ timeout 的时间需要根据你的视频长度和处理速度进行调整，以
 </span><span class="lnt">44
 </span><span class="lnt">45
 </span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nv">vcodec_1</span><span class="o">=</span><span class="s2">&#34;libx264&#34;</span>				<span class="c1"># 视频编码格式</span>
@@ -3193,9 +3228,9 @@ timeout 的时间需要根据你的视频长度和处理速度进行调整，以
 </span></span><span class="line"><span class="cl">  <span class="nv">b</span><span class="o">=</span><span class="k">$(</span>ffprobe <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> 2&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="p">|</span> grep <span class="s2">&#34;bitrate&#34;</span> <span class="p">|</span> grep -Eo <span class="s2">&#34;[0-9]{4,6} kb/s&#34;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $1}&#39;</span><span class="k">)</span>
 </span></span><span class="line"><span class="cl">  <span class="nv">pix_fmt</span><span class="o">=</span><span class="k">$(</span>ffprobe <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> 2&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="p">|</span> grep -Eo <span class="s2">&#34;, .*(.*progressive)&#34;</span> <span class="p">|</span> awk -F <span class="s1">&#39;(&#39;</span> <span class="s1">&#39;{print $1}&#39;</span> <span class="p">|</span> awk -F <span class="s1">&#39;,&#39;</span> <span class="s1">&#39;{print $2}&#39;</span> <span class="p">|</span> sed <span class="s1">&#39;s/ //g&#39;</span><span class="k">)</span> <span class="c1"># 获取像素格式</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;fps: </span><span class="si">${</span><span class="nv">fps</span><span class="si">}</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;s: </span><span class="si">${</span><span class="nv">s</span><span class="si">}</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;pix_fmt: </span><span class="si">${</span><span class="nv">pix_fmt</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># echo &#34;fps: ${fps}&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># echo &#34;s: ${s}&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># echo &#34;pix_fmt: ${pix_fmt}&#34;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="k">case</span> <span class="nv">$2</span> in
 </span></span><span class="line"><span class="cl">	  R<span class="o">)</span>
@@ -3207,16 +3242,28 @@ timeout 的时间需要根据你的视频长度和处理速度进行调整，以
 </span></span><span class="line"><span class="cl">		  ffmpeg -f concat -safe <span class="m">0</span> -i pngRlist.txt -vf palettegen -y palette.png <span class="c1"># 生成调色板</span>
 </span></span><span class="line"><span class="cl">		  <span class="k">case</span> <span class="nv">$3</span> in
 </span></span><span class="line"><span class="cl">			  mp4<span class="o">)</span>
-</span></span><span class="line"><span class="cl">				  ffmpeg -r <span class="s2">&#34;</span><span class="si">${</span><span class="nv">fps</span><span class="si">}</span><span class="s2">&#34;</span> -f image2 -f concat -safe <span class="m">0</span> -i pngRlist.txt -i palette.png -pix_fmt <span class="s2">&#34;</span><span class="si">${</span><span class="nv">pix_fmt</span><span class="si">}</span><span class="s2">&#34;</span> -vcodec <span class="s2">&#34;</span><span class="si">${</span><span class="nv">vcodec_1</span><span class="si">}</span><span class="s2">&#34;</span> -crf <span class="s2">&#34;</span><span class="si">${</span><span class="nv">crf_1</span><span class="si">}</span><span class="s2">&#34;</span> -lavfi paletteuse -s <span class="s2">&#34;</span><span class="si">${</span><span class="nv">s</span><span class="si">}</span><span class="s2">&#34;</span> -b:v <span class="s2">&#34;</span><span class="si">${</span><span class="nv">b</span><span class="si">}</span><span class="s2">k&#34;</span> -y output.mp4 <span class="c1"># 将视频转换为倒放</span>
+</span></span><span class="line"><span class="cl">				  ffmpeg -r <span class="s2">&#34;</span><span class="si">${</span><span class="nv">fps</span><span class="si">}</span><span class="s2">&#34;</span> -f image2 -f concat -safe <span class="m">0</span> -i pngRlist.txt -i palette.png -pix_fmt <span class="s2">&#34;</span><span class="si">${</span><span class="nv">pix_fmt</span><span class="si">}</span><span class="s2">&#34;</span> -vcodec <span class="s2">&#34;</span><span class="si">${</span><span class="nv">vcodec_1</span><span class="si">}</span><span class="s2">&#34;</span> -crf <span class="s2">&#34;</span><span class="si">${</span><span class="nv">crf_1</span><span class="si">}</span><span class="s2">&#34;</span> -lavfi paletteuse -s <span class="s2">&#34;</span><span class="si">${</span><span class="nv">s</span><span class="si">}</span><span class="s2">&#34;</span> -y routput.mp4 <span class="c1"># 将视频转换为倒放</span>
+</span></span><span class="line"><span class="cl">				  rm *.png
+</span></span><span class="line"><span class="cl">				  rm *.txt
 </span></span><span class="line"><span class="cl">				  <span class="p">;;</span>
 </span></span><span class="line"><span class="cl">			  gif<span class="o">)</span>
-</span></span><span class="line"><span class="cl">				  ffmpeg -r <span class="s2">&#34;</span><span class="si">${</span><span class="nv">fps</span><span class="si">}</span><span class="s2">&#34;</span> -f concat -safe <span class="m">0</span> -i pngRlist.txt -i palette.png -pix_fmt <span class="s2">&#34;</span><span class="si">${</span><span class="nv">pix_fmt</span><span class="si">}</span><span class="s2">&#34;</span> -crf <span class="s2">&#34;</span><span class="si">${</span><span class="nv">crf_1</span><span class="si">}</span><span class="s2">&#34;</span> -lavfi paletteuse -s <span class="s2">&#34;</span><span class="si">${</span><span class="nv">s</span><span class="si">}</span><span class="s2">&#34;</span> -b:v <span class="s2">&#34;</span><span class="si">${</span><span class="nv">b</span><span class="si">}</span><span class="s2">k&#34;</span> -y output.gif <span class="c1"># 将视频转换为倒放的gif</span>
+</span></span><span class="line"><span class="cl">				  ffmpeg -r <span class="s2">&#34;</span><span class="si">${</span><span class="nv">fps</span><span class="si">}</span><span class="s2">&#34;</span> -f concat -safe <span class="m">0</span> -i pngRlist.txt -i palette.png -pix_fmt <span class="s2">&#34;</span><span class="si">${</span><span class="nv">pix_fmt</span><span class="si">}</span><span class="s2">&#34;</span> -crf <span class="s2">&#34;</span><span class="si">${</span><span class="nv">crf_1</span><span class="si">}</span><span class="s2">&#34;</span> -lavfi paletteuse -s <span class="s2">&#34;</span><span class="si">${</span><span class="nv">s</span><span class="si">}</span><span class="s2">&#34;</span> -y routput.gif <span class="c1"># 将视频转换为倒放的gif</span>
+</span></span><span class="line"><span class="cl">				  rm *.png
+</span></span><span class="line"><span class="cl">				  rm *.txt
+</span></span><span class="line"><span class="cl">				  <span class="p">;;</span>
+</span></span><span class="line"><span class="cl">			  rgif<span class="o">)</span>
+</span></span><span class="line"><span class="cl">				  ffmpeg -r <span class="s2">&#34;</span><span class="si">${</span><span class="nv">fps</span><span class="si">}</span><span class="s2">&#34;</span> -f concat -safe <span class="m">0</span> -i pngRlist.txt -i palette.png -pix_fmt <span class="s2">&#34;</span><span class="si">${</span><span class="nv">pix_fmt</span><span class="si">}</span><span class="s2">&#34;</span> -crf <span class="s2">&#34;</span><span class="si">${</span><span class="nv">crf_1</span><span class="si">}</span><span class="s2">&#34;</span> -lavfi paletteuse -s <span class="s2">&#34;</span><span class="si">${</span><span class="nv">s</span><span class="si">}</span><span class="s2">&#34;</span> -y routput.gif <span class="c1"># 将视频转换为gif</span>
+</span></span><span class="line"><span class="cl">				  ffmpeg -i routput.gif -vf <span class="s2">&#34;scale=</span><span class="si">${</span><span class="nv">4</span><span class="si">}</span><span class="s2">:-2&#34;</span> -y rsoutput.gif <span class="c1"># 缩放gif文件</span>
+</span></span><span class="line"><span class="cl">				  rm *.png
+</span></span><span class="line"><span class="cl">				  rm *.txt
 </span></span><span class="line"><span class="cl">				  <span class="p">;;</span>
 </span></span><span class="line"><span class="cl">			  all<span class="o">)</span>
-</span></span><span class="line"><span class="cl">				  ffmpeg -r <span class="s2">&#34;</span><span class="si">${</span><span class="nv">fps</span><span class="si">}</span><span class="s2">&#34;</span> -f image2 -f concat -safe <span class="m">0</span> -i pngRlist.txt -i palette.png -pix_fmt <span class="s2">&#34;</span><span class="si">${</span><span class="nv">pix_fmt</span><span class="si">}</span><span class="s2">&#34;</span> -vcodec <span class="s2">&#34;</span><span class="si">${</span><span class="nv">vcodec_1</span><span class="si">}</span><span class="s2">&#34;</span> -crf <span class="s2">&#34;</span><span class="si">${</span><span class="nv">crf_1</span><span class="si">}</span><span class="s2">&#34;</span> -lavfi paletteuse -s <span class="s2">&#34;</span><span class="si">${</span><span class="nv">s</span><span class="si">}</span><span class="s2">&#34;</span> -b:v <span class="s2">&#34;</span><span class="si">${</span><span class="nv">b</span><span class="si">}</span><span class="s2">k&#34;</span> -y output.mp4 <span class="c1"># 将视频转换为倒放</span>
-</span></span><span class="line"><span class="cl">				  ffmpeg -r <span class="s2">&#34;</span><span class="si">${</span><span class="nv">fps</span><span class="si">}</span><span class="s2">&#34;</span> -f concat -safe <span class="m">0</span> -i pngRlist.txt -i palette.png -pix_fmt <span class="s2">&#34;</span><span class="si">${</span><span class="nv">pix_fmt</span><span class="si">}</span><span class="s2">&#34;</span> -crf <span class="s2">&#34;</span><span class="si">${</span><span class="nv">crf_1</span><span class="si">}</span><span class="s2">&#34;</span> -lavfi paletteuse -s <span class="s2">&#34;</span><span class="si">${</span><span class="nv">s</span><span class="si">}</span><span class="s2">&#34;</span> -b:v <span class="s2">&#34;</span><span class="si">${</span><span class="nv">b</span><span class="si">}</span><span class="s2">k&#34;</span> -y output.gif <span class="c1"># 将视频转换为倒放的gif</span>
-</span></span><span class="line"><span class="cl">				  <span class="p">;;</span>			  
-</span></span><span class="line"><span class="cl">		  <span class="k">esac</span>		  
+</span></span><span class="line"><span class="cl">				  ffmpeg -r <span class="s2">&#34;</span><span class="si">${</span><span class="nv">fps</span><span class="si">}</span><span class="s2">&#34;</span> -f image2 -f concat -safe <span class="m">0</span> -i pngRlist.txt -i palette.png -pix_fmt <span class="s2">&#34;</span><span class="si">${</span><span class="nv">pix_fmt</span><span class="si">}</span><span class="s2">&#34;</span> -vcodec <span class="s2">&#34;</span><span class="si">${</span><span class="nv">vcodec_1</span><span class="si">}</span><span class="s2">&#34;</span> -crf <span class="s2">&#34;</span><span class="si">${</span><span class="nv">crf_1</span><span class="si">}</span><span class="s2">&#34;</span> -lavfi paletteuse -s <span class="s2">&#34;</span><span class="si">${</span><span class="nv">s</span><span class="si">}</span><span class="s2">&#34;</span> -y routput.mp4 <span class="c1"># 将视频转换为倒放</span>
+</span></span><span class="line"><span class="cl">				  ffmpeg -r <span class="s2">&#34;</span><span class="si">${</span><span class="nv">fps</span><span class="si">}</span><span class="s2">&#34;</span> -f concat -safe <span class="m">0</span> -i pngRlist.txt -i palette.png -pix_fmt <span class="s2">&#34;</span><span class="si">${</span><span class="nv">pix_fmt</span><span class="si">}</span><span class="s2">&#34;</span> -crf <span class="s2">&#34;</span><span class="si">${</span><span class="nv">crf_1</span><span class="si">}</span><span class="s2">&#34;</span> -lavfi paletteuse -s <span class="s2">&#34;</span><span class="si">${</span><span class="nv">s</span><span class="si">}</span><span class="s2">&#34;</span> -y routput.gif <span class="c1"># 将视频转换为倒放的gif				  </span>
+</span></span><span class="line"><span class="cl">				  ffmpeg -i routput.gif -vf <span class="s2">&#34;scale=</span><span class="si">${</span><span class="nv">4</span><span class="si">}</span><span class="s2">:-2&#34;</span> -y rsoutput.gif <span class="c1"># 缩放gif文件</span>
+</span></span><span class="line"><span class="cl">				  rm *.png
+</span></span><span class="line"><span class="cl">				  rm *.txt				  
+</span></span><span class="line"><span class="cl">		  <span class="k">esac</span>
 </span></span><span class="line"><span class="cl">		  <span class="p">;;</span>
 </span></span><span class="line"><span class="cl">	  N<span class="o">)</span>
 </span></span><span class="line"><span class="cl">		  <span class="nv">dir</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> <span class="p">|</span> awk -F <span class="s1">&#39;.&#39;</span> <span class="s1">&#39;{print $1}&#39;</span><span class="k">)</span>
@@ -3224,12 +3271,35 @@ timeout 的时间需要根据你的视频长度和处理速度进行调整，以
 </span></span><span class="line"><span class="cl">		  ffmpeg -i <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> -vf <span class="s2">&#34;fps=</span><span class="si">${</span><span class="nv">fps</span><span class="si">}</span><span class="s2">&#34;</span> -y <span class="s2">&#34;</span><span class="si">${</span><span class="nv">dir</span><span class="si">}</span><span class="s2">&#34;</span>/%d.png
 </span></span><span class="line"><span class="cl">		  <span class="nb">cd</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">dir</span><span class="si">}</span><span class="s2">&#34;</span>
 </span></span><span class="line"><span class="cl">		  mapfile -t files &lt; &lt;<span class="o">(</span>ls *.png <span class="p">|</span> sort -n<span class="o">)</span><span class="p">;</span> <span class="k">for</span> i in <span class="s2">&#34;</span><span class="si">${</span><span class="nv">files</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span> <span class="k">do</span> <span class="nb">echo</span> <span class="s2">&#34;file &#39;</span><span class="si">${</span><span class="nv">i</span><span class="si">}</span><span class="s2">&#39;&#34;</span><span class="p">;</span> <span class="k">done</span> <span class="p">|</span> cat &gt; pngNlist.txt <span class="c1"># 生成帧图片的文件列表</span>
-</span></span><span class="line"><span class="cl">		  ffmpeg -f concat -safe <span class="m">0</span> -i pngNlist.txt -vf palettegen -y palette.png <span class="c1"># 生成调色板</span>
-</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">		  ffmpeg -f concat -safe <span class="m">0</span> -i pngNlist.txt -vf palettegen -y palette.png <span class="c1"># 生成调色板		  </span>
 </span></span><span class="line"><span class="cl">		  <span class="k">case</span> <span class="nv">$3</span> in
 </span></span><span class="line"><span class="cl">			  gif<span class="o">)</span>
-</span></span><span class="line"><span class="cl">				  ffmpeg -r <span class="s2">&#34;</span><span class="si">${</span><span class="nv">fps</span><span class="si">}</span><span class="s2">&#34;</span> -f concat -safe <span class="m">0</span> -i pngNlist.txt -i palette.png -pix_fmt <span class="s2">&#34;</span><span class="si">${</span><span class="nv">pix_fmt</span><span class="si">}</span><span class="s2">&#34;</span> -crf <span class="s2">&#34;</span><span class="si">${</span><span class="nv">crf_1</span><span class="si">}</span><span class="s2">&#34;</span> -lavfi paletteuse -s <span class="s2">&#34;</span><span class="si">${</span><span class="nv">s</span><span class="si">}</span><span class="s2">&#34;</span> -b:v <span class="s2">&#34;</span><span class="si">${</span><span class="nv">b</span><span class="si">}</span><span class="s2">k&#34;</span> -y output.gif <span class="c1"># 将视频转换为gif</span>
+</span></span><span class="line"><span class="cl">				  ffmpeg -r <span class="s2">&#34;</span><span class="si">${</span><span class="nv">fps</span><span class="si">}</span><span class="s2">&#34;</span> -f concat -safe <span class="m">0</span> -i pngNlist.txt -i palette.png -pix_fmt <span class="s2">&#34;</span><span class="si">${</span><span class="nv">pix_fmt</span><span class="si">}</span><span class="s2">&#34;</span> -crf <span class="s2">&#34;</span><span class="si">${</span><span class="nv">crf_1</span><span class="si">}</span><span class="s2">&#34;</span> -lavfi paletteuse -s <span class="s2">&#34;</span><span class="si">${</span><span class="nv">s</span><span class="si">}</span><span class="s2">&#34;</span> -y noutput.gif <span class="c1"># 将视频转换为gif				  </span>
+</span></span><span class="line"><span class="cl">				  rm *.png
+</span></span><span class="line"><span class="cl">				  rm *.txt
+</span></span><span class="line"><span class="cl">				  <span class="p">;;</span>
+</span></span><span class="line"><span class="cl">			  sgif<span class="o">)</span>
+</span></span><span class="line"><span class="cl">				  ffmpeg -r <span class="s2">&#34;</span><span class="si">${</span><span class="nv">fps</span><span class="si">}</span><span class="s2">&#34;</span> -f concat -safe <span class="m">0</span> -i pngNlist.txt -i palette.png -pix_fmt <span class="s2">&#34;</span><span class="si">${</span><span class="nv">pix_fmt</span><span class="si">}</span><span class="s2">&#34;</span> -crf <span class="s2">&#34;</span><span class="si">${</span><span class="nv">crf_1</span><span class="si">}</span><span class="s2">&#34;</span> -lavfi paletteuse -s <span class="s2">&#34;</span><span class="si">${</span><span class="nv">s</span><span class="si">}</span><span class="s2">&#34;</span> -y noutput.gif <span class="c1"># 将视频转换为gif</span>
+</span></span><span class="line"><span class="cl">				  ffmpeg -i noutput.gif -vf <span class="s2">&#34;scale=</span><span class="si">${</span><span class="nv">4</span><span class="si">}</span><span class="s2">:-2&#34;</span> -y nsoutput.gif <span class="c1"># 缩放gif文件</span>
+</span></span><span class="line"><span class="cl">				  rm *.png
+</span></span><span class="line"><span class="cl">				  rm *.txt
+</span></span><span class="line"><span class="cl">				  <span class="p">;;</span>
+</span></span><span class="line"><span class="cl">			  all<span class="o">)</span>
+</span></span><span class="line"><span class="cl">				  ffmpeg -r <span class="s2">&#34;</span><span class="si">${</span><span class="nv">fps</span><span class="si">}</span><span class="s2">&#34;</span> -f concat -safe <span class="m">0</span> -i pngNlist.txt -i palette.png -pix_fmt <span class="s2">&#34;</span><span class="si">${</span><span class="nv">pix_fmt</span><span class="si">}</span><span class="s2">&#34;</span> -crf <span class="s2">&#34;</span><span class="si">${</span><span class="nv">crf_1</span><span class="si">}</span><span class="s2">&#34;</span> -lavfi paletteuse -s <span class="s2">&#34;</span><span class="si">${</span><span class="nv">s</span><span class="si">}</span><span class="s2">&#34;</span> -y noutput.gif <span class="c1"># 将视频转换为gif</span>
+</span></span><span class="line"><span class="cl">				  ffmpeg -i noutput.gif -vf <span class="s2">&#34;scale=</span><span class="si">${</span><span class="nv">4</span><span class="si">}</span><span class="s2">:-2&#34;</span> -y nsoutput.gif <span class="c1"># 缩放gif文件</span>
+</span></span><span class="line"><span class="cl">				  rm *.png
+</span></span><span class="line"><span class="cl">				  rm *.txt
 </span></span><span class="line"><span class="cl">		  <span class="k">esac</span>
+</span></span><span class="line"><span class="cl">		  <span class="p">;;</span>
+</span></span><span class="line"><span class="cl">	  s<span class="o">)</span>		  
+</span></span><span class="line"><span class="cl">		  ffmpeg -i <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> -vf <span class="s2">&#34;scale=</span><span class="si">${</span><span class="nv">3</span><span class="si">}</span><span class="s2">:-2&#34;</span> -y soutput.gif
+</span></span><span class="line"><span class="cl">		  <span class="p">;;</span>
+</span></span><span class="line"><span class="cl">	  c<span class="o">)</span>
+</span></span><span class="line"><span class="cl">		  ffmpeg -i <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> -y coutput.gif
+</span></span><span class="line"><span class="cl">		  <span class="p">;;</span>
+</span></span><span class="line"><span class="cl">	  cs<span class="o">)</span>
+</span></span><span class="line"><span class="cl">		  ffmpeg -i <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> -y coutput.gif
+</span></span><span class="line"><span class="cl">		  ffmpeg -i <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> -vf <span class="s2">&#34;scale=</span><span class="si">${</span><span class="nv">3</span><span class="si">}</span><span class="s2">:-2&#34;</span> -y csoutput.gif
 </span></span><span class="line"><span class="cl">		  <span class="p">;;</span>
 </span></span><span class="line"><span class="cl">  <span class="k">esac</span></span></span></code></pre></td></tr></table>
 </div>
