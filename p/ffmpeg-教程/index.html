@@ -3146,13 +3146,9 @@ timeout 的时间需要根据你的视频长度和处理速度进行调整，以
 </span><span class="lnt">10
 </span><span class="lnt">11
 </span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nv">fps</span><span class="o">=</span><span class="k">$(</span>ffprobe <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> 2&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="p">|</span> grep -Eo <span class="s2">&#34;[0-9]{2,5} fps&#34;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $1}&#39;</span><span class="k">)</span>
-</span></span><span class="line"><span class="cl">  <span class="c1"># echo &#34;${fps}&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="k">case</span> <span class="nv">$2</span> in
 </span></span><span class="line"><span class="cl">	  R<span class="o">)</span>
 </span></span><span class="line"><span class="cl">		  <span class="nv">dir</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> <span class="p">|</span> awk -F <span class="s1">&#39;.&#39;</span> <span class="s1">&#39;{print $1}&#39;</span><span class="k">)</span>
@@ -3160,9 +3156,7 @@ timeout 的时间需要根据你的视频长度和处理速度进行调整，以
 </span></span><span class="line"><span class="cl">		  ffmpeg -i <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> -vf <span class="s2">&#34;fps=</span><span class="si">${</span><span class="nv">fps</span><span class="si">}</span><span class="s2">&#34;</span> -y <span class="s2">&#34;</span><span class="si">${</span><span class="nv">dir</span><span class="si">}</span><span class="s2">&#34;</span>/%d.png
 </span></span><span class="line"><span class="cl">		  <span class="nb">cd</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">dir</span><span class="si">}</span><span class="s2">&#34;</span>
 </span></span><span class="line"><span class="cl">		  mapfile -t files &lt; &lt;<span class="o">(</span>ls *.png <span class="p">|</span> sort -nr<span class="o">)</span><span class="p">;</span> <span class="k">for</span> i in <span class="s2">&#34;</span><span class="si">${</span><span class="nv">files</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span> <span class="k">do</span> <span class="nb">echo</span> <span class="s2">&#34;file &#39;</span><span class="si">${</span><span class="nv">i</span><span class="si">}</span><span class="s2">&#39;&#34;</span><span class="p">;</span> <span class="k">done</span> <span class="p">|</span> cat &gt; pngRlist.txt
-</span></span><span class="line"><span class="cl">		  ffmpeg -f concat -i pngRlist.txt -vf palettegen -y palette.png
-</span></span><span class="line"><span class="cl">		  <span class="c1"># ffmpeg -r &#34;${fps}&#34; -f concat -safe 0 -i pngRlist.txt -i palette.png -lavfi paletteuse -y palette.mp4</span>
-</span></span><span class="line"><span class="cl">		  <span class="c1"># ffmpeg -r 30 -f concat -i pngRlist.txt -i palette.png -lavfi paletteuse -y palette.mp4</span>
+</span></span><span class="line"><span class="cl">		  ffmpeg -f concat -i pngRlist.txt -vf palettegen -y palette.png		  
 </span></span><span class="line"><span class="cl">		  ffmpeg -r <span class="s2">&#34;</span><span class="si">${</span><span class="nv">fps</span><span class="si">}</span><span class="s2">&#34;</span> -f concat -safe <span class="m">0</span> -i pngRlist.txt -i palette.png -lavfi paletteuse -y output.mp4
 </span></span><span class="line"><span class="cl">		  <span class="p">;;</span>
 </span></span><span class="line"><span class="cl">  <span class="k">esac</span></span></span></code></pre></td></tr></table>
