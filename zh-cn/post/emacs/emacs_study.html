@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- 2024-09-08 周日 04:22 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>&lrm;</title>
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content" class="content">
+<nav id="table-of-contents" role="doc-toc">
+<h2>&#30446;&#24405;</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org0e0c03e">1. 学习emacs</a>
+<ul>
+<li><a href="#org62929a5">1.1. emacs自带简单教程</a></li>
+<li><a href="#org05e4217">1.2. 推荐emacs教程</a></li>
+</ul>
+</li>
+<li><a href="#orgd1cae22">2. 推荐书籍</a></li>
+<li><a href="#orgdca3485">3. emacs入门教程</a></li>
+<li><a href="#orgc22cce2">4. Emacs文件和目录操作模式Dired</a>
+<ul>
+<li><a href="#orgf9b9cab">4.1. 参考链接</a></li>
+<li><a href="#org80566f6">4.2. 在目录模式(dired)下的操作</a></li>
+<li><a href="#org2927f2a">4.3. linux下加载emacs配置文件提示：无法检查签名：没有公钥</a>
+<ul>
+<li><a href="#org649281a">4.3.1. 参考链接</a></li>
+</ul>
+</li>
+<li><a href="#orgf599c9b">4.4. Emacs 中更换文件的换行符格式</a>
+<ul>
+<li><a href="#org088f42d">4.4.1. Emacs 选中内容后用 eww 搜索技巧</a>
+<ul>
+<li><a href="#orga3f6930">4.4.1.1. emacs导出html文件如何忽略不存在的文件路径</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgedc5ec6">5. 安装emacs</a></li>
+<li><a href="#orgd55b75a">6. emacs使用技巧</a>
+<ul>
+<li><a href="#orgc37f8c9">6.1. emacs列操作与emacs寄存器的操作</a></li>
+<li><a href="#org9b6f36c">6.2. emacs操作-显示空格，选中区域搜索空格并替换</a></li>
+<li><a href="#org6fd9065">6.3. emacs: org-mode与gtd</a></li>
+<li><a href="#org8075266">6.4. emacs文件头设置显示缩进和打开级别</a>
+<ul>
+<li><a href="#orge595d79">6.4.1. 文件头</a></li>
+</ul>
+</li>
+<li><a href="#org325f68c">6.5. emacs查看按键使用记录</a></li>
+<li><a href="#org4dd7db3">6.6. 要确保嵌套代码块在 Org-mode 文档中显示为普通文本，可以使用 `verbatim` 或 `example` 代码块来避免被执行。下面是一个适合网页显示的示例：</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</nav>
+<p>
+&#x2014;
+title: "emacs_study"
+date: 2024-03-26T00:55:06+08:00
+tags: ["emacs"]
+&#x2014;
+</p>
+
+<div id="outline-container-org0e0c03e" class="outline-2">
+<h2 id="org0e0c03e"><span class="section-number-2">1.</span> 学习emacs</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+首先有一些最基本的命令：
+</p>
+
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">M-x</th>
+<th scope="col" class="org-left">#命令模式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">clipboard-kill-region</td>
+<td class="org-left">#剪切区域并发送到系统剪切板和Kill环中，需</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">要配合命令模式使用</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">clipboard-kill-ring-save</td>
+<td class="org-left">#复制区域内容到系统剪切板和Kill 环中，需要</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">配合命令模式使用</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">clipboard-yank</td>
+<td class="org-left">#从剪切板中粘贴到Emacs中，需要配合命令模式</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+使用
+</p>
+
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">C-x u</th>
+<th scope="col" class="org-left">#重做，也就是撤销</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">C-x h</td>
+<td class="org-left">#全选</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">C-w</td>
+<td class="org-left">#删除</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">C-h f</td>
+<td class="org-left">#查看函数绑定按键</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">C-k</td>
+<td class="org-left">#从光标位置删除至行尾</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">C-p</td>
+<td class="org-left">#移动到上一行</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">C-n</td>
+<td class="org-left">#移动到下一行</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">C-b</td>
+<td class="org-left">#向左移一个字符</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">C-f</td>
+<td class="org-left">#向右移一个字符</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-org62929a5" class="outline-3">
+<h3 id="org62929a5"><span class="section-number-3">1.1.</span> emacs自带简单教程</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+<a href="https://zhuanlan.zhihu.com/p/27299756">emacs 自带的简单入门教程</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-org05e4217" class="outline-3">
+<h3 id="org05e4217"><span class="section-number-3">1.2.</span> 推荐emacs教程</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+<a href="https://zhuanlan.zhihu.com/p/385214753">专业 Emacs 入门（一）</a>
+</p>
+
+<p>
+<a href="https://zhuanlan.zhihu.com/p/403076883">专业 Emacs 入门（二）：基础操作</a>
+</p>
+
+<p>
+<a href="https://zhuanlan.zhihu.com/p/409364725">专业 Emacs 入门（三）：多文件与模式</a>
+</p>
+
+<p>
+<a href="https://zhuanlan.zhihu.com/p/432552171">专业 Emacs 入门（四）：基本配置</a>
+</p>
+
+<p>
+<a href="https://zhuanlan.zhihu.com/p/441612281">专业 Emacs 入门（五）：插件篇——功能优化类</a>
+</p>
+
+<p>
+<a href="https://zhuanlan.zhihu.com/p/450512406">专业 Emacs 入门（六）：插件篇——功能增强类</a>
+</p>
+
+<p>
+<a href="https://zhuanlan.zhihu.com/p/467681146">专业 Emacs 入门（七）：插件篇——编程开发类</a>
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd1cae22" class="outline-2">
+<h2 id="orgd1cae22"><span class="section-number-2">2.</span> 推荐书籍</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+<a href="file:///g:/book/计算机/程序员/emacs/Emacs-生存指南.pdf">Emacs-生存指南</a>
+</p>
+
+<p>
+<a href="file:///g:/book/计算机/程序员/emacs/GNU-Emacs-Lisp编程入门.pdf">GNU-Emacs-Lisp编程入门</a>
+</p>
+
+<p>
+<a href="file:///g:/book/计算机/程序员/emacs/ANSI-Common-Lisp-中文版.epub">ANSI-Common-Lisp-中文版</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgdca3485" class="outline-2">
+<h2 id="orgdca3485"><span class="section-number-2">3.</span> emacs入门教程</h2>
+<div class="outline-text-2" id="text-3">
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">&lt;C-h t&gt;</td>
+<td class="org-left">查看官方教程，教程会根据系统语言显示中文</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-orgc22cce2" class="outline-2">
+<h2 id="orgc22cce2"><span class="section-number-2">4.</span> Emacs文件和目录操作模式Dired</h2>
+<div class="outline-text-2" id="text-4">
+</div>
+<div id="outline-container-orgf9b9cab" class="outline-3">
+<h3 id="orgf9b9cab"><span class="section-number-3">4.1.</span> 参考链接</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+<a href="https://www.cnblogs.com/beanmoon/archive/2012/09/22/2697723.html">Emacs文件和目录操作模式Dired</a>
+</p>
+
+
+<p>
+&lt;&gt; 内对应要执行的快捷键，C 表示 Ctrl 键，RET 表示回车，M 表示 Alt 键
+</p>
+
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">&lt;C-x d&gt;</td>
+<td class="org-left">进入Dired模式</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&lt;C-x C-f&gt; RET PATH</td>
+<td class="org-left">打开PATH目录</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org80566f6" class="outline-3">
+<h3 id="org80566f6"><span class="section-number-3">4.2.</span> 在目录模式(dired)下的操作</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+将文件根据时间进行排序
+</p>
+
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">&lt;s&gt;</td>
+<td class="org-left">将文件按时间进行排序，按下 s 后使最新修改的文件排在前边</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+移动光标
+</p>
+
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">&lt;SPACE&gt;、&lt;C-n&gt;、&lt;n&gt;</td>
+<td class="org-left">向下</td>
+</tr>
+
+<tr>
+<td class="org-left">&lt;Backspace&gt;、&lt;C-p&gt;、&lt;p&gt;</td>
+<td class="org-left">向上</td>
+</tr>
+
+<tr>
+<td class="org-left">&lt;ENTER&gt;</td>
+<td class="org-left">进入子目录</td>
+</tr>
+
+<tr>
+<td class="org-left">&lt;q&gt;</td>
+<td class="org-left">退出子目录</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+查看文件内容
+</p>
+
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">&lt;v&gt;</td>
+<td class="org-left">移动到某文件以只读模式查看</td>
+</tr>
+
+<tr>
+<td class="org-left">&lt;s&gt;</td>
+<td class="org-left">递增查找字符串</td>
+</tr>
+
+<tr>
+<td class="org-left">&lt;q&gt;</td>
+<td class="org-left">退出只读模式</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+编辑文件
+</p>
+
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">&lt;f&gt;</td>
+<td class="org-left">编辑文件</td>
+</tr>
+
+<tr>
+<td class="org-left">&lt;C-x k&gt;</td>
+<td class="org-left">关闭当前buffer</td>
+</tr>
+
+<tr>
+<td class="org-left">&lt;C-b&gt;</td>
+<td class="org-left">切换到上一个buffer，也可以rpv tab 键显示其他buffer手动输入切换</td>
+</tr>
+
+<tr>
+<td class="org-left">&lt;C-x C-b&gt;</td>
+<td class="org-left">显示buffer列表</td>
+</tr>
+
+<tr>
+<td class="org-left">&lt;C-x C-f M-y&gt;</td>
+<td class="org-left">重新编辑关掉的文件，&lt;M-y&gt;递归历史记录，找到关闭的文件并打开</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+文件的删除、复制、重命名、压缩与解压缩、比较
+</p>
+
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">&lt;d&gt;</td>
+<td class="org-left">加上待删除标记</td>
+</tr>
+
+<tr>
+<td class="org-left">&lt;u&gt;</td>
+<td class="org-left">取消标记</td>
+</tr>
+
+<tr>
+<td class="org-left">&lt;x&gt;</td>
+<td class="org-left">执行被记的文件</td>
+</tr>
+
+<tr>
+<td class="org-left">&lt;#&gt;</td>
+<td class="org-left">给所有自动文件添加待删除标记</td>
+</tr>
+
+<tr>
+<td class="org-left">&lt;~&gt;</td>
+<td class="org-left">给所有备份文件添加待删除标记</td>
+</tr>
+
+<tr>
+<td class="org-left">&lt;D&gt;</td>
+<td class="org-left">立即删除指定文件</td>
+</tr>
+
+<tr>
+<td class="org-left">&lt;l&gt;</td>
+<td class="org-left">用于复制光标所在文件文件</td>
+</tr>
+
+<tr>
+<td class="org-left">&lt;2 C&gt;</td>
+<td class="org-left">复制光标所在位置文件以及后一个文件</td>
+</tr>
+
+<tr>
+<td class="org-left">&lt;R&gt;</td>
+<td class="org-left">重命名或移动文件</td>
+</tr>
+
+<tr>
+<td class="org-left">&lt;Z&gt;</td>
+<td class="org-left">压缩与解压缩操作</td>
+</tr>
+
+<tr>
+<td class="org-left">&lt;=&gt;</td>
+<td class="org-left">比较当前文件与待输入的文件，类似于lunix的diff命令</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+在文件上运行linux命令，在文件上按&lt;!&gt;键
+</p>
+
+<p>
+对文件组进行操作
+</p>
+
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">&lt;m&gt;</th>
+<th scope="col" class="org-left">标记文件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">&lt;%m&gt;</td>
+<td class="org-left">使用正则标记</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">&lt;+&gt;</td>
+<td class="org-left">创建目录</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org2927f2a" class="outline-3">
+<h3 id="org2927f2a"><span class="section-number-3">4.3.</span> linux下加载emacs配置文件提示：无法检查签名：没有公钥</h3>
+<div class="outline-text-3" id="text-4-3">
+</div>
+<div id="outline-container-org649281a" class="outline-4">
+<h4 id="org649281a"><span class="section-number-4">4.3.1.</span> 参考链接</h4>
+<div class="outline-text-4" id="text-4-3-1">
+<p>
+<a href="https://blog.csdn.net/abc1716975442/article/details/104718125">Emacs: Failed to verify signature archive-contents.sig或gpg: 无法检查签名：没有公钥</a>
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf599c9b" class="outline-3">
+<h3 id="orgf599c9b"><span class="section-number-3">4.4.</span> Emacs 中更换文件的换行符格式</h3>
+<div class="outline-text-3" id="text-4-4">
+<p>
+您可以使用 M-x set-buffer-file-coding-system 命令来实现这一操作。
+</p>
+
+<p>
+具体步骤如下：
+</p>
+
+<ol class="org-ol">
+<li>打开您想要更改换行符格式的文件。</li>
+<li>执行 M-x set-buffer-file-coding-system 命令。</li>
+<li>在弹出的提示中输入 unix，然后按 Enter。</li>
+</ol>
+
+<p>
+这样就可以将文件的换行符格式从 Windows 格式（\r\n）转换为 Unix 格式（\n）了。如果您希望将文件的换行符格式从 Unix 转换为 Windows 格式，可以在第三步中输入 dos。
+</p>
+</div>
+
+<div id="outline-container-org088f42d" class="outline-4">
+<h4 id="org088f42d"><span class="section-number-4">4.4.1.</span> Emacs 选中内容后用 eww 搜索技巧</h4>
+<div class="outline-text-4" id="text-4-4-1">
+<p>
+Emacs 中选择内容后执行如下命令
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">&lt;M-s,M-w&gt;
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orga3f6930" class="outline-5">
+<h5 id="orga3f6930"><span class="section-number-5">4.4.1.1.</span> emacs导出html文件如何忽略不存在的文件路径</h5>
+<div class="outline-text-5" id="text-4-4-1-1">
+<p>
+在Emacs中导出HTML文件时，如果需要忽略不存在的文件路径，你可以使用org-mode提供的一些选项来控制导出的行为。具体来说，你可以在org文件中使用以下选项：
+</p>
+
+<ol class="org-ol">
+<li>#+OPTIONS: 属性：在org文件的开头添加 #+OPTIONS: 行，并在后面添加导出HTML时的选项，例如 :broken-links nil。</li>
+</ol>
+
+<p>
+这将告诉org-mode在导出HTML时忽略不存在的文件路径，避免在导出时出现错误或警告。
+</p>
+
+<p>
+下面是一个示例：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-txt">#+OPTIONS: broken-links:nil
+</pre>
+</div>
+
+<p>
+通过设置这个选项，当你在Emacs中导出HTML文件时，org-mode会忽略不存在的文件路径，从而避免出现问题。
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgedc5ec6" class="outline-2">
+<h2 id="orgedc5ec6"><span class="section-number-2">5.</span> 安装emacs</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+对于Emacs，通常是带有图形界面的。然而，你可以安装一个被称为"Emacs in Terminal"的版本，它是一个没有图形界面的纯文本模式的Emacs。
+</p>
+
+<p>
+你可以尝试以下两种方法之一来安装"Emacs in Terminal"版本：
+</p>
+
+<p>
+命令行安装：
+</p>
+
+<p>
+打开终端（命令行界面）。
+</p>
+
+<p>
+输入以下命令以安装"Emacs in Terminal"版本：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">sudo apt-get update
+sudo apt-get install emacs-nox
+</pre>
+</div>
+
+<p>
+这将安装一个没有图形界面的Emacs版本。
+</p>
+
+<p>
+手动编译安装：
+</p>
+
+<p>
+首先，你需要从Emacs官方网站下载源代码压缩包（tar.gz）。
+</p>
+
+<p>
+解压缩下载的源代码压缩包。
+</p>
+
+<p>
+进入解压缩后的目录，并执行以下命令：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">./configure --without-x
+make
+sudo make install
+</pre>
+</div>
+
+<p>
+这将通过 &#x2013;without-x 选项编译一个没有图形界面的 Emacs 版本，并安装到系统中。
+</p>
+
+<p>
+无论你选择哪种方法，安装完成后，你可以在命令行中使用以下命令来启动"Emacs in Terminal"：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">emacs
+</pre>
+</div>
+
+<p>
+这将在纯文本模式下启动Emacs，而不会调用图形界面。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd55b75a" class="outline-2">
+<h2 id="orgd55b75a"><span class="section-number-2">6.</span> emacs使用技巧</h2>
+<div class="outline-text-2" id="text-6">
+</div>
+<div id="outline-container-orgc37f8c9" class="outline-3">
+<h3 id="orgc37f8c9"><span class="section-number-3">6.1.</span> emacs列操作与emacs寄存器的操作</h3>
+<div class="outline-text-3" id="text-6-1">
+<p>
+<a href="https://www.cnblogs.com/ts65214/p/5561646.html">Emacs列操作</a>
+</p>
+
+<p>
+<a href="https://blog.csdn.net/Xiao_Qiang_/article/details/21225769">Emacs 编辑环境，第 4 部分: 选项、寄存器和书签</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9b6f36c" class="outline-3">
+<h3 id="org9b6f36c"><span class="section-number-3">6.2.</span> emacs操作-显示空格，选中区域搜索空格并替换</h3>
+<div class="outline-text-3" id="text-6-2">
+<p>
+显示空格和行尾标识：global-whitespace-mode
+</p>
+
+<p>
+查找并替换掉空格：M-%  //执行命令，输入空格，回车，什么都不要输入，回车，输入感叹号"!"，选中区域搜索到的空格被替换消失。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org6fd9065" class="outline-3">
+<h3 id="org6fd9065"><span class="section-number-3">6.3.</span> emacs: org-mode与gtd</h3>
+<div class="outline-text-3" id="text-6-3">
+<p>
+<a href="https://www.bilibili.com/video/BV17t411F7WC">用Emacs org mode实现任务管理（基础）</a>
+</p>
+
+<p>
+<a href="https://www.bilibili.com/video/BV1Z7411273s">Emacs Org Mode GTD工作流（实现任务管理、日期安排、工作日志记录）</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-org8075266" class="outline-3">
+<h3 id="org8075266"><span class="section-number-3">6.4.</span> emacs文件头设置显示缩进和打开级别</h3>
+<div class="outline-text-3" id="text-6-4">
+</div>
+<div id="outline-container-orge595d79" class="outline-4">
+<h4 id="orge595d79"><span class="section-number-4">6.4.1.</span> 文件头</h4>
+<div class="outline-text-4" id="text-6-4-1">
+<div class="org-src-container">
+<pre class="src src-txt">#+STARTUP：overview ;;默认 top-level headlines only
+#+STARTUP：content ;;all headlines
+#+STARTUP：showall ;;默认 no folding of any entries
+#+STARTUP：showeveryting
+#+STARTUP：indent
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org325f68c" class="outline-3">
+<h3 id="org325f68c"><span class="section-number-3">6.5.</span> emacs查看按键使用记录</h3>
+<div class="outline-text-3" id="text-6-5">
+<p>
+在 Emacs 中查看按键使用记录通常是指查看你在当前 Emacs 会话中输入的按键序列，这对于了解自己的操作习惯、调试快捷键冲突等问题很有帮助。你可以使用以下步骤来查看按键使用记录：
+</p>
+
+<ol class="org-ol">
+<li>在 Emacs 中打开一个 buffer（比如说使用 C-x C-f 打开一个文件）。</li>
+<li>按下 C-h l（即 Control 键加上 h 键，然后加上 l 键），这将显示你最近的按键序列。</li>
+</ol>
+
+<p>
+在 C-h l 命令执行后，会在 Emacs 下方显示你最近按下的按键序列，通常显示最近的 300 次按键记录。这些记录可以帮助你了解自己在 Emacs 中的操作习惯，并且在遇到问题时可以查看自己的操作过程，有助于快速排查问题。
+</p>
+
+<p>
+请注意，这个按键记录只是在当前 Emacs 会话中有效，一旦关闭 Emacs，这些记录就会消失。如果你需要更长时间的按键记录或者想要保存按键记录以备将来查看，你可能需要使用 Emacs 的其他插件或者进行一些配置。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org4dd7db3" class="outline-3">
+<h3 id="org4dd7db3"><span class="section-number-3">6.6.</span> 要确保嵌套代码块在 Org-mode 文档中显示为普通文本，可以使用 `verbatim` 或 `example` 代码块来避免被执行。下面是一个适合网页显示的示例：</h3>
+<div class="outline-text-3" id="text-6-6">
+<pre class="example">
+ls
+#+begin_example
+# This is an inner code block
+echo "Inner block"
+#+end_example
+</pre>
+
+<p>
+在这个示例中，`#+begin_example` 和 `#+end_example` 用于将嵌套的代码块作为普通文本处理。确保在网页中显示时，它们不会被执行，而是以文本形式显示。
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2024-09-08 周日 04:22</p>
+</div>
+</body>
+</html>
