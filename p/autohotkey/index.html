@@ -311,6 +311,12 @@
 </li>
 </ul>
 </li>
+<li><a href="#headline-12">autohotkey鼠标自动点击，并且可以判断是否有按键按下</a>
+<ul>
+<li><a href="#headline-13">参考链接</a>
+</li>
+</ul>
+</li>
 </ul>
 </nav>
         </div>
@@ -975,6 +981,68 @@ AutoHotKey 操作鼠标进行移动托动点击
 <a href="https://wyagd001.github.io/zh-cn/docs/lib/MouseClick.htm">MouseClick</a></p>
 <p>
 <a href="https://wyagd001.github.io/zh-cn/docs/lib/MouseMove.htm">MouseMove</a></p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-12" class="outline-2">
+<h2 id="headline-12">
+autohotkey鼠标自动点击，并且可以判断是否有按键按下
+</h2>
+<div id="outline-text-headline-12" class="outline-text-2">
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">sleep 3000
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">flag := 0
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">if (flag = 0)
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">	Loop 1000
+</span></span><span class="line"><span class="cl">	{
+</span></span><span class="line"><span class="cl">		Click, xpos, xpos
+</span></span><span class="line"><span class="cl">		sleep 100
+</span></span><span class="line"><span class="cl">		if GetKeyState(&#34;F8&#34;)
+</span></span><span class="line"><span class="cl">		{
+</span></span><span class="line"><span class="cl">			flag++
+</span></span><span class="line"><span class="cl">			MsgBox, F8按键被按下了，按回车继续
+</span></span><span class="line"><span class="cl">			continue
+</span></span><span class="line"><span class="cl">		}
+</span></span><span class="line"><span class="cl">	}
+</span></span><span class="line"><span class="cl">}</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-13" class="outline-3">
+<h3 id="headline-13">
+参考链接
+</h3>
+<div id="outline-text-headline-13" class="outline-text-3">
+<p>
+<a href="https://wenku.csdn.net/answer/c361bdcda45d4ad98753d60d40aedd93">autohotkey鼠标自动点击</a></p>
+<p>
+<a href="https://wenku.csdn.net/answer/518f5e460b904d4db83857b2a7dffc38">autohotkey如何判断有按键按下</a></p>
 </div>
 </div>
 </div>
