@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-cn" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Ubuntu 20.04LTS FFmpeg 环境配置 Ubuntu 18.04LTS FFmpeg 是音视频开发工作中不可缺少的工作技能，本文主要讲解如何在 Ubuntu 系统之上编译、搭建 FFmpeg 开发环境。 Chapter 1 安装前的环境配置 Part 1 安装环境'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Ubuntu 20.04LTS FFmpeg 环境配置 FFmpeg 是音视频开发工作中不可缺少的工作技能，本文主要讲解如何在 Ubuntu 系统之上编译、搭建 FFmpeg 开发环境。 Chapter 1 安装前的环境配置 Part 1 安装环境依赖'>
 <title>Ubuntu 20.04LTS FFmpeg 环境配置</title>
 
 <link rel='canonical' href='https://ynhugo.github.io/p/ubuntu-20.04lts-ffmpeg-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/'>
 
 <link rel="stylesheet" href="/scss/style.min.2328f6a64e9c190e18c4f69895d0081330e55c8210e9395d11068ea1d881517f.css"><meta property='og:title' content='Ubuntu 20.04LTS FFmpeg 环境配置'>
-<meta property='og:description' content='Ubuntu 20.04LTS FFmpeg 环境配置 Ubuntu 18.04LTS FFmpeg 是音视频开发工作中不可缺少的工作技能，本文主要讲解如何在 Ubuntu 系统之上编译、搭建 FFmpeg 开发环境。 Chapter 1 安装前的环境配置 Part 1 安装环境'>
+<meta property='og:description' content='Ubuntu 20.04LTS FFmpeg 环境配置 FFmpeg 是音视频开发工作中不可缺少的工作技能，本文主要讲解如何在 Ubuntu 系统之上编译、搭建 FFmpeg 开发环境。 Chapter 1 安装前的环境配置 Part 1 安装环境依赖'>
 <meta property='og:url' content='https://ynhugo.github.io/p/ubuntu-20.04lts-ffmpeg-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/'>
 <meta property='og:site_name' content='ynblog'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='ffmpeg' /><meta property='article:published_time' content='2024-09-05T17:06:30&#43;08:00'/><meta property='article:modified_time' content='2024-09-05T17:06:30&#43;08:00'/>
 <meta name="twitter:title" content="Ubuntu 20.04LTS FFmpeg 环境配置">
-<meta name="twitter:description" content="Ubuntu 20.04LTS FFmpeg 环境配置 Ubuntu 18.04LTS FFmpeg 是音视频开发工作中不可缺少的工作技能，本文主要讲解如何在 Ubuntu 系统之上编译、搭建 FFmpeg 开发环境。 Chapter 1 安装前的环境配置 Part 1 安装环境">
+<meta name="twitter:description" content="Ubuntu 20.04LTS FFmpeg 环境配置 FFmpeg 是音视频开发工作中不可缺少的工作技能，本文主要讲解如何在 Ubuntu 系统之上编译、搭建 FFmpeg 开发环境。 Chapter 1 安装前的环境配置 Part 1 安装环境依赖">
     <link rel="shortcut icon" href="/img/favicon.ico" />
 
     </head>
@@ -389,8 +389,6 @@ Ubuntu 20.04LTS FFmpeg 环境配置
 </h2>
 <div id="outline-text-headline-1" class="outline-text-2">
 <p>
-Ubuntu 18.04LTS</p>
-<p>
 FFmpeg 是音视频开发工作中不可缺少的工作技能，本文主要讲解如何在 Ubuntu 系统之上编译、搭建 FFmpeg 开发环境。</p>
 <div id="outline-container-headline-2" class="outline-3">
 <h3 id="headline-2">
@@ -457,6 +455,16 @@ Part 1 安装环境依赖
 </span></span><span class="line"><span class="cl">  texinfo \
 </span></span><span class="line"><span class="cl">  wget \
 </span></span><span class="line"><span class="cl">  zlib1g-dev</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">sudo apt install -y ffmpeg libavcodec-dev libavformat-dev libavutil-dev</span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
@@ -545,6 +553,8 @@ Part 2 配置编译项
 </span><span class="lnt"> 8
 </span><span class="lnt"> 9
 </span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">./configure --enable-gpl \
@@ -556,7 +566,9 @@ Part 2 配置编译项
 </span></span><span class="line"><span class="cl">  --enable-libvpx \
 </span></span><span class="line"><span class="cl">  --enable-libx264 \
 </span></span><span class="line"><span class="cl">  --enable-libx265 \
-</span></span><span class="line"><span class="cl">  --enable-nonfree</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">  --enable-nonfree
+</span></span><span class="line"><span class="cl">  --enable-vdpau
+</span></span><span class="line"><span class="cl">  --enable-vaapi</span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
@@ -573,7 +585,7 @@ Part 3 编译
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  sudo make -j4 <span class="o">&amp;&amp;</span> sudo make install</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  sudo make -j8 <span class="o">&amp;&amp;</span> sudo make install</span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
@@ -715,17 +727,19 @@ Part 4 测试
 </span><span class="lnt"> 8
 </span><span class="lnt"> 9
 </span><span class="lnt">10
+</span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  sudo apt-get update
 </span></span><span class="line"><span class="cl">  sudo apt-get install -y autoconf automake build-essential cmake git-core libass-dev libfreetype6-dev libsdl2-dev libtool libva-dev libvdpau-dev libvorbis-dev libxcb1-dev libxcb-shm0-dev libxcb-xfixes0-dev pkg-config texinfo wget zlib1g-dev
+</span></span><span class="line"><span class="cl">  sudo apt install -y ffmpeg libavcodec-dev libavformat-dev libavutil-dev
 </span></span><span class="line"><span class="cl">  sudo apt-get install -y nasm yasm libx264-dev libx265-dev libnuma-dev libvpx-dev libfdk-aac-dev libopus-dev
 </span></span><span class="line"><span class="cl">  mkdir ffmpeg <span class="o">&amp;&amp;</span> <span class="nb">cd</span> ffmpeg/
 </span></span><span class="line"><span class="cl">  wget https://ffmpeg.org/releases/ffmpeg-4.3.1.tar.bz2
 </span></span><span class="line"><span class="cl">  tar xvf ffmpeg-4.3.1.tar.bz2
 </span></span><span class="line"><span class="cl">  <span class="nb">cd</span> ffmpeg-4.3.1/
-</span></span><span class="line"><span class="cl">  ./configure --enable-gpl --enable-libass --enable-libfdk-aac --enable-libfreetype --enable-libopus --enable-libvorbis --enable-libvpx --enable-libx264 --enable-libx265 --enable-nonfree
-</span></span><span class="line"><span class="cl">  sudo make -j4 <span class="o">&amp;&amp;</span> sudo make install
+</span></span><span class="line"><span class="cl">  ./configure --enable-gpl --enable-libass --enable-libfdk-aac --enable-libfreetype --enable-libopus --enable-libvorbis --enable-libvpx --enable-libx264 --enable-libx265 --enable-nonfree --enable-vdpau --enable-vaapi
+</span></span><span class="line"><span class="cl">  sudo make -j8 <span class="o">&amp;&amp;</span> make examples <span class="o">&amp;&amp;</span> sudo make install
 </span></span><span class="line"><span class="cl">  <span class="c1"># git clone https://github.com/lazybing/ffmpeg-study-recording</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
@@ -739,6 +753,10 @@ Part 4 测试
 <div id="outline-text-headline-12" class="outline-text-3">
 <p>
 <a href="https://blog.csdn.net/qq_17790209/article/details/130737220">Ubuntu 20.04LTS FFmpeg 环境配置</a></p>
+<p>
+<a href="https://blog.csdn.net/snail_hunan/article/details/136157819">linux下ffmpeg调用GPU硬件解码（VDPAU/VAAPI）保存文件</a></p>
+<p>
+<a href="https://blog.csdn.net/qq_23662505/article/details/130429823">nvdec与vaapi与vdpau的关系</a></p>
 <p>
 <a href="https://segmentfault.com/a/1190000044815848">FFmpeg开发笔记（一）搭建Linux系统的开发环境</a></p>
 <p>
