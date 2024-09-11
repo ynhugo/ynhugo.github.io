@@ -38,6 +38,7 @@
 &lt;p&gt;bc&lt;/p&gt;
 &lt;p&gt;dos2unix&lt;/p&gt;
 &lt;h1 id=&#34;配置apt-cyg&#34;&gt;配置apt-cyg&lt;/h1&gt;
+&lt;h2 id=&#34;方式一&#34;&gt;方式一&lt;/h2&gt;
 &lt;p&gt;用记事本创建一个名为apt-cyg的文件，复制粘贴进去如下内容，并且文本写完后，用vscode打开，把windows下的换行符CRLF改成linux下的LF
 接下来，把刚刚的apt-cyg文件剪贴到Cygwin安装目录的bin文件夹里&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -1390,6 +1391,31 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;else&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nb&#34;&gt;printf&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$usage&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;fi&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;方式二&#34;&gt;方式二&lt;/h2&gt;
+&lt;p&gt;虽然我们上面安装好了 Cygwin，但还是很不方便，为什么呢？主要是因为 Cygwin目前设计的还不是很人性化。如果我们安装好Cygwin后，如果缺少了某个包想安装的话就特别麻烦。还需要重新安装 Cygwin才能解决，有没有更好的方式呢？&lt;/p&gt;
+&lt;p&gt;你遇到的困难，别人也会遇到，不同的是你要么忍了，要么不用了。可别人遇到困难后会去解决困难，这才是人与人之间最大的不同。&lt;/p&gt;
+&lt;p&gt;话扯的有点远哈。没错，已经有人帮我们解决了这个问题。这是一个很好用的开源工具，它叫 apt-cyg。它与 Ubuntu系统中的 apt一样特别好用，而且使用的方式与 apt也是一个样子的。&lt;/p&gt;
+&lt;p&gt;如何安装它呢？网上有很多方法，但很多不可行。大家按我这个方法操作一定可以安装成功。&lt;/p&gt;
+&lt;p&gt;其实，apt-cyg就是一个脚本。我们只需要将这个脚本下载下来就OK了。这里是&lt;a class=&#34;link&#34; href=&#34;https://github.com/transcode-open/apt-cyg/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;apt-cyg&lt;/a&gt;的下载地址。大家可以在Cygwin下执行下面的命令就好了。&lt;/p&gt;
+&lt;p&gt;第一步：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-BASH&#34; data-lang=&#34;BASH&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;wget -c https://raw.githubusercontent.com/transcode-open/apt-cyg/master/apt-cyg
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;第二步&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-BASH&#34; data-lang=&#34;BASH&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;install apt-cyg /bin
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;h1 id=&#34;需要添加的环境变量&#34;&gt;需要添加的环境变量&lt;/h1&gt;

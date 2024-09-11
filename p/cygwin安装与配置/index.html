@@ -284,6 +284,11 @@
   </ol>
 
   <ol>
+    <li><a href="#方式一">方式一</a></li>
+    <li><a href="#方式二">方式二</a></li>
+  </ol>
+
+  <ol>
     <li><a href="#在当前文件夹打开">在当前文件夹打开</a></li>
   </ol>
 </nav>
@@ -328,7 +333,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 6 分钟
+                    阅读时长: 7 分钟
                 </time>
             </div>
         
@@ -370,6 +375,7 @@
 <p>bc</p>
 <p>dos2unix</p>
 <h1 id="配置apt-cyg">配置apt-cyg</h1>
+<h2 id="方式一">方式一</h2>
 <p>用记事本创建一个名为apt-cyg的文件，复制粘贴进去如下内容，并且文本写完后，用vscode打开，把windows下的换行符CRLF改成linux下的LF
 接下来，把刚刚的apt-cyg文件剪贴到Cygwin安装目录的bin文件夹里</p>
 <div class="highlight"><div class="chroma">
@@ -1722,6 +1728,31 @@
 </span></span><span class="line"><span class="cl"><span class="k">else</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">printf</span> <span class="s2">&#34;</span><span class="nv">$usage</span><span class="s2">&#34;</span>
 </span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="方式二">方式二</h2>
+<p>虽然我们上面安装好了 Cygwin，但还是很不方便，为什么呢？主要是因为 Cygwin目前设计的还不是很人性化。如果我们安装好Cygwin后，如果缺少了某个包想安装的话就特别麻烦。还需要重新安装 Cygwin才能解决，有没有更好的方式呢？</p>
+<p>你遇到的困难，别人也会遇到，不同的是你要么忍了，要么不用了。可别人遇到困难后会去解决困难，这才是人与人之间最大的不同。</p>
+<p>话扯的有点远哈。没错，已经有人帮我们解决了这个问题。这是一个很好用的开源工具，它叫 apt-cyg。它与 Ubuntu系统中的 apt一样特别好用，而且使用的方式与 apt也是一个样子的。</p>
+<p>如何安装它呢？网上有很多方法，但很多不可行。大家按我这个方法操作一定可以安装成功。</p>
+<p>其实，apt-cyg就是一个脚本。我们只需要将这个脚本下载下来就OK了。这里是<a class="link" href="https://github.com/transcode-open/apt-cyg/"  target="_blank" rel="noopener"
+    >apt-cyg</a>的下载地址。大家可以在Cygwin下执行下面的命令就好了。</p>
+<p>第一步：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-BASH" data-lang="BASH"><span class="line"><span class="cl">wget -c https://raw.githubusercontent.com/transcode-open/apt-cyg/master/apt-cyg
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>第二步</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-BASH" data-lang="BASH"><span class="line"><span class="cl">install apt-cyg /bin
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h1 id="需要添加的环境变量">需要添加的环境变量</h1>
