@@ -1420,9 +1420,103 @@ ChatGPT分析代码
 &lt;/div&gt;
 &lt;div id=&#34;outline-container-headline-17&#34; class=&#34;outline-3&#34;&gt;
 &lt;h3 id=&#34;headline-17&#34;&gt;
-查找视频和音频流示例
+打开一个媒体文件并输出其格式信息
 &lt;/h3&gt;
 &lt;div id=&#34;outline-text-headline-17&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;div class=&#34;src src-text&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;26
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;#include &amp;lt;stdio.h&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;#include &amp;#34;libavformat/avformat.h&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;int main(int argc, char *argv[])
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	if (argc != 2)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	{
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;		printf(&amp;#34;格式:./app 文件名\n&amp;#34;);
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	    return 1;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	}
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	const char *file_name = argv[1];
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	AVFormatContext *ps = NULL;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	int res = avformat_open_input(&amp;amp;ps, file_name, NULL, NULL);
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	if (res != 0) {				
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;		printf(&amp;#34;open err: %d\n&amp;#34;, res);
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;		return 1;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	}
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	av_dump_format(ps, 0, file_name, 0);
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;		
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	avformat_close_input(&amp;amp;ps);
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	return 0;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-18&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-18&#34;&gt;
+示例说明
+&lt;/h4&gt;
+&lt;div id=&#34;outline-text-headline-18&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;p&gt;
+这段代码的功能是打开一个指定的视频或音频文件并打印其格式信息。具体步骤如下：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;检查命令行参数：确保提供了一个文件名作为参数。&lt;/li&gt;
+&lt;li&gt;打开文件：使用 avformat_open_input 打开指定的媒体文件，并将文件的格式信息存储在 AVFormatContext 结构体中。&lt;/li&gt;
+&lt;li&gt;打印格式信息：使用 av_dump_format 打印文件的详细格式信息。&lt;/li&gt;
+&lt;li&gt;关闭文件：调用 avformat_close_input 释放资源并关闭文件。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;代码的最终目的是用来查看指定媒体文件的格式信息。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-19&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-19&#34;&gt;
+参考链接
+&lt;/h4&gt;
+&lt;div id=&#34;outline-text-headline-19&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://blog.csdn.net/weixin_42877471/article/details/139929421&#34;&gt;【FFmpeg】avformat_open_input函数&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://blog.csdn.net/u012587637/article/details/122804997&#34;&gt;ffmpeg_av_dump_format&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-20&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-20&#34;&gt;
+查找视频和音频流示例
+&lt;/h3&gt;
+&lt;div id=&#34;outline-text-headline-20&#34; class=&#34;outline-text-3&#34;&gt;
 &lt;div class=&#34;src src-text&#34;&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -1563,11 +1657,11 @@ ChatGPT分析代码
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-18&#34; class=&#34;outline-4&#34;&gt;
-&lt;h4 id=&#34;headline-18&#34;&gt;
+&lt;div id=&#34;outline-container-headline-21&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-21&#34;&gt;
 示例说明
 &lt;/h4&gt;
-&lt;div id=&#34;outline-text-headline-18&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;div id=&#34;outline-text-headline-21&#34; class=&#34;outline-text-4&#34;&gt;
 &lt;p&gt;
 这段代码的功能是使用 FFmpeg 和 SDL 库来读取和分析多媒体文件。它的主要任务是打开一个视频文件，查找视频和音频流，并输出有关这些流的信息。具体功能总结如下：&lt;/p&gt;
 &lt;ol&gt;
@@ -1587,17 +1681,19 @@ ChatGPT分析代码
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-19&#34; class=&#34;outline-3&#34;&gt;
-&lt;h3 id=&#34;headline-19&#34;&gt;
+&lt;div id=&#34;outline-container-headline-22&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-22&#34;&gt;
 参考链接
 &lt;/h3&gt;
-&lt;div id=&#34;outline-text-headline-19&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;div id=&#34;outline-text-headline-22&#34; class=&#34;outline-text-3&#34;&gt;
 &lt;p&gt;
 &lt;a href=&#34;https://blog.csdn.net/weixin_44453694/article/details/127098011&#34;&gt;Linux下基于ffmpeg音视频解码&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;
-&lt;a href=&#34;https://www.cnblogs.com/yongdaimi/p/9796349.html&#34;&gt;FFmpeg(2)-avformat_open_input()函数详解并示例打开mp4文件&lt;/a&gt;&lt;/p&gt;
+&lt;a href=&#34;https://blog.csdn.net/weixin_42877471/article/details/139929421&#34;&gt;【FFmpeg】avformat_open_input函数&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;
-&lt;a href=&#34;https://blog.csdn.net/chenxiuli0810/article/details/97111558&#34;&gt;FFmpeg(2)-avformat_open_input()函数详解并示例打开mp4文件&lt;/a&gt;&lt;/p&gt;
+&lt;a href=&#34;https://blog.csdn.net/qq_51282224/article/details/130993130&#34;&gt;ffmpeg之avformat_find_stream_info函数详细解释&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://blog.csdn.net/leixiaohua1020/article/details/41181155&#34;&gt;FFmpeg源代码简单分析：常见结构体的初始化和销毁（AVFormatContext，AVFrame等）&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
