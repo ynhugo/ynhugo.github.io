@@ -293,6 +293,14 @@
 </li>
 </ul>
 </li>
+<li><a href="#headline-6">C语言打印格式%x与%#x有什么区别</a>
+<ul>
+<li><a href="#headline-7">举例说明</a>
+</li>
+<li><a href="#headline-8">总结</a>
+</li>
+</ul>
+</li>
 </ul>
 </nav>
         </div>
@@ -349,7 +357,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 2 分钟
+                    阅读时长: 3 分钟
                 </time>
             </div>
         
@@ -461,6 +469,115 @@ const uint8_t * const* 是 C 语言中的一种复杂指针类型，用于指向
 <div id="outline-text-headline-5" class="outline-text-3">
 <p>
 在 FFmpeg 的 sws_scale 函数中，const uint8_t * const* 用于指向图像的多个平面数据。每个平面都是不可修改的，这保证了图像数据在转换过程中不会被意外改变。同时，const uint8_t * const* 确保你不能改变指向这些平面的指针数组的结构。这种方式增加了代码的安全性和可维护性。</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-6" class="outline-2">
+<h2 id="headline-6">
+C语言打印格式%x与%#x有什么区别
+</h2>
+<div id="outline-text-headline-6" class="outline-text-2">
+<p>
+在 C 语言中，%x 和 %#x 是 printf 函数中的格式说明符，用于打印整数值的十六进制表示。它们之间的主要区别在于是否显示前缀：</p>
+<ol>
+<li>
+<p>%x:</p>
+<ul>
+<li>打印整数的十六进制表示，不带任何前缀。</li>
+<li>输出的是一个十六进制数，只使用小写字母（a 到 f）。</li>
+<li>
+<p>示例：</p>
+<div class="src src-c">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="mi">255</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nf">printf</span><span class="p">(</span><span class="s">&#34;%x</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">num</span><span class="p">);</span>  <span class="c1">// 输出 &#34;ff&#34;
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</li>
+</ul>
+</li>
+<li>
+<p>%#x:</p>
+<ul>
+<li>在十六进制表示前加上 0x 前缀。</li>
+<li>也输出小写字母（a 到 f）。</li>
+<li>
+<p>示例：</p>
+<div class="src src-c">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="mi">255</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nf">printf</span><span class="p">(</span><span class="s">&#34;%#x</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">num</span><span class="p">);</span>  <span class="c1">// 输出 &#34;0xff&#34;
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</li>
+</ul>
+</li>
+</ol>
+<div id="outline-container-headline-7" class="outline-3">
+<h3 id="headline-7">
+举例说明
+</h3>
+<div id="outline-text-headline-7" class="outline-text-3">
+<div class="src src-c">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">  <span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	  <span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="mi">255</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	  <span class="c1">// 使用 %x
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	  <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;Using %%x: %x</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">num</span><span class="p">);</span>  <span class="c1">// 输出: Using %x: ff
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">	  <span class="c1">// 使用 %#x
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	  <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;Using %%#x: %#x</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">num</span><span class="p">);</span>  <span class="c1">// 输出: Using %#x: 0xff
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">	  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-8" class="outline-3">
+<h3 id="headline-8">
+总结
+</h3>
+<div id="outline-text-headline-8" class="outline-text-3">
+<ul>
+<li>&#34;%x&#34; 输出的是纯十六进制数值，不带前缀。</li>
+<li>&#34;%#x&#34; 在十六进制数值前加上 0x 前缀，标识这是一个十六进制数。</li>
+</ul>
 </div>
 </div>
 </div>
