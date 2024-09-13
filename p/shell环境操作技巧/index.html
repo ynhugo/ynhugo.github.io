@@ -533,9 +533,11 @@
 </li>
 <li><a href="#headline-107">参考链接</a>
 </li>
-<li><a href="#headline-108">将24bmp的bmp灰度图转换为16位的bmp灰度图</a>
-</li>
 </ul>
+</li>
+<li><a href="#headline-108">删除文件指定字节二进制数据</a>
+</li>
+<li><a href="#headline-109">将二进制文件16进制输出的情况下每两个字符后添加一个0并输出到另一个文件</a>
 </li>
 </ul>
 </nav>
@@ -3506,11 +3508,13 @@ Linux终端批量造十六进制数-64位
 <a href="https://jingyan.baidu.com/article/08b6a59191815f14a80922b0.html">shell分隔字符串插入空格</a></p>
 </div>
 </div>
-<div id="outline-container-headline-108" class="outline-3">
-<h3 id="headline-108">
-将24bmp的bmp灰度图转换为16位的bmp灰度图
-</h3>
-<div id="outline-text-headline-108" class="outline-text-3">
+</div>
+</div>
+<div id="outline-container-headline-108" class="outline-2">
+<h2 id="headline-108">
+删除文件指定字节二进制数据
+</h2>
+<div id="outline-text-headline-108" class="outline-text-2">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -3520,6 +3524,21 @@ Linux终端批量造十六进制数-64位
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nv">output</span><span class="o">=</span><span class="k">$(</span><span class="nv">input</span><span class="o">=</span><span class="k">$(</span>xxd -l <span class="m">4</span> output_0001.bmp <span class="p">|</span> awk <span class="s1">&#39;{print $3}&#39;</span> <span class="p">|</span> sed -e <span class="s1">&#39;s/../&amp;\ /g&#39;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $2$1}&#39;</span> <span class="p">|</span> tr <span class="s1">&#39;[a-z]&#39;</span> <span class="s1">&#39;[A-Z]&#39;</span><span class="k">)</span><span class="p">;</span> <span class="nb">echo</span> <span class="s2">&#34;obase=10; ibase=16; </span><span class="si">${</span><span class="nv">input</span><span class="si">}</span><span class="s2">&#34;</span> <span class="p">|</span> bc<span class="k">)</span><span class="p">;</span> dd <span class="k">if</span><span class="o">=</span>output_0001.bmp <span class="nv">of</span><span class="o">=</span>newBmp.bmp <span class="nv">skip</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">output</span><span class="si">}</span><span class="s2">&#34;</span> <span class="nv">bs</span><span class="o">=</span><span class="m">1024</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-109" class="outline-2">
+<h2 id="headline-109">
+将二进制文件16进制输出的情况下每两个字符后添加一个0并输出到另一个文件
+</h2>
+<div id="outline-text-headline-109" class="outline-text-2">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  xxd -p output_0001.bmp <span class="p">|</span> sed <span class="s1">&#39;s/../&amp;0/g&#39;</span> &gt; output.bmp</span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
