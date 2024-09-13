@@ -527,6 +527,14 @@
 </li>
 <li><a href="#headline-104">查找文件并依次进行比较</a>
 </li>
+<li><a href="#headline-105">将连续的两个字节以一个字节单位倒序处理，并计算对应的10进制结果</a>
+<ul>
+<li><a href="#headline-106">命令拆解</a>
+</li>
+<li><a href="#headline-107">参考链接</a>
+</li>
+</ul>
+</li>
 </ul>
 </nav>
         </div>
@@ -570,7 +578,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 28 分钟
+                    阅读时长: 29 分钟
                 </time>
             </div>
         
@@ -3370,6 +3378,130 @@ Linux终端批量造十六进制数-64位
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  mapfile -t files &lt; &lt;<span class="o">(</span>find ./ -name <span class="s2">&#34;M6678_SRIO.h&#34;</span><span class="o">)</span><span class="p">;</span> <span class="k">for</span> <span class="o">((</span><span class="nv">i</span> <span class="o">=</span> 0<span class="p">;</span> i &lt; <span class="si">${#</span><span class="nv">files</span><span class="p">[@]</span><span class="si">}</span><span class="p">;</span> i++<span class="o">))</span><span class="p">;</span> <span class="k">do</span> diff <span class="s2">&#34;</span><span class="si">${</span><span class="nv">files</span><span class="p">[i]</span><span class="si">}</span><span class="s2">&#34;</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">files</span><span class="p">[i+1]</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span> <span class="k">done</span></span></span></code></pre></td></tr></table>
 </div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-105" class="outline-2">
+<h2 id="headline-105">
+将连续的两个字节以一个字节单位倒序处理，并计算对应的10进制结果
+</h2>
+<div id="outline-text-headline-105" class="outline-text-2">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nv">input</span><span class="o">=</span><span class="k">$(</span>xxd -l <span class="m">4</span> output_0001.bmp <span class="p">|</span> awk <span class="s1">&#39;{print $3}&#39;</span> <span class="p">|</span> sed -e <span class="s1">&#39;s/../&amp;\ /g&#39;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $2$1}&#39;</span> <span class="p">|</span> tr <span class="s1">&#39;[a-z]&#39;</span> <span class="s1">&#39;[A-Z]&#39;</span><span class="k">)</span><span class="p">;</span> <span class="nb">echo</span> <span class="s2">&#34;obase=10; ibase=16; </span><span class="si">${</span><span class="nv">input</span><span class="si">}</span><span class="s2">&#34;</span> <span class="p">|</span> bc</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-106" class="outline-3">
+<h3 id="headline-106">
+命令拆解
+</h3>
+<div id="outline-text-headline-106" class="outline-text-3">
+<p>
+这个命令的作用是从 output_0001.bmp 文件中提取前 4 字节的数据，将其转换为十进制数。让我们逐步拆解它：</p>
+<ol>
+<li>提取数据：</li>
+</ol>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">   xxd -l <span class="m">4</span> output_0001.bmp</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>xxd 工具将 output_0001.bmp 文件的前 4 字节以十六进制格式输出。每行输出包括地址、十六进制数据和 ASCII 表示。</p>
+<ol>
+<li>提取十六进制数据：</li>
+</ol>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">   awk <span class="s1">&#39;{print $3}&#39;</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>awk 从 xxd 的输出中提取第三列，这一列包含了十六进制数据。</p>
+<ol>
+<li>格式化数据：</li>
+</ol>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">   sed -e <span class="s1">&#39;s/../&amp;\ /g&#39;</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>sed 用于在每两个字符之间插入一个空格，使其变成以空格分隔的十六进制对。</p>
+<ol>
+<li>重排数据：</li>
+</ol>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">   awk <span class="s1">&#39;{print $2$1}&#39;</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>awk 将第一列和第二列的十六进制对连接起来，通常这一步用来调整字节顺序。</p>
+<ol>
+<li>转换为大写：</li>
+</ol>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">   tr <span class="s1">&#39;[a-z]&#39;</span> <span class="s1">&#39;[A-Z]&#39;</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>tr 将十六进制数中的小写字母转换为大写字母。</p>
+<ol>
+<li>计算十进制值：</li>
+</ol>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">   <span class="nb">echo</span> <span class="s2">&#34;obase=10; ibase=16; </span><span class="si">${</span><span class="nv">input</span><span class="si">}</span><span class="s2">&#34;</span> <span class="p">|</span> bc</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>bc 用于将处理后的十六进制字符串转换为十进制值。obase=10 设置输出为十进制，ibase=16 设置输入为十六进制。</p>
+<p>
+总结：
+这个命令将 BMP 文件的前 4 字节提取、格式化并转化为十进制数。</p>
+</div>
+</div>
+<div id="outline-container-headline-107" class="outline-3">
+<h3 id="headline-107">
+参考链接
+</h3>
+<div id="outline-text-headline-107" class="outline-text-3">
+<p>
+<a href="https://www.cnblogs.com/oboth-zl/p/10314071.html">Linux终端中的字符串使用总结（截取，切片，查找替换，转换，变量赋值等）</a></p>
+<p>
+<a href="https://jingyan.baidu.com/article/08b6a59191815f14a80922b0.html">shell分隔字符串插入空格</a></p>
 </div>
 </div>
 </div>
