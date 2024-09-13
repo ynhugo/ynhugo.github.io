@@ -1991,27 +1991,24 @@ ChatGPT分析代码
 </span><span class="lnt">71
 </span><span class="lnt">72
 </span><span class="lnt">73
-</span><span class="lnt">74
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">#include &lt;stdio.h&gt;
-</span></span><span class="line"><span class="cl">#include &lt;SDL.h&gt;
 </span></span><span class="line"><span class="cl">#include &#34;libavformat/avformat.h&#34;
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">int main(int argc, char *argv[])
 </span></span><span class="line"><span class="cl">{
 </span></span><span class="line"><span class="cl">	if (argc != 2) {
-</span></span><span class="line"><span class="cl">		printf(&#34;格式:./app 文件名\n&#34;);
+</span></span><span class="line"><span class="cl">		printf(&#34;Usage:./app filename\n&#34;);
+</span></span><span class="line"><span class="cl">		return 0;
 </span></span><span class="line"><span class="cl">	}
 </span></span><span class="line"><span class="cl">	const char *file_name = argv[1];
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER);
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">	AVFormatContext *ps = NULL;
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">	int res = avformat_open_input(&amp;ps, file_name, NULL, NULL);
 </span></span><span class="line"><span class="cl">	if (res) {
-</span></span><span class="line"><span class="cl">		printf(&#34;open err:%d&#34;, res);
+</span></span><span class="line"><span class="cl">		printf(&#34;open err:%d\n&#34;, res);
 </span></span><span class="line"><span class="cl">		return -1;
 </span></span><span class="line"><span class="cl">	}
 </span></span><span class="line"><span class="cl">
@@ -2019,50 +2016,51 @@ ChatGPT分析代码
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">	av_dump_format(ps, 0, file_name, 0);
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	int videostream = -1, audiostream = -1;		
-</span></span><span class="line"><span class="cl">	AVStream *stream = NULL, *audstream = NULL;	
+</span></span><span class="line"><span class="cl">	int videostream = -1, audiostream = -1;
+</span></span><span class="line"><span class="cl">	AVStream *stream = NULL, *audstream = NULL;
 </span></span><span class="line"><span class="cl">	AVCodec *vcodec = NULL, *audcodec = NULL;
 </span></span><span class="line"><span class="cl">	int frame_rate = 0;
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">	videostream = av_find_best_stream(ps, AVMEDIA_TYPE_VIDEO, -1, -1, NULL, 0);
-</span></span><span class="line"><span class="cl">	printf(&#34;video = %d\n&#34;, videostream);
+</span></span><span class="line"><span class="cl">	printf(&#34;Video = %d\n&#34;, videostream);
 </span></span><span class="line"><span class="cl">	audiostream = av_find_best_stream(ps, AVMEDIA_TYPE_AUDIO, -1, -1, NULL, 0);
-</span></span><span class="line"><span class="cl">	printf(&#34;audio = %d\n&#34;, audiostream);
+</span></span><span class="line"><span class="cl">	printf(&#34;Audio = %d\n&#34;, audiostream);
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">	if (videostream != -1) {
 </span></span><span class="line"><span class="cl">		stream = ps-&gt;streams[videostream];
 </span></span><span class="line"><span class="cl">		vcodec = avcodec_find_decoder(stream-&gt;codecpar-&gt;codec_id);
 </span></span><span class="line"><span class="cl">		if (!vcodec) {
-</span></span><span class="line"><span class="cl">			printf(&#34;未找到视频解码器\n&#34;);
+</span></span><span class="line"><span class="cl">			printf(&#34;Not find video decoder.\n&#34;);
+</span></span><span class="line"><span class="cl">			return -1;
 </span></span><span class="line"><span class="cl">		}
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">		res = avcodec_open2(stream-&gt;codec, vcodec, NULL);
 </span></span><span class="line"><span class="cl">		if (res) {
-</span></span><span class="line"><span class="cl">			printf(&#34;打开解码器失败\n&#34;);
+</span></span><span class="line"><span class="cl">			printf(&#34;Open decoder failed.\n&#34;);
 </span></span><span class="line"><span class="cl">			return -1;
 </span></span><span class="line"><span class="cl">		}
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">		printf(&#34;视频流ID = %#x\n&#34;, vcodec-&gt;id);
+</span></span><span class="line"><span class="cl">		printf(&#34;Video Stream ID = %#X\n&#34;, vcodec-&gt;id);
 </span></span><span class="line"><span class="cl">	}
 </span></span><span class="line"><span class="cl">	if (audiostream &gt;= 0) {
-</span></span><span class="line"><span class="cl">	    audstream = ps-&gt;streams[audiostream];
+</span></span><span class="line"><span class="cl">		audstream = ps-&gt;streams[audiostream];
 </span></span><span class="line"><span class="cl">		audcodec = avcodec_find_decoder(audstream-&gt;codecpar-&gt;codec_id);
-</span></span><span class="line"><span class="cl">		if (!audcodec) {
-</span></span><span class="line"><span class="cl">			printf(&#34;未找到音频解码器\n&#34;);
+</span></span><span class="line"><span class="cl">	    if (!audcodec) {
+</span></span><span class="line"><span class="cl">			printf(&#34;Not find audio decoder.\n&#34;);
 </span></span><span class="line"><span class="cl">			return -1;
 </span></span><span class="line"><span class="cl">		}
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">		res = avcodec_open2(audstream-&gt;codec, audcodec, NULL);
 </span></span><span class="line"><span class="cl">		if (res) {
-</span></span><span class="line"><span class="cl">			printf(&#34;打开解码器失败\n&#34;);
-</span></span><span class="line"><span class="cl">		    return -1;
+</span></span><span class="line"><span class="cl">			printf(&#34;Open decoder failed.\n&#34;);
+</span></span><span class="line"><span class="cl">			return -1;
 </span></span><span class="line"><span class="cl">		}
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">		printf(&#34;音频流ID = %#x\n&#34;, audcodec-&gt;id);
+</span></span><span class="line"><span class="cl">		printf(&#34;Audio Stream ID = %#X\n&#34;, audcodec-&gt;id);
 </span></span><span class="line"><span class="cl">	}
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">	frame_rate = stream-&gt;avg_frame_rate.num / stream-&gt;avg_frame_rate.den;
-</span></span><span class="line"><span class="cl">	printf(&#34;fps = %d\n&#34;, frame_rate);
+</span></span><span class="line"><span class="cl">	printf(&#34;FPS = %d\n&#34;, frame_rate);
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">	avformat_close_input(&amp;ps);
 </span></span><span class="line"><span class="cl">
