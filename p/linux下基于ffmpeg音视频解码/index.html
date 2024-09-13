@@ -2008,7 +2008,7 @@ ChatGPT分析代码
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">	int res = avformat_open_input(&amp;ps, file_name, NULL, NULL);
 </span></span><span class="line"><span class="cl">	if (res) {
-</span></span><span class="line"><span class="cl">		printf(&#34;open err:%d\n&#34;, res);
+</span></span><span class="line"><span class="cl">		printf(&#34;Open Error:%d\n&#34;, res);
 </span></span><span class="line"><span class="cl">		return -1;
 </span></span><span class="line"><span class="cl">	}
 </span></span><span class="line"><span class="cl">
@@ -2026,11 +2026,11 @@ ChatGPT分析代码
 </span></span><span class="line"><span class="cl">	audiostream = av_find_best_stream(ps, AVMEDIA_TYPE_AUDIO, -1, -1, NULL, 0);
 </span></span><span class="line"><span class="cl">	printf(&#34;Audio = %d\n&#34;, audiostream);
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	if (videostream != -1) {
+</span></span><span class="line"><span class="cl">	if (videostream &gt;= 0) {
 </span></span><span class="line"><span class="cl">		stream = ps-&gt;streams[videostream];
 </span></span><span class="line"><span class="cl">		vcodec = avcodec_find_decoder(stream-&gt;codecpar-&gt;codec_id);
 </span></span><span class="line"><span class="cl">		if (!vcodec) {
-</span></span><span class="line"><span class="cl">			printf(&#34;Not find video decoder.\n&#34;);
+</span></span><span class="line"><span class="cl">			printf(&#34;Not find video decoder\n&#34;);
 </span></span><span class="line"><span class="cl">			return -1;
 </span></span><span class="line"><span class="cl">		}
 </span></span><span class="line"><span class="cl">
@@ -2045,8 +2045,8 @@ ChatGPT分析代码
 </span></span><span class="line"><span class="cl">	if (audiostream &gt;= 0) {
 </span></span><span class="line"><span class="cl">		audstream = ps-&gt;streams[audiostream];
 </span></span><span class="line"><span class="cl">		audcodec = avcodec_find_decoder(audstream-&gt;codecpar-&gt;codec_id);
-</span></span><span class="line"><span class="cl">	    if (!audcodec) {
-</span></span><span class="line"><span class="cl">			printf(&#34;Not find audio decoder.\n&#34;);
+</span></span><span class="line"><span class="cl">		if (!audcodec) {
+</span></span><span class="line"><span class="cl">			printf(&#34;Not find audio decoder\n&#34;);
 </span></span><span class="line"><span class="cl">			return -1;
 </span></span><span class="line"><span class="cl">		}
 </span></span><span class="line"><span class="cl">
@@ -2056,7 +2056,7 @@ ChatGPT分析代码
 </span></span><span class="line"><span class="cl">			return -1;
 </span></span><span class="line"><span class="cl">		}
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">		printf(&#34;Audio Stream ID = %#X\n&#34;, audcodec-&gt;id);
+</span></span><span class="line"><span class="cl">		printf(&#34;Audio Stream ID = %#X\n&#34;, audcodec-&gt;id);		
 </span></span><span class="line"><span class="cl">	}
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">	frame_rate = stream-&gt;avg_frame_rate.num / stream-&gt;avg_frame_rate.den;
