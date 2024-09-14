@@ -343,7 +343,15 @@
 </li>
 </ul>
 </li>
-<li><a href="#headline-26">参考链接</a>
+<li><a href="#headline-26">查看视频帧率</a>
+<ul>
+<li><a href="#headline-27">参考链接</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-28">正确获取和处理流索引、解码器、以及正确释放资源 - ChatGPT</a>
+</li>
+<li><a href="#headline-29">参考链接</a>
 </li>
 </ul>
 </li>
@@ -403,7 +411,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 16 分钟
+                    阅读时长: 18 分钟
                 </time>
             </div>
         
@@ -2305,9 +2313,298 @@ ChatGPT分析代码
 </div>
 <div id="outline-container-headline-26" class="outline-3">
 <h3 id="headline-26">
-参考链接
+查看视频帧率
 </h3>
 <div id="outline-text-headline-26" class="outline-text-3">
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">#include &lt;stdio.h&gt;
+</span></span><span class="line"><span class="cl">#include &#34;libavformat/avformat.h&#34;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">int main(int argc, char *argv[])
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">	if (argc != 2) {
+</span></span><span class="line"><span class="cl">		printf(&#34;Usage:./app filename\n&#34;);
+</span></span><span class="line"><span class="cl">		return 0;
+</span></span><span class="line"><span class="cl">	}
+</span></span><span class="line"><span class="cl">	const char *file_name = argv[1];
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	AVFormatContext *ps = NULL;
+</span></span><span class="line"><span class="cl">	AVRational framerate;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	int res = avformat_open_input(&amp;ps, file_name, NULL, NULL);
+</span></span><span class="line"><span class="cl">	if (res) {
+</span></span><span class="line"><span class="cl">		printf(&#34;Open error:%d\n&#34;, res);
+</span></span><span class="line"><span class="cl">		return -1;
+</span></span><span class="line"><span class="cl">	}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	avformat_find_stream_info(ps, NULL);   	
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	framerate = av_guess_frame_rate(ps, ps-&gt;streams[0], NULL);
+</span></span><span class="line"><span class="cl">	av_log(NULL, AV_LOG_INFO, &#34;video framerate=%d/%d\n&#34;, framerate.num, framerate.den);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    avformat_close_input(&amp;ps);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	return 0;
+</span></span><span class="line"><span class="cl">}</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-27" class="outline-4">
+<h4 id="headline-27">
+参考链接
+</h4>
+<div id="outline-text-headline-27" class="outline-text-4">
+<p>
+<a href="https://segmentfault.com/a/1190000017980746">一步步进行ffmpeg的C语言音视频编程</a></p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-28" class="outline-3">
+<h3 id="headline-28">
+正确获取和处理流索引、解码器、以及正确释放资源 - ChatGPT
+</h3>
+<div id="outline-text-headline-28" class="outline-text-3">
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span><span class="lnt">90
+</span><span class="lnt">91
+</span><span class="lnt">92
+</span><span class="lnt">93
+</span><span class="lnt">94
+</span><span class="lnt">95
+</span><span class="lnt">96
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">#include &lt;stdio.h&gt;
+</span></span><span class="line"><span class="cl">#include &lt;libavformat/avformat.h&gt;
+</span></span><span class="line"><span class="cl">#include &lt;libavcodec/avcodec.h&gt;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">int main(int argc, char *argv[]) {
+</span></span><span class="line"><span class="cl">    if (argc != 2) {
+</span></span><span class="line"><span class="cl">        printf(&#34;Usage: ./app filename\n&#34;);
+</span></span><span class="line"><span class="cl">        return 0;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    const char *file_name = argv[1];
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    AVFormatContext *ps = NULL;
+</span></span><span class="line"><span class="cl">    int res = avformat_open_input(&amp;ps, file_name, NULL, NULL);
+</span></span><span class="line"><span class="cl">    if (res) {
+</span></span><span class="line"><span class="cl">        printf(&#34;Open error: %d\n&#34;, res);
+</span></span><span class="line"><span class="cl">        return -1;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    avformat_find_stream_info(ps, NULL);
+</span></span><span class="line"><span class="cl">    av_dump_format(ps, 0, file_name, 0);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    AVStream *stream = NULL;
+</span></span><span class="line"><span class="cl">    AVCodecParameters *codec_par = NULL;
+</span></span><span class="line"><span class="cl">    AVCodec *codec = NULL;
+</span></span><span class="line"><span class="cl">    AVCodecContext *video_codec_ctx = NULL, *audio_codec_ctx = NULL;
+</span></span><span class="line"><span class="cl">    int video_stream_idx = -1, audio_stream_idx = -1;
+</span></span><span class="line"><span class="cl">    AVRational framerate;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    for (int i = 0; i &lt; ps-&gt;nb_streams; i++) {
+</span></span><span class="line"><span class="cl">        stream = ps-&gt;streams[i];
+</span></span><span class="line"><span class="cl">        codec_par = stream-&gt;codecpar;
+</span></span><span class="line"><span class="cl">        codec = avcodec_find_decoder(codec_par-&gt;codec_id);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        if (codec == NULL) {
+</span></span><span class="line"><span class="cl">            av_log(NULL, AV_LOG_WARNING, &#34;Unsupported codec with id %d\n&#34;, codec_par-&gt;codec_id);
+</span></span><span class="line"><span class="cl">            continue;
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        av_log(NULL, AV_LOG_INFO, &#34;Stream index = %d, type = %s, codec id = %#X\n&#34;, i, av_get_media_type_string(codec_par-&gt;codec_type), codec_par-&gt;codec_id);
+</span></span><span class="line"><span class="cl">        av_log(NULL, AV_LOG_INFO, &#34;Codec name = %s\t%s\n&#34;, codec-&gt;name, codec-&gt;long_name);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        if (codec_par-&gt;codec_type == AVMEDIA_TYPE_VIDEO) {
+</span></span><span class="line"><span class="cl">            video_stream_idx = i;
+</span></span><span class="line"><span class="cl">            video_codec_ctx = avcodec_alloc_context3(codec);
+</span></span><span class="line"><span class="cl">            avcodec_parameters_to_context(video_codec_ctx, codec_par);
+</span></span><span class="line"><span class="cl">            if (avcodec_open2(video_codec_ctx, codec, NULL) &lt; 0) {
+</span></span><span class="line"><span class="cl">                av_log(NULL, AV_LOG_ERROR, &#34;Failed to open video codec\n&#34;);
+</span></span><span class="line"><span class="cl">                return -1;
+</span></span><span class="line"><span class="cl">            }
+</span></span><span class="line"><span class="cl">        } else if (codec_par-&gt;codec_type == AVMEDIA_TYPE_AUDIO) {
+</span></span><span class="line"><span class="cl">            audio_stream_idx = i;
+</span></span><span class="line"><span class="cl">            audio_codec_ctx = avcodec_alloc_context3(codec);
+</span></span><span class="line"><span class="cl">            avcodec_parameters_to_context(audio_codec_ctx, codec_par);
+</span></span><span class="line"><span class="cl">            if (avcodec_open2(audio_codec_ctx, codec, NULL) &lt; 0) {
+</span></span><span class="line"><span class="cl">                av_log(NULL, AV_LOG_ERROR, &#34;Failed to open audio codec\n&#34;);
+</span></span><span class="line"><span class="cl">                return -1;
+</span></span><span class="line"><span class="cl">            }
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    if (video_stream_idx &gt;= 0) {
+</span></span><span class="line"><span class="cl">        framerate = av_guess_frame_rate(ps, ps-&gt;streams[video_stream_idx], NULL);
+</span></span><span class="line"><span class="cl">        av_log(NULL, AV_LOG_INFO, &#34;Video framerate = %d/%d\n&#34;, framerate.num, framerate.den);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    AVPacket *pkt = av_packet_alloc();
+</span></span><span class="line"><span class="cl">    AVFrame *frame = av_frame_alloc();
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    while (av_read_frame(ps, pkt) &gt;= 0) {
+</span></span><span class="line"><span class="cl">        if (pkt-&gt;size) {
+</span></span><span class="line"><span class="cl">            if (pkt-&gt;stream_index == video_stream_idx) {
+</span></span><span class="line"><span class="cl">                printf(&#34;Video stream index = %d\n&#34;, video_stream_idx);
+</span></span><span class="line"><span class="cl">                avcodec_send_packet(video_codec_ctx, pkt);
+</span></span><span class="line"><span class="cl">                while (avcodec_receive_frame(video_codec_ctx, frame) == 0) {
+</span></span><span class="line"><span class="cl">                    printf(&#34;Decoded video frame\n&#34;);
+</span></span><span class="line"><span class="cl">                }
+</span></span><span class="line"><span class="cl">            } else if (pkt-&gt;stream_index == audio_stream_idx) {
+</span></span><span class="line"><span class="cl">                printf(&#34;Audio stream index = %d\n&#34;, audio_stream_idx);
+</span></span><span class="line"><span class="cl">                avcodec_send_packet(audio_codec_ctx, pkt);
+</span></span><span class="line"><span class="cl">                while (avcodec_receive_frame(audio_codec_ctx, frame) == 0) {
+</span></span><span class="line"><span class="cl">                    printf(&#34;Decoded audio frame\n&#34;);
+</span></span><span class="line"><span class="cl">                }
+</span></span><span class="line"><span class="cl">            }
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">        av_packet_unref(pkt);
+</span></span><span class="line"><span class="cl">        av_frame_unref(frame);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    avcodec_free_context(&amp;video_codec_ctx);
+</span></span><span class="line"><span class="cl">    avcodec_free_context(&amp;audio_codec_ctx);
+</span></span><span class="line"><span class="cl">    av_frame_free(&amp;frame);
+</span></span><span class="line"><span class="cl">    av_packet_free(&amp;pkt);
+</span></span><span class="line"><span class="cl">    avformat_close_input(&amp;ps);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    return 0;
+</span></span><span class="line"><span class="cl">}</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-29" class="outline-3">
+<h3 id="headline-29">
+参考链接
+</h3>
+<div id="outline-text-headline-29" class="outline-text-3">
 <p>
 <a href="https://blog.csdn.net/weixin_44453694/article/details/127098011">Linux下基于ffmpeg音视频解码</a></p>
 <p>
