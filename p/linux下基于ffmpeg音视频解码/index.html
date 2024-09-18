@@ -367,7 +367,9 @@
 </li>
 <li><a href="#headline-34">encode_video_mp4 - ChatGPT</a>
 </li>
-<li><a href="#headline-35">参考链接</a>
+<li><a href="#headline-35">Linux下基于FFmpeg，通过C语言调用API函数解码mp4视频后再合并成一个新的视频，要求分辨率、颜色跟解码之前一样 - ChatGPT</a>
+</li>
+<li><a href="#headline-36">参考链接</a>
 </li>
 </ul>
 </li>
@@ -427,7 +429,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 22 分钟
+                    阅读时长: 24 分钟
                 </time>
             </div>
         
@@ -3477,9 +3479,468 @@ encode_video_mp4 - ChatGPT
 </div>
 <div id="outline-container-headline-35" class="outline-3">
 <h3 id="headline-35">
-参考链接
+Linux下基于FFmpeg，通过C语言调用API函数解码mp4视频后再合并成一个新的视频，要求分辨率、颜色跟解码之前一样 - ChatGPT
 </h3>
 <div id="outline-text-headline-35" class="outline-text-3">
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span><span class="lnt">154
+</span><span class="lnt">155
+</span><span class="lnt">156
+</span><span class="lnt">157
+</span><span class="lnt">158
+</span><span class="lnt">159
+</span><span class="lnt">160
+</span><span class="lnt">161
+</span><span class="lnt">162
+</span><span class="lnt">163
+</span><span class="lnt">164
+</span><span class="lnt">165
+</span><span class="lnt">166
+</span><span class="lnt">167
+</span><span class="lnt">168
+</span><span class="lnt">169
+</span><span class="lnt">170
+</span><span class="lnt">171
+</span><span class="lnt">172
+</span><span class="lnt">173
+</span><span class="lnt">174
+</span><span class="lnt">175
+</span><span class="lnt">176
+</span><span class="lnt">177
+</span><span class="lnt">178
+</span><span class="lnt">179
+</span><span class="lnt">180
+</span><span class="lnt">181
+</span><span class="lnt">182
+</span><span class="lnt">183
+</span><span class="lnt">184
+</span><span class="lnt">185
+</span><span class="lnt">186
+</span><span class="lnt">187
+</span><span class="lnt">188
+</span><span class="lnt">189
+</span><span class="lnt">190
+</span><span class="lnt">191
+</span><span class="lnt">192
+</span><span class="lnt">193
+</span><span class="lnt">194
+</span><span class="lnt">195
+</span><span class="lnt">196
+</span><span class="lnt">197
+</span><span class="lnt">198
+</span><span class="lnt">199
+</span><span class="lnt">200
+</span><span class="lnt">201
+</span><span class="lnt">202
+</span><span class="lnt">203
+</span><span class="lnt">204
+</span><span class="lnt">205
+</span><span class="lnt">206
+</span><span class="lnt">207
+</span><span class="lnt">208
+</span><span class="lnt">209
+</span><span class="lnt">210
+</span><span class="lnt">211
+</span><span class="lnt">212
+</span><span class="lnt">213
+</span><span class="lnt">214
+</span><span class="lnt">215
+</span><span class="lnt">216
+</span><span class="lnt">217
+</span><span class="lnt">218
+</span><span class="lnt">219
+</span><span class="lnt">220
+</span><span class="lnt">221
+</span><span class="lnt">222
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">#include &lt;stdio.h&gt;
+</span></span><span class="line"><span class="cl">#include &lt;stdlib.h&gt;
+</span></span><span class="line"><span class="cl">#include &lt;libavcodec/avcodec.h&gt;
+</span></span><span class="line"><span class="cl">#include &lt;libavformat/avformat.h&gt;
+</span></span><span class="line"><span class="cl">#include &lt;libswscale/swscale.h&gt;
+</span></span><span class="line"><span class="cl">#include &lt;libavutil/imgutils.h&gt;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">static void encode(AVCodecContext *enc_ctx, AVFrame *frame, AVFormatContext *ofmt_ctx, AVStream *out_stream) {
+</span></span><span class="line"><span class="cl">    int ret;
+</span></span><span class="line"><span class="cl">    AVPacket *pkt = av_packet_alloc();
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    ret = avcodec_send_frame(enc_ctx, frame);
+</span></span><span class="line"><span class="cl">    if (ret &lt; 0) {
+</span></span><span class="line"><span class="cl">        fprintf(stderr, &#34;Error sending frame to encoder\n&#34;);
+</span></span><span class="line"><span class="cl">        exit(1);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    while (ret &gt;= 0) {
+</span></span><span class="line"><span class="cl">        ret = avcodec_receive_packet(enc_ctx, pkt);
+</span></span><span class="line"><span class="cl">        if (ret == AVERROR(EAGAIN) || ret == AVERROR_EOF)
+</span></span><span class="line"><span class="cl">            return;
+</span></span><span class="line"><span class="cl">        else if (ret &lt; 0) {
+</span></span><span class="line"><span class="cl">            fprintf(stderr, &#34;Error during encoding\n&#34;);
+</span></span><span class="line"><span class="cl">            exit(1);
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        av_packet_rescale_ts(pkt, enc_ctx-&gt;time_base, out_stream-&gt;time_base);
+</span></span><span class="line"><span class="cl">        pkt-&gt;stream_index = out_stream-&gt;index;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        ret = av_interleaved_write_frame(ofmt_ctx, pkt);
+</span></span><span class="line"><span class="cl">        if (ret &lt; 0) {
+</span></span><span class="line"><span class="cl">            fprintf(stderr, &#34;Error writing frame\n&#34;);
+</span></span><span class="line"><span class="cl">            exit(1);
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">        av_packet_unref(pkt);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    av_packet_free(&amp;pkt);
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">int main(int argc, char **argv) {
+</span></span><span class="line"><span class="cl">    const char *input_filename, *output_filename;
+</span></span><span class="line"><span class="cl">    AVFormatContext *ifmt_ctx = NULL, *ofmt_ctx = NULL;
+</span></span><span class="line"><span class="cl">    AVCodecContext *dec_ctx = NULL, *enc_ctx = NULL;
+</span></span><span class="line"><span class="cl">    AVStream *in_stream = NULL, *out_stream = NULL;
+</span></span><span class="line"><span class="cl">    const AVCodec *decoder, *encoder;
+</span></span><span class="line"><span class="cl">    AVFrame *frame = NULL;
+</span></span><span class="line"><span class="cl">    AVPacket pkt;
+</span></span><span class="line"><span class="cl">    int ret;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    if (argc &lt; 3) {
+</span></span><span class="line"><span class="cl">        fprintf(stderr, &#34;Usage: %s &lt;input.mp4&gt; &lt;output.mp4&gt;\n&#34;, argv[0]);
+</span></span><span class="line"><span class="cl">        return -1;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    input_filename = argv[1];
+</span></span><span class="line"><span class="cl">    output_filename = argv[2];
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    av_register_all();
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 打开输入文件并获取格式上下文
+</span></span><span class="line"><span class="cl">    if ((ret = avformat_open_input(&amp;ifmt_ctx, input_filename, NULL, NULL)) &lt; 0) {
+</span></span><span class="line"><span class="cl">        fprintf(stderr, &#34;Could not open input file &#39;%s&#39;\n&#34;, input_filename);
+</span></span><span class="line"><span class="cl">        return ret;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 查找流信息
+</span></span><span class="line"><span class="cl">    if ((ret = avformat_find_stream_info(ifmt_ctx, NULL)) &lt; 0) {
+</span></span><span class="line"><span class="cl">        fprintf(stderr, &#34;Failed to retrieve input stream information\n&#34;);
+</span></span><span class="line"><span class="cl">        return ret;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 打开输出文件格式上下文
+</span></span><span class="line"><span class="cl">    avformat_alloc_output_context2(&amp;ofmt_ctx, NULL, NULL, output_filename);
+</span></span><span class="line"><span class="cl">    if (!ofmt_ctx) {
+</span></span><span class="line"><span class="cl">        fprintf(stderr, &#34;Could not create output context\n&#34;);
+</span></span><span class="line"><span class="cl">        return AVERROR_UNKNOWN;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 查找视频流
+</span></span><span class="line"><span class="cl">    for (int i = 0; i &lt; ifmt_ctx-&gt;nb_streams; i++) {
+</span></span><span class="line"><span class="cl">        AVStream *stream = ifmt_ctx-&gt;streams[i];
+</span></span><span class="line"><span class="cl">        if (stream-&gt;codecpar-&gt;codec_type == AVMEDIA_TYPE_VIDEO) {
+</span></span><span class="line"><span class="cl">            in_stream = stream;
+</span></span><span class="line"><span class="cl">            break;
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    if (!in_stream) {
+</span></span><span class="line"><span class="cl">        fprintf(stderr, &#34;Could not find video stream in input file\n&#34;);
+</span></span><span class="line"><span class="cl">        return -1;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 查找解码器
+</span></span><span class="line"><span class="cl">    decoder = avcodec_find_decoder(in_stream-&gt;codecpar-&gt;codec_id);
+</span></span><span class="line"><span class="cl">    if (!decoder) {
+</span></span><span class="line"><span class="cl">        fprintf(stderr, &#34;Decoder not found\n&#34;);
+</span></span><span class="line"><span class="cl">        return AVERROR_DECODER_NOT_FOUND;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 分配解码器上下文
+</span></span><span class="line"><span class="cl">    dec_ctx = avcodec_alloc_context3(decoder);
+</span></span><span class="line"><span class="cl">    if (!dec_ctx) {
+</span></span><span class="line"><span class="cl">        fprintf(stderr, &#34;Could not allocate decoder context\n&#34;);
+</span></span><span class="line"><span class="cl">        return AVERROR(ENOMEM);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 初始化解码器上下文
+</span></span><span class="line"><span class="cl">    if ((ret = avcodec_parameters_to_context(dec_ctx, in_stream-&gt;codecpar)) &lt; 0) {
+</span></span><span class="line"><span class="cl">        fprintf(stderr, &#34;Failed to copy decoder parameters to input context\n&#34;);
+</span></span><span class="line"><span class="cl">        return ret;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 打开解码器
+</span></span><span class="line"><span class="cl">    if ((ret = avcodec_open2(dec_ctx, decoder, NULL)) &lt; 0) {
+</span></span><span class="line"><span class="cl">        fprintf(stderr, &#34;Failed to open decoder\n&#34;);
+</span></span><span class="line"><span class="cl">        return ret;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 为输出流添加一个视频流
+</span></span><span class="line"><span class="cl">    out_stream = avformat_new_stream(ofmt_ctx, NULL);
+</span></span><span class="line"><span class="cl">    if (!out_stream) {
+</span></span><span class="line"><span class="cl">        fprintf(stderr, &#34;Failed allocating output stream\n&#34;);
+</span></span><span class="line"><span class="cl">        return AVERROR_UNKNOWN;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 查找编码器（使用与解码器相同的格式）
+</span></span><span class="line"><span class="cl">    encoder = avcodec_find_encoder(dec_ctx-&gt;codec_id);
+</span></span><span class="line"><span class="cl">    if (!encoder) {
+</span></span><span class="line"><span class="cl">        fprintf(stderr, &#34;Encoder not found\n&#34;);
+</span></span><span class="line"><span class="cl">        return AVERROR_ENCODER_NOT_FOUND;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 分配编码器上下文
+</span></span><span class="line"><span class="cl">    enc_ctx = avcodec_alloc_context3(encoder);
+</span></span><span class="line"><span class="cl">    if (!enc_ctx) {
+</span></span><span class="line"><span class="cl">        fprintf(stderr, &#34;Could not allocate encoder context\n&#34;);
+</span></span><span class="line"><span class="cl">        return AVERROR(ENOMEM);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 设置编码器上下文的属性
+</span></span><span class="line"><span class="cl">    enc_ctx-&gt;height = dec_ctx-&gt;height;
+</span></span><span class="line"><span class="cl">    enc_ctx-&gt;width = dec_ctx-&gt;width;
+</span></span><span class="line"><span class="cl">    enc_ctx-&gt;pix_fmt = dec_ctx-&gt;pix_fmt;
+</span></span><span class="line"><span class="cl">    enc_ctx-&gt;time_base = in_stream-&gt;time_base;
+</span></span><span class="line"><span class="cl">    enc_ctx-&gt;framerate = av_guess_frame_rate(ifmt_ctx, in_stream, NULL);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 打开编码器
+</span></span><span class="line"><span class="cl">    if ((ret = avcodec_open2(enc_ctx, encoder, NULL)) &lt; 0) {
+</span></span><span class="line"><span class="cl">        fprintf(stderr, &#34;Could not open encoder\n&#34;);
+</span></span><span class="line"><span class="cl">        return ret;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 复制编码器参数到输出流
+</span></span><span class="line"><span class="cl">    if ((ret = avcodec_parameters_from_context(out_stream-&gt;codecpar, enc_ctx)) &lt; 0) {
+</span></span><span class="line"><span class="cl">        fprintf(stderr, &#34;Failed to copy encoder parameters to output stream\n&#34;);
+</span></span><span class="line"><span class="cl">        return ret;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    out_stream-&gt;time_base = enc_ctx-&gt;time_base;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 打开输出文件
+</span></span><span class="line"><span class="cl">    if (!(ofmt_ctx-&gt;oformat-&gt;flags &amp; AVFMT_NOFILE)) {
+</span></span><span class="line"><span class="cl">        if ((ret = avio_open(&amp;ofmt_ctx-&gt;pb, output_filename, AVIO_FLAG_WRITE)) &lt; 0) {
+</span></span><span class="line"><span class="cl">            fprintf(stderr, &#34;Could not open output file &#39;%s&#39;\n&#34;, output_filename);
+</span></span><span class="line"><span class="cl">            return ret;
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 写文件头
+</span></span><span class="line"><span class="cl">    if ((ret = avformat_write_header(ofmt_ctx, NULL)) &lt; 0) {
+</span></span><span class="line"><span class="cl">        fprintf(stderr, &#34;Error occurred when opening output file\n&#34;);
+</span></span><span class="line"><span class="cl">        return ret;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 解码并重新编码视频帧
+</span></span><span class="line"><span class="cl">    frame = av_frame_alloc();
+</span></span><span class="line"><span class="cl">    if (!frame) {
+</span></span><span class="line"><span class="cl">        fprintf(stderr, &#34;Could not allocate video frame\n&#34;);
+</span></span><span class="line"><span class="cl">        return AVERROR(ENOMEM);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    while (av_read_frame(ifmt_ctx, &amp;pkt) &gt;= 0) {
+</span></span><span class="line"><span class="cl">        if (pkt.stream_index == in_stream-&gt;index) {
+</span></span><span class="line"><span class="cl">            ret = avcodec_send_packet(dec_ctx, &amp;pkt);
+</span></span><span class="line"><span class="cl">            if (ret &lt; 0) {
+</span></span><span class="line"><span class="cl">                fprintf(stderr, &#34;Error sending packet to decoder\n&#34;);
+</span></span><span class="line"><span class="cl">                break;
+</span></span><span class="line"><span class="cl">            }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            while (ret &gt;= 0) {
+</span></span><span class="line"><span class="cl">                ret = avcodec_receive_frame(dec_ctx, frame);
+</span></span><span class="line"><span class="cl">                if (ret == AVERROR(EAGAIN) || ret == AVERROR_EOF)
+</span></span><span class="line"><span class="cl">                    break;
+</span></span><span class="line"><span class="cl">                else if (ret &lt; 0) {
+</span></span><span class="line"><span class="cl">                    fprintf(stderr, &#34;Error during decoding\n&#34;);
+</span></span><span class="line"><span class="cl">                    return ret;
+</span></span><span class="line"><span class="cl">                }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                frame-&gt;pts = frame-&gt;best_effort_timestamp;
+</span></span><span class="line"><span class="cl">                encode(enc_ctx, frame, ofmt_ctx, out_stream);
+</span></span><span class="line"><span class="cl">            }
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">        av_packet_unref(&amp;pkt);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // Flush encoder
+</span></span><span class="line"><span class="cl">    encode(enc_ctx, NULL, ofmt_ctx, out_stream);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 写文件尾部
+</span></span><span class="line"><span class="cl">    av_write_trailer(ofmt_ctx);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 释放资源
+</span></span><span class="line"><span class="cl">    av_frame_free(&amp;frame);
+</span></span><span class="line"><span class="cl">    avcodec_free_context(&amp;dec_ctx);
+</span></span><span class="line"><span class="cl">    avcodec_free_context(&amp;enc_ctx);
+</span></span><span class="line"><span class="cl">    avformat_close_input(&amp;ifmt_ctx);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    if (!(ofmt_ctx-&gt;oformat-&gt;flags &amp; AVFMT_NOFILE))
+</span></span><span class="line"><span class="cl">        avio_closep(&amp;ofmt_ctx-&gt;pb);
+</span></span><span class="line"><span class="cl">    avformat_free_context(ofmt_ctx);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    return 0;
+</span></span><span class="line"><span class="cl">}</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-36" class="outline-3">
+<h3 id="headline-36">
+参考链接
+</h3>
+<div id="outline-text-headline-36" class="outline-text-3">
 <p>
 <a href="https://blog.csdn.net/weixin_44453694/article/details/127098011">Linux下基于ffmpeg音视频解码</a></p>
 <p>
