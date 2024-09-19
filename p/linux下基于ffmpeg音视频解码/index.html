@@ -368,8 +368,26 @@
 <li><a href="#headline-34">encode_video_mp4 - ChatGPT</a>
 </li>
 <li><a href="#headline-35">Linux下基于FFmpeg，通过C语言调用API函数解码mp4视频后再合并成一个新的视频，要求分辨率、颜色跟解码之前一样 - ChatGPT</a>
+<ul>
+<li><a href="#headline-36">编码函数定义</a>
+<ul>
+<li><a href="#headline-37">内部变量</a>
 </li>
-<li><a href="#headline-36">参考链接</a>
+<li><a href="#headline-38">发送帧进行编码</a>
+</li>
+<li><a href="#headline-39">接收编码后数据</a>
+</li>
+<li><a href="#headline-40">时间基准转换和写入帧</a>
+</li>
+<li><a href="#headline-41">释放数据包</a>
+</li>
+<li><a href="#headline-42">总结</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#headline-43">参考链接</a>
 </li>
 </ul>
 </li>
@@ -429,7 +447,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 24 分钟
+                    阅读时长: 25 分钟
                 </time>
             </div>
         
@@ -3743,7 +3761,7 @@ Linux下基于FFmpeg，通过C语言调用API函数解码mp4视频后再合并�
 </span></span><span class="line"><span class="cl">}
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">int main(int argc, char **argv) {
-</span></span><span class="line"><span class="cl">    const char *input_filename, *output_filename;
+</span></span><span class="line"><span class="cl">    const char *input_filename, *output_filename = NULL;
 </span></span><span class="line"><span class="cl">    AVFormatContext *ifmt_ctx = NULL, *ofmt_ctx = NULL;
 </span></span><span class="line"><span class="cl">    AVCodecContext *dec_ctx = NULL, *enc_ctx = NULL;
 </span></span><span class="line"><span class="cl">    AVStream *in_stream = NULL, *out_stream = NULL;
@@ -3928,13 +3946,189 @@ Linux下基于FFmpeg，通过C语言调用API函数解码mp4视频后再合并�
 </div>
 </div>
 </div>
+<div id="outline-container-headline-36" class="outline-4">
+<h4 id="headline-36">
+编码函数定义
+</h4>
+<div id="outline-text-headline-36" class="outline-text-4">
+<div class="src src-c">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">  <span class="k">static</span> <span class="kt">void</span> <span class="nf">encode</span><span class="p">(</span><span class="n">AVCodecContext</span> <span class="o">*</span><span class="n">enc_ctx</span><span class="p">,</span> <span class="n">AVFrame</span> <span class="o">*</span><span class="n">frame</span><span class="p">,</span> <span class="n">AVFormatContext</span> <span class="o">*</span><span class="n">ofmt_ctx</span><span class="p">,</span> <span class="n">AVStream</span> <span class="o">*</span><span class="n">out_stream</span><span class="p">)</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
-<div id="outline-container-headline-36" class="outline-3">
-<h3 id="headline-36">
+</div>
+<ul>
+<li>enc_ctx: 编码上下文，包含编码器的相关设置。</li>
+<li>frame: 需要编码的输入帧。</li>
+<li>ofmt_ctx: 输出格式上下文，表示输出文件的格式。</li>
+<li>out_stream: 输出流，表示在输出文件中要写入的流。</li>
+</ul>
+<div id="outline-container-headline-37" class="outline-5">
+<h5 id="headline-37">
+内部变量
+</h5>
+<div id="outline-text-headline-37" class="outline-text-5">
+<div class="src src-c">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">  <span class="kt">int</span> <span class="n">ret</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">AVPacket</span> <span class="o">*</span><span class="n">pkt</span> <span class="o">=</span> <span class="nf">av_packet_alloc</span><span class="p">();</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<ul>
+<li>ret: 用于存储函数调用的返回值。</li>
+<li>pkt: 分配一个 AVPacket，用于存储编码后的数据。</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-headline-38" class="outline-5">
+<h5 id="headline-38">
+发送帧进行编码
+</h5>
+<div id="outline-text-headline-38" class="outline-text-5">
+<div class="src src-c">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">  <span class="n">ret</span> <span class="o">=</span> <span class="nf">avcodec_send_frame</span><span class="p">(</span><span class="n">enc_ctx</span><span class="p">,</span> <span class="n">frame</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	  <span class="nf">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&#34;Error sending frame to encoder</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	  <span class="nf">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<ul>
+<li>调用 avcodec_send_frame 将帧发送到编码器。</li>
+<li>如果返回值小于零，表示出错，打印错误信息并退出。</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-headline-39" class="outline-5">
+<h5 id="headline-39">
+接收编码后数据
+</h5>
+<div id="outline-text-headline-39" class="outline-text-5">
+<div class="src src-c">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">  <span class="k">while</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	  <span class="n">ret</span> <span class="o">=</span> <span class="nf">avcodec_receive_packet</span><span class="p">(</span><span class="n">enc_ctx</span><span class="p">,</span> <span class="n">pkt</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">==</span> <span class="nf">AVERROR</span><span class="p">(</span><span class="n">EAGAIN</span><span class="p">)</span> <span class="o">||</span> <span class="n">ret</span> <span class="o">==</span> <span class="n">AVERROR_EOF</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		  <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		  <span class="nf">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&#34;Error during encoding</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		  <span class="nf">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	  <span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<ul>
+<li>通过 avcodec_receive_packet 接收编码后的数据包。</li>
+<li>如果返回 EAGAIN 或 EOF，说明没有更多的数据可接收，直接返回。</li>
+<li>如果返回值小于零，表示出错，打印错误信息并退出。</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-headline-40" class="outline-5">
+<h5 id="headline-40">
+时间基准转换和写入帧
+</h5>
+<div id="outline-text-headline-40" class="outline-text-5">
+<div class="src src-c">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">  <span class="nf">av_packet_rescale_ts</span><span class="p">(</span><span class="n">pkt</span><span class="p">,</span> <span class="n">enc_ctx</span><span class="o">-&gt;</span><span class="n">time_base</span><span class="p">,</span> <span class="n">out_stream</span><span class="o">-&gt;</span><span class="n">time_base</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">pkt</span><span class="o">-&gt;</span><span class="n">stream_index</span> <span class="o">=</span> <span class="n">out_stream</span><span class="o">-&gt;</span><span class="n">index</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="n">ret</span> <span class="o">=</span> <span class="nf">av_interleaved_write_frame</span><span class="p">(</span><span class="n">ofmt_ctx</span><span class="p">,</span> <span class="n">pkt</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	  <span class="nf">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&#34;Error writing frame</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	  <span class="nf">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<ul>
+<li>av_packet_rescale_ts: 将数据包的时间戳从编码上下文的时间基准转换为输出流的时间基准。</li>
+<li>设置数据包的流索引。</li>
+<li>使用 av_interleaved_write_frame 写入编码后的数据包到输出格式上下文中。</li>
+<li>如果写入失败，打印错误信息并退出。</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-headline-41" class="outline-5">
+<h5 id="headline-41">
+释放数据包
+</h5>
+<div id="outline-text-headline-41" class="outline-text-5">
+<div class="src src-c">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">  <span class="nf">av_packet_unref</span><span class="p">(</span><span class="n">pkt</span><span class="p">);</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<ul>
+<li>释放 pkt，以准备下一次使用。</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-headline-42" class="outline-5">
+<h5 id="headline-42">
+总结
+</h5>
+<div id="outline-text-headline-42" class="outline-text-5">
+<p>整体上，这段代码实现了视频帧的编码并写入到文件的功能，通过调用 FFmpeg 提供的 API 处理编码和输出。每一步都包含错误检查，以确保程序在发生错误时能够及时反馈并退出。</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-43" class="outline-3">
+<h3 id="headline-43">
 参考链接
 </h3>
-<div id="outline-text-headline-36" class="outline-text-3">
+<div id="outline-text-headline-43" class="outline-text-3">
 <p>
 <a href="https://blog.csdn.net/weixin_44453694/article/details/127098011">Linux下基于ffmpeg音视频解码</a></p>
 <p>
