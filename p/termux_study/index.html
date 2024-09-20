@@ -321,6 +321,28 @@
 </li>
 </ul>
 </li>
+<li><a href="#headline-18">Termux设置——服务自启动</a>
+<ul>
+<li><a href="#headline-19">安装：</a>
+</li>
+<li><a href="#headline-20">原生支持的服务</a>
+</li>
+<li><a href="#headline-21">相关命令</a>
+</li>
+<li><a href="#headline-22">自己编写一个自启动服务</a>
+<ul>
+<li><a href="#headline-23">自启动脚本创建</a>
+</li>
+<li><a href="#headline-24">配置服务的输出日志</a>
+</li>
+<li><a href="#headline-25">自启动服务测试</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-26">参考链接</a>
+</li>
+</ul>
+</li>
 </ul>
 </nav>
         </div>
@@ -377,7 +399,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 4 分钟
+                    阅读时长: 6 分钟
                 </time>
             </div>
         
@@ -856,6 +878,383 @@ termux使用技巧
 创建新的标签页：Ctrl+Alt+c</p>
 <p>
 切换到下一个标签页：Ctrl+Alt+n</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-18" class="outline-2">
+<h2 id="headline-18">
+Termux设置——服务自启动
+</h2>
+<div id="outline-text-headline-18" class="outline-text-2">
+<p>
+首先奉上官方Wilki: <a href="https://wiki.termux.com/wiki/Termux-services">https://wiki.termux.com/wiki/Termux-services</a></p>
+<p>
+用过Linux的朋友应该对runit并不陌生，runit是一个用于服务监控的UNIX软件，它提供以下两种服务：</p>
+<p>
+当服务器启动的时候启动定义好的服务。
+监控运行的服务，当服务发生意外中断的时候，自动重启服务。
+而termux-services就是基于runit封装的，至此大部分runit功能及命令，并专门针对Termux特殊结构做了优化。</p>
+<p>
+termux-services会主动监视$PREFIX/var/service/目录，会自动未目录下服务生成守护程序，当服务意外崩溃时，会第一时间将服务重新启动。</p>
+<p>
+同时termux-services默认会后台启动服务，并将服务的输出流做重定向。</p>
+<div id="outline-container-headline-19" class="outline-3">
+<h3 id="headline-19">
+安装：
+</h3>
+<div id="outline-text-headline-19" class="outline-text-3">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  pkg install termux-services -y</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+安装完成后会随软件开启自动运行。</p>
+</div>
+</div>
+<div id="outline-container-headline-20" class="outline-3">
+<h3 id="headline-20">
+原生支持的服务
+</h3>
+<div id="outline-text-headline-20" class="outline-text-3">
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>包名</th>
+<th>进程服务名</th>
+<th class="align-right">默认使用端口</th>
+<th>服务描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>apache2</td>
+<td>httpd</td>
+<td class="align-right">8080</td>
+<td>Apache Web Server HTTP Web Server</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>at</td>
+<td>atd</td>
+<td class="align-right"></td>
+<td>AT and batch delayed command scheduling utility and daemon at</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>bitcoin</td>
+<td>bitcoind</td>
+<td class="align-right"></td>
+<td>Bitcoin Core</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>busybox</td>
+<td>telnetd</td>
+<td class="align-right">8023</td>
+<td>Remote terminal service Telnet</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>busybox</td>
+<td>ftpd</td>
+<td class="align-right">8021</td>
+<td>FTP (File Transfer Protocol) FTP</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>cronie</td>
+<td>crond</td>
+<td class="align-right"></td>
+<td>Daemon that runs specified programs at scheduled times cron</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>emacs</td>
+<td>emacsd</td>
+<td class="align-right"></td>
+<td>Extensible, customizable text editor-and more EMACS</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>ipfs</td>
+<td>ipfs</td>
+<td class="align-right"></td>
+<td>A peer-to-peer hypermedia distribution protocol IPFS</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>libmosquitto</td>
+<td>mosquitto</td>
+<td class="align-right">1883</td>
+<td>MQTT is a lightweight, publish-subscribe network protocol MQTT</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>lighttpd</td>
+<td>lighttpd</td>
+<td class="align-right">8080</td>
+<td>Lighttpd Small webserver HTTP Web Server</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>lnd</td>
+<td>lnd</td>
+<td class="align-right"></td>
+<td>Lightning Network Daemon</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>mariadb</td>
+<td>mysqld</td>
+<td class="align-right">3306</td>
+<td>MariaDB Community-developed fork of the MySQL from its original authors</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>mpd</td>
+<td>mpd</td>
+<td class="align-right"></td>
+<td>Music Player Daemon (MPD)</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>mpdscribble</td>
+<td>mpdscribble</td>
+<td class="align-right"></td>
+<td>MPD client which submits tracks being played</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>nginx</td>
+<td>nginx</td>
+<td class="align-right">8080</td>
+<td>NGINX Web server HTTP Web Server</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>openssh</td>
+<td>sshd</td>
+<td class="align-right">8022</td>
+<td>OpenSSH SSH</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>postgresql</td>
+<td>postgres</td>
+<td class="align-right">5432</td>
+<td>PostgreSQL database PostgreSQL</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>privoxy</td>
+<td>privoxy</td>
+<td class="align-right"></td>
+<td>Privoxy is non-caching web proxy with advanced filtering capabilities HTTP Proxy</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>tor</td>
+<td>tor</td>
+<td class="align-right"></td>
+<td>The Onion Router anonymizing overlay network Tor</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>transmission</td>
+<td>transmission</td>
+<td class="align-right"></td>
+<td>BitTorrent client BitTorrent</td>
+</tr>
+</tbody>
+</table></div>
+<p>
+上表中的服务安装时就会自动在$PREFIX/var/service/下生成自己的服务文件夹：</p>
+</div>
+</div>
+<div id="outline-container-headline-21" class="outline-3">
+<h3 id="headline-21">
+相关命令
+</h3>
+<div id="outline-text-headline-21" class="outline-text-3">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  sv-enable sshd		<span class="c1">#sshd服务设为自启动</span>
+</span></span><span class="line"><span class="cl">  sv-disable sshd		<span class="c1">#取消sshd自启动</span>
+</span></span><span class="line"><span class="cl">  sv down sshd		<span class="c1">#停止sshd服务，并使本次Termux运行期间sshd自启动服务失效</span>
+</span></span><span class="line"><span class="cl">  sv up sshd			<span class="c1">#启动sshd服务</span>
+</span></span><span class="line"><span class="cl">  sv status sshd		<span class="c1">#查看sshd服务运行状态</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-22" class="outline-3">
+<h3 id="headline-22">
+自己编写一个自启动服务
+</h3>
+<div id="outline-text-headline-22" class="outline-text-3">
+<div id="outline-container-headline-23" class="outline-4">
+<h4 id="headline-23">
+自启动脚本创建
+</h4>
+<div id="outline-text-headline-23" class="outline-text-4">
+<p>
+在$PREFIX/var/service/下创建子目录，子目录名即为自启动服务名,这里使用test_ato作为自启动服务名：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  mkdir -p <span class="nv">$PREFIX</span>/var/service/test_ato</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+接下来创建执行脚本run:</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  vim <span class="nv">$PREFIX</span>/var/service/test_ato/run</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+脚本内容：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="c1">#!/data/data/com.termux/files/usr/bin/sh</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">exec</span> 2&gt;<span class="p">&amp;</span><span class="m">1</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">exec</span> ~/test/test.sh 2&gt;<span class="p">&amp;</span><span class="m">1</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+保存，赋予其执行权限：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  chmod +x <span class="nv">$PREFIX</span>/var/service/test_ato/log/run</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-24" class="outline-4">
+<h4 id="headline-24">
+配置服务的输出日志
+</h4>
+<div id="outline-text-headline-24" class="outline-text-4">
+<p>
+log/run中内容：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="c1">#!/data/data/com.termux/files/usr/bin/sh</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">svlogger</span><span class="o">=</span><span class="s2">&#34;/data/data/com.termux/files/usr/share/termux-services/svlogger&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">exec</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">svlogger</span><span class="si">}</span><span class="s2">&#34;</span> <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+保存，赋予其执行权限：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  chmod +x <span class="nv">$PREFIX</span>/var/service/test_ato/log/run</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+此时，日志文件被重定向到了目录$PREFIX/var/log/sv/&lt;服务名&gt;中</p>
+</div>
+</div>
+<div id="outline-container-headline-25" class="outline-4">
+<h4 id="headline-25">
+自启动服务测试
+</h4>
+<div id="outline-text-headline-25" class="outline-text-4">
+<p>
+将test.sh设为自启动：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  sv-enable test_ato</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+重启Termux应用，此时test.sh已经开始运行，查看日志文件$PREFIX/var/log/sv/test_ato/current已经开始稳定输出日志信息了。</p>
+<p>
+一个简单的模板服务就写好了，可以根据这个模板来编写自己需要的服务。</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-26" class="outline-3">
+<h3 id="headline-26">
+参考链接
+</h3>
+<div id="outline-text-headline-26" class="outline-text-3">
+<p>
+<a href="https://blog.csdn.net/YiBYiH/article/details/127294017">Termux设置——服务自启动</a></p>
 </div>
 </div>
 </div>
