@@ -385,9 +385,33 @@
 </li>
 </ul>
 </li>
+<li><a href="#headline-43">完整代码解析</a>
+<ul>
+<li><a href="#headline-44">encode 函数</a>
+<ul>
+<li><a href="#headline-45">功能</a>
+</li>
+<li><a href="#headline-46">参数解释</a>
+</li>
+<li><a href="#headline-47">过程解释</a>
+</li>
 </ul>
 </li>
-<li><a href="#headline-43">参考链接</a>
+<li><a href="#headline-48">main 函数</a>
+<ul>
+<li><a href="#headline-49">参数解释</a>
+</li>
+<li><a href="#headline-50">核心步骤：</a>
+</li>
+<li><a href="#headline-51">结论</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#headline-52">参考链接</a>
 </li>
 </ul>
 </li>
@@ -447,7 +471,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 25 分钟
+                    阅读时长: 27 分钟
                 </time>
             </div>
         
@@ -4122,13 +4146,400 @@ Linux下基于FFmpeg，通过C语言调用API函数解码mp4视频后再合并�
 </div>
 </div>
 </div>
+<div id="outline-container-headline-43" class="outline-4">
+<h4 id="headline-43">
+完整代码解析
+</h4>
+<div id="outline-text-headline-43" class="outline-text-4">
+<p>
+让我们分解并逐步解释代码的各个部分，包括其功能、参数以及工作机制。该代码的主要目的是在 Linux 下基于 FFmpeg，通过 C 语言解码一个 MP4 视频文件，然后将解码后的帧重新编码为另一个 MP4 文件。</p>
+<div id="outline-container-headline-44" class="outline-5">
+<h5 id="headline-44">
+encode 函数
+</h5>
+<div id="outline-text-headline-44" class="outline-text-5">
+<div class="src src-c">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">  <span class="k">static</span> <span class="kt">void</span> <span class="nf">encode</span><span class="p">(</span><span class="n">AVCodecContext</span> <span class="o">*</span><span class="n">enc_ctx</span><span class="p">,</span> <span class="n">AVFrame</span> <span class="o">*</span><span class="n">frame</span><span class="p">,</span> <span class="n">AVFormatContext</span> <span class="o">*</span><span class="n">ofmt_ctx</span><span class="p">,</span> <span class="n">AVStream</span> <span class="o">*</span><span class="n">out_stream</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	  <span class="kt">int</span> <span class="n">ret</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	  <span class="n">AVPacket</span> <span class="o">*</span><span class="n">pkt</span> <span class="o">=</span> <span class="nf">av_packet_alloc</span><span class="p">();</span> <span class="c1">// 分配一个新的 AVPacket
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
-<div id="outline-container-headline-43" class="outline-3">
-<h3 id="headline-43">
+</div>
+<div id="outline-container-headline-45" class="outline-6">
+<h6 id="headline-45">
+功能
+</h6>
+<div id="outline-text-headline-45" class="outline-text-6">
+<p>encode 函数的作用是将视频帧通过编码器进行编码，并将编码后的数据写入输出文件。</p>
+</div>
+</div>
+<div id="outline-container-headline-46" class="outline-6">
+<h6 id="headline-46">
+参数解释
+</h6>
+<div id="outline-text-headline-46" class="outline-text-6">
+<ul>
+<li>AVCodecContext *enc_ctx: 编码器上下文，包含编码器的相关参数和状态。</li>
+<li>AVFrame *frame: 待编码的帧。</li>
+<li>AVFormatContext *ofmt_ctx: 输出格式上下文，管理输出文件的格式和流。</li>
+<li>AVStream *out_stream: 输出流，代表输出文件中的单个流（视频流）。</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-headline-47" class="outline-6">
+<h6 id="headline-47">
+过程解释
+</h6>
+<div id="outline-text-headline-47" class="outline-text-6">
+<ol>
+<li>发送帧到编码器：</li>
+</ol>
+<div class="src src-c">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">  <span class="n">ret</span> <span class="o">=</span> <span class="nf">avcodec_send_frame</span><span class="p">(</span><span class="n">enc_ctx</span><span class="p">,</span> <span class="n">frame</span><span class="p">);</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>将 frame 发送到编码器。如果 frame 为 NULL，则意味着需要刷新编码器，处理剩余未编码的帧。</p>
+<ol>
+<li>从编码器接收已编码的包：</li>
+</ol>
+<div class="src src-c">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">  <span class="k">while</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	  <span class="n">ret</span> <span class="o">=</span> <span class="nf">avcodec_receive_packet</span><span class="p">(</span><span class="n">enc_ctx</span><span class="p">,</span> <span class="n">pkt</span><span class="p">);</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>通过 avcodec_receive_packet 获取编码后的数据包 pkt。返回 EAGAIN 表示编码器还在等待输入帧；返回 AVERROR_EOF 表示编码器已完成。</p>
+<ol>
+<li>写入文件：</li>
+</ol>
+<div class="src src-c">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">  <span class="nf">av_interleaved_write_frame</span><span class="p">(</span><span class="n">ofmt_ctx</span><span class="p">,</span> <span class="n">pkt</span><span class="p">);</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>编码后的数据包 pkt 被写入输出文件。</p>
+<ol>
+<li>清理：</li>
+</ol>
+<div class="src src-c">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">  <span class="nf">av_packet_unref</span><span class="p">(</span><span class="n">pkt</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">av_packet_free</span><span class="p">(</span><span class="o">&amp;</span><span class="n">pkt</span><span class="p">);</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>使用 av_packet_unref 清理包内容并释放分配的 AVPacket。</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-48" class="outline-5">
+<h5 id="headline-48">
+main 函数
+</h5>
+<div id="outline-text-headline-48" class="outline-text-5">
+<p>
+main 函数是程序的入口点，它负责打开输入文件、初始化解码器和编码器、逐帧解码并重新编码、最后将编码后的数据写入输出文件。</p>
+<div class="src src-c">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">  <span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="n">argv</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">input_filename</span><span class="p">,</span> <span class="o">*</span><span class="n">output_filename</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	  <span class="n">AVFormatContext</span> <span class="o">*</span><span class="n">ifmt_ctx</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">,</span> <span class="o">*</span><span class="n">ofmt_ctx</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	  <span class="n">AVCodecContext</span> <span class="o">*</span><span class="n">dec_ctx</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">,</span> <span class="o">*</span><span class="n">enc_ctx</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	  <span class="n">AVStream</span> <span class="o">*</span><span class="n">in_stream</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">,</span> <span class="o">*</span><span class="n">out_stream</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">const</span> <span class="n">AVCodec</span> <span class="o">*</span><span class="n">decoder</span><span class="p">,</span> <span class="o">*</span><span class="n">encoder</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	  <span class="n">AVFrame</span> <span class="o">*</span><span class="n">frame</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	  <span class="n">AVPacket</span> <span class="n">pkt</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	  <span class="kt">int</span> <span class="n">ret</span><span class="p">;</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-49" class="outline-6">
+<h6 id="headline-49">
+参数解释
+</h6>
+<div id="outline-text-headline-49" class="outline-text-6">
+<ul>
+<li>argc: 命令行参数的数量。</li>
+<li>argv: 命令行参数数组，argv[1] 为输入视频文件路径，argv[2] 为输出视频文件路径。</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-headline-50" class="outline-6">
+<h6 id="headline-50">
+核心步骤：
+</h6>
+<div id="outline-text-headline-50" class="outline-text-6">
+<ol>
+<li>输入参数验证：</li>
+</ol>
+<div class="src src-c">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="n">argc</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	  <span class="nf">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&#34;Usage: %s &lt;input.mp4&gt; &lt;output.mp4&gt;</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="n">input_filename</span> <span class="o">=</span> <span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">  <span class="n">output_filename</span> <span class="o">=</span> <span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>检查命令行参数是否足够，确保用户提供了输入和输出文件路径。</p>
+<ol>
+<li>注册所有编解码器：</li>
+</ol>
+<div class="src src-c">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">  <span class="nf">av_register_all</span><span class="p">();</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>FFmpeg 初始化函数，注册所有支持的编解码器、文件格式等。</p>
+<ol>
+<li>打开输入文件并获取格式上下文：</li>
+</ol>
+<div class="src src-c">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">((</span><span class="n">ret</span> <span class="o">=</span> <span class="nf">avformat_open_input</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ifmt_ctx</span><span class="p">,</span> <span class="n">input_filename</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">))</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	  <span class="nf">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&#34;Could not open input file &#39;%s&#39;</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">input_filename</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>通过 avformat_open_input 打开输入文件，并填充 ifmt_ctx 结构体，其中包含输入文件的信息。</p>
+<ol>
+<li>查找输入文件流信息：</li>
+</ol>
+<div class="src src-c">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">((</span><span class="n">ret</span> <span class="o">=</span> <span class="nf">avformat_find_stream_info</span><span class="p">(</span><span class="n">ifmt_ctx</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">))</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	  <span class="nf">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&#34;Failed to retrieve input stream information</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>使用 avformat_find_stream_info 获取输入文件的所有流信息（视频流、音频流等）。</p>
+<ol>
+<li>查找视频流：</li>
+</ol>
+<div class="src src-c">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">ifmt_ctx</span><span class="o">-&gt;</span><span class="n">nb_streams</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	  <span class="n">AVStream</span> <span class="o">*</span><span class="n">stream</span> <span class="o">=</span> <span class="n">ifmt_ctx</span><span class="o">-&gt;</span><span class="n">streams</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">if</span> <span class="p">(</span><span class="n">stream</span><span class="o">-&gt;</span><span class="n">codecpar</span><span class="o">-&gt;</span><span class="n">codec_type</span> <span class="o">==</span> <span class="n">AVMEDIA_TYPE_VIDEO</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		  <span class="n">in_stream</span> <span class="o">=</span> <span class="n">stream</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		  <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>遍历所有流，找到类型为视频的流并赋值给 in_stream。</p>
+<ol>
+<li>查找解码器并初始化解码器上下文：</li>
+</ol>
+<div class="src src-c">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">  <span class="n">decoder</span> <span class="o">=</span> <span class="nf">avcodec_find_decoder</span><span class="p">(</span><span class="n">in_stream</span><span class="o">-&gt;</span><span class="n">codecpar</span><span class="o">-&gt;</span><span class="n">codec_id</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">dec_ctx</span> <span class="o">=</span> <span class="nf">avcodec_alloc_context3</span><span class="p">(</span><span class="n">decoder</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">avcodec_parameters_to_context</span><span class="p">(</span><span class="n">dec_ctx</span><span class="p">,</span> <span class="n">in_stream</span><span class="o">-&gt;</span><span class="n">codecpar</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">avcodec_open2</span><span class="p">(</span><span class="n">dec_ctx</span><span class="p">,</span> <span class="n">decoder</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>根据输入视频的编码格式查找相应的解码器，并初始化解码器上下文 dec_ctx。然后，打开解码器以准备解码。</p>
+<ol>
+<li>创建输出文件并初始化输出流：</li>
+</ol>
+<div class="src src-c">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">  <span class="nf">avformat_alloc_output_context2</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ofmt_ctx</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="n">output_filename</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">out_stream</span> <span class="o">=</span> <span class="nf">avformat_new_stream</span><span class="p">(</span><span class="n">ofmt_ctx</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">encoder</span> <span class="o">=</span> <span class="nf">avcodec_find_encoder</span><span class="p">(</span><span class="n">dec_ctx</span><span class="o">-&gt;</span><span class="n">codec_id</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">enc_ctx</span> <span class="o">=</span> <span class="nf">avcodec_alloc_context3</span><span class="p">(</span><span class="n">encoder</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">avcodec_open2</span><span class="p">(</span><span class="n">enc_ctx</span><span class="p">,</span> <span class="n">encoder</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>为输出文件分配格式上下文，并创建一个新的视频流 out_stream。随后，查找对应的编码器并初始化编码器上下文 enc_ctx。</p>
+<ol>
+<li>逐帧解码和编码：</li>
+</ol>
+<div class="src src-c">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">  <span class="k">while</span> <span class="p">(</span><span class="nf">av_read_frame</span><span class="p">(</span><span class="n">ifmt_ctx</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">pkt</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">if</span> <span class="p">(</span><span class="n">pkt</span><span class="p">.</span><span class="n">stream_index</span> <span class="o">==</span> <span class="n">in_stream</span><span class="o">-&gt;</span><span class="n">index</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		  <span class="n">ret</span> <span class="o">=</span> <span class="nf">avcodec_send_packet</span><span class="p">(</span><span class="n">dec_ctx</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">pkt</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		  <span class="k">while</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			  <span class="n">ret</span> <span class="o">=</span> <span class="nf">avcodec_receive_frame</span><span class="p">(</span><span class="n">dec_ctx</span><span class="p">,</span> <span class="n">frame</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">			  <span class="nf">encode</span><span class="p">(</span><span class="n">enc_ctx</span><span class="p">,</span> <span class="n">frame</span><span class="p">,</span> <span class="n">ofmt_ctx</span><span class="p">,</span> <span class="n">out_stream</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">	  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">	  <span class="nf">av_packet_unref</span><span class="p">(</span><span class="o">&amp;</span><span class="n">pkt</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<ul>
+<li>通过 av_read_frame 读取视频帧数据包 pkt。</li>
+<li>使用 avcodec_send_packet 发送数据包到解码器。</li>
+<li>从解码器获取解码后的 frame，然后通过 encode 函数将其编码并写入输出文件。</li>
+</ul>
+<ol>
+<li>写入文件尾并释放资源：</li>
+</ol>
+<div class="src src-c">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">  <span class="nf">av_write_trailer</span><span class="p">(</span><span class="n">ofmt_ctx</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">av_frame_free</span><span class="p">(</span><span class="o">&amp;</span><span class="n">frame</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">avcodec_free_context</span><span class="p">(</span><span class="o">&amp;</span><span class="n">dec_ctx</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">avcodec_free_context</span><span class="p">(</span><span class="o">&amp;</span><span class="n">enc_ctx</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">avformat_close_input</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ifmt_ctx</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">avio_closep</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ofmt_ctx</span><span class="o">-&gt;</span><span class="n">pb</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">avformat_free_context</span><span class="p">(</span><span class="n">ofmt_ctx</span><span class="p">);</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-51" class="outline-6">
+<h6 id="headline-51">
+结论
+</h6>
+<div id="outline-text-headline-51" class="outline-text-6">
+<p>该程序逐步完成视频的解码和编码，将输入 MP4 文件中的视频流解码为帧，然后将每一帧重新编码为新的 MP4 文件，确保解码后的视频重新编码为同样的格式。</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-52" class="outline-3">
+<h3 id="headline-52">
 参考链接
 </h3>
-<div id="outline-text-headline-43" class="outline-text-3">
+<div id="outline-text-headline-52" class="outline-text-3">
 <p>
 <a href="https://blog.csdn.net/weixin_44453694/article/details/127098011">Linux下基于ffmpeg音视频解码</a></p>
 <p>
