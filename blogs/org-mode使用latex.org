@@ -1,0 +1,143 @@
+---
+title: org-mode使用latex
+tags: ["emacs", "org-mode"]
+date: 2024-09-24T10:00:05.55+0800
+---
+
+申明：该博客在hugo博客框架下，该文章内org-mode下的公式在hugo博客中不能正常显示html效果的公式，如果想要感受公式效果，除了根据本文的参考链接查看练习以外，也可以下载本博客原始文件后用emacs打开，然后导出为html文件查看公式效果，点击下载[[][原始文件]]
+
+* org mode 使用latex
+org mode写技术文章，经常需要编写数学公式和希腊字母。下面介绍如何使用.
+
+** 拉丁、希腊字母
+可以使用转义符
+#+begin_src 
+Angles are written as Greek letters \alpha, \beta and \gamma.
+#+end_src
+
+获得的结果是：
+#+begin_src 
+Angles are written as Greek letters α, β and γ. 
+#+end_src
+
+输入M-x命令，可以查看完整的entities
+#+begin_src 
+org-entities-help
+#+end_src
+在letters里面可以看到拉丁和希腊字符。
+
+使用转义字符的公式
+#+begin_src 
+a\sup2 + b\sup2 = c\sup2
+#+end_src
+
+导出html查看效果
+#+begin_src 
+a² + b² = c²
+#+end_src
+使用转义字符的公式导出html的效果可以将公式视作普通文本复制下来，如果是使用latex公式，导出的html效果中公式不能被复制下来，但是可以在电脑端浏览器网页中设置公式的样式和效果
+
+** org-mode行内公式
+使用org-mode输入
+#+begin_src latex
+$a^2 + b^2 = c^2$
+#+end_src
+导出html查看效果
+
+$a^2 + b^2 = c^2$
+
+** LaTex关于数学公式的使用（10）---求和，求积
+关于求和符号和求积符号的创建(结合3学习)
+1、求和符号及其范围的创建，两种方式
+
+1) 基本的求和
+#+begin_src 
+\begin{equation}
+\sum_{0 \lt i \lt m \ 0 \lt j \lt n}x_{ij}
+\end{equation}
+#+end_src
+\begin{equation}
+\sum_{0 \lt i \lt m \ 0 \lt j \lt n}x_{ij}
+\end{equation}
+
+2) 将范围表示叠层处理
+#+begin_src 
+\begin{equation}
+\sum_{0 \lt i \lt m \\ 0 \lt j \lt n}x_{ij}
+\end{equation}
+#+end_src
+\begin{equation}
+\sum_{0 \lt i \lt m \\ 0 \lt j \lt n}x_{ij}
+\end{equation}
+
+2、两种和2）同样功能的实现方式
+#+begin_src 
+\begin{equation}
+\sum_{\begin{subarray}{l}0 \lt i \lt m\\0 \lt j \lt n\end{subarray}}x_{ij}
+\end{equation}
+
+\begin{equation}
+\sum_{\begin{subarray}{c}i\\0 \lt j \lt n\end{subarray}} x_{ij}
+\end{equation}
+#+end_src
+\begin{equation}
+\sum_{\begin{subarray}{l}0 \lt i \lt m\\0 \lt j \lt n\end{subarray}}x_{ij}
+\end{equation}
+
+\begin{equation}
+\sum_{\begin{subarray}{c}i\\0 \lt j \lt n\end{subarray}} x_{ij}
+\end{equation}
+
+3、累积符号的创建
+#+begin_src 
+\begin{equation}
+\sideset{_a^b}{_x^d}\prod_i^N x_i 
+\end{equation}
+
+\begin{equation}
+\sideset{_a^b}{_c'}\prod_i^N x_i 
+\end{equation}
+#+end_src
+\begin{equation}
+\sideset{_a^b}{_x^d}\prod_i^N x_i 
+\end{equation}
+
+\begin{equation}
+\sideset{_a^b}{_c'}\prod_i^N x_i 
+\end{equation}
+
+4、关于求和的另外表示方式
+#+begin_src 
+\begin{equation} 
+\sum\thinspace'x_i\hspace{1cm}\sum{'}x_i %第一行图
+\end{equation}
+
+\begin{equation}
+\sum\nolimits 'x_i %第二行图
+\end{equation}
+
+\begin{equation}
+\sideset{}{'}\sum_i x_i %第二行图
+\end{equation}
+#+end_src
+\begin{equation} 
+\sum\thinspace'x_i\hspace{1cm}\sum{'}x_i %第一行图
+\end{equation}
+
+\begin{equation}
+\sum\nolimits 'x_i %第二行图
+\end{equation}
+
+\begin{equation}
+\sideset{}{'}\sum_i x_i %第二行图
+\end{equation}
+
+*** 参考链接
+
+[[https://blog.csdn.net/csfreebird/article/details/43636615][org mode 使用latex]]
+
+[[https://www.doc88.com/p-74187927705291.html][org mode 使用 latex]]
+
+[[https://forum.ubuntu.com.cn/viewtopic.php?t=343290][org-mode下如何输入数学公式和特殊符号并且在导出了html中可以正常显示？]]
+
+[[https://blog.csdn.net/little_ox/article/details/105020289][LaTex关于数学公式的使用（10）---求和，求积]]
