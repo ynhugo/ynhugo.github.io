@@ -301,7 +301,7 @@
 </li>
 </ul>
 </li>
-<li><a href="#headline-9">从终端输入字符串，提取字符串中的ASCII值</a>
+<li><a href="#headline-9">从终端输入字符串，提取字符串中的ASCII值 - ChatGPT</a>
 <ul>
 <li><a href="#headline-10">代码说明</a>
 <ul>
@@ -311,9 +311,23 @@
 </li>
 </ul>
 </li>
-<li><a href="#headline-12">提取字符串中的数字</a>
+<li><a href="#headline-12">提取字符串中的数字 - ChatGPT</a>
 <ul>
 <li><a href="#headline-13">关键点</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-14">提取字符串中的正数、浮点数 - ChatGPT</a>
+<ul>
+<li><a href="#headline-15">代码说明</a>
+<ul>
+<li><a href="#headline-16">主函数：</a>
+</li>
+<li><a href="#headline-17">extractNumbers 函数：</a>
+</li>
+<li><a href="#headline-18">示例输出</a>
+</li>
+</ul>
 </li>
 </ul>
 </li>
@@ -373,7 +387,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 5 分钟
+                    阅读时长: 7 分钟
                 </time>
             </div>
         
@@ -600,7 +614,7 @@ C语言打印格式%x与%#x有什么区别
 </div>
 <div id="outline-container-headline-9" class="outline-2">
 <h2 id="headline-9">
-从终端输入字符串，提取字符串中的ASCII值
+从终端输入字符串，提取字符串中的ASCII值 - ChatGPT
 </h2>
 <div id="outline-text-headline-9" class="outline-text-2">
 <div class="src src-text">
@@ -720,7 +734,7 @@ C语言打印格式%x与%#x有什么区别
 </div>
 <div id="outline-container-headline-12" class="outline-2">
 <h2 id="headline-12">
-提取字符串中的数字
+提取字符串中的数字 - ChatGPT
 </h2>
 <div id="outline-text-headline-12" class="outline-text-2">
 <div class="src src-text">
@@ -817,6 +831,249 @@ C语言打印格式%x与%#x有什么区别
 <p>动态指针数组: 使用 char **buf_test 来存储提取的数字，每次提取后动态分配内存。
 内存管理: 使用 malloc 和 realloc 进行动态内存分配，确保在失败时释放已分配的内存。
 字符串操作: 使用 strtok 函数提取字符串，并用 strcpy 复制到新分配的内存中。</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-14" class="outline-2">
+<h2 id="headline-14">
+提取字符串中的正数、浮点数 - ChatGPT
+</h2>
+<div id="outline-text-headline-14" class="outline-text-2">
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">#include &lt;stdio.h&gt;
+</span></span><span class="line"><span class="cl">#include &lt;ctype.h&gt;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// 函数声明
+</span></span><span class="line"><span class="cl">void extractNumbers(const char *inputString);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">int main() {
+</span></span><span class="line"><span class="cl">    const char *inputString = &#34;1 -2 3.5 -4.7 5 6 -0.1 7.0&#34;;
+</span></span><span class="line"><span class="cl">    extractNumbers(inputString);
+</span></span><span class="line"><span class="cl">    return 0;
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// 提取数字的函数
+</span></span><span class="line"><span class="cl">void extractNumbers(const char *inputString) {
+</span></span><span class="line"><span class="cl">    double num = 0.0;
+</span></span><span class="line"><span class="cl">    int foundNumber = 0;  // 标志是否找到了数字
+</span></span><span class="line"><span class="cl">    int isNegative = 0;   // 标志是否为负数
+</span></span><span class="line"><span class="cl">    int hasDecimal = 0;   // 标志是否有小数部分
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    while (*inputString) {
+</span></span><span class="line"><span class="cl">        // 跳过空格
+</span></span><span class="line"><span class="cl">        while (isspace(*inputString)) {
+</span></span><span class="line"><span class="cl">            inputString++;
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        // 检查正负号
+</span></span><span class="line"><span class="cl">        if (*inputString == &#39;-&#39;) {
+</span></span><span class="line"><span class="cl">            isNegative = 1;
+</span></span><span class="line"><span class="cl">            inputString++;
+</span></span><span class="line"><span class="cl">        } else if (*inputString == &#39;+&#39;) {
+</span></span><span class="line"><span class="cl">            inputString++; // 忽略正号
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        // 提取数字部分
+</span></span><span class="line"><span class="cl">        num = 0.0;
+</span></span><span class="line"><span class="cl">        hasDecimal = 0;
+</span></span><span class="line"><span class="cl">        double decimalPlace = 1.0;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        while (isdigit(*inputString) || *inputString == &#39;.&#39;) {
+</span></span><span class="line"><span class="cl">            if (*inputString == &#39;.&#39;) {
+</span></span><span class="line"><span class="cl">                hasDecimal = 1;
+</span></span><span class="line"><span class="cl">                inputString++;
+</span></span><span class="line"><span class="cl">                continue;
+</span></span><span class="line"><span class="cl">            }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            if (hasDecimal) {
+</span></span><span class="line"><span class="cl">                decimalPlace *= 10.0; // 更新小数位
+</span></span><span class="line"><span class="cl">                num = num + (*inputString - &#39;0&#39;) / decimalPlace; // 加入小数部分
+</span></span><span class="line"><span class="cl">            } else {
+</span></span><span class="line"><span class="cl">                num = num * 10 + (*inputString - &#39;0&#39;); // 加入整数部分
+</span></span><span class="line"><span class="cl">            }
+</span></span><span class="line"><span class="cl">            inputString++;
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        // 应用符号
+</span></span><span class="line"><span class="cl">        if (isNegative) {
+</span></span><span class="line"><span class="cl">            num = -num;
+</span></span><span class="line"><span class="cl">            isNegative = 0; // 重置标志
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        // 判断并打印结果
+</span></span><span class="line"><span class="cl">        if (hasDecimal) {
+</span></span><span class="line"><span class="cl">            printf(&#34;提取的浮点数是: %.2f\n&#34;, num);
+</span></span><span class="line"><span class="cl">        } else {
+</span></span><span class="line"><span class="cl">            printf(&#34;提取的整数是: %d\n&#34;, (int)num);
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        foundNumber = 1;  // 找到数字
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        // 重置状态
+</span></span><span class="line"><span class="cl">        while (isspace(*inputString)) {
+</span></span><span class="line"><span class="cl">            inputString++; // 跳过空格
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    if (!foundNumber) {
+</span></span><span class="line"><span class="cl">        printf(&#34;没有找到任何数字。\n&#34;);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-15" class="outline-3">
+<h3 id="headline-15">
+代码说明
+</h3>
+<div id="outline-text-headline-15" class="outline-text-3">
+<div id="outline-container-headline-16" class="outline-4">
+<h4 id="headline-16">
+主函数：
+</h4>
+<div id="outline-text-headline-16" class="outline-text-4">
+<ul>
+<li>定义了输入字符串 inputString，并调用 extractNumbers 函数。</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-headline-17" class="outline-4">
+<h4 id="headline-17">
+extractNumbers 函数：
+</h4>
+<div id="outline-text-headline-17" class="outline-text-4">
+<ul>
+<li>使用 double 类型来存储提取的数值，以便处理浮点数。</li>
+<li>使用 isNegative 标志来判断数字是否为负数。</li>
+<li>使用 hasDecimal 标志来判断是否有小数部分。</li>
+<li>遍历字符串时，首先跳过空格，然后检查正负号。</li>
+<li>
+<p>提取数字部分，包括整数和小数：</p>
+<ul>
+<li>如果遇到小数点，更新 hasDecimal 标志，并在后续循环中处理小数部分。</li>
+</ul>
+</li>
+<li>输出提取的数字，区分整数和浮点数。</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-headline-18" class="outline-4">
+<h4 id="headline-18">
+示例输出
+</h4>
+<div id="outline-text-headline-18" class="outline-text-4">
+<p>运行上述代码时，输出将会显示提取的所有数字，包括整数和浮点数：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">提取的整数是: <span class="m">1</span>
+</span></span><span class="line"><span class="cl">提取的整数是: -2
+</span></span><span class="line"><span class="cl">提取的浮点数是: 3.50
+</span></span><span class="line"><span class="cl">提取的浮点数是: -4.70
+</span></span><span class="line"><span class="cl">提取的整数是: <span class="m">5</span>
+</span></span><span class="line"><span class="cl">提取的整数是: <span class="m">6</span>
+</span></span><span class="line"><span class="cl">提取的浮点数是: -0.10
+</span></span><span class="line"><span class="cl">提取的浮点数是: 7.00</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>这种实现能够有效提取出字符串中的所有整数和浮点数，并且考虑了正负号。</p>
+</div>
+</div>
 </div>
 </div>
 </div>
