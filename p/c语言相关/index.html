@@ -311,6 +311,12 @@
 </li>
 </ul>
 </li>
+<li><a href="#headline-12">提取字符串中的数字</a>
+<ul>
+<li><a href="#headline-13">关键点</a>
+</li>
+</ul>
+</li>
 </ul>
 </nav>
         </div>
@@ -367,7 +373,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 4 分钟
+                    阅读时长: 5 分钟
                 </time>
             </div>
         
@@ -708,6 +714,109 @@ C语言打印格式%x与%#x有什么区别
 程序会输出您输入的字符串和每个字符的 ASCII 值。</p>
 </div>
 </div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-12" class="outline-2">
+<h2 id="headline-12">
+提取字符串中的数字
+</h2>
+<div id="outline-text-headline-12" class="outline-text-2">
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">#include &lt;stdio.h&gt;
+</span></span><span class="line"><span class="cl">#include &lt;stdlib.h&gt;
+</span></span><span class="line"><span class="cl">#include &lt;string.h&gt;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">int main(void) {
+</span></span><span class="line"><span class="cl">    const char *RecvBuf = &#34;1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129 130 131 132 133 134 135 136 137 138 139 140 141 142 143 144 145 146 147 148 149 150 151 152 153 154 155 156 157 158 159 160 161 162 163 164 165 166 167 168 169 170 171 172 173 174 175 176 177 178 179 180 181 182 183 184 185 186 187 188 189 190 191 192 193 194 195 196 197 198 199 200 201 202 203 204 205 206 207 208 209 210 211 212 213 214 215 216 217 218 219 220 221 222 223 224 225 226 227 228 229 230 231 232 233 234 235 236 237 238 239 240 241 242 243 244 245 246 247 248 249 250 251 252 253 254 255 256&#34;; // 输入字符串
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    char **buf_test = NULL; // 指向字符串指针数组
+</span></span><span class="line"><span class="cl">    int count = 0; // 计数器
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 创建一个临时字符串以避免修改原始字符串
+</span></span><span class="line"><span class="cl">    char *temp = (char *)malloc(strlen(RecvBuf) + 1);
+</span></span><span class="line"><span class="cl">    strcpy(temp, RecvBuf); // 复制输入字符串到临时字符串
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 使用 strtok 提取每个数字
+</span></span><span class="line"><span class="cl">    char *token = strtok(temp, &#34; &#34;);
+</span></span><span class="line"><span class="cl">    while (token != NULL) {
+</span></span><span class="line"><span class="cl">        // 动态增加指针数组大小
+</span></span><span class="line"><span class="cl">        char **new_buf_test = (char **)realloc(buf_test, (count + 1) * sizeof(char *));
+</span></span><span class="line"><span class="cl">        buf_test = new_buf_test;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        // 为当前数字分配内存并复制
+</span></span><span class="line"><span class="cl">        buf_test[count] = (char *)malloc(strlen(token) + 1);
+</span></span><span class="line"><span class="cl">        strcpy(buf_test[count], token); // 复制字符串到新分配的内存
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        count++;
+</span></span><span class="line"><span class="cl">        token = strtok(NULL, &#34; &#34;);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 输出提取的数字
+</span></span><span class="line"><span class="cl">    for (int i = 0; i &lt; count; i++) {
+</span></span><span class="line"><span class="cl">        printf(&#34;buf_test[%d] = %s\n&#34;, i, buf_test[i]);
+</span></span><span class="line"><span class="cl">        free(buf_test[i]); // 释放每个字符串的内存
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    free(buf_test); // 释放指针数组的内存
+</span></span><span class="line"><span class="cl">    free(temp); // 释放临时字符串的内存
+</span></span><span class="line"><span class="cl">    return 0;
+</span></span><span class="line"><span class="cl">}</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-13" class="outline-3">
+<h3 id="headline-13">
+关键点
+</h3>
+<div id="outline-text-headline-13" class="outline-text-3">
+<p>动态指针数组: 使用 char **buf_test 来存储提取的数字，每次提取后动态分配内存。
+内存管理: 使用 malloc 和 realloc 进行动态内存分配，确保在失败时释放已分配的内存。
+字符串操作: 使用 strtok 函数提取字符串，并用 strcpy 复制到新分配的内存中。</p>
 </div>
 </div>
 </div>
