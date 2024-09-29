@@ -301,6 +301,16 @@
 </li>
 </ul>
 </li>
+<li><a href="#headline-9">从终端输入字符串，提取字符串中的ASCII值</a>
+<ul>
+<li><a href="#headline-10">代码说明</a>
+<ul>
+<li><a href="#headline-11">使用说明</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </nav>
         </div>
@@ -357,7 +367,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 3 分钟
+                    阅读时长: 4 分钟
                 </time>
             </div>
         
@@ -578,6 +588,126 @@ C语言打印格式%x与%#x有什么区别
 <li>&#34;%x&#34; 输出的是纯十六进制数值，不带前缀。</li>
 <li>&#34;%#x&#34; 在十六进制数值前加上 0x 前缀，标识这是一个十六进制数。</li>
 </ul>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-9" class="outline-2">
+<h2 id="headline-9">
+从终端输入字符串，提取字符串中的ASCII值
+</h2>
+<div id="outline-text-headline-9" class="outline-text-2">
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">#include &lt;stdio.h&gt;
+</span></span><span class="line"><span class="cl">#include &lt;stdlib.h&gt;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">int main(void) {
+</span></span><span class="line"><span class="cl">    unsigned char *arr = NULL;  // 初始化为 NULL
+</span></span><span class="line"><span class="cl">    unsigned int arr_num = 0;   // 当前输入字符的数量
+</span></span><span class="line"><span class="cl">    unsigned int capacity = 1;   // 初始容量设置为 1
+</span></span><span class="line"><span class="cl">    int ch;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 为 arr 分配初始内存
+</span></span><span class="line"><span class="cl">    arr = (unsigned char *)malloc(capacity * sizeof(unsigned char));
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    printf(&#34;请输入包含任意大小数字的任意长度的字符串 (按 Enter 键结束):\n&#34;);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    while ((ch = getchar()) != &#39;\n&#39;) {
+</span></span><span class="line"><span class="cl">        // 检查是否需要扩展数组
+</span></span><span class="line"><span class="cl">        if (arr_num &gt;= capacity) {
+</span></span><span class="line"><span class="cl">            capacity *= 2; // 扩大容量为原来的两倍
+</span></span><span class="line"><span class="cl">            unsigned char *temp = realloc(arr, capacity * sizeof(unsigned char));
+</span></span><span class="line"><span class="cl">            arr = temp; // 更新 arr 指针
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">        arr[arr_num++] = (unsigned char)ch; // 将读取的字符存储到数组
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 为字符串结束符增加空间
+</span></span><span class="line"><span class="cl">    unsigned char *final_arr = realloc(arr, (arr_num + 1) * sizeof(unsigned char));    
+</span></span><span class="line"><span class="cl">    arr = final_arr;
+</span></span><span class="line"><span class="cl">    arr[arr_num] = &#39;\0&#39;; // 添加字符串结束符
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 输出读取到的字符串
+</span></span><span class="line"><span class="cl">    printf(&#34;您输入的字符串是: %s\n&#34;, arr);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 打印每个字符及其 ASCII 值
+</span></span><span class="line"><span class="cl">    for (unsigned int i = 0; i &lt; arr_num; i++) {
+</span></span><span class="line"><span class="cl">        printf(&#34;arr[%d] = %c\n&#34;, i, arr[i]);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    free(arr); // 释放动态分配的内存
+</span></span><span class="line"><span class="cl">    return 0;
+</span></span><span class="line"><span class="cl">}</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-10" class="outline-3">
+<h3 id="headline-10">
+代码说明
+</h3>
+<div id="outline-text-headline-10" class="outline-text-3">
+<p>动态内存分配: 使用 malloc 为 arr 分配初始内存，之后根据需要使用 realloc 扩展内存。</p>
+<p>
+字符读取: 使用 getchar() 从标准输入逐个读取字符，直到遇到换行符 \n。</p>
+<p>
+容量管理: 每当字符数量达到当前容量时，容量翻倍，以合理利用内存。</p>
+<p>
+字符串结束符: 在读取完成后，为字符串添加结束符 \0，确保可以正确作为字符串处理。</p>
+<p>
+内存释放: 程序结尾处释放分配的内存，以避免内存泄漏。</p>
+<div id="outline-container-headline-11" class="outline-4">
+<h4 id="headline-11">
+使用说明
+</h4>
+<div id="outline-text-headline-11" class="outline-text-4">
+<p>编译并运行程序，输入一段字符并按回车键结束。
+程序会输出您输入的字符串和每个字符的 ASCII 值。</p>
+</div>
+</div>
 </div>
 </div>
 </div>
