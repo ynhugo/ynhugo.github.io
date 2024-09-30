@@ -332,6 +332,16 @@
 </ul>
 </li>
 <li><a href="#headline-19">提取指定大小字符串中的整数 - ChatGPT</a>
+<ul>
+<li><a href="#headline-20">代码</a>
+</li>
+<li><a href="#headline-21">代码功能分析</a>
+</li>
+<li><a href="#headline-22">重要细节</a>
+</li>
+<li><a href="#headline-23">总结</a>
+</li>
+</ul>
 </li>
 </ul>
 </nav>
@@ -389,7 +399,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 8 分钟
+                    阅读时长: 9 分钟
                 </time>
             </div>
         
@@ -1085,6 +1095,11 @@ extractNumbers 函数：
 提取指定大小字符串中的整数 - ChatGPT
 </h2>
 <div id="outline-text-headline-19" class="outline-text-2">
+<div id="outline-container-headline-20" class="outline-3">
+<h3 id="headline-20">
+代码
+</h3>
+<div id="outline-text-headline-20" class="outline-text-3">
 <div class="src src-text">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1133,7 +1148,6 @@ extractNumbers 函数：
 </span><span class="lnt">43
 </span><span class="lnt">44
 </span><span class="lnt">45
-</span><span class="lnt">46
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">#include &lt;stdio.h&gt;
@@ -1142,56 +1156,114 @@ extractNumbers 函数：
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">unsigned int *buf1 = NULL;
 </span></span><span class="line"><span class="cl">size_t buf1_len = 0;
-</span></span><span class="line"><span class="cl">unsigned char *str = NULL;
-</span></span><span class="line"><span class="cl">size_t str_len = 0;
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">int main(int argc, char *argv[]) {
-</span></span><span class="line"><span class="cl">    int i = 0, j = 0;
+</span></span><span class="line"><span class="cl">int convert_character(unsigned char *str1, size_t str1_len , unsigned int *str2);
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    // 使用malloc分配足够的空间
-</span></span><span class="line"><span class="cl">    buf1 = malloc(15 * sizeof(unsigned int)); // 假设最多有15个数字
-</span></span><span class="line"><span class="cl">    str = &#34;1 2 3 4 5 6 7 8 9 10 11 12 13 14&#34;;
-</span></span><span class="line"><span class="cl">    str_len = strlen(str);
+</span></span><span class="line"><span class="cl">int main(int argc, char *aragv[]) {
+</span></span><span class="line"><span class="cl">	int i = 0;
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    printf(&#34;%d: str_len = %zu\n&#34;, __LINE__, str_len);
+</span></span><span class="line"><span class="cl">	buf1 = malloc(15 * sizeof(unsigned int));
+</span></span><span class="line"><span class="cl">	unsigned char *str = (unsigned char *)&#34;1 2 3 4 5 6 7 8 9 10 11 12 13 14&#34;;
+</span></span><span class="line"><span class="cl">	size_t str_len = strlen((char *)str);
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    // 按空格分隔字符串并存储到buf1中
-</span></span><span class="line"><span class="cl">    for (i = 0; i &lt; str_len; i++) {
-</span></span><span class="line"><span class="cl">        if (str[i] == &#39; &#39;) {
-</span></span><span class="line"><span class="cl">            continue; // 跳过空格
-</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">	convert_character(str, str_len, buf1);
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        // 读取数字
-</span></span><span class="line"><span class="cl">        unsigned int num = 0;
-</span></span><span class="line"><span class="cl">        while (i &lt; str_len &amp;&amp; str[i] != &#39; &#39;) {
-</span></span><span class="line"><span class="cl">            num = num * 10 + (str[i] - &#39;0&#39;); // 将字符转换为整数
-</span></span><span class="line"><span class="cl">            i++;
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">        buf1[j++] = num; // 存储数字
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">	/* 输出转换结果 */
+</span></span><span class="line"><span class="cl">	for (i = 0; i &lt; buf1_len; i++) {
+</span></span><span class="line"><span class="cl">		printf(&#34;%d: buf1[%d] = %u\n&#34;, __LINE__, i, buf1[i]);
+</span></span><span class="line"><span class="cl">	}
+</span></span><span class="line"><span class="cl">	
+</span></span><span class="line"><span class="cl">	free(buf1);
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    buf1_len = j; // 有效数字的数量
+</span></span><span class="line"><span class="cl">	return 0;
+</span></span><span class="line"><span class="cl">}
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    // 输出每个数字
-</span></span><span class="line"><span class="cl">    for (i = 0; i &lt; buf1_len; i++) {
-</span></span><span class="line"><span class="cl">        printf(&#34;%d: buf1[%d] = %u\n&#34;, __LINE__, i, buf1[i]);
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">int convert_character(unsigned char *str1, size_t str1_len , unsigned int *str2) {
+</span></span><span class="line"><span class="cl">	int i = 0, j = 0;	
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    // 释放内存
-</span></span><span class="line"><span class="cl">    free(buf1);
+</span></span><span class="line"><span class="cl">	for (i = 0; i &lt; str1_len; i++) {
+</span></span><span class="line"><span class="cl">		if (str1[i] == &#39; &#39;) continue; /* 跳过空格 */
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    return 0;
+</span></span><span class="line"><span class="cl">		int num = 0;
+</span></span><span class="line"><span class="cl">		while(i &lt; str1_len &amp;&amp; str1[i] != &#39; &#39;) {
+</span></span><span class="line"><span class="cl">			num = num * 10 + (str1[i] - &#39;0&#39;);
+</span></span><span class="line"><span class="cl">			i++;
+</span></span><span class="line"><span class="cl">		}
+</span></span><span class="line"><span class="cl">		str2[j++] = num;
+</span></span><span class="line"><span class="cl">	}
+</span></span><span class="line"><span class="cl">	buf1_len = j;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	return 0;
 </span></span><span class="line"><span class="cl">}</span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
+<p>
+这段代码的主要功能是将一个包含空格分隔数字的字符串转换为无符号整数数组，并输出这些整数。下面是对代码功能和结构的详细分析：</p>
+</div>
+</div>
+<div id="outline-container-headline-21" class="outline-3">
+<h3 id="headline-21">
+代码功能分析
+</h3>
+<div id="outline-text-headline-21" class="outline-text-3">
 <ol>
-<li>为 buf1 分配固定的大小：在本例中假设最多有 15 个数字。</li>
-<li>去除多余的内存分配：直接使用字符串字面量，不再重新为 str 分配内存。</li>
-<li>解析数字：使用一个 while 循环来从字符串中解析出整数，并将其存储到 buf1 中。</li>
-<li>输出格式：将输出格式中的 -d-%x 部分修改为更清晰的无符号整数输出。</li>
-<li>适当的内存清理：在程序结束时释放分配的内存，以防内存泄漏。</li>
+<li>
+<p>全局变量：</p>
+<ul>
+<li>unsigned int *buf1：指向动态分配的无符号整数数组，用于保存转换后的结果。</li>
+<li>size_t buf1_len：保存转换后数组的长度。</li>
+</ul>
+</li>
+<li>
+<p>主函数 (main)：</p>
+<ul>
+<li>定义了一个指向 unsigned char 的字符串 str，其中包含空格分隔的数字。</li>
+<li>使用 malloc 动态分配了一个大小为 15 的 unsigned int 数组，以便存储转换后的数字。</li>
+<li>调用 convert_character 函数，将字符串 str 和它的长度 str_len 传递给该函数以进行转换。</li>
+<li>遍历 buf1 数组并打印每个无符号整数及其索引。</li>
+<li>最后释放动态分配的内存。</li>
+</ul>
+</li>
+<li>
+<p>转换函数 (convert_character)：</p>
+<ul>
+<li>接受输入字符串 str1 和其长度 str1_len，以及用于存储输出结果的数组 str2。</li>
+<li>
+<p>在循环中，跳过空格并逐个字符读取数字：</p>
+<ul>
+<li>将字符转换为整数（通过将字符减去 &#39;0&#39;）并累加到 num 中。</li>
+<li>当遇到空格或字符串结束时，将解析得到的整数存入 str2 数组。</li>
+</ul>
+</li>
+<li>更新全局变量 buf1_len，指示转换后的数字数量。</li>
+</ul>
+</li>
 </ol>
+</div>
+</div>
+<div id="outline-container-headline-22" class="outline-3">
+<h3 id="headline-22">
+重要细节
+</h3>
+<div id="outline-text-headline-22" class="outline-text-3">
+<ul>
+<li>内存分配：使用 malloc 为 buf1 分配内存，但没有检查分配结果是否成功，可能在内存不足时导致未定义行为。</li>
+<li>全局变量的使用：buf1_len 更新在 convert_character 函数中，可能导致可读性降低，因为它在函数外部使用。</li>
+<li>输出格式：在输出时使用 __LINE__，这会显示当前行号，有助于调试，但在实际应用中可能不需要。</li>
+<li>错误处理：缺少对输入数据的有效性检查（例如，确保输入格式正确且不超过预期的数字数量）。</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-headline-23" class="outline-3">
+<h3 id="headline-23">
+总结
+</h3>
+<div id="outline-text-headline-23" class="outline-text-3">
+<p>
+总体而言，这段代码实现了从一个以空格分隔的数字字符串到无符号整数数组的简单转换功能，并打印出结果。但在实际应用中，应该加入更多的错误处理和边界检查，以提高健壮性和可读性。</p>
+</div>
+</div>
 </div>
 </div>
 
