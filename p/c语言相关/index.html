@@ -331,6 +331,8 @@
 </li>
 </ul>
 </li>
+<li><a href="#headline-19">提取指定大小字符串中的整数 - ChatGPT</a>
+</li>
 </ul>
 </nav>
         </div>
@@ -387,7 +389,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 7 分钟
+                    阅读时长: 8 分钟
                 </time>
             </div>
         
@@ -1076,6 +1078,120 @@ extractNumbers 函数：
 </div>
 </div>
 </div>
+</div>
+</div>
+<div id="outline-container-headline-19" class="outline-2">
+<h2 id="headline-19">
+提取指定大小字符串中的整数 - ChatGPT
+</h2>
+<div id="outline-text-headline-19" class="outline-text-2">
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">#include &lt;stdio.h&gt;
+</span></span><span class="line"><span class="cl">#include &lt;stdlib.h&gt;
+</span></span><span class="line"><span class="cl">#include &lt;string.h&gt;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">unsigned int *buf1 = NULL;
+</span></span><span class="line"><span class="cl">size_t buf1_len = 0;
+</span></span><span class="line"><span class="cl">unsigned char *str = NULL;
+</span></span><span class="line"><span class="cl">size_t str_len = 0;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">int main(int argc, char *argv[]) {
+</span></span><span class="line"><span class="cl">    int i = 0, j = 0;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 使用malloc分配足够的空间
+</span></span><span class="line"><span class="cl">    buf1 = malloc(15 * sizeof(unsigned int)); // 假设最多有15个数字
+</span></span><span class="line"><span class="cl">    str = &#34;1 2 3 4 5 6 7 8 9 10 11 12 13 14&#34;;
+</span></span><span class="line"><span class="cl">    str_len = strlen(str);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    printf(&#34;%d: str_len = %zu\n&#34;, __LINE__, str_len);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 按空格分隔字符串并存储到buf1中
+</span></span><span class="line"><span class="cl">    for (i = 0; i &lt; str_len; i++) {
+</span></span><span class="line"><span class="cl">        if (str[i] == &#39; &#39;) {
+</span></span><span class="line"><span class="cl">            continue; // 跳过空格
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        // 读取数字
+</span></span><span class="line"><span class="cl">        unsigned int num = 0;
+</span></span><span class="line"><span class="cl">        while (i &lt; str_len &amp;&amp; str[i] != &#39; &#39;) {
+</span></span><span class="line"><span class="cl">            num = num * 10 + (str[i] - &#39;0&#39;); // 将字符转换为整数
+</span></span><span class="line"><span class="cl">            i++;
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">        buf1[j++] = num; // 存储数字
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    buf1_len = j; // 有效数字的数量
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 输出每个数字
+</span></span><span class="line"><span class="cl">    for (i = 0; i &lt; buf1_len; i++) {
+</span></span><span class="line"><span class="cl">        printf(&#34;%d: buf1[%d] = %u\n&#34;, __LINE__, i, buf1[i]);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 释放内存
+</span></span><span class="line"><span class="cl">    free(buf1);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    return 0;
+</span></span><span class="line"><span class="cl">}</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<ol>
+<li>为 buf1 分配固定的大小：在本例中假设最多有 15 个数字。</li>
+<li>去除多余的内存分配：直接使用字符串字面量，不再重新为 str 分配内存。</li>
+<li>解析数字：使用一个 while 循环来从字符串中解析出整数，并将其存储到 buf1 中。</li>
+<li>输出格式：将输出格式中的 -d-%x 部分修改为更清晰的无符号整数输出。</li>
+<li>适当的内存清理：在程序结束时释放分配的内存，以防内存泄漏。</li>
+</ol>
 </div>
 </div>
 
