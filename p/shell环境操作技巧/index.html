@@ -539,6 +539,8 @@
 </li>
 <li><a href="#headline-109">将二进制文件16进制输出的情况下每两个字符后添加一个0并输出到另一个文件</a>
 </li>
+<li><a href="#headline-110">查找指定类型文件中的内容返回结果，并且会自动去除第一列的空格</a>
+</li>
 </ul>
 </nav>
         </div>
@@ -3539,6 +3541,25 @@ Linux终端批量造十六进制数-64位
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  xxd -p output_0001.bmp <span class="p">|</span> sed <span class="s1">&#39;s/../&amp;0/g&#39;</span> &gt; output.bmp</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-110" class="outline-2">
+<h2 id="headline-110">
+查找指定类型文件中的内容返回结果，并且会自动去除第一列的空格
+</h2>
+<div id="outline-text-headline-110" class="outline-text-2">
+<p>
+由于结果并不是在第一列显示，因此让第一列为空，再把空格去掉</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">find ./ -name <span class="s2">&#34;*.cpp&#34;</span> <span class="p">|</span> xargs grep --color<span class="o">=</span>always <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> <span class="s2">&#34;</span><span class="nv">$2</span><span class="s2">&#34;</span> <span class="p">|</span> awk <span class="s1">&#39;{$1=&#34;&#34;; print $0}&#39;</span> <span class="p">|</span> sed -e <span class="s1">&#39;s/^[ ]*//g&#39;</span> <span class="p">|</span> sed -e <span class="s1">&#39;s/[ ]*$//g&#39;</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
