@@ -549,6 +549,8 @@
 </li>
 </ul>
 </li>
+<li><a href="#headline-114">visual studio的dll相关文件拷贝到Qt工程的driver目录技巧</a>
+</li>
 </ul>
 </nav>
         </div>
@@ -592,7 +594,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 29 分钟
+                    阅读时长: 30 分钟
                 </time>
             </div>
         
@@ -3609,6 +3611,23 @@ Linux终端批量造十六进制数-64位
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  date -Ins -r ts1.c <span class="p">|</span> tr <span class="s1">&#39;,&#39;</span> <span class="s1">&#39;.&#39;</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-114" class="outline-2">
+<h2 id="headline-114">
+visual studio的dll相关文件拷贝到Qt工程的driver目录技巧
+</h2>
+<div id="outline-text-headline-114" class="outline-text-2">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  mapfile -t files &lt; &lt;<span class="o">(</span>find ./ -name <span class="s2">&#34;*DLL.h&#34;</span> -o -name <span class="s2">&#34;*.x64.dll&#34;</span> -o -name <span class="s2">&#34;*.x64.lib&#34;</span><span class="o">)</span><span class="p">;</span> <span class="k">for</span> i in <span class="s2">&#34;</span><span class="si">${</span><span class="nv">files</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span> <span class="k">do</span> cp -vf <span class="s2">&#34;</span><span class="si">${</span><span class="nv">i</span><span class="si">}</span><span class="s2">&#34;</span> ../03_Demo/PCIE_SGDMA-4CH_HTFD/driver/<span class="p">;</span> <span class="k">done</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
