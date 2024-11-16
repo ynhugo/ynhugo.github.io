@@ -411,6 +411,28 @@
 </li>
 </ul>
 </li>
+<li><a href="#headline-52">Git 如何使用一条命令来获取Git根目录</a>
+<ul>
+<li><a href="#headline-53">使用git rev-parse命令获取Git根目录</a>
+</li>
+<li><a href="#headline-54">示例</a>
+</li>
+<li><a href="#headline-55">其他方法</a>
+</li>
+<li><a href="#headline-56">总结</a>
+</li>
+<li><a href="#headline-57">参考链接</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-58">我的push与pull脚本</a>
+<ul>
+<li><a href="#headline-59">push脚本</a>
+</li>
+<li><a href="#headline-60">pull脚本</a>
+</li>
+</ul>
+</li>
 </ul>
 </nav>
         </div>
@@ -467,7 +489,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 13 分钟
+                    阅读时长: 15 分钟
                 </time>
             </div>
         
@@ -732,7 +754,7 @@ git pull 命令时出现了冲突
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="o">&lt;&lt;&lt;&lt;&lt;&lt;</span>&lt; HEAD
-</span></span><span class="line"><span class="cl">  // <span class="nv">本地仓库中的代码</span>
+</span></span><span class="line"><span class="cl">  // 本地仓库中的代码
 </span></span><span class="line"><span class="cl">  <span class="o">=======</span>
 </span></span><span class="line"><span class="cl">  // 远程仓库中的代码
 </span></span><span class="line"><span class="cl">  &gt;&gt;&gt;&gt;&gt;&gt;&gt; FETCH_HEAD</span></span></code></pre></td></tr></table>
@@ -1231,13 +1253,13 @@ Git 仓库的远程列表
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl">  <span class="nv">对于</span> <span class="nv">GitHub</span> <span class="nv">上的代码文件,可以通过以下方式构建它的</span> <span class="nv">raw</span> <span class="nv">格式链接:</span>
+<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl">  <span class="err">对于</span> <span class="nv">GitHub</span> <span class="err">上的代码文件</span><span class="o">,</span><span class="err">可以通过以下方式构建它的</span> <span class="nv">raw</span> <span class="err">格式链接</span><span class="o">:</span>
 </span></span><span class="line"><span class="cl">  <span class="nv">https://raw.githubusercontent.com/:owner/:repo/:branch/:path/to/file</span>
-</span></span><span class="line"><span class="cl">  <span class="nv">其中:</span>
-</span></span><span class="line"><span class="cl">  <span class="nf">-</span> <span class="nb">:owner</span> <span class="nf">-</span> <span class="nv">仓库所属的用户或组织名</span>
-</span></span><span class="line"><span class="cl">  <span class="nf">-</span> <span class="nb">:repo</span> <span class="nf">-</span> <span class="nv">仓库的名称</span>
-</span></span><span class="line"><span class="cl">  <span class="nf">-</span> <span class="nb">:branch</span> <span class="nf">-</span> <span class="nv">代码所在的分支,通常是</span> <span class="nv">master</span>
-</span></span><span class="line"><span class="cl">  <span class="nf">-</span> <span class="nb">:path/to/file</span> <span class="nf">-</span> <span class="nv">仓库内文件的路径</span></span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">  <span class="err">其中</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">-</span> <span class="nb">:owner</span> <span class="nf">-</span> <span class="err">仓库所属的用户或组织名</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">-</span> <span class="nb">:repo</span> <span class="nf">-</span> <span class="err">仓库的名称</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">-</span> <span class="nb">:branch</span> <span class="nf">-</span> <span class="err">代码所在的分支</span><span class="o">,</span><span class="err">通常是</span> <span class="nv">master</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">-</span> <span class="nb">:path/to/file</span> <span class="nf">-</span> <span class="err">仓库内文件的路径</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
@@ -1763,6 +1785,172 @@ GitHub 看代码神器
 <div id="outline-text-headline-51" class="outline-text-3">
 <p>
 <a href="https://blog.csdn.net/sinat_32872729/article/details/125191720">github的一些快捷键和在线编辑器</a></p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-52" class="outline-2">
+<h2 id="headline-52">
+Git 如何使用一条命令来获取Git根目录
+</h2>
+<div id="outline-text-headline-52" class="outline-text-2">
+<p>
+在本文中，我们将介绍如何使用一条命令来获取Git根目录。在Git中，根目录是指包含.git文件夹的顶级目录，它是整个Git仓库的起始点。</p>
+<div id="outline-container-headline-53" class="outline-3">
+<h3 id="headline-53">
+使用git rev-parse命令获取Git根目录
+</h3>
+<div id="outline-text-headline-53" class="outline-text-3">
+<p>Git提供了一个名为git rev-parse的命令，可以用来解析、处理Git对象以及获取与之相关的信息。通过使用git rev-parse命令，我们可以获取Git根目录的绝对路径。</p>
+<p>
+要获取Git根目录的绝对路径，可以在命令行中输入以下命令：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  git rev-parse --show-toplevel</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+这将返回Git根目录的绝对路径。例如，假设我们的Git仓库位于/Users/username/git-repo目录中，那么以上命令将返回/Users/username/git-repo。你可以在自己的Git仓库中尝试该命令，看看它是否返回了正确的根目录路径。</p>
+</div>
+</div>
+<div id="outline-container-headline-54" class="outline-3">
+<h3 id="headline-54">
+示例
+</h3>
+<div id="outline-text-headline-54" class="outline-text-3">
+<p>让我们通过一个示例来进一步说明如何使用git rev-parse命令获取Git根目录。</p>
+<p>
+首先，我们在命令行中切换到我们的Git仓库所在的目录。</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> /path/to/git-repo</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+接下来，我们可以使用git rev-parse –show-toplevel命令来获取Git根目录的路径。</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  git rev-parse --show-toplevel</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+结果将会显示Git根目录的绝对路径。</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  /path/to/git-repo</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+通过执行以上命令，我们成功地获取了Git根目录的路径。</p>
+</div>
+</div>
+<div id="outline-container-headline-55" class="outline-3">
+<h3 id="headline-55">
+其他方法
+</h3>
+<div id="outline-text-headline-55" class="outline-text-3">
+<p>除了使用git rev-parse命令之外，还有一些其他方法可以获取Git根目录的路径。这些方法可能更简洁或更适合特定的情况，但可能不如git rev-parse命令灵活。</p>
+<p>
+使用git rev-parse –show-cdup命令可以返回到Git根目录所需的相对路径。
+使用git rev-parse –git-dir命令可以返回相对于当前目录的.git文件夹的路径。</p>
+<p>
+在Git的钩子脚本中，可以使用git rev-parse命令获取Git根目录以及其他相关信息，用于自定义的处理逻辑。</p>
+<p>
+请注意，使用这些方法时需要切换到Git仓库所在的目录。</p>
+</div>
+</div>
+<div id="outline-container-headline-56" class="outline-3">
+<h3 id="headline-56">
+总结
+</h3>
+<div id="outline-text-headline-56" class="outline-text-3">
+<p>通过使用git rev-parse命令，我们可以方便地获取Git根目录的路径。该命令对于构建自定义的Git工具或在Git钩子脚本中进行自定义处理非常有用。除了git rev-parse命令之外，还有一些其他方法可以获取Git根目录的路径，但可能不如git rev-parse命令灵活。希望本文对你理解如何获取Git根目录有所帮助。</p>
+</div>
+</div>
+<div id="outline-container-headline-57" class="outline-3">
+<h3 id="headline-57">
+参考链接
+</h3>
+<div id="outline-text-headline-57" class="outline-text-3">
+<p>
+<a href="https://geek-docs.com/git/git-questions/267_git_is_there_a_way_to_get_the_git_root_directory_in_one_command.html">Git 如何使用一条命令来获取Git根目录</a></p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-58" class="outline-2">
+<h2 id="headline-58">
+我的push与pull脚本
+</h2>
+<div id="outline-text-headline-58" class="outline-text-2">
+<div id="outline-container-headline-59" class="outline-3">
+<h3 id="headline-59">
+push脚本
+</h3>
+<div id="outline-text-headline-59" class="outline-text-3">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nb">cd</span> <span class="k">$(</span>git rev-parse --show-toplevel<span class="k">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  git add .
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  git commit -m <span class="s2">&#34;test&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  git push -u origin <span class="k">$(</span>git branch <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span><span class="k">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-60" class="outline-3">
+<h3 id="headline-60">
+pull脚本
+</h3>
+<div id="outline-text-headline-60" class="outline-text-3">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nb">cd</span> <span class="k">$(</span>git rev-parse --show-toplevel<span class="k">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  git pull origin <span class="k">$(</span>git branch <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span><span class="k">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
