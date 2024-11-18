@@ -551,6 +551,8 @@
 </li>
 <li><a href="#headline-114">visual studio的dll相关文件拷贝到Qt工程的driver目录技巧</a>
 </li>
+<li><a href="#headline-115">命令行的shell脚本练习：read与case组合</a>
+</li>
 </ul>
 </nav>
         </div>
@@ -3631,6 +3633,40 @@ visual studio的dll相关文件拷贝到Qt工程的driver目录技巧
 </div>
 </div>
 </div>
+</div>
+</div>
+<div id="outline-container-headline-115" class="outline-2">
+<h2 id="headline-115">
+命令行的shell脚本练习：read与case组合
+</h2>
+<div id="outline-text-headline-115" class="outline-text-2">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nb">read</span> key<span class="p">;</span> <span class="k">case</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">key</span><span class="si">}</span><span class="s2">&#34;</span> in *<span class="o">)</span> <span class="nb">echo</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">key</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;;</span><span class="k">esac</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+执行结果：</p>
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">$ read key; case &#34;${key}&#34; in *) echo &#34;${key}&#34;;;esac
+</span></span><span class="line"><span class="cl">test
+</span></span><span class="line"><span class="cl">test</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>运行后输入test并回车，然后将输入结果打印出来。</p>
 </div>
 </div>
 
