@@ -433,6 +433,16 @@
 </li>
 </ul>
 </li>
+<li><a href="#headline-61">在执行 git pull 操作时，本地的某些文件发生了修改，而这些修改未被提交。git pull 操作会试图将远程分支的更改合并到本地分支，但这会导致你本地的修改被覆盖，从而产生了冲突</a>
+<ul>
+<li><a href="#headline-62">1. <strong><strong>提交本地更改</strong></strong></a>
+</li>
+<li><a href="#headline-63">2. <strong><strong>暂存本地更改</strong></strong></a>
+</li>
+<li><a href="#headline-64">3. <strong><strong>丢弃本地更改</strong></strong></a>
+</li>
+</ul>
+</li>
 </ul>
 </nav>
         </div>
@@ -489,7 +499,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 15 分钟
+                    阅读时长: 16 分钟
                 </time>
             </div>
         
@@ -754,7 +764,7 @@ git pull 命令时出现了冲突
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="o">&lt;&lt;&lt;&lt;&lt;&lt;</span>&lt; HEAD
-</span></span><span class="line"><span class="cl">  // 本地仓库中的代码
+</span></span><span class="line"><span class="cl">  // <span class="nv">本地仓库中的代码</span>
 </span></span><span class="line"><span class="cl">  <span class="o">=======</span>
 </span></span><span class="line"><span class="cl">  // 远程仓库中的代码
 </span></span><span class="line"><span class="cl">  &gt;&gt;&gt;&gt;&gt;&gt;&gt; FETCH_HEAD</span></span></code></pre></td></tr></table>
@@ -1253,13 +1263,13 @@ Git 仓库的远程列表
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl">  <span class="err">对于</span> <span class="nv">GitHub</span> <span class="err">上的代码文件</span><span class="o">,</span><span class="err">可以通过以下方式构建它的</span> <span class="nv">raw</span> <span class="err">格式链接</span><span class="o">:</span>
+<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl">  <span class="nv">对于</span> <span class="nv">GitHub</span> <span class="nv">上的代码文件,可以通过以下方式构建它的</span> <span class="nv">raw</span> <span class="nv">格式链接:</span>
 </span></span><span class="line"><span class="cl">  <span class="nv">https://raw.githubusercontent.com/:owner/:repo/:branch/:path/to/file</span>
-</span></span><span class="line"><span class="cl">  <span class="err">其中</span><span class="o">:</span>
-</span></span><span class="line"><span class="cl">  <span class="nf">-</span> <span class="nb">:owner</span> <span class="nf">-</span> <span class="err">仓库所属的用户或组织名</span>
-</span></span><span class="line"><span class="cl">  <span class="nf">-</span> <span class="nb">:repo</span> <span class="nf">-</span> <span class="err">仓库的名称</span>
-</span></span><span class="line"><span class="cl">  <span class="nf">-</span> <span class="nb">:branch</span> <span class="nf">-</span> <span class="err">代码所在的分支</span><span class="o">,</span><span class="err">通常是</span> <span class="nv">master</span>
-</span></span><span class="line"><span class="cl">  <span class="nf">-</span> <span class="nb">:path/to/file</span> <span class="nf">-</span> <span class="err">仓库内文件的路径</span></span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">  <span class="nv">其中:</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">-</span> <span class="nb">:owner</span> <span class="nf">-</span> <span class="nv">仓库所属的用户或组织名</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">-</span> <span class="nb">:repo</span> <span class="nf">-</span> <span class="nv">仓库的名称</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">-</span> <span class="nb">:branch</span> <span class="nf">-</span> <span class="nv">代码所在的分支,通常是</span> <span class="nv">master</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">-</span> <span class="nb">:path/to/file</span> <span class="nf">-</span> <span class="nv">仓库内文件的路径</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
@@ -1955,6 +1965,113 @@ pull脚本
 </div>
 </div>
 </div>
+<div id="outline-container-headline-61" class="outline-2">
+<h2 id="headline-61">
+在执行 git pull 操作时，本地的某些文件发生了修改，而这些修改未被提交。git pull 操作会试图将远程分支的更改合并到本地分支，但这会导致你本地的修改被覆盖，从而产生了冲突
+</h2>
+<div id="outline-text-headline-61" class="outline-text-2">
+<p>
+为了解决这个问题，你可以采取以下几种方法之一：</p>
+<div id="outline-container-headline-62" class="outline-3">
+<h3 id="headline-62">
+1. <strong><strong>提交本地更改</strong></strong>
+</h3>
+<div id="outline-text-headline-62" class="outline-text-3">
+<p>如果你希望保留你本地的修改，最简单的做法是先将本地更改提交，再进行合并操作。步骤如下：</p>
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl"># 查看当前文件修改的状态
+</span></span><span class="line"><span class="cl">git status
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 将文件添加到暂存区
+</span></span><span class="line"><span class="cl">git add filename
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 提交更改
+</span></span><span class="line"><span class="cl">git commit -m &#34;保存本地修改&#34;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 进行拉取操作
+</span></span><span class="line"><span class="cl">git pull</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-63" class="outline-3">
+<h3 id="headline-63">
+2. <strong><strong>暂存本地更改</strong></strong>
+</h3>
+<div id="outline-text-headline-63" class="outline-text-3">
+<p>如果你暂时不想提交本地更改，可以使用 git stash 来存储本地更改，再进行拉取操作。步骤如下：</p>
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl"># 暂存本地更改
+</span></span><span class="line"><span class="cl">git stash
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 拉取远程代码
+</span></span><span class="line"><span class="cl">git pull
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 恢复本地更改
+</span></span><span class="line"><span class="cl">git stash pop</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-64" class="outline-3">
+<h3 id="headline-64">
+3. <strong><strong>丢弃本地更改</strong></strong>
+</h3>
+<div id="outline-text-headline-64" class="outline-text-3">
+<p>如果你确定不需要保留本地的更改，可以直接丢弃这些修改。步骤如下：</p>
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl"># 丢弃本地更改
+</span></span><span class="line"><span class="cl">git checkout -- filename
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 拉取远程代码
+</span></span><span class="line"><span class="cl">git pull</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+选择合适的方式取决于你是否需要保留本地的修改。如果你不确定如何操作，可以先用 git status 查看当前本地的修改情况，然后决定是否提交、暂存或丢弃这些修改。</p>
+</div>
+</div>
+</div>
+</div>
 
 </section>
 
@@ -1963,7 +2080,7 @@ pull脚本
     
     <section class="article-tags">
         
-            <a href="/tags/git/">Git</a>
+            <a href="/tags/git/">git</a>
         
     </section>
 
