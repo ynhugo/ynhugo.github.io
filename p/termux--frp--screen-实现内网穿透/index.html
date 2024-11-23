@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-cn" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='内网穿透方法 服务器布置 一、 下载frp arm64！！ 1 2 # 网络好的话 wget https://github.com/fatedier/frp/releases/download/v0.61.0/frp_0.61.0_linux_arm64.tar.gz 二、复制到服务器中解压 1 2 tar zxvf frp_0.37.0_linux_arm64.tar.gz cd frp_0.37.0_linux_arm64 三、下载 screen 并使用它创建frp服务器'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='内网穿透方法 当本地服务运行时，它会通过端口转发将内容暴露出去，而 frp 的配置文件会将本地端口暴露到外部网络。因此，在修改 frp 配置文件后，相关的本地'>
 <title>termux &#43; frp &#43; screen 实现内网穿透</title>
 
 <link rel='canonical' href='https://ynhugo.github.io/p/termux--frp--screen-%E5%AE%9E%E7%8E%B0%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/'>
 
 <link rel="stylesheet" href="/scss/style.min.2328f6a64e9c190e18c4f69895d0081330e55c8210e9395d11068ea1d881517f.css"><meta property='og:title' content='termux &#43; frp &#43; screen 实现内网穿透'>
-<meta property='og:description' content='内网穿透方法 服务器布置 一、 下载frp arm64！！ 1 2 # 网络好的话 wget https://github.com/fatedier/frp/releases/download/v0.61.0/frp_0.61.0_linux_arm64.tar.gz 二、复制到服务器中解压 1 2 tar zxvf frp_0.37.0_linux_arm64.tar.gz cd frp_0.37.0_linux_arm64 三、下载 screen 并使用它创建frp服务器'>
+<meta property='og:description' content='内网穿透方法 当本地服务运行时，它会通过端口转发将内容暴露出去，而 frp 的配置文件会将本地端口暴露到外部网络。因此，在修改 frp 配置文件后，相关的本地'>
 <meta property='og:url' content='https://ynhugo.github.io/p/termux--frp--screen-%E5%AE%9E%E7%8E%B0%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/'>
 <meta property='og:site_name' content='ynblog'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='termux' /><meta property='article:tag' content='frp' /><meta property='article:tag' content='内网穿透' /><meta property='article:published_time' content='2024-11-17T18:57:10&#43;08:00'/><meta property='article:modified_time' content='2024-11-17T18:57:10&#43;08:00'/>
 <meta name="twitter:title" content="termux &#43; frp &#43; screen 实现内网穿透">
-<meta name="twitter:description" content="内网穿透方法 服务器布置 一、 下载frp arm64！！ 1 2 # 网络好的话 wget https://github.com/fatedier/frp/releases/download/v0.61.0/frp_0.61.0_linux_arm64.tar.gz 二、复制到服务器中解压 1 2 tar zxvf frp_0.37.0_linux_arm64.tar.gz cd frp_0.37.0_linux_arm64 三、下载 screen 并使用它创建frp服务器">
+<meta name="twitter:description" content="内网穿透方法 当本地服务运行时，它会通过端口转发将内容暴露出去，而 frp 的配置文件会将本地端口暴露到外部网络。因此，在修改 frp 配置文件后，相关的本地">
     <link rel="shortcut icon" href="/img/favicon.ico" />
 
     </head>
@@ -281,21 +281,45 @@
 <ul>
 <li><a href="#headline-1">内网穿透方法</a>
 <ul>
-<li><a href="#headline-2">服务器布置</a>
+<li><a href="#headline-2">ssh连接-termux</a>
 <ul>
-<li><a href="#headline-3">frps.ini</a>
+<li><a href="#headline-3">服务器布置</a>
+<ul>
+<li><a href="#headline-4">frps.ini</a>
 </li>
 </ul>
 </li>
-<li><a href="#headline-4">客户端布置</a>
+<li><a href="#headline-5">客户端布置</a>
 <ul>
-<li><a href="#headline-5">fprc.ini</a>
+<li><a href="#headline-6">fprc.ini</a>
 </li>
 </ul>
 </li>
-<li><a href="#headline-6">测试frp内网穿透</a>
+<li><a href="#headline-7">测试frp内网穿透</a>
 </li>
-<li><a href="#headline-7">参考链接</a>
+<li><a href="#headline-8">参考链接</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-9">web访问-nginx</a>
+<ul>
+<li><a href="#headline-10">服务器布置</a>
+<ul>
+<li><a href="#headline-11">frps.ini</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-12">客户端布置</a>
+<ul>
+<li><a href="#headline-13">fprc.ini</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-14">测试frp内网穿透</a>
+</li>
+<li><a href="#headline-15">参考链接</a>
+</li>
+</ul>
 </li>
 </ul>
 </li>
@@ -355,7 +379,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 1 分钟
+                    阅读时长: 3 分钟
                 </time>
             </div>
         
@@ -376,11 +400,18 @@
 内网穿透方法
 </h2>
 <div id="outline-text-headline-1" class="outline-text-2">
+<p>
+当本地服务运行时，它会通过端口转发将内容暴露出去，而 frp 的配置文件会将本地端口暴露到外部网络。因此，在修改 frp 配置文件后，相关的本地服务也需要重新启动。例如，如果配置的是 SSH 穿透，在修改 frp 配置后，本地需要重新启动 sshd 服务。类似地，对于 nginx 服务，修改 frp 配置后，也需要执行 nginx -s reload 来重新加载配置。</p>
 <div id="outline-container-headline-2" class="outline-3">
 <h3 id="headline-2">
-服务器布置
+ssh连接-termux
 </h3>
 <div id="outline-text-headline-2" class="outline-text-3">
+<div id="outline-container-headline-3" class="outline-4">
+<h4 id="headline-3">
+服务器布置
+</h4>
+<div id="outline-text-headline-3" class="outline-text-4">
 <p>
 一、 下载frp arm64！！</p>
 <div class="src src-text">
@@ -429,11 +460,11 @@
 </div>
 </div>
 </div>
-<div id="outline-container-headline-3" class="outline-4">
-<h4 id="headline-3">
+<div id="outline-container-headline-4" class="outline-5">
+<h5 id="headline-4">
 frps.ini
-</h4>
-<div id="outline-text-headline-3" class="outline-text-4">
+</h5>
+<div id="outline-text-headline-4" class="outline-text-5">
 <div class="src src-text">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -450,11 +481,11 @@ frps.ini
 </div>
 </div>
 </div>
-<div id="outline-container-headline-4" class="outline-3">
-<h3 id="headline-4">
+<div id="outline-container-headline-5" class="outline-4">
+<h4 id="headline-5">
 客户端布置
-</h3>
-<div id="outline-text-headline-4" class="outline-text-3">
+</h4>
+<div id="outline-text-headline-5" class="outline-text-4">
 <p>
 frps与frpc的运行都在同一个设备上的termux中，通过screen创建多个实例来运行frps与fprc</p>
 <div class="src src-text">
@@ -475,11 +506,11 @@ frps与frpc的运行都在同一个设备上的termux中，通过screen创建多
 </div>
 </div>
 </div>
-<div id="outline-container-headline-5" class="outline-4">
-<h4 id="headline-5">
+<div id="outline-container-headline-6" class="outline-5">
+<h5 id="headline-6">
 fprc.ini
-</h4>
-<div id="outline-text-headline-5" class="outline-text-4">
+</h5>
+<div id="outline-text-headline-6" class="outline-text-5">
 <div class="src src-text">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -510,11 +541,11 @@ fprc.ini
 </div>
 </div>
 </div>
-<div id="outline-container-headline-6" class="outline-3">
-<h3 id="headline-6">
+<div id="outline-container-headline-7" class="outline-4">
+<h4 id="headline-7">
 测试frp内网穿透
-</h3>
-<div id="outline-text-headline-6" class="outline-text-3">
+</h4>
+<div id="outline-text-headline-7" class="outline-text-4">
 <div class="src src-text">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -527,13 +558,198 @@ fprc.ini
 </div>
 </div>
 </div>
-<div id="outline-container-headline-7" class="outline-3">
-<h3 id="headline-7">
+<div id="outline-container-headline-8" class="outline-4">
+<h4 id="headline-8">
 参考链接
-</h3>
-<div id="outline-text-headline-7" class="outline-text-3">
+</h4>
+<div id="outline-text-headline-8" class="outline-text-4">
 <p>
 <a href="https://blog.csdn.net/Arise_/article/details/119057879">【简单易学】frp + tmux 实现内网穿透</a></p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-9" class="outline-3">
+<h3 id="headline-9">
+web访问-nginx
+</h3>
+<div id="outline-text-headline-9" class="outline-text-3">
+<p>
+在配置 frp 与 nginx 时，选择使用 TCP 协议而不是 HTTP 协议，是因为 HTTP 协议涉及的配置项较多且相对复杂，尤其是大多数示例都基于域名来进行配置。尽管我拥有域名，但考虑到不想花费过多时间在复杂的配置上，同时也只是想进行简单的验证，因此我选择了使用 TCP 协议。</p>
+<div id="outline-container-headline-10" class="outline-4">
+<h4 id="headline-10">
+服务器布置
+</h4>
+<div id="outline-text-headline-10" class="outline-text-4">
+<p>
+一、 下载frp arm64！！</p>
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl"># 网络好的话
+</span></span><span class="line"><span class="cl">wget https://github.com/fatedier/frp/releases/download/v0.61.0/frp_0.61.0_linux_arm64.tar.gz</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+二、复制到服务器中解压</p>
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">tar zxvf frp_0.37.0_linux_arm64.tar.gz
+</span></span><span class="line"><span class="cl">cd frp_0.37.0_linux_arm64</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+三、下载 screen 并使用它创建frp服务器端</p>
+<p>
+可以根据需要修改端口，我这里选择使用默认的，后期根据需要再去修改</p>
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">pkg install -y screen
+</span></span><span class="line"><span class="cl">screen -S frps
+</span></span><span class="line"><span class="cl">./frps -c frps.ini
+</span></span><span class="line"><span class="cl"># 退出该screen：Ctrl + a，Ctrl + d</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-11" class="outline-5">
+<h5 id="headline-11">
+frps.ini
+</h5>
+<div id="outline-text-headline-11" class="outline-text-5">
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">[common]
+</span></span><span class="line"><span class="cl">bind_port = 7000</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-12" class="outline-4">
+<h4 id="headline-12">
+客户端布置
+</h4>
+<div id="outline-text-headline-12" class="outline-text-4">
+<p>
+frps与frpc的运行都在同一个设备上的termux中，通过screen创建多个实例来运行frps与fprc</p>
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">screen -S frpc
+</span></span><span class="line"><span class="cl">vim frpc.ini	
+</span></span><span class="line"><span class="cl">./frpc -c frpc.ini
+</span></span><span class="line"><span class="cl"># 退出该screen：Ctrl + a，Ctrl + d
+</span></span><span class="line"><span class="cl">sshd	# 退出screen实例后运行 sshd 命令，使 9000 端口配置生效</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-13" class="outline-5">
+<h5 id="headline-13">
+fprc.ini
+</h5>
+<div id="outline-text-headline-13" class="outline-text-5">
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">[common]
+</span></span><span class="line"><span class="cl">server_addr = x.x.x.x
+</span></span><span class="line"><span class="cl">server_port = 7000
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">[ssh]
+</span></span><span class="line"><span class="cl">type = tcp
+</span></span><span class="line"><span class="cl">local_ip = x.x.x.x
+</span></span><span class="line"><span class="cl">local_port = 8022
+</span></span><span class="line"><span class="cl">remote_port = 6000
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">[nginx]
+</span></span><span class="line"><span class="cl">type = tcp              
+</span></span><span class="line"><span class="cl">local_ip = x.x.x.x
+</span></span><span class="line"><span class="cl">local_port = 8080       
+</span></span><span class="line"><span class="cl">remote_port = 9000</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-14" class="outline-4">
+<h4 id="headline-14">
+测试frp内网穿透
+</h4>
+<div id="outline-text-headline-14" class="outline-text-4">
+<p>
+浏览器访问</p>
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">x.x.x.x:9000</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-15" class="outline-4">
+<h4 id="headline-15">
+参考链接
+</h4>
+<div id="outline-text-headline-15" class="outline-text-4">
+<p>
+<a href="https://blog.csdn.net/zzj19941115/article/details/121060935">安卓手机使用Termux搭建web服务器（含frp内网穿透、wake on lan远程唤醒）</a></p>
+</div>
+</div>
 </div>
 </div>
 </div>
