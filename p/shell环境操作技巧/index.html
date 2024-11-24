@@ -553,6 +553,18 @@
 </li>
 <li><a href="#headline-115">命令行的shell脚本练习：read与case组合</a>
 </li>
+<li><a href="#headline-116">shell脚本将case语句放在for循环中 - ChatGPT</a>
+<ul>
+<li><a href="#headline-117">示例：使用 case 语句和 for 循环</a>
+</li>
+<li><a href="#headline-118">说明：</a>
+</li>
+<li><a href="#headline-119">运行结果：</a>
+</li>
+<li><a href="#headline-120">关键点：</a>
+</li>
+</ul>
+</li>
 </ul>
 </nav>
         </div>
@@ -596,7 +608,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 30 分钟
+                    阅读时长: 31 分钟
                 </time>
             </div>
         
@@ -3667,6 +3679,141 @@ visual studio的dll相关文件拷贝到Qt工程的driver目录技巧
 </div>
 </div>
 <p>运行后输入test并回车，然后将输入结果打印出来。</p>
+</div>
+</div>
+<div id="outline-container-headline-116" class="outline-2">
+<h2 id="headline-116">
+shell脚本将case语句放在for循环中 - ChatGPT
+</h2>
+<div id="outline-text-headline-116" class="outline-text-2">
+<p>
+在 Shell 脚本中，可以将 case 语句放入 for 循环中，以便对每个循环的项进行不同的处理。case 语句用于匹配某个条件，并根据条件执行相应的操作，结合 for 循环可以对多个元素做类似的处理。</p>
+<p>
+以下是一个基本的例子，展示如何在 for 循环中使用 case 语句：</p>
+<div id="outline-container-headline-117" class="outline-3">
+<h3 id="headline-117">
+示例：使用 case 语句和 for 循环
+</h3>
+<div id="outline-text-headline-117" class="outline-text-3">
+<p>
+假设你有一组文件名，你想根据文件扩展名进行不同的处理，可以在 for 循环中使用 case 语句来分类：</p>
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">#!/bin/bash
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 假设有一组文件名
+</span></span><span class="line"><span class="cl">files=(&#34;file1.txt&#34; &#34;file2.jpg&#34; &#34;file3.png&#34; &#34;file4.txt&#34; &#34;file5.doc&#34;)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 遍历文件名列表
+</span></span><span class="line"><span class="cl">for file in &#34;${files[@]}&#34;; do
+</span></span><span class="line"><span class="cl">  # 提取文件的扩展名
+</span></span><span class="line"><span class="cl">  extension=&#34;${file##*.}&#34;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  # 使用 case 语句处理不同的扩展名
+</span></span><span class="line"><span class="cl">  case &#34;$extension&#34; in
+</span></span><span class="line"><span class="cl">    txt)
+</span></span><span class="line"><span class="cl">      echo &#34;$file 是一个文本文件&#34;
+</span></span><span class="line"><span class="cl">      ;;
+</span></span><span class="line"><span class="cl">    jpg|png)
+</span></span><span class="line"><span class="cl">      echo &#34;$file 是一个图片文件&#34;
+</span></span><span class="line"><span class="cl">      ;;
+</span></span><span class="line"><span class="cl">    doc)
+</span></span><span class="line"><span class="cl">      echo &#34;$file 是一个文档文件&#34;
+</span></span><span class="line"><span class="cl">      ;;
+</span></span><span class="line"><span class="cl">    *)
+</span></span><span class="line"><span class="cl">      echo &#34;$file 是其他类型的文件&#34;
+</span></span><span class="line"><span class="cl">      ;;
+</span></span><span class="line"><span class="cl">  esac
+</span></span><span class="line"><span class="cl">done</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-118" class="outline-3">
+<h3 id="headline-118">
+说明：
+</h3>
+<div id="outline-text-headline-118" class="outline-text-3">
+<ul>
+<li>files=(&#34;file1.txt&#34; &#34;file2.jpg&#34; &#34;file3.png&#34; &#34;file4.txt&#34; &#34;file5.doc&#34;)：这是一个包含文件名的数组。</li>
+<li>for file in &#34;${files[@]}&#34;：遍历数组中的每个文件名。</li>
+<li>extension=&#34;${file##*.}&#34;：通过 Shell 参数扩展提取文件的扩展名（即最后一个点 . 后面的部分）。</li>
+<li>case &#34;$extension&#34; in … esac：根据文件扩展名做不同的处理。| 用于在 case 语句中匹配多个选项（例如 jpg|png）。</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-headline-119" class="outline-3">
+<h3 id="headline-119">
+运行结果：
+</h3>
+<div id="outline-text-headline-119" class="outline-text-3">
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">file1.txt 是一个文本文件
+</span></span><span class="line"><span class="cl">file2.jpg 是一个图片文件
+</span></span><span class="line"><span class="cl">file3.png 是一个图片文件
+</span></span><span class="line"><span class="cl">file4.txt 是一个文本文件
+</span></span><span class="line"><span class="cl">file5.doc 是一个文档文件</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-120" class="outline-3">
+<h3 id="headline-120">
+关键点：
+</h3>
+<div id="outline-text-headline-120" class="outline-text-3">
+<ol>
+<li>for 循环遍历一个列表或数组，并且对每个元素执行循环体中的操作。</li>
+<li>case 语句用于根据不同条件执行不同的代码块。在这个例子中，判断的是文件的扩展名。</li>
+<li>
+<ul>
+<li>是 case 语句中的默认匹配模式，表示所有未匹配的情况。</li>
+</ul>
+</li>
+</ol>
+<p>这个示例展示了如何结合 for 循环和 case 语句来处理一系列数据，并根据不同的条件执行相应的操作。在 Shell 脚本中，这种结构非常常见且有效，尤其适用于分类处理和不同条件下的动作。</p>
+</div>
+</div>
 </div>
 </div>
 
