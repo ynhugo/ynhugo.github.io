@@ -285,6 +285,12 @@
 </li>
 <li><a href="#headline-3">配置文件代码</a>
 </li>
+<li><a href="#headline-4">修改Tmux的Ctrl+B前缀快捷键</a>
+<ul>
+<li><a href="#headline-5">参考链接</a>
+</li>
+</ul>
+</li>
 </ul>
 </nav>
         </div>
@@ -423,6 +429,103 @@
 </span></span><span class="line"><span class="cl">  <span class="c1"># Easy config reload</span>
 </span></span><span class="line"><span class="cl">  bind-key r source-file ~/.tmux.conf <span class="se">\;</span> display-message <span class="s2">&#34;tmux.conf reloaded&#34;</span></span></span></code></pre></td></tr></table>
 </div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-4" class="outline-3">
+<h3 id="headline-4">
+修改Tmux的Ctrl+B前缀快捷键
+</h3>
+<div id="outline-text-headline-4" class="outline-text-3">
+<p>
+在电脑上ctrl+b是往前移动一个字符</p>
+<p>
+1.查看prefix现有绑定键：</p>
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">tmux show-options -g | grep prefix</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+2.要在tmux内置命令中修改及时生效，可在终端中输入以下命令：（只对当前这一次登录有效，关机后失效）其中第一个-g设置全局生效快捷键。其实一般第一个设置好后新的快捷键就可以生效，如果需要再使用第二个和第三个命令。</p>
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">tmux set -g prefix C-x
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">tmux unbind C-b 
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">tmux bind C-x send-prefix</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+3.要永久生效，则在创建或修改系统级的/etc/tmux.conf或用户级的~/.tmux.conf
+首先打开文件：</p>
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">vim ~/.tmux.conf</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+然后在文件中输入三个命令</p>
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">set -g prefix C-x
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">unbind C-b
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">bind C-x send-prefix</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+然后让他生效：</p>
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">source ~/.tmux.conf</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+或者重启也可以让他生效</p>
+<div id="outline-container-headline-5" class="outline-4">
+<h4 id="headline-5">
+参考链接
+</h4>
+<div id="outline-text-headline-5" class="outline-text-4">
+<p>
+<a href="https://blog.csdn.net/lwgkzl/article/details/100799042">修改Tmux的Ctrl+B前缀快捷键</a></p>
 </div>
 </div>
 </div>
