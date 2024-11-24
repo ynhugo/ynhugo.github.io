@@ -565,6 +565,16 @@
 </li>
 </ul>
 </li>
+<li><a href="#headline-121">case语句+shift偏移参数</a>
+<ul>
+<li><a href="#headline-122">脚本代码</a>
+<ul>
+<li><a href="#headline-123">运行示例</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </nav>
         </div>
@@ -608,7 +618,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 31 分钟
+                    阅读时长: 32 分钟
                 </time>
             </div>
         
@@ -3812,6 +3822,137 @@ shell脚本将case语句放在for循环中 - ChatGPT
 </li>
 </ol>
 <p>这个示例展示了如何结合 for 循环和 case 语句来处理一系列数据，并根据不同的条件执行相应的操作。在 Shell 脚本中，这种结构非常常见且有效，尤其适用于分类处理和不同条件下的动作。</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-121" class="outline-2">
+<h2 id="headline-121">
+case语句+shift偏移参数
+</h2>
+<div id="outline-text-headline-121" class="outline-text-2">
+<div id="outline-container-headline-122" class="outline-3">
+<h3 id="headline-122">
+脚本代码
+</h3>
+<div id="outline-text-headline-122" class="outline-text-3">
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">case $1 in
+</span></span><span class="line"><span class="cl">    param1)
+</span></span><span class="line"><span class="cl">	shift  # 移除第一个参数，$1 变成了原来的 $2
+</span></span><span class="line"><span class="cl">        for i in &#34;$@&#34;; do  # 循环处理剩余参数
+</span></span><span class="line"><span class="cl">            case $i in
+</span></span><span class="line"><span class="cl">                2)
+</span></span><span class="line"><span class="cl">                    echo &#34;2&#34;
+</span></span><span class="line"><span class="cl">                    ;;	
+</span></span><span class="line"><span class="cl">                3)
+</span></span><span class="line"><span class="cl">                    echo &#34;3&#34;
+</span></span><span class="line"><span class="cl">                    ;;
+</span></span><span class="line"><span class="cl">                *)  # 默认处理未匹配的情况
+</span></span><span class="line"><span class="cl">                    echo &#34;Unrecognized input: $i&#34;
+</span></span><span class="line"><span class="cl">                    ;;
+</span></span><span class="line"><span class="cl">            esac
+</span></span><span class="line"><span class="cl">        done    
+</span></span><span class="line"><span class="cl">        ;;
+</span></span><span class="line"><span class="cl">    param2)
+</span></span><span class="line"><span class="cl">	shift  # 移除第一个参数，$1 变成了原来的 $2
+</span></span><span class="line"><span class="cl">        for i in &#34;$@&#34;; do  # 循环处理剩余参数
+</span></span><span class="line"><span class="cl">            case $i in
+</span></span><span class="line"><span class="cl">                2)
+</span></span><span class="line"><span class="cl">                    echo &#34;3&#34;
+</span></span><span class="line"><span class="cl">                    ;;	
+</span></span><span class="line"><span class="cl">                3)
+</span></span><span class="line"><span class="cl">                    echo &#34;4&#34;
+</span></span><span class="line"><span class="cl">                    ;;
+</span></span><span class="line"><span class="cl">                *)  # 默认处理未匹配的情况
+</span></span><span class="line"><span class="cl">                    echo &#34;Unrecognized input: $i&#34;
+</span></span><span class="line"><span class="cl">                    ;;
+</span></span><span class="line"><span class="cl">            esac
+</span></span><span class="line"><span class="cl">        done    
+</span></span><span class="line"><span class="cl">        ;;
+</span></span><span class="line"><span class="cl">    *)  # 处理未匹配的主参数
+</span></span><span class="line"><span class="cl">        echo &#34;Invalid command: $1&#34;
+</span></span><span class="line"><span class="cl">        ;;
+</span></span><span class="line"><span class="cl">esac</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-123" class="outline-4">
+<h4 id="headline-123">
+运行示例
+</h4>
+<div id="outline-text-headline-123" class="outline-text-4">
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">$ ./ts2.sh param1 2 3
+</span></span><span class="line"><span class="cl">2
+</span></span><span class="line"><span class="cl">3</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">$ ./ts2.sh param2 2 3
+</span></span><span class="line"><span class="cl">3
+</span></span><span class="line"><span class="cl">4</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
