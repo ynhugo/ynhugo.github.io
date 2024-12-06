@@ -491,10 +491,20 @@ default: 是这个配置的名称
 </h4>
 <div id="outline-text-headline-8" class="outline-text-4">
 <p>我们在 ~/.emacs.d/.emacs-profiles.el 文件里添加 scratch 环境的配置：</p>
-<p>
-((&#34;default&#34; . ((user-emacs-directory . &#34;~/.emacs.d/.emacs.d.default&#34;)))
- (&#34;scratch&#34; . ((user-emacs-directory . &#34;~/.emacs.d/.emacs.d.scratch&#34;)))
- )</p>
+<div class="src src-emacs-lisp">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl">  <span class="p">((</span><span class="s">&#34;default&#34;</span> <span class="o">.</span> <span class="p">((</span><span class="nv">user-emacs-directory</span> <span class="o">.</span> <span class="s">&#34;~/.emacs.d/.emacs.d.default&#34;</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">   <span class="p">(</span><span class="s">&#34;scratch&#34;</span> <span class="o">.</span> <span class="p">((</span><span class="nv">user-emacs-directory</span> <span class="o">.</span> <span class="s">&#34;~/.emacs.d/.emacs.d.scratch&#34;</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">   <span class="p">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div id="outline-container-headline-9" class="outline-4">
@@ -503,21 +513,43 @@ default: 是这个配置的名称
 </h4>
 <div id="outline-text-headline-9" class="outline-text-4">
 <p>我们在 ~/.emacs.d/.emacs.d.scratch 文件夹下，具体配置 scratch 这个环境，这个过程跟你单独配置一个全新的 Emacs 类似。拿我的目录为例，结构大概如下：</p>
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">/Users/test/.emacs.d/.emacs.d.scratch
+</span></span><span class="line"><span class="cl">├── README.org
+</span></span><span class="line"><span class="cl">├── config-mirror
+</span></span><span class="line"><span class="cl">├── early-init.el
+</span></span><span class="line"><span class="cl">├── elpa
+</span></span><span class="line"><span class="cl">├── emacs-config.org
+</span></span><span class="line"><span class="cl">├── etc
+</span></span><span class="line"><span class="cl">├── init.el
+</span></span><span class="line"><span class="cl">├── lisp
+</span></span><span class="line"><span class="cl">├── quelpa
+</span></span><span class="line"><span class="cl">├── reveal.js
+</span></span><span class="line"><span class="cl">└── var
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">8 directories, 4 files</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
 <p>
-<em>Users/test</em>.emacs.d/.emacs.d.scratch
-├── README.org
-├── config-mirror
-├── early-init.el
-├── elpa
-├── emacs-config.org
-├── etc
-├── init.el
-├── lisp
-├── quelpa
-├── reveal.js
-└── var</p>
-<p>
-8 directories, 4 files
 你可以在这个目录下写 scratch 这个环境的配置，它不会影响你的 default 以及其他的环境。</p>
 </div>
 </div>
@@ -527,8 +559,17 @@ default: 是这个配置的名称
 </h4>
 <div id="outline-text-headline-10" class="outline-text-4">
 <p>我们通过下面的命令来启动 scratch 环境的 Emacs：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">emacs --with-profile scratch</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
 <p>
-emacs –with-profile scratch
 然后 Emacs 会以 ~/.emacs.d/.emacs.d.scratch 目录下的配置来启动 Emacs，安装相应的插件。你相当于拥有了一个区别于 default 的一个单独的环境。</p>
 </div>
 </div>
