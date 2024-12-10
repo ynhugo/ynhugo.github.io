@@ -431,15 +431,19 @@
 </li>
 <li><a href="#headline-60">pull脚本</a>
 </li>
+<li><a href="#headline-61">强制push脚本</a>
+</li>
+<li><a href="#headline-62">强制pull脚本</a>
+</li>
 </ul>
 </li>
-<li><a href="#headline-61">在执行 git pull 操作时，本地的某些文件发生了修改，而这些修改未被提交。git pull 操作会试图将远程分支的更改合并到本地分支，但这会导致你本地的修改被覆盖，从而产生了冲突</a>
+<li><a href="#headline-63">在执行 git pull 操作时，本地的某些文件发生了修改，而这些修改未被提交。git pull 操作会试图将远程分支的更改合并到本地分支，但这会导致你本地的修改被覆盖，从而产生了冲突</a>
 <ul>
-<li><a href="#headline-62">1. <strong><strong>提交本地更改</strong></strong></a>
+<li><a href="#headline-64">1. <strong><strong>提交本地更改</strong></strong></a>
 </li>
-<li><a href="#headline-63">2. <strong><strong>暂存本地更改</strong></strong></a>
+<li><a href="#headline-65">2. <strong><strong>暂存本地更改</strong></strong></a>
 </li>
-<li><a href="#headline-64">3. <strong><strong>丢弃本地更改</strong></strong></a>
+<li><a href="#headline-66">3. <strong><strong>丢弃本地更改</strong></strong></a>
 </li>
 </ul>
 </li>
@@ -1963,20 +1967,78 @@ pull脚本
 </div>
 </div>
 </div>
+<div id="outline-container-headline-61" class="outline-3">
+<h3 id="headline-61">
+强制push脚本
+</h3>
+<div id="outline-text-headline-61" class="outline-text-3">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nb">cd</span> <span class="k">$(</span>git rev-parse --show-toplevel<span class="k">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  git add .
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  git commit -m <span class="s2">&#34;test&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  git push -f origin <span class="k">$(</span>git branch <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span><span class="k">)</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
-<div id="outline-container-headline-61" class="outline-2">
-<h2 id="headline-61">
-在执行 git pull 操作时，本地的某些文件发生了修改，而这些修改未被提交。git pull 操作会试图将远程分支的更改合并到本地分支，但这会导致你本地的修改被覆盖，从而产生了冲突
-</h2>
-<div id="outline-text-headline-61" class="outline-text-2">
-<p>
-为了解决这个问题，你可以采取以下几种方法之一：</p>
+</div>
+</div>
+</div>
 <div id="outline-container-headline-62" class="outline-3">
 <h3 id="headline-62">
-1. <strong><strong>提交本地更改</strong></strong>
+强制pull脚本
 </h3>
 <div id="outline-text-headline-62" class="outline-text-3">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nb">cd</span> <span class="k">$(</span>git rev-parse --show-toplevel<span class="k">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  git fetch origin
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  git reset --hard origin/<span class="k">$(</span>git branch <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  git pull origin <span class="k">$(</span>git branch <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span><span class="k">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-63" class="outline-2">
+<h2 id="headline-63">
+在执行 git pull 操作时，本地的某些文件发生了修改，而这些修改未被提交。git pull 操作会试图将远程分支的更改合并到本地分支，但这会导致你本地的修改被覆盖，从而产生了冲突
+</h2>
+<div id="outline-text-headline-63" class="outline-text-2">
+<p>
+为了解决这个问题，你可以采取以下几种方法之一：</p>
+<div id="outline-container-headline-64" class="outline-3">
+<h3 id="headline-64">
+1. <strong><strong>提交本地更改</strong></strong>
+</h3>
+<div id="outline-text-headline-64" class="outline-text-3">
 <p>如果你希望保留你本地的修改，最简单的做法是先将本地更改提交，再进行合并操作。步骤如下：</p>
 <div class="src src-text">
 <div class="highlight"><div class="chroma">
@@ -2010,11 +2072,11 @@ pull脚本
 </div>
 </div>
 </div>
-<div id="outline-container-headline-63" class="outline-3">
-<h3 id="headline-63">
+<div id="outline-container-headline-65" class="outline-3">
+<h3 id="headline-65">
 2. <strong><strong>暂存本地更改</strong></strong>
 </h3>
-<div id="outline-text-headline-63" class="outline-text-3">
+<div id="outline-text-headline-65" class="outline-text-3">
 <p>如果你暂时不想提交本地更改，可以使用 git stash 来存储本地更改，再进行拉取操作。步骤如下：</p>
 <div class="src src-text">
 <div class="highlight"><div class="chroma">
@@ -2042,11 +2104,11 @@ pull脚本
 </div>
 </div>
 </div>
-<div id="outline-container-headline-64" class="outline-3">
-<h3 id="headline-64">
+<div id="outline-container-headline-66" class="outline-3">
+<h3 id="headline-66">
 3. <strong><strong>丢弃本地更改</strong></strong>
 </h3>
-<div id="outline-text-headline-64" class="outline-text-3">
+<div id="outline-text-headline-66" class="outline-text-3">
 <p>如果你确定不需要保留本地的更改，可以直接丢弃这些修改。步骤如下：</p>
 <div class="src src-text">
 <div class="highlight"><div class="chroma">
