@@ -313,6 +313,42 @@
 </li>
 <li><a href="#headline-12">参考链接</a>
 </li>
+<li><a href="#headline-13">如何用bash脚本创建screen并向其发送命令？</a>
+<ul>
+<li><a href="#headline-14">解析命令-ChatGPT</a>
+<ul>
+<li><a href="#headline-15">1. screen -dmS test</a>
+<ul>
+<li><a href="#headline-16">各部分解析：</a>
+</li>
+<li><a href="#headline-17">作用：</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-18">2. screen -S test -X stuff &#34;ls -a\n&#34;</a>
+<ul>
+<li><a href="#headline-19">各部分解析：</a>
+</li>
+<li><a href="#headline-20">作用：</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-21">3. screen -S test -p 0 -X stuff &#34;ls -a\n&#34;</a>
+<ul>
+<li><a href="#headline-22">各部分解析：</a>
+</li>
+<li><a href="#headline-23">作用：</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-24">总结</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-25">参考链接</a>
+</li>
+</ul>
+</li>
 </ul>
 </nav>
         </div>
@@ -369,7 +405,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 5 分钟
+                    阅读时长: 7 分钟
                 </time>
             </div>
         
@@ -799,6 +835,160 @@ issues
 <a href="https://blog.csdn.net/huibiannihao/article/details/105405245">linux下screen的新建、删除、退出等常见指令</a></p>
 <p>
 <a href="https://blog.csdn.net/weixin_39925939/article/details/121033427">远程神器 screen命令的保姆级详解教程+举例</a></p>
+</div>
+</div>
+<div id="outline-container-headline-13" class="outline-2">
+<h2 id="headline-13">
+如何用bash脚本创建screen并向其发送命令？
+</h2>
+<div id="outline-text-headline-13" class="outline-text-2">
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">screen -dmS test</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">screen -dmS test 
+</span></span><span class="line"><span class="cl">screen -S test -X stuff &#34;ls -a\n&#34; 
+</span></span><span class="line"><span class="cl">或 
+</span></span><span class="line"><span class="cl">screen -S test -p 0 -X stuff &#34;ls -a\n&#34;</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-14" class="outline-3">
+<h3 id="headline-14">
+解析命令-ChatGPT
+</h3>
+<div id="outline-text-headline-14" class="outline-text-3">
+<p>
+这些命令是使用 screen 进行会话管理和自动化输入的示例。我们来逐个解析：</p>
+<div id="outline-container-headline-15" class="outline-4">
+<h4 id="headline-15">
+1. screen -dmS test
+</h4>
+<div id="outline-text-headline-15" class="outline-text-4">
+<div id="outline-container-headline-16" class="outline-5">
+<h5 id="headline-16">
+各部分解析：
+</h5>
+<div id="outline-text-headline-16" class="outline-text-5">
+<ul>
+<li>screen：启动 screen 会话，screen 是一个终端多路复用器，允许在一个终端窗口内运行多个虚拟终端。</li>
+<li>-d：这个选项告诉 screen 在后台启动会话。也就是说，screen 会话启动后不会占用当前的终端窗口，而是将其放在后台运行。</li>
+<li>-m：强制启动一个新的会话，即使没有其他正在运行的 screen 会话。</li>
+<li>-S test：指定会话的名称为 test。-S 选项后面的 test 是会话的标识符，通过这个名字，你可以后续对该会话进行操作（例如发送命令、分离等）。</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-headline-17" class="outline-5">
+<h5 id="headline-17">
+作用：
+</h5>
+<div id="outline-text-headline-17" class="outline-text-5">
+<p>这个命令的作用是：启动一个名为 test 的 screen 会话，并将其放在后台运行。此时会话没有关联到任何窗口（终端）。它是一个“分离模式”启动的 screen 会话。</p>
+<p>
+—</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-18" class="outline-4">
+<h4 id="headline-18">
+2. screen -S test -X stuff &#34;ls -a\n&#34;
+</h4>
+<div id="outline-text-headline-18" class="outline-text-4">
+<div id="outline-container-headline-19" class="outline-5">
+<h5 id="headline-19">
+各部分解析：
+</h5>
+<div id="outline-text-headline-19" class="outline-text-5">
+<ul>
+<li>screen：再次调用 screen，用于对已存在的 screen 会话进行操作。</li>
+<li>-S test：指定要操作的会话名称为 test。</li>
+<li>-X：执行对 screen 会话的命令。-X 选项让我们向 screen 会话发送命令。</li>
+<li>stuff &#34;ls -a\n&#34;：stuff 命令将 ls -a（列出当前目录的所有文件，包括隐藏文件）发送到指定会话的当前窗口中，并模拟按下回车键（\n）。这等同于在该会话的终端中执行了 ls -a 命令。</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-headline-20" class="outline-5">
+<h5 id="headline-20">
+作用：
+</h5>
+<div id="outline-text-headline-20" class="outline-text-5">
+<p>该命令将 ls -a 这个命令发送到名为 test 的 screen 会话中的当前窗口，模拟在该窗口执行 ls -a。由于是后台操作，所以并不会直接在终端显示输出，命令的结果会被发送到该 screen 会话的输出流。</p>
+<p>
+—</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-21" class="outline-4">
+<h4 id="headline-21">
+3. screen -S test -p 0 -X stuff &#34;ls -a\n&#34;
+</h4>
+<div id="outline-text-headline-21" class="outline-text-4">
+<div id="outline-container-headline-22" class="outline-5">
+<h5 id="headline-22">
+各部分解析：
+</h5>
+<div id="outline-text-headline-22" class="outline-text-5">
+<ul>
+<li>screen：同样，调用 screen 来操作会话。</li>
+<li>-S test：指定会话名称为 test。</li>
+<li>-p 0：指定窗口编号为 0，即第一个窗口。screen 会话可以包含多个窗口，这个命令告诉 screen 要向编号为 0 的窗口发送命令。</li>
+<li>-X stuff &#34;ls -a\n&#34;：将 ls -a 发送到指定窗口，并模拟按下回车键。</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-headline-23" class="outline-5">
+<h5 id="headline-23">
+作用：
+</h5>
+<div id="outline-text-headline-23" class="outline-text-5">
+<p>该命令将 ls -a 命令发送到名为 test 的 screen 会话中的第一个窗口（编号为 0），并模拟按下回车键。这意味着，如果会话已经包含多个窗口，这个命令只会作用于第一个窗口，而不会影响其他窗口。</p>
+<p>
+—</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-24" class="outline-4">
+<h4 id="headline-24">
+总结
+</h4>
+<div id="outline-text-headline-24" class="outline-text-4">
+<ol>
+<li>screen -dmS test：在后台启动一个新的 screen 会话，命名为 test。</li>
+<li>screen -S test -X stuff &#34;ls -a\n&#34;：向名为 test 的 screen 会话的当前窗口发送 ls -a 命令并执行。</li>
+<li>screen -S test -p 0 -X stuff &#34;ls -a\n&#34;：向名为 test 的 screen 会话的第一个窗口（编号为 0）发送 ls -a 命令并执行。</li>
+</ol>
+<p>这些命令组合起来，可以实现对后台 screen 会话的自动化控制和命令发送，适用于需要在后台运行的程序和脚本的自动化管理。</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-25" class="outline-3">
+<h3 id="headline-25">
+参考链接
+</h3>
+<div id="outline-text-headline-25" class="outline-text-3">
+<p>
+<a href="https://cloud.tencent.com/developer/article/1856896">用bash脚本创建screen并向其发送命令</a></p>
+</div>
+</div>
 </div>
 </div>
 
