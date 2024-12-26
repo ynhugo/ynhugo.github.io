@@ -575,6 +575,14 @@
 </li>
 </ul>
 </li>
+<li><a href="#headline-124">sed命令在包含指定关键词的行首与包含指定关键词的下一行的行首添加&#39;//&#39;</a>
+<ul>
+<li><a href="#headline-125">示例命令</a>
+</li>
+<li><a href="#headline-126">解释：</a>
+</li>
+</ul>
+</li>
 </ul>
 </nav>
         </div>
@@ -3953,6 +3961,44 @@ case语句+shift偏移参数
 </div>
 </div>
 </div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-124" class="outline-2">
+<h2 id="headline-124">
+sed命令在包含指定关键词的行首与包含指定关键词的下一行的行首添加&#39;//&#39;
+</h2>
+<div id="outline-text-headline-124" class="outline-text-2">
+<div id="outline-container-headline-125" class="outline-3">
+<h3 id="headline-125">
+示例命令
+</h3>
+<div id="outline-text-headline-125" class="outline-text-3">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  sed <span class="s1">&#39;/KEYWORD/{s/^/\/\//;n;s/^/\/\//}&#39;</span> input.txt</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-126" class="outline-3">
+<h3 id="headline-126">
+解释：
+</h3>
+<div id="outline-text-headline-126" class="outline-text-3">
+<ul>
+<li>/KEYWORD/：查找包含 KEYWORD 的行。</li>
+<li>{…}：表示一个代码块，包含多个操作。</li>
+<li>s/^/\/\//：在匹配的行行首添加 //。这里的 ^ 是行首的符号。</li>
+<li>n：n 命令让 sed 跳到下一行进行处理（并打印出该行）。</li>
+<li>再次执行 s/^/\/\//：在下一行的行首也添加 //。</li>
+</ul>
 </div>
 </div>
 </div>

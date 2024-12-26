@@ -782,16 +782,16 @@ sed -i &#39;Ni hello_world&#39; file.txt # 在file.txt第N行前面插入一行&
 sed -i &#39;/hello/a hello_world&#39; file.txt # 在file.txt包含&amp;quot;hello&amp;quot;的所有行后面追加一行&amp;quot;hello_world&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id=&#34;7在指定行首添加字符串&#34;&gt;7、在指定行首添加字符串&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;sed -i &#39;3{s/^/aa}&#39; a.txt    //aa为要在第3行行首添加内容，a.txt为要操作的文件
+&lt;pre&gt;&lt;code&gt;sed -i &#39;3{s/^/aa/}&#39; a.txt    //aa为要在第3行行首添加内容，a.txt为要操作的文件
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id=&#34;8在连续几行行尾添加&#34;&gt;8、在连续几行行尾添加：&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;sed -i ‘1,2{s/$/bb/}’ a.txt（在1-2行行尾添加bb）
+&lt;pre&gt;&lt;code&gt;sed -i &#39;1,2{s/$/bb/}&#39; a.txt（在1-2行行尾添加bb）
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id=&#34;在特定行行前添加数据&#34;&gt;在特定行，行前添加数据&lt;/h3&gt;
 &lt;pre&gt;&lt;code&gt;sed -i ‘N;2 i 111’ c.txt（在第一行行前添加111）
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id=&#34;在特定行行后添加数据&#34;&gt;在特定行，行后添加数据&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;sed -i ‘N; 2 i 111’ c.txt（在第二行行后添加111）	 
+&lt;pre&gt;&lt;code&gt;sed -i &#39;N; 2 i 111&#39; c.txt（在第二行行后添加111）	 
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id=&#34;指定多行批量添加字符串至行首&#34;&gt;指定多行批量添加字符串至行首&lt;/h3&gt;
 &lt;pre&gt;&lt;code&gt;sed -i &#39;1{s/^/## /}&#39; 1.c	//将字符串&amp;quot;## &amp;quot;添加到文件1.c的第1行

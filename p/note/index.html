@@ -1208,16 +1208,16 @@ sed -i 'Ni hello_world' file.txt # 在file.txt第N行前面插入一行&quot;hel
 sed -i '/hello/a hello_world' file.txt # 在file.txt包含&quot;hello&quot;的所有行后面追加一行&quot;hello_world&quot;
 </code></pre>
 <h3 id="7在指定行首添加字符串">7、在指定行首添加字符串</h3>
-<pre><code>sed -i '3{s/^/aa}' a.txt    //aa为要在第3行行首添加内容，a.txt为要操作的文件
+<pre><code>sed -i '3{s/^/aa/}' a.txt    //aa为要在第3行行首添加内容，a.txt为要操作的文件
 </code></pre>
 <h3 id="8在连续几行行尾添加">8、在连续几行行尾添加：</h3>
-<pre><code>sed -i ‘1,2{s/$/bb/}’ a.txt（在1-2行行尾添加bb）
+<pre><code>sed -i '1,2{s/$/bb/}' a.txt（在1-2行行尾添加bb）
 </code></pre>
 <h3 id="在特定行行前添加数据">在特定行，行前添加数据</h3>
 <pre><code>sed -i ‘N;2 i 111’ c.txt（在第一行行前添加111）
 </code></pre>
 <h3 id="在特定行行后添加数据">在特定行，行后添加数据</h3>
-<pre><code>sed -i ‘N; 2 i 111’ c.txt（在第二行行后添加111）	 
+<pre><code>sed -i 'N; 2 i 111' c.txt（在第二行行后添加111）	 
 </code></pre>
 <h3 id="指定多行批量添加字符串至行首">指定多行批量添加字符串至行首</h3>
 <pre><code>sed -i '1{s/^/## /}' 1.c	//将字符串&quot;## &quot;添加到文件1.c的第1行

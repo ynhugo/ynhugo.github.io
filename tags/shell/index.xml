@@ -3335,6 +3335,44 @@ case语句+shift偏移参数
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-124&#34; class=&#34;outline-2&#34;&gt;
+&lt;h2 id=&#34;headline-124&#34;&gt;
+sed命令在包含指定关键词的行首与包含指定关键词的下一行的行首添加&amp;#39;//&amp;#39;
+&lt;/h2&gt;
+&lt;div id=&#34;outline-text-headline-124&#34; class=&#34;outline-text-2&#34;&gt;
+&lt;div id=&#34;outline-container-headline-125&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-125&#34;&gt;
+示例命令
+&lt;/h3&gt;
+&lt;div id=&#34;outline-text-headline-125&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;div class=&#34;src src-bash&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  sed &lt;span class=&#34;s1&#34;&gt;&amp;#39;/KEYWORD/{s/^/\/\//;n;s/^/\/\//}&amp;#39;&lt;/span&gt; input.txt&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-126&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-126&#34;&gt;
+解释：
+&lt;/h3&gt;
+&lt;div id=&#34;outline-text-headline-126&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;ul&gt;
+&lt;li&gt;/KEYWORD/：查找包含 KEYWORD 的行。&lt;/li&gt;
+&lt;li&gt;{…}：表示一个代码块，包含多个操作。&lt;/li&gt;
+&lt;li&gt;s/^/\/\//：在匹配的行行首添加 //。这里的 ^ 是行首的符号。&lt;/li&gt;
+&lt;li&gt;n：n 命令让 sed 跳到下一行进行处理（并打印出该行）。&lt;/li&gt;
+&lt;li&gt;再次执行 s/^/\/\//：在下一行的行首也添加 //。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
 </description>
         </item>
         

@@ -287,9 +287,7 @@
 </li>
 <li><a href="#headline-4">测试</a>
 </li>
-<li><a href="#headline-5">一键执行脚本</a>
-</li>
-<li><a href="#headline-6">参考链接</a>
+<li><a href="#headline-5">参考链接</a>
 </li>
 </ul>
 </li>
@@ -382,24 +380,34 @@ live555归档链接：<a href="https://download.videolan.org/pub/contrib/live555
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  wget https://download.videolan.org/pub/contrib/live555/live.2020.12.23.tar.gz
 </span></span><span class="line"><span class="cl">  tar zxvf live.2020.12.23.tar.gz  
 </span></span><span class="line"><span class="cl">  <span class="nb">export</span> <span class="nv">live</span><span class="o">=</span><span class="k">$(</span>readlink -f live<span class="k">)</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">cd</span> <span class="nv">$live</span>
-</span></span><span class="line"><span class="cl">  ./genMakefiles android
+</span></span><span class="line"><span class="cl">  sed -i <span class="s1">&#39;97,98{s/^/\/\//}&#39;</span> liveMedia/ByteStreamFileSource.cpp
+</span></span><span class="line"><span class="cl">  ./genMakefiles linux-64bit
 </span></span><span class="line"><span class="cl">  make
 </span></span><span class="line"><span class="cl">  <span class="nb">cd</span> <span class="nv">$live</span>/mediaServer
-</span></span><span class="line"><span class="cl">  ./live555MediaServer</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">  mkdir -p video
+</span></span><span class="line"><span class="cl">  wget https://images.videolan.org/images/vlc-player.mp4
+</span></span><span class="line"><span class="cl">  mv vlc-player.mp4 video
+</span></span><span class="line"><span class="cl">  ffmpeg -i video/vlc-player.mp4 -vcodec h264 -s 352*278 -y video/vlc-player.264
+</span></span><span class="line"><span class="cl">  ./live555MediaServer video/vlc-player.mp4</span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
@@ -489,7 +497,7 @@ live555归档链接：<a href="https://download.videolan.org/pub/contrib/live555
 </span></span><span class="line"><span class="cl">  wget https://images.videolan.org/images/vlc-player.mp4
 </span></span><span class="line"><span class="cl">  ffmpeg -i vlc-player.mp4 -vcodec h264 -s 352*278 -y vlc-player.264
 </span></span><span class="line"><span class="cl">  <span class="nb">cd</span> <span class="nv">$live</span>/mediaServer
-</span></span><span class="line"><span class="cl">  ./live555MediaServer</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">  ./live555MediaServer video/vlc-player.mp4</span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
@@ -531,32 +539,17 @@ live555归档链接：<a href="https://download.videolan.org/pub/contrib/live555
 </div>
 <div id="outline-container-headline-5" class="outline-5">
 <h5 id="headline-5">
-一键执行脚本
-</h5>
-<div id="outline-text-headline-5" class="outline-text-5">
-<div class="src src-bash">
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  wget https://download.videolan.org/pub/contrib/live555/live.2020.12.23.tar.gz <span class="o">&amp;&amp;</span> tar zxvf live.2020.12.23.tar.gz<span class="p">;</span> <span class="nb">export</span> <span class="nv">live</span><span class="o">=</span><span class="k">$(</span>readlink -f live<span class="k">)</span><span class="p">;</span> <span class="nb">cd</span> <span class="nv">$live</span><span class="p">;</span> ./genMakefiles android<span class="p">;</span> make<span class="p">;</span> <span class="nb">cd</span> <span class="nv">$live</span>/mediaServer<span class="p">;</span> mkdir -p <span class="nv">$live</span>/mediaServer/video<span class="p">;</span> <span class="nb">cd</span> <span class="nv">$live</span>/mediaServer/video<span class="p">;</span> wget https://images.videolan.org/images/vlc-player.mp4<span class="p">;</span> ffmpeg -i vlc-player.mp4 -vcodec h264 -s 352*278 -y vlc-player.264<span class="p">;</span> <span class="nb">cd</span> <span class="nv">$live</span>/mediaServer<span class="p">;</span> ./live555MediaServer<span class="p">;</span></span></span></code></pre></td></tr></table>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div id="outline-container-headline-6" class="outline-5">
-<h5 id="headline-6">
 参考链接
 </h5>
-<div id="outline-text-headline-6" class="outline-text-5">
+<div id="outline-text-headline-5" class="outline-text-5">
 <p>
 <a href="https://download.videolan.org/pub/contrib/live555/">live555-archive</a></p>
 <p>
 <a href="https://blog.csdn.net/qq_32523587/article/details/103516224">Ubuntu下使用Live555搭建流媒体服务器</a></p>
 <p>
 <a href="https://wenku.csdn.net/answer/c523e5c39091413db9cf923780bd87ba">Android 编译live555</a></p>
+<p>
+<a href="https://gitee.com/ascend/mindxsdk-referenceapps/blob/master/docs/参考资料/Live555离线视频转RTSP说明文档.md#1-视频循环推流">1. 视频循环推流</a></p>
 </div>
 </div>
 </div>
