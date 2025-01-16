@@ -115,9 +115,27 @@ scrcpy不传输声音，并且当scrcpy连接到设备时使设备黑屏，只�
 &lt;/div&gt;
 &lt;div id=&#34;outline-container-headline-9&#34; class=&#34;outline-4&#34;&gt;
 &lt;h4 id=&#34;headline-9&#34;&gt;
-通过脚本连接
+scrcpy指定窗口位置和大小
 &lt;/h4&gt;
 &lt;div id=&#34;outline-text-headline-9&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;div class=&#34;src src-bash&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  scrcpy -s 192.168.*.*:5555 --window-x &lt;span class=&#34;m&#34;&gt;1920&lt;/span&gt; --window-y &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt; --window-height &lt;span class=&#34;m&#34;&gt;1080&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;如果要指定宽度可以增加选项：–window-width 100&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-10&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-10&#34;&gt;
+通过脚本连接
+&lt;/h4&gt;
+&lt;div id=&#34;outline-text-headline-10&#34; class=&#34;outline-text-4&#34;&gt;
 &lt;p&gt;
 ssh_host是ssh配置文件中的host，也可以改为user@hostname的形式，需要结合termux使用&lt;/p&gt;
 &lt;div class=&#34;src src-bash&#34;&gt;
@@ -144,11 +162,11 @@ ssh_host是ssh配置文件中的host，也可以改为user@hostname的形式，�
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-10&#34; class=&#34;outline-4&#34;&gt;
-&lt;h4 id=&#34;headline-10&#34;&gt;
+&lt;div id=&#34;outline-container-headline-11&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-11&#34;&gt;
 通过脚本解锁手机并连接-1
 &lt;/h4&gt;
-&lt;div id=&#34;outline-text-headline-10&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;div id=&#34;outline-text-headline-11&#34; class=&#34;outline-text-4&#34;&gt;
 &lt;div class=&#34;src src-bash&#34;&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -161,11 +179,11 @@ ssh_host是ssh配置文件中的host，也可以改为user@hostname的形式，�
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-11&#34; class=&#34;outline-4&#34;&gt;
-&lt;h4 id=&#34;headline-11&#34;&gt;
+&lt;div id=&#34;outline-container-headline-12&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-12&#34;&gt;
 通过脚本解锁手机并连接-2
 &lt;/h4&gt;
-&lt;div id=&#34;outline-text-headline-11&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;div id=&#34;outline-text-headline-12&#34; class=&#34;outline-text-4&#34;&gt;
 &lt;p&gt;
 脚本名称：auto_android_scrcpy.sh&lt;/p&gt;
 &lt;div class=&#34;src src-bash&#34;&gt;
@@ -196,42 +214,99 @@ ssh_host是ssh配置文件中的host，也可以改为user@hostname的形式，�
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nv&#34;&gt;num_args&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$#&lt;/span&gt;						&lt;span class=&#34;c1&#34;&gt;# 获取参数数量    &lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;num_args&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt; -eq &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;then&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	  &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; -e &lt;span class=&#34;s2&#34;&gt;&amp;#34;Usage: \n&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$0&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt; IPV4:Port&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; -e &lt;span class=&#34;s2&#34;&gt;&amp;#34;Usage: \n&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$0&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt; IPV4:Port&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;k&#34;&gt;elif&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;num_args&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt; -eq &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;then&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	  adb connect &lt;span class=&#34;nv&#34;&gt;$1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	  scrcpy -s &lt;span class=&#34;nv&#34;&gt;$1&lt;/span&gt; --no-audio -S &lt;span class=&#34;p&#34;&gt;&amp;amp;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	adb connect &lt;span class=&#34;nv&#34;&gt;$1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	scrcpy -s &lt;span class=&#34;nv&#34;&gt;$1&lt;/span&gt; --no-audio -S &lt;span class=&#34;p&#34;&gt;&amp;amp;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;k&#34;&gt;elif&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$2&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;unlock&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;then&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	  &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$3&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;then&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;		  &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; -e &lt;span class=&#34;s2&#34;&gt;&amp;#34;Usage: \n&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$0&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt; unlock passward&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	  &lt;span class=&#34;k&#34;&gt;else&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;		  adb -s &lt;span class=&#34;nv&#34;&gt;$1&lt;/span&gt; shell input keyevent 82&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; adb -s &lt;span class=&#34;nv&#34;&gt;$1&lt;/span&gt; shell input keyevent 82&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; sleep 0.4&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; adb -s &lt;span class=&#34;nv&#34;&gt;$1&lt;/span&gt; shell input text &lt;span class=&#34;nv&#34;&gt;$3&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; clear
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	  &lt;span class=&#34;k&#34;&gt;fi&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$3&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	  &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; -e &lt;span class=&#34;s2&#34;&gt;&amp;#34;Usage: \n&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$0&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt; unlock passward&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;k&#34;&gt;else&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	  adb -s &lt;span class=&#34;nv&#34;&gt;$1&lt;/span&gt; shell input keyevent 82&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; adb -s &lt;span class=&#34;nv&#34;&gt;$1&lt;/span&gt; shell input keyevent 82&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; sleep 0.4&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; adb -s &lt;span class=&#34;nv&#34;&gt;$1&lt;/span&gt; shell input text &lt;span class=&#34;nv&#34;&gt;$3&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; clear
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;k&#34;&gt;fi&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;k&#34;&gt;elif&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$2&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;rescrcpy&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;then&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	  &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$3&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;then&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;		  &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; -e &lt;span class=&#34;s2&#34;&gt;&amp;#34;Usage: \n&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$0&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt; unlock passward&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	  &lt;span class=&#34;k&#34;&gt;else&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;		  adb -s &lt;span class=&#34;nv&#34;&gt;$1&lt;/span&gt; shell input keyevent 82&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; adb -s &lt;span class=&#34;nv&#34;&gt;$1&lt;/span&gt; shell input keyevent 82&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; sleep 0.4&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; adb -s &lt;span class=&#34;nv&#34;&gt;$1&lt;/span&gt; shell input text &lt;span class=&#34;nv&#34;&gt;$3&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; scrcpy -s &lt;span class=&#34;nv&#34;&gt;$1&lt;/span&gt; --no-audio -S &lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; clear &lt;span class=&#34;p&#34;&gt;&amp;amp;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	  &lt;span class=&#34;k&#34;&gt;fi&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$3&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	  &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; -e &lt;span class=&#34;s2&#34;&gt;&amp;#34;Usage: \n&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$0&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt; unlock passward&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;k&#34;&gt;else&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	  adb -s &lt;span class=&#34;nv&#34;&gt;$1&lt;/span&gt; shell input keyevent 82&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; adb -s &lt;span class=&#34;nv&#34;&gt;$1&lt;/span&gt; shell input keyevent 82&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; sleep 0.4&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; adb -s &lt;span class=&#34;nv&#34;&gt;$1&lt;/span&gt; shell input text &lt;span class=&#34;nv&#34;&gt;$3&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; scrcpy -s &lt;span class=&#34;nv&#34;&gt;$1&lt;/span&gt; --no-audio -S &lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; clear &lt;span class=&#34;p&#34;&gt;&amp;amp;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;k&#34;&gt;fi&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;k&#34;&gt;fi&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-12&#34; class=&#34;outline-4&#34;&gt;
-&lt;h4 id=&#34;headline-12&#34;&gt;
+&lt;div id=&#34;outline-container-headline-13&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-13&#34;&gt;
+通过脚本解锁手机并连接-3
+&lt;/h4&gt;
+&lt;div id=&#34;outline-text-headline-13&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;div class=&#34;src src-bash&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nv&#34;&gt;num_args&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$#&lt;/span&gt;                                             &lt;span class=&#34;c1&#34;&gt;# 获取参数数量&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;num_args&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt; -eq &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; -e &lt;span class=&#34;s2&#34;&gt;&amp;#34;Usage: \n&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$0&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt; IPV4:Port&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;k&#34;&gt;elif&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;num_args&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt; -eq &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	adb connect &lt;span class=&#34;nv&#34;&gt;$1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;c1&#34;&gt;# scrcpy -s $1 --no-audio -S &amp;amp;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	scrcpy -s &lt;span class=&#34;nv&#34;&gt;$1&lt;/span&gt; --no-audio --window-x &lt;span class=&#34;m&#34;&gt;1920&lt;/span&gt; --window-y &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt; --window-height &lt;span class=&#34;m&#34;&gt;1038&lt;/span&gt; -S &lt;span class=&#34;p&#34;&gt;&amp;amp;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;k&#34;&gt;elif&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$2&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;unlock&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$3&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	  &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; -e &lt;span class=&#34;s2&#34;&gt;&amp;#34;Usage: \n&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$0&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt; unlock passward&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;k&#34;&gt;else&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	  adb -s &lt;span class=&#34;nv&#34;&gt;$1&lt;/span&gt; shell input keyevent 82&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; adb -s &lt;span class=&#34;nv&#34;&gt;$1&lt;/span&gt; shell input keyevent 82&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; sleep 0.4&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; adb -s &lt;span class=&#34;nv&#34;&gt;$1&lt;/span&gt; shell input text &lt;span class=&#34;nv&#34;&gt;$3&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; clear
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;k&#34;&gt;fi&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;k&#34;&gt;elif&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$2&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;rescrcpy&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$3&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	  &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; -e &lt;span class=&#34;s2&#34;&gt;&amp;#34;Usage: \n&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$0&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt; unlock passward&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;k&#34;&gt;else&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	  adb -s &lt;span class=&#34;nv&#34;&gt;$1&lt;/span&gt; shell input keyevent 82&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; adb -s &lt;span class=&#34;nv&#34;&gt;$1&lt;/span&gt; shell input keyevent 82&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; sleep 0.4&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; adb -s &lt;span class=&#34;nv&#34;&gt;$1&lt;/span&gt; shell input text &lt;span class=&#34;nv&#34;&gt;$3&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; scrcpy -s &lt;span class=&#34;nv&#34;&gt;$1&lt;/span&gt; --no-audio -S &lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; clear &lt;span class=&#34;p&#34;&gt;&amp;amp;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;k&#34;&gt;fi&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;k&#34;&gt;fi&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-14&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-14&#34;&gt;
 注意事项
 &lt;/h4&gt;
-&lt;div id=&#34;outline-text-headline-12&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;div id=&#34;outline-text-headline-14&#34; class=&#34;outline-text-4&#34;&gt;
 &lt;p&gt;
 scrcpy建议使用最新版本，如果手机的安卓版本较高，而scrcpy的版本又较老的话，会出现一些快捷键用不了的情况，而最新版本的scrcpy则会好很多，一般快捷键都支持&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-13&#34; class=&#34;outline-4&#34;&gt;
-&lt;h4 id=&#34;headline-13&#34;&gt;
+&lt;div id=&#34;outline-container-headline-15&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-15&#34;&gt;
 参考链接
 &lt;/h4&gt;
-&lt;div id=&#34;outline-text-headline-13&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;div id=&#34;outline-text-headline-15&#34; class=&#34;outline-text-4&#34;&gt;
 &lt;p&gt;
 &lt;a href=&#34;https://zhuanlan.zhihu.com/p/80264357&#34;&gt;scrcpy - 手机无线投屏到电脑&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;
@@ -240,25 +315,27 @@ scrcpy建议使用最新版本，如果手机的安卓版本较高，而scrcpy�
 &lt;a href=&#34;https://zhuanlan.zhihu.com/p/606448877&#34;&gt;Scrcpy – 通过Linux桌面显示和控制Android 设备&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;
 &lt;a href=&#34;https://zhuanlan.zhihu.com/p/561723992&#34;&gt;ScrCpy工具的快捷键&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://blog.csdn.net/DDJ_TEST/article/details/120287342&#34;&gt;scrcpy投屏教程、scrcpy无线投屏、scrcpy命令大全&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-14&#34; class=&#34;outline-3&#34;&gt;
-&lt;h3 id=&#34;headline-14&#34;&gt;
+&lt;div id=&#34;outline-container-headline-16&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-16&#34;&gt;
 异地组网——5 分钟，使用内网穿透快速实现远程手机桌面！
 &lt;/h3&gt;
-&lt;div id=&#34;outline-text-headline-14&#34; class=&#34;outline-text-3&#34;&gt;
-&lt;div id=&#34;outline-container-headline-15&#34; class=&#34;outline-4&#34;&gt;
-&lt;h4 id=&#34;headline-15&#34;&gt;
+&lt;div id=&#34;outline-text-headline-16&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;div id=&#34;outline-container-headline-17&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-17&#34;&gt;
 准备
 &lt;/h4&gt;
-&lt;div id=&#34;outline-text-headline-15&#34; class=&#34;outline-text-4&#34;&gt;
-&lt;div id=&#34;outline-container-headline-16&#34; class=&#34;outline-5&#34;&gt;
-&lt;h5 id=&#34;headline-16&#34;&gt;
+&lt;div id=&#34;outline-text-headline-17&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;div id=&#34;outline-container-headline-18&#34; class=&#34;outline-5&#34;&gt;
+&lt;h5 id=&#34;headline-18&#34;&gt;
 PC 安装 Scrcpy 控制器
 &lt;/h5&gt;
-&lt;div id=&#34;outline-text-headline-16&#34; class=&#34;outline-text-5&#34;&gt;
+&lt;div id=&#34;outline-text-headline-18&#34; class=&#34;outline-text-5&#34;&gt;
 &lt;p&gt;
 Scrpy 控制器是一款免 Root 的开源安卓设备投屏工具，支持 USB 和 WIFI 两种连接方式&lt;/p&gt;
 &lt;p&gt;
@@ -275,11 +352,11 @@ https://github.com/Genymobile/scrcpy#summary&lt;/p&gt;
 https://sspai.com/post/40471&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-17&#34; class=&#34;outline-5&#34;&gt;
-&lt;h5 id=&#34;headline-17&#34;&gt;
+&lt;div id=&#34;outline-container-headline-19&#34; class=&#34;outline-5&#34;&gt;
+&lt;h5 id=&#34;headline-19&#34;&gt;
 PC 和 Android 设备分别安装网穿透工具
 &lt;/h5&gt;
-&lt;div id=&#34;outline-text-headline-17&#34; class=&#34;outline-text-5&#34;&gt;
+&lt;div id=&#34;outline-text-headline-19&#34; class=&#34;outline-text-5&#34;&gt;
 &lt;p&gt;
 这里以蒲公英为例，到官网选择「 蒲公英-个人版 」进行下载&lt;/p&gt;
 &lt;p&gt;
@@ -296,16 +373,16 @@ https://pgy.oray.com/download/personal/#visitor&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-18&#34; class=&#34;outline-4&#34;&gt;
-&lt;h4 id=&#34;headline-18&#34;&gt;
+&lt;div id=&#34;outline-container-headline-20&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-20&#34;&gt;
 实操一下
 &lt;/h4&gt;
-&lt;div id=&#34;outline-text-headline-18&#34; class=&#34;outline-text-4&#34;&gt;
-&lt;div id=&#34;outline-container-headline-19&#34; class=&#34;outline-5&#34;&gt;
-&lt;h5 id=&#34;headline-19&#34;&gt;
+&lt;div id=&#34;outline-text-headline-20&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;div id=&#34;outline-container-headline-21&#34; class=&#34;outline-5&#34;&gt;
+&lt;h5 id=&#34;headline-21&#34;&gt;
 Android 设备开启网络调试并连接
 &lt;/h5&gt;
-&lt;div id=&#34;outline-text-headline-19&#34; class=&#34;outline-text-5&#34;&gt;
+&lt;div id=&#34;outline-text-headline-21&#34; class=&#34;outline-text-5&#34;&gt;
 &lt;p&gt;
 首先，在 Android 设备中开启「 开发者选项 」，并打开「 USB 调试 」&lt;/p&gt;
 &lt;p&gt;
@@ -314,11 +391,11 @@ Android 设备开启网络调试并连接
 然后，Android 设备通过数据线连接 PC，使用 adb 命令开启手机的网络调试&lt;/p&gt;
 &lt;p&gt;
 PS：这里指定网络连接的端口号为 5555&lt;/p&gt;
-&lt;div id=&#34;outline-container-headline-20&#34; class=&#34;outline-6&#34;&gt;
-&lt;h6 id=&#34;headline-20&#34;&gt;
+&lt;div id=&#34;outline-container-headline-22&#34; class=&#34;outline-6&#34;&gt;
+&lt;h6 id=&#34;headline-22&#34;&gt;
 查询连接的设备列表
 &lt;/h6&gt;
-&lt;div id=&#34;outline-text-headline-20&#34; class=&#34;outline-text-6&#34;&gt;
+&lt;div id=&#34;outline-text-headline-22&#34; class=&#34;outline-text-6&#34;&gt;
 &lt;div class=&#34;src src-bash&#34;&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -335,11 +412,11 @@ PS：这里指定网络连接的端口号为 5555&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-21&#34; class=&#34;outline-6&#34;&gt;
-&lt;h6 id=&#34;headline-21&#34;&gt;
+&lt;div id=&#34;outline-container-headline-23&#34; class=&#34;outline-6&#34;&gt;
+&lt;h6 id=&#34;headline-23&#34;&gt;
 开启手机的网络调试，端口为5555
 &lt;/h6&gt;
-&lt;div id=&#34;outline-text-headline-21&#34; class=&#34;outline-text-6&#34;&gt;
+&lt;div id=&#34;outline-text-headline-23&#34; class=&#34;outline-text-6&#34;&gt;
 &lt;div class=&#34;src src-bash&#34;&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -356,11 +433,11 @@ PS：这里指定网络连接的端口号为 5555&lt;/p&gt;
 接着，断开数据线连接，在蒲公英 PC 客户端上查看 Android 设备的 IP 地址，通过「 该 IP 地址 + 端口号 」连接手机设备&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-22&#34; class=&#34;outline-6&#34;&gt;
-&lt;h6 id=&#34;headline-22&#34;&gt;
+&lt;div id=&#34;outline-container-headline-24&#34; class=&#34;outline-6&#34;&gt;
+&lt;h6 id=&#34;headline-24&#34;&gt;
 比如：PC版本蒲公英显示手机的ip地址为：172.11.1.233
 &lt;/h6&gt;
-&lt;div id=&#34;outline-text-headline-22&#34; class=&#34;outline-text-6&#34;&gt;
+&lt;div id=&#34;outline-text-headline-24&#34; class=&#34;outline-text-6&#34;&gt;
 &lt;div class=&#34;src src-bash&#34;&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -373,11 +450,11 @@ PS：这里指定网络连接的端口号为 5555&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-23&#34; class=&#34;outline-6&#34;&gt;
-&lt;h6 id=&#34;headline-23&#34;&gt;
+&lt;div id=&#34;outline-container-headline-25&#34; class=&#34;outline-6&#34;&gt;
+&lt;h6 id=&#34;headline-25&#34;&gt;
 使用adb命令连接设备
 &lt;/h6&gt;
-&lt;div id=&#34;outline-text-headline-23&#34; class=&#34;outline-text-6&#34;&gt;
+&lt;div id=&#34;outline-text-headline-25&#34; class=&#34;outline-text-6&#34;&gt;
 &lt;div class=&#34;src src-bash&#34;&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -394,11 +471,11 @@ PS：这里指定网络连接的端口号为 5555&lt;/p&gt;
 最后，可以通过一些简单的 adb 命令测试一下是否能控制手机&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-24&#34; class=&#34;outline-6&#34;&gt;
-&lt;h6 id=&#34;headline-24&#34;&gt;
+&lt;div id=&#34;outline-container-headline-26&#34; class=&#34;outline-6&#34;&gt;
+&lt;h6 id=&#34;headline-26&#34;&gt;
 比如：修改屏幕的大小
 &lt;/h6&gt;
-&lt;div id=&#34;outline-text-headline-24&#34; class=&#34;outline-text-6&#34;&gt;
+&lt;div id=&#34;outline-text-headline-26&#34; class=&#34;outline-text-6&#34;&gt;
 &lt;div class=&#34;src src-bash&#34;&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -411,11 +488,11 @@ PS：这里指定网络连接的端口号为 5555&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-25&#34; class=&#34;outline-6&#34;&gt;
-&lt;h6 id=&#34;headline-25&#34;&gt;
+&lt;div id=&#34;outline-container-headline-27&#34; class=&#34;outline-6&#34;&gt;
+&lt;h6 id=&#34;headline-27&#34;&gt;
 恢复原来屏幕尺寸
 &lt;/h6&gt;
-&lt;div id=&#34;outline-text-headline-25&#34; class=&#34;outline-text-6&#34;&gt;
+&lt;div id=&#34;outline-text-headline-27&#34; class=&#34;outline-text-6&#34;&gt;
 &lt;div class=&#34;src src-bash&#34;&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -428,11 +505,11 @@ PS：这里指定网络连接的端口号为 5555&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-26&#34; class=&#34;outline-6&#34;&gt;
-&lt;h6 id=&#34;headline-26&#34;&gt;
+&lt;div id=&#34;outline-container-headline-28&#34; class=&#34;outline-6&#34;&gt;
+&lt;h6 id=&#34;headline-28&#34;&gt;
 休眠或者解锁屏幕
 &lt;/h6&gt;
-&lt;div id=&#34;outline-text-headline-26&#34; class=&#34;outline-text-6&#34;&gt;
+&lt;div id=&#34;outline-text-headline-28&#34; class=&#34;outline-text-6&#34;&gt;
 &lt;div class=&#34;src src-bash&#34;&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -447,22 +524,22 @@ PS：这里指定网络连接的端口号为 5555&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-27&#34; class=&#34;outline-5&#34;&gt;
-&lt;h5 id=&#34;headline-27&#34;&gt;
+&lt;div id=&#34;outline-container-headline-29&#34; class=&#34;outline-5&#34;&gt;
+&lt;h5 id=&#34;headline-29&#34;&gt;
 局域网屏幕控制
 &lt;/h5&gt;
-&lt;div id=&#34;outline-text-headline-27&#34; class=&#34;outline-text-5&#34;&gt;
+&lt;div id=&#34;outline-text-headline-29&#34; class=&#34;outline-text-5&#34;&gt;
 &lt;p&gt;
 在 CMD 命令行，使用「 scrcpy.exe 」命令就可以将手机投屏在 PC 上了，如此就能在 PC 端完成对手机的完全控制了&lt;/p&gt;
 &lt;p&gt;
 scrcpy 功能非常地强大，可以通过一些参数命令设置屏幕控制的特性&lt;/p&gt;
 &lt;p&gt;
 比如，通过 -S 设置投屏的同时关闭设备屏幕，也可以通过 -b、-m 改变比特率、限制分辨率，提高屏幕控制的响应速度&lt;/p&gt;
-&lt;div id=&#34;outline-container-headline-28&#34; class=&#34;outline-6&#34;&gt;
-&lt;h6 id=&#34;headline-28&#34;&gt;
+&lt;div id=&#34;outline-container-headline-30&#34; class=&#34;outline-6&#34;&gt;
+&lt;h6 id=&#34;headline-30&#34;&gt;
 直接将手机界面投屏到PC上，通过PC可以控制手机界面
 &lt;/h6&gt;
-&lt;div id=&#34;outline-text-headline-28&#34; class=&#34;outline-text-6&#34;&gt;
+&lt;div id=&#34;outline-text-headline-30&#34; class=&#34;outline-text-6&#34;&gt;
 &lt;div class=&#34;src src-bash&#34;&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -475,11 +552,11 @@ scrcpy 功能非常地强大，可以通过一些参数命令设置屏幕控制�
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-29&#34; class=&#34;outline-6&#34;&gt;
-&lt;h6 id=&#34;headline-29&#34;&gt;
+&lt;div id=&#34;outline-container-headline-31&#34; class=&#34;outline-6&#34;&gt;
+&lt;h6 id=&#34;headline-31&#34;&gt;
 投屏的同时，关闭设备屏幕
 &lt;/h6&gt;
-&lt;div id=&#34;outline-text-headline-29&#34; class=&#34;outline-text-6&#34;&gt;
+&lt;div id=&#34;outline-text-headline-31&#34; class=&#34;outline-text-6&#34;&gt;
 &lt;div class=&#34;src src-bash&#34;&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -510,11 +587,11 @@ scrcpy 功能非常地强大，可以通过一些参数命令设置屏幕控制�
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-30&#34; class=&#34;outline-5&#34;&gt;
-&lt;h5 id=&#34;headline-30&#34;&gt;
+&lt;div id=&#34;outline-container-headline-32&#34; class=&#34;outline-5&#34;&gt;
+&lt;h5 id=&#34;headline-32&#34;&gt;
 远程屏幕控制
 &lt;/h5&gt;
-&lt;div id=&#34;outline-text-headline-30&#34; class=&#34;outline-text-5&#34;&gt;
+&lt;div id=&#34;outline-text-headline-32&#34; class=&#34;outline-text-5&#34;&gt;
 &lt;p&gt;
 上面的操作都是在同一局域网下完成的 PC 端对 Android 设备的屏幕控制&lt;/p&gt;
 &lt;p&gt;
@@ -525,22 +602,22 @@ scrcpy 功能非常地强大，可以通过一些参数命令设置屏幕控制�
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-31&#34; class=&#34;outline-4&#34;&gt;
-&lt;h4 id=&#34;headline-31&#34;&gt;
+&lt;div id=&#34;outline-container-headline-33&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-33&#34;&gt;
 参考链接
 &lt;/h4&gt;
-&lt;div id=&#34;outline-text-headline-31&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;div id=&#34;outline-text-headline-33&#34; class=&#34;outline-text-4&#34;&gt;
 &lt;p&gt;
 &lt;a href=&#34;https://blog.csdn.net/hsh881025/article/details/124161932&#34;&gt;5 分钟，使用内网穿透快速实现远程手机桌面！&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-32&#34; class=&#34;outline-3&#34;&gt;
-&lt;h3 id=&#34;headline-32&#34;&gt;
+&lt;div id=&#34;outline-container-headline-34&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-34&#34;&gt;
 解锁手机
 &lt;/h3&gt;
-&lt;div id=&#34;outline-text-headline-32&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;div id=&#34;outline-text-headline-34&#34; class=&#34;outline-text-3&#34;&gt;
 &lt;div class=&#34;src src-bash&#34;&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -551,11 +628,11 @@ scrcpy 功能非常地强大，可以通过一些参数命令设置屏幕控制�
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-33&#34; class=&#34;outline-4&#34;&gt;
-&lt;h4 id=&#34;headline-33&#34;&gt;
+&lt;div id=&#34;outline-container-headline-35&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-35&#34;&gt;
 测试
 &lt;/h4&gt;
-&lt;div id=&#34;outline-text-headline-33&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;div id=&#34;outline-text-headline-35&#34; class=&#34;outline-text-4&#34;&gt;
 &lt;p&gt;
 手机密码：123456&lt;/p&gt;
 &lt;div class=&#34;src src-bash&#34;&gt;
@@ -578,11 +655,11 @@ scrcpy 功能非常地强大，可以通过一些参数命令设置屏幕控制�
 锁屏：adb shell input keyevent 26&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-34&#34; class=&#34;outline-4&#34;&gt;
-&lt;h4 id=&#34;headline-34&#34;&gt;
+&lt;div id=&#34;outline-container-headline-36&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-36&#34;&gt;
 实操命令
 &lt;/h4&gt;
-&lt;div id=&#34;outline-text-headline-34&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;div id=&#34;outline-text-headline-36&#34; class=&#34;outline-text-4&#34;&gt;
 &lt;div class=&#34;src src-bash&#34;&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -595,11 +672,11 @@ scrcpy 功能非常地强大，可以通过一些参数命令设置屏幕控制�
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-35&#34; class=&#34;outline-4&#34;&gt;
-&lt;h4 id=&#34;headline-35&#34;&gt;
+&lt;div id=&#34;outline-container-headline-37&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-37&#34;&gt;
 参考链接
 &lt;/h4&gt;
-&lt;div id=&#34;outline-text-headline-35&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;div id=&#34;outline-text-headline-37&#34; class=&#34;outline-text-4&#34;&gt;
 &lt;p&gt;
 &lt;a href=&#34;https://exp-blog.com/tools/adb-jie-suo-shou-ji-zhi-yin/&#34;&gt;利用 ADB 解锁手机指引&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;
@@ -620,11 +697,11 @@ scrcpy 功能非常地强大，可以通过一些参数命令设置屏幕控制�
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-36&#34; class=&#34;outline-3&#34;&gt;
-&lt;h3 id=&#34;headline-36&#34;&gt;
+&lt;div id=&#34;outline-container-headline-38&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-38&#34;&gt;
 如何用bash脚本创建screen并向其发送命令？
 &lt;/h3&gt;
-&lt;div id=&#34;outline-text-headline-36&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;div id=&#34;outline-text-headline-38&#34; class=&#34;outline-text-3&#34;&gt;
 &lt;div class=&#34;src src-text&#34;&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -651,23 +728,23 @@ scrcpy 功能非常地强大，可以通过一些参数命令设置屏幕控制�
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-37&#34; class=&#34;outline-4&#34;&gt;
-&lt;h4 id=&#34;headline-37&#34;&gt;
+&lt;div id=&#34;outline-container-headline-39&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-39&#34;&gt;
 解析命令-ChatGPT
 &lt;/h4&gt;
-&lt;div id=&#34;outline-text-headline-37&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;div id=&#34;outline-text-headline-39&#34; class=&#34;outline-text-4&#34;&gt;
 &lt;p&gt;
 这些命令是使用 screen 进行会话管理和自动化输入的示例。我们来逐个解析：&lt;/p&gt;
-&lt;div id=&#34;outline-container-headline-38&#34; class=&#34;outline-5&#34;&gt;
-&lt;h5 id=&#34;headline-38&#34;&gt;
+&lt;div id=&#34;outline-container-headline-40&#34; class=&#34;outline-5&#34;&gt;
+&lt;h5 id=&#34;headline-40&#34;&gt;
 1. screen -dmS test
 &lt;/h5&gt;
-&lt;div id=&#34;outline-text-headline-38&#34; class=&#34;outline-text-5&#34;&gt;
-&lt;div id=&#34;outline-container-headline-39&#34; class=&#34;outline-6&#34;&gt;
-&lt;h6 id=&#34;headline-39&#34;&gt;
+&lt;div id=&#34;outline-text-headline-40&#34; class=&#34;outline-text-5&#34;&gt;
+&lt;div id=&#34;outline-container-headline-41&#34; class=&#34;outline-6&#34;&gt;
+&lt;h6 id=&#34;headline-41&#34;&gt;
 各部分解析：
 &lt;/h6&gt;
-&lt;div id=&#34;outline-text-headline-39&#34; class=&#34;outline-text-6&#34;&gt;
+&lt;div id=&#34;outline-text-headline-41&#34; class=&#34;outline-text-6&#34;&gt;
 &lt;ul&gt;
 &lt;li&gt;screen：启动 screen 会话，screen 是一个终端多路复用器，允许在一个终端窗口内运行多个虚拟终端。&lt;/li&gt;
 &lt;li&gt;-d：这个选项告诉 screen 在后台启动会话。也就是说，screen 会话启动后不会占用当前的终端窗口，而是将其放在后台运行。&lt;/li&gt;
@@ -676,11 +753,11 @@ scrcpy 功能非常地强大，可以通过一些参数命令设置屏幕控制�
 &lt;/ul&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-40&#34; class=&#34;outline-6&#34;&gt;
-&lt;h6 id=&#34;headline-40&#34;&gt;
+&lt;div id=&#34;outline-container-headline-42&#34; class=&#34;outline-6&#34;&gt;
+&lt;h6 id=&#34;headline-42&#34;&gt;
 作用：
 &lt;/h6&gt;
-&lt;div id=&#34;outline-text-headline-40&#34; class=&#34;outline-text-6&#34;&gt;
+&lt;div id=&#34;outline-text-headline-42&#34; class=&#34;outline-text-6&#34;&gt;
 &lt;p&gt;这个命令的作用是：启动一个名为 test 的 screen 会话，并将其放在后台运行。此时会话没有关联到任何窗口（终端）。它是一个“分离模式”启动的 screen 会话。&lt;/p&gt;
 &lt;p&gt;
 —&lt;/p&gt;
@@ -688,16 +765,16 @@ scrcpy 功能非常地强大，可以通过一些参数命令设置屏幕控制�
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-41&#34; class=&#34;outline-5&#34;&gt;
-&lt;h5 id=&#34;headline-41&#34;&gt;
+&lt;div id=&#34;outline-container-headline-43&#34; class=&#34;outline-5&#34;&gt;
+&lt;h5 id=&#34;headline-43&#34;&gt;
 2. screen -S test -X stuff &amp;#34;ls -a\n&amp;#34;
 &lt;/h5&gt;
-&lt;div id=&#34;outline-text-headline-41&#34; class=&#34;outline-text-5&#34;&gt;
-&lt;div id=&#34;outline-container-headline-42&#34; class=&#34;outline-6&#34;&gt;
-&lt;h6 id=&#34;headline-42&#34;&gt;
+&lt;div id=&#34;outline-text-headline-43&#34; class=&#34;outline-text-5&#34;&gt;
+&lt;div id=&#34;outline-container-headline-44&#34; class=&#34;outline-6&#34;&gt;
+&lt;h6 id=&#34;headline-44&#34;&gt;
 各部分解析：
 &lt;/h6&gt;
-&lt;div id=&#34;outline-text-headline-42&#34; class=&#34;outline-text-6&#34;&gt;
+&lt;div id=&#34;outline-text-headline-44&#34; class=&#34;outline-text-6&#34;&gt;
 &lt;ul&gt;
 &lt;li&gt;screen：再次调用 screen，用于对已存在的 screen 会话进行操作。&lt;/li&gt;
 &lt;li&gt;-S test：指定要操作的会话名称为 test。&lt;/li&gt;
@@ -706,11 +783,11 @@ scrcpy 功能非常地强大，可以通过一些参数命令设置屏幕控制�
 &lt;/ul&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-43&#34; class=&#34;outline-6&#34;&gt;
-&lt;h6 id=&#34;headline-43&#34;&gt;
+&lt;div id=&#34;outline-container-headline-45&#34; class=&#34;outline-6&#34;&gt;
+&lt;h6 id=&#34;headline-45&#34;&gt;
 作用：
 &lt;/h6&gt;
-&lt;div id=&#34;outline-text-headline-43&#34; class=&#34;outline-text-6&#34;&gt;
+&lt;div id=&#34;outline-text-headline-45&#34; class=&#34;outline-text-6&#34;&gt;
 &lt;p&gt;该命令将 ls -a 这个命令发送到名为 test 的 screen 会话中的当前窗口，模拟在该窗口执行 ls -a。由于是后台操作，所以并不会直接在终端显示输出，命令的结果会被发送到该 screen 会话的输出流。&lt;/p&gt;
 &lt;p&gt;
 —&lt;/p&gt;
@@ -718,16 +795,16 @@ scrcpy 功能非常地强大，可以通过一些参数命令设置屏幕控制�
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-44&#34; class=&#34;outline-5&#34;&gt;
-&lt;h5 id=&#34;headline-44&#34;&gt;
+&lt;div id=&#34;outline-container-headline-46&#34; class=&#34;outline-5&#34;&gt;
+&lt;h5 id=&#34;headline-46&#34;&gt;
 3. screen -S test -p 0 -X stuff &amp;#34;ls -a\n&amp;#34;
 &lt;/h5&gt;
-&lt;div id=&#34;outline-text-headline-44&#34; class=&#34;outline-text-5&#34;&gt;
-&lt;div id=&#34;outline-container-headline-45&#34; class=&#34;outline-6&#34;&gt;
-&lt;h6 id=&#34;headline-45&#34;&gt;
+&lt;div id=&#34;outline-text-headline-46&#34; class=&#34;outline-text-5&#34;&gt;
+&lt;div id=&#34;outline-container-headline-47&#34; class=&#34;outline-6&#34;&gt;
+&lt;h6 id=&#34;headline-47&#34;&gt;
 各部分解析：
 &lt;/h6&gt;
-&lt;div id=&#34;outline-text-headline-45&#34; class=&#34;outline-text-6&#34;&gt;
+&lt;div id=&#34;outline-text-headline-47&#34; class=&#34;outline-text-6&#34;&gt;
 &lt;ul&gt;
 &lt;li&gt;screen：同样，调用 screen 来操作会话。&lt;/li&gt;
 &lt;li&gt;-S test：指定会话名称为 test。&lt;/li&gt;
@@ -736,11 +813,11 @@ scrcpy 功能非常地强大，可以通过一些参数命令设置屏幕控制�
 &lt;/ul&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-46&#34; class=&#34;outline-6&#34;&gt;
-&lt;h6 id=&#34;headline-46&#34;&gt;
+&lt;div id=&#34;outline-container-headline-48&#34; class=&#34;outline-6&#34;&gt;
+&lt;h6 id=&#34;headline-48&#34;&gt;
 作用：
 &lt;/h6&gt;
-&lt;div id=&#34;outline-text-headline-46&#34; class=&#34;outline-text-6&#34;&gt;
+&lt;div id=&#34;outline-text-headline-48&#34; class=&#34;outline-text-6&#34;&gt;
 &lt;p&gt;该命令将 ls -a 命令发送到名为 test 的 screen 会话中的第一个窗口（编号为 0），并模拟按下回车键。这意味着，如果会话已经包含多个窗口，这个命令只会作用于第一个窗口，而不会影响其他窗口。&lt;/p&gt;
 &lt;p&gt;
 —&lt;/p&gt;
@@ -748,11 +825,11 @@ scrcpy 功能非常地强大，可以通过一些参数命令设置屏幕控制�
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-47&#34; class=&#34;outline-5&#34;&gt;
-&lt;h5 id=&#34;headline-47&#34;&gt;
+&lt;div id=&#34;outline-container-headline-49&#34; class=&#34;outline-5&#34;&gt;
+&lt;h5 id=&#34;headline-49&#34;&gt;
 总结
 &lt;/h5&gt;
-&lt;div id=&#34;outline-text-headline-47&#34; class=&#34;outline-text-5&#34;&gt;
+&lt;div id=&#34;outline-text-headline-49&#34; class=&#34;outline-text-5&#34;&gt;
 &lt;ol&gt;
 &lt;li&gt;screen -dmS test：在后台启动一个新的 screen 会话，命名为 test。&lt;/li&gt;
 &lt;li&gt;screen -S test -X stuff &amp;#34;ls -a\n&amp;#34;：向名为 test 的 screen 会话的当前窗口发送 ls -a 命令并执行。&lt;/li&gt;
@@ -763,11 +840,11 @@ scrcpy 功能非常地强大，可以通过一些参数命令设置屏幕控制�
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-48&#34; class=&#34;outline-4&#34;&gt;
-&lt;h4 id=&#34;headline-48&#34;&gt;
+&lt;div id=&#34;outline-container-headline-50&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-50&#34;&gt;
 参考链接
 &lt;/h4&gt;
-&lt;div id=&#34;outline-text-headline-48&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;div id=&#34;outline-text-headline-50&#34; class=&#34;outline-text-4&#34;&gt;
 &lt;p&gt;
 &lt;a href=&#34;https://cloud.tencent.com/developer/article/1856896&#34;&gt;用bash脚本创建screen并向其发送命令&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
