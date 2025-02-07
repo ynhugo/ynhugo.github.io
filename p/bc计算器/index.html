@@ -512,9 +512,23 @@ sqrt(x) 计算根号下x</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;obase=16; </span><span class="k">$(</span><span class="nb">echo</span> <span class="k">$((</span><span class="m">1</span>&lt;&lt;<span class="m">29</span><span class="k">)))</span><span class="s2">&#34;</span> <span class="p">|</span> bc</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;obase=16; </span><span class="k">$(</span><span class="nb">echo</span> <span class="k">$((</span><span class="m">1</span><span class="s">&lt;&lt;29)))&#34; | bc
+</span></span></span><span class="line"><span class="cl"><span class="s">  echo &#34;obase=16; $(((1 &lt;&lt; 2</span><span class="m">2</span><span class="o">)</span> <span class="o">|</span> <span class="o">(</span><span class="m">1</span> <span class="s">&lt;&lt; 20) | (4 &lt;&lt; 12</span><span class="o">)</span> <span class="o">|</span> <span class="m">6</span><span class="k">))</span><span class="s2">&#34; | bc</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+或</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nv">temp</span><span class="o">=</span>0<span class="p">;</span> <span class="nv">temp</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="s2">&#34;</span><span class="k">$((</span><span class="o">(</span><span class="m">1</span> <span class="s">&lt;&lt; 22) | (1 &lt;&lt; 2</span><span class="m">0</span><span class="o">)</span> <span class="o">|</span> <span class="o">(</span><span class="m">4</span> <span class="s">&lt;&lt; 12) | 6))&#34; | bc); echo &#34;obase=1</span><span class="m">6</span><span class="p">;</span> <span class="nv">$temp</span><span class="s2">&#34; | bc</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
