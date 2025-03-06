@@ -442,9 +442,14 @@ server.c
 </span><span class="lnt">58
 </span><span class="lnt">59
 </span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">  <span class="cm">/* File Name: server.c */</span>
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">  <span class="cm">/*
+</span></span></span><span class="line"><span class="cl"><span class="cm">	File Name: server.c
+</span></span></span><span class="line"><span class="cl"><span class="cm">  ,*/</span>
 </span></span><span class="line"><span class="cl">  <span class="cp">#include</span><span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span>  <span class="cp">#include</span><span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span>  <span class="cp">#include</span><span class="cpf">&lt;string.h&gt;</span><span class="cp">
@@ -453,16 +458,17 @@ server.c
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span>  <span class="cp">#include</span><span class="cpf">&lt;sys/socket.h&gt;</span><span class="cp">
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span>  <span class="cp">#include</span><span class="cpf">&lt;netinet/in.h&gt;</span><span class="cp">
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span>  <span class="cp">#include</span><span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span>  <span class="cp">#define DEFAULT_PORT 8000
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl">  <span class="cp">#define DEFAULT_PORT 8000
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span>  <span class="cp">#define MAXLINE 4096
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span>  <span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">**</span> <span class="n">argv</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">  <span class="p">{</span>
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">**</span> <span class="n">argv</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">	  <span class="kt">int</span>    <span class="n">socket_fd</span><span class="p">,</span> <span class="n">connect_fd</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">	  <span class="k">struct</span> <span class="n">sockaddr_in</span>     <span class="n">servaddr</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">	  <span class="kt">char</span>    <span class="n">buff</span><span class="p">[</span><span class="mi">4096</span><span class="p">];</span>
 </span></span><span class="line"><span class="cl">	  <span class="kt">int</span>     <span class="n">n</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">	  <span class="c1">//初始化Socket
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	  <span class="k">if</span><span class="p">(</span> <span class="p">(</span><span class="n">socket_fd</span> <span class="o">=</span> <span class="nf">socket</span><span class="p">(</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">SOCK_STREAM</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="p">){</span>
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	  <span class="k">if</span><span class="p">(</span> <span class="p">(</span><span class="n">socket_fd</span> <span class="o">=</span> <span class="nf">socket</span><span class="p">(</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">SOCK_STREAM</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">		  <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;create socket error: %s(errno: %d)</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="nf">strerror</span><span class="p">(</span><span class="n">errno</span><span class="p">),</span><span class="n">errno</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">		  <span class="nf">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">	  <span class="p">}</span>
@@ -473,26 +479,26 @@ server.c
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>	  <span class="n">servaddr</span><span class="p">.</span><span class="n">sin_port</span> <span class="o">=</span> <span class="nf">htons</span><span class="p">(</span><span class="n">DEFAULT_PORT</span><span class="p">);</span><span class="c1">//设置的端口为DEFAULT_PORT
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>
 </span></span><span class="line"><span class="cl">	  <span class="c1">//将本地地址绑定到所创建的套接字上
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	  <span class="k">if</span><span class="p">(</span> <span class="nf">bind</span><span class="p">(</span><span class="n">socket_fd</span><span class="p">,</span> <span class="p">(</span><span class="k">struct</span> <span class="n">sockaddr</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">servaddr</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">servaddr</span><span class="p">))</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">){</span>
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	  <span class="k">if</span><span class="p">(</span> <span class="nf">bind</span><span class="p">(</span><span class="n">socket_fd</span><span class="p">,</span> <span class="p">(</span><span class="k">struct</span> <span class="n">sockaddr</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">servaddr</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">servaddr</span><span class="p">))</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">		  <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;bind socket error: %s(errno: %d)</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="nf">strerror</span><span class="p">(</span><span class="n">errno</span><span class="p">),</span><span class="n">errno</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">		  <span class="nf">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">	  <span class="p">}</span>
 </span></span><span class="line"><span class="cl">	  <span class="c1">//开始监听是否有客户端连接
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	  <span class="k">if</span><span class="p">(</span> <span class="nf">listen</span><span class="p">(</span><span class="n">socket_fd</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">){</span>
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	  <span class="k">if</span><span class="p">(</span> <span class="nf">listen</span><span class="p">(</span><span class="n">socket_fd</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">		  <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;listen socket error: %s(errno: %d)</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="nf">strerror</span><span class="p">(</span><span class="n">errno</span><span class="p">),</span><span class="n">errno</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">		  <span class="nf">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">	  <span class="p">}</span>
 </span></span><span class="line"><span class="cl">	  <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;======waiting for client&#39;s request======</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">	  <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">  <span class="c1">//阻塞直到有客户端连接，不然多浪费CPU资源。
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		  <span class="k">if</span><span class="p">(</span> <span class="p">(</span><span class="n">connect_fd</span> <span class="o">=</span> <span class="nf">accept</span><span class="p">(</span><span class="n">socket_fd</span><span class="p">,</span> <span class="p">(</span><span class="k">struct</span> <span class="n">sockaddr</span><span class="o">*</span><span class="p">)</span><span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">))</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		  <span class="c1">//阻塞直到有客户端连接，不然多浪费CPU资源。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		  <span class="k">if</span><span class="p">(</span> <span class="p">(</span><span class="n">connect_fd</span> <span class="o">=</span> <span class="nf">accept</span><span class="p">(</span><span class="n">socket_fd</span><span class="p">,</span> <span class="p">(</span><span class="k">struct</span> <span class="n">sockaddr</span><span class="o">*</span><span class="p">)</span><span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">))</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">			  <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;accept socket error: %s(errno: %d)&#34;</span><span class="p">,</span><span class="nf">strerror</span><span class="p">(</span><span class="n">errno</span><span class="p">),</span><span class="n">errno</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">			  <span class="k">continue</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">		  <span class="p">}</span>
-</span></span><span class="line"><span class="cl">  <span class="c1">//接受客户端传过来的数据
+</span></span><span class="line"><span class="cl">		  <span class="c1">//接受客户端传过来的数据
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>		  <span class="n">n</span> <span class="o">=</span> <span class="nf">recv</span><span class="p">(</span><span class="n">connect_fd</span><span class="p">,</span> <span class="n">buff</span><span class="p">,</span> <span class="n">MAXLINE</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">  <span class="c1">//向客户端发送回应数据
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		  <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nf">fork</span><span class="p">()){</span> <span class="cm">/*紫禁城*/</span>
+</span></span><span class="line"><span class="cl">		  <span class="c1">//向客户端发送回应数据
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		  <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nf">fork</span><span class="p">())</span> <span class="p">{</span> <span class="cm">/*紫禁城*/</span>
 </span></span><span class="line"><span class="cl">			  <span class="k">if</span><span class="p">(</span><span class="nf">send</span><span class="p">(</span><span class="n">connect_fd</span><span class="p">,</span> <span class="s">&#34;Hello,you are connected!</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="mi">26</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">				  <span class="nf">perror</span><span class="p">(</span><span class="s">&#34;send error&#34;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">			  <span class="nf">close</span><span class="p">(</span><span class="n">connect_fd</span><span class="p">);</span>
@@ -582,11 +588,11 @@ client.c
 </span><span class="lnt">63
 </span><span class="lnt">64
 </span><span class="lnt">65
-</span><span class="lnt">66
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">  <span class="cm">/* File Name: client.c */</span>
-</span></span><span class="line"><span class="cl">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">  <span class="cm">/*
+</span></span></span><span class="line"><span class="cl"><span class="cm">	File Name: client.c
+</span></span></span><span class="line"><span class="cl"><span class="cm">  ,*/</span>
 </span></span><span class="line"><span class="cl">  <span class="cp">#include</span><span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span>  <span class="cp">#include</span><span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span>  <span class="cp">#include</span><span class="cpf">&lt;string.h&gt;</span><span class="cp">
@@ -600,21 +606,20 @@ client.c
 </span></span><span class="line"><span class="cl">  <span class="cp">#define MAXLINE 4096
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">**</span> <span class="n">argv</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">  <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">**</span> <span class="n">argv</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">	  <span class="kt">int</span>    <span class="n">sockfd</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span><span class="n">rec_len</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">	  <span class="kt">char</span>    <span class="n">recvline</span><span class="p">[</span><span class="mi">4096</span><span class="p">],</span> <span class="n">sendline</span><span class="p">[</span><span class="mi">4096</span><span class="p">];</span>
 </span></span><span class="line"><span class="cl">	  <span class="kt">char</span>    <span class="n">buf</span><span class="p">[</span><span class="n">MAXLINE</span><span class="p">];</span>
 </span></span><span class="line"><span class="cl">	  <span class="k">struct</span> <span class="n">sockaddr_in</span>    <span class="n">servaddr</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	  <span class="k">if</span><span class="p">(</span> <span class="n">argc</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">if</span><span class="p">(</span> <span class="n">argc</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">		  <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;usage: ./client &lt;ipaddress&gt;</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">		  <span class="nf">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">	  <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	  <span class="k">if</span><span class="p">(</span> <span class="p">(</span><span class="n">sockfd</span> <span class="o">=</span> <span class="nf">socket</span><span class="p">(</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">SOCK_STREAM</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">if</span><span class="p">(</span> <span class="p">(</span><span class="n">sockfd</span> <span class="o">=</span> <span class="nf">socket</span><span class="p">(</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">SOCK_STREAM</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">		  <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;create socket error: %s(errno: %d)</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="nf">strerror</span><span class="p">(</span><span class="n">errno</span><span class="p">),</span><span class="n">errno</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">		  <span class="nf">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">	  <span class="p">}</span>
@@ -623,13 +628,13 @@ client.c
 </span></span><span class="line"><span class="cl">	  <span class="nf">memset</span><span class="p">(</span><span class="o">&amp;</span><span class="n">servaddr</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">servaddr</span><span class="p">));</span>
 </span></span><span class="line"><span class="cl">	  <span class="n">servaddr</span><span class="p">.</span><span class="n">sin_family</span> <span class="o">=</span> <span class="n">AF_INET</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">	  <span class="n">servaddr</span><span class="p">.</span><span class="n">sin_port</span> <span class="o">=</span> <span class="nf">htons</span><span class="p">(</span><span class="mi">8000</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">	  <span class="k">if</span><span class="p">(</span> <span class="nf">inet_pton</span><span class="p">(</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="o">&amp;</span><span class="n">servaddr</span><span class="p">.</span><span class="n">sin_addr</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">if</span><span class="p">(</span> <span class="nf">inet_pton</span><span class="p">(</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="o">&amp;</span><span class="n">servaddr</span><span class="p">.</span><span class="n">sin_addr</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">		  <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;inet_pton error for %s</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
 </span></span><span class="line"><span class="cl">		  <span class="nf">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">	  <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	  <span class="k">if</span><span class="p">(</span> <span class="nf">connect</span><span class="p">(</span><span class="n">sockfd</span><span class="p">,</span> <span class="p">(</span><span class="k">struct</span> <span class="n">sockaddr</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">servaddr</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">servaddr</span><span class="p">))</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">if</span><span class="p">(</span> <span class="nf">connect</span><span class="p">(</span><span class="n">sockfd</span><span class="p">,</span> <span class="p">(</span><span class="k">struct</span> <span class="n">sockaddr</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">servaddr</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">servaddr</span><span class="p">))</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">		  <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;connect error: %s(errno: %d)</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="nf">strerror</span><span class="p">(</span><span class="n">errno</span><span class="p">),</span><span class="n">errno</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">		  <span class="nf">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">	  <span class="p">}</span>
@@ -637,8 +642,7 @@ client.c
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">	  <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;send msg to server: </span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">	  <span class="nf">fgets</span><span class="p">(</span><span class="n">sendline</span><span class="p">,</span> <span class="mi">4096</span><span class="p">,</span> <span class="n">stdin</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">	  <span class="k">if</span><span class="p">(</span> <span class="nf">send</span><span class="p">(</span><span class="n">sockfd</span><span class="p">,</span> <span class="n">sendline</span><span class="p">,</span> <span class="nf">strlen</span><span class="p">(</span><span class="n">sendline</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	  <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">if</span><span class="p">(</span> <span class="nf">send</span><span class="p">(</span><span class="n">sockfd</span><span class="p">,</span> <span class="n">sendline</span><span class="p">,</span> <span class="nf">strlen</span><span class="p">(</span><span class="n">sendline</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">		  <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;send msg error: %s(errno: %d)</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="nf">strerror</span><span class="p">(</span><span class="n">errno</span><span class="p">),</span> <span class="n">errno</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">		  <span class="nf">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">	  <span class="p">}</span>
