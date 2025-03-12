@@ -25,6 +25,9 @@ Petalinux BSP安装
 &lt;div id=&#34;outline-text-headline-2&#34; class=&#34;outline-text-3&#34;&gt;
 &lt;p&gt;
 &lt;a href=&#34;https://china.xilinx.com/member/forms/download/xef.html?filename=xilinx-zcu102-zu9-es2-rev1.0-v2018.3-final.bsp&#34;&gt;ZCU102 ZU9 ES2 Rev 1.0 BSP v2018.3&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;
+BSP 使用要通过 Petalinux 来进行，因此首先激活 Petalinux 环境。source settings.sh
+petalinux-create -t project -s &amp;lt;BSP路径&amp;gt;，通过此命令即可使用下载好的 BSP 创建出对应的 Petalinux 工程。&lt;/p&gt;
 &lt;div class=&#34;src src-text&#34;&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -35,15 +38,32 @@ Petalinux BSP安装
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
+&lt;p&gt;里面的 Pre-build 即为预先编译好的 images，可以直接拿去用。如果要求不高，至此就已经结束了。
+如果想进行一些自定义，里面也有 vivado 工程、也可以像前一篇一样进行 config、build。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-3&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-3&#34;&gt;
+参考链接
+&lt;/h3&gt;
+&lt;div id=&#34;outline-text-headline-3&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;p&gt;
+https://docs.amd.com/v/u/zh-CN/ug1144-petalinux-tools-reference-guide&lt;/p&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://foreveryolo.top/posts/3/index.html&#34;&gt;ZCU102初步-使用 Petalinux 基于 BSP 构建 Linux&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://blog.csdn.net/yueni_zhao/article/details/131654601&#34;&gt;petalinux驱动实践:起步篇&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://foreveryolo.top/posts/3/index.html&#34;&gt;ZCU102初步-使用 Petalinux 基于 BSP 构建 Linux&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-3&#34; class=&#34;outline-2&#34;&gt;
-&lt;h2 id=&#34;headline-3&#34;&gt;
+&lt;div id=&#34;outline-container-headline-4&#34; class=&#34;outline-2&#34;&gt;
+&lt;h2 id=&#34;headline-4&#34;&gt;
 sftp使用技巧
 &lt;/h2&gt;
-&lt;div id=&#34;outline-text-headline-3&#34; class=&#34;outline-text-2&#34;&gt;
+&lt;div id=&#34;outline-text-headline-4&#34; class=&#34;outline-text-2&#34;&gt;
 &lt;div class=&#34;src src-text&#34;&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -75,34 +95,21 @@ sftp使用技巧
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# 上传驱动
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sftp root@192.168.1.10 &amp;lt;&amp;lt; EOF
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;cd /run/media/mmcblk0p1
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;/home/ubt/petalinux/tes801/prj_3/build/tmp/sysroots-components/plnx_zynq7/xilinx-axidma/lib/modules/4.14.0-xilinx-v2018.3/extra/xilinx-axidma.ko
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;put ./build/tmp/sysroots-components/plnx_zynq7/xilinx-axidma/lib/modules/4.14.0-xilinx-v2018.3/extra/xilinx-axidma.ko
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;EOF&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;p&gt;如果要上传目录文件，可以加一个-r选项&lt;/p&gt;
-&lt;div id=&#34;outline-container-headline-4&#34; class=&#34;outline-3&#34;&gt;
-&lt;h3 id=&#34;headline-4&#34;&gt;
+&lt;div id=&#34;outline-container-headline-5&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-5&#34;&gt;
 参考链接
 &lt;/h3&gt;
-&lt;div id=&#34;outline-text-headline-4&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;div id=&#34;outline-text-headline-5&#34; class=&#34;outline-text-3&#34;&gt;
 &lt;p&gt;
 &lt;a href=&#34;https://blog.csdn.net/sunny_day_day/article/details/106746799&#34;&gt;shell ssh sftp 远程自动部署程序、上传文件，sftp文件上传下载shell脚本&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-5&#34; class=&#34;outline-2&#34;&gt;
-&lt;h2 id=&#34;headline-5&#34;&gt;
-参考链接
-&lt;/h2&gt;
-&lt;div id=&#34;outline-text-headline-5&#34; class=&#34;outline-text-2&#34;&gt;
-&lt;p&gt;
-https://docs.amd.com/v/u/zh-CN/ug1144-petalinux-tools-reference-guide&lt;/p&gt;
-&lt;p&gt;
-&lt;a href=&#34;https://foreveryolo.top/posts/3/index.html&#34;&gt;ZCU102初步-使用 Petalinux 基于 BSP 构建 Linux&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;
-&lt;a href=&#34;https://blog.csdn.net/yueni_zhao/article/details/131654601&#34;&gt;petalinux驱动实践:起步篇&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 </description>
