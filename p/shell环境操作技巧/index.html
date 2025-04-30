@@ -4116,23 +4116,30 @@ sed使用技巧
 </span><span class="lnt"> 8
 </span><span class="lnt"> 9
 </span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="c1"># 参考</span>
-</span></span><span class="line"><span class="cl">  <span class="c1"># str1=&#34;)&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="c1"># str2=&#34; hi1910B-asic-M100-B69.dts&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="c1"># sed -i &#34;${dtsFileListLine}s/${str1}/${str2}&amp;/&#34; CMakeLists.txt</span>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="c1"># 查看有多少个pcie控制器</span>
+</span></span><span class="line"><span class="cl">  sed -i <span class="s1">&#39;/^[[:space:]]*\/\*/d&#39;</span> product/hi1910B-pcie-rc-M150-B50.dtsi
+</span></span><span class="line"><span class="cl">  sed -i <span class="s1">&#39;/^[[:space:]]*\*\//d&#39;</span> product/hi1910B-pcie-rc-M150-B50.dtsi
+</span></span><span class="line"><span class="cl">  mapfile -t array1 &lt; &lt;<span class="o">(</span>grep -oE <span class="s2">&#34;pcie@.*{&#34;</span> product/hi1910B-pcie-rc-M150-B50.dtsi<span class="o">)</span><span class="p">;</span> <span class="k">for</span> <span class="o">((</span><span class="nv">i</span> <span class="o">=</span> 0<span class="p">;</span> i &lt; <span class="si">${#</span><span class="nv">array1</span><span class="p">[@]</span><span class="si">}</span><span class="p">;</span> i++<span class="o">))</span><span class="p">;</span> <span class="k">do</span> <span class="nb">echo</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">array1</span><span class="p">[i]</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span> <span class="k">done</span>  
+</span></span><span class="line"><span class="cl">  <span class="c1"># 添加 ^[[:space:]]* 只匹配行首的注释  </span>
+</span></span><span class="line"><span class="cl">  <span class="nv">str1</span><span class="o">=</span><span class="s2">&#34;/*&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">str2</span><span class="o">=</span><span class="s2">&#34;*/&#34;</span>
+</span></span><span class="line"><span class="cl">  sed -i <span class="s2">&#34;/</span><span class="si">${</span><span class="nv">array1</span><span class="p">[2]</span><span class="si">}</span><span class="s2">/i\\</span><span class="si">${</span><span class="nv">str1</span><span class="si">}</span><span class="s2">&#34;</span> product/hi1910B-pcie-rc-M150-B50.dtsi
+</span></span><span class="line"><span class="cl">  mapfile -t array2 &lt; &lt;<span class="o">(</span>grep -noE <span class="s2">&#34;};&#34;</span> product/hi1910B-pcie-rc-M150-B50.dtsi <span class="p">|</span> awk -F <span class="s1">&#39;:&#39;</span> <span class="s1">&#39;{print $1}&#39;</span><span class="o">)</span><span class="p">;</span> <span class="k">for</span> <span class="o">((</span><span class="nv">i</span> <span class="o">=</span> 0<span class="p">;</span> i &lt; <span class="si">${#</span><span class="nv">array2</span><span class="p">[@]</span><span class="si">}</span><span class="p">;</span> i++<span class="o">))</span><span class="p">;</span> <span class="k">do</span> <span class="nb">echo</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">array2</span><span class="p">[i]</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span> <span class="k">done</span>
+</span></span><span class="line"><span class="cl">  sed -i <span class="s2">&#34;</span><span class="si">${</span><span class="nv">array2</span><span class="p">[2]</span><span class="si">}</span><span class="s2"> a </span><span class="si">${</span><span class="nv">str2</span><span class="si">}</span><span class="s2">&#34;</span> product/hi1910B-pcie-rc-M150-B50.dtsi
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="c1"># 查看有多少个pcie控制器</span>
-</span></span><span class="line"><span class="cl">  mapfile -t array1 &lt; &lt;<span class="o">(</span>grep -E <span class="s2">&#34;pcie@.*{&#34;</span> product/hi1910B-pcie-rc-M150-B50.dtsi<span class="o">)</span><span class="p">;</span> <span class="k">for</span> <span class="o">((</span><span class="nv">i</span> <span class="o">=</span> 0<span class="p">;</span> i &lt; <span class="si">${#</span><span class="nv">array1</span><span class="p">[@]</span><span class="si">}</span><span class="p">;</span> i++<span class="o">))</span><span class="p">;</span> <span class="k">do</span> <span class="nb">echo</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">array1</span><span class="p">[i]</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span> <span class="k">done</span>  
-</span></span><span class="line"><span class="cl">  <span class="nv">str1</span><span class="o">=</span><span class="s2">&#34;/*&#34;</span><span class="p">;</span> <span class="nv">str2</span><span class="o">=</span><span class="s2">&#34;*/&#34;</span>
-</span></span><span class="line"><span class="cl">  sed -e <span class="s2">&#34;/</span><span class="si">${</span><span class="nv">array1</span><span class="p">[0]</span><span class="si">}</span><span class="s2">/i\\&#34;</span> -e <span class="s2">&#34;</span><span class="si">${</span><span class="nv">str1</span><span class="si">}</span><span class="s2">&#34;</span> product/hi1910B-pcie-rc-M150-B50.dtsi
-</span></span><span class="line"><span class="cl">  sed -e <span class="s2">&#34;/</span><span class="si">${</span><span class="nv">array1</span><span class="p">[1]</span><span class="si">}</span><span class="s2">/i\\&#34;</span> -e <span class="s2">&#34;</span><span class="si">${</span><span class="nv">str2</span><span class="si">}${</span><span class="nv">str1</span><span class="si">}</span><span class="s2">&#34;</span> product/hi1910B-pcie-rc-M150-B50.dtsi</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">  sed -i <span class="s2">&#34;/</span><span class="si">${</span><span class="nv">array1</span><span class="p">[3]</span><span class="si">}</span><span class="s2">/i\\</span><span class="si">${</span><span class="nv">str1</span><span class="si">}</span><span class="s2">&#34;</span> product/hi1910B-pcie-rc-M150-B50.dtsi
+</span></span><span class="line"><span class="cl">  mapfile -t array2 &lt; &lt;<span class="o">(</span>grep -noE <span class="s2">&#34;};&#34;</span> product/hi1910B-pcie-rc-M150-B50.dtsi <span class="p">|</span> awk -F <span class="s1">&#39;:&#39;</span> <span class="s1">&#39;{print $1}&#39;</span><span class="o">)</span><span class="p">;</span> <span class="k">for</span> <span class="o">((</span><span class="nv">i</span> <span class="o">=</span> 0<span class="p">;</span> i &lt; <span class="si">${#</span><span class="nv">array2</span><span class="p">[@]</span><span class="si">}</span><span class="p">;</span> i++<span class="o">))</span><span class="p">;</span> <span class="k">do</span> <span class="nb">echo</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">array2</span><span class="p">[i]</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span> <span class="k">done</span>
+</span></span><span class="line"><span class="cl">  sed -i <span class="s2">&#34;</span><span class="si">${</span><span class="nv">array2</span><span class="p">[3]</span><span class="si">}</span><span class="s2"> a </span><span class="si">${</span><span class="nv">str2</span><span class="si">}</span><span class="s2">&#34;</span> product/hi1910B-pcie-rc-M150-B50.dtsi</span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
-<p>i\\ 表示插入命令，中间的-e 分隔多个表达式
-${str1} 的内容会被插入到匹配行之前</p>
+<p>这段脚本的主要功能是修改设备树文件(hi1910B-pcie-rc-M150-B50.dtsi)，具体操作包括删除现有注释、查找PCIe控制器定义、并在特定PCIe控制器前后添加注释标记</p>
 </div>
 </div>
 
