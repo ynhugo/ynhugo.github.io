@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-cn" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='脚本内容 1 2 3 4 5 6 7 create vdisk file=d:\test_vhd.vhd maximum=1024 type=fixed select vdisk file=d:\test_vhd.vhd attach vdisk create partition primary assign letter=Z format quick label=vhd detach vdisk 在D盘根目录创建一个1G的固定磁盘，选中并连接该磁盘文件，接着创建主分区并快速'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='脚本内容 创建一个txt文件如test.txt，将以下脚本内容添加到txt文件中 1 2 3 4 5 6 7 create vdisk file=d:\test_vhd.vhd maximum=1024 type=fixed select vdisk file=d:\test_vhd.vhd attach vdisk create partition primary assign letter=Z format quick label=vhd detach vdisk 在D盘根'>
 <title>Diskpart自动脚本</title>
 
 <link rel='canonical' href='https://ynhugo.github.io/p/diskpart%E8%87%AA%E5%8A%A8%E8%84%9A%E6%9C%AC/'>
 
 <link rel="stylesheet" href="/scss/style.min.2328f6a64e9c190e18c4f69895d0081330e55c8210e9395d11068ea1d881517f.css"><meta property='og:title' content='Diskpart自动脚本'>
-<meta property='og:description' content='脚本内容 1 2 3 4 5 6 7 create vdisk file=d:\test_vhd.vhd maximum=1024 type=fixed select vdisk file=d:\test_vhd.vhd attach vdisk create partition primary assign letter=Z format quick label=vhd detach vdisk 在D盘根目录创建一个1G的固定磁盘，选中并连接该磁盘文件，接着创建主分区并快速'>
+<meta property='og:description' content='脚本内容 创建一个txt文件如test.txt，将以下脚本内容添加到txt文件中 1 2 3 4 5 6 7 create vdisk file=d:\test_vhd.vhd maximum=1024 type=fixed select vdisk file=d:\test_vhd.vhd attach vdisk create partition primary assign letter=Z format quick label=vhd detach vdisk 在D盘根'>
 <meta property='og:url' content='https://ynhugo.github.io/p/diskpart%E8%87%AA%E5%8A%A8%E8%84%9A%E6%9C%AC/'>
 <meta property='og:site_name' content='ynblog'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='windows' /><meta property='article:tag' content='VHD' /><meta property='article:tag' content='Diskpart' />
 <meta name="twitter:title" content="Diskpart自动脚本">
-<meta name="twitter:description" content="脚本内容 1 2 3 4 5 6 7 create vdisk file=d:\test_vhd.vhd maximum=1024 type=fixed select vdisk file=d:\test_vhd.vhd attach vdisk create partition primary assign letter=Z format quick label=vhd detach vdisk 在D盘根目录创建一个1G的固定磁盘，选中并连接该磁盘文件，接着创建主分区并快速">
+<meta name="twitter:description" content="脚本内容 创建一个txt文件如test.txt，将以下脚本内容添加到txt文件中 1 2 3 4 5 6 7 create vdisk file=d:\test_vhd.vhd maximum=1024 type=fixed select vdisk file=d:\test_vhd.vhd attach vdisk create partition primary assign letter=Z format quick label=vhd detach vdisk 在D盘根">
     <link rel="shortcut icon" href="/img/favicon.ico" />
 
     </head>
@@ -281,7 +281,9 @@
 <ul>
 <li><a href="#headline-1">脚本内容</a>
 <ul>
-<li><a href="#headline-2">参考链接</a>
+<li><a href="#headline-2">脚本执行方式</a>
+</li>
+<li><a href="#headline-3">参考链接</a>
 </li>
 </ul>
 </li>
@@ -349,6 +351,8 @@
 脚本内容
 </h2>
 <div id="outline-text-headline-1" class="outline-text-2">
+<p>
+创建一个txt文件如test.txt，将以下脚本内容添加到txt文件中</p>
 <div class="src src-text">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -374,9 +378,26 @@
 <p>在D盘根目录创建一个1G的固定磁盘，选中并连接该磁盘文件，接着创建主分区并快速格式化，然后分离该磁盘文件</p>
 <div id="outline-container-headline-2" class="outline-3">
 <h3 id="headline-2">
-参考链接
+脚本执行方式
 </h3>
 <div id="outline-text-headline-2" class="outline-text-3">
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">diskpart -s test.txt</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-3" class="outline-3">
+<h3 id="headline-3">
+参考链接
+</h3>
+<div id="outline-text-headline-3" class="outline-text-3">
 <p>
 <a href="https://www.cnblogs.com/ruiy/p/CLIMakeVhd.html">windows 基于命令行制作vhd虚拟磁盘</a></p>
 <p>
