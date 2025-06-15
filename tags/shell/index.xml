@@ -3755,6 +3755,172 @@ sed使用技巧
 &lt;p&gt;这段脚本的主要功能是修改设备树文件(hi1910B-pcie-rc-M150-B50.dtsi)，具体操作包括删除现有注释、查找PCIe控制器定义、并在特定PCIe控制器前后添加注释标记&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-131&#34; class=&#34;outline-2&#34;&gt;
+&lt;h2 id=&#34;headline-131&#34;&gt;
+Bash 命令行选项解析
+&lt;/h2&gt;
+&lt;div id=&#34;outline-text-headline-131&#34; class=&#34;outline-text-2&#34;&gt;
+&lt;div class=&#34;src src-bash&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;k&#34;&gt;while&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;getopts&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;hv&amp;#34;&lt;/span&gt; opt&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;do&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;k&#34;&gt;case&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$opt&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt; in
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	  h&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;		&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;h&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;		&lt;span class=&#34;p&#34;&gt;;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	  v&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;		&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;v&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;		&lt;span class=&#34;p&#34;&gt;;;&lt;/span&gt;	  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;k&#34;&gt;esac&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;k&#34;&gt;done&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nb&#34;&gt;shift&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;$((&lt;/span&gt;OPTIND &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;))&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;
+解析：Deepseek
+这个脚本是一个典型的 Bash shell 脚本片段，用于处理命令行参数。下面我来逐行解析它的功能：&lt;/p&gt;
+&lt;div id=&#34;outline-container-headline-132&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-132&#34;&gt;
+1. while getopts &amp;#34;hv&amp;#34; opt; do
+&lt;/h3&gt;
+&lt;div id=&#34;outline-text-headline-132&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;ul&gt;
+&lt;li&gt;getopts 是 Bash 内置的命令行选项解析器&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&amp;#34;hv&amp;#34; 定义了脚本接受的选项：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;-h 是一个选项&lt;/li&gt;
+&lt;li&gt;-v 是另一个选项&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;opt 是变量，用于存储当前处理的选项字符&lt;/li&gt;
+&lt;li&gt;这个 while 循环会遍历所有提供的命令行选项&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-133&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-133&#34;&gt;
+2. case &amp;#34;$opt&amp;#34; in
+&lt;/h3&gt;
+&lt;div id=&#34;outline-text-headline-133&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;ul&gt;
+&lt;li&gt;开始一个 case 语句，根据当前选项 $opt 的值执行不同的操作&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-134&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-134&#34;&gt;
+3. h)
+&lt;/h3&gt;
+&lt;div id=&#34;outline-text-headline-134&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;ul&gt;
+&lt;li&gt;当选项是 -h 时的处理分支&lt;/li&gt;
+&lt;li&gt;echo &amp;#34;h&amp;#34;：简单地输出字母 &amp;#34;h&amp;#34;&lt;/li&gt;
+&lt;li&gt;;; 表示这个 case 分支的结束&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-135&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-135&#34;&gt;
+4. v)
+&lt;/h3&gt;
+&lt;div id=&#34;outline-text-headline-135&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;ul&gt;
+&lt;li&gt;当选项是 -v 时的处理分支&lt;/li&gt;
+&lt;li&gt;echo &amp;#34;v&amp;#34;：简单地输出字母 &amp;#34;v&amp;#34;&lt;/li&gt;
+&lt;li&gt;;; 表示这个 case 分支的结束&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-136&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-136&#34;&gt;
+5. esac 和 done
+&lt;/h3&gt;
+&lt;div id=&#34;outline-text-headline-136&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;ul&gt;
+&lt;li&gt;esac 结束 case 语句&lt;/li&gt;
+&lt;li&gt;done 结束 while 循环&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-137&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-137&#34;&gt;
+6. shift &amp;#34;$((OPTIND - 1))&amp;#34;
+&lt;/h3&gt;
+&lt;div id=&#34;outline-text-headline-137&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;ul&gt;
+&lt;li&gt;OPTIND 是 getopts 维护的变量，表示下一个要处理的参数的索引&lt;/li&gt;
+&lt;li&gt;$((OPTIND - 1)) 计算需要移除的已处理选项数量&lt;/li&gt;
+&lt;li&gt;shift 命令将位置参数向左移动，移除已经处理过的选项&lt;/li&gt;
+&lt;li&gt;这样处理之后，$1 将指向第一个非选项参数&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-138&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-138&#34;&gt;
+示例用法：
+&lt;/h3&gt;
+&lt;div id=&#34;outline-text-headline-138&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;如果运行脚本时输入 script.sh -h -v：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;会输出：
+
+h
+v&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;如果运行 script.sh -h file.txt：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;会输出 h&lt;/li&gt;
+&lt;li&gt;然后 file.txt 会成为第一个位置参数（$1）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-139&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-139&#34;&gt;
+总结：
+&lt;/h3&gt;
+&lt;div id=&#34;outline-text-headline-139&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;p&gt;这个脚本处理两个选项：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;-h：输出 &amp;#34;h&amp;#34;&lt;/li&gt;
+&lt;li&gt;-v：输出 &amp;#34;v&amp;#34;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;然后使用 shift 调整位置参数，使得后续代码可以方便地处理非选项参数。&lt;/p&gt;
+&lt;p&gt;
+这是一个基础的命令行选项处理框架，实际应用中通常会在各个 case 分支中执行更复杂的操作，而不仅仅是 echo。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-140&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-140&#34;&gt;
+参考链接
+&lt;/h3&gt;
+&lt;div id=&#34;outline-text-headline-140&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://gitee.com/HUAWEI-ASCEND/ascend-devkit/blob/master/src/image-builder/src/minimal/base.sh&#34;&gt;ascend-devkit/src/image-builder/src/minimal/base.sh&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
 </description>
         </item>
         
