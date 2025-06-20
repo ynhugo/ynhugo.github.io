@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-cn" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='安装Cygwi 基本选项 官网链接 选择通过网络安装 选择root目录，安装用户选择仅个人 选择安装的包的路径 使用系统代理，选择下载源如中科大的或阿里'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='安装Cygwi 基本选项 Cygwin 选择通过网络安装 选择root目录，安装用户选择仅个人 选择安装的包的路径 使用系统代理，选择下载源如中科大的或阿里云等国'>
 <title>Cygwin安装与配置</title>
 
 <link rel='canonical' href='https://ynhugo.github.io/p/cygwin%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/'>
 
 <link rel="stylesheet" href="/scss/style.min.2328f6a64e9c190e18c4f69895d0081330e55c8210e9395d11068ea1d881517f.css"><meta property='og:title' content='Cygwin安装与配置'>
-<meta property='og:description' content='安装Cygwi 基本选项 官网链接 选择通过网络安装 选择root目录，安装用户选择仅个人 选择安装的包的路径 使用系统代理，选择下载源如中科大的或阿里'>
+<meta property='og:description' content='安装Cygwi 基本选项 Cygwin 选择通过网络安装 选择root目录，安装用户选择仅个人 选择安装的包的路径 使用系统代理，选择下载源如中科大的或阿里云等国'>
 <meta property='og:url' content='https://ynhugo.github.io/p/cygwin%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/'>
 <meta property='og:site_name' content='ynblog'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='cygwin' />
 <meta name="twitter:title" content="Cygwin安装与配置">
-<meta name="twitter:description" content="安装Cygwi 基本选项 官网链接 选择通过网络安装 选择root目录，安装用户选择仅个人 选择安装的包的路径 使用系统代理，选择下载源如中科大的或阿里">
+<meta name="twitter:description" content="安装Cygwi 基本选项 Cygwin 选择通过网络安装 选择root目录，安装用户选择仅个人 选择安装的包的路径 使用系统代理，选择下载源如中科大的或阿里云等国">
     <link rel="shortcut icon" href="/img/favicon.ico" />
 
     </head>
@@ -278,19 +278,44 @@
         
         <div class="widget--toc">
             <nav id="TableOfContents">
-  <ol>
-    <li><a href="#基本选项">基本选项</a></li>
-    <li><a href="#安装工具选择">安装工具选择</a></li>
-  </ol>
-
-  <ol>
-    <li><a href="#方式一">方式一</a></li>
-    <li><a href="#方式二">方式二</a></li>
-  </ol>
-
-  <ol>
-    <li><a href="#在当前文件夹打开">在当前文件夹打开</a></li>
-  </ol>
+<ul>
+<li><a href="#headline-1">安装Cygwi</a>
+<ul>
+<li><a href="#headline-2">基本选项</a>
+</li>
+<li><a href="#headline-3">安装工具选择</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-4">cygwin 命令行安装库</a>
+<ul>
+<li><a href="#headline-5">cygwin安装程序介绍</a>
+</li>
+<li><a href="#headline-6">前提</a>
+</li>
+<li><a href="#headline-7">一键安装命令</a>
+</li>
+<li><a href="#headline-8">参考链接</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-9">配置apt-cyg</a>
+<ul>
+<li><a href="#headline-10">方式一</a>
+</li>
+<li><a href="#headline-11">方式二</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-12">需要添加的环境变量</a>
+<ul>
+<li><a href="#headline-13">参考链接</a>
+</li>
+<li><a href="#headline-14">在当前文件夹打开</a>
+</li>
+</ul>
+</li>
+</ul>
 </nav>
         </div>
     </section>
@@ -333,7 +358,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 7 分钟
+                    阅读时长: 8 分钟
                 </time>
             </div>
         
@@ -348,44 +373,193 @@
     <section class="article-content">
     
     
-    <h1 id="安装cygwi">安装Cygwi</h1>
-<h2 id="基本选项">基本选项</h2>
-<p><a class="link" href="https://www.cygwin.com/install.html"  target="_blank" rel="noopener"
-    >官网链接</a></p>
-<p>选择通过网络安装
+    
+<div id="outline-container-headline-1" class="outline-2">
+<h2 id="headline-1">
+安装Cygwi
+</h2>
+<div id="outline-text-headline-1" class="outline-text-2">
+<div id="outline-container-headline-2" class="outline-3">
+<h3 id="headline-2">
+基本选项
+</h3>
+<div id="outline-text-headline-2" class="outline-text-3">
+<p>
+<a href="https://www.cygwin.com/install.html">Cygwin</a></p>
+<p>
+选择通过网络安装
 选择root目录，安装用户选择仅个人
 选择安装的包的路径
 使用系统代理，选择下载源如中科大的或阿里云等国内下载源</p>
-<h2 id="安装工具选择">安装工具选择</h2>
-<p>binutils</p>
-<p>gcc-core</p>
-<p>gdb</p>
-<p>mingw64-i686-gcc-core</p>
-<p>make(必装)</p>
-<p>cmake</p>
-<p>screen</p>
-<p>还有的如：</p>
-<p>openssh</p>
-<p>unzip</p>
-<p>vim</p>
-<p>tmux</p>
-<p>git</p>
-<p>wget</p>
-<p>curl</p>
-<p>zip</p>
-<p>bc</p>
-<p>dos2unix</p>
-<p>w3m</p>
-<p>lynx</p>
-<p>emacs</p>
-<p>rsync</p>
-<p>expect</p>
-<p>jq</p>
-<p>cpio</p>
-<h1 id="配置apt-cyg">配置apt-cyg</h1>
-<h2 id="方式一">方式一</h2>
-<p>用记事本创建一个名为apt-cyg的文件，复制粘贴进去如下内容，并且文本写完后，用vscode打开，把windows下的换行符CRLF改成linux下的LF
+</div>
+</div>
+<div id="outline-container-headline-3" class="outline-3">
+<h3 id="headline-3">
+安装工具选择
+</h3>
+<div id="outline-text-headline-3" class="outline-text-3">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  binutils
+</span></span><span class="line"><span class="cl">  gcc-core
+</span></span><span class="line"><span class="cl">  gdb
+</span></span><span class="line"><span class="cl">  mingw64-i686-gcc-core
+</span></span><span class="line"><span class="cl">  make<span class="o">(</span>必装<span class="o">)</span>
+</span></span><span class="line"><span class="cl">  cmake
+</span></span><span class="line"><span class="cl">  screen
+</span></span><span class="line"><span class="cl">  <span class="c1"># 还有的如：</span>
+</span></span><span class="line"><span class="cl">  openssh
+</span></span><span class="line"><span class="cl">  unzip
+</span></span><span class="line"><span class="cl">  vim
+</span></span><span class="line"><span class="cl">  tmux
+</span></span><span class="line"><span class="cl">  git
+</span></span><span class="line"><span class="cl">  wget
+</span></span><span class="line"><span class="cl">  curl
+</span></span><span class="line"><span class="cl">  zip
+</span></span><span class="line"><span class="cl">  bc
+</span></span><span class="line"><span class="cl">  dos2unix
+</span></span><span class="line"><span class="cl">  w3m
+</span></span><span class="line"><span class="cl">  lynx
+</span></span><span class="line"><span class="cl">  emacs
+</span></span><span class="line"><span class="cl">  rsync
+</span></span><span class="line"><span class="cl">  expect
+</span></span><span class="line"><span class="cl">  jq
+</span></span><span class="line"><span class="cl">  cpio</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-4" class="outline-2">
+<h2 id="headline-4">
+cygwin 命令行安装库
+</h2>
+<div id="outline-text-headline-4" class="outline-text-2">
+<div id="outline-container-headline-5" class="outline-3">
+<h3 id="headline-5">
+cygwin安装程序介绍
+</h3>
+<div id="outline-text-headline-5" class="outline-text-3">
+<p>
+在Cygwin中安装库的过程通常涉及使用Cygwin的包管理工具setup.exe。以下是通过命令行安装库的步骤：</p>
+<ol>
+<li>打开Cygwin终端。</li>
+<li>输入setup.exe -q命令来运行安装程序，并进入交互式安装模式。</li>
+<li>当安装程序启动时，选择需要安装的库。</li>
+<li>选择库后，按照屏幕上的提示进行安装。</li>
+</ol>
+<p>如果你想要在不启动setup.exe的情况下从命令行安装库，可以使用以下命令：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  ./setup-x86_64.exe -q -P &lt;package_name&gt;</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+其中&lt;package_name&gt;是你想要安装的库的名称。例如，如果你想要安装openssh，你可以运行：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  ./setup-x86_64.exe -q -P openssh</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+请注意，你可能需要管理员权限来安装库，这取决于你的操作系统设置。如果是这样，你需要以管理员身份运行Cygwin终端。</p>
+</div>
+</div>
+<div id="outline-container-headline-6" class="outline-3">
+<h3 id="headline-6">
+前提
+</h3>
+<div id="outline-text-headline-6" class="outline-text-3">
+<ol>
+<li>exe 程序需要放到cgwin的目录下</li>
+<li>运行程序之前必须先安装cygwin</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-headline-7" class="outline-3">
+<h3 id="headline-7">
+一键安装命令
+</h3>
+<div id="outline-text-headline-7" class="outline-text-3">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">./setup-x86_64.exe -q -P binutils gcc-core gdb mingw64-i686-gcc-core make cmake screen openssh unzip vim tmux git wget curl zip bc dos2unix w3m lynx emacs rsync expect jq cpio</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-8" class="outline-3">
+<h3 id="headline-8">
+参考链接
+</h3>
+<div id="outline-text-headline-8" class="outline-text-3">
+<p>
+<a href="https://blog.csdn.net/zengliguang/article/details/139495999">cygwin 命令行安装库</a></p>
+<p>
+<a href="https://www.jianshu.com/p/715eee8c00ed">一种简便的安装Cygwin的方法</a></p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-9" class="outline-2">
+<h2 id="headline-9">
+配置apt-cyg
+</h2>
+<div id="outline-text-headline-9" class="outline-text-2">
+<div id="outline-container-headline-10" class="outline-3">
+<h3 id="headline-10">
+方式一
+</h3>
+<div id="outline-text-headline-10" class="outline-text-3">
+<p>
+用记事本创建一个名为apt-cyg的文件，复制粘贴进去如下内容，并且文本写完后，用vscode打开，把windows下的换行符CRLF改成linux下的LF
 接下来，把刚刚的apt-cyg文件剪贴到Cygwin安装目录的bin文件夹里</p>
+<div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">  1
@@ -1063,717 +1237,768 @@
 </span><span class="lnt">673
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-BASH" data-lang="BASH"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="c1"># apt-cyg: install tool for Cygwin similar to debian apt-get</span>
-</span></span><span class="line"><span class="cl"><span class="c1">#</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># The MIT License (MIT)</span>
-</span></span><span class="line"><span class="cl"><span class="c1">#</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># Copyright (c) 2013 Trans-code Design</span>
-</span></span><span class="line"><span class="cl"><span class="c1">#</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># Permission is hereby granted, free of charge, to any person obtaining a copy</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># of this software and associated documentation files (the &#34;Software&#34;), to deal</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># in the Software without restriction, including without limitation the rights</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># to use, copy, modify, merge, publish, distribute, sublicense, and/or sell</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># copies of the Software, and to permit persons to whom the Software is</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># furnished to do so, subject to the following conditions:</span>
-</span></span><span class="line"><span class="cl"><span class="c1">#</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># The above copyright notice and this permission notice shall be included in</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># all copies or substantial portions of the Software.</span>
-</span></span><span class="line"><span class="cl"><span class="c1">#</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># THE SOFTWARE IS PROVIDED &#34;AS IS&#34;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># THE SOFTWARE.</span>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="c1">#!/bin/bash</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># apt-cyg: install tool for Cygwin similar to debian apt-get</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">#</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># The MIT License (MIT)</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">#</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># Copyright (c) 2013 Trans-code Design</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">#</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># Permission is hereby granted, free of charge, to any person obtaining a copy</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># of this software and associated documentation files (the &#34;Software&#34;), to deal</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># in the Software without restriction, including without limitation the rights</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># to use, copy, modify, merge, publish, distribute, sublicense, and/or sell</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># copies of the Software, and to permit persons to whom the Software is</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># furnished to do so, subject to the following conditions:</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">#</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># The above copyright notice and this permission notice shall be included in</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># all copies or substantial portions of the Software.</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">#</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># THE SOFTWARE IS PROVIDED &#34;AS IS&#34;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># THE SOFTWARE.</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> <span class="si">${</span><span class="nv">BASH_VERSINFO</span><span class="si">}${</span><span class="nv">BASH_VERSINFO</span><span class="p">[1]</span><span class="si">}</span> -lt <span class="m">42</span> <span class="o">]</span>
-</span></span><span class="line"><span class="cl"><span class="k">then</span>
-</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s1">&#39;Bash version 4.2+ required&#39;</span>
-</span></span><span class="line"><span class="cl">  <span class="nb">exit</span>
-</span></span><span class="line"><span class="cl"><span class="k">fi</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nv">usage</span><span class="o">=</span><span class="s2">&#34;\
-</span></span></span><span class="line"><span class="cl"><span class="s2">NAME
-</span></span></span><span class="line"><span class="cl"><span class="s2">  apt-cyg - package manager utility
-</span></span></span><span class="line"><span class="cl"><span class="s2">
-</span></span></span><span class="line"><span class="cl"><span class="s2">SYNOPSIS
-</span></span></span><span class="line"><span class="cl"><span class="s2">  apt-cyg [operation] [options] [targets]
-</span></span></span><span class="line"><span class="cl"><span class="s2">
-</span></span></span><span class="line"><span class="cl"><span class="s2">DESCRIPTION
-</span></span></span><span class="line"><span class="cl"><span class="s2">  apt-cyg is a package management utility that tracks installed packages on a
-</span></span></span><span class="line"><span class="cl"><span class="s2">  Cygwin system. Invoking apt-cyg involves specifying an operation with any
-</span></span></span><span class="line"><span class="cl"><span class="s2">  potential options and targets to operate on. A target is usually a package
-</span></span></span><span class="line"><span class="cl"><span class="s2">  name, file name, URL, or a search string. Targets can be provided as command
-</span></span></span><span class="line"><span class="cl"><span class="s2">  line arguments.
-</span></span></span><span class="line"><span class="cl"><span class="s2">
-</span></span></span><span class="line"><span class="cl"><span class="s2">OPERATIONS
-</span></span></span><span class="line"><span class="cl"><span class="s2">  install
-</span></span></span><span class="line"><span class="cl"><span class="s2">    Install package(s).
-</span></span></span><span class="line"><span class="cl"><span class="s2">
-</span></span></span><span class="line"><span class="cl"><span class="s2">  remove
-</span></span></span><span class="line"><span class="cl"><span class="s2">    Remove package(s) from the system.
-</span></span></span><span class="line"><span class="cl"><span class="s2">
-</span></span></span><span class="line"><span class="cl"><span class="s2">  update
-</span></span></span><span class="line"><span class="cl"><span class="s2">    Download a fresh copy of the master package list (setup.ini) from the
-</span></span></span><span class="line"><span class="cl"><span class="s2">    server defined in setup.rc.
-</span></span></span><span class="line"><span class="cl"><span class="s2">
-</span></span></span><span class="line"><span class="cl"><span class="s2">  download
-</span></span></span><span class="line"><span class="cl"><span class="s2">    Retrieve package(s) from the server, but do not install/upgrade anything.
-</span></span></span><span class="line"><span class="cl"><span class="s2">
-</span></span></span><span class="line"><span class="cl"><span class="s2">  show
-</span></span></span><span class="line"><span class="cl"><span class="s2">    Display information on given package(s).
-</span></span></span><span class="line"><span class="cl"><span class="s2">
-</span></span></span><span class="line"><span class="cl"><span class="s2">  depends
-</span></span></span><span class="line"><span class="cl"><span class="s2">    Produce a dependency tree for a package.
-</span></span></span><span class="line"><span class="cl"><span class="s2">
-</span></span></span><span class="line"><span class="cl"><span class="s2">  rdepends
-</span></span></span><span class="line"><span class="cl"><span class="s2">    Produce a tree of packages that depend on the named package.
-</span></span></span><span class="line"><span class="cl"><span class="s2">
-</span></span></span><span class="line"><span class="cl"><span class="s2">  list
-</span></span></span><span class="line"><span class="cl"><span class="s2">    Search each locally-installed package for names that match regexp. If no
-</span></span></span><span class="line"><span class="cl"><span class="s2">    package names are provided in the command line, all installed packages will
-</span></span></span><span class="line"><span class="cl"><span class="s2">    be queried.
-</span></span></span><span class="line"><span class="cl"><span class="s2">
-</span></span></span><span class="line"><span class="cl"><span class="s2">  listall
-</span></span></span><span class="line"><span class="cl"><span class="s2">    This will search each package in the master package list (setup.ini) for
-</span></span></span><span class="line"><span class="cl"><span class="s2">    names that match regexp.
-</span></span></span><span class="line"><span class="cl"><span class="s2">
-</span></span></span><span class="line"><span class="cl"><span class="s2">  category
-</span></span></span><span class="line"><span class="cl"><span class="s2">    Display all packages that are members of a named category.
-</span></span></span><span class="line"><span class="cl"><span class="s2">
-</span></span></span><span class="line"><span class="cl"><span class="s2">  listfiles
-</span></span></span><span class="line"><span class="cl"><span class="s2">    List all files owned by a given package. Multiple packages can be specified
-</span></span></span><span class="line"><span class="cl"><span class="s2">    on the command line.
-</span></span></span><span class="line"><span class="cl"><span class="s2">
-</span></span></span><span class="line"><span class="cl"><span class="s2">  search
-</span></span></span><span class="line"><span class="cl"><span class="s2">    Search for downloaded packages that own the specified file(s). The path can
-</span></span></span><span class="line"><span class="cl"><span class="s2">    be relative or absolute, and one or more files can be specified.
-</span></span></span><span class="line"><span class="cl"><span class="s2">
-</span></span></span><span class="line"><span class="cl"><span class="s2">  searchall
-</span></span></span><span class="line"><span class="cl"><span class="s2">    Search cygwin.com to retrieve file information about packages. The provided
-</span></span></span><span class="line"><span class="cl"><span class="s2">    target is considered to be a filename and searchall will return the
-</span></span></span><span class="line"><span class="cl"><span class="s2">    package(s) which contain this file.
-</span></span></span><span class="line"><span class="cl"><span class="s2">
-</span></span></span><span class="line"><span class="cl"><span class="s2">  mirror
-</span></span></span><span class="line"><span class="cl"><span class="s2">    Set the mirror; a full URL to a location where the database, packages, and
-</span></span></span><span class="line"><span class="cl"><span class="s2">    signatures for this repository can be found. If no URL is provided, display
-</span></span></span><span class="line"><span class="cl"><span class="s2">    current mirror.
-</span></span></span><span class="line"><span class="cl"><span class="s2">
-</span></span></span><span class="line"><span class="cl"><span class="s2">  cache
-</span></span></span><span class="line"><span class="cl"><span class="s2">    Set the package cache directory. If a file is not found in cache directory,
-</span></span></span><span class="line"><span class="cl"><span class="s2">    it will be downloaded. Unix and Windows forms are accepted, as well as
-</span></span></span><span class="line"><span class="cl"><span class="s2">    absolute or regular paths. If no directory is provided, display current
-</span></span></span><span class="line"><span class="cl"><span class="s2">    cache.
-</span></span></span><span class="line"><span class="cl"><span class="s2">
-</span></span></span><span class="line"><span class="cl"><span class="s2">OPTIONS
-</span></span></span><span class="line"><span class="cl"><span class="s2">  --nodeps
-</span></span></span><span class="line"><span class="cl"><span class="s2">    Specify this option to skip all dependency checks.
-</span></span></span><span class="line"><span class="cl"><span class="s2">
-</span></span></span><span class="line"><span class="cl"><span class="s2">  --version
-</span></span></span><span class="line"><span class="cl"><span class="s2">    Display version and exit.
-</span></span></span><span class="line"><span class="cl"><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nv">version</span><span class="o">=</span><span class="s2">&#34;\
-</span></span></span><span class="line"><span class="cl"><span class="s2">apt-cyg version 1
-</span></span></span><span class="line"><span class="cl"><span class="s2">
-</span></span></span><span class="line"><span class="cl"><span class="s2">The MIT License (MIT)
-</span></span></span><span class="line"><span class="cl"><span class="s2">
-</span></span></span><span class="line"><span class="cl"><span class="s2">Copyright (c) 2005-9 Stephen Jungels
-</span></span></span><span class="line"><span class="cl"><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">function</span> wget <span class="o">{</span>
-</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="nb">command</span> wget -h <span class="p">&amp;</span>&gt;/dev/null
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> <span class="si">${</span><span class="nv">BASH_VERSINFO</span><span class="si">}${</span><span class="nv">BASH_VERSINFO</span><span class="p">[1]</span><span class="si">}</span> -lt <span class="m">42</span> <span class="o">]</span>
 </span></span><span class="line"><span class="cl">  <span class="k">then</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">command</span> wget <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">echo</span> <span class="s1">&#39;Bash version 4.2+ required&#39;</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">exit</span>
+</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nv">usage</span><span class="o">=</span><span class="s2">&#34;\
+</span></span></span><span class="line"><span class="cl"><span class="s2">  NAME
+</span></span></span><span class="line"><span class="cl"><span class="s2">	apt-cyg - package manager utility
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">  SYNOPSIS
+</span></span></span><span class="line"><span class="cl"><span class="s2">	apt-cyg [operation] [options] [targets]
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">  DESCRIPTION
+</span></span></span><span class="line"><span class="cl"><span class="s2">	apt-cyg is a package management utility that tracks installed packages on a
+</span></span></span><span class="line"><span class="cl"><span class="s2">	Cygwin system. Invoking apt-cyg involves specifying an operation with any
+</span></span></span><span class="line"><span class="cl"><span class="s2">	potential options and targets to operate on. A target is usually a package
+</span></span></span><span class="line"><span class="cl"><span class="s2">	name, file name, URL, or a search string. Targets can be provided as command
+</span></span></span><span class="line"><span class="cl"><span class="s2">	line arguments.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">  OPERATIONS
+</span></span></span><span class="line"><span class="cl"><span class="s2">	install
+</span></span></span><span class="line"><span class="cl"><span class="s2">	  Install package(s).
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">	remove
+</span></span></span><span class="line"><span class="cl"><span class="s2">	  Remove package(s) from the system.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">	update
+</span></span></span><span class="line"><span class="cl"><span class="s2">	  Download a fresh copy of the master package list (setup.ini) from the
+</span></span></span><span class="line"><span class="cl"><span class="s2">	  server defined in setup.rc.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">	download
+</span></span></span><span class="line"><span class="cl"><span class="s2">	  Retrieve package(s) from the server, but do not install/upgrade anything.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">	show
+</span></span></span><span class="line"><span class="cl"><span class="s2">	  Display information on given package(s).
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">	depends
+</span></span></span><span class="line"><span class="cl"><span class="s2">	  Produce a dependency tree for a package.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">	rdepends
+</span></span></span><span class="line"><span class="cl"><span class="s2">	  Produce a tree of packages that depend on the named package.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">	list
+</span></span></span><span class="line"><span class="cl"><span class="s2">	  Search each locally-installed package for names that match regexp. If no
+</span></span></span><span class="line"><span class="cl"><span class="s2">	  package names are provided in the command line, all installed packages will
+</span></span></span><span class="line"><span class="cl"><span class="s2">	  be queried.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">	listall
+</span></span></span><span class="line"><span class="cl"><span class="s2">	  This will search each package in the master package list (setup.ini) for
+</span></span></span><span class="line"><span class="cl"><span class="s2">	  names that match regexp.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">	category
+</span></span></span><span class="line"><span class="cl"><span class="s2">	  Display all packages that are members of a named category.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">	listfiles
+</span></span></span><span class="line"><span class="cl"><span class="s2">	  List all files owned by a given package. Multiple packages can be specified
+</span></span></span><span class="line"><span class="cl"><span class="s2">	  on the command line.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">	search
+</span></span></span><span class="line"><span class="cl"><span class="s2">	  Search for downloaded packages that own the specified file(s). The path can
+</span></span></span><span class="line"><span class="cl"><span class="s2">	  be relative or absolute, and one or more files can be specified.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">	searchall
+</span></span></span><span class="line"><span class="cl"><span class="s2">	  Search cygwin.com to retrieve file information about packages. The provided
+</span></span></span><span class="line"><span class="cl"><span class="s2">	  target is considered to be a filename and searchall will return the
+</span></span></span><span class="line"><span class="cl"><span class="s2">	  package(s) which contain this file.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">	mirror
+</span></span></span><span class="line"><span class="cl"><span class="s2">	  Set the mirror; a full URL to a location where the database, packages, and
+</span></span></span><span class="line"><span class="cl"><span class="s2">	  signatures for this repository can be found. If no URL is provided, display
+</span></span></span><span class="line"><span class="cl"><span class="s2">	  current mirror.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">	cache
+</span></span></span><span class="line"><span class="cl"><span class="s2">	  Set the package cache directory. If a file is not found in cache directory,
+</span></span></span><span class="line"><span class="cl"><span class="s2">	  it will be downloaded. Unix and Windows forms are accepted, as well as
+</span></span></span><span class="line"><span class="cl"><span class="s2">	  absolute or regular paths. If no directory is provided, display current
+</span></span></span><span class="line"><span class="cl"><span class="s2">	  cache.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">  OPTIONS
+</span></span></span><span class="line"><span class="cl"><span class="s2">	--nodeps
+</span></span></span><span class="line"><span class="cl"><span class="s2">	  Specify this option to skip all dependency checks.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">	--version
+</span></span></span><span class="line"><span class="cl"><span class="s2">	  Display version and exit.
+</span></span></span><span class="line"><span class="cl"><span class="s2">  &#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nv">version</span><span class="o">=</span><span class="s2">&#34;\
+</span></span></span><span class="line"><span class="cl"><span class="s2">  apt-cyg version 1
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">  The MIT License (MIT)
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">  Copyright (c) 2005-9 Stephen Jungels
+</span></span></span><span class="line"><span class="cl"><span class="s2">  &#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">function</span> wget <span class="o">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nb">command</span> wget -h <span class="p">&amp;</span>&gt;/dev/null
+</span></span><span class="line"><span class="cl">	<span class="k">then</span>
+</span></span><span class="line"><span class="cl">	  <span class="nb">command</span> wget <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">else</span>
+</span></span><span class="line"><span class="cl">	  warn wget is not installed, using lynx as fallback
+</span></span><span class="line"><span class="cl">	  <span class="nb">set</span> <span class="s2">&#34;</span><span class="si">${</span><span class="p">*: -1</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">	  lynx -source <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> &gt; <span class="s2">&#34;</span><span class="si">${</span><span class="nv">1</span><span class="p">##*/</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">fi</span>
+</span></span><span class="line"><span class="cl">  <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">function</span> find-workspace <span class="o">{</span>
+</span></span><span class="line"><span class="cl">	<span class="c1"># default working directory and mirror</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="c1"># work wherever setup worked last, if possible</span>
+</span></span><span class="line"><span class="cl">	<span class="nv">cache</span><span class="o">=</span><span class="k">$(</span>awk <span class="s1">&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">	BEGIN {
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  RS = &#34;\n\\&lt;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  FS = &#34;\n\t&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s1">	}
+</span></span></span><span class="line"><span class="cl"><span class="s1">	$1 == &#34;last-cache&#34; {
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  print $2
+</span></span></span><span class="line"><span class="cl"><span class="s1">	}
+</span></span></span><span class="line"><span class="cl"><span class="s1">	&#39;</span> /etc/setup/setup.rc<span class="k">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nv">mirror</span><span class="o">=</span><span class="k">$(</span>awk <span class="s1">&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">	/last-mirror/ {
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  getline
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  print $1
+</span></span></span><span class="line"><span class="cl"><span class="s1">	}
+</span></span></span><span class="line"><span class="cl"><span class="s1">	&#39;</span> /etc/setup/setup.rc<span class="k">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nv">mirrordir</span><span class="o">=</span><span class="k">$(</span>sed <span class="s1">&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">	s / %2f g
+</span></span></span><span class="line"><span class="cl"><span class="s1">	s : %3a g
+</span></span></span><span class="line"><span class="cl"><span class="s1">	&#39;</span> <span class="o">&lt;&lt;&lt;</span> <span class="s2">&#34;</span><span class="nv">$mirror</span><span class="s2">&#34;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	mkdir -p <span class="s2">&#34;</span><span class="nv">$cache</span><span class="s2">/</span><span class="nv">$mirrordir</span><span class="s2">/</span><span class="nv">$arch</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">cd</span> <span class="s2">&#34;</span><span class="nv">$cache</span><span class="s2">/</span><span class="nv">$mirrordir</span><span class="s2">/</span><span class="nv">$arch</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="o">[</span> -e setup.ini <span class="o">]</span>
+</span></span><span class="line"><span class="cl">	<span class="k">then</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">return</span> <span class="m">0</span>
+</span></span><span class="line"><span class="cl">	<span class="k">else</span>
+</span></span><span class="line"><span class="cl">	  get-setup
+</span></span><span class="line"><span class="cl">	  <span class="k">return</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">	<span class="k">fi</span>
+</span></span><span class="line"><span class="cl">  <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">function</span> get-setup <span class="o">{</span>
+</span></span><span class="line"><span class="cl">	touch setup.ini
+</span></span><span class="line"><span class="cl">	mv setup.ini setup.ini-save
+</span></span><span class="line"><span class="cl">	wget -N <span class="nv">$mirror</span>/<span class="nv">$arch</span>/setup.bz2
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="o">[</span> -e setup.bz2 <span class="o">]</span>
+</span></span><span class="line"><span class="cl">	<span class="k">then</span>
+</span></span><span class="line"><span class="cl">	  bunzip2 setup.bz2
+</span></span><span class="line"><span class="cl">	  mv setup setup.ini
+</span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> Updated setup.ini
+</span></span><span class="line"><span class="cl">	<span class="k">else</span>
+</span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> Error updating setup.ini, reverting
+</span></span><span class="line"><span class="cl">	  mv setup.ini-save setup.ini
+</span></span><span class="line"><span class="cl">	<span class="k">fi</span>
+</span></span><span class="line"><span class="cl">  <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">function</span> check-packages <span class="o">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="o">[[</span> <span class="nv">$pks</span> <span class="o">]]</span>
+</span></span><span class="line"><span class="cl">	<span class="k">then</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">return</span> <span class="m">0</span>
+</span></span><span class="line"><span class="cl">	<span class="k">else</span>
+</span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> No packages found.
+</span></span><span class="line"><span class="cl">	  <span class="k">return</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">	<span class="k">fi</span>
+</span></span><span class="line"><span class="cl">  <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">function</span> warn <span class="o">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">printf</span> <span class="s1">&#39;\e[1;31m%s\e[m\n&#39;</span> <span class="s2">&#34;</span><span class="nv">$*</span><span class="s2">&#34;</span> &gt;<span class="p">&amp;</span><span class="m">2</span>
+</span></span><span class="line"><span class="cl">  <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">function</span> apt-update <span class="o">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> find-workspace
+</span></span><span class="line"><span class="cl">	<span class="k">then</span>
+</span></span><span class="line"><span class="cl">	  get-setup
+</span></span><span class="line"><span class="cl">	<span class="k">fi</span>
+</span></span><span class="line"><span class="cl">  <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">function</span> apt-category <span class="o">{</span>
+</span></span><span class="line"><span class="cl">	check-packages
+</span></span><span class="line"><span class="cl">	find-workspace
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> pkg in <span class="s2">&#34;</span><span class="si">${</span><span class="nv">pks</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">do</span>
+</span></span><span class="line"><span class="cl">	  awk <span class="s1">&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  $1 == &#34;@&#34; {
+</span></span></span><span class="line"><span class="cl"><span class="s1">		pck = $2
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  }
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  $1 == &#34;category:&#34; &amp;&amp; $0 ~ query {
+</span></span></span><span class="line"><span class="cl"><span class="s1">		print pck
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  }
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  &#39;</span> <span class="nv">query</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$pks</span><span class="s2">&#34;</span> setup.ini
+</span></span><span class="line"><span class="cl">	<span class="k">done</span>
+</span></span><span class="line"><span class="cl">  <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">function</span> apt-list <span class="o">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">local</span> sbq
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> pkg in <span class="s2">&#34;</span><span class="si">${</span><span class="nv">pks</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">do</span>
+</span></span><span class="line"><span class="cl">	  <span class="nb">let</span> sbq++ <span class="o">&amp;&amp;</span> <span class="nb">echo</span>
+</span></span><span class="line"><span class="cl">	  awk <span class="s1">&#39;NR&gt;1 &amp;&amp; $1~pkg &amp;&amp; $0=$1&#39;</span> <span class="nv">pkg</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$pkg</span><span class="s2">&#34;</span> /etc/setup/installed.db
+</span></span><span class="line"><span class="cl">	<span class="k">done</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">let</span> sbq <span class="o">&amp;&amp;</span> <span class="k">return</span>
+</span></span><span class="line"><span class="cl">	awk <span class="s1">&#39;NR&gt;1 &amp;&amp; $0=$1&#39;</span> /etc/setup/installed.db
+</span></span><span class="line"><span class="cl">  <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">function</span> apt-listall <span class="o">{</span>
+</span></span><span class="line"><span class="cl">	check-packages
+</span></span><span class="line"><span class="cl">	find-workspace
+</span></span><span class="line"><span class="cl">	<span class="nb">local</span> sbq
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> pkg in <span class="s2">&#34;</span><span class="si">${</span><span class="nv">pks</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">do</span>
+</span></span><span class="line"><span class="cl">	  <span class="nb">let</span> sbq++ <span class="o">&amp;&amp;</span> <span class="nb">echo</span>
+</span></span><span class="line"><span class="cl">	  awk <span class="s1">&#39;$1~pkg &amp;&amp; $0=$1&#39;</span> <span class="nv">RS</span><span class="o">=</span><span class="s1">&#39;\n\n@ &#39;</span> <span class="nv">FS</span><span class="o">=</span><span class="s1">&#39;\n&#39;</span> <span class="nv">pkg</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$pkg</span><span class="s2">&#34;</span> setup.ini
+</span></span><span class="line"><span class="cl">	<span class="k">done</span>
+</span></span><span class="line"><span class="cl">  <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">function</span> apt-listfiles <span class="o">{</span>
+</span></span><span class="line"><span class="cl">	check-packages
+</span></span><span class="line"><span class="cl">	find-workspace
+</span></span><span class="line"><span class="cl">	<span class="nb">local</span> pkg sbq
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> pkg in <span class="s2">&#34;</span><span class="si">${</span><span class="nv">pks</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">do</span>
+</span></span><span class="line"><span class="cl">	  <span class="o">((</span> sbq++ <span class="o">))</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">if</span> <span class="o">[</span> ! -e /etc/setup/<span class="s2">&#34;</span><span class="nv">$pkg</span><span class="s2">&#34;</span>.lst.gz <span class="o">]</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">then</span>
+</span></span><span class="line"><span class="cl">		download <span class="s2">&#34;</span><span class="nv">$pkg</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">	  gzip -cd /etc/setup/<span class="s2">&#34;</span><span class="nv">$pkg</span><span class="s2">&#34;</span>.lst.gz
+</span></span><span class="line"><span class="cl">	<span class="k">done</span>
+</span></span><span class="line"><span class="cl">  <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">function</span> apt-show <span class="o">{</span>
+</span></span><span class="line"><span class="cl">	find-workspace
+</span></span><span class="line"><span class="cl">	check-packages
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> pkg in <span class="s2">&#34;</span><span class="si">${</span><span class="nv">pks</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">do</span>
+</span></span><span class="line"><span class="cl">	  <span class="o">((</span> notfirst++ <span class="o">))</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span>
+</span></span><span class="line"><span class="cl">	  awk <span class="s1">&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  $1 == query {
+</span></span></span><span class="line"><span class="cl"><span class="s1">		print
+</span></span></span><span class="line"><span class="cl"><span class="s1">		fd++
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  }
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  END {
+</span></span></span><span class="line"><span class="cl"><span class="s1">		if (! fd)
+</span></span></span><span class="line"><span class="cl"><span class="s1">		  print &#34;Unable to locate package &#34; query
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  }
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  &#39;</span> <span class="nv">RS</span><span class="o">=</span><span class="s1">&#39;\n\n@ &#39;</span> <span class="nv">FS</span><span class="o">=</span><span class="s1">&#39;\n&#39;</span> <span class="nv">query</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$pkg</span><span class="s2">&#34;</span> setup.ini
+</span></span><span class="line"><span class="cl">	<span class="k">done</span>
+</span></span><span class="line"><span class="cl">  <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">function</span> apt-depends <span class="o">{</span>
+</span></span><span class="line"><span class="cl">	find-workspace
+</span></span><span class="line"><span class="cl">	check-packages
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> pkg in <span class="s2">&#34;</span><span class="si">${</span><span class="nv">pks</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">do</span>
+</span></span><span class="line"><span class="cl">	  awk <span class="s1">&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  @include &#34;join&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  $1 == &#34;@&#34; {
+</span></span></span><span class="line"><span class="cl"><span class="s1">		apg = $2
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  }
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  $1 == &#34;requires:&#34; {
+</span></span></span><span class="line"><span class="cl"><span class="s1">		for (z=2; z&lt;=NF; z++)
+</span></span></span><span class="line"><span class="cl"><span class="s1">		  reqs[apg][z-1] = $z
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  }
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  END {
+</span></span></span><span class="line"><span class="cl"><span class="s1">		prpg(ENVIRON[&#34;pkg&#34;])
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  }
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  function smartmatch(small, large,    values) {
+</span></span></span><span class="line"><span class="cl"><span class="s1">		for (each in large)
+</span></span></span><span class="line"><span class="cl"><span class="s1">		  values[large[each]]
+</span></span></span><span class="line"><span class="cl"><span class="s1">		return small in values
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  }
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  function prpg(fpg) {
+</span></span></span><span class="line"><span class="cl"><span class="s1">		if (smartmatch(fpg, spath)) return
+</span></span></span><span class="line"><span class="cl"><span class="s1">		spath[length(spath)+1] = fpg
+</span></span></span><span class="line"><span class="cl"><span class="s1">		print join(spath, 1, length(spath), &#34; &gt; &#34;)
+</span></span></span><span class="line"><span class="cl"><span class="s1">		if (isarray(reqs[fpg]))
+</span></span></span><span class="line"><span class="cl"><span class="s1">		  for (each in reqs[fpg])
+</span></span></span><span class="line"><span class="cl"><span class="s1">			prpg(reqs[fpg][each])
+</span></span></span><span class="line"><span class="cl"><span class="s1">		delete spath[length(spath)]
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  }
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  &#39;</span> setup.ini
+</span></span><span class="line"><span class="cl">	<span class="k">done</span>
+</span></span><span class="line"><span class="cl">  <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">function</span> apt-rdepends <span class="o">{</span>
+</span></span><span class="line"><span class="cl">	find-workspace
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> pkg in <span class="s2">&#34;</span><span class="si">${</span><span class="nv">pks</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">do</span>
+</span></span><span class="line"><span class="cl">	  awk <span class="s1">&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  @include &#34;join&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  $1 == &#34;@&#34; {
+</span></span></span><span class="line"><span class="cl"><span class="s1">		apg = $2
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  }
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  $1 == &#34;requires:&#34; {
+</span></span></span><span class="line"><span class="cl"><span class="s1">		for (z=2; z&lt;=NF; z++)
+</span></span></span><span class="line"><span class="cl"><span class="s1">		  reqs[$z][length(reqs[$z])+1] = apg
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  }
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  END {
+</span></span></span><span class="line"><span class="cl"><span class="s1">		prpg(ENVIRON[&#34;pkg&#34;])
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  }
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  function smartmatch(small, large,    values) {
+</span></span></span><span class="line"><span class="cl"><span class="s1">		for (each in large)
+</span></span></span><span class="line"><span class="cl"><span class="s1">		  values[large[each]]
+</span></span></span><span class="line"><span class="cl"><span class="s1">		return small in values
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  }
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  function prpg(fpg) {
+</span></span></span><span class="line"><span class="cl"><span class="s1">		if (smartmatch(fpg, spath)) return
+</span></span></span><span class="line"><span class="cl"><span class="s1">		spath[length(spath)+1] = fpg
+</span></span></span><span class="line"><span class="cl"><span class="s1">		print join(spath, 1, length(spath), &#34; &lt; &#34;)
+</span></span></span><span class="line"><span class="cl"><span class="s1">		if (isarray(reqs[fpg]))
+</span></span></span><span class="line"><span class="cl"><span class="s1">		  for (each in reqs[fpg])
+</span></span></span><span class="line"><span class="cl"><span class="s1">			prpg(reqs[fpg][each])
+</span></span></span><span class="line"><span class="cl"><span class="s1">		delete spath[length(spath)]
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  }
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  &#39;</span> setup.ini
+</span></span><span class="line"><span class="cl">	<span class="k">done</span>
+</span></span><span class="line"><span class="cl">  <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">function</span> apt-download <span class="o">{</span>
+</span></span><span class="line"><span class="cl">	check-packages
+</span></span><span class="line"><span class="cl">	find-workspace
+</span></span><span class="line"><span class="cl">	<span class="nb">local</span> pkg sbq
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> pkg in <span class="s2">&#34;</span><span class="si">${</span><span class="nv">pks</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">do</span>
+</span></span><span class="line"><span class="cl">	  <span class="o">((</span> sbq++ <span class="o">))</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span>
+</span></span><span class="line"><span class="cl">	  download <span class="s2">&#34;</span><span class="nv">$pkg</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">done</span>
+</span></span><span class="line"><span class="cl">  <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">function</span> download <span class="o">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">local</span> pkg digest digactual
+</span></span><span class="line"><span class="cl">	<span class="nv">pkg</span><span class="o">=</span><span class="nv">$1</span>
+</span></span><span class="line"><span class="cl">	<span class="c1"># look for package and save desc file</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	awk <span class="s1">&#39;$1 == pc&#39;</span> <span class="nv">RS</span><span class="o">=</span><span class="s1">&#39;\n\n@ &#39;</span> <span class="nv">FS</span><span class="o">=</span><span class="s1">&#39;\n&#39;</span> <span class="nv">pc</span><span class="o">=</span><span class="nv">$pkg</span> setup.ini &gt; desc
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="o">[</span> ! -s desc <span class="o">]</span>
+</span></span><span class="line"><span class="cl">	<span class="k">then</span>
+</span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> Unable to locate package <span class="nv">$pkg</span>
+</span></span><span class="line"><span class="cl">	  <span class="nb">exit</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">	<span class="k">fi</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="c1"># download and unpack the bz2 or xz file</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="c1"># pick the latest version, which comes first</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">set</span> -- <span class="k">$(</span>awk <span class="s1">&#39;$1 == &#34;install:&#34;&#39;</span> desc<span class="k">)</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="o">((</span> ! <span class="nv">$#</span> <span class="o">))</span>
+</span></span><span class="line"><span class="cl">	<span class="k">then</span>
+</span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> <span class="s1">&#39;Could not find &#34;install&#34; in package description: obsolete package?&#39;</span>
+</span></span><span class="line"><span class="cl">	  <span class="nb">exit</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">	<span class="k">fi</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nv">dn</span><span class="o">=</span><span class="k">$(</span>dirname <span class="nv">$2</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nv">bn</span><span class="o">=</span><span class="k">$(</span>basename <span class="nv">$2</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="c1"># check the md5</span>
+</span></span><span class="line"><span class="cl">	<span class="nv">digest</span><span class="o">=</span><span class="nv">$4</span>
+</span></span><span class="line"><span class="cl">	<span class="k">case</span> <span class="si">${#</span><span class="nv">digest</span><span class="si">}</span> in
+</span></span><span class="line"><span class="cl">	  32<span class="o">)</span> <span class="nv">hash</span><span class="o">=</span>md5sum    <span class="p">;;</span>
+</span></span><span class="line"><span class="cl">	  128<span class="o">)</span> <span class="nv">hash</span><span class="o">=</span>sha512sum <span class="p">;;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">esac</span>
+</span></span><span class="line"><span class="cl">	mkdir -p <span class="s2">&#34;</span><span class="nv">$cache</span><span class="s2">/</span><span class="nv">$mirrordir</span><span class="s2">/</span><span class="nv">$dn</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">cd</span> <span class="s2">&#34;</span><span class="nv">$cache</span><span class="s2">/</span><span class="nv">$mirrordir</span><span class="s2">/</span><span class="nv">$dn</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> ! <span class="nb">test</span> -e <span class="nv">$bn</span> <span class="o">||</span> ! <span class="nv">$hash</span> -c <span class="o">&lt;&lt;&lt;</span> <span class="s2">&#34;</span><span class="nv">$digest</span><span class="s2"> </span><span class="nv">$bn</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">then</span>
+</span></span><span class="line"><span class="cl">	  wget -O <span class="nv">$bn</span> <span class="nv">$mirror</span>/<span class="nv">$dn</span>/<span class="nv">$bn</span>
+</span></span><span class="line"><span class="cl">	  <span class="nv">$hash</span> -c <span class="o">&lt;&lt;&lt;</span> <span class="s2">&#34;</span><span class="nv">$digest</span><span class="s2"> </span><span class="nv">$bn</span><span class="s2">&#34;</span> <span class="o">||</span> <span class="nb">exit</span>
+</span></span><span class="line"><span class="cl">	<span class="k">fi</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	tar tf <span class="nv">$bn</span> <span class="p">|</span> gzip &gt; /etc/setup/<span class="s2">&#34;</span><span class="nv">$pkg</span><span class="s2">&#34;</span>.lst.gz
+</span></span><span class="line"><span class="cl">	<span class="nb">cd</span> ~-
+</span></span><span class="line"><span class="cl">	mv desc <span class="s2">&#34;</span><span class="nv">$cache</span><span class="s2">/</span><span class="nv">$mirrordir</span><span class="s2">/</span><span class="nv">$dn</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">echo</span> <span class="nv">$dn</span> <span class="nv">$bn</span> &gt; /tmp/dwn
+</span></span><span class="line"><span class="cl">  <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">function</span> apt-search <span class="o">{</span>
+</span></span><span class="line"><span class="cl">	check-packages
+</span></span><span class="line"><span class="cl">	<span class="nb">echo</span> Searching downloaded packages...
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> pkg in <span class="s2">&#34;</span><span class="si">${</span><span class="nv">pks</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">do</span>
+</span></span><span class="line"><span class="cl">	  <span class="nv">key</span><span class="o">=</span><span class="k">$(</span><span class="nb">type</span> -P <span class="s2">&#34;</span><span class="nv">$pkg</span><span class="s2">&#34;</span> <span class="p">|</span> sed s./..<span class="k">)</span>
+</span></span><span class="line"><span class="cl">	  <span class="o">[[</span> <span class="nv">$key</span> <span class="o">]]</span> <span class="o">||</span> <span class="nv">key</span><span class="o">=</span><span class="nv">$pkg</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">for</span> manifest in /etc/setup/*.lst.gz
+</span></span><span class="line"><span class="cl">	  <span class="k">do</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> gzip -cd <span class="nv">$manifest</span> <span class="p">|</span> grep -q <span class="s2">&#34;</span><span class="nv">$key</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">		<span class="k">then</span>
+</span></span><span class="line"><span class="cl">		  <span class="nv">package</span><span class="o">=</span><span class="k">$(</span>sed <span class="s1">&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">		  s,/etc/setup/,,
+</span></span></span><span class="line"><span class="cl"><span class="s1">		  s,.lst.gz,,
+</span></span></span><span class="line"><span class="cl"><span class="s1">		  &#39;</span> <span class="o">&lt;&lt;&lt;</span> <span class="nv">$manifest</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">		  <span class="nb">echo</span> <span class="nv">$package</span>
+</span></span><span class="line"><span class="cl">		<span class="k">fi</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">done</span>
+</span></span><span class="line"><span class="cl">	<span class="k">done</span>
+</span></span><span class="line"><span class="cl">  <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">function</span> apt-searchall <span class="o">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">cd</span> /tmp
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> pkg in <span class="s2">&#34;</span><span class="si">${</span><span class="nv">pks</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">do</span>
+</span></span><span class="line"><span class="cl">	  <span class="nb">printf</span> -v qs <span class="s1">&#39;text=1&amp;arch=%s&amp;grep=%s&#39;</span> <span class="nv">$arch</span> <span class="s2">&#34;</span><span class="nv">$pkg</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">	  wget -O matches cygwin.com/cgi-bin2/package-grep.cgi?<span class="s2">&#34;</span><span class="nv">$qs</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">	  awk <span class="s1">&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  NR == 1 {next}
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  mc[$1]++ {next}
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  /-debuginfo-/ {next}
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  /^cygwin32-/ {next}
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  {print $1}
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  &#39;</span> <span class="nv">FS</span><span class="o">=</span>-<span class="o">[[</span>:digit:<span class="o">]]</span> matches
+</span></span><span class="line"><span class="cl">	<span class="k">done</span>
+</span></span><span class="line"><span class="cl">  <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">function</span> apt-install <span class="o">{</span>
+</span></span><span class="line"><span class="cl">	check-packages
+</span></span><span class="line"><span class="cl">	find-workspace
+</span></span><span class="line"><span class="cl">	<span class="nb">local</span> pkg dn bn requires wr package sbq script
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> pkg in <span class="s2">&#34;</span><span class="si">${</span><span class="nv">pks</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">do</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	  <span class="k">if</span> grep -q <span class="s2">&#34;^</span><span class="nv">$pkg</span><span class="s2"> &#34;</span> /etc/setup/installed.db
+</span></span><span class="line"><span class="cl">	  <span class="k">then</span>
+</span></span><span class="line"><span class="cl">		<span class="nb">echo</span> Package <span class="nv">$pkg</span> is already installed, skipping
+</span></span><span class="line"><span class="cl">		<span class="k">continue</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">	  <span class="o">((</span> sbq++ <span class="o">))</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span>
+</span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> Installing <span class="nv">$pkg</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	  download <span class="nv">$pkg</span>
+</span></span><span class="line"><span class="cl">	  <span class="nb">read</span> dn bn &lt;/tmp/dwn
+</span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> Unpacking...
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	  <span class="nb">cd</span> <span class="s2">&#34;</span><span class="nv">$cache</span><span class="s2">/</span><span class="nv">$mirrordir</span><span class="s2">/</span><span class="nv">$dn</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">	  tar -x -C / -f <span class="nv">$bn</span>
+</span></span><span class="line"><span class="cl">	  <span class="c1"># update the package database</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	  awk <span class="s1">&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">	ins != 1 &amp;&amp; pkg &lt; $1 {
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  print pkg, bz, 0
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  ins = 1
+</span></span></span><span class="line"><span class="cl"><span class="s1">	}
+</span></span></span><span class="line"><span class="cl"><span class="s1">	1
+</span></span></span><span class="line"><span class="cl"><span class="s1">	END {
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  if (ins != 1) print pkg, bz, 0
+</span></span></span><span class="line"><span class="cl"><span class="s1">	}
+</span></span></span><span class="line"><span class="cl"><span class="s1">	&#39;</span> <span class="nv">pkg</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$pkg</span><span class="s2">&#34;</span> <span class="nv">bz</span><span class="o">=</span><span class="nv">$bn</span> /etc/setup/installed.db &gt; /tmp/awk.<span class="nv">$$</span>
+</span></span><span class="line"><span class="cl">	  mv /etc/setup/installed.db /etc/setup/installed.db-save
+</span></span><span class="line"><span class="cl">	  mv /tmp/awk.<span class="nv">$$</span> /etc/setup/installed.db
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	  <span class="o">[</span> -v nodeps <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="k">continue</span>
+</span></span><span class="line"><span class="cl">	  <span class="c1"># recursively install required packages</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	  <span class="nv">requires</span><span class="o">=</span><span class="k">$(</span>awk <span class="s1">&#39;$1==&#34;requires&#34;, $0=$2&#39;</span> <span class="nv">FS</span><span class="o">=</span><span class="s1">&#39;: &#39;</span> desc<span class="k">)</span>
+</span></span><span class="line"><span class="cl">	  <span class="nb">cd</span> ~-
+</span></span><span class="line"><span class="cl">	  <span class="nv">wr</span><span class="o">=</span><span class="m">0</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">if</span> <span class="o">[[</span> <span class="nv">$requires</span> <span class="o">]]</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">then</span>
+</span></span><span class="line"><span class="cl">		<span class="nb">echo</span> Package <span class="nv">$pkg</span> requires the following packages, installing:
+</span></span><span class="line"><span class="cl">		<span class="nb">echo</span> <span class="nv">$requires</span>
+</span></span><span class="line"><span class="cl">		<span class="k">for</span> package in <span class="nv">$requires</span>
+</span></span><span class="line"><span class="cl">		<span class="k">do</span>
+</span></span><span class="line"><span class="cl">		  <span class="k">if</span> grep -q <span class="s2">&#34;^</span><span class="nv">$package</span><span class="s2"> &#34;</span> /etc/setup/installed.db
+</span></span><span class="line"><span class="cl">		  <span class="k">then</span>
+</span></span><span class="line"><span class="cl">			<span class="nb">echo</span> Package <span class="nv">$package</span> is already installed, skipping
+</span></span><span class="line"><span class="cl">			<span class="k">continue</span>
+</span></span><span class="line"><span class="cl">		  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">		  apt-cyg install --noscripts <span class="nv">$package</span> <span class="o">||</span> <span class="o">((</span> wr++ <span class="o">))</span>
+</span></span><span class="line"><span class="cl">		<span class="k">done</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">if</span> <span class="o">((</span> wr <span class="o">))</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">then</span>
+</span></span><span class="line"><span class="cl">		<span class="nb">echo</span> some required packages did not install, continuing
+</span></span><span class="line"><span class="cl">	  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	  <span class="c1"># run all postinstall scripts</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	  <span class="o">[</span> -v noscripts <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="k">continue</span>
+</span></span><span class="line"><span class="cl">	  find /etc/postinstall -name <span class="s1">&#39;*.sh&#39;</span> <span class="p">|</span> <span class="k">while</span> <span class="nb">read</span> script
+</span></span><span class="line"><span class="cl">	  <span class="k">do</span>
+</span></span><span class="line"><span class="cl">		<span class="nb">echo</span> Running <span class="nv">$script</span>
+</span></span><span class="line"><span class="cl">		<span class="nv">$script</span>
+</span></span><span class="line"><span class="cl">		mv <span class="nv">$script</span> <span class="nv">$script</span>.done
+</span></span><span class="line"><span class="cl">	  <span class="k">done</span>
+</span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> Package <span class="nv">$pkg</span> installed
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">done</span>
+</span></span><span class="line"><span class="cl">  <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">function</span> apt-remove <span class="o">{</span>
+</span></span><span class="line"><span class="cl">	check-packages
+</span></span><span class="line"><span class="cl">	<span class="nb">cd</span> /etc
+</span></span><span class="line"><span class="cl">	cygcheck awk bash bunzip2 grep gzip mv sed tar xz &gt; setup/essential.lst
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> pkg in <span class="s2">&#34;</span><span class="si">${</span><span class="nv">pks</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">do</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	  <span class="k">if</span> ! grep -q <span class="s2">&#34;^</span><span class="nv">$pkg</span><span class="s2"> &#34;</span> setup/installed.db
+</span></span><span class="line"><span class="cl">	  <span class="k">then</span>
+</span></span><span class="line"><span class="cl">		<span class="nb">echo</span> Package <span class="nv">$pkg</span> is not installed, skipping
+</span></span><span class="line"><span class="cl">		<span class="k">continue</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	  <span class="k">if</span> <span class="o">[</span> ! -e setup/<span class="s2">&#34;</span><span class="nv">$pkg</span><span class="s2">&#34;</span>.lst.gz <span class="o">]</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">then</span>
+</span></span><span class="line"><span class="cl">		warn Package manifest missing, cannot remove <span class="nv">$pkg</span>. Exiting
+</span></span><span class="line"><span class="cl">		<span class="nb">exit</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">	  gzip -dk setup/<span class="s2">&#34;</span><span class="nv">$pkg</span><span class="s2">&#34;</span>.lst.gz
+</span></span><span class="line"><span class="cl">	  awk <span class="s1">&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">	NR == FNR {
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  if ($NF) ess[$NF]
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  next
+</span></span></span><span class="line"><span class="cl"><span class="s1">	}
+</span></span></span><span class="line"><span class="cl"><span class="s1">	$NF in ess {
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  exit 1
+</span></span></span><span class="line"><span class="cl"><span class="s1">	}
+</span></span></span><span class="line"><span class="cl"><span class="s1">	&#39;</span> <span class="nv">FS</span><span class="o">=</span><span class="s1">&#39;[/\\\\]&#39;</span> setup/<span class="o">{</span>essential,<span class="nv">$pkg</span><span class="o">}</span>.lst
+</span></span><span class="line"><span class="cl">	  <span class="nv">esn</span><span class="o">=</span><span class="nv">$?</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">if</span> <span class="o">[</span> <span class="nv">$esn</span> <span class="o">=</span> <span class="m">0</span> <span class="o">]</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">then</span>
+</span></span><span class="line"><span class="cl">		<span class="nb">echo</span> Removing <span class="nv">$pkg</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="o">[</span> -e preremove/<span class="s2">&#34;</span><span class="nv">$pkg</span><span class="s2">&#34;</span>.sh <span class="o">]</span>
+</span></span><span class="line"><span class="cl">		<span class="k">then</span>
+</span></span><span class="line"><span class="cl">		  preremove/<span class="s2">&#34;</span><span class="nv">$pkg</span><span class="s2">&#34;</span>.sh
+</span></span><span class="line"><span class="cl">		  rm preremove/<span class="s2">&#34;</span><span class="nv">$pkg</span><span class="s2">&#34;</span>.sh
+</span></span><span class="line"><span class="cl">		<span class="k">fi</span>
+</span></span><span class="line"><span class="cl">		mapfile dt &lt; setup/<span class="s2">&#34;</span><span class="nv">$pkg</span><span class="s2">&#34;</span>.lst
+</span></span><span class="line"><span class="cl">		<span class="k">for</span> each in <span class="si">${</span><span class="nv">dt</span><span class="p">[*]</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">		<span class="k">do</span>
+</span></span><span class="line"><span class="cl">		  <span class="o">[</span> -f /<span class="nv">$each</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> rm /<span class="nv">$each</span>
+</span></span><span class="line"><span class="cl">		<span class="k">done</span>
+</span></span><span class="line"><span class="cl">		<span class="k">for</span> each in <span class="si">${</span><span class="nv">dt</span><span class="p">[*]</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">		<span class="k">do</span>
+</span></span><span class="line"><span class="cl">		  <span class="o">[</span> -d /<span class="nv">$each</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> rmdir --i /<span class="nv">$each</span>
+</span></span><span class="line"><span class="cl">		<span class="k">done</span>
+</span></span><span class="line"><span class="cl">		rm -f setup/<span class="s2">&#34;</span><span class="nv">$pkg</span><span class="s2">&#34;</span>.lst.gz postinstall/<span class="s2">&#34;</span><span class="nv">$pkg</span><span class="s2">&#34;</span>.sh.done
+</span></span><span class="line"><span class="cl">		awk -i inplace <span class="s1">&#39;$1 != ENVIRON[&#34;pkg&#34;]&#39;</span> setup/installed.db
+</span></span><span class="line"><span class="cl">		<span class="nb">echo</span> Package <span class="nv">$pkg</span> removed
+</span></span><span class="line"><span class="cl">	  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">	  rm setup/<span class="s2">&#34;</span><span class="nv">$pkg</span><span class="s2">&#34;</span>.lst
+</span></span><span class="line"><span class="cl">	  <span class="k">if</span> <span class="o">[</span> <span class="nv">$esn</span> <span class="o">=</span> <span class="m">1</span> <span class="o">]</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">then</span>
+</span></span><span class="line"><span class="cl">		warn apt-cyg cannot remove package <span class="nv">$pkg</span>, exiting
+</span></span><span class="line"><span class="cl">		<span class="nb">exit</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">done</span>
+</span></span><span class="line"><span class="cl">  <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">function</span> apt-mirror <span class="o">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$pks</span><span class="s2">&#34;</span> <span class="o">]</span>
+</span></span><span class="line"><span class="cl">	<span class="k">then</span>
+</span></span><span class="line"><span class="cl">	  awk -i inplace <span class="s1">&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  1
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  /last-mirror/ {
+</span></span></span><span class="line"><span class="cl"><span class="s1">		getline
+</span></span></span><span class="line"><span class="cl"><span class="s1">		print &#34;\t&#34; pks
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  }
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  &#39;</span> <span class="nv">pks</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$pks</span><span class="s2">&#34;</span> /etc/setup/setup.rc
+</span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> Mirror <span class="nb">set</span> to <span class="s2">&#34;</span><span class="nv">$pks</span><span class="s2">&#34;</span>.
+</span></span><span class="line"><span class="cl">	<span class="k">else</span>
+</span></span><span class="line"><span class="cl">	  awk <span class="s1">&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  /last-mirror/ {
+</span></span></span><span class="line"><span class="cl"><span class="s1">		getline
+</span></span></span><span class="line"><span class="cl"><span class="s1">		print $1
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  }
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  &#39;</span> /etc/setup/setup.rc
+</span></span><span class="line"><span class="cl">	<span class="k">fi</span>
+</span></span><span class="line"><span class="cl">  <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">function</span> apt-cache <span class="o">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$pks</span><span class="s2">&#34;</span> <span class="o">]</span>
+</span></span><span class="line"><span class="cl">	<span class="k">then</span>
+</span></span><span class="line"><span class="cl">	  <span class="nv">vas</span><span class="o">=</span><span class="k">$(</span>cygpath -aw <span class="s2">&#34;</span><span class="nv">$pks</span><span class="s2">&#34;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">	  awk -i inplace <span class="s1">&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  1
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  /last-cache/ {
+</span></span></span><span class="line"><span class="cl"><span class="s1">		getline
+</span></span></span><span class="line"><span class="cl"><span class="s1">		print &#34;\t&#34; vas
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  }
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  &#39;</span> <span class="nv">vas</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">vas</span><span class="p">//</span><span class="se">\\</span><span class="p">/</span><span class="se">\\\\</span><span class="si">}</span><span class="s2">&#34;</span> /etc/setup/setup.rc
+</span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> Cache <span class="nb">set</span> to <span class="s2">&#34;</span><span class="nv">$vas</span><span class="s2">&#34;</span>.
+</span></span><span class="line"><span class="cl">	<span class="k">else</span>
+</span></span><span class="line"><span class="cl">	  awk <span class="s1">&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  /last-cache/ {
+</span></span></span><span class="line"><span class="cl"><span class="s1">		getline
+</span></span></span><span class="line"><span class="cl"><span class="s1">		print $1
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  }
+</span></span></span><span class="line"><span class="cl"><span class="s1">	  &#39;</span> /etc/setup/setup.rc
+</span></span><span class="line"><span class="cl">	<span class="k">fi</span>
+</span></span><span class="line"><span class="cl">  <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> -p /dev/stdin <span class="o">]</span>
+</span></span><span class="line"><span class="cl">  <span class="k">then</span>
+</span></span><span class="line"><span class="cl">	mapfile -t pks
+</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1"># process options</span>
+</span></span><span class="line"><span class="cl">  <span class="k">until</span> <span class="o">[</span> <span class="nv">$#</span> <span class="o">=</span> <span class="m">0</span> <span class="o">]</span>
+</span></span><span class="line"><span class="cl">  <span class="k">do</span>
+</span></span><span class="line"><span class="cl">	<span class="k">case</span> <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> in
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	  --nodeps<span class="o">)</span>
+</span></span><span class="line"><span class="cl">		<span class="nv">nodeps</span><span class="o">=</span><span class="m">1</span>
+</span></span><span class="line"><span class="cl">		<span class="nb">shift</span>
+</span></span><span class="line"><span class="cl">		<span class="p">;;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	  --noscripts<span class="o">)</span>
+</span></span><span class="line"><span class="cl">		<span class="nv">noscripts</span><span class="o">=</span><span class="m">1</span>
+</span></span><span class="line"><span class="cl">		<span class="nb">shift</span>
+</span></span><span class="line"><span class="cl">		<span class="p">;;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	  --version<span class="o">)</span>
+</span></span><span class="line"><span class="cl">		<span class="nb">printf</span> <span class="s2">&#34;</span><span class="nv">$version</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">		<span class="nb">exit</span>
+</span></span><span class="line"><span class="cl">		<span class="p">;;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	  update<span class="o">)</span>
+</span></span><span class="line"><span class="cl">		<span class="nv">command</span><span class="o">=</span><span class="nv">$1</span>
+</span></span><span class="line"><span class="cl">		<span class="nb">shift</span>
+</span></span><span class="line"><span class="cl">		<span class="p">;;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	  list <span class="p">|</span> cache  <span class="p">|</span> remove <span class="p">|</span> depends <span class="p">|</span> listall  <span class="p">|</span> download <span class="p">|</span> listfiles <span class="p">|</span><span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>		show <span class="p">|</span> mirror <span class="p">|</span> search <span class="p">|</span> install <span class="p">|</span> category <span class="p">|</span> rdepends <span class="p">|</span> searchall <span class="o">)</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="o">[[</span> <span class="nv">$command</span> <span class="o">]]</span>
+</span></span><span class="line"><span class="cl">		<span class="k">then</span>
+</span></span><span class="line"><span class="cl">		  <span class="nv">pks</span><span class="o">+=(</span><span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">		<span class="k">else</span>
+</span></span><span class="line"><span class="cl">		  <span class="nv">command</span><span class="o">=</span><span class="nv">$1</span>
+</span></span><span class="line"><span class="cl">		<span class="k">fi</span>
+</span></span><span class="line"><span class="cl">		<span class="nb">shift</span>
+</span></span><span class="line"><span class="cl">		<span class="p">;;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	  ,*<span class="o">)</span>
+</span></span><span class="line"><span class="cl">		<span class="nv">pks</span><span class="o">+=(</span><span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">		<span class="nb">shift</span>
+</span></span><span class="line"><span class="cl">		<span class="p">;;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">esac</span>
+</span></span><span class="line"><span class="cl">  <span class="k">done</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nb">set</span> -a
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="nb">type</span> -t apt-<span class="nv">$command</span> <span class="p">|</span> grep -q <span class="k">function</span>
+</span></span><span class="line"><span class="cl">  <span class="k">then</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">readonly</span> <span class="nv">arch</span><span class="o">=</span><span class="si">${</span><span class="nv">HOSTTYPE</span><span class="p">/i6/x</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">	apt-<span class="nv">$command</span>
 </span></span><span class="line"><span class="cl">  <span class="k">else</span>
-</span></span><span class="line"><span class="cl">    warn wget is not installed, using lynx as fallback
-</span></span><span class="line"><span class="cl">    <span class="nb">set</span> <span class="s2">&#34;</span><span class="si">${</span><span class="p">*: -1</span><span class="si">}</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">    lynx -source <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> &gt; <span class="s2">&#34;</span><span class="si">${</span><span class="nv">1</span><span class="p">##*/</span><span class="si">}</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
-</span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">function</span> find-workspace <span class="o">{</span>
-</span></span><span class="line"><span class="cl">  <span class="c1"># default working directory and mirror</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="c1"># work wherever setup worked last, if possible</span>
-</span></span><span class="line"><span class="cl">  <span class="nv">cache</span><span class="o">=</span><span class="k">$(</span>awk <span class="s1">&#39;
-</span></span></span><span class="line"><span class="cl"><span class="s1">  BEGIN {
-</span></span></span><span class="line"><span class="cl"><span class="s1">    RS = &#34;\n\\&lt;&#34;
-</span></span></span><span class="line"><span class="cl"><span class="s1">    FS = &#34;\n\t&#34;
-</span></span></span><span class="line"><span class="cl"><span class="s1">  }
-</span></span></span><span class="line"><span class="cl"><span class="s1">  $1 == &#34;last-cache&#34; {
-</span></span></span><span class="line"><span class="cl"><span class="s1">    print $2
-</span></span></span><span class="line"><span class="cl"><span class="s1">  }
-</span></span></span><span class="line"><span class="cl"><span class="s1">  &#39;</span> /etc/setup/setup.rc<span class="k">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="nv">mirror</span><span class="o">=</span><span class="k">$(</span>awk <span class="s1">&#39;
-</span></span></span><span class="line"><span class="cl"><span class="s1">  /last-mirror/ {
-</span></span></span><span class="line"><span class="cl"><span class="s1">    getline
-</span></span></span><span class="line"><span class="cl"><span class="s1">    print $1
-</span></span></span><span class="line"><span class="cl"><span class="s1">  }
-</span></span></span><span class="line"><span class="cl"><span class="s1">  &#39;</span> /etc/setup/setup.rc<span class="k">)</span>
-</span></span><span class="line"><span class="cl">  <span class="nv">mirrordir</span><span class="o">=</span><span class="k">$(</span>sed <span class="s1">&#39;
-</span></span></span><span class="line"><span class="cl"><span class="s1">  s / %2f g
-</span></span></span><span class="line"><span class="cl"><span class="s1">  s : %3a g
-</span></span></span><span class="line"><span class="cl"><span class="s1">  &#39;</span> <span class="o">&lt;&lt;&lt;</span> <span class="s2">&#34;</span><span class="nv">$mirror</span><span class="s2">&#34;</span><span class="k">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  mkdir -p <span class="s2">&#34;</span><span class="nv">$cache</span><span class="s2">/</span><span class="nv">$mirrordir</span><span class="s2">/</span><span class="nv">$arch</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="nb">cd</span> <span class="s2">&#34;</span><span class="nv">$cache</span><span class="s2">/</span><span class="nv">$mirrordir</span><span class="s2">/</span><span class="nv">$arch</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> -e setup.ini <span class="o">]</span>
-</span></span><span class="line"><span class="cl">  <span class="k">then</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="m">0</span>
-</span></span><span class="line"><span class="cl">  <span class="k">else</span>
-</span></span><span class="line"><span class="cl">    get-setup
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="m">1</span>
-</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
-</span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">function</span> get-setup <span class="o">{</span>
-</span></span><span class="line"><span class="cl">  touch setup.ini
-</span></span><span class="line"><span class="cl">  mv setup.ini setup.ini-save
-</span></span><span class="line"><span class="cl">  wget -N <span class="nv">$mirror</span>/<span class="nv">$arch</span>/setup.bz2
-</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> -e setup.bz2 <span class="o">]</span>
-</span></span><span class="line"><span class="cl">  <span class="k">then</span>
-</span></span><span class="line"><span class="cl">    bunzip2 setup.bz2
-</span></span><span class="line"><span class="cl">    mv setup setup.ini
-</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> Updated setup.ini
-</span></span><span class="line"><span class="cl">  <span class="k">else</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> Error updating setup.ini, reverting
-</span></span><span class="line"><span class="cl">    mv setup.ini-save setup.ini
-</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
-</span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">function</span> check-packages <span class="o">{</span>
-</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[[</span> <span class="nv">$pks</span> <span class="o">]]</span>
-</span></span><span class="line"><span class="cl">  <span class="k">then</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="m">0</span>
-</span></span><span class="line"><span class="cl">  <span class="k">else</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> No packages found.
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="m">1</span>
-</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
-</span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">function</span> warn <span class="o">{</span>
-</span></span><span class="line"><span class="cl">  <span class="nb">printf</span> <span class="s1">&#39;\e[1;31m%s\e[m\n&#39;</span> <span class="s2">&#34;</span><span class="nv">$*</span><span class="s2">&#34;</span> &gt;<span class="p">&amp;</span><span class="m">2</span>
-</span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">function</span> apt-update <span class="o">{</span>
-</span></span><span class="line"><span class="cl">  <span class="k">if</span> find-workspace
-</span></span><span class="line"><span class="cl">  <span class="k">then</span>
-</span></span><span class="line"><span class="cl">    get-setup
-</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
-</span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">function</span> apt-category <span class="o">{</span>
-</span></span><span class="line"><span class="cl">  check-packages
-</span></span><span class="line"><span class="cl">  find-workspace
-</span></span><span class="line"><span class="cl">  <span class="k">for</span> pkg in <span class="s2">&#34;</span><span class="si">${</span><span class="nv">pks</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="k">do</span>
-</span></span><span class="line"><span class="cl">    awk <span class="s1">&#39;
-</span></span></span><span class="line"><span class="cl"><span class="s1">    $1 == &#34;@&#34; {
-</span></span></span><span class="line"><span class="cl"><span class="s1">      pck = $2
-</span></span></span><span class="line"><span class="cl"><span class="s1">    }
-</span></span></span><span class="line"><span class="cl"><span class="s1">    $1 == &#34;category:&#34; &amp;&amp; $0 ~ query {
-</span></span></span><span class="line"><span class="cl"><span class="s1">      print pck
-</span></span></span><span class="line"><span class="cl"><span class="s1">    }
-</span></span></span><span class="line"><span class="cl"><span class="s1">    &#39;</span> <span class="nv">query</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$pks</span><span class="s2">&#34;</span> setup.ini
-</span></span><span class="line"><span class="cl">  <span class="k">done</span>
-</span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">function</span> apt-list <span class="o">{</span>
-</span></span><span class="line"><span class="cl">  <span class="nb">local</span> sbq
-</span></span><span class="line"><span class="cl">  <span class="k">for</span> pkg in <span class="s2">&#34;</span><span class="si">${</span><span class="nv">pks</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="k">do</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">let</span> sbq++ <span class="o">&amp;&amp;</span> <span class="nb">echo</span>
-</span></span><span class="line"><span class="cl">    awk <span class="s1">&#39;NR&gt;1 &amp;&amp; $1~pkg &amp;&amp; $0=$1&#39;</span> <span class="nv">pkg</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$pkg</span><span class="s2">&#34;</span> /etc/setup/installed.db
-</span></span><span class="line"><span class="cl">  <span class="k">done</span>
-</span></span><span class="line"><span class="cl">  <span class="nb">let</span> sbq <span class="o">&amp;&amp;</span> <span class="k">return</span>
-</span></span><span class="line"><span class="cl">  awk <span class="s1">&#39;NR&gt;1 &amp;&amp; $0=$1&#39;</span> /etc/setup/installed.db
-</span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">function</span> apt-listall <span class="o">{</span>
-</span></span><span class="line"><span class="cl">  check-packages
-</span></span><span class="line"><span class="cl">  find-workspace
-</span></span><span class="line"><span class="cl">  <span class="nb">local</span> sbq
-</span></span><span class="line"><span class="cl">  <span class="k">for</span> pkg in <span class="s2">&#34;</span><span class="si">${</span><span class="nv">pks</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="k">do</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">let</span> sbq++ <span class="o">&amp;&amp;</span> <span class="nb">echo</span>
-</span></span><span class="line"><span class="cl">    awk <span class="s1">&#39;$1~pkg &amp;&amp; $0=$1&#39;</span> <span class="nv">RS</span><span class="o">=</span><span class="s1">&#39;\n\n@ &#39;</span> <span class="nv">FS</span><span class="o">=</span><span class="s1">&#39;\n&#39;</span> <span class="nv">pkg</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$pkg</span><span class="s2">&#34;</span> setup.ini
-</span></span><span class="line"><span class="cl">  <span class="k">done</span>
-</span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">function</span> apt-listfiles <span class="o">{</span>
-</span></span><span class="line"><span class="cl">  check-packages
-</span></span><span class="line"><span class="cl">  find-workspace
-</span></span><span class="line"><span class="cl">  <span class="nb">local</span> pkg sbq
-</span></span><span class="line"><span class="cl">  <span class="k">for</span> pkg in <span class="s2">&#34;</span><span class="si">${</span><span class="nv">pks</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="k">do</span>
-</span></span><span class="line"><span class="cl">    <span class="o">((</span> sbq++ <span class="o">))</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span>
-</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">[</span> ! -e /etc/setup/<span class="s2">&#34;</span><span class="nv">$pkg</span><span class="s2">&#34;</span>.lst.gz <span class="o">]</span>
-</span></span><span class="line"><span class="cl">    <span class="k">then</span>
-</span></span><span class="line"><span class="cl">      download <span class="s2">&#34;</span><span class="nv">$pkg</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="k">fi</span>
-</span></span><span class="line"><span class="cl">    gzip -cd /etc/setup/<span class="s2">&#34;</span><span class="nv">$pkg</span><span class="s2">&#34;</span>.lst.gz
-</span></span><span class="line"><span class="cl">  <span class="k">done</span>
-</span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">function</span> apt-show <span class="o">{</span>
-</span></span><span class="line"><span class="cl">  find-workspace
-</span></span><span class="line"><span class="cl">  check-packages
-</span></span><span class="line"><span class="cl">  <span class="k">for</span> pkg in <span class="s2">&#34;</span><span class="si">${</span><span class="nv">pks</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="k">do</span>
-</span></span><span class="line"><span class="cl">    <span class="o">((</span> notfirst++ <span class="o">))</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span>
-</span></span><span class="line"><span class="cl">    awk <span class="s1">&#39;
-</span></span></span><span class="line"><span class="cl"><span class="s1">    $1 == query {
-</span></span></span><span class="line"><span class="cl"><span class="s1">      print
-</span></span></span><span class="line"><span class="cl"><span class="s1">      fd++
-</span></span></span><span class="line"><span class="cl"><span class="s1">    }
-</span></span></span><span class="line"><span class="cl"><span class="s1">    END {
-</span></span></span><span class="line"><span class="cl"><span class="s1">      if (! fd)
-</span></span></span><span class="line"><span class="cl"><span class="s1">        print &#34;Unable to locate package &#34; query
-</span></span></span><span class="line"><span class="cl"><span class="s1">    }
-</span></span></span><span class="line"><span class="cl"><span class="s1">    &#39;</span> <span class="nv">RS</span><span class="o">=</span><span class="s1">&#39;\n\n@ &#39;</span> <span class="nv">FS</span><span class="o">=</span><span class="s1">&#39;\n&#39;</span> <span class="nv">query</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$pkg</span><span class="s2">&#34;</span> setup.ini
-</span></span><span class="line"><span class="cl">  <span class="k">done</span>
-</span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">function</span> apt-depends <span class="o">{</span>
-</span></span><span class="line"><span class="cl">  find-workspace
-</span></span><span class="line"><span class="cl">  check-packages
-</span></span><span class="line"><span class="cl">  <span class="k">for</span> pkg in <span class="s2">&#34;</span><span class="si">${</span><span class="nv">pks</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="k">do</span>
-</span></span><span class="line"><span class="cl">    awk <span class="s1">&#39;
-</span></span></span><span class="line"><span class="cl"><span class="s1">    @include &#34;join&#34;
-</span></span></span><span class="line"><span class="cl"><span class="s1">    $1 == &#34;@&#34; {
-</span></span></span><span class="line"><span class="cl"><span class="s1">      apg = $2
-</span></span></span><span class="line"><span class="cl"><span class="s1">    }
-</span></span></span><span class="line"><span class="cl"><span class="s1">    $1 == &#34;requires:&#34; {
-</span></span></span><span class="line"><span class="cl"><span class="s1">      for (z=2; z&lt;=NF; z++)
-</span></span></span><span class="line"><span class="cl"><span class="s1">        reqs[apg][z-1] = $z
-</span></span></span><span class="line"><span class="cl"><span class="s1">    }
-</span></span></span><span class="line"><span class="cl"><span class="s1">    END {
-</span></span></span><span class="line"><span class="cl"><span class="s1">      prpg(ENVIRON[&#34;pkg&#34;])
-</span></span></span><span class="line"><span class="cl"><span class="s1">    }
-</span></span></span><span class="line"><span class="cl"><span class="s1">    function smartmatch(small, large,    values) {
-</span></span></span><span class="line"><span class="cl"><span class="s1">      for (each in large)
-</span></span></span><span class="line"><span class="cl"><span class="s1">        values[large[each]]
-</span></span></span><span class="line"><span class="cl"><span class="s1">      return small in values
-</span></span></span><span class="line"><span class="cl"><span class="s1">    }
-</span></span></span><span class="line"><span class="cl"><span class="s1">    function prpg(fpg) {
-</span></span></span><span class="line"><span class="cl"><span class="s1">      if (smartmatch(fpg, spath)) return
-</span></span></span><span class="line"><span class="cl"><span class="s1">      spath[length(spath)+1] = fpg
-</span></span></span><span class="line"><span class="cl"><span class="s1">      print join(spath, 1, length(spath), &#34; &gt; &#34;)
-</span></span></span><span class="line"><span class="cl"><span class="s1">      if (isarray(reqs[fpg]))
-</span></span></span><span class="line"><span class="cl"><span class="s1">        for (each in reqs[fpg])
-</span></span></span><span class="line"><span class="cl"><span class="s1">          prpg(reqs[fpg][each])
-</span></span></span><span class="line"><span class="cl"><span class="s1">      delete spath[length(spath)]
-</span></span></span><span class="line"><span class="cl"><span class="s1">    }
-</span></span></span><span class="line"><span class="cl"><span class="s1">    &#39;</span> setup.ini
-</span></span><span class="line"><span class="cl">  <span class="k">done</span>
-</span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">function</span> apt-rdepends <span class="o">{</span>
-</span></span><span class="line"><span class="cl">  find-workspace
-</span></span><span class="line"><span class="cl">  <span class="k">for</span> pkg in <span class="s2">&#34;</span><span class="si">${</span><span class="nv">pks</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="k">do</span>
-</span></span><span class="line"><span class="cl">    awk <span class="s1">&#39;
-</span></span></span><span class="line"><span class="cl"><span class="s1">    @include &#34;join&#34;
-</span></span></span><span class="line"><span class="cl"><span class="s1">    $1 == &#34;@&#34; {
-</span></span></span><span class="line"><span class="cl"><span class="s1">      apg = $2
-</span></span></span><span class="line"><span class="cl"><span class="s1">    }
-</span></span></span><span class="line"><span class="cl"><span class="s1">    $1 == &#34;requires:&#34; {
-</span></span></span><span class="line"><span class="cl"><span class="s1">      for (z=2; z&lt;=NF; z++)
-</span></span></span><span class="line"><span class="cl"><span class="s1">        reqs[$z][length(reqs[$z])+1] = apg
-</span></span></span><span class="line"><span class="cl"><span class="s1">    }
-</span></span></span><span class="line"><span class="cl"><span class="s1">    END {
-</span></span></span><span class="line"><span class="cl"><span class="s1">      prpg(ENVIRON[&#34;pkg&#34;])
-</span></span></span><span class="line"><span class="cl"><span class="s1">    }
-</span></span></span><span class="line"><span class="cl"><span class="s1">    function smartmatch(small, large,    values) {
-</span></span></span><span class="line"><span class="cl"><span class="s1">      for (each in large)
-</span></span></span><span class="line"><span class="cl"><span class="s1">        values[large[each]]
-</span></span></span><span class="line"><span class="cl"><span class="s1">      return small in values
-</span></span></span><span class="line"><span class="cl"><span class="s1">    }
-</span></span></span><span class="line"><span class="cl"><span class="s1">    function prpg(fpg) {
-</span></span></span><span class="line"><span class="cl"><span class="s1">      if (smartmatch(fpg, spath)) return
-</span></span></span><span class="line"><span class="cl"><span class="s1">      spath[length(spath)+1] = fpg
-</span></span></span><span class="line"><span class="cl"><span class="s1">      print join(spath, 1, length(spath), &#34; &lt; &#34;)
-</span></span></span><span class="line"><span class="cl"><span class="s1">      if (isarray(reqs[fpg]))
-</span></span></span><span class="line"><span class="cl"><span class="s1">        for (each in reqs[fpg])
-</span></span></span><span class="line"><span class="cl"><span class="s1">          prpg(reqs[fpg][each])
-</span></span></span><span class="line"><span class="cl"><span class="s1">      delete spath[length(spath)]
-</span></span></span><span class="line"><span class="cl"><span class="s1">    }
-</span></span></span><span class="line"><span class="cl"><span class="s1">    &#39;</span> setup.ini
-</span></span><span class="line"><span class="cl">  <span class="k">done</span>
-</span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">function</span> apt-download <span class="o">{</span>
-</span></span><span class="line"><span class="cl">  check-packages
-</span></span><span class="line"><span class="cl">  find-workspace
-</span></span><span class="line"><span class="cl">  <span class="nb">local</span> pkg sbq
-</span></span><span class="line"><span class="cl">  <span class="k">for</span> pkg in <span class="s2">&#34;</span><span class="si">${</span><span class="nv">pks</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="k">do</span>
-</span></span><span class="line"><span class="cl">    <span class="o">((</span> sbq++ <span class="o">))</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span>
-</span></span><span class="line"><span class="cl">    download <span class="s2">&#34;</span><span class="nv">$pkg</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="k">done</span>
-</span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">function</span> download <span class="o">{</span>
-</span></span><span class="line"><span class="cl">  <span class="nb">local</span> pkg digest digactual
-</span></span><span class="line"><span class="cl">  <span class="nv">pkg</span><span class="o">=</span><span class="nv">$1</span>
-</span></span><span class="line"><span class="cl">  <span class="c1"># look for package and save desc file</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  awk <span class="s1">&#39;$1 == pc&#39;</span> <span class="nv">RS</span><span class="o">=</span><span class="s1">&#39;\n\n@ &#39;</span> <span class="nv">FS</span><span class="o">=</span><span class="s1">&#39;\n&#39;</span> <span class="nv">pc</span><span class="o">=</span><span class="nv">$pkg</span> setup.ini &gt; desc
-</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> ! -s desc <span class="o">]</span>
-</span></span><span class="line"><span class="cl">  <span class="k">then</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> Unable to locate package <span class="nv">$pkg</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">exit</span> <span class="m">1</span>
-</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="c1"># download and unpack the bz2 or xz file</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="c1"># pick the latest version, which comes first</span>
-</span></span><span class="line"><span class="cl">  <span class="nb">set</span> -- <span class="k">$(</span>awk <span class="s1">&#39;$1 == &#34;install:&#34;&#39;</span> desc<span class="k">)</span>
-</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">((</span> ! <span class="nv">$#</span> <span class="o">))</span>
-</span></span><span class="line"><span class="cl">  <span class="k">then</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s1">&#39;Could not find &#34;install&#34; in package description: obsolete package?&#39;</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">exit</span> <span class="m">1</span>
-</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="nv">dn</span><span class="o">=</span><span class="k">$(</span>dirname <span class="nv">$2</span><span class="k">)</span>
-</span></span><span class="line"><span class="cl">  <span class="nv">bn</span><span class="o">=</span><span class="k">$(</span>basename <span class="nv">$2</span><span class="k">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="c1"># check the md5</span>
-</span></span><span class="line"><span class="cl">  <span class="nv">digest</span><span class="o">=</span><span class="nv">$4</span>
-</span></span><span class="line"><span class="cl">  <span class="k">case</span> <span class="si">${#</span><span class="nv">digest</span><span class="si">}</span> in
-</span></span><span class="line"><span class="cl">   32<span class="o">)</span> <span class="nv">hash</span><span class="o">=</span>md5sum    <span class="p">;;</span>
-</span></span><span class="line"><span class="cl">  128<span class="o">)</span> <span class="nv">hash</span><span class="o">=</span>sha512sum <span class="p">;;</span>
-</span></span><span class="line"><span class="cl">  <span class="k">esac</span>
-</span></span><span class="line"><span class="cl">  mkdir -p <span class="s2">&#34;</span><span class="nv">$cache</span><span class="s2">/</span><span class="nv">$mirrordir</span><span class="s2">/</span><span class="nv">$dn</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="nb">cd</span> <span class="s2">&#34;</span><span class="nv">$cache</span><span class="s2">/</span><span class="nv">$mirrordir</span><span class="s2">/</span><span class="nv">$dn</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="k">if</span> ! <span class="nb">test</span> -e <span class="nv">$bn</span> <span class="o">||</span> ! <span class="nv">$hash</span> -c <span class="o">&lt;&lt;&lt;</span> <span class="s2">&#34;</span><span class="nv">$digest</span><span class="s2"> </span><span class="nv">$bn</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="k">then</span>
-</span></span><span class="line"><span class="cl">    wget -O <span class="nv">$bn</span> <span class="nv">$mirror</span>/<span class="nv">$dn</span>/<span class="nv">$bn</span>
-</span></span><span class="line"><span class="cl">    <span class="nv">$hash</span> -c <span class="o">&lt;&lt;&lt;</span> <span class="s2">&#34;</span><span class="nv">$digest</span><span class="s2"> </span><span class="nv">$bn</span><span class="s2">&#34;</span> <span class="o">||</span> <span class="nb">exit</span>
-</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  tar tf <span class="nv">$bn</span> <span class="p">|</span> gzip &gt; /etc/setup/<span class="s2">&#34;</span><span class="nv">$pkg</span><span class="s2">&#34;</span>.lst.gz
-</span></span><span class="line"><span class="cl">  <span class="nb">cd</span> ~-
-</span></span><span class="line"><span class="cl">  mv desc <span class="s2">&#34;</span><span class="nv">$cache</span><span class="s2">/</span><span class="nv">$mirrordir</span><span class="s2">/</span><span class="nv">$dn</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="nv">$dn</span> <span class="nv">$bn</span> &gt; /tmp/dwn
-</span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">function</span> apt-search <span class="o">{</span>
-</span></span><span class="line"><span class="cl">  check-packages
-</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> Searching downloaded packages...
-</span></span><span class="line"><span class="cl">  <span class="k">for</span> pkg in <span class="s2">&#34;</span><span class="si">${</span><span class="nv">pks</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="k">do</span>
-</span></span><span class="line"><span class="cl">    <span class="nv">key</span><span class="o">=</span><span class="k">$(</span><span class="nb">type</span> -P <span class="s2">&#34;</span><span class="nv">$pkg</span><span class="s2">&#34;</span> <span class="p">|</span> sed s./..<span class="k">)</span>
-</span></span><span class="line"><span class="cl">    <span class="o">[[</span> <span class="nv">$key</span> <span class="o">]]</span> <span class="o">||</span> <span class="nv">key</span><span class="o">=</span><span class="nv">$pkg</span>
-</span></span><span class="line"><span class="cl">    <span class="k">for</span> manifest in /etc/setup/*.lst.gz
-</span></span><span class="line"><span class="cl">    <span class="k">do</span>
-</span></span><span class="line"><span class="cl">      <span class="k">if</span> gzip -cd <span class="nv">$manifest</span> <span class="p">|</span> grep -q <span class="s2">&#34;</span><span class="nv">$key</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">      <span class="k">then</span>
-</span></span><span class="line"><span class="cl">        <span class="nv">package</span><span class="o">=</span><span class="k">$(</span>sed <span class="s1">&#39;
-</span></span></span><span class="line"><span class="cl"><span class="s1">        s,/etc/setup/,,
-</span></span></span><span class="line"><span class="cl"><span class="s1">        s,.lst.gz,,
-</span></span></span><span class="line"><span class="cl"><span class="s1">        &#39;</span> <span class="o">&lt;&lt;&lt;</span> <span class="nv">$manifest</span><span class="k">)</span>
-</span></span><span class="line"><span class="cl">        <span class="nb">echo</span> <span class="nv">$package</span>
-</span></span><span class="line"><span class="cl">      <span class="k">fi</span>
-</span></span><span class="line"><span class="cl">    <span class="k">done</span>
-</span></span><span class="line"><span class="cl">  <span class="k">done</span>
-</span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">function</span> apt-searchall <span class="o">{</span>
-</span></span><span class="line"><span class="cl">  <span class="nb">cd</span> /tmp
-</span></span><span class="line"><span class="cl">  <span class="k">for</span> pkg in <span class="s2">&#34;</span><span class="si">${</span><span class="nv">pks</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="k">do</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">printf</span> -v qs <span class="s1">&#39;text=1&amp;arch=%s&amp;grep=%s&#39;</span> <span class="nv">$arch</span> <span class="s2">&#34;</span><span class="nv">$pkg</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">    wget -O matches cygwin.com/cgi-bin2/package-grep.cgi?<span class="s2">&#34;</span><span class="nv">$qs</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">    awk <span class="s1">&#39;
-</span></span></span><span class="line"><span class="cl"><span class="s1">    NR == 1 {next}
-</span></span></span><span class="line"><span class="cl"><span class="s1">    mc[$1]++ {next}
-</span></span></span><span class="line"><span class="cl"><span class="s1">    /-debuginfo-/ {next}
-</span></span></span><span class="line"><span class="cl"><span class="s1">    /^cygwin32-/ {next}
-</span></span></span><span class="line"><span class="cl"><span class="s1">    {print $1}
-</span></span></span><span class="line"><span class="cl"><span class="s1">    &#39;</span> <span class="nv">FS</span><span class="o">=</span>-<span class="o">[[</span>:digit:<span class="o">]]</span> matches
-</span></span><span class="line"><span class="cl">  <span class="k">done</span>
-</span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">function</span> apt-install <span class="o">{</span>
-</span></span><span class="line"><span class="cl">  check-packages
-</span></span><span class="line"><span class="cl">  find-workspace
-</span></span><span class="line"><span class="cl">  <span class="nb">local</span> pkg dn bn requires wr package sbq script
-</span></span><span class="line"><span class="cl">  <span class="k">for</span> pkg in <span class="s2">&#34;</span><span class="si">${</span><span class="nv">pks</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="k">do</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="k">if</span> grep -q <span class="s2">&#34;^</span><span class="nv">$pkg</span><span class="s2"> &#34;</span> /etc/setup/installed.db
-</span></span><span class="line"><span class="cl">  <span class="k">then</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> Package <span class="nv">$pkg</span> is already installed, skipping
-</span></span><span class="line"><span class="cl">    <span class="k">continue</span>
-</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
-</span></span><span class="line"><span class="cl">  <span class="o">((</span> sbq++ <span class="o">))</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span>
-</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> Installing <span class="nv">$pkg</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  download <span class="nv">$pkg</span>
-</span></span><span class="line"><span class="cl">  <span class="nb">read</span> dn bn &lt;/tmp/dwn
-</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> Unpacking...
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="nb">cd</span> <span class="s2">&#34;</span><span class="nv">$cache</span><span class="s2">/</span><span class="nv">$mirrordir</span><span class="s2">/</span><span class="nv">$dn</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">  tar -x -C / -f <span class="nv">$bn</span>
-</span></span><span class="line"><span class="cl">  <span class="c1"># update the package database</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  awk <span class="s1">&#39;
-</span></span></span><span class="line"><span class="cl"><span class="s1">  ins != 1 &amp;&amp; pkg &lt; $1 {
-</span></span></span><span class="line"><span class="cl"><span class="s1">    print pkg, bz, 0
-</span></span></span><span class="line"><span class="cl"><span class="s1">    ins = 1
-</span></span></span><span class="line"><span class="cl"><span class="s1">  }
-</span></span></span><span class="line"><span class="cl"><span class="s1">  1
-</span></span></span><span class="line"><span class="cl"><span class="s1">  END {
-</span></span></span><span class="line"><span class="cl"><span class="s1">    if (ins != 1) print pkg, bz, 0
-</span></span></span><span class="line"><span class="cl"><span class="s1">  }
-</span></span></span><span class="line"><span class="cl"><span class="s1">  &#39;</span> <span class="nv">pkg</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$pkg</span><span class="s2">&#34;</span> <span class="nv">bz</span><span class="o">=</span><span class="nv">$bn</span> /etc/setup/installed.db &gt; /tmp/awk.<span class="nv">$$</span>
-</span></span><span class="line"><span class="cl">  mv /etc/setup/installed.db /etc/setup/installed.db-save
-</span></span><span class="line"><span class="cl">  mv /tmp/awk.<span class="nv">$$</span> /etc/setup/installed.db
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="o">[</span> -v nodeps <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="k">continue</span>
-</span></span><span class="line"><span class="cl">  <span class="c1"># recursively install required packages</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="nv">requires</span><span class="o">=</span><span class="k">$(</span>awk <span class="s1">&#39;$1==&#34;requires&#34;, $0=$2&#39;</span> <span class="nv">FS</span><span class="o">=</span><span class="s1">&#39;: &#39;</span> desc<span class="k">)</span>
-</span></span><span class="line"><span class="cl">  <span class="nb">cd</span> ~-
-</span></span><span class="line"><span class="cl">  <span class="nv">wr</span><span class="o">=</span><span class="m">0</span>
-</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[[</span> <span class="nv">$requires</span> <span class="o">]]</span>
-</span></span><span class="line"><span class="cl">  <span class="k">then</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> Package <span class="nv">$pkg</span> requires the following packages, installing:
-</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="nv">$requires</span>
-</span></span><span class="line"><span class="cl">    <span class="k">for</span> package in <span class="nv">$requires</span>
-</span></span><span class="line"><span class="cl">    <span class="k">do</span>
-</span></span><span class="line"><span class="cl">      <span class="k">if</span> grep -q <span class="s2">&#34;^</span><span class="nv">$package</span><span class="s2"> &#34;</span> /etc/setup/installed.db
-</span></span><span class="line"><span class="cl">      <span class="k">then</span>
-</span></span><span class="line"><span class="cl">        <span class="nb">echo</span> Package <span class="nv">$package</span> is already installed, skipping
-</span></span><span class="line"><span class="cl">        <span class="k">continue</span>
-</span></span><span class="line"><span class="cl">      <span class="k">fi</span>
-</span></span><span class="line"><span class="cl">      apt-cyg install --noscripts <span class="nv">$package</span> <span class="o">||</span> <span class="o">((</span> wr++ <span class="o">))</span>
-</span></span><span class="line"><span class="cl">    <span class="k">done</span>
-</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
-</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">((</span> wr <span class="o">))</span>
-</span></span><span class="line"><span class="cl">  <span class="k">then</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> some required packages did not install, continuing
-</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="c1"># run all postinstall scripts</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="o">[</span> -v noscripts <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="k">continue</span>
-</span></span><span class="line"><span class="cl">  find /etc/postinstall -name <span class="s1">&#39;*.sh&#39;</span> <span class="p">|</span> <span class="k">while</span> <span class="nb">read</span> script
-</span></span><span class="line"><span class="cl">  <span class="k">do</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> Running <span class="nv">$script</span>
-</span></span><span class="line"><span class="cl">    <span class="nv">$script</span>
-</span></span><span class="line"><span class="cl">    mv <span class="nv">$script</span> <span class="nv">$script</span>.done
-</span></span><span class="line"><span class="cl">  <span class="k">done</span>
-</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> Package <span class="nv">$pkg</span> installed
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="k">done</span>
-</span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">function</span> apt-remove <span class="o">{</span>
-</span></span><span class="line"><span class="cl">  check-packages
-</span></span><span class="line"><span class="cl">  <span class="nb">cd</span> /etc
-</span></span><span class="line"><span class="cl">  cygcheck awk bash bunzip2 grep gzip mv sed tar xz &gt; setup/essential.lst
-</span></span><span class="line"><span class="cl">  <span class="k">for</span> pkg in <span class="s2">&#34;</span><span class="si">${</span><span class="nv">pks</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="k">do</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="k">if</span> ! grep -q <span class="s2">&#34;^</span><span class="nv">$pkg</span><span class="s2"> &#34;</span> setup/installed.db
-</span></span><span class="line"><span class="cl">  <span class="k">then</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> Package <span class="nv">$pkg</span> is not installed, skipping
-</span></span><span class="line"><span class="cl">    <span class="k">continue</span>
-</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> ! -e setup/<span class="s2">&#34;</span><span class="nv">$pkg</span><span class="s2">&#34;</span>.lst.gz <span class="o">]</span>
-</span></span><span class="line"><span class="cl">  <span class="k">then</span>
-</span></span><span class="line"><span class="cl">    warn Package manifest missing, cannot remove <span class="nv">$pkg</span>. Exiting
-</span></span><span class="line"><span class="cl">    <span class="nb">exit</span> <span class="m">1</span>
-</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
-</span></span><span class="line"><span class="cl">  gzip -dk setup/<span class="s2">&#34;</span><span class="nv">$pkg</span><span class="s2">&#34;</span>.lst.gz
-</span></span><span class="line"><span class="cl">  awk <span class="s1">&#39;
-</span></span></span><span class="line"><span class="cl"><span class="s1">  NR == FNR {
-</span></span></span><span class="line"><span class="cl"><span class="s1">    if ($NF) ess[$NF]
-</span></span></span><span class="line"><span class="cl"><span class="s1">    next
-</span></span></span><span class="line"><span class="cl"><span class="s1">  }
-</span></span></span><span class="line"><span class="cl"><span class="s1">  $NF in ess {
-</span></span></span><span class="line"><span class="cl"><span class="s1">    exit 1
-</span></span></span><span class="line"><span class="cl"><span class="s1">  }
-</span></span></span><span class="line"><span class="cl"><span class="s1">  &#39;</span> <span class="nv">FS</span><span class="o">=</span><span class="s1">&#39;[/\\\\]&#39;</span> setup/<span class="o">{</span>essential,<span class="nv">$pkg</span><span class="o">}</span>.lst
-</span></span><span class="line"><span class="cl">  <span class="nv">esn</span><span class="o">=</span><span class="nv">$?</span>
-</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> <span class="nv">$esn</span> <span class="o">=</span> <span class="m">0</span> <span class="o">]</span>
-</span></span><span class="line"><span class="cl">  <span class="k">then</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> Removing <span class="nv">$pkg</span>
-</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">[</span> -e preremove/<span class="s2">&#34;</span><span class="nv">$pkg</span><span class="s2">&#34;</span>.sh <span class="o">]</span>
-</span></span><span class="line"><span class="cl">    <span class="k">then</span>
-</span></span><span class="line"><span class="cl">      preremove/<span class="s2">&#34;</span><span class="nv">$pkg</span><span class="s2">&#34;</span>.sh
-</span></span><span class="line"><span class="cl">      rm preremove/<span class="s2">&#34;</span><span class="nv">$pkg</span><span class="s2">&#34;</span>.sh
-</span></span><span class="line"><span class="cl">    <span class="k">fi</span>
-</span></span><span class="line"><span class="cl">    mapfile dt &lt; setup/<span class="s2">&#34;</span><span class="nv">$pkg</span><span class="s2">&#34;</span>.lst
-</span></span><span class="line"><span class="cl">    <span class="k">for</span> each in <span class="si">${</span><span class="nv">dt</span><span class="p">[*]</span><span class="si">}</span>
-</span></span><span class="line"><span class="cl">    <span class="k">do</span>
-</span></span><span class="line"><span class="cl">      <span class="o">[</span> -f /<span class="nv">$each</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> rm /<span class="nv">$each</span>
-</span></span><span class="line"><span class="cl">    <span class="k">done</span>
-</span></span><span class="line"><span class="cl">    <span class="k">for</span> each in <span class="si">${</span><span class="nv">dt</span><span class="p">[*]</span><span class="si">}</span>
-</span></span><span class="line"><span class="cl">    <span class="k">do</span>
-</span></span><span class="line"><span class="cl">      <span class="o">[</span> -d /<span class="nv">$each</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> rmdir --i /<span class="nv">$each</span>
-</span></span><span class="line"><span class="cl">    <span class="k">done</span>
-</span></span><span class="line"><span class="cl">    rm -f setup/<span class="s2">&#34;</span><span class="nv">$pkg</span><span class="s2">&#34;</span>.lst.gz postinstall/<span class="s2">&#34;</span><span class="nv">$pkg</span><span class="s2">&#34;</span>.sh.done
-</span></span><span class="line"><span class="cl">    awk -i inplace <span class="s1">&#39;$1 != ENVIRON[&#34;pkg&#34;]&#39;</span> setup/installed.db
-</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> Package <span class="nv">$pkg</span> removed
-</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
-</span></span><span class="line"><span class="cl">  rm setup/<span class="s2">&#34;</span><span class="nv">$pkg</span><span class="s2">&#34;</span>.lst
-</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> <span class="nv">$esn</span> <span class="o">=</span> <span class="m">1</span> <span class="o">]</span>
-</span></span><span class="line"><span class="cl">  <span class="k">then</span>
-</span></span><span class="line"><span class="cl">    warn apt-cyg cannot remove package <span class="nv">$pkg</span>, exiting
-</span></span><span class="line"><span class="cl">    <span class="nb">exit</span> <span class="m">1</span>
-</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="k">done</span>
-</span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">function</span> apt-mirror <span class="o">{</span>
-</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$pks</span><span class="s2">&#34;</span> <span class="o">]</span>
-</span></span><span class="line"><span class="cl">  <span class="k">then</span>
-</span></span><span class="line"><span class="cl">    awk -i inplace <span class="s1">&#39;
-</span></span></span><span class="line"><span class="cl"><span class="s1">    1
-</span></span></span><span class="line"><span class="cl"><span class="s1">    /last-mirror/ {
-</span></span></span><span class="line"><span class="cl"><span class="s1">      getline
-</span></span></span><span class="line"><span class="cl"><span class="s1">      print &#34;\t&#34; pks
-</span></span></span><span class="line"><span class="cl"><span class="s1">    }
-</span></span></span><span class="line"><span class="cl"><span class="s1">    &#39;</span> <span class="nv">pks</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$pks</span><span class="s2">&#34;</span> /etc/setup/setup.rc
-</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> Mirror <span class="nb">set</span> to <span class="s2">&#34;</span><span class="nv">$pks</span><span class="s2">&#34;</span>.
-</span></span><span class="line"><span class="cl">  <span class="k">else</span>
-</span></span><span class="line"><span class="cl">    awk <span class="s1">&#39;
-</span></span></span><span class="line"><span class="cl"><span class="s1">    /last-mirror/ {
-</span></span></span><span class="line"><span class="cl"><span class="s1">      getline
-</span></span></span><span class="line"><span class="cl"><span class="s1">      print $1
-</span></span></span><span class="line"><span class="cl"><span class="s1">    }
-</span></span></span><span class="line"><span class="cl"><span class="s1">    &#39;</span> /etc/setup/setup.rc
-</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
-</span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">function</span> apt-cache <span class="o">{</span>
-</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$pks</span><span class="s2">&#34;</span> <span class="o">]</span>
-</span></span><span class="line"><span class="cl">  <span class="k">then</span>
-</span></span><span class="line"><span class="cl">    <span class="nv">vas</span><span class="o">=</span><span class="k">$(</span>cygpath -aw <span class="s2">&#34;</span><span class="nv">$pks</span><span class="s2">&#34;</span><span class="k">)</span>
-</span></span><span class="line"><span class="cl">    awk -i inplace <span class="s1">&#39;
-</span></span></span><span class="line"><span class="cl"><span class="s1">    1
-</span></span></span><span class="line"><span class="cl"><span class="s1">    /last-cache/ {
-</span></span></span><span class="line"><span class="cl"><span class="s1">      getline
-</span></span></span><span class="line"><span class="cl"><span class="s1">      print &#34;\t&#34; vas
-</span></span></span><span class="line"><span class="cl"><span class="s1">    }
-</span></span></span><span class="line"><span class="cl"><span class="s1">    &#39;</span> <span class="nv">vas</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">vas</span><span class="p">//</span><span class="se">\\</span><span class="p">/</span><span class="se">\\\\</span><span class="si">}</span><span class="s2">&#34;</span> /etc/setup/setup.rc
-</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> Cache <span class="nb">set</span> to <span class="s2">&#34;</span><span class="nv">$vas</span><span class="s2">&#34;</span>.
-</span></span><span class="line"><span class="cl">  <span class="k">else</span>
-</span></span><span class="line"><span class="cl">    awk <span class="s1">&#39;
-</span></span></span><span class="line"><span class="cl"><span class="s1">    /last-cache/ {
-</span></span></span><span class="line"><span class="cl"><span class="s1">      getline
-</span></span></span><span class="line"><span class="cl"><span class="s1">      print $1
-</span></span></span><span class="line"><span class="cl"><span class="s1">    }
-</span></span></span><span class="line"><span class="cl"><span class="s1">    &#39;</span> /etc/setup/setup.rc
-</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
-</span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> -p /dev/stdin <span class="o">]</span>
-</span></span><span class="line"><span class="cl"><span class="k">then</span>
-</span></span><span class="line"><span class="cl">  mapfile -t pks
-</span></span><span class="line"><span class="cl"><span class="k">fi</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># process options</span>
-</span></span><span class="line"><span class="cl"><span class="k">until</span> <span class="o">[</span> <span class="nv">$#</span> <span class="o">=</span> <span class="m">0</span> <span class="o">]</span>
-</span></span><span class="line"><span class="cl"><span class="k">do</span>
-</span></span><span class="line"><span class="cl">  <span class="k">case</span> <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> in
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    --nodeps<span class="o">)</span>
-</span></span><span class="line"><span class="cl">      <span class="nv">nodeps</span><span class="o">=</span><span class="m">1</span>
-</span></span><span class="line"><span class="cl">      <span class="nb">shift</span>
-</span></span><span class="line"><span class="cl">    <span class="p">;;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    --noscripts<span class="o">)</span>
-</span></span><span class="line"><span class="cl">      <span class="nv">noscripts</span><span class="o">=</span><span class="m">1</span>
-</span></span><span class="line"><span class="cl">      <span class="nb">shift</span>
-</span></span><span class="line"><span class="cl">    <span class="p">;;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    --version<span class="o">)</span>
-</span></span><span class="line"><span class="cl">      <span class="nb">printf</span> <span class="s2">&#34;</span><span class="nv">$version</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">      <span class="nb">exit</span>
-</span></span><span class="line"><span class="cl">    <span class="p">;;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    update<span class="o">)</span>
-</span></span><span class="line"><span class="cl">      <span class="nv">command</span><span class="o">=</span><span class="nv">$1</span>
-</span></span><span class="line"><span class="cl">      <span class="nb">shift</span>
-</span></span><span class="line"><span class="cl">    <span class="p">;;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    list <span class="p">|</span> cache  <span class="p">|</span> remove <span class="p">|</span> depends <span class="p">|</span> listall  <span class="p">|</span> download <span class="p">|</span> listfiles <span class="p">|</span><span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>    show <span class="p">|</span> mirror <span class="p">|</span> search <span class="p">|</span> install <span class="p">|</span> category <span class="p">|</span> rdepends <span class="p">|</span> searchall <span class="o">)</span>
-</span></span><span class="line"><span class="cl">      <span class="k">if</span> <span class="o">[[</span> <span class="nv">$command</span> <span class="o">]]</span>
-</span></span><span class="line"><span class="cl">      <span class="k">then</span>
-</span></span><span class="line"><span class="cl">        <span class="nv">pks</span><span class="o">+=(</span><span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span><span class="o">)</span>
-</span></span><span class="line"><span class="cl">      <span class="k">else</span>
-</span></span><span class="line"><span class="cl">        <span class="nv">command</span><span class="o">=</span><span class="nv">$1</span>
-</span></span><span class="line"><span class="cl">      <span class="k">fi</span>
-</span></span><span class="line"><span class="cl">      <span class="nb">shift</span>
-</span></span><span class="line"><span class="cl">    <span class="p">;;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    *<span class="o">)</span>
-</span></span><span class="line"><span class="cl">      <span class="nv">pks</span><span class="o">+=(</span><span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span><span class="o">)</span>
-</span></span><span class="line"><span class="cl">      <span class="nb">shift</span>
-</span></span><span class="line"><span class="cl">    <span class="p">;;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="k">esac</span>
-</span></span><span class="line"><span class="cl"><span class="k">done</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nb">set</span> -a
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="nb">type</span> -t apt-<span class="nv">$command</span> <span class="p">|</span> grep -q <span class="k">function</span>
-</span></span><span class="line"><span class="cl"><span class="k">then</span>
-</span></span><span class="line"><span class="cl">  <span class="nb">readonly</span> <span class="nv">arch</span><span class="o">=</span><span class="si">${</span><span class="nv">HOSTTYPE</span><span class="p">/i6/x</span><span class="si">}</span>
-</span></span><span class="line"><span class="cl">  apt-<span class="nv">$command</span>
-</span></span><span class="line"><span class="cl"><span class="k">else</span>
-</span></span><span class="line"><span class="cl">  <span class="nb">printf</span> <span class="s2">&#34;</span><span class="nv">$usage</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="k">fi</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">	<span class="nb">printf</span> <span class="s2">&#34;</span><span class="nv">$usage</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">fi</span></span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="方式二">方式二</h2>
-<p>虽然我们上面安装好了 Cygwin，但还是很不方便，为什么呢？主要是因为 Cygwin目前设计的还不是很人性化。如果我们安装好Cygwin后，如果缺少了某个包想安装的话就特别麻烦。还需要重新安装 Cygwin才能解决，有没有更好的方式呢？</p>
-<p>你遇到的困难，别人也会遇到，不同的是你要么忍了，要么不用了。可别人遇到困难后会去解决困难，这才是人与人之间最大的不同。</p>
-<p>话扯的有点远哈。没错，已经有人帮我们解决了这个问题。这是一个很好用的开源工具，它叫 apt-cyg。它与 Ubuntu系统中的 apt一样特别好用，而且使用的方式与 apt也是一个样子的。</p>
-<p>如何安装它呢？网上有很多方法，但很多不可行。大家按我这个方法操作一定可以安装成功。</p>
-<p>其实，apt-cyg就是一个脚本。我们只需要将这个脚本下载下来就OK了。这里是<a class="link" href="https://github.com/transcode-open/apt-cyg/"  target="_blank" rel="noopener"
-    >apt-cyg</a>的下载地址。大家可以在Cygwin下执行下面的命令就好了。</p>
-<p>第一步：</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-11" class="outline-3">
+<h3 id="headline-11">
+方式二
+</h3>
+<div id="outline-text-headline-11" class="outline-text-3">
+<p>
+虽然我们上面安装好了 Cygwin，但还是很不方便，为什么呢？主要是因为 Cygwin目前设计的还不是很人性化。如果我们安装好Cygwin后，如果缺少了某个包想安装的话就特别麻烦。还需要重新安装 Cygwin才能解决，有没有更好的方式呢？</p>
+<p>
+你遇到的困难，别人也会遇到，不同的是你要么忍了，要么不用了。可别人遇到困难后会去解决困难，这才是人与人之间最大的不同。</p>
+<p>
+话扯的有点远哈。没错，已经有人帮我们解决了这个问题。这是一个很好用的开源工具，它叫 apt-cyg。它与 Ubuntu系统中的 apt一样特别好用，而且使用的方式与 apt也是一个样子的。</p>
+<p>
+如何安装它呢？网上有很多方法，但很多不可行。大家按我这个方法操作一定可以安装成功。</p>
+<p>
+其实，apt-cyg就是一个脚本。我们只需要将这个脚本下载下来就OK了。这里是<a href="https://github.com/transcode-open/apt-cyg/">apt-cyg</a>的下载地址。大家可以在Cygwin下执行下面的命令就好了。</p>
+<p>
+第一步：</p>
+<div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-BASH" data-lang="BASH"><span class="line"><span class="cl">wget -c https://raw.githubusercontent.com/transcode-open/apt-cyg/master/apt-cyg
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  wget -c https://raw.githubusercontent.com/transcode-open/apt-cyg/master/apt-cyg</span></span></code></pre></td></tr></table>
 </div>
-</div><p>第二步</p>
+</div>
+</div>
+<p>
+第二步:</p>
+<div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-BASH" data-lang="BASH"><span class="line"><span class="cl">install apt-cyg /bin
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  install apt-cyg /bin</span></span></code></pre></td></tr></table>
 </div>
-</div><h1 id="需要添加的环境变量">需要添加的环境变量</h1>
-<pre><code>    C:\Cygwin\bin
-    C:\Cygwin\sbin
-    C:\Cygwin\usr\sbin
-</code></pre>
-<p><a class="link" href="https://blog.csdn.net/hu_yinghui/article/details/125263154"  target="_blank" rel="noopener"
-    >参考链接1</a></p>
-<p><a class="link" href="https://blog.csdn.net/nianjiuhuiyi/article/details/121989680"  target="_blank" rel="noopener"
-    >参考链接2</a></p>
-<h2 id="在当前文件夹打开">在当前文件夹打开</h2>
-<p>可以在文件资源管理器的地址栏运行cygwin的mintty，前提是设置好环境变量</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-12" class="outline-2">
+<h2 id="headline-12">
+需要添加的环境变量
+</h2>
+<div id="outline-text-headline-12" class="outline-text-2">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  C:<span class="se">\C</span>ygwin<span class="se">\b</span>in
+</span></span><span class="line"><span class="cl">  C:<span class="se">\C</span>ygwin<span class="se">\s</span>bin
+</span></span><span class="line"><span class="cl">  C:<span class="se">\C</span>ygwin<span class="se">\u</span>sr<span class="se">\s</span>bin</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-13" class="outline-3">
+<h3 id="headline-13">
+参考链接
+</h3>
+<div id="outline-text-headline-13" class="outline-text-3">
+<p>
+<a href="https://blog.csdn.net/hu_yinghui/article/details/125263154">windows下安装Cygwin详细教程</a></p>
+<p>
+<a href="https://blog.csdn.net/nianjiuhuiyi/article/details/121989680">Cygwin的安装使用，及其软件包apt-cyg的配置使用，以及apt-cyg错误“/usr/bin/apt-cyg: line 25: $‘\r‘: command not found”解决</a></p>
+</div>
+</div>
+<div id="outline-container-headline-14" class="outline-3">
+<h3 id="headline-14">
+在当前文件夹打开
+</h3>
+<div id="outline-text-headline-14" class="outline-text-3">
+<p>
+可以在文件资源管理器的地址栏运行cygwin的mintty，前提是设置好环境变量</p>
+</div>
+</div>
+</div>
+</div>
 
 </section>
 
