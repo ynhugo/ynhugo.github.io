@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-cn" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='安装Conda 1 2 3 4 #- 下载miniconda安装脚本 wget -v https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-aarch64.sh #- 运行安装脚本 bash Miniconda3-latest-Linux-aarch64.sh 参考链接 [Termux] termux&#43;ubuntu&#43;vscode&#43;conda'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='termux安装Conda教程 安装Ubuntu 1 2 3 4 5 6 7 8 #- 安装proot-distro pkg install proot-distro -y #- 查看有哪些系统 proot-distro list #- 安装ubuntu系'>
 <title>termux安装Conda教程</title>
 
 <link rel='canonical' href='https://ynhugo.github.io/p/termux%E5%AE%89%E8%A3%85conda%E6%95%99%E7%A8%8B/'>
 
 <link rel="stylesheet" href="/scss/style.min.2328f6a64e9c190e18c4f69895d0081330e55c8210e9395d11068ea1d881517f.css"><meta property='og:title' content='termux安装Conda教程'>
-<meta property='og:description' content='安装Conda 1 2 3 4 #- 下载miniconda安装脚本 wget -v https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-aarch64.sh #- 运行安装脚本 bash Miniconda3-latest-Linux-aarch64.sh 参考链接 [Termux] termux&#43;ubuntu&#43;vscode&#43;conda'>
+<meta property='og:description' content='termux安装Conda教程 安装Ubuntu 1 2 3 4 5 6 7 8 #- 安装proot-distro pkg install proot-distro -y #- 查看有哪些系统 proot-distro list #- 安装ubuntu系'>
 <meta property='og:url' content='https://ynhugo.github.io/p/termux%E5%AE%89%E8%A3%85conda%E6%95%99%E7%A8%8B/'>
 <meta property='og:site_name' content='ynblog'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='termux' /><meta property='article:tag' content='conda' /><meta property='article:published_time' content='2025-06-24T18:38:08&#43;08:00'/><meta property='article:modified_time' content='2025-06-24T18:38:08&#43;08:00'/>
 <meta name="twitter:title" content="termux安装Conda教程">
-<meta name="twitter:description" content="安装Conda 1 2 3 4 #- 下载miniconda安装脚本 wget -v https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-aarch64.sh #- 运行安装脚本 bash Miniconda3-latest-Linux-aarch64.sh 参考链接 [Termux] termux&#43;ubuntu&#43;vscode&#43;conda">
+<meta name="twitter:description" content="termux安装Conda教程 安装Ubuntu 1 2 3 4 5 6 7 8 #- 安装proot-distro pkg install proot-distro -y #- 查看有哪些系统 proot-distro list #- 安装ubuntu系">
     <link rel="shortcut icon" href="/img/favicon.ico" />
 
     </head>
@@ -279,9 +279,13 @@
         <div class="widget--toc">
             <nav id="TableOfContents">
 <ul>
-<li><a href="#headline-1">安装Conda</a>
+<li><a href="#headline-1">termux安装Conda教程</a>
 <ul>
-<li><a href="#headline-2">参考链接</a>
+<li><a href="#headline-2">安装Ubuntu</a>
+</li>
+<li><a href="#headline-3">安装Conda</a>
+</li>
+<li><a href="#headline-4">参考链接</a>
 </li>
 </ul>
 </li>
@@ -359,9 +363,45 @@
     
 <div id="outline-container-headline-1" class="outline-2">
 <h2 id="headline-1">
-安装Conda
+termux安装Conda教程
 </h2>
 <div id="outline-text-headline-1" class="outline-text-2">
+<div id="outline-container-headline-2" class="outline-3">
+<h3 id="headline-2">
+安装Ubuntu
+</h3>
+<div id="outline-text-headline-2" class="outline-text-3">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="c1">#- 安装proot-distro</span>
+</span></span><span class="line"><span class="cl">  pkg install proot-distro -y
+</span></span><span class="line"><span class="cl">  <span class="c1">#- 查看有哪些系统</span>
+</span></span><span class="line"><span class="cl">  proot-distro list
+</span></span><span class="line"><span class="cl">  <span class="c1">#- 安装ubuntu系统</span>
+</span></span><span class="line"><span class="cl">  proot-distro install ubuntu
+</span></span><span class="line"><span class="cl">  <span class="c1">#- 登录ubuntu系统</span>
+</span></span><span class="line"><span class="cl">  proot-distro login ubuntu</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-3" class="outline-3">
+<h3 id="headline-3">
+安装Conda
+</h3>
+<div id="outline-text-headline-3" class="outline-text-3">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -378,13 +418,15 @@
 </div>
 </div>
 </div>
-<div id="outline-container-headline-2" class="outline-3">
-<h3 id="headline-2">
+</div>
+</div>
+<div id="outline-container-headline-4" class="outline-3">
+<h3 id="headline-4">
 参考链接
 </h3>
-<div id="outline-text-headline-2" class="outline-text-3">
+<div id="outline-text-headline-4" class="outline-text-3">
 <p>
-<a href="https://blog.csdn.net/UCAS_HMM/article/details/145529239#Conda_150">[Termux] termux+ubuntu+vscode+conda环境搭建</a></p>
+<a href="https://blog.csdn.net/UCAS_HMM/article/details/145529239#Conda_150">【Termux】termux+ubuntu+vscode+conda环境搭建</a></p>
 </div>
 </div>
 </div>
