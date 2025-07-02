@@ -491,6 +491,9 @@ termux+uiautomator2给多个QQ好友点赞
 </span><span class="lnt">15
 </span><span class="lnt">16
 </span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">import sys
@@ -509,10 +512,14 @@ termux+uiautomator2给多个QQ好友点赞
 </span></span><span class="line"><span class="cl">for i in range(1):
 </span></span><span class="line"><span class="cl">  for j in range(10):
 </span></span><span class="line"><span class="cl">    xpath = f&#39;//*[@resource-id=&#34;com.tencent.mobileqq:id/kzn&#34;]/android.widget.LinearLayout[{i+1}]/android.widget.RelativeLayout[1]/android.widget.RelativeLayout[1]/android.widget.ImageView[1]&#39;
-</span></span><span class="line"><span class="cl">    d.xpath(xpath).click()</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">    d.xpath(xpath).click()
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">d.app_stop(&#39;com.tencent.mobileqq&#39;)
+</span></span><span class="line"><span class="cl"># d.app_clear(&#39;com.tencent.mobileqq&#39;)</span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
+<p>最后添加了d.app_stop()，qq点完赞后会自动关闭。</p>
 <div id="outline-container-headline-5" class="outline-5">
 <h5 id="headline-5">
 执行方式
