@@ -1,0 +1,2979 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" 初识adb adb shell下载链接：https://wws.lanzoui.com/iNYNiq9l3yd\n打开文件所在文件夹，将地址栏清空并键入cmd，然后回车，在cmd窗口键入adb shell测试use调试是否连接成功，如果出现美元符号表示连接成功。\nadb命令 adb shell am monitor #执行该命令后在手机上打开要卸载的应用，获取包名\nadb shell pm disable-user 包名 #停用应用\nadb shell pm enable 包名 #恢复应用\nadb install -r apk文件路径 #安装应用，直接将文件拖入cmd窗口可直接实现插入路径\nadb shell pm list packages #显示包名列表\nadb uninstall 包名 #卸载应用\nadb安装软件实操 emulator代表实际序列号，如果有多个序号号的话需要指定一下，序列号可以通过&#34;adb devices&#34;查看\n1 adb -s emulator-5554 install rustdesk-1.2.7-aarch64-signed.apk adb命令安装apk脚本 1 mapfile -t files &lt; &lt;(find ./ -name &#34;*.apk&#34; | awk -F &#34;/&#34; &#39;{print $2}&#39;); for i in &#34;${files[@]}&#34;; do adb install &#34;${i}&#34;; done Android adb 查看已经安装的应用、安装应用、卸载应用 adb shell pm list packages -[option] 命令查看已经安装的应用，列出包名，后面加不同的后缀输出不同信息。 adb shell pm list packages ####查看当前连接设备或者虚拟机的所有包\n">
+<title>adb教程</title>
+
+<link rel='canonical' href='https://ynhugo.github.io/p/adb%E6%95%99%E7%A8%8B/'>
+
+<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="adb教程">
+<meta property='og:description' content=" 初识adb adb shell下载链接：https://wws.lanzoui.com/iNYNiq9l3yd\n打开文件所在文件夹，将地址栏清空并键入cmd，然后回车，在cmd窗口键入adb shell测试use调试是否连接成功，如果出现美元符号表示连接成功。\nadb命令 adb shell am monitor #执行该命令后在手机上打开要卸载的应用，获取包名\nadb shell pm disable-user 包名 #停用应用\nadb shell pm enable 包名 #恢复应用\nadb install -r apk文件路径 #安装应用，直接将文件拖入cmd窗口可直接实现插入路径\nadb shell pm list packages #显示包名列表\nadb uninstall 包名 #卸载应用\nadb安装软件实操 emulator代表实际序列号，如果有多个序号号的话需要指定一下，序列号可以通过&#34;adb devices&#34;查看\n1 adb -s emulator-5554 install rustdesk-1.2.7-aarch64-signed.apk adb命令安装apk脚本 1 mapfile -t files &lt; &lt;(find ./ -name &#34;*.apk&#34; | awk -F &#34;/&#34; &#39;{print $2}&#39;); for i in &#34;${files[@]}&#34;; do adb install &#34;${i}&#34;; done Android adb 查看已经安装的应用、安装应用、卸载应用 adb shell pm list packages -[option] 命令查看已经安装的应用，列出包名，后面加不同的后缀输出不同信息。 adb shell pm list packages ####查看当前连接设备或者虚拟机的所有包\n">
+<meta property='og:url' content='https://ynhugo.github.io/p/adb%E6%95%99%E7%A8%8B/'>
+<meta property='og:site_name' content='ynhugo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2024-03-31T15:56:35&#43;08:00'/><meta property='article:modified_time' content='2024-03-31T15:56:35&#43;08:00'/>
+<meta name="twitter:title" content="adb教程">
+<meta name="twitter:description" content=" 初识adb adb shell下载链接：https://wws.lanzoui.com/iNYNiq9l3yd\n打开文件所在文件夹，将地址栏清空并键入cmd，然后回车，在cmd窗口键入adb shell测试use调试是否连接成功，如果出现美元符号表示连接成功。\nadb命令 adb shell am monitor #执行该命令后在手机上打开要卸载的应用，获取包名\nadb shell pm disable-user 包名 #停用应用\nadb shell pm enable 包名 #恢复应用\nadb install -r apk文件路径 #安装应用，直接将文件拖入cmd窗口可直接实现插入路径\nadb shell pm list packages #显示包名列表\nadb uninstall 包名 #卸载应用\nadb安装软件实操 emulator代表实际序列号，如果有多个序号号的话需要指定一下，序列号可以通过&#34;adb devices&#34;查看\n1 adb -s emulator-5554 install rustdesk-1.2.7-aarch64-signed.apk adb命令安装apk脚本 1 mapfile -t files &lt; &lt;(find ./ -name &#34;*.apk&#34; | awk -F &#34;/&#34; &#39;{print $2}&#39;); for i in &#34;${files[@]}&#34;; do adb install &#34;${i}&#34;; done Android adb 查看已经安装的应用、安装应用、卸载应用 adb shell pm list packages -[option] 命令查看已经安装的应用，列出包名，后面加不同的后缀输出不同信息。 adb shell pm list packages ####查看当前连接设备或者虚拟机的所有包\n">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_f509edb42ecc0ebd.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🍥</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">ynhugo</a></h1>
+            <h2 class="site-description">ynhugo.github.io</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/CaiJimmy/hugo-theme-stack'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://x.com'
+                        target="_blank"
+                        title="x"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E5%85%B3%E4%BA%8E/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                    
+                        <li id="i18n-switch">  
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                            <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
+                                
+                                    <option value="https://ynhugo.github.io/en/" >English</option>
+                                
+                                    <option value="https://ynhugo.github.io/" selected>中文</option>
+                                
+                                    <option value="https://ynhugo.github.io/ar/" >عربي</option>
+                                
+                            </select>
+                        </li>
+                    
+                
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+<ul>
+<li><a href="#headline-1">初识adb</a>
+<ul>
+<li><a href="#headline-2">adb命令</a>
+<ul>
+<li><a href="#headline-3">adb安装软件实操</a>
+</li>
+<li><a href="#headline-4">adb命令安装apk脚本</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-5">Android adb 查看已经安装的应用、安装应用、卸载应用</a>
+<ul>
+<li><a href="#headline-6">adb shell pm list packages -[option] 命令查看已经安装的应用，列出包名，后面加不同的后缀输出不同信息。</a>
+</li>
+<li><a href="#headline-7">想要获取应用的详细信息需要使用以下命令</a>
+</li>
+<li><a href="#headline-8">将安装包pull到本地</a>
+<ul>
+<li><a href="#headline-9">使用示例</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-10">参考链接</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-11">有些手机需要解锁system分区（如小米）</a>
+</li>
+<li><a href="#headline-12">以下是常用命令，可供大家查阅：</a>
+</li>
+<li><a href="#headline-13">已停用应用包名(个人某手机已停用应用)：</a>
+</li>
+<li><a href="#headline-14">安卓adb shell常用的命令</a>
+<ul>
+<li><a href="#headline-15">install/uninstall，在设备上安装 APK。</a>
+</li>
+<li><a href="#headline-16">dumpsys（dump system）比较强大的系统服务查询-安卓无需电脑使用adb连接本机，免root控制充电</a>
+</li>
+<li><a href="#headline-17">wm（windows manager）窗口管理器，可以设置一些屏幕参数。</a>
+</li>
+<li><a href="#headline-18">logcat，查看日志，方便提交bug。</a>
+</li>
+<li><a href="#headline-19">reboot，重启。</a>
+</li>
+<li><a href="#headline-20">参考链接</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-21">消除ADB错误“more than one device and emulator”的方法</a>
+<ul>
+<li><a href="#headline-22">参考链接</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-23">通过ADB命令备份和恢复Android手机信息</a>
+<ul>
+<li><a href="#headline-24">备份手机信息</a>
+<ul>
+<li><a href="#headline-25">连接设备</a>
+</li>
+<li><a href="#headline-26">安装ADB工具</a>
+</li>
+<li><a href="#headline-27">打开命令行窗口</a>
+</li>
+<li><a href="#headline-28">检测设备</a>
+</li>
+<li><a href="#headline-29">备份手机信息</a>
+</li>
+<li><a href="#headline-30">加密备份文件（可选）</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-31">恢复手机信息</a>
+<ul>
+<li><a href="#headline-32">连接设备</a>
+</li>
+<li><a href="#headline-33">打开命令行窗口</a>
+</li>
+<li><a href="#headline-34">恢复备份文件</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-35">参考链接</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-36">adb按键</a>
+<ul>
+<li><a href="#headline-37">adb-按键</a>
+<ul>
+<li><a href="#headline-38">唤醒屏幕+划动屏幕</a>
+</li>
+<li><a href="#headline-39">adb shell input keyevent (具体操作) – 模拟按键事件 KeyCode</a>
+</li>
+<li><a href="#headline-40">每个数字与keycode对应表如下：</a>
+</li>
+<li><a href="#headline-41">电话键</a>
+</li>
+<li><a href="#headline-42">控制键</a>
+</li>
+<li><a href="#headline-43">按键</a>
+</li>
+<li><a href="#headline-44">多媒体键</a>
+</li>
+<li><a href="#headline-45">F1~F12功能键</a>
+</li>
+<li><a href="#headline-46">符号按键</a>
+</li>
+<li><a href="#headline-47">小键盘按键</a>
+</li>
+<li><a href="#headline-48">参考链接</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-49">adb推拉文件或文件夹</a>
+<ul>
+<li><a href="#headline-50">adb拉取文件</a>
+</li>
+<li><a href="#headline-51">adb拉取文件夹</a>
+</li>
+<li><a href="#headline-52">adb推送文件</a>
+</li>
+<li><a href="#headline-53">adb推送文件夹</a>
+</li>
+<li><a href="#headline-54">参考链接</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/adb%E6%95%99%E7%A8%8B/">adb教程</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Mar 31, 2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 7 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    
+<div id="outline-container-headline-1" class="outline-2">
+<h2 id="headline-1">
+初识adb
+</h2>
+<div id="outline-text-headline-1" class="outline-text-2">
+<p>
+adb shell下载链接：<a href="https://wws.lanzoui.com/iNYNiq9l3yd">https://wws.lanzoui.com/iNYNiq9l3yd</a></p>
+<p>
+打开文件所在文件夹，将地址栏清空并键入cmd，然后回车，在cmd窗口键入adb shell测试use调试是否连接成功，如果出现美元符号表示连接成功。</p>
+<div id="outline-container-headline-2" class="outline-3">
+<h3 id="headline-2">
+adb命令
+</h3>
+<div id="outline-text-headline-2" class="outline-text-3">
+<p>
+adb shell am monitor                       #执行该命令后在手机上打开要卸载的应用，获取包名</p>
+<p>
+adb shell pm disable-user 包名           #停用应用</p>
+<p>
+adb shell pm enable 包名                 #恢复应用</p>
+<p>
+adb install -r apk文件路径               #安装应用，直接将文件拖入cmd窗口可直接实现插入路径</p>
+<p>
+adb shell pm list packages               #显示包名列表</p>
+<p>
+adb uninstall 包名                       #卸载应用</p>
+<div id="outline-container-headline-3" class="outline-4">
+<h4 id="headline-3">
+adb安装软件实操
+</h4>
+<div id="outline-text-headline-3" class="outline-text-4">
+<p>
+emulator代表实际序列号，如果有多个序号号的话需要指定一下，序列号可以通过&#34;adb devices&#34;查看</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  adb -s emulator-5554  install rustdesk-1.2.7-aarch64-signed.apk</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-4" class="outline-4">
+<h4 id="headline-4">
+adb命令安装apk脚本
+</h4>
+<div id="outline-text-headline-4" class="outline-text-4">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  mapfile -t files &lt; &lt;<span class="o">(</span>find ./ -name <span class="s2">&#34;*.apk&#34;</span> <span class="p">|</span> awk -F <span class="s2">&#34;/&#34;</span> <span class="s1">&#39;{print $2}&#39;</span><span class="o">)</span><span class="p">;</span> <span class="k">for</span> i in <span class="s2">&#34;</span><span class="si">${</span><span class="nv">files</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span> <span class="k">do</span> adb install <span class="s2">&#34;</span><span class="si">${</span><span class="nv">i</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span> <span class="k">done</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-5" class="outline-3">
+<h3 id="headline-5">
+Android adb 查看已经安装的应用、安装应用、卸载应用
+</h3>
+<div id="outline-text-headline-5" class="outline-text-3">
+<div id="outline-container-headline-6" class="outline-4">
+<h4 id="headline-6">
+adb shell pm list packages -[option] 命令查看已经安装的应用，列出包名，后面加不同的后缀输出不同信息。
+</h4>
+<div id="outline-text-headline-6" class="outline-text-4">
+<p>
+adb shell pm list packages     ####查看当前连接设备或者虚拟机的所有包</p>
+<p>
+adb shell pm list packages -d    #####只输出禁用的包。</p>
+<p>
+adb shell pm list packages -e    #####只输出启用的包。</p>
+<p>
+adb shell pm list packages -s    #####只输出系统的包。</p>
+<p>
+adb shell pm list packages -i   #####只输出包和安装信息（安装来源）。</p>
+<p>
+adb shell pm list packages -u   #####只输出包和未安装包信息（安装来源）。</p>
+<p>
+adb shell pm list packages -i   #####只输出包和安装信息（安装来源）。</p>
+<p>
+adb shell pm list packages -f   #####输出包和包相关联的文件</p>
+<p>
+adb shell pm list packages -3   #####输出所有第三方包。</p>
+<p>
+adb shell pm list packages -[option] &#34;sina&#34;   #####按照要求搜索包。</p>
+</div>
+</div>
+<div id="outline-container-headline-7" class="outline-4">
+<h4 id="headline-7">
+想要获取应用的详细信息需要使用以下命令
+</h4>
+<div id="outline-text-headline-7" class="outline-text-4">
+<p>
+adb shell dumpsys package [pkgName]</p>
+</div>
+</div>
+<div id="outline-container-headline-8" class="outline-4">
+<h4 id="headline-8">
+将安装包pull到本地
+</h4>
+<div id="outline-text-headline-8" class="outline-text-4">
+<p>
+1.查询应用安装包路径
+adb shell pm list packages -f
+2.将安装包pull到本地
+adb pull [安装包路径] [本地路径]</p>
+<div id="outline-container-headline-9" class="outline-5">
+<h5 id="headline-9">
+使用示例
+</h5>
+<div id="outline-text-headline-9" class="outline-text-5">
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">$ adb shell pm list packages -3 -f | grep &#34;autojs&#34;
+</span></span><span class="line"><span class="cl">package:/data/app/~~EM3uClqaGqOJmFtgZzu5mg==/org.autojs.autojs6-uw8ReTCkJ0WgHz6xbYclsw==/base.apk=org.autojs.autojs6
+</span></span><span class="line"><span class="cl">package:/data/app/~~2QN6HKjtOdxJUztZ3psK-Q==/org.autojs.autojs6.test-xnGjPdkp-SKSPTDsWvP1PQ==/base.apk=org.autojs.autojs6.test</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">adb pull /data/app/~~2QN6HKjtOdxJUztZ3psK-Q==/org.autojs.autojs6.test-xnGjPdkp-SKSPTDsWvP1PQ==/base.apk ./</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-10" class="outline-4">
+<h4 id="headline-10">
+参考链接
+</h4>
+<div id="outline-text-headline-10" class="outline-text-4">
+<p>
+<a href="https://blog.csdn.net/qq_37858386/article/details/103142590">Android adb 查看已经安装的应用、安装应用、卸载应用</a></p>
+<p>
+<a href="https://blog.csdn.net/y954227239/article/details/131413899">使用ADB命令查看手机已安装应用详细信息，包含应用名称</a></p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-11" class="outline-3">
+<h3 id="headline-11">
+有些手机需要解锁system分区（如小米）
+</h3>
+<div id="outline-text-headline-11" class="outline-text-3">
+<p>
+输入：adb root</p>
+<p>
+输入：adb disable-verity</p>
+<p>
+查看手机连接状态：adb device</p>
+<p>
+获得root权限：root</p>
+<p>
+设置超级用户模式 : su</p>
+<p>
+退出su : exit</p>
+<p>
+重启命令：adb reboot</p>
+<p>
+重启到Rec：adb reboot recovery</p>
+<p>
+重启到Fastboot：adb reboot bootloader</p>
+<p>
+推送ROM包：adb sideload &lt;Rom包&gt;</p>
+<p>
+把文件从手机中复制到电脑上 : adb pull &lt;手机路径&gt; &lt;电脑路径&gt;</p>
+<p>
+把文件从电脑复制到手机上 : adb push &lt;电脑路径&gt; &lt;手机路径&gt;</p>
+<p>
+重新挂载文件系统 : adb remount</p>
+<p>
+安装软件 : adb install apk文件名称.apk</p>
+<p>
+卸载apk软件 : adb uninstall apk包名.apk</p>
+<p>
+Fastboot命令：</p>
+<p>
+查看连接状态 ：fastboot devices</p>
+<p>
+重启 ：fastboot reboot</p>
+<p>
+重启到Fastboot ：fastboot reboot-bootloader</p>
+<p>
+除非你很了解该命令，否则以下命令请谨慎使用：</p>
+<p>
+解锁 ：fastboot flashing unlock或fastboot oem unlock</p>
+<p>
+上锁 ：fastboot flashing lock或fastboot oem lock</p>
+<p>
+清除分区数据 ：fastboot erase &lt;boot/system/data/cache/userdata/recovery&gt;</p>
+<p>
+清除分区(四清) ：fastboot erase system -w</p>
+<p>
+格式化分区数据 ：fastboot format &lt;boot/system/data/cache/userdata/recovery&gt;</p>
+<p>
+烧写分区 ：fastboot flash &lt; boot/system <em>recovery/radio/bootloader</em> splash1/&gt; &lt;*.img&gt;</p>
+</div>
+</div>
+<div id="outline-container-headline-12" class="outline-3">
+<h3 id="headline-12">
+以下是常用命令，可供大家查阅：
+</h3>
+<div id="outline-text-headline-12" class="outline-text-3">
+<p>
+启动 adb server 命令：adb start-server</p>
+<p>
+停止 adb server 命令：adb kill-server</p>
+<p>
+查看 adb 版本：adb version</p>
+<p>
+安装 APK命令：adb install [-lrtsdg] &lt;path_to_apk&gt;</p>
+<p>
+卸载应用命令：adb uninstall [-k] &lt;packagename&gt;</p>
+<p>
+清除应用数据与缓存：adb shell pm clear &lt;packagename&gt;</p>
+<p>
+查看正在运行的 Services命令：adb shell dumpsys activity services [&lt;packagename&gt;]</p>
+<p>
+查看应用详细信息命令：adb shell dumpsys package &lt;packagename&gt;</p>
+<p>
+发送广播，命令格式：adb shell am broadcast [options] &lt;INTENT&gt;</p>
+<p>
+强制停止应用命令：adb shell am force-stop &lt;packagename&gt;</p>
+<p>
+文件管理复制设备里的文件到电脑：adb pull &lt;设备里的文件路径&gt; [电脑上的目录]</p>
+<p>
+复制电脑里的文件到设备：adb push &lt;电脑上的文件路径&gt; &lt;设备里的目录&gt;</p>
+<p>
+电池状况命令：adb shell dumpsys battery</p>
+<p>
+adb help, 列出所有的选项说明及子命令</p>
+</div>
+</div>
+<div id="outline-container-headline-13" class="outline-3">
+<h3 id="headline-13">
+已停用应用包名(个人某手机已停用应用)：
+</h3>
+<div id="outline-text-headline-13" class="outline-text-3">
+<p>
+com.ivvi.browser 自带浏览器</p>
+<p>
+com.android.fmradio FM电台</p>
+<p>
+com.upgadata.ivvi 游戏电台</p>
+<p>
+com.iflytek.inputmethod 讯飞输入法</p>
+<p>
+com.yulong.freezeroom 应用冻结</p>
+<p>
+com.icoolme.android.weather 最美天气</p>
+<p>
+com.yulong.android.videoplayer 视频</p>
+<p>
+com.redstone.ota.ui 系统更新</p>
+<p>
+com.coolpad.music 音乐</p>
+<p>
+com.android.stk sim卡应用</p>
+<p>
+com.yulong.android.backup 备份与恢复</p>
+</div>
+</div>
+<div id="outline-container-headline-14" class="outline-3">
+<h3 id="headline-14">
+安卓adb shell常用的命令
+</h3>
+<div id="outline-text-headline-14" class="outline-text-3">
+<div id="outline-container-headline-15" class="outline-4">
+<h4 id="headline-15">
+install/uninstall，在设备上安装 APK。
+</h4>
+<div id="outline-text-headline-15" class="outline-text-4">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  adb install path_to_apk</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-16" class="outline-4">
+<h4 id="headline-16">
+dumpsys（dump system）比较强大的系统服务查询-安卓无需电脑使用adb连接本机，免root控制充电
+</h4>
+<div id="outline-text-headline-16" class="outline-text-4">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 查看当前系统所支持的dump服务</span>
+</span></span><span class="line"><span class="cl">adb shell dumpsys -l
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 比如电池信息</span>
+</span></span><span class="line"><span class="cl">adb shell dumpsys battery
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">adb shell dumpsys battery <span class="nb">set</span> status <span class="m">1</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#设置电池为非充电状态</span>
+</span></span><span class="line"><span class="cl">adb shell dumpsys battery <span class="nb">set</span> status <span class="m">2</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#设置电池为充电状态</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 一些就手机安装linux做服务器之后，又不能一直充电，就可以使用这个方法来自动充放电，保护电池。</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">adb shell dumpsys battery <span class="nb">set</span> level <span class="m">100</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#设置电量百分比</span>
+</span></span><span class="line"><span class="cl">adb shell dumpsys battery unplug
+</span></span><span class="line"><span class="cl"><span class="c1">#设置断开充电</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 可以拿来做伪装电量。</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">adb shell dumpsys battery reset
+</span></span><span class="line"><span class="cl"><span class="c1"># 恢复</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-17" class="outline-4">
+<h4 id="headline-17">
+wm（windows manager）窗口管理器，可以设置一些屏幕参数。
+</h4>
+<div id="outline-text-headline-17" class="outline-text-4">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="c1"># 查看分辨率</span>
+</span></span><span class="line"><span class="cl">  adb shell wm size
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1"># 查看dpi</span>
+</span></span><span class="line"><span class="cl">  adb shell wm density</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-18" class="outline-4">
+<h4 id="headline-18">
+logcat，查看日志，方便提交bug。
+</h4>
+<div id="outline-text-headline-18" class="outline-text-4">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  adb logcat <span class="s2">&#34;*:W&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1"># 日志输出级别</span>
+</span></span><span class="line"><span class="cl">  V —— Verbose（最低，输出得最多）
+</span></span><span class="line"><span class="cl">  D —— Debug
+</span></span><span class="line"><span class="cl">  I —— Info
+</span></span><span class="line"><span class="cl">  W —— Warning
+</span></span><span class="line"><span class="cl">  E —— Error
+</span></span><span class="line"><span class="cl">  F —— Fatal
+</span></span><span class="line"><span class="cl">  S —— Silent（最高，啥也不输出）
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1"># 清理日志</span>
+</span></span><span class="line"><span class="cl">  adb logcat -c</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-19" class="outline-4">
+<h4 id="headline-19">
+reboot，重启。
+</h4>
+<div id="outline-text-headline-19" class="outline-text-4">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="c1">#重启</span>
+</span></span><span class="line"><span class="cl">  adb reboot
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1">#重启到recovery模式</span>
+</span></span><span class="line"><span class="cl">  adb reboot recovery
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1">#重启到bl模式</span>
+</span></span><span class="line"><span class="cl">  adb reboot bootloader</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-20" class="outline-4">
+<h4 id="headline-20">
+参考链接
+</h4>
+<div id="outline-text-headline-20" class="outline-text-4">
+<p>
+<a href="https://blog.crrashh.com/archives/9">安卓设备通过Termux实现本机ADB</a></p>
+<p>
+<a href="https://zsxwz.com/2021/09/16/安卓使用adb连接本机，免root控制充电/">安卓无需电脑使用adb连接本机，免root控制充电</a></p>
+<p>
+<a href="https://zsxwz.com/2021/01/31/安卓adb-shell常用的命令/">安卓adb shell常用的命令</a></p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-21" class="outline-3">
+<h3 id="headline-21">
+消除ADB错误“more than one device and emulator”的方法
+</h3>
+<div id="outline-text-headline-21" class="outline-text-3">
+<p>
+当我连着手机充电的时候，启动模拟器调试，执行ADB指令时，报错。</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  $ adb shell
+</span></span><span class="line"><span class="cl">  error: more than one device and emulator
+</span></span><span class="line"><span class="cl">  $ adb install e:<span class="se">\g</span>ood.apk
+</span></span><span class="line"><span class="cl">  error: more than one device and emulator</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+碰到这种情况，首先要查一下，是不是真的有多个设备或模拟器。</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  $ adb devices
+</span></span><span class="line"><span class="cl">  List of devices attached
+</span></span><span class="line"><span class="cl">  emulator-5554   device
+</span></span><span class="line"><span class="cl">  adfadcb96b03cf02        device</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+发现还真是多个设备，那就需要为ADB命令指定设备的序列号了。</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  $ adb -s emulator-5554 shell</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+也就是如上所示，给命令加上-s的参数就可以了！</p>
+<p>
+如果实际上只有一个设备或模拟器，并且查到有offline的状态；
+那就说明是ADB本身的BUG所导致的，就需要用如下的方法处理下了：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  $ adb kill-server
+</span></span><span class="line"><span class="cl">  $ taskkill /f /im adb.exe</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+第一条命令是杀ADB的服务，第二条命令是杀ADB的进程！
+如果第一条没有用，才考虑用第二条命令再试试看的</p>
+<div id="outline-container-headline-22" class="outline-4">
+<h4 id="headline-22">
+参考链接
+</h4>
+<div id="outline-text-headline-22" class="outline-text-4">
+<p>
+<a href="https://blog.csdn.net/gaojinshan/article/details/9455193">消除ADB错误“more than one device and emulator”的方法</a></p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-23" class="outline-3">
+<h3 id="headline-23">
+通过ADB命令备份和恢复Android手机信息
+</h3>
+<div id="outline-text-headline-23" class="outline-text-3">
+<p>
+在Android设备上，ADB（Android Debug Bridge）是一个强大的命令行工具，可以用于与设备进行通信和控制设备。通过ADB命令，你可以备份和恢复手机信息，包括应用数据、联系人、短信等。</p>
+<div id="outline-container-headline-24" class="outline-4">
+<h4 id="headline-24">
+备份手机信息
+</h4>
+<div id="outline-text-headline-24" class="outline-text-4">
+<div id="outline-container-headline-25" class="outline-5">
+<h5 id="headline-25">
+连接设备
+</h5>
+<div id="outline-text-headline-25" class="outline-text-5">
+<p>
+首先，确保你的Android设备已开启开发者选项和USB调试模式。然后，通过USB将设备连接到电脑。</p>
+</div>
+</div>
+<div id="outline-container-headline-26" class="outline-5">
+<h5 id="headline-26">
+安装ADB工具
+</h5>
+<div id="outline-text-headline-26" class="outline-text-5">
+<p>
+在电脑上安装ADB工具。你可以从Android官方网站下载适用于Windows、Mac和Linux的ADB工具。</p>
+</div>
+</div>
+<div id="outline-container-headline-27" class="outline-5">
+<h5 id="headline-27">
+打开命令行窗口
+</h5>
+<div id="outline-text-headline-27" class="outline-text-5">
+<p>
+打开命令行窗口（Windows用户可以使用命令提示符或PowerShell，Mac和Linux用户可以使用终端）。</p>
+</div>
+</div>
+<div id="outline-container-headline-28" class="outline-5">
+<h5 id="headline-28">
+检测设备
+</h5>
+<div id="outline-text-headline-28" class="outline-text-5">
+<p>
+在命令行窗口中输入以下命令，检测设备是否正确连接：
+adb devices
+如果设备已正确连接，你应该能在列表中看到你的设备。</p>
+</div>
+</div>
+<div id="outline-container-headline-29" class="outline-5">
+<h5 id="headline-29">
+备份手机信息
+</h5>
+<div id="outline-text-headline-29" class="outline-text-5">
+<p>
+使用以下命令备份手机信息：
+adb backup -all
+该命令将备份应用数据和设备设置，并生成一个名为backup.ab的文件。默认情况下，该文件将保存在电脑的当前目录下。</p>
+</div>
+</div>
+<div id="outline-container-headline-30" class="outline-5">
+<h5 id="headline-30">
+加密备份文件（可选）
+</h5>
+<div id="outline-text-headline-30" class="outline-text-5">
+<p>
+如果你想加密备份文件，可以在备份时输入密码。输入以下命令：
+adb backup -all -password yourpassword</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-31" class="outline-4">
+<h4 id="headline-31">
+恢复手机信息
+</h4>
+<div id="outline-text-headline-31" class="outline-text-4">
+<p>
+如果需要恢复手机信息，请按照以下步骤操作：</p>
+<div id="outline-container-headline-32" class="outline-5">
+<h5 id="headline-32">
+连接设备
+</h5>
+<div id="outline-text-headline-32" class="outline-text-5">
+<p>
+通过USB将设备连接到电脑。</p>
+</div>
+</div>
+<div id="outline-container-headline-33" class="outline-5">
+<h5 id="headline-33">
+打开命令行窗口
+</h5>
+<div id="outline-text-headline-33" class="outline-text-5">
+<p>
+打开命令行窗口（Windows用户可以使用命令提示符或PowerShell，Mac和Linux用户可以使用终端）。</p>
+</div>
+</div>
+<div id="outline-container-headline-34" class="outline-5">
+<h5 id="headline-34">
+恢复备份文件
+</h5>
+<div id="outline-text-headline-34" class="outline-text-5">
+<p>
+使用以下命令恢复备份文件：
+adb restore backup.ab点击恢复数据即可。</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-35" class="outline-4">
+<h4 id="headline-35">
+参考链接
+</h4>
+<div id="outline-text-headline-35" class="outline-text-4">
+<p>
+<a href="https://developer.baidu.com/article/detail.html?id=2871198">通过ADB命令备份和恢复Android手机信息</a></p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-36" class="outline-3">
+<h3 id="headline-36">
+adb按键
+</h3>
+<div id="outline-text-headline-36" class="outline-text-3">
+<div id="outline-container-headline-37" class="outline-4">
+<h4 id="headline-37">
+adb-按键
+</h4>
+<div id="outline-text-headline-37" class="outline-text-4">
+<div id="outline-container-headline-38" class="outline-5">
+<h5 id="headline-38">
+唤醒屏幕+划动屏幕
+</h5>
+<div id="outline-text-headline-38" class="outline-text-5">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  adb shell input keyevent 224<span class="p">;</span> adb shell input keyevent 82<span class="p">;</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-39" class="outline-5">
+<h5 id="headline-39">
+adb shell input keyevent (具体操作) – 模拟按键事件 KeyCode
+</h5>
+<div id="outline-text-headline-39" class="outline-text-5">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  adb shell input keyevent 4		<span class="c1"># 这条命令相当于按了设备的Backkey键</span>
+</span></span><span class="line"><span class="cl">  adb shell input keyevent  <span class="m">82</span> 	<span class="c1"># 可以解锁屏幕</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-40" class="outline-5">
+<h5 id="headline-40">
+每个数字与keycode对应表如下：
+</h5>
+<div id="outline-text-headline-40" class="outline-text-5">
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th class="align-right">0</th>
+<th>KEYCODE_UNKNOWN</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="align-right">1</td>
+<td>KEYCODE_MENU</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">2</td>
+<td>KEYCODE_SOFT_RIGHT</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">3</td>
+<td>KEYCODE_HOME</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">4</td>
+<td>KEYCODE_BACK</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">5</td>
+<td>KEYCODE_CALL</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">6</td>
+<td>KEYCODE_ENDCALL</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">7</td>
+<td>KEYCODE_0</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">8</td>
+<td>KEYCODE_1</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">9</td>
+<td>KEYCODE_2</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">10</td>
+<td>KEYCODE_3</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">11</td>
+<td>KEYCODE_4</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">12</td>
+<td>KEYCODE_5</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">13</td>
+<td>KEYCODE_6</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">14</td>
+<td>KEYCODE_7</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">15</td>
+<td>KEYCODE_8</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">16</td>
+<td>KEYCODE_9</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">17</td>
+<td>KEYCODE_STAR</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">18</td>
+<td>KEYCODE_POUND</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">19</td>
+<td>KEYCODE_DPAD_UP</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">20</td>
+<td>KEYCODE_DPAD_DOWN</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">21</td>
+<td>KEYCODE_DPAD_LEFT</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">22</td>
+<td>KEYCODE_DPAD_RIGHT</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">23</td>
+<td>KEYCODE_DPAD_CENTER</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">24</td>
+<td>KEYCODE_VOLUME_UP</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">25</td>
+<td>KEYCODE_VOLUME_DOWN</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">26</td>
+<td>KEYCODE_POWER</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">27</td>
+<td>KEYCODE_CAMERA</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">28</td>
+<td>KEYCODE_CLEAR</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">29</td>
+<td>KEYCODE_A</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">30</td>
+<td>KEYCODE_B</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">31</td>
+<td>KEYCODE_C</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">32</td>
+<td>KEYCODE_D</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">33</td>
+<td>KEYCODE_E</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">34</td>
+<td>KEYCODE_F</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">35</td>
+<td>KEYCODE_G</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">36</td>
+<td>KEYCODE_H</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">37</td>
+<td>KEYCODE_I</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">38</td>
+<td>KEYCODE_J</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">39</td>
+<td>KEYCODE_K</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">40</td>
+<td>KEYCODE_L</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">41</td>
+<td>KEYCODE_M</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">42</td>
+<td>KEYCODE_N</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">43</td>
+<td>KEYCODE_O</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">44</td>
+<td>KEYCODE_P</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">45</td>
+<td>KEYCODE_Q</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">46</td>
+<td>KEYCODE_R</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">47</td>
+<td>KEYCODE_S</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">48</td>
+<td>KEYCODE_T</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">49</td>
+<td>KEYCODE_U</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">50</td>
+<td>KEYCODE_V</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">51</td>
+<td>KEYCODE_W</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">52</td>
+<td>KEYCODE_X</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">53</td>
+<td>KEYCODE_Y</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">54</td>
+<td>KEYCODE_Z</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">55</td>
+<td>KEYCODE_COMMA</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">56</td>
+<td>KEYCODE_PERIOD</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">57</td>
+<td>KEYCODE_ALT_LEFT</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">58</td>
+<td>KEYCODE_ALT_RIGHT</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">59</td>
+<td>KEYCODE_SHIFT_LEFT</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">60</td>
+<td>KEYCODE_SHIFT_RIGHT</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">61</td>
+<td>KEYCODE_TAB</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">62</td>
+<td>KEYCODE_SPACE</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">63</td>
+<td>KEYCODE_SYM</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">64</td>
+<td>KEYCODE_EXPLORER</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">65</td>
+<td>KEYCODE_ENVELOPE</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">66</td>
+<td>KEYCODE_ENTER</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">67</td>
+<td>KEYCODE_DEL</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">68</td>
+<td>KEYCODE_GRAVE</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">69</td>
+<td>KEYCODE_MINUS</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">70</td>
+<td>KEYCODE_EQUALS</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">71</td>
+<td>KEYCODE_LEFT_BRACKET</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">72</td>
+<td>KEYCODE_RIGHT_BRACKET</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">73</td>
+<td>KEYCODE_BACKSLASH</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">74</td>
+<td>KEYCODE_SEMICOLON</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">75</td>
+<td>KEYCODE_APOSTROPHE</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">76</td>
+<td>KEYCODE_SLASH</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">77</td>
+<td>KEYCODE_AT</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">78</td>
+<td>KEYCODE_NUM</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">79</td>
+<td>KEYCODE_HEADSETHOOK</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">80</td>
+<td>KEYCODE_FOCUS</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">81</td>
+<td>KEYCODE_PLUS</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">82</td>
+<td>KEYCODE_MENU</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">83</td>
+<td>KEYCODE_NOTIFICATION</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">84</td>
+<td>KEYCODE_SEARCH</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="align-right">85</td>
+<td>TAG_LAST_KEYCODE</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div id="outline-container-headline-41" class="outline-5">
+<h5 id="headline-41">
+电话键
+</h5>
+<div id="outline-text-headline-41" class="outline-text-5">
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>KEYCODE_CALL</th>
+<th>拨号键</th>
+<th class="align-right">5</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>KEYCODE_ENDCALL</td>
+<td>挂机键</td>
+<td class="align-right">6</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_HOME</td>
+<td>按键Home</td>
+<td class="align-right">3</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_MENU</td>
+<td>菜单键</td>
+<td class="align-right">82</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_BACK</td>
+<td>返回键</td>
+<td class="align-right">4</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_SEARCH</td>
+<td>搜索键</td>
+<td class="align-right">84</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_CAMERA</td>
+<td>拍照键</td>
+<td class="align-right">27</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_FOCUS</td>
+<td>拍照对焦键</td>
+<td class="align-right">80</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_POWER</td>
+<td>电源键</td>
+<td class="align-right">26</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_NOTIFICATION</td>
+<td>通知键</td>
+<td class="align-right">83</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_MUTE</td>
+<td>话筒静音键</td>
+<td class="align-right">91</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_VOLUME_MUTE</td>
+<td>扬声器静音键</td>
+<td class="align-right">164</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_VOLUME_UP</td>
+<td>音量增加键</td>
+<td class="align-right">24</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_VOLUME_DOWN</td>
+<td>音量减小键</td>
+<td class="align-right">25</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div id="outline-container-headline-42" class="outline-5">
+<h5 id="headline-42">
+控制键
+</h5>
+<div id="outline-text-headline-42" class="outline-text-5">
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>KEYCODE_ENTER</th>
+<th>回车键</th>
+<th class="align-right">66</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>KEYCODE_ESCAPE</td>
+<td>ESC键</td>
+<td class="align-right">111</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_DPAD_CENTER</td>
+<td>导航键 确定键</td>
+<td class="align-right">23</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_DPAD_UP</td>
+<td>导航键 向上</td>
+<td class="align-right">19</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_DPAD_DOWN</td>
+<td>导航键 向下</td>
+<td class="align-right">20</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_DPAD_LEFT</td>
+<td>导航键 向左</td>
+<td class="align-right">21</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_DPAD_RIGHT</td>
+<td>导航键 向右</td>
+<td class="align-right">22</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_MOVE_HOME</td>
+<td>光标移动到开始键</td>
+<td class="align-right">122</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_MOVE_END</td>
+<td>光标移动到末尾键</td>
+<td class="align-right">123</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_PAGE_UP</td>
+<td>向上翻页键</td>
+<td class="align-right">92</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_PAGE_DOWN</td>
+<td>向下翻页键</td>
+<td class="align-right">93</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_DEL</td>
+<td>退格键</td>
+<td class="align-right">67</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_FORWARD_DEL</td>
+<td>删除键</td>
+<td class="align-right">112</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_INSERT</td>
+<td>插入键</td>
+<td class="align-right">124</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_TAB</td>
+<td>Tab键</td>
+<td class="align-right">61</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_NUM_LOCK</td>
+<td>小键盘锁</td>
+<td class="align-right">143</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_CAPS_LOCK</td>
+<td>大写锁定键</td>
+<td class="align-right">115</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_BREAK</td>
+<td>Break/Pause键</td>
+<td class="align-right">121</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_SCROLL_LOCK</td>
+<td>滚动锁定键</td>
+<td class="align-right">116</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_ZOOM_IN</td>
+<td>放大键</td>
+<td class="align-right">168</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_ZOOM_OUT</td>
+<td>缩小键</td>
+<td class="align-right">169</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div id="outline-container-headline-43" class="outline-5">
+<h5 id="headline-43">
+按键
+</h5>
+<div id="outline-text-headline-43" class="outline-text-5">
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>KEYCODE_0</th>
+<th>按键&#39;0&#39;</th>
+<th class="align-right">7</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>KEYCODE_1</td>
+<td>按键&#39;1&#39;</td>
+<td class="align-right">8</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_2</td>
+<td>按键&#39;2&#39;</td>
+<td class="align-right">9</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_3</td>
+<td>按键&#39;3&#39;</td>
+<td class="align-right">10</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_4</td>
+<td>按键&#39;4&#39;</td>
+<td class="align-right">11</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_5</td>
+<td>按键&#39;5&#39;</td>
+<td class="align-right">12</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_6</td>
+<td>按键&#39;6&#39;</td>
+<td class="align-right">13</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_7</td>
+<td>按键&#39;7&#39;</td>
+<td class="align-right">14</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_8</td>
+<td>按键&#39;8&#39;</td>
+<td class="align-right">15</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_9</td>
+<td>按键&#39;9&#39;</td>
+<td class="align-right">16</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_A</td>
+<td>按键&#39;A&#39;</td>
+<td class="align-right">29</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_B</td>
+<td>按键&#39;B&#39;</td>
+<td class="align-right">30</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_C</td>
+<td>按键&#39;C&#39;</td>
+<td class="align-right">31</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_D</td>
+<td>按键&#39;D&#39;</td>
+<td class="align-right">32</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_E</td>
+<td>按键&#39;E&#39;</td>
+<td class="align-right">33</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_F</td>
+<td>按键&#39;F&#39;</td>
+<td class="align-right">34</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_G</td>
+<td>按键&#39;G&#39;</td>
+<td class="align-right">35</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_H</td>
+<td>按键&#39;H&#39;</td>
+<td class="align-right">36</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_I</td>
+<td>按键&#39;I&#39;</td>
+<td class="align-right">37</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_J</td>
+<td>按键&#39;J&#39;</td>
+<td class="align-right">38</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_K</td>
+<td>按键&#39;K&#39;</td>
+<td class="align-right">39</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_L</td>
+<td>按键&#39;L&#39;</td>
+<td class="align-right">40</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_M</td>
+<td>按键&#39;M&#39;</td>
+<td class="align-right">41</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_N</td>
+<td>按键&#39;N&#39;</td>
+<td class="align-right">42</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_O</td>
+<td>按键&#39;O&#39;</td>
+<td class="align-right">43</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_P</td>
+<td>按键&#39;P&#39;</td>
+<td class="align-right">44</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_Q</td>
+<td>按键&#39;Q&#39;</td>
+<td class="align-right">45</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_R</td>
+<td>按键&#39;R&#39;</td>
+<td class="align-right">46</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_S</td>
+<td>按键&#39;S&#39;</td>
+<td class="align-right">47</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_T</td>
+<td>按键&#39;T&#39;</td>
+<td class="align-right">48</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_U</td>
+<td>按键&#39;U&#39;</td>
+<td class="align-right">49</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_V</td>
+<td>按键&#39;V&#39;</td>
+<td class="align-right">50</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_W</td>
+<td>按键&#39;W&#39;</td>
+<td class="align-right">51</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_X</td>
+<td>按键&#39;X&#39;</td>
+<td class="align-right">52</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_Y</td>
+<td>按键&#39;Y&#39;</td>
+<td class="align-right">53</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_Z</td>
+<td>按键&#39;Z&#39;</td>
+<td class="align-right">54</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div id="outline-container-headline-44" class="outline-5">
+<h5 id="headline-44">
+多媒体键
+</h5>
+<div id="outline-text-headline-44" class="outline-text-5">
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>KEYCODE_MEDIA_PLAY</th>
+<th>多媒体键 播放</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>KEYCODE_MEDIA_STOP</td>
+<td>多媒体键 停止</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_MEDIA_PAUSE</td>
+<td>多媒体键 暂停</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_MEDIA_PLAY_PAUSE</td>
+<td>多媒体键 播放/暂停</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_MEDIA_FAST_FORWARD</td>
+<td>多媒体键 快进</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_MEDIA_REWIND</td>
+<td>多媒体键 快退</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_MEDIA_NEXT</td>
+<td>多媒体键 下一首</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_MEDIA_PREVIOUS</td>
+<td>多媒体键 上一首</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_MEDIA_CLOSE</td>
+<td>多媒体键 关闭</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_MEDIA_EJECT</td>
+<td>多媒体键 弹出</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_MEDIA_RECORD</td>
+<td>多媒体键 录音</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div id="outline-container-headline-45" class="outline-5">
+<h5 id="headline-45">
+F1~F12功能键
+</h5>
+<div id="outline-text-headline-45" class="outline-text-5">
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>KEYCODE_F1</th>
+<th>按键F1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>KEYCODE_F2</td>
+<td>按键F2</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_F3</td>
+<td>按键F3</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_F4</td>
+<td>按键F4</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_F5</td>
+<td>按键F5</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_F6</td>
+<td>按键F6</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_F7</td>
+<td>按键F7</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_F8</td>
+<td>按键F8</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_F9</td>
+<td>按键F9</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_F10</td>
+<td>按键F10</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_F11</td>
+<td>按键F11</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_F12</td>
+<td>按键F12</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div id="outline-container-headline-46" class="outline-5">
+<h5 id="headline-46">
+符号按键
+</h5>
+<div id="outline-text-headline-46" class="outline-text-5">
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>KEYCODE_PLUS</th>
+<th>按键&#39;+&#39;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>KEYCODE_MINUS</td>
+<td>按键&#39;-&#39;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_STAR</td>
+<td>按键&#39;*&#39;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_SLASH</td>
+<td>按键&#39;/&#39;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_EQUALS</td>
+<td>按键&#39;=&#39;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_AT</td>
+<td>按键&#39;@&#39;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_POUND</td>
+<td>按键&#39;#&#39;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_APOSTROPHE</td>
+<td>按键&#39;&#39;&#39; (单引号)</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_BACKSLASH</td>
+<td>按键&#39;\&#39;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_COMMA</td>
+<td>按键&#39;,&#39;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_PERIOD</td>
+<td>按键&#39;.&#39;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_LEFT_BRACKET</td>
+<td>按键&#39;[&#39;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_RIGHT_BRACKET</td>
+<td>按键&#39;]&#39;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_SEMICOLON</td>
+<td>按键&#39;;&#39;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_GRAVE</td>
+<td>按键&#39;`&#39;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_SPACE</td>
+<td>空格键</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div id="outline-container-headline-47" class="outline-5">
+<h5 id="headline-47">
+小键盘按键
+</h5>
+<div id="outline-text-headline-47" class="outline-text-5">
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>KEYCODE_NUMPAD_0</th>
+<th>小键盘按键&#39;0&#39;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>KEYCODE_NUMPAD_1</td>
+<td>小键盘按键&#39;1&#39;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_NUMPAD_2</td>
+<td>小键盘按键&#39;2&#39;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_NUMPAD_3</td>
+<td>小键盘按键&#39;3&#39;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_NUMPAD_4</td>
+<td>小键盘按键&#39;4&#39;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_NUMPAD_5</td>
+<td>小键盘按键&#39;5&#39;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_NUMPAD_6</td>
+<td>小键盘按键&#39;6&#39;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_NUMPAD_7</td>
+<td>小键盘按键&#39;7&#39;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_NUMPAD_8</td>
+<td>小键盘按键&#39;8&#39;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_NUMPAD_9</td>
+<td>小键盘按键&#39;9&#39;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_NUMPAD_ADD</td>
+<td>小键盘按键&#39;+&#39;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_NUMPAD_SUBTRACT</td>
+<td>小键盘按键&#39;-&#39;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_NUMPAD_MULTIPLY</td>
+<td>小键盘按键&#39;*&#39;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_NUMPAD_DIVIDE</td>
+<td>小键盘按键&#39;/&#39;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_NUMPAD_EQUALS</td>
+<td>小键盘按键&#39;=&#39;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_NUMPAD_COMMA</td>
+<td>小键盘按键&#39;,&#39;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_NUMPAD_DOT</td>
+<td>小键盘按键&#39;.&#39;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_NUMPAD_LEFT_PAREN</td>
+<td>小键盘按键&#39;(&#39;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_NUMPAD_RIGHT_PAREN</td>
+<td>小键盘按键&#39;)&#39;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>KEYCODE_NUMPAD_ENTER</td>
+<td>小键盘按键回车</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div id="outline-container-headline-48" class="outline-5">
+<h5 id="headline-48">
+参考链接
+</h5>
+<div id="outline-text-headline-48" class="outline-text-5">
+<p>
+<a href="https://blog.csdn.net/h_bpdwn/article/details/91425599">adb shell input keyevent (具体操作) – 模拟按键事件 KeyCode</a></p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-49" class="outline-4">
+<h4 id="headline-49">
+adb推拉文件或文件夹
+</h4>
+<div id="outline-text-headline-49" class="outline-text-4">
+<div id="outline-container-headline-50" class="outline-5">
+<h5 id="headline-50">
+adb拉取文件
+</h5>
+<div id="outline-text-headline-50" class="outline-text-5">
+<p>
+redeme.txt文件会从安卓设备被拷贝到PC端temp目录下</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  adb pull /storage/emulated/0/Download/book/redeme.txt D:<span class="se">\c</span>ygwin<span class="se">\h</span>ome<span class="se">\t</span>emp</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-51" class="outline-5">
+<h5 id="headline-51">
+adb拉取文件夹
+</h5>
+<div id="outline-text-headline-51" class="outline-text-5">
+<p>
+拉取文件夹与拉取文件相比，多了一个-a选项</p>
+<p>
+book文件夹会从安卓设备被拷贝到PC端temp-book目录下，temp-book目录如果不存在时会自动新建该目录，如果不指定新建目录，则book目录下的所以文件会被拷贝到temp目录下，而不是book目录被拷贝到temp-book目录下</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  adb pull -a /storage/emulated/0/Download/book/嵌入式/ D:<span class="se">\c</span>ygwin<span class="se">\h</span>ome<span class="se">\t</span>emp-book</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-52" class="outline-5">
+<h5 id="headline-52">
+adb推送文件
+</h5>
+<div id="outline-text-headline-52" class="outline-text-5">
+<p>
+redeme.txt文件会从PC端被拷贝到安卓设备的test目录下</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  adb push D:<span class="se">\c</span>ygwin<span class="se">\h</span>ome<span class="se">\t</span>emp<span class="se">\r</span>edeme.txt /storage/emulated/0/Download/test</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-53" class="outline-5">
+<h5 id="headline-53">
+adb推送文件夹
+</h5>
+<div id="outline-text-headline-53" class="outline-text-5">
+<p>
+推送文件与推送文件夹的命令模式一样</p>
+<p>
+temp-book文件夹会从PC端被拷贝到安卓设备的test目录下，test目录下会看到temp-book目录</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  adb push D:<span class="se">\c</span>ygwin<span class="se">\h</span>ome<span class="se">\t</span>emp<span class="se">\t</span>emp-book /storage/emulated/0/Download/test</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-54" class="outline-5">
+<h5 id="headline-54">
+参考链接
+</h5>
+<div id="outline-text-headline-54" class="outline-text-5">
+<p>
+<a href="https://deepinout.com/android/android-questions/1_tk_1703638640.html">adb pull 整个文件夹详解</a></p>
+<p>
+<a href="https://blog.csdn.net/u012865085/article/details/122582115">adb push文件夹</a></p>
+<p>
+<a href="https://sspai.com/post/23631">安卓教程：使用adb工具进行文件推送</a></p>
+<p>
+<a href="https://blog.csdn.net/kala_/article/details/121141567">adb命令从PC端传输文件到安卓手机端指定目录下</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            最后更新于 Mar 31, 2024 15:56 &#43;0800
+        </span>
+    </section></footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "hugo-theme-stack" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2025 Example Person
+    </section>
+    
+    <section class="powerby">
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" 参考链接 [已更新: 安装原生版微信] 超详细教程 - Ubuntu等Linux分支利用Docker安装并使用微信详细教程\n使用 Docker 运行微信 PC 客户端\nUbuntu等Linux分支利用Docker安装并使用微信详细教程 引言 通过Docker安装微信相比于wine和deepwine都稳定的多，毕竟整个环境是被测试过重新封装好的，所以这种又稳定又不占用太多内存的方式在我使用一段时间之后还是基本满意的。\n但是毕竟是第三方做的，肯定没有深度(deepin)或者windows那种官方维护的体验好，不过只要能解决基本通信使用的需求就谢天谢地了。\n安装Docker（已经有docker的直接跳过这部分，去看第二步） 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 #先来更新一下包管理库 sudo apt update #添加一下docker的包仓库的依赖文件 sudo apt install apt-transport-https ca-certificates curl gnupg-agent software-properties-common #添加仓库钥匙 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - #把在线仓库连接加到你的更新源里 sudo add-apt-repository &#34;deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable&#34; #默认安装最新版docker sudo apt update sudo apt install docker-ce docker-ce-cli containerd.io -y 检查一下docker状态：\n">
+<title>ubuntu16.04使用docker运行微信.org</title>
+
+<link rel='canonical' href='https://ynhugo.github.io/p/ubuntu16.04%E4%BD%BF%E7%94%A8docker%E8%BF%90%E8%A1%8C%E5%BE%AE%E4%BF%A1.org/'>
+
+<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="ubuntu16.04使用docker运行微信.org">
+<meta property='og:description' content=" 参考链接 [已更新: 安装原生版微信] 超详细教程 - Ubuntu等Linux分支利用Docker安装并使用微信详细教程\n使用 Docker 运行微信 PC 客户端\nUbuntu等Linux分支利用Docker安装并使用微信详细教程 引言 通过Docker安装微信相比于wine和deepwine都稳定的多，毕竟整个环境是被测试过重新封装好的，所以这种又稳定又不占用太多内存的方式在我使用一段时间之后还是基本满意的。\n但是毕竟是第三方做的，肯定没有深度(deepin)或者windows那种官方维护的体验好，不过只要能解决基本通信使用的需求就谢天谢地了。\n安装Docker（已经有docker的直接跳过这部分，去看第二步） 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 #先来更新一下包管理库 sudo apt update #添加一下docker的包仓库的依赖文件 sudo apt install apt-transport-https ca-certificates curl gnupg-agent software-properties-common #添加仓库钥匙 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - #把在线仓库连接加到你的更新源里 sudo add-apt-repository &#34;deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable&#34; #默认安装最新版docker sudo apt update sudo apt install docker-ce docker-ce-cli containerd.io -y 检查一下docker状态：\n">
+<meta property='og:url' content='https://ynhugo.github.io/p/ubuntu16.04%E4%BD%BF%E7%94%A8docker%E8%BF%90%E8%A1%8C%E5%BE%AE%E4%BF%A1.org/'>
+<meta property='og:site_name' content='ynhugo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='docker' /><meta property='article:published_time' content='2024-03-26T00:24:20&#43;08:00'/><meta property='article:modified_time' content='2024-03-26T00:24:20&#43;08:00'/>
+<meta name="twitter:title" content="ubuntu16.04使用docker运行微信.org">
+<meta name="twitter:description" content=" 参考链接 [已更新: 安装原生版微信] 超详细教程 - Ubuntu等Linux分支利用Docker安装并使用微信详细教程\n使用 Docker 运行微信 PC 客户端\nUbuntu等Linux分支利用Docker安装并使用微信详细教程 引言 通过Docker安装微信相比于wine和deepwine都稳定的多，毕竟整个环境是被测试过重新封装好的，所以这种又稳定又不占用太多内存的方式在我使用一段时间之后还是基本满意的。\n但是毕竟是第三方做的，肯定没有深度(deepin)或者windows那种官方维护的体验好，不过只要能解决基本通信使用的需求就谢天谢地了。\n安装Docker（已经有docker的直接跳过这部分，去看第二步） 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 #先来更新一下包管理库 sudo apt update #添加一下docker的包仓库的依赖文件 sudo apt install apt-transport-https ca-certificates curl gnupg-agent software-properties-common #添加仓库钥匙 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - #把在线仓库连接加到你的更新源里 sudo add-apt-repository &#34;deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable&#34; #默认安装最新版docker sudo apt update sudo apt install docker-ce docker-ce-cli containerd.io -y 检查一下docker状态：\n">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_f509edb42ecc0ebd.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🍥</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">ynhugo</a></h1>
+            <h2 class="site-description">ynhugo.github.io</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/CaiJimmy/hugo-theme-stack'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://x.com'
+                        target="_blank"
+                        title="x"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E5%85%B3%E4%BA%8E/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                    
+                        <li id="i18n-switch">  
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                            <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
+                                
+                                    <option value="https://ynhugo.github.io/en/" >English</option>
+                                
+                                    <option value="https://ynhugo.github.io/" selected>中文</option>
+                                
+                                    <option value="https://ynhugo.github.io/ar/" >عربي</option>
+                                
+                            </select>
+                        </li>
+                    
+                
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+<ul>
+<li><a href="#headline-1">参考链接</a>
+</li>
+<li><a href="#headline-2">Ubuntu等Linux分支利用Docker安装并使用微信详细教程</a>
+</li>
+<li><a href="#headline-3">直接通过脚本完成安装docker与运行微信</a>
+<ul>
+<li><a href="#headline-4">安装docker与微信的脚本</a>
+</li>
+<li><a href="#headline-5">运行微信的脚本</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-6">windows环境写的脚本不能在Linux环境运行的原因与解决方法</a>
+<ul>
+<li><a href="#headline-7">安装&#34;dos2unix&#34;</a>
+</li>
+<li><a href="#headline-8">使用方法</a>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/ubuntu16.04%E4%BD%BF%E7%94%A8docker%E8%BF%90%E8%A1%8C%E5%BE%AE%E4%BF%A1.org/">ubuntu16.04使用docker运行微信.org</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Mar 26, 2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 3 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    
+<div id="outline-container-headline-1" class="outline-2">
+<h2 id="headline-1">
+参考链接
+</h2>
+<div id="outline-text-headline-1" class="outline-text-2">
+<p>
+<a href="https://blog.csdn.net/iwanvan/article/details/119155094#t3">[已更新: 安装原生版微信] 超详细教程 - Ubuntu等Linux分支利用Docker安装并使用微信详细教程</a></p>
+<p>
+<a href="https://cloud.tencent.com/developer/article/1761394">使用 Docker 运行微信 PC 客户端</a></p>
+</div>
+</div>
+<div id="outline-container-headline-2" class="outline-2">
+<h2 id="headline-2">
+Ubuntu等Linux分支利用Docker安装并使用微信详细教程
+</h2>
+<div id="outline-text-headline-2" class="outline-text-2">
+<ol>
+<li>引言</li>
+</ol>
+<p>通过Docker安装微信相比于wine和deepwine都稳定的多，毕竟整个环境是被测试过重新封装好的，所以这种又稳定又不占用太多内存的方式在我使用一段时间之后还是基本满意的。</p>
+<p>
+但是毕竟是第三方做的，肯定没有深度(deepin)或者windows那种官方维护的体验好，不过只要能解决基本通信使用的需求就谢天谢地了。</p>
+<ol>
+<li>安装Docker（已经有docker的直接跳过这部分，去看第二步）</li>
+</ol>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="c1">#先来更新一下包管理库</span>
+</span></span><span class="line"><span class="cl">  sudo apt update
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1">#添加一下docker的包仓库的依赖文件</span>
+</span></span><span class="line"><span class="cl">  sudo apt install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1">#添加仓库钥匙</span>
+</span></span><span class="line"><span class="cl">  curl -fsSL https://download.docker.com/linux/ubuntu/gpg <span class="p">|</span> sudo apt-key add -
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1">#把在线仓库连接加到你的更新源里</span>
+</span></span><span class="line"><span class="cl">  sudo add-apt-repository <span class="s2">&#34;deb [arch=amd64] https://download.docker.com/linux/ubuntu </span><span class="k">$(</span>lsb_release -cs<span class="k">)</span><span class="s2"> stable&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1">#默认安装最新版docker</span>
+</span></span><span class="line"><span class="cl">  sudo apt update
+</span></span><span class="line"><span class="cl">  sudo apt install docker-ce docker-ce-cli containerd.io -y</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+检查一下docker状态：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  sudo systemctl status docker</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+输出大概会显示Active(running)这类的信息，其实还挺吃内存的：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  Loaded: loaded <span class="o">(</span>/lib/systemd/system/docker.service<span class="p">;</span> enabled<span class="p">;</span> vendor preset: enabled<span class="o">)</span>
+</span></span><span class="line"><span class="cl">  Active: active <span class="o">(</span>running<span class="o">)</span> 
+</span></span><span class="line"><span class="cl">  TriggeredBy: ● docker.socket
+</span></span><span class="line"><span class="cl">  Docs: https://docs.docker.com
+</span></span><span class="line"><span class="cl">  Main PID: <span class="m">1461</span> <span class="o">(</span>dockerd<span class="o">)</span>
+</span></span><span class="line"><span class="cl">  Tasks: <span class="m">32</span>
+</span></span><span class="line"><span class="cl">  Memory: 1.0G
+</span></span><span class="line"><span class="cl">  CGroup: /system.slice/docker.service
+</span></span><span class="line"><span class="cl">  └─1461 /usr/bin/dockerd -H fd:// --containerd<span class="o">=</span>/run/containerd/containerd.sock</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<ol>
+<li>下载并安装Docker微信</li>
+</ol>
+<p>DoChat(盒装微信)是一个 Linux 下的 Docker 化的微信 PC Windows 客户端，项目地址：<a href="https://github.com/huan/docker-wechat">https://github.com/huan/docker-wechat</a>，当然既然是容器化的，理论上运行多个客户端也是可行的。</p>
+<p>
+建议使用 Linux Ubuntu 发行版（DoChat 是使用 Ubuntu Desktop 19.10开发的）运行，当然也需要安装 Docker（运行sudo apt update &amp;&amp; apt install docker.io 以为 Ubuntu 用户安装 Docker）。</p>
+<p>
+要安装也很简单，通过运行以下单行命令，即可在 Linux 桌面上启动WeChat PC：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  curl -sL https://raw.githubusercontent.com/huan/docker-wechat/master/dochat.sh <span class="p">|</span> bash</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+只需将上述单行命令复制/粘贴到你的终端，然后按 Enter，微信 PC 版本应该会很快出现在你的 XWindows 桌面中了。</p>
+<p>
+另外要注意上面的 dochat.sh 启动脚本不能用 uid 0（root用户）运行，用 uid 0 运行它将导致一个死循环，很难从终端上杀死。如果你的用户无权运行 docker，请将该用户添加到 docker group 中</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  sudo usermod -aG docker <span class="nv">$USER</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+可能需要重启才能进行更改。</p>
+<p>
+&#34;另外需要注意有用户说使用该项目后，他的微信帐号会被封禁，虽然最终说明是看错了微信号，但是使用该项目是否会有封号风险需要自行评估，相关 issue 地址：<a href="https://github.com/huan/docker-wechat/issues/55">https://github.com/huan/docker-wechat/issues/55</a>&#34;</p>
+<p>
+如果你想自己定制一些行为，比如在桌面上打开多个微信 PC 客户端；那么，你可以自行修改 dochat.sh 脚本，比如下面的 docker 命令可以将数据持久化到宿主机上：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  sudo docker run <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   --name DoChat <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   --rm <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -i <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -v <span class="s2">&#34;</span><span class="nv">$HOME</span><span class="s2">/DoChat/WeChat Files/&#34;</span>:<span class="s1">&#39;/home/$USER/WeChat Files/&#39;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -v <span class="s2">&#34;</span><span class="nv">$HOME</span><span class="s2">/DoChat/Applcation Data&#34;</span>:<span class="s1">&#39;/home/$USER/.wine/drive_c/users/user/Application Data/&#39;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -v /tmp/.X11-unix:/tmp/.X11-unix <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -e DISPLAY <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -e <span class="nv">XMODIFIERS</span><span class="o">=</span>@im<span class="o">=</span>fcitx <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -e <span class="nv">GTK_IM_MODULE</span><span class="o">=</span>fcitx <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -e <span class="nv">QT_IM_MODULE</span><span class="o">=</span>fcitx <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -e <span class="nv">GID</span><span class="o">=</span><span class="s2">&#34;</span><span class="k">$(</span>id -g<span class="k">)</span><span class="s2">&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -e <span class="nv">UID</span><span class="o">=</span><span class="s2">&#34;</span><span class="k">$(</span>id -u<span class="k">)</span><span class="s2">&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   --ipc<span class="o">=</span>host <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   --privileged <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   zixia/wechat</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-3" class="outline-2">
+<h2 id="headline-3">
+直接通过脚本完成安装docker与运行微信
+</h2>
+<div id="outline-text-headline-3" class="outline-text-2">
+<p>
+脚本被压缩成zip压缩包，如果是在linux中要解压zip压缩包需要安装&#34;unzip&#34;</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  unzip docker_install.zip
+</span></span><span class="line"><span class="cl">  unzip docker_wechat.zip</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+如果在安装过程中失败了，可以再次尝试，甚至多次尝试，直到安装成功，因为docker的服务器是国外的，所以偶尔会安装失败</p>
+<p>
+脚本在执行前要先赋予脚本执行权限</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  sudo chmod +x docker_install.sh
+</span></span><span class="line"><span class="cl">  sudo chmod +x docker_wechat.sh</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-4" class="outline-3">
+<h3 id="headline-4">
+安装docker与微信的脚本
+</h3>
+<div id="outline-text-headline-4" class="outline-text-3">
+<p>
+<a href="/software/docker_install.zip">点击下载脚本</a></p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="c1">#先来更新一下包管理库</span>
+</span></span><span class="line"><span class="cl">  sudo apt update
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1">#添加一下docker的包仓库的依赖文件</span>
+</span></span><span class="line"><span class="cl">  sudo apt install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1">#添加仓库钥匙</span>
+</span></span><span class="line"><span class="cl">  curl -fsSL https://download.docker.com/linux/ubuntu/gpg <span class="p">|</span> sudo apt-key add -
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1">#把在线仓库连接加到你的更新源里</span>
+</span></span><span class="line"><span class="cl">  sudo add-apt-repository <span class="s2">&#34;deb [arch=amd64] https://download.docker.com/linux/ubuntu </span><span class="k">$(</span>lsb_release -cs<span class="k">)</span><span class="s2"> stable&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1">#默认安装最新版docker</span>
+</span></span><span class="line"><span class="cl">  sudo apt update
+</span></span><span class="line"><span class="cl">  sudo apt install docker-ce docker-ce-cli containerd.io -y
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  sudo systemctl status docker
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  curl -sL https://raw.githubusercontent.com/huan/docker-wechat/master/dochat.sh <span class="p">|</span> bash
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  sudo usermod -aG docker <span class="nv">$USER</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-5" class="outline-3">
+<h3 id="headline-5">
+运行微信的脚本
+</h3>
+<div id="outline-text-headline-5" class="outline-text-3">
+<p>
+<a href="/software/docker_wechat.zip">点击下载脚本</a></p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  sudo docker run <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   --name DoChat <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   --rm <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -i <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -v <span class="s2">&#34;</span><span class="nv">$HOME</span><span class="s2">/DoChat/WeChat Files/&#34;</span>:<span class="s1">&#39;/home/$USER/WeChat Files/&#39;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -v <span class="s2">&#34;</span><span class="nv">$HOME</span><span class="s2">/DoChat/Applcation Data&#34;</span>:<span class="s1">&#39;/home/$USER/.wine/drive_c/users/user/Application Data/&#39;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -v /tmp/.X11-unix:/tmp/.X11-unix <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -e DISPLAY <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -e <span class="nv">XMODIFIERS</span><span class="o">=</span>@im<span class="o">=</span>fcitx <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -e <span class="nv">GTK_IM_MODULE</span><span class="o">=</span>fcitx <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -e <span class="nv">QT_IM_MODULE</span><span class="o">=</span>fcitx <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -e <span class="nv">GID</span><span class="o">=</span><span class="s2">&#34;</span><span class="k">$(</span>id -g<span class="k">)</span><span class="s2">&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -e <span class="nv">UID</span><span class="o">=</span><span class="s2">&#34;</span><span class="k">$(</span>id -u<span class="k">)</span><span class="s2">&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   --ipc<span class="o">=</span>host <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   --privileged <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   zixia/wechat</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-6" class="outline-2">
+<h2 id="headline-6">
+windows环境写的脚本不能在Linux环境运行的原因与解决方法
+</h2>
+<div id="outline-text-headline-6" class="outline-text-2">
+<p>
+windows环境的换行符与lunix环境的换行符不一样，因此在windows环境导出的脚本的脚本直接拷贝到Linux环境的话是运行不了的，可以通过安装&#34;dos2unix&#34;工具解决</p>
+<div id="outline-container-headline-7" class="outline-4">
+<h4 id="headline-7">
+安装&#34;dos2unix&#34;
+</h4>
+<div id="outline-text-headline-7" class="outline-text-4">
+<p>
+dos2unix可以将文件中的换行符转换成linux环境中的换行符</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  sudo apt-get install dos2unix -y</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-8" class="outline-4">
+<h4 id="headline-8">
+使用方法
+</h4>
+<div id="outline-text-headline-8" class="outline-text-4">
+<p>
+假设test.sh是windows环境写好的脚本，然后拷贝到了linux环境中，脚本不能运行，可能通过如下方法解决</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  dos2unix test.sh</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/docker/">Docker</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "hugo-theme-stack" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2025 Example Person
+    </section>
+    
+    <section class="powerby">
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

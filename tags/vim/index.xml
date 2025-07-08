@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Vim on ynhugo</title>
+        <link>https://ynhugo.github.io/tags/vim/</link>
+        <description>Recent content in Vim on ynhugo</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <copyright>Example Person</copyright>
+        <lastBuildDate>Tue, 26 Mar 2024 00:24:34 +0800</lastBuildDate><atom:link href="https://ynhugo.github.io/tags/vim/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>vim_study</title>
+        <link>https://ynhugo.github.io/p/vim_study/</link>
+        <pubDate>Tue, 26 Mar 2024 00:24:34 +0800</pubDate>
+        
+        <guid>https://ynhugo.github.io/p/vim_study/</guid>
+        <description>
+&lt;div id=&#34;outline-container-headline-1&#34; class=&#34;outline-2&#34;&gt;
+&lt;h2 id=&#34;headline-1&#34;&gt;
+vim_studay
+&lt;/h2&gt;
+&lt;div id=&#34;outline-text-headline-1&#34; class=&#34;outline-text-2&#34;&gt;
+&lt;div id=&#34;outline-container-headline-2&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-2&#34;&gt;
+vim常用命令
+&lt;/h3&gt;
+&lt;div id=&#34;outline-text-headline-2&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;p&gt;
+`u` 撤销上次命令
+`Ctrl+r` 恢复撤销命令
+`x` 删除光标所在的字符或选中文字
+`d(移动命令)` 删除移动命令对应的内容
+`dd` 删除光标所在行，可以ndd复制多行
+`D` 删除至行尾
+`dw` 从光标位置删除到单词末尾
+`d0` 从光标位置删除到一行的起始位置
+`d}` 从光标位置删除到段落结尾
+`ndd` 从光标位置向下连续删除 n 行
+`d代码行G` 从光标所在行 删除到 指定代码行 之间的所有代码
+`d’a` 从光标所在行 删除到 标记a 之间的所有代码
+`touch 文件名(或文件名+后缀)` 建立空文件
+`echo &amp;#39;内容&amp;#39; &amp;gt; 文件` 将内容写入文件
+`x,X` #在一行字当中，x为向后删除-个字符,X为向前删除
+`nx` #n为数字，连续向后删除n个字符
+`dd` #删除游标所在的那一 -整列(常用)
+`ndd` #n为数字,删除光标所在的向下n列
+`d1G` #删除光标所在到第一行的所有数据
+`dG` #删除光标所在到最后一行的所有数据
+`d$` #删除游标所在处，到该行的最后一个字符
+`d0` #那个是数字的0，删除游标所在处，到该行的最前面一个字符
+`vy` #复制游标所在的那- -行(常用)
+`nyy` #n为数字。 复制光标所在的向下n列，例如20yy则是复制20 列(常用)
+`y1G` #复制游标所在列到第- 列的所有数据
+`yG` #复制游标所在列到最后一列的所有数据
+`y0` #复制光标所在的那个字符到该行行首的所有数据
+`y$` #复制光标所在的那个字符到该行行尾的所有数据
+`p,P` #p为将已复制的数据在光标下一行贴上，P则为贴在游标上一行!举例来说，我目前光标在第20行，且己经复制了10行数据。则按下p后，那10行数据会贴在原本的20标在第20行，且己经复制了10行数据。则按下p后，那10行数据会贴在原本的20行之后，亦即由21行开始贴。但如果是按下P呢?那么原本的第20行会被推到变成30行 ( 常用)
+`J` #将光标所在列与下一列的数据结合成同一列
+`c` #重复删除多个数据，例如向下删除10行，[10c]
+`u` #复原前一个动作。(常用)&lt;/p&gt;
+&lt;p&gt;
+ctrl + c 退出模式&lt;/p&gt;
+&lt;p&gt;
+命令模式下：
+ctrl + p 向上一行
+ctrl + n 向下一行
+ctrl + o 打开最近打开过的文件&lt;/p&gt;
+&lt;p&gt;
+在插入模式下：
+ctrl + i / ctrl + t 从光标位置向后补一个tab
+ctrl + y 复制上一行同一列的字符
+ctrl + u 删除光标前的内容
+ctrl + n / ctrl + p 打开补全列表
+ctrl + h 删除光标前的一个字符
+ctrl + x 特殊功能模式，ctrl + y / ctrl + e 上下移动页面
+ctrl + j / ctrl + m 向下补空行
+ctrl + w 删除单词&lt;/p&gt;
+&lt;p&gt;
+`Ctrl+r` #重做上一个动作。(常用)
+`.` #不要怀疑!这就是小数点!意思重复前一个动作的意思。如果你想要重复删除、重复贴上等等动作，按下小数点就好了! (常用)&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-3&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-3&#34;&gt;
+基于单词/字串的移动命令
+&lt;/h3&gt;
+&lt;div id=&#34;outline-text-headline-3&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;p&gt;移动命令	说明
+w	移动到下一个单词的开头
+W	移动到下一个字串的开头
+e	移动到当前单词的末尾，或者下一个单词的末尾
+E	移动到当前字串的末尾，或者下一个字串的末尾
+b	移动到当前单词的开头，或者前一个单词的开头
+B	移动到当前字串的开头，或者前一个字串的开头
+ge	移动到上一个单词的结尾
+gE	移动到上一个字串 的结尾&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" 付费 VPS raksmart 支持最低3美元的 VPS，可以用于搭建 ChatGPT，可以在 web 界面进行开关机和重装系统，重装系统时可以重置密码，配置的话通过 ssh 访问\n链接：https://www.raksmart.com/home\n免费 VPS 永久免费的公共 UNIX 服务器 注册方法 打开网址：https://sdf.org/ 直接填写邮箱和登录名称，确认即可注册。\n注册后，请在邮箱中查找来自 SDF 的邮件，极有可能是在垃圾箱中，里面给出了服务器登录的方法，包括用户名和密码。\n使用 ssh 工具，直接登录即可。\n操作建议 一款持续提供35年的服务商是值得尊敬的，如果有条件可以赞助一下；筹款商店还有光盘和徽章售卖。终身会员只要36刀！\n新人可以看看 freeBSD 的文档，对于提升有很大帮助：https://docs.freebsd.org/doc/\nSDF 提示信息 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 $ notes -r Welcome to the SDF Public Access UNIX system. (est. 1987) For quick help, type &#39;help&#39; For detailed questions and answers, type &#39;faq&#39; For user discussion boards, type &#39;bboard&#39; For interactive discussions, type &#39;com&#39; For adding yourself to the SDF User Map, see http://sdf1.org/map To setup your homepage, type &#39;mkhomepg&#39; To create your URL http://qq182sdf.freeshell.org, type &#39;addlink&#39; Classroom Student programs are located in /sys/classroom Explore and Enjoy! [1:2] (P)ROCEED, (D)ELETE, (C)ATCH UP, (R)ESPOND or (Q)UIT: PROCEED 参考链接 永久免费的公共UNIX服务器\n">
+<title>VPS相关</title>
+
+<link rel='canonical' href='https://ynhugo.github.io/p/vps%E7%9B%B8%E5%85%B3/'>
+
+<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="VPS相关">
+<meta property='og:description' content=" 付费 VPS raksmart 支持最低3美元的 VPS，可以用于搭建 ChatGPT，可以在 web 界面进行开关机和重装系统，重装系统时可以重置密码，配置的话通过 ssh 访问\n链接：https://www.raksmart.com/home\n免费 VPS 永久免费的公共 UNIX 服务器 注册方法 打开网址：https://sdf.org/ 直接填写邮箱和登录名称，确认即可注册。\n注册后，请在邮箱中查找来自 SDF 的邮件，极有可能是在垃圾箱中，里面给出了服务器登录的方法，包括用户名和密码。\n使用 ssh 工具，直接登录即可。\n操作建议 一款持续提供35年的服务商是值得尊敬的，如果有条件可以赞助一下；筹款商店还有光盘和徽章售卖。终身会员只要36刀！\n新人可以看看 freeBSD 的文档，对于提升有很大帮助：https://docs.freebsd.org/doc/\nSDF 提示信息 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 $ notes -r Welcome to the SDF Public Access UNIX system. (est. 1987) For quick help, type &#39;help&#39; For detailed questions and answers, type &#39;faq&#39; For user discussion boards, type &#39;bboard&#39; For interactive discussions, type &#39;com&#39; For adding yourself to the SDF User Map, see http://sdf1.org/map To setup your homepage, type &#39;mkhomepg&#39; To create your URL http://qq182sdf.freeshell.org, type &#39;addlink&#39; Classroom Student programs are located in /sys/classroom Explore and Enjoy! [1:2] (P)ROCEED, (D)ELETE, (C)ATCH UP, (R)ESPOND or (Q)UIT: PROCEED 参考链接 永久免费的公共UNIX服务器\n">
+<meta property='og:url' content='https://ynhugo.github.io/p/vps%E7%9B%B8%E5%85%B3/'>
+<meta property='og:site_name' content='ynhugo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='VPS' /><meta property='article:published_time' content='2024-07-16T21:07:26&#43;08:00'/><meta property='article:modified_time' content='2024-07-16T21:07:26&#43;08:00'/>
+<meta name="twitter:title" content="VPS相关">
+<meta name="twitter:description" content=" 付费 VPS raksmart 支持最低3美元的 VPS，可以用于搭建 ChatGPT，可以在 web 界面进行开关机和重装系统，重装系统时可以重置密码，配置的话通过 ssh 访问\n链接：https://www.raksmart.com/home\n免费 VPS 永久免费的公共 UNIX 服务器 注册方法 打开网址：https://sdf.org/ 直接填写邮箱和登录名称，确认即可注册。\n注册后，请在邮箱中查找来自 SDF 的邮件，极有可能是在垃圾箱中，里面给出了服务器登录的方法，包括用户名和密码。\n使用 ssh 工具，直接登录即可。\n操作建议 一款持续提供35年的服务商是值得尊敬的，如果有条件可以赞助一下；筹款商店还有光盘和徽章售卖。终身会员只要36刀！\n新人可以看看 freeBSD 的文档，对于提升有很大帮助：https://docs.freebsd.org/doc/\nSDF 提示信息 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 $ notes -r Welcome to the SDF Public Access UNIX system. (est. 1987) For quick help, type &#39;help&#39; For detailed questions and answers, type &#39;faq&#39; For user discussion boards, type &#39;bboard&#39; For interactive discussions, type &#39;com&#39; For adding yourself to the SDF User Map, see http://sdf1.org/map To setup your homepage, type &#39;mkhomepg&#39; To create your URL http://qq182sdf.freeshell.org, type &#39;addlink&#39; Classroom Student programs are located in /sys/classroom Explore and Enjoy! [1:2] (P)ROCEED, (D)ELETE, (C)ATCH UP, (R)ESPOND or (Q)UIT: PROCEED 参考链接 永久免费的公共UNIX服务器\n">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_f509edb42ecc0ebd.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🍥</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">ynhugo</a></h1>
+            <h2 class="site-description">ynhugo.github.io</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/CaiJimmy/hugo-theme-stack'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://x.com'
+                        target="_blank"
+                        title="x"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E5%85%B3%E4%BA%8E/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                    
+                        <li id="i18n-switch">  
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                            <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
+                                
+                                    <option value="https://ynhugo.github.io/en/" >English</option>
+                                
+                                    <option value="https://ynhugo.github.io/" selected>中文</option>
+                                
+                                    <option value="https://ynhugo.github.io/ar/" >عربي</option>
+                                
+                            </select>
+                        </li>
+                    
+                
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+<ul>
+<li><a href="#headline-1">付费 VPS</a>
+<ul>
+<li><a href="#headline-2">raksmart</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-3">免费 VPS</a>
+<ul>
+<li><a href="#headline-4">永久免费的公共 UNIX 服务器</a>
+<ul>
+<li><a href="#headline-5">注册方法</a>
+</li>
+<li><a href="#headline-6">操作建议</a>
+</li>
+<li><a href="#headline-7">SDF 提示信息</a>
+</li>
+<li><a href="#headline-8">参考链接</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-9">使用&#34;Segfault&#34;免费VPS教程</a>
+<ul>
+<li><a href="#headline-10">注册VPS</a>
+<ul>
+<li><a href="#headline-11">点击&#34;Remote Desktop&#34;</a>
+</li>
+<li><a href="#headline-12">点击&#34;I&#39;m New Here&#34;，以新用户身份注册VPS</a>
+</li>
+<li><a href="#headline-13">保存官方分配的 SECRET&#34;</a>
+</li>
+<li><a href="#headline-14">把 SECRET 保存好后点击 Continue 进行下一步进入网页终端环境中</a>
+</li>
+<li><a href="#headline-15">进入终端环境中后根据提示进行操作，然后真正进入终端环境</a>
+</li>
+<li><a href="#headline-16">本地SSH连接远程VPS</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-17">VNC教程</a>
+<ul>
+<li><a href="#headline-18">第一步，运行VNC服务</a>
+</li>
+<li><a href="#headline-19">第二步，启动VNC</a>
+</li>
+<li><a href="#headline-20">第三步，本地运行&#34;ssh -L5900:0:5900 -o &#39;SetEnv SECRET=W7NHhPqWvpNKPTcpEgkez4P2&#39; root@adm.segfault.net&#34;进行隧道端口转发</a>
+</li>
+<li><a href="#headline-21">第四步，VNC客户端连接访问 172.0.0.1:5900</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-22">Segfault 提示信息</a>
+</li>
+<li><a href="#headline-23">startfb 教程</a>
+</li>
+<li><a href="#headline-24">参考链接</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#headline-25">SSH 注意事项</a>
+</li>
+</ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/vps%E7%9B%B8%E5%85%B3/">VPS相关</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jul 16, 2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 3 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    
+<div id="outline-container-headline-1" class="outline-2">
+<h2 id="headline-1">
+付费 VPS
+</h2>
+<div id="outline-text-headline-1" class="outline-text-2">
+<div id="outline-container-headline-2" class="outline-3">
+<h3 id="headline-2">
+raksmart
+</h3>
+<div id="outline-text-headline-2" class="outline-text-3">
+<p>
+支持最低3美元的 VPS，可以用于搭建 ChatGPT，可以在 web 界面进行开关机和重装系统，重装系统时可以重置密码，配置的话通过 ssh 访问</p>
+<p>
+链接：<a href="https://www.raksmart.com/home">https://www.raksmart.com/home</a></p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-3" class="outline-2">
+<h2 id="headline-3">
+免费 VPS
+</h2>
+<div id="outline-text-headline-3" class="outline-text-2">
+<div id="outline-container-headline-4" class="outline-3">
+<h3 id="headline-4">
+永久免费的公共 UNIX 服务器
+</h3>
+<div id="outline-text-headline-4" class="outline-text-3">
+<div id="outline-container-headline-5" class="outline-4">
+<h4 id="headline-5">
+注册方法
+</h4>
+<div id="outline-text-headline-5" class="outline-text-4">
+<p>
+打开网址：<a href="https://sdf.org/">https://sdf.org/</a> 直接填写邮箱和登录名称，确认即可注册。</p>
+<p>
+注册后，请在邮箱中查找来自 SDF 的邮件，极有可能是在垃圾箱中，里面给出了服务器登录的方法，包括用户名和密码。</p>
+<p>
+使用 ssh 工具，直接登录即可。</p>
+</div>
+</div>
+<div id="outline-container-headline-6" class="outline-4">
+<h4 id="headline-6">
+操作建议
+</h4>
+<div id="outline-text-headline-6" class="outline-text-4">
+<p>
+一款持续提供35年的服务商是值得尊敬的，如果有条件可以赞助一下；筹款商店还有光盘和徽章售卖。终身会员只要36刀！</p>
+<p>
+新人可以看看 freeBSD 的文档，对于提升有很大帮助：<a href="https://docs.freebsd.org/doc/">https://docs.freebsd.org/doc/</a></p>
+</div>
+</div>
+<div id="outline-container-headline-7" class="outline-4">
+<h4 id="headline-7">
+SDF 提示信息
+</h4>
+<div id="outline-text-headline-7" class="outline-text-4">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  $ notes -r
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  Welcome to the SDF Public Access UNIX system. <span class="o">(</span>est. 1987<span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  For quick help, <span class="nb">type</span> <span class="s1">&#39;help&#39;</span>
+</span></span><span class="line"><span class="cl">  For detailed questions and answers, <span class="nb">type</span> <span class="s1">&#39;faq&#39;</span>
+</span></span><span class="line"><span class="cl">  For user discussion boards, <span class="nb">type</span> <span class="s1">&#39;bboard&#39;</span>
+</span></span><span class="line"><span class="cl">  For interactive discussions, <span class="nb">type</span> <span class="s1">&#39;com&#39;</span>
+</span></span><span class="line"><span class="cl">  For adding yourself to the SDF User Map, see http://sdf1.org/map
+</span></span><span class="line"><span class="cl">  To setup your homepage, <span class="nb">type</span> <span class="s1">&#39;mkhomepg&#39;</span>
+</span></span><span class="line"><span class="cl">  To create your URL http://qq182sdf.freeshell.org, <span class="nb">type</span> <span class="s1">&#39;addlink&#39;</span>
+</span></span><span class="line"><span class="cl">  Classroom Student programs are located in /sys/classroom
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  Explore and Enjoy!
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="o">[</span>1:2<span class="o">]</span> <span class="o">(</span>P<span class="o">)</span>ROCEED, <span class="o">(</span>D<span class="o">)</span>ELETE, <span class="o">(</span>C<span class="o">)</span>ATCH UP, <span class="o">(</span>R<span class="o">)</span>ESPOND or <span class="o">(</span>Q<span class="o">)</span>UIT: PROCEED</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-8" class="outline-4">
+<h4 id="headline-8">
+参考链接
+</h4>
+<div id="outline-text-headline-8" class="outline-text-4">
+<p>
+<a href="https://iweec.com/410.html">永久免费的公共UNIX服务器</a></p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-9" class="outline-3">
+<h3 id="headline-9">
+使用&#34;Segfault&#34;免费VPS教程
+</h3>
+<div id="outline-text-headline-9" class="outline-text-3">
+<div id="outline-container-headline-10" class="outline-4">
+<h4 id="headline-10">
+注册VPS
+</h4>
+<div id="outline-text-headline-10" class="outline-text-4">
+<p>
+新注册一个 VPS，官方会给新注册的 VPS 分配 SECRET，把官方分配的 SECRET 保存好，每个人的 SECRET 都不一样，使用 SSH 连接的时候需要用到，不同的 SECRET 使用 SSH 连接 VPS 的时候可以避免冲突，使用 SECRET 通过 SSH 连接 VPS 的时候需要输入密码，密码都是 segfault</p>
+<div id="outline-container-headline-11" class="outline-5">
+<h5 id="headline-11">
+点击&#34;Remote Desktop&#34;
+</h5>
+<div id="outline-text-headline-11" class="outline-text-5">
+<p>
+<img src="/images/segfault_vps教程/png1.png" alt="/images/segfault_vps教程/png1.png" title="/images/segfault_vps教程/png1.png" /></p>
+</div>
+</div>
+<div id="outline-container-headline-12" class="outline-5">
+<h5 id="headline-12">
+点击&#34;I&#39;m New Here&#34;，以新用户身份注册VPS
+</h5>
+<div id="outline-text-headline-12" class="outline-text-5">
+<p>
+<img src="/images/segfault_vps教程/png2.png" alt="/images/segfault_vps教程/png2.png" title="/images/segfault_vps教程/png2.png" /></p>
+</div>
+</div>
+<div id="outline-container-headline-13" class="outline-5">
+<h5 id="headline-13">
+保存官方分配的 SECRET&#34;
+</h5>
+<div id="outline-text-headline-13" class="outline-text-5">
+<p>
+我的 SECRET 是 adm-W7NHhPqWvpNKPTcpEgkez4P2</p>
+<p>
+<img src="/images/segfault_vps教程/png3.png" alt="/images/segfault_vps教程/png3.png" title="/images/segfault_vps教程/png3.png" /></p>
+</div>
+</div>
+<div id="outline-container-headline-14" class="outline-5">
+<h5 id="headline-14">
+把 SECRET 保存好后点击 Continue 进行下一步进入网页终端环境中
+</h5>
+<div id="outline-text-headline-14" class="outline-text-5">
+<p>
+<img src="/images/segfault_vps教程/png4.png" alt="/images/segfault_vps教程/png4.png" title="/images/segfault_vps教程/png4.png" /></p>
+<p>
+如果光标没有进入终端环境中，可以按一下 Tab 键切入到终端环境中</p>
+<p>
+<img src="/images/segfault_vps教程/png5.png" alt="/images/segfault_vps教程/png5.png" title="/images/segfault_vps教程/png5.png" /></p>
+</div>
+</div>
+<div id="outline-container-headline-15" class="outline-5">
+<h5 id="headline-15">
+进入终端环境中后根据提示进行操作，然后真正进入终端环境
+</h5>
+<div id="outline-text-headline-15" class="outline-text-5">
+<p>
+终端打印了 SSH 的配置信息，其中包含了 SSH 连接命令，SSH 连接命令中 SECRET 的值就是我们刚注册时官方提示要我们保存的密钥值，在本地终端 SSH 连接远程 VPS 时一个一个敲密钥值太过麻烦，直接将之前保存的密钥值粘贴一下即可，还有一个是主机名，也是新注册 VPS 时官方分配的，例如我的是 adm.segfault.net</p>
+<p>
+例如我的是：ssh -o &#34;SetEnv SECRET=adm-W7NHhPqWvpNKPTcpEgkez4P2&#34; root@adm.segfault.net</p>
+<p>
+终端中 SSH 连接命令中有一个反斜杠 \，那是因为终端中是分现行显示的，我们在用的时候把反斜杠去掉输入一行命令即可</p>
+<p>
+<img src="/images/segfault_vps教程/png6.png" alt="/images/segfault_vps教程/png6.png" title="/images/segfault_vps教程/png6.png" /></p>
+</div>
+</div>
+<div id="outline-container-headline-16" class="outline-5">
+<h5 id="headline-16">
+本地SSH连接远程VPS
+</h5>
+<div id="outline-text-headline-16" class="outline-text-5">
+<p>
+新注册 VPS 的 SSH 连接密码都是segfault</p>
+<p>
+<img src="/images/segfault_vps教程/png7.png" alt="/images/segfault_vps教程/png7.png" title="/images/segfault_vps教程/png7.png" /></p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-17" class="outline-4">
+<h4 id="headline-17">
+VNC教程
+</h4>
+<div id="outline-text-headline-17" class="outline-text-4">
+<p>
+VNC 客户端下载链接：<a href="https://www.realvnc.com/en/connect/download/viewer/windows/">https://www.realvnc.com/en/connect/download/viewer/windows/</a></p>
+<div id="outline-container-headline-18" class="outline-5">
+<h5 id="headline-18">
+第一步，运行VNC服务
+</h5>
+<div id="outline-text-headline-18" class="outline-text-5">
+<p>
+<img src="/images/segfault_vps教程/png8.png" alt="/images/segfault_vps教程/png8.png" title="/images/segfault_vps教程/png8.png" /></p>
+<p>
+运行VNC服务后提示输入并验证密码，密码 segfault，然后VNC服务询问是否设置 view-only 密码，我输入的是 n 表示不设置</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  vncserver</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-19" class="outline-5">
+<h5 id="headline-19">
+第二步，启动VNC
+</h5>
+<div id="outline-text-headline-19" class="outline-text-5">
+<p>
+<img src="/images/segfault_vps教程/png8.png" alt="/images/segfault_vps教程/png8.png" title="/images/segfault_vps教程/png8.png" /></p>
+<p>
+启动VNC后提示了需要在本地终端运行&#34;ssh -L5900:0:5900 -o &#39;SetEnv SECRET=W7NHhPqWvpNKPTcpEgkez4P2&#39; root@adm.segfault.net&#34;，作用是通过 SSH 隧道将本地端口 5900 映射到远程主机 adm.segfault.net 的端口 5900。通过这种方式，用户可以使用 VNC 客户端通过 SSH 连接到远程 VNC 图形界面</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  startxvnc</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-20" class="outline-5">
+<h5 id="headline-20">
+第三步，本地运行&#34;ssh -L5900:0:5900 -o &#39;SetEnv SECRET=W7NHhPqWvpNKPTcpEgkez4P2&#39; root@adm.segfault.net&#34;进行隧道端口转发
+</h5>
+<div id="outline-text-headline-20" class="outline-text-5">
+<p>
+<img src="/images/segfault_vps教程/png9.png" alt="/images/segfault_vps教程/png9.png" title="/images/segfault_vps教程/png9.png" /></p>
+</div>
+</div>
+<div id="outline-container-headline-21" class="outline-5">
+<h5 id="headline-21">
+第四步，VNC客户端连接访问 172.0.0.1:5900
+</h5>
+<div id="outline-text-headline-21" class="outline-text-5">
+<p>
+<img src="/images/segfault_vps教程/png10.png" alt="/images/segfault_vps教程/png10.png" title="/images/segfault_vps教程/png10.png" /></p>
+<p>
+成功通过 VNC 连接到远程 VPS，不过效果一般，还不如用命令行</p>
+<p>
+<img src="/images/segfault_vps教程/png11.png" alt="/images/segfault_vps教程/png11.png" title="/images/segfault_vps教程/png11.png" /></p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-22" class="outline-4">
+<h4 id="headline-22">
+Segfault 提示信息
+</h4>
+<div id="outline-text-headline-22" class="outline-text-4">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  ┌──<span class="o">(</span>root💀adm-RecipeKit<span class="o">)</span>-<span class="o">[</span>~<span class="o">]</span>
+</span></span><span class="line"><span class="cl">  └─# info
+</span></span><span class="line"><span class="cl">  :Cut <span class="p">&amp;</span> Paste these lines to your workstation<span class="s1">&#39;s shell to retain access:
+</span></span></span><span class="line"><span class="cl"><span class="s1">  ######################################################################
+</span></span></span><span class="line"><span class="cl"><span class="s1">  cat &gt;~/.ssh/id_sf-adm-segfault-net &lt;&lt;&#39;</span>__EOF__<span class="s1">&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">  -----BEGIN OPENSSH PRIVATE KEY-----
+</span></span></span><span class="line"><span class="cl"><span class="s1">  b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW
+</span></span></span><span class="line"><span class="cl"><span class="s1">  QyNTUxOQAAACBJFPbVdK92w4fHGb7vaG2c7XhlRTdZErUPW3Ag7lqVJAAAAIjxT/9z8U//
+</span></span></span><span class="line"><span class="cl"><span class="s1">  cwAAAAtzc2gtZWQyNTUxOQAAACBJFPbVdK92w4fHGb7vaG2c7XhlRTdZErUPW3Ag7lqVJA
+</span></span></span><span class="line"><span class="cl"><span class="s1">  AAAEA9D69K0YYMDbh6ZcWfmcZ1CdYk6Yryx28zc5ira9opkEkU9tV0r3bDh8cZvu9obZzt
+</span></span></span><span class="line"><span class="cl"><span class="s1">  eGVFN1kStQ9bcCDuWpUkAAAAAAECAwQF
+</span></span></span><span class="line"><span class="cl"><span class="s1">  -----END OPENSSH PRIVATE KEY-----
+</span></span></span><span class="line"><span class="cl"><span class="s1">  __EOF__
+</span></span></span><span class="line"><span class="cl"><span class="s1">  cat &gt;&gt;~/.ssh/config &lt;&lt;&#39;</span>__EOF__<span class="err">&#39;</span>
+</span></span><span class="line"><span class="cl">  host recipekit
+</span></span><span class="line"><span class="cl">	  User root
+</span></span><span class="line"><span class="cl">	  HostName adm.segfault.net
+</span></span><span class="line"><span class="cl">	  IdentityFile ~/.ssh/id_sf-adm-segfault-net
+</span></span><span class="line"><span class="cl">	  SetEnv <span class="nv">SECRET</span><span class="o">=</span>W7NHhPqWvpNKPTcpEgkez4P2
+</span></span><span class="line"><span class="cl">  __EOF__
+</span></span><span class="line"><span class="cl">  chmod <span class="m">600</span> ~/.ssh/config ~/.ssh/id_sf-adm-segfault-net
+</span></span><span class="line"><span class="cl">  <span class="c1">######################################################################</span>
+</span></span><span class="line"><span class="cl">  Thereafter use these commands:
+</span></span><span class="line"><span class="cl">  --&gt; ssh  recipekit
+</span></span><span class="line"><span class="cl">  --&gt; sftp recipekit
+</span></span><span class="line"><span class="cl">  --&gt; scp  recipekit:stuff.tar.gz ~/
+</span></span><span class="line"><span class="cl">  --&gt; sshfs -o reconnect recipekit:/sec ~/sec
+</span></span><span class="line"><span class="cl">  ----------------------------------------------------------------------
+</span></span><span class="line"><span class="cl">  Token             : No See https://thc.org/segfault/token
+</span></span><span class="line"><span class="cl">  Your workstation  : xxx.xxx.xxx.xxx <span class="o">(</span>xxx<span class="o">)</span>
+</span></span><span class="line"><span class="cl">  Reverse Port      : Type curl sf/port <span class="k">for</span> reverse port.
+</span></span><span class="line"><span class="cl">  Exit CryptoStorm  : 128.127.104.110 <span class="o">(</span>Sweden<span class="o">)</span>
+</span></span><span class="line"><span class="cl">  Exit Mullvad      : 185.77.218.15   <span class="o">(</span>Helsinki/Finland<span class="o">)</span>
+</span></span><span class="line"><span class="cl">  Exit NordVPN      : 185.255.128.233 <span class="o">(</span>Zurich/Switzerland<span class="o">)</span>
+</span></span><span class="line"><span class="cl">  TOR Proxy         : 172.20.0.111:9050
+</span></span><span class="line"><span class="cl">  Shared storage    : /everyone/RecipeKit        <span class="o">(</span>encrypted<span class="o">)</span>
+</span></span><span class="line"><span class="cl">  Your storage      : /sec                       <span class="o">(</span>encrypted<span class="o">)</span>
+</span></span><span class="line"><span class="cl">  Your Onion WWW    : /onion                     <span class="o">(</span>encrypted<span class="o">)</span>
+</span></span><span class="line"><span class="cl">  Your Web Page     : http://2xyr7jug4b5uhndzelsf7vgrxygttutc6h5mqzpwp7y6blk6owhxliqd.onion/recipekit/
+</span></span><span class="line"><span class="cl">  SSH               : ssh -o <span class="s2">&#34;SetEnv SECRET=W7NHhPqWvpNKPTcpEgkez4P2&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>						 root@adm.segfault.net
+</span></span><span class="line"><span class="cl">  SSH <span class="o">(</span>TOR<span class="o">)</span>         : torsocks ssh -o <span class="s2">&#34;SetEnv SECRET=W7NHhPqWvpNKPTcpEgkez4P2&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>						 root@w5wc42fbltkdxpycsurj4zwxouhb3es3t2334lyte6euewrebjx4ryid.onion
+</span></span><span class="line"><span class="cl">  SSH <span class="o">(</span>gsocket<span class="o">)</span>     : gsocket -s NGExNzFhNMYm ssh -o <span class="s2">&#34;SetEnv SECRET=W7NHhPqWvpNKPTcpEgkez4P2&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>						 root@adm.segfault.gsocket
+</span></span><span class="line"><span class="cl">  SECRET            : W7NHhPqWvpNKPTcpEgkez4P2</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-23" class="outline-4">
+<h4 id="headline-23">
+startfb 教程
+</h4>
+<div id="outline-text-headline-23" class="outline-text-4">
+<p>
+使用下面所示的端口转发登录，密码还是 segfault，登录后在vps终端键入 startfb，保持登录状态，然后将浏览器指向 <a href="http://127.0.0.1:2900">http://127.0.0.1:2900</a></p>
+<p>
+不要退出终端，不然本地无法访问 <a href="http://127.0.0.1:2900">http://127.0.0.1:2900</a></p>
+<p>
+<img src="/images/segfault_vps教程/png12.png" alt="/images/segfault_vps教程/png12.png" title="/images/segfault_vps教程/png12.png" /></p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  ssh -L2900:0:2900 -o <span class="s1">&#39;SetEnv SECRET=W7NHhPqWvpNKPTcpEgkez4P2&#39;</span> root@adm.segfault.net
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  startfb</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+然后在本地访问如下链接</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">http://127.0.0.1:2900</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+进入如下页面</p>
+<p>
+<img src="/images/segfault_vps教程/png13.png" alt="/images/segfault_vps教程/png13.png" title="/images/segfault_vps教程/png13.png" /></p>
+<p>
+本地浏览器访问 VPS 的文件浏览器界面默认显示的是 VPS 根目录下的内容，而终端登录进 VPS 默认是在家目录下，在 VPS 的文件浏览器中要进入家目录下需要双击进入 sec/root</p>
+<p>
+<img src="/images/segfault_vps教程/png14.png" alt="/images/segfault_vps教程/png14.png" title="/images/segfault_vps教程/png14.png" /></p>
+</div>
+</div>
+<div id="outline-container-headline-24" class="outline-4">
+<h4 id="headline-24">
+参考链接
+</h4>
+<div id="outline-text-headline-24" class="outline-text-4">
+<p>
+https://www.thc.org/segfault/</p>
+<p>
+https://www.thc.org/segfault/gui/</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-25" class="outline-2">
+<h2 id="headline-25">
+SSH 注意事项
+</h2>
+<div id="outline-text-headline-25" class="outline-text-2">
+<p>
+首先无论是付费 vps 还是免费 vps，如果需要自己配置 ssh 连接的话一定要注意配置文件里除了默认允许密码登录授权的配置以外还要确认并配置允许 ssh 公钥登录授权，如果 vps 配置这两项都是 yes，那就不需要更改了，其他配置根据自己的需要进行修改</p>
+<p>
+linux 下 ssh 配置文件路径：/etc/ssh/sshd_config</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  PasswordAuthentication yes		<span class="c1"># 允许通过密码进行 ssh 连接</span>
+</span></span><span class="line"><span class="cl">  PubkeyAuthentication yes  		<span class="c1"># 允许通过 ssh 公钥进行 ssh 连接</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+然后改动 ssh 的配置后要重新启动 ssh 服务</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  /etc/init.d/ssh restart</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/vps/">VPS</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "hugo-theme-stack" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2025 Example Person
+    </section>
+    
+    <section class="powerby">
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

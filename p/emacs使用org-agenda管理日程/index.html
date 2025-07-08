@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" Emacs 使用org-agenda 管理日程 如何使用org设置日程上篇已经介绍完，那现在的重点就是如何查看日程，并且真正将org运用到日常工作中来。之前学习org跨越了很长时间，但一直没有落实到日常应用，所以过一阵子就会忘记，得来的教训就是学习任何语言，工具一定要落实在使用中，纸上谈兵要不得。让我们一起开始使用org-agenda查看，管理及运用设置好的日程。\n纸上得来终觉浅,绝知此事要躬行.\n日程 Agenda 定义完ToDo之后，使用M-x org-agenda 打开日程buffer，可看到当前排的所有日程，并可以直接进行优先级等操作。那如何归纳整理自己的日程表呢，通常我使用多个文件来代表不同的类型。\n日程文件 可以针对不同的任务类型，定义多个日程或任务文件，然后将文件加入全局的日程文件列表，统一纳入org的管理。\n以下来举例： 使用C-h v 查看变量org-agenda-flies，当前有一个文件，现在我们再加入另一个\n打开org文件，使用org-agenda-file-to-front或者快捷键C-c [ 将当前文件加入到全局列表。这样一来，我们定义的日程就会加入到全局列表，使用emacs统一进行管理了。也可以通过emacs配置文件加入。\n然后就可以使用M-x org-agenda a 打开agenda界面了。\n快捷键 功能 C-c [ 将当前文件加入全局列表 C-c ] 将当前文件移除全局列表 C-c C-x &lt; 锁定当前文件即在org agenda的buffer中只显示当前文件的日程（org-agenda-set-restriction-lock） C-c C-x &gt; 解锁(org-agenda-remove-restriction-lock) 可以打开speedbar ，在文件上使用&lt; 和&gt; 来锁定和解锁。\n日程操作 前一章已经介绍过，使用org-agenda打开日程buffer，此时可以选择多种视图方式，以便更加方便的查看日程。\nEmacs 内置了多种视图，下面会一一介绍，首先来看都有哪些操作。\n视图中的操作 其他快捷键及功能：\n快捷键 功能 b daily视图 w weekly视图 n/p 上/下移动光标 N/P 上/下按日程移动光标 SPC 在另一缓冲区显示任务在org文件中的定义的位置 TAB 在另一缓冲区显示任务在org文件中的定义的位置，并且光标跳转至此 L 显示任务在文件中位置并且光标居中 RET 在当前buffer打开文件并跳转 F 打开跟踪模式，即移动光标时，另一buffer显示当前任务的定义处 C-c C-x b 显示任务及子树，并可以设置层数 C-c C-o 打开链接 o 关闭另一个buffer A 打开另一种视图并嵌入到当前视图中 v 弹出多个命令进行选择 f/b 下一天 . 跳转至当天 j 选择日期并跳转 D 包含日记 r 刷新agenda buffer / 通过tag过滤 &lt; 通过类型过滤 ^ 通过 top headline 过滤 = 通过模式匹配过滤 丨 去除所有过滤 t 改变状态 C-S-Left/C-S-Right 改变状态 C-k 删除 C-w 重新归档某项日程 $ 归档，通常是另一个文件 T 显示所有tag : 设置tag , 设置优先级 +/- 或者 S-up/down 设置优先级 z 添加note C-c C-a 附件 C-c C-s 安排日程 C-c C-d 设置deadline S-Left/Right 改变日期 &gt; 改变日期 I 插入clock O 停止上一个clock X 取消当前clock J 跳转之clock处 M-Up/Down 拖拽一个日程 m mark当前日程 * mark所有日程为重点 u 取消mark当前日程 U 取消mark所有日程 M-m 设置/取消当前mark M-× 设置/取消所有mark B bulk action C-x C-w 导出。可以为.html .pdf .ps .org q 退出 x 退出，包括所有相关打开的buffer 太多了，大家通过帮助自己尝试吧。\n">
+<title>Emacs使用org-agenda管理日程</title>
+
+<link rel='canonical' href='https://ynhugo.github.io/p/emacs%E4%BD%BF%E7%94%A8org-agenda%E7%AE%A1%E7%90%86%E6%97%A5%E7%A8%8B/'>
+
+<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="Emacs使用org-agenda管理日程">
+<meta property='og:description' content=" Emacs 使用org-agenda 管理日程 如何使用org设置日程上篇已经介绍完，那现在的重点就是如何查看日程，并且真正将org运用到日常工作中来。之前学习org跨越了很长时间，但一直没有落实到日常应用，所以过一阵子就会忘记，得来的教训就是学习任何语言，工具一定要落实在使用中，纸上谈兵要不得。让我们一起开始使用org-agenda查看，管理及运用设置好的日程。\n纸上得来终觉浅,绝知此事要躬行.\n日程 Agenda 定义完ToDo之后，使用M-x org-agenda 打开日程buffer，可看到当前排的所有日程，并可以直接进行优先级等操作。那如何归纳整理自己的日程表呢，通常我使用多个文件来代表不同的类型。\n日程文件 可以针对不同的任务类型，定义多个日程或任务文件，然后将文件加入全局的日程文件列表，统一纳入org的管理。\n以下来举例： 使用C-h v 查看变量org-agenda-flies，当前有一个文件，现在我们再加入另一个\n打开org文件，使用org-agenda-file-to-front或者快捷键C-c [ 将当前文件加入到全局列表。这样一来，我们定义的日程就会加入到全局列表，使用emacs统一进行管理了。也可以通过emacs配置文件加入。\n然后就可以使用M-x org-agenda a 打开agenda界面了。\n快捷键 功能 C-c [ 将当前文件加入全局列表 C-c ] 将当前文件移除全局列表 C-c C-x &lt; 锁定当前文件即在org agenda的buffer中只显示当前文件的日程（org-agenda-set-restriction-lock） C-c C-x &gt; 解锁(org-agenda-remove-restriction-lock) 可以打开speedbar ，在文件上使用&lt; 和&gt; 来锁定和解锁。\n日程操作 前一章已经介绍过，使用org-agenda打开日程buffer，此时可以选择多种视图方式，以便更加方便的查看日程。\nEmacs 内置了多种视图，下面会一一介绍，首先来看都有哪些操作。\n视图中的操作 其他快捷键及功能：\n快捷键 功能 b daily视图 w weekly视图 n/p 上/下移动光标 N/P 上/下按日程移动光标 SPC 在另一缓冲区显示任务在org文件中的定义的位置 TAB 在另一缓冲区显示任务在org文件中的定义的位置，并且光标跳转至此 L 显示任务在文件中位置并且光标居中 RET 在当前buffer打开文件并跳转 F 打开跟踪模式，即移动光标时，另一buffer显示当前任务的定义处 C-c C-x b 显示任务及子树，并可以设置层数 C-c C-o 打开链接 o 关闭另一个buffer A 打开另一种视图并嵌入到当前视图中 v 弹出多个命令进行选择 f/b 下一天 . 跳转至当天 j 选择日期并跳转 D 包含日记 r 刷新agenda buffer / 通过tag过滤 &lt; 通过类型过滤 ^ 通过 top headline 过滤 = 通过模式匹配过滤 丨 去除所有过滤 t 改变状态 C-S-Left/C-S-Right 改变状态 C-k 删除 C-w 重新归档某项日程 $ 归档，通常是另一个文件 T 显示所有tag : 设置tag , 设置优先级 +/- 或者 S-up/down 设置优先级 z 添加note C-c C-a 附件 C-c C-s 安排日程 C-c C-d 设置deadline S-Left/Right 改变日期 &gt; 改变日期 I 插入clock O 停止上一个clock X 取消当前clock J 跳转之clock处 M-Up/Down 拖拽一个日程 m mark当前日程 * mark所有日程为重点 u 取消mark当前日程 U 取消mark所有日程 M-m 设置/取消当前mark M-× 设置/取消所有mark B bulk action C-x C-w 导出。可以为.html .pdf .ps .org q 退出 x 退出，包括所有相关打开的buffer 太多了，大家通过帮助自己尝试吧。\n">
+<meta property='og:url' content='https://ynhugo.github.io/p/emacs%E4%BD%BF%E7%94%A8org-agenda%E7%AE%A1%E7%90%86%E6%97%A5%E7%A8%8B/'>
+<meta property='og:site_name' content='ynhugo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='emacs' /><meta property='article:tag' content='org-agenda' /><meta property='article:tag' content='gtd' /><meta property='article:published_time' content='2024-11-26T02:12:09&#43;08:00'/><meta property='article:modified_time' content='2024-11-26T02:12:09&#43;08:00'/>
+<meta name="twitter:title" content="Emacs使用org-agenda管理日程">
+<meta name="twitter:description" content=" Emacs 使用org-agenda 管理日程 如何使用org设置日程上篇已经介绍完，那现在的重点就是如何查看日程，并且真正将org运用到日常工作中来。之前学习org跨越了很长时间，但一直没有落实到日常应用，所以过一阵子就会忘记，得来的教训就是学习任何语言，工具一定要落实在使用中，纸上谈兵要不得。让我们一起开始使用org-agenda查看，管理及运用设置好的日程。\n纸上得来终觉浅,绝知此事要躬行.\n日程 Agenda 定义完ToDo之后，使用M-x org-agenda 打开日程buffer，可看到当前排的所有日程，并可以直接进行优先级等操作。那如何归纳整理自己的日程表呢，通常我使用多个文件来代表不同的类型。\n日程文件 可以针对不同的任务类型，定义多个日程或任务文件，然后将文件加入全局的日程文件列表，统一纳入org的管理。\n以下来举例： 使用C-h v 查看变量org-agenda-flies，当前有一个文件，现在我们再加入另一个\n打开org文件，使用org-agenda-file-to-front或者快捷键C-c [ 将当前文件加入到全局列表。这样一来，我们定义的日程就会加入到全局列表，使用emacs统一进行管理了。也可以通过emacs配置文件加入。\n然后就可以使用M-x org-agenda a 打开agenda界面了。\n快捷键 功能 C-c [ 将当前文件加入全局列表 C-c ] 将当前文件移除全局列表 C-c C-x &lt; 锁定当前文件即在org agenda的buffer中只显示当前文件的日程（org-agenda-set-restriction-lock） C-c C-x &gt; 解锁(org-agenda-remove-restriction-lock) 可以打开speedbar ，在文件上使用&lt; 和&gt; 来锁定和解锁。\n日程操作 前一章已经介绍过，使用org-agenda打开日程buffer，此时可以选择多种视图方式，以便更加方便的查看日程。\nEmacs 内置了多种视图，下面会一一介绍，首先来看都有哪些操作。\n视图中的操作 其他快捷键及功能：\n快捷键 功能 b daily视图 w weekly视图 n/p 上/下移动光标 N/P 上/下按日程移动光标 SPC 在另一缓冲区显示任务在org文件中的定义的位置 TAB 在另一缓冲区显示任务在org文件中的定义的位置，并且光标跳转至此 L 显示任务在文件中位置并且光标居中 RET 在当前buffer打开文件并跳转 F 打开跟踪模式，即移动光标时，另一buffer显示当前任务的定义处 C-c C-x b 显示任务及子树，并可以设置层数 C-c C-o 打开链接 o 关闭另一个buffer A 打开另一种视图并嵌入到当前视图中 v 弹出多个命令进行选择 f/b 下一天 . 跳转至当天 j 选择日期并跳转 D 包含日记 r 刷新agenda buffer / 通过tag过滤 &lt; 通过类型过滤 ^ 通过 top headline 过滤 = 通过模式匹配过滤 丨 去除所有过滤 t 改变状态 C-S-Left/C-S-Right 改变状态 C-k 删除 C-w 重新归档某项日程 $ 归档，通常是另一个文件 T 显示所有tag : 设置tag , 设置优先级 +/- 或者 S-up/down 设置优先级 z 添加note C-c C-a 附件 C-c C-s 安排日程 C-c C-d 设置deadline S-Left/Right 改变日期 &gt; 改变日期 I 插入clock O 停止上一个clock X 取消当前clock J 跳转之clock处 M-Up/Down 拖拽一个日程 m mark当前日程 * mark所有日程为重点 u 取消mark当前日程 U 取消mark所有日程 M-m 设置/取消当前mark M-× 设置/取消所有mark B bulk action C-x C-w 导出。可以为.html .pdf .ps .org q 退出 x 退出，包括所有相关打开的buffer 太多了，大家通过帮助自己尝试吧。\n">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_f509edb42ecc0ebd.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🍥</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">ynhugo</a></h1>
+            <h2 class="site-description">ynhugo.github.io</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/CaiJimmy/hugo-theme-stack'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://x.com'
+                        target="_blank"
+                        title="x"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E5%85%B3%E4%BA%8E/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                    
+                        <li id="i18n-switch">  
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                            <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
+                                
+                                    <option value="https://ynhugo.github.io/en/" >English</option>
+                                
+                                    <option value="https://ynhugo.github.io/" selected>中文</option>
+                                
+                                    <option value="https://ynhugo.github.io/ar/" >عربي</option>
+                                
+                            </select>
+                        </li>
+                    
+                
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+<ul>
+<li><a href="#headline-1">Emacs 使用org-agenda 管理日程</a>
+<ul>
+<li><a href="#headline-2">日程 Agenda</a>
+</li>
+<li><a href="#headline-3">日程文件</a>
+</li>
+<li><a href="#headline-4">日程操作</a>
+</li>
+<li><a href="#headline-5">视图中的操作</a>
+</li>
+<li><a href="#headline-6">Weekly/daily 视图</a>
+</li>
+<li><a href="#headline-7">todo 视图</a>
+</li>
+<li><a href="#headline-8">Tag和属性过滤视图</a>
+</li>
+<li><a href="#headline-9">search 视图</a>
+</li>
+<li><a href="#headline-10">stuck project视图</a>
+</li>
+<li><a href="#headline-11">分类</a>
+</li>
+<li><a href="#headline-12">Column 视图</a>
+</li>
+<li><a href="#headline-13">格式</a>
+</li>
+<li><a href="#headline-14">最后</a>
+</li>
+<li><a href="#headline-15">参考链接</a>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/emacs%E4%BD%BF%E7%94%A8org-agenda%E7%AE%A1%E7%90%86%E6%97%A5%E7%A8%8B/">Emacs使用org-agenda管理日程</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Nov 26, 2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 2 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    
+<div id="outline-container-headline-1" class="outline-2">
+<h2 id="headline-1">
+Emacs 使用org-agenda 管理日程
+</h2>
+<div id="outline-text-headline-1" class="outline-text-2">
+<p>如何使用org设置日程上篇已经介绍完，那现在的重点就是如何查看日程，并且真正将org运用到日常工作中来。之前学习org跨越了很长时间，但一直没有落实到日常应用，所以过一阵子就会忘记，得来的教训就是学习任何语言，工具一定要落实在使用中，纸上谈兵要不得。让我们一起开始使用org-agenda查看，管理及运用设置好的日程。</p>
+<p>
+纸上得来终觉浅,绝知此事要躬行.</p>
+<div id="outline-container-headline-2" class="outline-3">
+<h3 id="headline-2">
+日程 Agenda
+</h3>
+<div id="outline-text-headline-2" class="outline-text-3">
+<p>定义完ToDo之后，使用M-x org-agenda 打开日程buffer，可看到当前排的所有日程，并可以直接进行优先级等操作。那如何归纳整理自己的日程表呢，通常我使用多个文件来代表不同的类型。</p>
+</div>
+</div>
+<div id="outline-container-headline-3" class="outline-3">
+<h3 id="headline-3">
+日程文件
+</h3>
+<div id="outline-text-headline-3" class="outline-text-3">
+<p>可以针对不同的任务类型，定义多个日程或任务文件，然后将文件加入全局的日程文件列表，统一纳入org的管理。</p>
+<p>
+以下来举例：
+使用C-h v 查看变量org-agenda-flies，当前有一个文件，现在我们再加入另一个</p>
+<p>
+打开org文件，使用org-agenda-file-to-front或者快捷键C-c [ 将当前文件加入到全局列表。这样一来，我们定义的日程就会加入到全局列表，使用emacs统一进行管理了。也可以通过emacs配置文件加入。</p>
+<p>
+然后就可以使用M-x org-agenda a 打开agenda界面了。</p>
+<div class="table-wrapper"><table>
+<tbody>
+<tr>
+<td>快捷键</td>
+<td>功能</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>C-c [</td>
+<td>将当前文件加入全局列表</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>C-c ]</td>
+<td>将当前文件移除全局列表</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>C-c C-x &lt;</td>
+<td>锁定当前文件即在org agenda的buffer中只显示当前文件的日程（org-agenda-set-restriction-lock）</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>C-c C-x &gt;</td>
+<td>解锁(org-agenda-remove-restriction-lock)</td>
+</tr>
+</tbody>
+</table></div>
+<p>
+可以打开speedbar ，在文件上使用&lt; 和&gt; 来锁定和解锁。</p>
+</div>
+</div>
+<div id="outline-container-headline-4" class="outline-3">
+<h3 id="headline-4">
+日程操作
+</h3>
+<div id="outline-text-headline-4" class="outline-text-3">
+<p>前一章已经介绍过，使用org-agenda打开日程buffer，此时可以选择多种视图方式，以便更加方便的查看日程。</p>
+<p>
+Emacs 内置了多种视图，下面会一一介绍，首先来看都有哪些操作。</p>
+</div>
+</div>
+<div id="outline-container-headline-5" class="outline-3">
+<h3 id="headline-5">
+视图中的操作
+</h3>
+<div id="outline-text-headline-5" class="outline-text-3">
+<p>其他快捷键及功能：</p>
+<div class="table-wrapper"><table>
+<tbody>
+<tr>
+<td>快捷键</td>
+<td>功能</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>b</td>
+<td>daily视图</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>w</td>
+<td>weekly视图</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>n/p</td>
+<td>上/下移动光标</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>N/P</td>
+<td>上/下按日程移动光标</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>SPC</td>
+<td>在另一缓冲区显示任务在org文件中的定义的位置</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>TAB</td>
+<td>在另一缓冲区显示任务在org文件中的定义的位置，并且光标跳转至此</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>L</td>
+<td>显示任务在文件中位置并且光标居中</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>RET</td>
+<td>在当前buffer打开文件并跳转</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>F</td>
+<td>打开跟踪模式，即移动光标时，另一buffer显示当前任务的定义处</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>C-c C-x b</td>
+<td>显示任务及子树，并可以设置层数</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>C-c C-o</td>
+<td>打开链接</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>o</td>
+<td>关闭另一个buffer</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>A</td>
+<td>打开另一种视图并嵌入到当前视图中</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>v</td>
+<td>弹出多个命令进行选择</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>f/b</td>
+<td>下一天</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>.</td>
+<td>跳转至当天</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>j</td>
+<td>选择日期并跳转</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>D</td>
+<td>包含日记</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>r</td>
+<td>刷新agenda buffer</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>/</td>
+<td>通过tag过滤</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>&lt;</td>
+<td>通过类型过滤</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>^</td>
+<td>通过 top headline 过滤</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>=</td>
+<td>通过模式匹配过滤</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>丨</td>
+<td>去除所有过滤</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>t</td>
+<td>改变状态</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>C-S-Left/C-S-Right</td>
+<td>改变状态</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>C-k</td>
+<td>删除</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>C-w</td>
+<td>重新归档某项日程</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>$</td>
+<td>归档，通常是另一个文件</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>T</td>
+<td>显示所有tag</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>:</td>
+<td>设置tag</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>,</td>
+<td>设置优先级</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>+/- 或者 S-up/down</td>
+<td>设置优先级</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>z</td>
+<td>添加note</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>C-c C-a</td>
+<td>附件</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>C-c C-s</td>
+<td>安排日程</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>C-c C-d</td>
+<td>设置deadline</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>S-Left/Right</td>
+<td>改变日期</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>&gt;</td>
+<td>改变日期</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>I</td>
+<td>插入clock</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>O</td>
+<td>停止上一个clock</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>X</td>
+<td>取消当前clock</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>J</td>
+<td>跳转之clock处</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>M-Up/Down</td>
+<td>拖拽一个日程</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>m</td>
+<td>mark当前日程</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>*</td>
+<td>mark所有日程为重点</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>u</td>
+<td>取消mark当前日程</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>U</td>
+<td>取消mark所有日程</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>M-m</td>
+<td>设置/取消当前mark</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>M-×</td>
+<td>设置/取消所有mark</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>B</td>
+<td>bulk action</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>C-x C-w</td>
+<td>导出。可以为.html .pdf .ps .org</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>q</td>
+<td>退出</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>x</td>
+<td>退出，包括所有相关打开的buffer</td>
+</tr>
+</tbody>
+</table></div>
+<p>
+太多了，大家通过帮助自己尝试吧。</p>
+</div>
+</div>
+<div id="outline-container-headline-6" class="outline-3">
+<h3 id="headline-6">
+Weekly/daily 视图
+</h3>
+<div id="outline-text-headline-6" class="outline-text-3">
+<p>输入M-x org-agenda 时， 选择a 进入此视图。</p>
+<p>
+在此视图中，操作在上一节介绍过。大家实践一下，通常使用的也就几个功能，碰到需要用的其他，再来查询具体快捷键。</p>
+</div>
+</div>
+<div id="outline-container-headline-7" class="outline-3">
+<h3 id="headline-7">
+todo 视图
+</h3>
+<div id="outline-text-headline-7" class="outline-text-3">
+<p>输入M-x org-agenda 时， 选择t/T 进入此视图。
+t， 列出所有的todo
+T，可以选择特殊的key来进行过滤。</p>
+</div>
+</div>
+<div id="outline-container-headline-8" class="outline-3">
+<h3 id="headline-8">
+Tag和属性过滤视图
+</h3>
+<div id="outline-text-headline-8" class="outline-text-3">
+<p>输入M-x org-agenda 时， 选择m/M 进入此视图。
+m， 根据tag进行过滤</p>
+<p>
+语法：</p>
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">‘work’： 选择tag ‘:work:’.
+</span></span><span class="line"><span class="cl">‘work&amp;boss’： 选择tag ‘:work:’ 和 ‘:boss:’.
+</span></span><span class="line"><span class="cl">‘+work-boss’： 选择tag ‘:work:’, 忽略 tag ‘:boss:’.
+</span></span><span class="line"><span class="cl">‘work|laptop’： 选择tag ‘:work:’ 或 ‘:laptop:’.
+</span></span><span class="line"><span class="cl">‘work|laptop+night’：选择有laptop 并且有night的tag</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+除了tag，还可以使用正则表达式，例如： ‘work+{^boss.*}’ ，选择带有work的tag并且以boss开头</p>
+<p>
+更多的语法及表达式就不介绍了，有需要时，查文档获取。</p>
+</div>
+</div>
+<div id="outline-container-headline-9" class="outline-3">
+<h3 id="headline-9">
+search 视图
+</h3>
+<div id="outline-text-headline-9" class="outline-text-3">
+<p>输入M-x org-agnda 时， 选择s 进入此视图。
+根据关键字查找或者正则。</p>
+</div>
+</div>
+<div id="outline-container-headline-10" class="outline-3">
+<h3 id="headline-10">
+stuck project视图
+</h3>
+<div id="outline-text-headline-10" class="outline-text-3">
+<p>输入M-x org-agnda 时， 选择# 进入此视图。
+参考了David Allen的GTD方法，一个stuck的project是没有定义下一步action的日程，不会在todo显示</p>
+</div>
+</div>
+<div id="outline-container-headline-11" class="outline-3">
+<h3 id="headline-11">
+分类
+</h3>
+<div id="outline-text-headline-11" class="outline-text-3">
+<p>每个org todo文件都有一个分类，默认就是文件名。</p>
+<p>
+可以在文件开头加入：</p>
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">#+CATEGORY: xxx</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+可以在某项日程中加入属性：</p>
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">:CATEGORY: xxx</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+之后在检索过滤时，可以根据分类来进行u过滤</p>
+</div>
+</div>
+<div id="outline-container-headline-12" class="outline-3">
+<h3 id="headline-12">
+Column 视图
+</h3>
+<div id="outline-text-headline-12" class="outline-text-3">
+<p>列模式在上篇文章已经介绍过。
+使用C-c C-x C-c 进入列模式。
+此处不介绍了。</p>
+</div>
+</div>
+<div id="outline-container-headline-13" class="outline-3">
+<h3 id="headline-13">
+格式
+</h3>
+<div id="outline-text-headline-13" class="outline-text-3">
+<p>导出时，Html等格式可以定义更多的格式，所以Emacs 可以定义更多的格式。</p>
+<p>
+例如：</p>
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">*bold*, /italic/, underlined, =verbatim= and code,</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+我只用到导出纯文本，故此项未深入了解。</p>
+</div>
+</div>
+<div id="outline-container-headline-14" class="outline-3">
+<h3 id="headline-14">
+最后
+</h3>
+<div id="outline-text-headline-14" class="outline-text-3">
+<p>终于将org从头开始过了一遍，在行进的路上任重而道远，坚持使用，道法自然。</p>
+</div>
+</div>
+<div id="outline-container-headline-15" class="outline-3">
+<h3 id="headline-15">
+参考链接
+</h3>
+<div id="outline-text-headline-15" class="outline-text-3">
+<p>
+<a href="https://www.jianshu.com/p/0d1c26abb7e6">Emacs 使用org-agenda 管理日程</a></p>
+</div>
+</div>
+</div>
+</div>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/emacs/">Emacs</a>
+        
+            <a href="/tags/org-agenda/">Org-Agenda</a>
+        
+            <a href="/tags/gtd/">GTD</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            最后更新于 Nov 26, 2024 02:12 &#43;0800
+        </span>
+    </section></footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "hugo-theme-stack" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2025 Example Person
+    </section>
+    
+    <section class="powerby">
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" TPM安装 按照官网的做法，很简单就安装上了，输入下面命令：\ntmux基本配置文件 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 # 把管理器文件安装到`~/.tmux/plugins/tpm`之下 此前这些目录是不存在的 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm # 新建配置文件 vim ~/.tmux.conf # 将下面内容复制到`~/.tmux.conf` # List of plugins set -g @plugin &#39;tmux-plugins/tpm&#39; set -g @plugin &#39;tmux-plugins/tmux-sensible&#39; # Other examples: # set -g @plugin &#39;github_username/plugin_name&#39; # set -g @plugin &#39;git@github.com/user/plugin&#39; # set -g @plugin &#39;git@bitbucket.com/user/plugin&#39; # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf) run &#39;~/.tmux/plugins/tpm/tpm&#39;\t# 记住，这个必须放在.tumx.conf的底部 使tmux配置生效 1 2 #使其生效 tmux source-file ~/.tmux.conf 快捷键管理插件（可忽略） 安装插件 添加新的插件 ~/.tmux.conf 与 set -g @plugin &#39;...&#39; 按 prefix + I（大写字母i，如我 nstall）来获取插件。 你很好！该插件已克隆到 ~/.tmux/plugins/dir 并已获得。\n">
+<title>Tmux Plugin Manager使用及具体插件</title>
+
+<link rel='canonical' href='https://ynhugo.github.io/p/tmux-plugin-manager%E4%BD%BF%E7%94%A8%E5%8F%8A%E5%85%B7%E4%BD%93%E6%8F%92%E4%BB%B6/'>
+
+<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="Tmux Plugin Manager使用及具体插件">
+<meta property='og:description' content=" TPM安装 按照官网的做法，很简单就安装上了，输入下面命令：\ntmux基本配置文件 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 # 把管理器文件安装到`~/.tmux/plugins/tpm`之下 此前这些目录是不存在的 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm # 新建配置文件 vim ~/.tmux.conf # 将下面内容复制到`~/.tmux.conf` # List of plugins set -g @plugin &#39;tmux-plugins/tpm&#39; set -g @plugin &#39;tmux-plugins/tmux-sensible&#39; # Other examples: # set -g @plugin &#39;github_username/plugin_name&#39; # set -g @plugin &#39;git@github.com/user/plugin&#39; # set -g @plugin &#39;git@bitbucket.com/user/plugin&#39; # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf) run &#39;~/.tmux/plugins/tpm/tpm&#39;\t# 记住，这个必须放在.tumx.conf的底部 使tmux配置生效 1 2 #使其生效 tmux source-file ~/.tmux.conf 快捷键管理插件（可忽略） 安装插件 添加新的插件 ~/.tmux.conf 与 set -g @plugin &#39;...&#39; 按 prefix + I（大写字母i，如我 nstall）来获取插件。 你很好！该插件已克隆到 ~/.tmux/plugins/dir 并已获得。\n">
+<meta property='og:url' content='https://ynhugo.github.io/p/tmux-plugin-manager%E4%BD%BF%E7%94%A8%E5%8F%8A%E5%85%B7%E4%BD%93%E6%8F%92%E4%BB%B6/'>
+<meta property='og:site_name' content='ynhugo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='tmux' /><meta property='article:published_time' content='2024-11-24T11:40:45&#43;08:00'/><meta property='article:modified_time' content='2024-11-24T11:40:45&#43;08:00'/>
+<meta name="twitter:title" content="Tmux Plugin Manager使用及具体插件">
+<meta name="twitter:description" content=" TPM安装 按照官网的做法，很简单就安装上了，输入下面命令：\ntmux基本配置文件 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 # 把管理器文件安装到`~/.tmux/plugins/tpm`之下 此前这些目录是不存在的 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm # 新建配置文件 vim ~/.tmux.conf # 将下面内容复制到`~/.tmux.conf` # List of plugins set -g @plugin &#39;tmux-plugins/tpm&#39; set -g @plugin &#39;tmux-plugins/tmux-sensible&#39; # Other examples: # set -g @plugin &#39;github_username/plugin_name&#39; # set -g @plugin &#39;git@github.com/user/plugin&#39; # set -g @plugin &#39;git@bitbucket.com/user/plugin&#39; # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf) run &#39;~/.tmux/plugins/tpm/tpm&#39;\t# 记住，这个必须放在.tumx.conf的底部 使tmux配置生效 1 2 #使其生效 tmux source-file ~/.tmux.conf 快捷键管理插件（可忽略） 安装插件 添加新的插件 ~/.tmux.conf 与 set -g @plugin &#39;...&#39; 按 prefix + I（大写字母i，如我 nstall）来获取插件。 你很好！该插件已克隆到 ~/.tmux/plugins/dir 并已获得。\n">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_f509edb42ecc0ebd.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🍥</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">ynhugo</a></h1>
+            <h2 class="site-description">ynhugo.github.io</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/CaiJimmy/hugo-theme-stack'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://x.com'
+                        target="_blank"
+                        title="x"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E5%85%B3%E4%BA%8E/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                    
+                        <li id="i18n-switch">  
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                            <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
+                                
+                                    <option value="https://ynhugo.github.io/en/" >English</option>
+                                
+                                    <option value="https://ynhugo.github.io/" selected>中文</option>
+                                
+                                    <option value="https://ynhugo.github.io/ar/" >عربي</option>
+                                
+                            </select>
+                        </li>
+                    
+                
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+<ul>
+<li><a href="#headline-1">TPM安装</a>
+<ul>
+<li><a href="#headline-2">tmux基本配置文件</a>
+</li>
+<li><a href="#headline-3">使tmux配置生效</a>
+</li>
+<li><a href="#headline-4">快捷键管理插件（可忽略）</a>
+<ul>
+<li><a href="#headline-5">安装插件</a>
+</li>
+<li><a href="#headline-6">卸载插件</a>
+</li>
+<li><a href="#headline-7">键绑定</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-8">命令管理插件</a>
+<ul>
+<li><a href="#headline-9">安装插件</a>
+</li>
+<li><a href="#headline-10">更新插件</a>
+</li>
+<li><a href="#headline-11">删除插件</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-12">tmux复制粘贴插件</a>
+</li>
+<li><a href="#headline-13">tmux永久保存插件(手动)</a>
+</li>
+<li><a href="#headline-14">tmux永久保存插件(自动)</a>
+</li>
+<li><a href="#headline-15">tmux日志</a>
+<ul>
+<li><a href="#headline-16">记录日志：</a>
+</li>
+<li><a href="#headline-17">截取屏幕日志：</a>
+</li>
+<li><a href="#headline-18">保存完整的历史记录</a>
+</li>
+<li><a href="#headline-19">清除窗格历史记录</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-20">我的配置文件</a>
+</li>
+<li><a href="#headline-21">参考链接</a>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/tmux-plugin-manager%E4%BD%BF%E7%94%A8%E5%8F%8A%E5%85%B7%E4%BD%93%E6%8F%92%E4%BB%B6/">Tmux Plugin Manager使用及具体插件</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Nov 24, 2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 3 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    
+<div id="outline-container-headline-1" class="outline-2">
+<h2 id="headline-1">
+TPM安装
+</h2>
+<div id="outline-text-headline-1" class="outline-text-2">
+<p>
+按照官网的做法，很简单就安装上了，输入下面命令：</p>
+<div id="outline-container-headline-2" class="outline-3">
+<h3 id="headline-2">
+tmux基本配置文件
+</h3>
+<div id="outline-text-headline-2" class="outline-text-3">
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl"># 把管理器文件安装到`~/.tmux/plugins/tpm`之下 此前这些目录是不存在的
+</span></span><span class="line"><span class="cl">git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 新建配置文件
+</span></span><span class="line"><span class="cl">vim ~/.tmux.conf
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 将下面内容复制到`~/.tmux.conf`
+</span></span><span class="line"><span class="cl"># List of plugins
+</span></span><span class="line"><span class="cl">set -g @plugin &#39;tmux-plugins/tpm&#39;
+</span></span><span class="line"><span class="cl">set -g @plugin &#39;tmux-plugins/tmux-sensible&#39;
+</span></span><span class="line"><span class="cl"># Other examples:
+</span></span><span class="line"><span class="cl"># set -g @plugin &#39;github_username/plugin_name&#39;
+</span></span><span class="line"><span class="cl"># set -g @plugin &#39;git@github.com/user/plugin&#39;
+</span></span><span class="line"><span class="cl"># set -g @plugin &#39;git@bitbucket.com/user/plugin&#39;
+</span></span><span class="line"><span class="cl"># Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
+</span></span><span class="line"><span class="cl">run &#39;~/.tmux/plugins/tpm/tpm&#39;	# 记住，这个必须放在.tumx.conf的底部</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-3" class="outline-3">
+<h3 id="headline-3">
+使tmux配置生效
+</h3>
+<div id="outline-text-headline-3" class="outline-text-3">
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">#使其生效
+</span></span><span class="line"><span class="cl">tmux source-file ~/.tmux.conf</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-4" class="outline-3">
+<h3 id="headline-4">
+快捷键管理插件（可忽略）
+</h3>
+<div id="outline-text-headline-4" class="outline-text-3">
+<div id="outline-container-headline-5" class="outline-4">
+<h4 id="headline-5">
+安装插件
+</h4>
+<div id="outline-text-headline-5" class="outline-text-4">
+<p>
+添加新的插件 <code class="verbatim">~/.tmux.conf</code> 与 <code class="verbatim">set -g @plugin &#39;...&#39;</code>
+按 <code class="verbatim">prefix</code> + I（大写字母i，如我 nstall）来获取插件。
+你很好！该插件已克隆到 <code class="verbatim">~/.tmux/plugins/dir</code> 并已获得。</p>
+</div>
+</div>
+<div id="outline-container-headline-6" class="outline-4">
+<h4 id="headline-6">
+卸载插件
+</h4>
+<div id="outline-text-headline-6" class="outline-text-4">
+<p>
+从列表中删除（或注释掉）插件。
+按 <code class="verbatim">prefix</code> + alt+ u（小写ü在ü n安装）删除插件。
+所有插件均已安装到， <code class="verbatim">~/.tmux/plugins/</code> 因此您也可以在此处找到插件目录并将其删除。</p>
+</div>
+</div>
+<div id="outline-container-headline-7" class="outline-4">
+<h4 id="headline-7">
+键绑定
+</h4>
+<div id="outline-text-headline-7" class="outline-text-4">
+<p>
+<code class="verbatim">prefix</code> + I</p>
+<ul>
+<li>从GitHub或任何其他git存储库安装新插件</li>
+<li>刷新TMUX环境</li>
+</ul>
+<p><code class="verbatim">prefix</code> + U</p>
+<ul>
+<li>更新插件</li>
+</ul>
+<p>
+<code class="verbatim">prefix</code> + alt+u</p>
+<ul>
+<li>删除/卸载不在插件列表中的插件</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-8" class="outline-3">
+<h3 id="headline-8">
+命令管理插件
+</h3>
+<div id="outline-text-headline-8" class="outline-text-3">
+<div id="outline-container-headline-9" class="outline-4">
+<h4 id="headline-9">
+安装插件
+</h4>
+<div id="outline-text-headline-9" class="outline-text-4">
+<p>
+像往常一样，需要在中指定插件 <code class="verbatim">.tmux.conf</code> 。运行以下命令以安装插件：</p>
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">~/.tmux/plugins/tpm/bin/install_plugins</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-10" class="outline-4">
+<h4 id="headline-10">
+更新插件
+</h4>
+<div id="outline-text-headline-10" class="outline-text-4">
+<p>
+要更新所有已安装的插件：</p>
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">~/.tmux/plugins/tpm/bin/update_plugins all</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+或更新单个插件：</p>
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">~/.tmux/plugins/tpm/bin/update_plugins tmux-sensible</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-11" class="outline-4">
+<h4 id="headline-11">
+删除插件
+</h4>
+<div id="outline-text-headline-11" class="outline-text-4">
+<p>
+要删除不在插件列表中的插件：</p>
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">~/.tmux/plugins/tpm/bin/clean_plugins</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-12" class="outline-3">
+<h3 id="headline-12">
+tmux复制粘贴插件
+</h3>
+<div id="outline-text-headline-12" class="outline-text-3">
+<p>
+使用 <code class="verbatim">tmux-yank</code> 插件改善复制粘贴体验</p>
+<p>
+直接在 <code class="verbatim">.tmux.conf</code> 中的 <code class="verbatim">List of plugins</code> 下新增插件即可</p>
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">set -g @plugin &#39;tmux-plugins/tmux-yank&#39;</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+安装完成后默认使用鼠标选中后,松开鼠标右键即为复制</p>
+</div>
+</div>
+<div id="outline-container-headline-13" class="outline-3">
+<h3 id="headline-13">
+tmux永久保存插件(手动)
+</h3>
+<div id="outline-text-headline-13" class="outline-text-3">
+<p>
+将插件添加到TPM插件列表中 <code class="verbatim">.tmux.conf</code> ：</p>
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">set -g @plugin &#39;tmux-plugins/tmux-resurrect&#39;</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+要保存 Tmux 会话 ， 我们只要按 <code class="verbatim">前缀键 + Ctrl-s</code> 就可以了 。 此时 ，Tmux 状态栏会显示 “Saving …” 字样 ， 完毕后会提示 Tmux 环境已保存 。</p>
+<p>
+Tmux Resurrect 会将 Tmux 会话的详细信息以文本文件形式保存到 <code class="verbatim">~/.tmux/resurrect</code> 目录 。</p>
+<p>
+还原则按 <code class="verbatim">前缀键 + Ctrl-r</code> 即可 。</p>
+<p>
+默认情况下，仅还原保守的程序列表</p>
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">vi vim nvim emacs man less more tail top htop irssi weechat mutt</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+我们可能还需要保存当前每个窗格运行的程序。类似 <code class="verbatim">vim</code>, <code class="verbatim">less</code>, <code class="verbatim">man</code> 这些程序 tmux-resurrect 会自动恢复，其他的则需要配置：</p>
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">set -g @resurrect-processes &#39;ssh mysql redis-server npm&#39;</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>这个插件可以保存和恢复tmux窗格的内容。</p>
+<p>
+可以通过添加以下行来启用此功能 <code class="verbatim">.tmux.conf</code> ：</p>
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">set -g @resurrect-capture-pane-contents &#39;on&#39;</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-14" class="outline-3">
+<h3 id="headline-14">
+tmux永久保存插件(自动)
+</h3>
+<div id="outline-text-headline-14" class="outline-text-3">
+<p>
+可能你嫌手动保存和恢复太过麻烦，别担心，这不是问题。Tmux Continuum 在 Tmux Resurrec的基础上更进一步，现在保存和恢复全部自动化了，如你所愿，可以无感使用tmux，不用再担心备份问题。</p>
+<p>
+Tmux Continuum依赖Tmux Resurrect，请保证已安装Tmux Resurrect插件</p>
+<p>
+Tmux Continuum默认每隔15mins备份一次，我设置的是一天一次：</p>
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">set -g @continuum-save-interval &#39;1440&#39;</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+<strong>关闭自动备份</strong> ，只需设置时间间隔为 <code class="verbatim">0</code> 即可：</p>
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">set -g @continuum-save-interval &#39;0&#39;</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+想要在 <strong>tmux启动时就恢复最后一次保存的会话环境</strong> ，需增加如下配置：</p>
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">set -g @continuum-restore &#39;on&#39; # 启用自动恢复</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+如果不想要启动时自动恢复的功能了，直接移除上面这行就行。想要绝对确定自动恢复不会发生，就在用户根目录下创建一个 <code class="verbatim">tmux_no_auto_restore</code> 空文件（创建命令： <code class="verbatim">touch ~/tmux_no_auto_restore</code> ），该文件存在时，自动恢复将不触发。</p>
+<p>
+对于tmux高级用户（可能就是你）而言，同时运行多个tmux服务器也是有可能的。你可能并不希望后面启用的几个tmux服务器自动恢复或者自动保存会话。因此Tmux Continuum会优先在第一个启用的tmux服务器中生效，随后启用的tmux服务器不再享受自动恢复或自动保存会话的待遇。</p>
+<p>
+实际上，不管Tmux Continuum功能有没有启用，或者多久保存一次，我们都有办法从状态栏知晓。Tmux Continuum提供了一个查看运行状态的插值 <code class="verbatim">#{continuum_status}</code> ，它支持 <code class="verbatim">status-right</code> 和 <code class="verbatim">status-left</code> 两种状态栏设置，如下所示：</p>
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">set -g status-right &#39;Continuum status: #{continuum_status}&#39;</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+tmux运行时， <code class="verbatim">#{continuum_status}</code> 将显示保存的时间间隔（单位为分钟），此时状态栏会显示：</p>
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">Continuum status: 1440</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+如果其自动保存功能关闭了，那么状态栏会显示：</p>
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">Continuum status: off</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-15" class="outline-3">
+<h3 id="headline-15">
+tmux日志
+</h3>
+<div id="outline-text-headline-15" class="outline-text-3">
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">set -g @plugin &#39;tmux-plugins/tmux-logging&#39;</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-16" class="outline-4">
+<h4 id="headline-16">
+记录日志：
+</h4>
+<div id="outline-text-headline-16" class="outline-text-4">
+<p>
+在当前窗格中切换（开始/停止）日志记录。</p>
+<ul>
+<li>按键绑定： prefix + shift + p</li>
+<li>文件名格式： tmux-#{session_name}-#{window_index}-#{pane_index}-%Y%m%dT%H%M%S.log</li>
+<li>文件路径：(</li>
+</ul>
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">$HOME</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>用户主目录)</p>
+<ul>
+<li>示例文件： <code class="verbatim">~/tmux-my-session-0-1-20140527T165614.log</code></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-headline-17" class="outline-4">
+<h4 id="headline-17">
+截取屏幕日志：
+</h4>
+<div id="outline-text-headline-17" class="outline-text-4">
+<p>
+在当前窗格中保存可见文本。等效于“文本截图”。</p>
+<p>
+按键绑定： <code class="verbatim">prefix + alt + p</code>
+文件名格式： <code class="verbatim">tmux-screen-capture-#{session_name}-#{window_index}-#{pane_index}-%Y%m%dT%H%M%S.log</code>
+文件路径：（$HOME 用户主目录）
+示例文件： <code class="verbatim">tmux-screen-capture-my-session-0-1-20140527T165614.log</code></p>
+</div>
+</div>
+<div id="outline-container-headline-18" class="outline-4">
+<h4 id="headline-18">
+保存完整的历史记录
+</h4>
+<div id="outline-text-headline-18" class="outline-text-4">
+<p>
+将完整的窗格历史记录保存到文件。如果您回想起来很方便，则需要记录/保存所有工作。</p>
+<ul>
+<li>按键绑定： prefix + alt + shift + p</li>
+<li>文件名格式： tmux-history-#{session_name}-#{window_index}-#{pane_index}-%Y%m%dT%H%M%S.log</li>
+<li>
+<p>文件路径：（$HOME用户主目录）</p>
+<ul>
+<li>示例文件： <code class="verbatim">tmux-history-my-session-0-1-20140527T165614.log</code></li>
+</ul>
+</li>
+</ul>
+<p><strong>注意</strong> ：此功能取决于 <code class="verbatim">history-limit</code>- 值Tmux在回滚缓冲区中保留的行数。Tmux保留的内容也只会保存到文件中。</p>
+<p>
+<code class="verbatim">set -g history-limit 50000</code> 在.tmux.conf中使用，对于现代计算机，可以将此选项设置为高数字。</p>
+</div>
+</div>
+<div id="outline-container-headline-19" class="outline-4">
+<h4 id="headline-19">
+清除窗格历史记录
+</h4>
+<div id="outline-text-headline-19" class="outline-text-4">
+<p>
+按键绑定： <code class="verbatim">prefix + alt + c</code></p>
+<p>
+这只是一个便捷键绑定。</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-20" class="outline-3">
+<h3 id="headline-20">
+我的配置文件
+</h3>
+<div id="outline-text-headline-20" class="outline-text-3">
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">set -g @plugin &#39;tmux-plugins/tpm&#39;
+</span></span><span class="line"><span class="cl">set -g @plugin &#39;tmux-plugins/tmux-sensible&#39; # 
+</span></span><span class="line"><span class="cl">set -g @plugin &#39;tmux-plugins/tmux-yank&#39; # tmux复制粘贴插件
+</span></span><span class="line"><span class="cl">set -g @plugin &#39;tmux-plugins/tmux-resurrect&#39; # tmux永久保存插件(手动)
+</span></span><span class="line"><span class="cl">set -g @continuum-save-interval &#39;15&#39; # tmux永久保存插件(自动)，每隔15分钟自动保存一次
+</span></span><span class="line"><span class="cl"># set -g @continuum-save-interval &#39;0&#39; # 关闭自动备份
+</span></span><span class="line"><span class="cl">set -g @continuum-restore &#39;on&#39; # 启用自动恢复，tmux启动时就恢复最后一次保存的会话环境
+</span></span><span class="line"><span class="cl">set -g status-right &#39;Continuum status: #{continuum_status}&#39; # 此时状态栏会显示保存的时间间隔（单位为分钟）
+</span></span><span class="line"><span class="cl">set -g @plugin &#39;tmux-plugins/tmux-logging&#39; # tmux日志
+</span></span><span class="line"><span class="cl">set -g history-limit 50000</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-21" class="outline-3">
+<h3 id="headline-21">
+参考链接
+</h3>
+<div id="outline-text-headline-21" class="outline-text-3">
+<p>
+<a href="https://www.cnblogs.com/hongdada/p/13528984.html">Tmux Plugin Manager使用及具体插件</a></p>
+</div>
+</div>
+</div>
+</div>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/tmux/">Tmux</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            最后更新于 Nov 24, 2024 11:40 &#43;0800
+        </span>
+    </section></footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "hugo-theme-stack" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2025 Example Person
+    </section>
+    
+    <section class="powerby">
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

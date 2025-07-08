@@ -1,0 +1,2311 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" 代码 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 #include &lt;stdio.h&gt; #include &lt;stdlib.h&gt; #include &lt;pthread.h&gt; #include &lt;unistd.h&gt; // 标志位，用于通知线程退出 volatile int flag = 0; // 线程函数 void* thread_func(void* arg) { while (!flag) { printf(&#34;Thread is running...\\n&#34;); sleep(1); } printf(&#34;Thread exiting...\\n&#34;); pthread_exit(NULL); } int main() { pthread_t thread; int ret; // 创建线程 ret = pthread_create(&amp;thread, NULL, thread_func, NULL); if (ret != 0) { perror(&#34;pthread_create&#34;); exit(EXIT_FAILURE); } // 主线程等待一段时间 sleep(5); // 设置标志位，通知线程退出 flag = 1; // 等待线程结束并回收资源 ret = pthread_join(thread, NULL); if (ret != 0) { perror(&#34;pthread_join&#34;); exit(EXIT_FAILURE); } printf(&#34;Thread has exited.\\n&#34;); // 创建新线程 flag = 0; // 重置标志位 ret = pthread_create(&amp;thread, NULL, thread_func, NULL); if (ret != 0) { perror(&#34;pthread_create&#34;); exit(EXIT_FAILURE); } // 主线程等待一段时间 sleep(5); // 设置标志位，通知新线程退出 flag = 1; // 等待新线程结束并回收资源 ret = pthread_join(thread, NULL); if (ret != 0) { perror(&#34;pthread_join&#34;); exit(EXIT_FAILURE); } printf(&#34;New thread has exited.\\n&#34;); return 0; } 关键点 标志位：使用volatile int flag通知线程退出。\n">
+<title>如何根据flag结束线程并创建新线程-Deepseek</title>
+
+<link rel='canonical' href='https://ynhugo.github.io/p/%E5%A6%82%E4%BD%95%E6%A0%B9%E6%8D%AEflag%E7%BB%93%E6%9D%9F%E7%BA%BF%E7%A8%8B%E5%B9%B6%E5%88%9B%E5%BB%BA%E6%96%B0%E7%BA%BF%E7%A8%8B-deepseek/'>
+
+<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="如何根据flag结束线程并创建新线程-Deepseek">
+<meta property='og:description' content=" 代码 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 #include &lt;stdio.h&gt; #include &lt;stdlib.h&gt; #include &lt;pthread.h&gt; #include &lt;unistd.h&gt; // 标志位，用于通知线程退出 volatile int flag = 0; // 线程函数 void* thread_func(void* arg) { while (!flag) { printf(&#34;Thread is running...\\n&#34;); sleep(1); } printf(&#34;Thread exiting...\\n&#34;); pthread_exit(NULL); } int main() { pthread_t thread; int ret; // 创建线程 ret = pthread_create(&amp;thread, NULL, thread_func, NULL); if (ret != 0) { perror(&#34;pthread_create&#34;); exit(EXIT_FAILURE); } // 主线程等待一段时间 sleep(5); // 设置标志位，通知线程退出 flag = 1; // 等待线程结束并回收资源 ret = pthread_join(thread, NULL); if (ret != 0) { perror(&#34;pthread_join&#34;); exit(EXIT_FAILURE); } printf(&#34;Thread has exited.\\n&#34;); // 创建新线程 flag = 0; // 重置标志位 ret = pthread_create(&amp;thread, NULL, thread_func, NULL); if (ret != 0) { perror(&#34;pthread_create&#34;); exit(EXIT_FAILURE); } // 主线程等待一段时间 sleep(5); // 设置标志位，通知新线程退出 flag = 1; // 等待新线程结束并回收资源 ret = pthread_join(thread, NULL); if (ret != 0) { perror(&#34;pthread_join&#34;); exit(EXIT_FAILURE); } printf(&#34;New thread has exited.\\n&#34;); return 0; } 关键点 标志位：使用volatile int flag通知线程退出。\n">
+<meta property='og:url' content='https://ynhugo.github.io/p/%E5%A6%82%E4%BD%95%E6%A0%B9%E6%8D%AEflag%E7%BB%93%E6%9D%9F%E7%BA%BF%E7%A8%8B%E5%B9%B6%E5%88%9B%E5%BB%BA%E6%96%B0%E7%BA%BF%E7%A8%8B-deepseek/'>
+<meta property='og:site_name' content='ynhugo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='pthread' /><meta property='article:tag' content='linux' /><meta property='article:tag' content='程序员' /><meta property='article:published_time' content='2025-03-19T09:49:36&#43;08:00'/><meta property='article:modified_time' content='2025-03-19T09:49:36&#43;08:00'/>
+<meta name="twitter:title" content="如何根据flag结束线程并创建新线程-Deepseek">
+<meta name="twitter:description" content=" 代码 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 #include &lt;stdio.h&gt; #include &lt;stdlib.h&gt; #include &lt;pthread.h&gt; #include &lt;unistd.h&gt; // 标志位，用于通知线程退出 volatile int flag = 0; // 线程函数 void* thread_func(void* arg) { while (!flag) { printf(&#34;Thread is running...\\n&#34;); sleep(1); } printf(&#34;Thread exiting...\\n&#34;); pthread_exit(NULL); } int main() { pthread_t thread; int ret; // 创建线程 ret = pthread_create(&amp;thread, NULL, thread_func, NULL); if (ret != 0) { perror(&#34;pthread_create&#34;); exit(EXIT_FAILURE); } // 主线程等待一段时间 sleep(5); // 设置标志位，通知线程退出 flag = 1; // 等待线程结束并回收资源 ret = pthread_join(thread, NULL); if (ret != 0) { perror(&#34;pthread_join&#34;); exit(EXIT_FAILURE); } printf(&#34;Thread has exited.\\n&#34;); // 创建新线程 flag = 0; // 重置标志位 ret = pthread_create(&amp;thread, NULL, thread_func, NULL); if (ret != 0) { perror(&#34;pthread_create&#34;); exit(EXIT_FAILURE); } // 主线程等待一段时间 sleep(5); // 设置标志位，通知新线程退出 flag = 1; // 等待新线程结束并回收资源 ret = pthread_join(thread, NULL); if (ret != 0) { perror(&#34;pthread_join&#34;); exit(EXIT_FAILURE); } printf(&#34;New thread has exited.\\n&#34;); return 0; } 关键点 标志位：使用volatile int flag通知线程退出。\n">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_f509edb42ecc0ebd.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🍥</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">ynhugo</a></h1>
+            <h2 class="site-description">ynhugo.github.io</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/CaiJimmy/hugo-theme-stack'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://x.com'
+                        target="_blank"
+                        title="x"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E5%85%B3%E4%BA%8E/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                    
+                        <li id="i18n-switch">  
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                            <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
+                                
+                                    <option value="https://ynhugo.github.io/en/" >English</option>
+                                
+                                    <option value="https://ynhugo.github.io/" selected>中文</option>
+                                
+                                    <option value="https://ynhugo.github.io/ar/" >عربي</option>
+                                
+                            </select>
+                        </li>
+                    
+                
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+<ul>
+<li><a href="#headline-1">代码</a>
+<ul>
+<li><a href="#headline-2">关键点</a>
+</li>
+<li><a href="#headline-3">可以不需要等待5秒，线程创建后可以立即退出并收尸。关键在于如何正确管理线程的生命周期，确保线程能够正常退出并且资源被回收。以下是改进后的代码示例，去除了不必要的等待时间，并确保线程创建后可以立即退出并收尸</a>
+<ul>
+<li><a href="#headline-4">关键点</a>
+</li>
+<li><a href="#headline-5">总结</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#headline-6">正确处理线程中的动态内存</a>
+<ul>
+<li><a href="#headline-7">关键代码解析</a>
+</li>
+<li><a href="#headline-8">使用清理函数（pthread_cleanup_push和pthread_cleanup_pop）</a>
+<ul>
+<li><a href="#headline-9">总结</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#headline-10">pthread_cancel</a>
+<ul>
+<li><a href="#headline-11">总结</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-12">在 main 函数的 while 循环中根据 flag 标志动态创建或停止线程，并确保子线程的结构体和动态申请的内存正常释放</a>
+<ul>
+<li><a href="#headline-13">实现思路</a>
+</li>
+<li><a href="#headline-14">完整代码示例</a>
+<ul>
+<li><a href="#headline-15">代码解析</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-16">总结</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-17">线程清理函数被调用的条件都有哪些</a>
+<ul>
+<li><a href="#headline-18">线程清理函数（通过 pthread_cleanup_push 注册）的调用条件是由 POSIX 线程库的行为定义的。清理函数会在以下情况下被调用：</a>
+</li>
+<li><a href="#headline-19">清理函数的调用顺序</a>
+</li>
+<li><a href="#headline-20">示例代码</a>
+</li>
+<li><a href="#headline-21">总结</a>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/%E5%A6%82%E4%BD%95%E6%A0%B9%E6%8D%AEflag%E7%BB%93%E6%9D%9F%E7%BA%BF%E7%A8%8B%E5%B9%B6%E5%88%9B%E5%BB%BA%E6%96%B0%E7%BA%BF%E7%A8%8B-deepseek/">如何根据flag结束线程并创建新线程-Deepseek</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Mar 19, 2025</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 10 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    
+<div id="outline-container-headline-1" class="outline-2">
+<h2 id="headline-1">
+代码
+</h2>
+<div id="outline-text-headline-1" class="outline-text-2">
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">#include &lt;stdio.h&gt;
+</span></span><span class="line"><span class="cl">#include &lt;stdlib.h&gt;
+</span></span><span class="line"><span class="cl">#include &lt;pthread.h&gt;
+</span></span><span class="line"><span class="cl">#include &lt;unistd.h&gt;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// 标志位，用于通知线程退出
+</span></span><span class="line"><span class="cl">volatile int flag = 0;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// 线程函数
+</span></span><span class="line"><span class="cl">void* thread_func(void* arg) {
+</span></span><span class="line"><span class="cl">    while (!flag) {
+</span></span><span class="line"><span class="cl">        printf(&#34;Thread is running...\n&#34;);
+</span></span><span class="line"><span class="cl">        sleep(1);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    printf(&#34;Thread exiting...\n&#34;);
+</span></span><span class="line"><span class="cl">    pthread_exit(NULL);
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">int main() {
+</span></span><span class="line"><span class="cl">    pthread_t thread;
+</span></span><span class="line"><span class="cl">    int ret;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 创建线程
+</span></span><span class="line"><span class="cl">    ret = pthread_create(&amp;thread, NULL, thread_func, NULL);
+</span></span><span class="line"><span class="cl">    if (ret != 0) {
+</span></span><span class="line"><span class="cl">        perror(&#34;pthread_create&#34;);
+</span></span><span class="line"><span class="cl">        exit(EXIT_FAILURE);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 主线程等待一段时间
+</span></span><span class="line"><span class="cl">    sleep(5);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 设置标志位，通知线程退出
+</span></span><span class="line"><span class="cl">    flag = 1;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 等待线程结束并回收资源
+</span></span><span class="line"><span class="cl">    ret = pthread_join(thread, NULL);
+</span></span><span class="line"><span class="cl">    if (ret != 0) {
+</span></span><span class="line"><span class="cl">        perror(&#34;pthread_join&#34;);
+</span></span><span class="line"><span class="cl">        exit(EXIT_FAILURE);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    printf(&#34;Thread has exited.\n&#34;);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 创建新线程
+</span></span><span class="line"><span class="cl">    flag = 0;  // 重置标志位
+</span></span><span class="line"><span class="cl">    ret = pthread_create(&amp;thread, NULL, thread_func, NULL);
+</span></span><span class="line"><span class="cl">    if (ret != 0) {
+</span></span><span class="line"><span class="cl">        perror(&#34;pthread_create&#34;);
+</span></span><span class="line"><span class="cl">        exit(EXIT_FAILURE);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 主线程等待一段时间
+</span></span><span class="line"><span class="cl">    sleep(5);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 设置标志位，通知新线程退出
+</span></span><span class="line"><span class="cl">    flag = 1;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 等待新线程结束并回收资源
+</span></span><span class="line"><span class="cl">    ret = pthread_join(thread, NULL);
+</span></span><span class="line"><span class="cl">    if (ret != 0) {
+</span></span><span class="line"><span class="cl">        perror(&#34;pthread_join&#34;);
+</span></span><span class="line"><span class="cl">        exit(EXIT_FAILURE);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    printf(&#34;New thread has exited.\n&#34;);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    return 0;
+</span></span><span class="line"><span class="cl">}</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-2" class="outline-3">
+<h3 id="headline-2">
+关键点
+</h3>
+<div id="outline-text-headline-2" class="outline-text-3">
+<p>
+标志位：使用volatile int flag通知线程退出。</p>
+<p>
+pthread_join：确保线程正常退出并回收资源。</p>
+<p>
+重置标志位：创建新线程前重置flag。</p>
+</div>
+</div>
+<div id="outline-container-headline-3" class="outline-3">
+<h3 id="headline-3">
+可以不需要等待5秒，线程创建后可以立即退出并收尸。关键在于如何正确管理线程的生命周期，确保线程能够正常退出并且资源被回收。以下是改进后的代码示例，去除了不必要的等待时间，并确保线程创建后可以立即退出并收尸
+</h3>
+<div id="outline-text-headline-3" class="outline-text-3">
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">#include &lt;stdio.h&gt;
+</span></span><span class="line"><span class="cl">#include &lt;stdlib.h&gt;
+</span></span><span class="line"><span class="cl">#include &lt;pthread.h&gt;
+</span></span><span class="line"><span class="cl">#include &lt;unistd.h&gt;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// 标志位，用于通知线程退出
+</span></span><span class="line"><span class="cl">volatile int flag = 0;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// 线程函数
+</span></span><span class="line"><span class="cl">void* thread_func(void* arg) {
+</span></span><span class="line"><span class="cl">    while (!flag) {
+</span></span><span class="line"><span class="cl">        printf(&#34;Thread is running...\n&#34;);
+</span></span><span class="line"><span class="cl">        sleep(1);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    printf(&#34;Thread exiting...\n&#34;);
+</span></span><span class="line"><span class="cl">    pthread_exit(NULL);
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">int main() {
+</span></span><span class="line"><span class="cl">    pthread_t thread;
+</span></span><span class="line"><span class="cl">    int ret;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 创建线程
+</span></span><span class="line"><span class="cl">    ret = pthread_create(&amp;thread, NULL, thread_func, NULL);
+</span></span><span class="line"><span class="cl">    if (ret != 0) {
+</span></span><span class="line"><span class="cl">        perror(&#34;pthread_create&#34;);
+</span></span><span class="line"><span class="cl">        exit(EXIT_FAILURE);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 立即设置标志位，通知线程退出
+</span></span><span class="line"><span class="cl">    flag = 1;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 等待线程结束并回收资源
+</span></span><span class="line"><span class="cl">    ret = pthread_join(thread, NULL);
+</span></span><span class="line"><span class="cl">    if (ret != 0) {
+</span></span><span class="line"><span class="cl">        perror(&#34;pthread_join&#34;);
+</span></span><span class="line"><span class="cl">        exit(EXIT_FAILURE);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    printf(&#34;Thread has exited.\n&#34;);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 创建新线程
+</span></span><span class="line"><span class="cl">    flag = 0;  // 重置标志位
+</span></span><span class="line"><span class="cl">    ret = pthread_create(&amp;thread, NULL, thread_func, NULL);
+</span></span><span class="line"><span class="cl">    if (ret != 0) {
+</span></span><span class="line"><span class="cl">        perror(&#34;pthread_create&#34;);
+</span></span><span class="line"><span class="cl">        exit(EXIT_FAILURE);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 立即设置标志位，通知新线程退出
+</span></span><span class="line"><span class="cl">    flag = 1;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 等待新线程结束并回收资源
+</span></span><span class="line"><span class="cl">    ret = pthread_join(thread, NULL);
+</span></span><span class="line"><span class="cl">    if (ret != 0) {
+</span></span><span class="line"><span class="cl">        perror(&#34;pthread_join&#34;);
+</span></span><span class="line"><span class="cl">        exit(EXIT_FAILURE);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    printf(&#34;New thread has exited.\n&#34;);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    return 0;
+</span></span><span class="line"><span class="cl">}</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-4" class="outline-4">
+<h4 id="headline-4">
+关键点
+</h4>
+<div id="outline-text-headline-4" class="outline-text-4">
+<p>
+立即设置标志位：</p>
+<p>
+在线程创建后，立即设置flag = 1，通知线程退出。</p>
+<p>
+这样可以避免不必要的等待时间。</p>
+<p>
+pthread_join：</p>
+<p>
+使用pthread_join等待线程退出并回收资源。</p>
+<p>
+即使线程立即退出，pthread_join也会确保资源被正确回收。</p>
+<p>
+重置标志位：</p>
+<p>
+在创建新线程之前，重置flag = 0，以确保新线程能够正常运行。</p>
+<p>
+线程函数中的循环：</p>
+<p>
+线程函数中的while (!flag)循环会检查标志位，如果flag为1，线程会立即退出。</p>
+</div>
+</div>
+<div id="outline-container-headline-5" class="outline-4">
+<h4 id="headline-5">
+总结
+</h4>
+<div id="outline-text-headline-5" class="outline-text-4">
+<p>
+不需要固定的等待时间（如5秒），可以通过标志位立即通知线程退出。</p>
+<p>
+使用pthread_join确保线程资源被回收，避免僵尸线程。</p>
+<p>
+这种方法可以动态控制线程的生命周期，适用于需要频繁创建和销毁线程的场景。</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-6" class="outline-2">
+<h2 id="headline-6">
+正确处理线程中的动态内存
+</h2>
+<div id="outline-text-headline-6" class="outline-text-2">
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">#include &lt;stdio.h&gt;
+</span></span><span class="line"><span class="cl">#include &lt;stdlib.h&gt;
+</span></span><span class="line"><span class="cl">#include &lt;pthread.h&gt;
+</span></span><span class="line"><span class="cl">#include &lt;unistd.h&gt;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// 线程数据结构体
+</span></span><span class="line"><span class="cl">typedef struct {
+</span></span><span class="line"><span class="cl">    int id;
+</span></span><span class="line"><span class="cl">    char* message;
+</span></span><span class="line"><span class="cl">} ThreadData;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// 线程函数
+</span></span><span class="line"><span class="cl">void* thread_func(void* arg) {
+</span></span><span class="line"><span class="cl">    ThreadData* data = (ThreadData*)arg;
+</span></span><span class="line"><span class="cl">    printf(&#34;Thread %d: %s\n&#34;, data-&gt;id, data-&gt;message);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 模拟线程工作
+</span></span><span class="line"><span class="cl">    sleep(2);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 释放动态分配的内存
+</span></span><span class="line"><span class="cl">    free(data-&gt;message);
+</span></span><span class="line"><span class="cl">    free(data);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    printf(&#34;Thread %d: Resources freed, exiting...\n&#34;, data-&gt;id);
+</span></span><span class="line"><span class="cl">    pthread_exit(NULL);
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">int main() {
+</span></span><span class="line"><span class="cl">    pthread_t thread;
+</span></span><span class="line"><span class="cl">    int ret;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 动态分配线程数据
+</span></span><span class="line"><span class="cl">    ThreadData* data = (ThreadData*)malloc(sizeof(ThreadData));
+</span></span><span class="line"><span class="cl">    if (!data) {
+</span></span><span class="line"><span class="cl">        perror(&#34;malloc&#34;);
+</span></span><span class="line"><span class="cl">        exit(EXIT_FAILURE);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    data-&gt;id = 1;
+</span></span><span class="line"><span class="cl">    data-&gt;message = (char*)malloc(50 * sizeof(char));
+</span></span><span class="line"><span class="cl">    if (!data-&gt;message) {
+</span></span><span class="line"><span class="cl">        perror(&#34;malloc&#34;);
+</span></span><span class="line"><span class="cl">        free(data);
+</span></span><span class="line"><span class="cl">        exit(EXIT_FAILURE);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    snprintf(data-&gt;message, 50, &#34;Hello from thread %d&#34;, data-&gt;id);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 创建线程
+</span></span><span class="line"><span class="cl">    ret = pthread_create(&amp;thread, NULL, thread_func, data);
+</span></span><span class="line"><span class="cl">    if (ret != 0) {
+</span></span><span class="line"><span class="cl">        perror(&#34;pthread_create&#34;);
+</span></span><span class="line"><span class="cl">        free(data-&gt;message);
+</span></span><span class="line"><span class="cl">        free(data);
+</span></span><span class="line"><span class="cl">        exit(EXIT_FAILURE);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 等待线程结束并回收资源
+</span></span><span class="line"><span class="cl">    ret = pthread_join(thread, NULL);
+</span></span><span class="line"><span class="cl">    if (ret != 0) {
+</span></span><span class="line"><span class="cl">        perror(&#34;pthread_join&#34;);
+</span></span><span class="line"><span class="cl">        exit(EXIT_FAILURE);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    printf(&#34;Main: Thread has exited.\n&#34;);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    return 0;
+</span></span><span class="line"><span class="cl">}</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-7" class="outline-3">
+<h3 id="headline-7">
+关键代码解析
+</h3>
+<div id="outline-text-headline-7" class="outline-text-3">
+<p>
+动态分配内存：</p>
+<p>
+使用malloc为线程数据（ThreadData）和字符串（message）分配内存。</p>
+<p>
+释放内存：</p>
+<p>
+在线程退出前，调用free释放data-&gt;message和data。</p>
+<p>
+线程退出：</p>
+<p>
+线程退出时，确保所有动态分配的内存都被释放，避免内存泄漏。</p>
+</div>
+</div>
+<div id="outline-container-headline-8" class="outline-3">
+<h3 id="headline-8">
+使用清理函数（pthread_cleanup_push和pthread_cleanup_pop）
+</h3>
+<div id="outline-text-headline-8" class="outline-text-3">
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">#include &lt;stdio.h&gt;
+</span></span><span class="line"><span class="cl">#include &lt;stdlib.h&gt;
+</span></span><span class="line"><span class="cl">#include &lt;pthread.h&gt;
+</span></span><span class="line"><span class="cl">#include &lt;unistd.h&gt;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// 线程数据结构体
+</span></span><span class="line"><span class="cl">typedef struct {
+</span></span><span class="line"><span class="cl">    int id;
+</span></span><span class="line"><span class="cl">    char* message;
+</span></span><span class="line"><span class="cl">} ThreadData;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// 清理函数
+</span></span><span class="line"><span class="cl">void cleanup_handler(void* arg) {
+</span></span><span class="line"><span class="cl">    ThreadData* data = (ThreadData*)arg;
+</span></span><span class="line"><span class="cl">    printf(&#34;Cleanup handler: Freeing resources for thread %d\n&#34;, data-&gt;id);
+</span></span><span class="line"><span class="cl">    free(data-&gt;message);
+</span></span><span class="line"><span class="cl">    free(data);
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// 线程函数
+</span></span><span class="line"><span class="cl">void* thread_func(void* arg) {
+</span></span><span class="line"><span class="cl">    ThreadData* data = (ThreadData*)arg;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 注册清理函数
+</span></span><span class="line"><span class="cl">    pthread_cleanup_push(cleanup_handler, data);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    printf(&#34;Thread %d: %s\n&#34;, data-&gt;id, data-&gt;message);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 模拟线程工作
+</span></span><span class="line"><span class="cl">    sleep(2);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 弹出清理函数并执行（参数为1表示执行清理函数）
+</span></span><span class="line"><span class="cl">    pthread_cleanup_pop(1);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    pthread_exit(NULL);
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">int main() {
+</span></span><span class="line"><span class="cl">    pthread_t thread;
+</span></span><span class="line"><span class="cl">    int ret;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 动态分配线程数据
+</span></span><span class="line"><span class="cl">    ThreadData* data = (ThreadData*)malloc(sizeof(ThreadData));
+</span></span><span class="line"><span class="cl">    if (!data) {
+</span></span><span class="line"><span class="cl">        perror(&#34;malloc&#34;);
+</span></span><span class="line"><span class="cl">        exit(EXIT_FAILURE);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    data-&gt;id = 1;
+</span></span><span class="line"><span class="cl">    data-&gt;message = (char*)malloc(50 * sizeof(char));
+</span></span><span class="line"><span class="cl">    if (!data-&gt;message) {
+</span></span><span class="line"><span class="cl">        perror(&#34;malloc&#34;);
+</span></span><span class="line"><span class="cl">        free(data);
+</span></span><span class="line"><span class="cl">        exit(EXIT_FAILURE);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    snprintf(data-&gt;message, 50, &#34;Hello from thread %d&#34;, data-&gt;id);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 创建线程
+</span></span><span class="line"><span class="cl">    ret = pthread_create(&amp;thread, NULL, thread_func, data);
+</span></span><span class="line"><span class="cl">    if (ret != 0) {
+</span></span><span class="line"><span class="cl">        perror(&#34;pthread_create&#34;);
+</span></span><span class="line"><span class="cl">        free(data-&gt;message);
+</span></span><span class="line"><span class="cl">        free(data);
+</span></span><span class="line"><span class="cl">        exit(EXIT_FAILURE);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 等待线程结束并回收资源
+</span></span><span class="line"><span class="cl">    ret = pthread_join(thread, NULL);
+</span></span><span class="line"><span class="cl">    if (ret != 0) {
+</span></span><span class="line"><span class="cl">        perror(&#34;pthread_join&#34;);
+</span></span><span class="line"><span class="cl">        exit(EXIT_FAILURE);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    printf(&#34;Main: Thread has exited.\n&#34;);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    return 0;
+</span></span><span class="line"><span class="cl">}</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-9" class="outline-4">
+<h4 id="headline-9">
+总结
+</h4>
+<div id="outline-text-headline-9" class="outline-text-4">
+<p>
+未释放的内存不会阻止线程退出，但会导致内存泄漏。</p>
+<p>
+在线程退出前，确保释放所有动态分配的内存。</p>
+<p>
+可以使用清理函数（pthread_cleanup_push和pthread_cleanup_pop）确保资源在线程被取消时也能正确释放。</p>
+<p>
+良好的资源管理是编写健壮多线程程序的关键。</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-10" class="outline-2">
+<h2 id="headline-10">
+pthread_cancel
+</h2>
+<div id="outline-text-headline-10" class="outline-text-2">
+<p>
+pthread_cancel 是 POSIX 线程库中用于取消线程的函数。它允许一个线程请求取消另一个线程。被取消的线程会在下一个取消点（cancellation point）退出，或者在显式调用pthread_testcancel时退出。为了正确使用pthread_cancel，需要注意以下几点：</p>
+<ol>
+<li>pthread_cancel 的基本用法</li>
+</ol>
+<ul>
+<li>函数原型：</li>
+</ul>
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">int pthread_cancel(pthread_t thread);</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<ul>
+<li>thread：要取消的线程 ID。</li>
+<li>返回值：成功返回 0，失败返回错误码。</li>
+</ul>
+<ul>
+<li>
+<p>取消点：</p>
+<ul>
+<li>
+<p>取消点是线程可以响应取消请求的地方。常见的取消点包括：</p>
+<ul>
+<li>sleep、pthread_join、read、write 等阻塞函数。</li>
+<li>显式调用 pthread_testcancel。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>取消类型：</p>
+<ul>
+<li>线程的取消行为由取消类型（cancellation type）决定：</li>
+<li>延迟取消（Deferred cancellation）：默认行为，线程只有在取消点才会响应取消请求。</li>
+<li>异步取消（Asynchronous cancellation）：线程可以在任何时候被取消，但这种方式不安全，容易导致资源泄漏。</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>pthread_cancel 的使用步骤</li>
+</ol>
+<ul>
+<li>
+<p>设置线程的取消状态：</p>
+<ul>
+<li>使用 pthread_setcancelstate 设置线程是否允许被取消。</li>
+<li>使用 pthread_setcanceltype 设置取消类型（延迟取消或异步取消）。</li>
+</ul>
+</li>
+<li>
+<p>在线程中处理取消请求：</p>
+<ul>
+<li>如果线程需要清理资源，可以使用 pthread_cleanup_push 和 pthread_cleanup_pop 注册清理函数。</li>
+</ul>
+</li>
+<li>
+<p>在主线程中调用 pthread_cancel：</p>
+<ul>
+<li>主线程或其他线程可以调用 pthread_cancel 取消目标线程。</li>
+</ul>
+</li>
+<li>
+<p>等待线程退出并回收资源：</p>
+<ul>
+<li>使用 pthread_join 等待被取消的线程退出，并确保资源被正确回收。</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>完整示例代码</li>
+</ol>
+<p>以下是一个综合示例，展示了如何使用 pthread_cancel 取消线程，并确保资源被正确释放：</p>
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span><span class="lnt">90
+</span><span class="lnt">91
+</span><span class="lnt">92
+</span><span class="lnt">93
+</span><span class="lnt">94
+</span><span class="lnt">95
+</span><span class="lnt">96
+</span><span class="lnt">97
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">#include &lt;stdio.h&gt;
+</span></span><span class="line"><span class="cl">#include &lt;stdlib.h&gt;
+</span></span><span class="line"><span class="cl">#include &lt;pthread.h&gt;
+</span></span><span class="line"><span class="cl">#include &lt;unistd.h&gt;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// 线程数据结构体
+</span></span><span class="line"><span class="cl">typedef struct {
+</span></span><span class="line"><span class="cl">    int id;
+</span></span><span class="line"><span class="cl">    char* message;
+</span></span><span class="line"><span class="cl">} ThreadData;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// 清理函数
+</span></span><span class="line"><span class="cl">void cleanup_handler(void* arg) {
+</span></span><span class="line"><span class="cl">    ThreadData* data = (ThreadData*)arg;
+</span></span><span class="line"><span class="cl">    printf(&#34;Cleanup handler: Freeing resources for thread %d\n&#34;, data-&gt;id);
+</span></span><span class="line"><span class="cl">    free(data-&gt;message);
+</span></span><span class="line"><span class="cl">    free(data);
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// 线程函数
+</span></span><span class="line"><span class="cl">void* thread_func(void* arg) {
+</span></span><span class="line"><span class="cl">    ThreadData* data = (ThreadData*)arg;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 注册清理函数
+</span></span><span class="line"><span class="cl">    pthread_cleanup_push(cleanup_handler, data);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 允许线程被取消
+</span></span><span class="line"><span class="cl">    pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, NULL);
+</span></span><span class="line"><span class="cl">    pthread_setcanceltype(PTHREAD_CANCEL_DEFERRED, NULL);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    printf(&#34;Thread %d: %s\n&#34;, data-&gt;id, data-&gt;message);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 模拟线程工作
+</span></span><span class="line"><span class="cl">    while (1) {
+</span></span><span class="line"><span class="cl">        printf(&#34;Thread %d: Working...\n&#34;, data-&gt;id);
+</span></span><span class="line"><span class="cl">        sleep(1);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        // 显式检查取消请求
+</span></span><span class="line"><span class="cl">        pthread_testcancel();
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 弹出清理函数（不会执行，因为线程会被取消）
+</span></span><span class="line"><span class="cl">    pthread_cleanup_pop(0);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    pthread_exit(NULL);
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">int main() {
+</span></span><span class="line"><span class="cl">    pthread_t thread;
+</span></span><span class="line"><span class="cl">    int ret;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 动态分配线程数据
+</span></span><span class="line"><span class="cl">    ThreadData* data = (ThreadData*)malloc(sizeof(ThreadData));
+</span></span><span class="line"><span class="cl">    if (!data) {
+</span></span><span class="line"><span class="cl">        perror(&#34;malloc&#34;);
+</span></span><span class="line"><span class="cl">        exit(EXIT_FAILURE);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    data-&gt;id = 1;
+</span></span><span class="line"><span class="cl">    data-&gt;message = (char*)malloc(50 * sizeof(char));
+</span></span><span class="line"><span class="cl">    if (!data-&gt;message) {
+</span></span><span class="line"><span class="cl">        perror(&#34;malloc&#34;);
+</span></span><span class="line"><span class="cl">        free(data);
+</span></span><span class="line"><span class="cl">        exit(EXIT_FAILURE);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    snprintf(data-&gt;message, 50, &#34;Hello from thread %d&#34;, data-&gt;id);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 创建线程
+</span></span><span class="line"><span class="cl">    ret = pthread_create(&amp;thread, NULL, thread_func, data);
+</span></span><span class="line"><span class="cl">    if (ret != 0) {
+</span></span><span class="line"><span class="cl">        perror(&#34;pthread_create&#34;);
+</span></span><span class="line"><span class="cl">        free(data-&gt;message);
+</span></span><span class="line"><span class="cl">        free(data);
+</span></span><span class="line"><span class="cl">        exit(EXIT_FAILURE);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 主线程等待一段时间
+</span></span><span class="line"><span class="cl">    sleep(3);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 取消线程
+</span></span><span class="line"><span class="cl">    printf(&#34;Main: Cancelling thread %d...\n&#34;, data-&gt;id);
+</span></span><span class="line"><span class="cl">    ret = pthread_cancel(thread);
+</span></span><span class="line"><span class="cl">    if (ret != 0) {
+</span></span><span class="line"><span class="cl">        perror(&#34;pthread_cancel&#34;);
+</span></span><span class="line"><span class="cl">        exit(EXIT_FAILURE);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 等待线程结束并回收资源
+</span></span><span class="line"><span class="cl">    ret = pthread_join(thread, NULL);
+</span></span><span class="line"><span class="cl">    if (ret != 0) {
+</span></span><span class="line"><span class="cl">        perror(&#34;pthread_join&#34;);
+</span></span><span class="line"><span class="cl">        exit(EXIT_FAILURE);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    printf(&#34;Main: Thread has exited.\n&#34;);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    return 0;
+</span></span><span class="line"><span class="cl">}</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<ol>
+<li>注意事项</li>
+</ol>
+<ul>
+<li>
+<p>资源泄漏：</p>
+<ul>
+<li>如果线程被取消时没有正确释放资源（如动态内存、文件描述符等），会导致资源泄漏。务必使用清理函数或手动释放资源。</li>
+</ul>
+</li>
+<li>
+<p>异步取消的风险：</p>
+<ul>
+<li>异步取消（PTHREAD_CANCEL_ASYNCHRONOUS）可能导致线程在任意时刻被取消，容易引发资源泄漏或数据不一致。除非必要，否则不要使用异步取消。</li>
+</ul>
+</li>
+<li>
+<p>取消点的选择：</p>
+<ul>
+<li>如果线程长时间运行而没有取消点，可以使用 pthread_testcancel 显式检查取消请求。</li>
+</ul>
+</li>
+</ul>
+<div id="outline-container-headline-11" class="outline-3">
+<h3 id="headline-11">
+总结
+</h3>
+<div id="outline-text-headline-11" class="outline-text-3">
+<ul>
+<li>pthread_cancel 是用于取消线程的函数，但需要配合清理函数和 pthread_join 使用，以确保资源被正确释放。</li>
+<li>使用 pthread_cleanup_push 和 pthread_cleanup_pop 注册清理函数，避免资源泄漏。</li>
+<li>默认的延迟取消是安全的，异步取消应谨慎使用。</li>
+<li>通过合理设计线程的取消逻辑，可以编写出健壮的多线程程序。</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-12" class="outline-2">
+<h2 id="headline-12">
+在 main 函数的 while 循环中根据 flag 标志动态创建或停止线程，并确保子线程的结构体和动态申请的内存正常释放
+</h2>
+<div id="outline-text-headline-12" class="outline-text-2">
+<div id="outline-container-headline-13" class="outline-3">
+<h3 id="headline-13">
+实现思路
+</h3>
+<div id="outline-text-headline-13" class="outline-text-3">
+<ul>
+<li>
+<p>全局标志位：</p>
+<ul>
+<li>使用一个全局标志位（如 volatile int flag）控制线程的创建和停止。</li>
+</ul>
+</li>
+<li>
+<p>线程管理：</p>
+<ul>
+<li>当 flag 为 1 时，创建线程。</li>
+<li>当 flag 为 0 时，停止线程并确保资源释放。</li>
+</ul>
+</li>
+<li>
+<p>资源释放：</p>
+<ul>
+<li>使用 pthread_cleanup_push 和 pthread_cleanup_pop 注册清理函数，确保线程被取消时资源（如结构体和动态内存）被正确释放。</li>
+</ul>
+</li>
+<li>
+<p>线程同步：</p>
+<ul>
+<li>使用 pthread_join 等待线程退出，确保线程资源被回收。</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-headline-14" class="outline-3">
+<h3 id="headline-14">
+完整代码示例
+</h3>
+<div id="outline-text-headline-14" class="outline-text-3">
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">#include &lt;stdio.h&gt;
+</span></span><span class="line"><span class="cl">#include &lt;stdlib.h&gt;
+</span></span><span class="line"><span class="cl">#include &lt;pthread.h&gt;
+</span></span><span class="line"><span class="cl">#include &lt;unistd.h&gt;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// 全局标志位
+</span></span><span class="line"><span class="cl">volatile int flag = 0;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// 线程数据结构体
+</span></span><span class="line"><span class="cl">typedef struct {
+</span></span><span class="line"><span class="cl">    int id;
+</span></span><span class="line"><span class="cl">    char* message;
+</span></span><span class="line"><span class="cl">} ThreadData;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// 清理函数
+</span></span><span class="line"><span class="cl">void cleanup_handler(void* arg) {
+</span></span><span class="line"><span class="cl">    ThreadData* data = (ThreadData*)arg;
+</span></span><span class="line"><span class="cl">    printf(&#34;Cleanup handler: Freeing resources for thread %d\n&#34;, data-&gt;id);
+</span></span><span class="line"><span class="cl">    free(data-&gt;message); // 释放动态内存
+</span></span><span class="line"><span class="cl">    free(data);          // 释放结构体
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// 线程函数
+</span></span><span class="line"><span class="cl">void* thread_func(void* arg) {
+</span></span><span class="line"><span class="cl">    ThreadData* data = (ThreadData*)arg;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 注册清理函数
+</span></span><span class="line"><span class="cl">    pthread_cleanup_push(cleanup_handler, data);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 允许线程被取消
+</span></span><span class="line"><span class="cl">    pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, NULL);
+</span></span><span class="line"><span class="cl">    pthread_setcanceltype(PTHREAD_CANCEL_DEFERRED, NULL);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    printf(&#34;Thread %d: %s\n&#34;, data-&gt;id, data-&gt;message);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 模拟线程工作
+</span></span><span class="line"><span class="cl">    while (1) {
+</span></span><span class="line"><span class="cl">        printf(&#34;Thread %d: Working...\n&#34;, data-&gt;id);
+</span></span><span class="line"><span class="cl">        sleep(1);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        // 显式检查取消请求
+</span></span><span class="line"><span class="cl">        pthread_testcancel();
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 弹出清理函数（不会执行，因为线程会被取消）
+</span></span><span class="line"><span class="cl">    pthread_cleanup_pop(0);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    pthread_exit(NULL);
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">int main() {
+</span></span><span class="line"><span class="cl">    pthread_t thread = 0; // 线程 ID
+</span></span><span class="line"><span class="cl">    int thread_id = 0;    // 线程编号
+</span></span><span class="line"><span class="cl">    int ret;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    while (1) {
+</span></span><span class="line"><span class="cl">        if (flag == 1 &amp;&amp; thread == 0) {
+</span></span><span class="line"><span class="cl">            // 创建线程
+</span></span><span class="line"><span class="cl">            ThreadData* data = (ThreadData*)malloc(sizeof(ThreadData));
+</span></span><span class="line"><span class="cl">            if (!data) {
+</span></span><span class="line"><span class="cl">                perror(&#34;malloc&#34;);
+</span></span><span class="line"><span class="cl">                exit(EXIT_FAILURE);
+</span></span><span class="line"><span class="cl">            }
+</span></span><span class="line"><span class="cl">            data-&gt;id = ++thread_id;
+</span></span><span class="line"><span class="cl">            data-&gt;message = (char*)malloc(50 * sizeof(char));
+</span></span><span class="line"><span class="cl">            if (!data-&gt;message) {
+</span></span><span class="line"><span class="cl">                perror(&#34;malloc&#34;);
+</span></span><span class="line"><span class="cl">                free(data);
+</span></span><span class="line"><span class="cl">                exit(EXIT_FAILURE);
+</span></span><span class="line"><span class="cl">            }
+</span></span><span class="line"><span class="cl">            snprintf(data-&gt;message, 50, &#34;Hello from thread %d&#34;, data-&gt;id);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            ret = pthread_create(&amp;thread, NULL, thread_func, data);
+</span></span><span class="line"><span class="cl">            if (ret != 0) {
+</span></span><span class="line"><span class="cl">                perror(&#34;pthread_create&#34;);
+</span></span><span class="line"><span class="cl">                free(data-&gt;message);
+</span></span><span class="line"><span class="cl">                free(data);
+</span></span><span class="line"><span class="cl">                exit(EXIT_FAILURE);
+</span></span><span class="line"><span class="cl">            }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            printf(&#34;Main: Created thread %d\n&#34;, data-&gt;id);
+</span></span><span class="line"><span class="cl">        } else if (flag == 0 &amp;&amp; thread != 0) {
+</span></span><span class="line"><span class="cl">            // 停止线程
+</span></span><span class="line"><span class="cl">            printf(&#34;Main: Stopping thread %d...\n&#34;, thread_id);
+</span></span><span class="line"><span class="cl">            ret = pthread_cancel(thread);
+</span></span><span class="line"><span class="cl">            if (ret != 0) {
+</span></span><span class="line"><span class="cl">                perror(&#34;pthread_cancel&#34;);
+</span></span><span class="line"><span class="cl">                exit(EXIT_FAILURE);
+</span></span><span class="line"><span class="cl">            }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            // 等待线程退出并回收资源
+</span></span><span class="line"><span class="cl">            ret = pthread_join(thread, NULL);
+</span></span><span class="line"><span class="cl">            if (ret != 0) {
+</span></span><span class="line"><span class="cl">                perror(&#34;pthread_join&#34;);
+</span></span><span class="line"><span class="cl">                exit(EXIT_FAILURE);
+</span></span><span class="line"><span class="cl">            }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            printf(&#34;Main: Thread %d has exited.\n&#34;, thread_id);
+</span></span><span class="line"><span class="cl">            thread = 0; // 重置线程 ID
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        // 模拟主线程工作
+</span></span><span class="line"><span class="cl">        sleep(1);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        // 模拟 flag 变化
+</span></span><span class="line"><span class="cl">        static int counter = 0;
+</span></span><span class="line"><span class="cl">        counter++;
+</span></span><span class="line"><span class="cl">        if (counter % 5 == 0) {
+</span></span><span class="line"><span class="cl">            flag = !flag; // 切换 flag 状态
+</span></span><span class="line"><span class="cl">            printf(&#34;Main: Toggling flag to %d\n&#34;, flag);
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    return 0;
+</span></span><span class="line"><span class="cl">}</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-15" class="outline-4">
+<h4 id="headline-15">
+代码解析
+</h4>
+<div id="outline-text-headline-15" class="outline-text-4">
+<ul>
+<li>
+<p>全局标志位 flag：</p>
+<ul>
+<li>
+<p>flag 控制线程的创建和停止：</p>
+<ul>
+<li>flag == 1：创建线程。</li>
+<li>flag == 0：停止线程。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>线程创建：</p>
+<ul>
+<li>动态分配 ThreadData 结构体和 message 内存。</li>
+<li>使用 pthread_create 创建线程，并将 ThreadData 传递给线程函数。</li>
+</ul>
+</li>
+<li>
+<p>线程停止：</p>
+<ul>
+<li>使用 pthread_cancel 取消线程。</li>
+<li>使用 pthread_join 等待线程退出，确保资源被回收。</li>
+</ul>
+</li>
+<li>
+<p>清理函数：</p>
+<ul>
+<li>使用 pthread_cleanup_push 注册清理函数 cleanup_handler，确保线程被取消时资源被正确释放。</li>
+</ul>
+</li>
+<li>
+<p>主循环：</p>
+<ul>
+<li>主循环根据 flag 的值动态创建或停止线程。</li>
+<li>每 5 秒切换一次 flag 的状态，模拟控制逻辑。</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-16" class="outline-3">
+<h3 id="headline-16">
+总结
+</h3>
+<div id="outline-text-headline-16" class="outline-text-3">
+<ul>
+<li>通过全局标志位 flag 动态控制线程的创建和停止。</li>
+<li>使用 pthread_cleanup_push 和 pthread_cleanup_pop 确保线程资源被正确释放。</li>
+<li>使用 pthread_cancel 和 pthread_join 安全地停止线程并回收资源。</li>
+<li>这种方法适用于需要动态管理线程生命周期的场景，同时避免了资源泄漏和僵尸线程问题。</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-17" class="outline-2">
+<h2 id="headline-17">
+线程清理函数被调用的条件都有哪些
+</h2>
+<div id="outline-text-headline-17" class="outline-text-2">
+<div id="outline-container-headline-18" class="outline-3">
+<h3 id="headline-18">
+线程清理函数（通过 pthread_cleanup_push 注册）的调用条件是由 POSIX 线程库的行为定义的。清理函数会在以下情况下被调用：
+</h3>
+<div id="outline-text-headline-18" class="outline-text-3">
+<ol>
+<li>
+<p>线程被取消（pthread_cancel）</p>
+<ul>
+<li>如果线程收到取消请求（通过 pthread_cancel），并且线程的取消状态为 PTHREAD_CANCEL_ENABLE（默认状态），则线程会在下一个取消点退出。</li>
+<li>在线程退出之前，所有通过 pthread_cleanup_push 注册的清理函数会按照**后进先出（LIFO）**的顺序被调用。</li>
+</ul>
+</li>
+<li>
+<p>线程显式调用 pthread_exit</p>
+<ul>
+<li>如果线程显式调用 pthread_exit 退出，所有通过 pthread_cleanup_push 注册的清理函数会按照**后进先出（LIFO）**的顺序被调用。</li>
+</ul>
+</li>
+<li>
+<p>线程调用 pthread_cleanup_pop 并传递非零参数</p>
+<ul>
+<li>如果线程调用 pthread_cleanup_pop 并传递一个非零参数，则弹出的清理函数会立即执行。</li>
+<li>这种方式通常用于在某个特定条件下手动触发清理函数。</li>
+</ul>
+</li>
+<li>
+<p>线程正常返回（从线程函数中返回）</p>
+<ul>
+<li>如果线程从线程函数中正常返回（即没有调用 pthread_exit 或 pthread_cancel），则不会调用清理函数。</li>
+<li>这是清理函数与 C++ 析构函数的一个重要区别：清理函数不会在线程正常返回时自动调用。</li>
+</ul>
+</li>
+<li>
+<p>线程被分离（pthread_detach）</p>
+<ul>
+<li>如果线程被分离（通过 pthread_detach），则线程退出时会自动释放资源，但清理函数仍然会被调用（如果满足上述条件）。</li>
+</ul>
+</li>
+<li>
+<p>线程因未捕获的异常退出</p>
+<ul>
+<li>如果线程因未捕获的异常（如段错误）退出，则清理函数不会被调用。</li>
+<li>这种情况下，线程的资源可能无法正确释放。</li>
+</ul>
+</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-headline-19" class="outline-3">
+<h3 id="headline-19">
+清理函数的调用顺序
+</h3>
+<div id="outline-text-headline-19" class="outline-text-3">
+<p>
+清理函数的调用顺序是**后进先出（LIFO）**的，即最后注册的清理函数会最先被调用。例如：</p>
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">pthread_cleanup_push(cleanup1, NULL);
+</span></span><span class="line"><span class="cl">pthread_cleanup_push(cleanup2, NULL);
+</span></span><span class="line"><span class="cl">pthread_cleanup_push(cleanup3, NULL);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// 清理函数的调用顺序是 cleanup3 -&gt; cleanup2 -&gt; cleanup1
+</span></span><span class="line"><span class="cl">pthread_cleanup_pop(1); // 调用 cleanup3
+</span></span><span class="line"><span class="cl">pthread_cleanup_pop(1); // 调用 cleanup2
+</span></span><span class="line"><span class="cl">pthread_cleanup_pop(1); // 调用 cleanup1</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-20" class="outline-3">
+<h3 id="headline-20">
+示例代码
+</h3>
+<div id="outline-text-headline-20" class="outline-text-3">
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">#include &lt;stdio.h&gt;
+</span></span><span class="line"><span class="cl">#include &lt;stdlib.h&gt;
+</span></span><span class="line"><span class="cl">#include &lt;pthread.h&gt;
+</span></span><span class="line"><span class="cl">#include &lt;unistd.h&gt;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// 清理函数 1
+</span></span><span class="line"><span class="cl">void cleanup1(void* arg) {
+</span></span><span class="line"><span class="cl">    printf(&#34;Cleanup 1: Freeing resources...\n&#34;);
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// 清理函数 2
+</span></span><span class="line"><span class="cl">void cleanup2(void* arg) {
+</span></span><span class="line"><span class="cl">    printf(&#34;Cleanup 2: Freeing resources...\n&#34;);
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// 线程函数
+</span></span><span class="line"><span class="cl">void* thread_func(void* arg) {
+</span></span><span class="line"><span class="cl">    // 注册清理函数
+</span></span><span class="line"><span class="cl">    pthread_cleanup_push(cleanup1, NULL);
+</span></span><span class="line"><span class="cl">    pthread_cleanup_push(cleanup2, NULL);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    printf(&#34;Thread: Running...\n&#34;);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 模拟线程工作
+</span></span><span class="line"><span class="cl">    sleep(2);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 显式调用 pthread_exit
+</span></span><span class="line"><span class="cl">    printf(&#34;Thread: Calling pthread_exit...\n&#34;);
+</span></span><span class="line"><span class="cl">    pthread_exit(NULL);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 弹出清理函数（不会执行，因为线程已经退出）
+</span></span><span class="line"><span class="cl">    pthread_cleanup_pop(0);
+</span></span><span class="line"><span class="cl">    pthread_cleanup_pop(0);
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">int main() {
+</span></span><span class="line"><span class="cl">    pthread_t thread;
+</span></span><span class="line"><span class="cl">    int ret;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 创建线程
+</span></span><span class="line"><span class="cl">    ret = pthread_create(&amp;thread, NULL, thread_func, NULL);
+</span></span><span class="line"><span class="cl">    if (ret != 0) {
+</span></span><span class="line"><span class="cl">        perror(&#34;pthread_create&#34;);
+</span></span><span class="line"><span class="cl">        exit(EXIT_FAILURE);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 等待线程结束
+</span></span><span class="line"><span class="cl">    ret = pthread_join(thread, NULL);
+</span></span><span class="line"><span class="cl">    if (ret != 0) {
+</span></span><span class="line"><span class="cl">        perror(&#34;pthread_join&#34;);
+</span></span><span class="line"><span class="cl">        exit(EXIT_FAILURE);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    printf(&#34;Main: Thread has exited.\n&#34;);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    return 0;
+</span></span><span class="line"><span class="cl">}</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-21" class="outline-3">
+<h3 id="headline-21">
+总结
+</h3>
+<div id="outline-text-headline-21" class="outline-text-3">
+<p>清理函数被调用的条件包括：</p>
+<ul>
+<li>线程被取消（pthread_cancel）。</li>
+<li>线程显式调用 pthread_exit。</li>
+<li>线程调用 pthread_cleanup_pop 并传递非零参数。</li>
+</ul>
+<p>清理函数不会在以下情况下被调用：</p>
+<ul>
+<li>线程正常返回（从线程函数中返回）。</li>
+<li>线程因未捕获的异常退出。</li>
+</ul>
+<p>通过合理使用清理函数，可以确保线程退出时资源被正确释放，避免内存泄漏和资源浪费。</p>
+</div>
+</div>
+</div>
+</div>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/pthread/">Pthread</a>
+        
+            <a href="/tags/linux/">Linux</a>
+        
+            <a href="/tags/%E7%A8%8B%E5%BA%8F%E5%91%98/">程序员</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            最后更新于 Mar 19, 2025 09:49 &#43;0800
+        </span>
+    </section></footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/p/socket-%E6%9C%8D%E5%8A%A1%E7%AB%AF%E4%B8%8E%E7%BA%BF%E7%A8%8B%E7%AE%A1%E7%90%86%E7%9A%84%E7%BB%93%E5%90%88-deepseek/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Socket 服务端与线程管理的结合-Deepseek</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/jq%E7%94%A8%E6%B3%95/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">jq用法</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/bc%E8%AE%A1%E7%AE%97%E5%99%A8/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">bc计算器</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/acme%E8%84%9A%E6%9C%AC%E7%94%B3%E8%AF%B7%E8%AF%81%E4%B9%A6%E6%95%99%E7%A8%8B/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">acme脚本申请证书教程</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/%E5%A6%82%E4%BD%95%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AAlinux%E5%86%85%E6%A0%B8%E6%A8%A1%E5%9D%97/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">如何编写一个Linux内核模块</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "hugo-theme-stack" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2025 Example Person
+    </section>
+    
+    <section class="powerby">
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

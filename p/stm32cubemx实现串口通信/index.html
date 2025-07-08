@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" STM32CubeMX实现串口通信 STM32CubeMX版本：6.10\n在安装STM32CubeMX之前需要电脑上有Java环境\nJava下载链接：https://javadl.oracle.com/webapps/download/AutoDL?BundleId=249203_b291ca3e0c8548b5a51d5a5f50063037\nSTM32CubeMX下载链接：https://www.st.com/zh/development-tools/stm32cubemx.html\nKeil5(MDK-ARM)下载链接：https://pan.baidu.com/s/1kC7h3ljv1iENa0mSP2a0aQ?pwd=pxsy\nProteus下载链接：https://mp.weixin.qq.com/s?__biz=MzA4MjU4MTg2Ng==&amp;mid=2247515066&amp;idx=5&amp;sn=ba4b87dad87c1f13ccc595934269bfaa&amp;chksm=9f817bbfa8f6f2a9cd6e6690e6a791ca3fd43f9bddf8ea06d2da4b07c28ce5600d79703d72f5&amp;scene=21#wechat_redirect\n串口调试助手：https://pan.baidu.com/s/1E5SprNfWX1yqPddtvsa8sw?pwd=e6vn\nVSPD下载链接：https://www.xue51.com/soft/9349.html#xzdz\n使用STM32CubeMX 安装固件库 若点击 Manage embedded software packages 后，出现失败，则需要随便点击其它任一选项，进行下载一些文件，比如点击 file-&gt;new project ，等下载后，再进行安装固件库。\n1.进入嵌入式软件包管理界面\n2.如果进入失败，则点击一下旁边的INSTALL/REMOVE，安装嵌入式软件包，如果提示登录的话，就将在ST官网注册的信息输入到CubeMX的登录框内进行登录，然后就可以接着安装了\n然后再次进行第一步的操作，这次就可以进入嵌入式软件包管理界面了，接着选择自己开发板的固件库，我这里是f1的。选择版本安装，我这里已经安装过了。\n工程设置 1.点击 file -&gt; new project 建立工程\n按步骤即可。搜索型号，选择合适的型号进行工程建立\n2.进行系统调试及基准时钟配置。\n点击 System Core下拉栏中的 SYS。选择debug调试接口。我选择 serial Wire\nSW模式就选择serial Wire。JTAG模式就选择JTAG，4pin和5pin的区别多了一个复位引脚\nstlink调试就是SW模式，jlink调试就是JTAG模式\n3.进行时钟RCC选项配置\n点击 System Core下拉栏中的 RCC。可以都选外部晶振Crystal/Ceramic Resonator。\nBYPASS Clock Source（旁路时钟源）\nCrystal/Ceramic Resonator（石英/陶瓷 晶振）\n4.进行系统具体时钟配置\n(1)点击“Clock Configuration”选项栏进入时钟树配置界面。\n">
+<title>STM32CubeMX实现串口通信</title>
+
+<link rel='canonical' href='https://ynhugo.github.io/p/stm32cubemx%E5%AE%9E%E7%8E%B0%E4%B8%B2%E5%8F%A3%E9%80%9A%E4%BF%A1/'>
+
+<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="STM32CubeMX实现串口通信">
+<meta property='og:description' content=" STM32CubeMX实现串口通信 STM32CubeMX版本：6.10\n在安装STM32CubeMX之前需要电脑上有Java环境\nJava下载链接：https://javadl.oracle.com/webapps/download/AutoDL?BundleId=249203_b291ca3e0c8548b5a51d5a5f50063037\nSTM32CubeMX下载链接：https://www.st.com/zh/development-tools/stm32cubemx.html\nKeil5(MDK-ARM)下载链接：https://pan.baidu.com/s/1kC7h3ljv1iENa0mSP2a0aQ?pwd=pxsy\nProteus下载链接：https://mp.weixin.qq.com/s?__biz=MzA4MjU4MTg2Ng==&amp;mid=2247515066&amp;idx=5&amp;sn=ba4b87dad87c1f13ccc595934269bfaa&amp;chksm=9f817bbfa8f6f2a9cd6e6690e6a791ca3fd43f9bddf8ea06d2da4b07c28ce5600d79703d72f5&amp;scene=21#wechat_redirect\n串口调试助手：https://pan.baidu.com/s/1E5SprNfWX1yqPddtvsa8sw?pwd=e6vn\nVSPD下载链接：https://www.xue51.com/soft/9349.html#xzdz\n使用STM32CubeMX 安装固件库 若点击 Manage embedded software packages 后，出现失败，则需要随便点击其它任一选项，进行下载一些文件，比如点击 file-&gt;new project ，等下载后，再进行安装固件库。\n1.进入嵌入式软件包管理界面\n2.如果进入失败，则点击一下旁边的INSTALL/REMOVE，安装嵌入式软件包，如果提示登录的话，就将在ST官网注册的信息输入到CubeMX的登录框内进行登录，然后就可以接着安装了\n然后再次进行第一步的操作，这次就可以进入嵌入式软件包管理界面了，接着选择自己开发板的固件库，我这里是f1的。选择版本安装，我这里已经安装过了。\n工程设置 1.点击 file -&gt; new project 建立工程\n按步骤即可。搜索型号，选择合适的型号进行工程建立\n2.进行系统调试及基准时钟配置。\n点击 System Core下拉栏中的 SYS。选择debug调试接口。我选择 serial Wire\nSW模式就选择serial Wire。JTAG模式就选择JTAG，4pin和5pin的区别多了一个复位引脚\nstlink调试就是SW模式，jlink调试就是JTAG模式\n3.进行时钟RCC选项配置\n点击 System Core下拉栏中的 RCC。可以都选外部晶振Crystal/Ceramic Resonator。\nBYPASS Clock Source（旁路时钟源）\nCrystal/Ceramic Resonator（石英/陶瓷 晶振）\n4.进行系统具体时钟配置\n(1)点击“Clock Configuration”选项栏进入时钟树配置界面。\n">
+<meta property='og:url' content='https://ynhugo.github.io/p/stm32cubemx%E5%AE%9E%E7%8E%B0%E4%B8%B2%E5%8F%A3%E9%80%9A%E4%BF%A1/'>
+<meta property='og:site_name' content='ynhugo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='stm32' /><meta property='article:published_time' content='2024-03-26T00:24:32&#43;08:00'/><meta property='article:modified_time' content='2024-03-26T00:24:32&#43;08:00'/>
+<meta name="twitter:title" content="STM32CubeMX实现串口通信">
+<meta name="twitter:description" content=" STM32CubeMX实现串口通信 STM32CubeMX版本：6.10\n在安装STM32CubeMX之前需要电脑上有Java环境\nJava下载链接：https://javadl.oracle.com/webapps/download/AutoDL?BundleId=249203_b291ca3e0c8548b5a51d5a5f50063037\nSTM32CubeMX下载链接：https://www.st.com/zh/development-tools/stm32cubemx.html\nKeil5(MDK-ARM)下载链接：https://pan.baidu.com/s/1kC7h3ljv1iENa0mSP2a0aQ?pwd=pxsy\nProteus下载链接：https://mp.weixin.qq.com/s?__biz=MzA4MjU4MTg2Ng==&amp;mid=2247515066&amp;idx=5&amp;sn=ba4b87dad87c1f13ccc595934269bfaa&amp;chksm=9f817bbfa8f6f2a9cd6e6690e6a791ca3fd43f9bddf8ea06d2da4b07c28ce5600d79703d72f5&amp;scene=21#wechat_redirect\n串口调试助手：https://pan.baidu.com/s/1E5SprNfWX1yqPddtvsa8sw?pwd=e6vn\nVSPD下载链接：https://www.xue51.com/soft/9349.html#xzdz\n使用STM32CubeMX 安装固件库 若点击 Manage embedded software packages 后，出现失败，则需要随便点击其它任一选项，进行下载一些文件，比如点击 file-&gt;new project ，等下载后，再进行安装固件库。\n1.进入嵌入式软件包管理界面\n2.如果进入失败，则点击一下旁边的INSTALL/REMOVE，安装嵌入式软件包，如果提示登录的话，就将在ST官网注册的信息输入到CubeMX的登录框内进行登录，然后就可以接着安装了\n然后再次进行第一步的操作，这次就可以进入嵌入式软件包管理界面了，接着选择自己开发板的固件库，我这里是f1的。选择版本安装，我这里已经安装过了。\n工程设置 1.点击 file -&gt; new project 建立工程\n按步骤即可。搜索型号，选择合适的型号进行工程建立\n2.进行系统调试及基准时钟配置。\n点击 System Core下拉栏中的 SYS。选择debug调试接口。我选择 serial Wire\nSW模式就选择serial Wire。JTAG模式就选择JTAG，4pin和5pin的区别多了一个复位引脚\nstlink调试就是SW模式，jlink调试就是JTAG模式\n3.进行时钟RCC选项配置\n点击 System Core下拉栏中的 RCC。可以都选外部晶振Crystal/Ceramic Resonator。\nBYPASS Clock Source（旁路时钟源）\nCrystal/Ceramic Resonator（石英/陶瓷 晶振）\n4.进行系统具体时钟配置\n(1)点击“Clock Configuration”选项栏进入时钟树配置界面。\n">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_f509edb42ecc0ebd.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🍥</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">ynhugo</a></h1>
+            <h2 class="site-description">ynhugo.github.io</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/CaiJimmy/hugo-theme-stack'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://x.com'
+                        target="_blank"
+                        title="x"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E5%85%B3%E4%BA%8E/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                    
+                        <li id="i18n-switch">  
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                            <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
+                                
+                                    <option value="https://ynhugo.github.io/en/" >English</option>
+                                
+                                    <option value="https://ynhugo.github.io/" selected>中文</option>
+                                
+                                    <option value="https://ynhugo.github.io/ar/" >عربي</option>
+                                
+                            </select>
+                        </li>
+                    
+                
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+<ul>
+<li><a href="#headline-1">STM32CubeMX实现串口通信</a>
+<ul>
+<li><a href="#headline-2">使用STM32CubeMX</a>
+<ul>
+<li><a href="#headline-3">安装固件库</a>
+</li>
+<li><a href="#headline-4">工程设置</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-5">USART串口通信</a>
+<ul>
+<li><a href="#headline-6">UART函数库介绍</a>
+</li>
+<li><a href="#headline-7">代码编写</a>
+</li>
+<li><a href="#headline-8">VSPD配置虚拟串口</a>
+</li>
+<li><a href="#headline-9">Proteus仿真STM32F103C8</a>
+<ul>
+<li><a href="#headline-10">添加 STM32F103C8 和 虚拟终端</a>
+</li>
+<li><a href="#headline-11">配置STM32单片机参数</a>
+</li>
+<li><a href="#headline-12">配置虚拟终端参数</a>
+</li>
+<li><a href="#headline-13">配置COMPIM参数</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-14">效果展示</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#headline-15">重写输入/输出函数</a>
+<ul>
+<li><a href="#headline-16">在main.c重写printf函数</a>
+</li>
+<li><a href="#headline-17">在main.c重写scanf函数</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-18">参考链接</a>
+</li>
+</ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/stm32cubemx%E5%AE%9E%E7%8E%B0%E4%B8%B2%E5%8F%A3%E9%80%9A%E4%BF%A1/">STM32CubeMX实现串口通信</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Mar 26, 2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 2 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    
+<div id="outline-container-headline-1" class="outline-2">
+<h2 id="headline-1">
+STM32CubeMX实现串口通信
+</h2>
+<div id="outline-text-headline-1" class="outline-text-2">
+<p>
+STM32CubeMX版本：6.10</p>
+<p>
+在安装STM32CubeMX之前需要电脑上有Java环境</p>
+<p>
+Java下载链接：<a href="https://javadl.oracle.com/webapps/download/AutoDL?BundleId=249203_b291ca3e0c8548b5a51d5a5f50063037">https://javadl.oracle.com/webapps/download/AutoDL?BundleId=249203_b291ca3e0c8548b5a51d5a5f50063037</a></p>
+<p>
+STM32CubeMX下载链接：<a href="https://www.st.com/zh/development-tools/stm32cubemx.html">https://www.st.com/zh/development-tools/stm32cubemx.html</a></p>
+<p>
+Keil5(MDK-ARM)下载链接：<a href="https://pan.baidu.com/s/1kC7h3ljv1iENa0mSP2a0aQ?pwd=pxsy">https://pan.baidu.com/s/1kC7h3ljv1iENa0mSP2a0aQ?pwd=pxsy</a></p>
+<p>
+Proteus下载链接：<a href="https://mp.weixin.qq.com/s?__biz=MzA4MjU4MTg2Ng==&amp;mid=2247515066&amp;idx=5&amp;sn=ba4b87dad87c1f13ccc595934269bfaa&amp;chksm=9f817bbfa8f6f2a9cd6e6690e6a791ca3fd43f9bddf8ea06d2da4b07c28ce5600d79703d72f5&amp;scene=21#wechat_redirect">https://mp.weixin.qq.com/s?__biz=MzA4MjU4MTg2Ng==&amp;mid=2247515066&amp;idx=5&amp;sn=ba4b87dad87c1f13ccc595934269bfaa&amp;chksm=9f817bbfa8f6f2a9cd6e6690e6a791ca3fd43f9bddf8ea06d2da4b07c28ce5600d79703d72f5&amp;scene=21#wechat_redirect</a></p>
+<p>
+串口调试助手：<a href="https://pan.baidu.com/s/1E5SprNfWX1yqPddtvsa8sw?pwd=e6vn">https://pan.baidu.com/s/1E5SprNfWX1yqPddtvsa8sw?pwd=e6vn</a></p>
+<p>
+VSPD下载链接：<a href="https://www.xue51.com/soft/9349.html#xzdz">https://www.xue51.com/soft/9349.html#xzdz</a></p>
+<div id="outline-container-headline-2" class="outline-3">
+<h3 id="headline-2">
+使用STM32CubeMX
+</h3>
+<div id="outline-text-headline-2" class="outline-text-3">
+<div id="outline-container-headline-3" class="outline-4">
+<h4 id="headline-3">
+安装固件库
+</h4>
+<div id="outline-text-headline-3" class="outline-text-4">
+<p>
+若点击 Manage embedded software packages 后，出现失败，则需要随便点击其它任一选项，进行下载一些文件，比如点击 file-&gt;new project ，等下载后，再进行安装固件库。</p>
+<p>
+1.进入嵌入式软件包管理界面</p>
+<p>
+<img src="/images/stm32/STM32CubeMX实现串口通信/png1.png" alt="/images/stm32/STM32CubeMX实现串口通信/png1.png" title="/images/stm32/STM32CubeMX实现串口通信/png1.png" /></p>
+<p>
+2.如果进入失败，则点击一下旁边的INSTALL/REMOVE，安装嵌入式软件包，如果提示登录的话，就将在<a href="https://st.com">ST</a>官网注册的信息输入到CubeMX的登录框内进行登录，然后就可以接着安装了</p>
+<p>
+<img src="/images/stm32/STM32CubeMX实现串口通信/png2.png" alt="/images/stm32/STM32CubeMX实现串口通信/png2.png" title="/images/stm32/STM32CubeMX实现串口通信/png2.png" /></p>
+<p>
+然后再次进行第一步的操作，这次就可以进入嵌入式软件包管理界面了，接着选择自己开发板的固件库，我这里是f1的。选择版本安装，我这里已经安装过了。</p>
+<p>
+<img src="/images/stm32/STM32CubeMX实现串口通信/png3.png" alt="/images/stm32/STM32CubeMX实现串口通信/png3.png" title="/images/stm32/STM32CubeMX实现串口通信/png3.png" /></p>
+</div>
+</div>
+<div id="outline-container-headline-4" class="outline-4">
+<h4 id="headline-4">
+工程设置
+</h4>
+<div id="outline-text-headline-4" class="outline-text-4">
+<p>
+1.点击 file -&gt; new project 建立工程</p>
+<p>
+<img src="/images/stm32/STM32CubeMX实现串口通信/png4.png" alt="/images/stm32/STM32CubeMX实现串口通信/png4.png" title="/images/stm32/STM32CubeMX实现串口通信/png4.png" /></p>
+<p>
+按步骤即可。搜索型号，选择合适的型号进行工程建立</p>
+<p>
+<img src="/images/stm32/STM32CubeMX实现串口通信/png5.png" alt="/images/stm32/STM32CubeMX实现串口通信/png5.png" title="/images/stm32/STM32CubeMX实现串口通信/png5.png" /></p>
+<p>
+2.进行系统调试及基准时钟配置。</p>
+<p>
+点击 System Core下拉栏中的 SYS。选择debug调试接口。我选择 serial Wire</p>
+<p>
+SW模式就选择serial Wire。JTAG模式就选择JTAG，4pin和5pin的区别多了一个复位引脚</p>
+<p>
+stlink调试就是SW模式，jlink调试就是JTAG模式</p>
+<p>
+<img src="/images/stm32/STM32CubeMX实现串口通信/png6.png" alt="/images/stm32/STM32CubeMX实现串口通信/png6.png" title="/images/stm32/STM32CubeMX实现串口通信/png6.png" /></p>
+<p>
+3.进行时钟RCC选项配置</p>
+<p>
+点击 System Core下拉栏中的 RCC。可以都选外部晶振Crystal/Ceramic Resonator。</p>
+<p>
+BYPASS Clock Source（旁路时钟源）</p>
+<p>
+Crystal/Ceramic Resonator（石英/陶瓷 晶振）</p>
+<p>
+<img src="/images/stm32/STM32CubeMX实现串口通信/png7.png" alt="/images/stm32/STM32CubeMX实现串口通信/png7.png" title="/images/stm32/STM32CubeMX实现串口通信/png7.png" /></p>
+<p>
+4.进行系统具体时钟配置</p>
+<p>
+(1)点击“Clock Configuration”选项栏进入时钟树配置界面。</p>
+<p>
+(2)选择外部时钟HSE 8MHz</p>
+<p>
+(3)PLL锁相环倍频9倍（8*9=72）</p>
+<p>
+(4)系统时钟来源选择为PLL</p>
+<p>
+(5)设置APB1分频器为 /2</p>
+<p>
+<img src="/images/stm32/STM32CubeMX实现串口通信/png8.png" alt="/images/stm32/STM32CubeMX实现串口通信/png8.png" title="/images/stm32/STM32CubeMX实现串口通信/png8.png" /></p>
+<p>
+5.设置串口</p>
+<p>
+这里选择USART1。串口配置的引脚为默认 PA6、PA7，无法手动更改。</p>
+<p>
+第三步中 设置MODE为 异步通信(Asynchronous)</p>
+<p>
+第四步中参数默认设置为 波特率为115200 Bits/s，传输数据长度为8 Bit，奇偶检验无，停止位1。以及下面未显示出的 接收和发送都使能</p>
+<p>
+<img src="/images/stm32/STM32CubeMX实现串口通信/png9.png" alt="/images/stm32/STM32CubeMX实现串口通信/png9.png" title="/images/stm32/STM32CubeMX实现串口通信/png9.png" /></p>
+<p>
+6.设置完成后，点击 Project Manager 选项，进入工程设置界面，选择 Project 选项。</p>
+<p>
+不管工程名称还是路径都不要有中文，否则后面编译文件会出错。</p>
+<p>
+Project Name：工程名称</p>
+<p>
+Project Location：点击后面的&#34;Browse&#34;选择你想要将生成的工程保存到哪个目录里面。</p>
+<p>
+Application Structure：应用程序结构</p>
+<ul>
+<li>Basic：是基础的结构，一般不包含中间件（RTOS、文件系统、USB设备等）</li>
+<li>Advanced：相反就是包含中间件，一般针对相对复杂一点的工程。</li>
+</ul>
+<p>Toolchain/IDE：根据你用的编译软件进行选择 使用KEIL就选择keil的对应版本。不要高于版本</p>
+<p>
+其他默认。</p>
+<p>
+<img src="/images/stm32/STM32CubeMX实现串口通信/png10.png" alt="/images/stm32/STM32CubeMX实现串口通信/png10.png" title="/images/stm32/STM32CubeMX实现串口通信/png10.png" /></p>
+<p>
+Code Generator 选项可以进行默认。这里我多勾选一个。</p>
+<p>
+<img src="/images/stm32/STM32CubeMX实现串口通信/png11.png" alt="/images/stm32/STM32CubeMX实现串口通信/png11.png" title="/images/stm32/STM32CubeMX实现串口通信/png11.png" /></p>
+<p>
+Code Generator 选项说明：</p>
+<ul>
+<li>copy all used libraries into the project folder：复制所有库文件（不管工程需要用到还是没用到）到生成的工程目录中，此做法可以使在不使用Cubemx或者电脑没有安装cubemx,依然可以按照标准库的编程习惯调用HAL库函数进行程序编写。</li>
+<li>Copy only the necessary library files： 只复制必要的库文件。这个相比上一个减少了很多文件。比如你没有使用CAN、SPI…等外设，就不会拷贝相关库文件到你工程下。</li>
+<li>Add necessary library files as reference in the toolchain project configuration file ：在工具链项目配置文件中添加必要的库文件作为参考。这里没有复制HAL库文件，只添加了必要文件（如main.c）。相比上面，没有Drivers相关文件。</li>
+<li>Generate peripheral initialization as a pair of’.c/.h’ files per peripheral：每个外设生成独立的.C .H文件，方便独立管理。不勾：所有初始化代码都生成在main.c 勾选：初始化代码生成在对应的外设文件。 如UART初始化代码生成在uart.c中。</li>
+<li>Backup previously generated files when re-generating：在重新生成时备份以前生成的文件。重新生成代码时，会在相关目录中生成一个Backup文件夹，将之前源文件拷贝到其中。</li>
+<li>keep user code when re-generating：重新生成代码时，保留用户代码(前提是代码写在规定的位置。也就是生成工程文件中的BEGIN和END之间。否则同样会删除。后面会根据生成的工程进行说明)</li>
+<li>delete previously generated files when not re-generated：删除以前生成但现在没有选择生成的文件 比如：之前生成了led.c，现在重新配置没有led.c，则会删除之前的led.c文件。(此功能根据自身要求进行取舍)</li>
+</ul>
+<p>点击 GENERATE CODE 生成代码。然后打开工程</p>
+<p>
+<img src="/images/stm32/STM32CubeMX实现串口通信/png12.png" alt="/images/stm32/STM32CubeMX实现串口通信/png12.png" title="/images/stm32/STM32CubeMX实现串口通信/png12.png" /></p>
+<p>
+编译代码。编译无误</p>
+<p>
+<img src="/images/stm32/STM32CubeMX实现串口通信/png13.png" alt="/images/stm32/STM32CubeMX实现串口通信/png13.png" title="/images/stm32/STM32CubeMX实现串口通信/png13.png" /></p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-5" class="outline-3">
+<h3 id="headline-5">
+USART串口通信
+</h3>
+<div id="outline-text-headline-5" class="outline-text-3">
+<div id="outline-container-headline-6" class="outline-4">
+<h4 id="headline-6">
+UART函数库介绍
+</h4>
+<div id="outline-text-headline-6" class="outline-text-4">
+<p>
+结构体以及函数定义均在头文件： stm32f1xx_hal_uart.h</p>
+<p>
+UART结构体定义</p>
+<div class="src src-c">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">  <span class="n">UART_HandleTypeDef</span> <span class="n">huart1</span><span class="p">;</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+串口发送/接收函数</p>
+<div class="src src-c">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">  <span class="nf">HAL_UART_Transmit</span><span class="p">()</span><span class="err">：串口发送数据，使用超时管理机制</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nf">HAL_UART_Receive</span><span class="p">()</span><span class="err">：串口接收数据，使用超时管理机制</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nf">HAL_UART_Transmit_IT</span><span class="p">()</span><span class="err">：串口中断模式发送</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nf">HAL_UART_Receive_IT</span><span class="p">()</span><span class="err">：串口中断模式接收</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nf">HAL_UART_Transmit_DMA</span><span class="p">()</span><span class="err">：串口</span><span class="n">DMA模式发送</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nf">HAL_UART_Transmit_DMA</span><span class="p">()</span><span class="err">：串口</span><span class="n">DMA模式接收</span><span class="p">;</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+串口发送数据：</p>
+<div class="src src-c">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">  <span class="nf">HAL_UART_Transmit</span><span class="p">(</span><span class="n">UART_HandleTypeDef</span> <span class="o">*</span><span class="n">huart</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">pData</span><span class="p">,</span> <span class="kt">uint16_t</span> <span class="n">Size</span><span class="p">,</span> <span class="kt">uint32_t</span> <span class="n">Timeout</span><span class="p">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+功能：串口发送指定长度的数据。如果超时没发送完成，则不再发送，返回超时标志（HAL_TIMEOUT）。</p>
+<p>
+参数：</p>
+<ul>
+<li>*UART_HandleTypeDef huart：UART结构体（ huart1）</li>
+<li>*pData：需要发送的数据</li>
+<li>Size：发送的字节数</li>
+<li>Timeout：最大发送时间，发送数据超过该时间退出发送</li>
+</ul>
+<p>举例：</p>
+<div class="src src-c">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">  <span class="nf">HAL_UART_Transmit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">huart1</span><span class="p">,</span> <span class="p">(</span><span class="kt">uint8_t</span> <span class="o">*</span><span class="p">)</span><span class="s">&#34;diyu&#34;</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mh">0xffff</span><span class="p">);</span>   <span class="c1">//串口发送4个字节数据，最大传输时间0xfff
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-7" class="outline-4">
+<h4 id="headline-7">
+代码编写
+</h4>
+<div id="outline-text-headline-7" class="outline-text-4">
+<p>
+在文件 main.c中的while循环里添加代码</p>
+<div class="src src-c">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">  <span class="k">while</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	  <span class="cm">/* USER CODE END WHILE */</span>
+</span></span><span class="line"><span class="cl">	  <span class="c1">//添加下面两行代码
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	  <span class="nf">HAL_UART_Transmit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">huart1</span><span class="p">,</span> <span class="p">(</span><span class="kt">uint8_t</span> <span class="o">*</span><span class="p">)</span><span class="s">&#34;hello windows!</span><span class="se">\r\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="mi">16</span> <span class="p">,</span> <span class="mh">0xffff</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	  <span class="nf">HAL_Delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>  <span class="c1">//延时1s
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	  <span class="cm">/* USER CODE BEGIN 3 */</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-8" class="outline-4">
+<h4 id="headline-8">
+VSPD配置虚拟串口
+</h4>
+<div id="outline-text-headline-8" class="outline-text-4">
+<p>
+<img src="/images/stm32/STM32CubeMX实现串口通信/png19.png" alt="/images/stm32/STM32CubeMX实现串口通信/png19.png" title="/images/stm32/STM32CubeMX实现串口通信/png19.png" /></p>
+</div>
+</div>
+<div id="outline-container-headline-9" class="outline-4">
+<h4 id="headline-9">
+Proteus仿真STM32F103C8
+</h4>
+<div id="outline-text-headline-9" class="outline-text-4">
+<div id="outline-container-headline-10" class="outline-5">
+<h5 id="headline-10">
+添加 STM32F103C8 和 虚拟终端
+</h5>
+<div id="outline-text-headline-10" class="outline-text-5">
+<p>
+<img src="/images/stm32/STM32CubeMX实现串口通信/png15.png" alt="/images/stm32/STM32CubeMX实现串口通信/png15.png" title="/images/stm32/STM32CubeMX实现串口通信/png15.png" /></p>
+</div>
+</div>
+<div id="outline-container-headline-11" class="outline-5">
+<h5 id="headline-11">
+配置STM32单片机参数
+</h5>
+<div id="outline-text-headline-11" class="outline-text-5">
+<p>
+<img src="/images/stm32/STM32CubeMX实现串口通信/png16.png" alt="/images/stm32/STM32CubeMX实现串口通信/png16.png" title="/images/stm32/STM32CubeMX实现串口通信/png16.png" /></p>
+</div>
+</div>
+<div id="outline-container-headline-12" class="outline-5">
+<h5 id="headline-12">
+配置虚拟终端参数
+</h5>
+<div id="outline-text-headline-12" class="outline-text-5">
+<p>
+<img src="/images/stm32/STM32CubeMX实现串口通信/png17.png" alt="/images/stm32/STM32CubeMX实现串口通信/png17.png" title="/images/stm32/STM32CubeMX实现串口通信/png17.png" /></p>
+</div>
+</div>
+<div id="outline-container-headline-13" class="outline-5">
+<h5 id="headline-13">
+配置COMPIM参数
+</h5>
+<div id="outline-text-headline-13" class="outline-text-5">
+<p>
+<img src="/images/stm32/STM32CubeMX实现串口通信/png18.png" alt="/images/stm32/STM32CubeMX实现串口通信/png18.png" title="/images/stm32/STM32CubeMX实现串口通信/png18.png" /></p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-14" class="outline-4">
+<h4 id="headline-14">
+效果展示
+</h4>
+<div id="outline-text-headline-14" class="outline-text-4">
+<p>
+编译，将程序烧录或下载进，打开串口助手查看接收到的数据。</p>
+<p>
+波特率、停止位、数据位、校验位要与配置的一致</p>
+<p>
+<img src="/images/stm32/STM32CubeMX实现串口通信/png14.png" alt="/images/stm32/STM32CubeMX实现串口通信/png14.png" title="/images/stm32/STM32CubeMX实现串口通信/png14.png" /></p>
+<p>
+<img src="/images/stm32/STM32CubeMX实现串口通信/png20.png" alt="/images/stm32/STM32CubeMX实现串口通信/png20.png" title="/images/stm32/STM32CubeMX实现串口通信/png20.png" /></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-15" class="outline-2">
+<h2 id="headline-15">
+重写输入/输出函数
+</h2>
+<div id="outline-text-headline-15" class="outline-text-2">
+<p>
+重写输入/输出函数是在main.c文件中完成的</p>
+<p>
+重写输入/输出函数之前需要先在main.c文件包含一下&#34;stdio.h&#34;头文件</p>
+<div class="src src-c">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">  <span class="cp">#include</span> <span class="cpf">&#34;stdio.h&#34;</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-16" class="outline-3">
+<h3 id="headline-16">
+在main.c重写printf函数
+</h3>
+<div id="outline-text-headline-16" class="outline-text-3">
+<div class="src src-c">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">  <span class="kt">int</span> <span class="nf">fputc</span><span class="p">(</span><span class="kt">int</span> <span class="n">c</span><span class="p">,</span> <span class="n">FILE</span> <span class="o">*</span> <span class="n">f</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">{</span>		
+</span></span><span class="line"><span class="cl">	  <span class="kt">int</span> <span class="n">ch</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	  <span class="n">ch</span><span class="o">=</span><span class="n">c</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	  <span class="nf">HAL_UART_Transmit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">huart1</span><span class="p">,(</span><span class="kt">uint8_t</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">ch</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1000</span><span class="p">);</span><span class="c1">//发送串口
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	  <span class="k">return</span> <span class="n">c</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-17" class="outline-3">
+<h3 id="headline-17">
+在main.c重写scanf函数
+</h3>
+<div id="outline-text-headline-17" class="outline-text-3">
+<div class="src src-c">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">  <span class="kt">int</span> <span class="nf">fgetc</span><span class="p">(</span><span class="n">FILE</span> <span class="o">*</span> <span class="n">F</span><span class="p">)</span>    
+</span></span><span class="line"><span class="cl">  <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	  <span class="kt">int</span> <span class="n">ch_r</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	  <span class="nf">HAL_UART_Receive</span> <span class="p">(</span><span class="o">&amp;</span><span class="n">huart1</span><span class="p">,(</span><span class="kt">uint8_t</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">ch_r</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mh">0xffff</span><span class="p">);</span><span class="c1">//接收
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	  <span class="k">return</span> <span class="n">ch_r</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-18" class="outline-2">
+<h2 id="headline-18">
+参考链接
+</h2>
+<div id="outline-text-headline-18" class="outline-text-2">
+<p>
+<a href="https://blog.csdn.net/qq_45945548/article/details/120984961">STM32CubeMX实现串口通信</a></p>
+<p>
+<a href="https://blog.csdn.net/lijin111222/article/details/123187483">STM32学习：串口通讯（proteus仿真）</a></p>
+<p>
+https://blog.csdn.net/qq_28317769/article/details/106659139</p>
+<p>
+<a href="https://blog.csdn.net/raulcy/article/details/123948637">STM32自学笔记-0-重写printf和scanf</a></p>
+</div>
+</div>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/stm32/">Stm32</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "hugo-theme-stack" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2025 Example Person
+    </section>
+    
+    <section class="powerby">
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

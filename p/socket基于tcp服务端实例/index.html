@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" socket基于tcp服务端实例 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 #include &lt;stdlib.h&gt; #include &lt;stdio.h&gt; #include &lt;stdbool.h&gt; #include &lt;assert.h&gt; #include &lt;fcntl.h&gt; // Flags for open() #include &lt;sys/stat.h&gt; // Open() system call #include &lt;sys/types.h&gt; // Types for open() #include &lt;unistd.h&gt; // Close() system call #include &lt;string.h&gt; // Memory setting and copying #include &lt;getopt.h&gt; // Option parsing #include &lt;errno.h&gt; // Error codes #include&lt;sys/socket.h&gt; #include&lt;netinet/in.h&gt; #include &lt;pthread.h&gt; #define DEFAULT_PORT 7 #define MAXLINE 4096 int socket_fd, connect_fd; int flag1; struct test { int flag1; }; /*---------------------------------------------------------------------------- * DMA File Transfer Functions *----------------------------------------------------------------------------*/ void *receive_file(void *arg) { struct test *my = (struct test *)arg; while (1) { if (my-&gt;flag1 == 1) { printf(&#34;test1\\n&#34;); } else if (my-&gt;flag1 == 2) { printf(&#34;test2\\n&#34;); } sleep(1); } // pthread_exit(NULL); return NULL; } /*---------------------------------------------------------------------------- * Main *----------------------------------------------------------------------------*/ int main(void) { // Socket相关变量 struct sockaddr_in servaddr; unsigned char buff[MAXLINE]; int n; int err; pthread_t tid; struct test *ts = (struct test *)malloc(sizeof(struct test)); ts-&gt;flag1 = 0; //初始化Socket if( (socket_fd = socket(AF_INET, SOCK_STREAM, 0)) == -1 ) { printf(&#34;create socket error: %s(errno: %d)\\n&#34;,strerror(errno),errno); exit(0); } // 解决 Address already in use 问题 int opt = 1; setsockopt(socket_fd, SOL_SOCKET, SO_REUSEADDR, &amp;opt, sizeof(opt)); //初始化 memset(&amp;servaddr, 0, sizeof(servaddr)); servaddr.sin_family = AF_INET; servaddr.sin_addr.s_addr = htonl(INADDR_ANY);//IP地址设置成INADDR_ANY,让系统自动获取本机的IP地址。 servaddr.sin_port = htons(DEFAULT_PORT);//设置的端口为DEFAULT_PORT //将本地地址绑定到所创建的套接字上 if( bind(socket_fd, (struct sockaddr*)&amp;servaddr, sizeof(servaddr)) == -1) { printf(&#34;bind socket error: %s(errno: %d)\\n&#34;,strerror(errno),errno); exit(0); } //开始监听是否有客户端连接 if( listen(socket_fd, 2) == -1) { printf(&#34;listen socket error: %s(errno: %d)\\n&#34;,strerror(errno),errno); exit(0); } printf(&#34;======waiting for client&#39;s request======\\n&#34;); // 启动线程 if ((err = pthread_create(&amp;tid, NULL, &amp;receive_file, ts)) != 0) { printf(&#34;err = %d, can&#39;t create thread&#34;, err); } pthread_detach(tid); //分离线程，避免僵尸进程 while (1) { //阻塞直到有客户端连接，不然多浪费CPU资源。 if( (connect_fd = accept(socket_fd, (struct sockaddr*)NULL, NULL)) == -1) { printf(&#34;accept socket error: %s(errno: %d)&#34;,strerror(errno),errno); continue; } while (1) { //接受客户端传过来的数据 n = recv(connect_fd, buff, MAXLINE, 0); if(n &gt; 0) { // 判断是开始还是停止 if (buff[0] == 0xFA &amp;&amp; buff[7] == 0x01) { ts-&gt;flag1 = 1; printf(&#34;start\\n&#34;); } else if (buff[0] == 0xFA &amp;&amp; buff[7] == 0x02) { ts-&gt;flag1 = 2; // 停止 printf(&#34;stop\\n&#34;); } else if (buff[0] == 0xFA &amp;&amp; buff[7] == 0x03) { ts-&gt;flag1 = 3; } } else { close(connect_fd); break; } } usleep(100); } close(connect_fd); close(socket_fd); return 0; } 参考链接 socket基于tcp通信实例\n">
+<title>socket基于tcp服务端实例</title>
+
+<link rel='canonical' href='https://ynhugo.github.io/p/socket%E5%9F%BA%E4%BA%8Etcp%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%AE%9E%E4%BE%8B/'>
+
+<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="socket基于tcp服务端实例">
+<meta property='og:description' content=" socket基于tcp服务端实例 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 #include &lt;stdlib.h&gt; #include &lt;stdio.h&gt; #include &lt;stdbool.h&gt; #include &lt;assert.h&gt; #include &lt;fcntl.h&gt; // Flags for open() #include &lt;sys/stat.h&gt; // Open() system call #include &lt;sys/types.h&gt; // Types for open() #include &lt;unistd.h&gt; // Close() system call #include &lt;string.h&gt; // Memory setting and copying #include &lt;getopt.h&gt; // Option parsing #include &lt;errno.h&gt; // Error codes #include&lt;sys/socket.h&gt; #include&lt;netinet/in.h&gt; #include &lt;pthread.h&gt; #define DEFAULT_PORT 7 #define MAXLINE 4096 int socket_fd, connect_fd; int flag1; struct test { int flag1; }; /*---------------------------------------------------------------------------- * DMA File Transfer Functions *----------------------------------------------------------------------------*/ void *receive_file(void *arg) { struct test *my = (struct test *)arg; while (1) { if (my-&gt;flag1 == 1) { printf(&#34;test1\\n&#34;); } else if (my-&gt;flag1 == 2) { printf(&#34;test2\\n&#34;); } sleep(1); } // pthread_exit(NULL); return NULL; } /*---------------------------------------------------------------------------- * Main *----------------------------------------------------------------------------*/ int main(void) { // Socket相关变量 struct sockaddr_in servaddr; unsigned char buff[MAXLINE]; int n; int err; pthread_t tid; struct test *ts = (struct test *)malloc(sizeof(struct test)); ts-&gt;flag1 = 0; //初始化Socket if( (socket_fd = socket(AF_INET, SOCK_STREAM, 0)) == -1 ) { printf(&#34;create socket error: %s(errno: %d)\\n&#34;,strerror(errno),errno); exit(0); } // 解决 Address already in use 问题 int opt = 1; setsockopt(socket_fd, SOL_SOCKET, SO_REUSEADDR, &amp;opt, sizeof(opt)); //初始化 memset(&amp;servaddr, 0, sizeof(servaddr)); servaddr.sin_family = AF_INET; servaddr.sin_addr.s_addr = htonl(INADDR_ANY);//IP地址设置成INADDR_ANY,让系统自动获取本机的IP地址。 servaddr.sin_port = htons(DEFAULT_PORT);//设置的端口为DEFAULT_PORT //将本地地址绑定到所创建的套接字上 if( bind(socket_fd, (struct sockaddr*)&amp;servaddr, sizeof(servaddr)) == -1) { printf(&#34;bind socket error: %s(errno: %d)\\n&#34;,strerror(errno),errno); exit(0); } //开始监听是否有客户端连接 if( listen(socket_fd, 2) == -1) { printf(&#34;listen socket error: %s(errno: %d)\\n&#34;,strerror(errno),errno); exit(0); } printf(&#34;======waiting for client&#39;s request======\\n&#34;); // 启动线程 if ((err = pthread_create(&amp;tid, NULL, &amp;receive_file, ts)) != 0) { printf(&#34;err = %d, can&#39;t create thread&#34;, err); } pthread_detach(tid); //分离线程，避免僵尸进程 while (1) { //阻塞直到有客户端连接，不然多浪费CPU资源。 if( (connect_fd = accept(socket_fd, (struct sockaddr*)NULL, NULL)) == -1) { printf(&#34;accept socket error: %s(errno: %d)&#34;,strerror(errno),errno); continue; } while (1) { //接受客户端传过来的数据 n = recv(connect_fd, buff, MAXLINE, 0); if(n &gt; 0) { // 判断是开始还是停止 if (buff[0] == 0xFA &amp;&amp; buff[7] == 0x01) { ts-&gt;flag1 = 1; printf(&#34;start\\n&#34;); } else if (buff[0] == 0xFA &amp;&amp; buff[7] == 0x02) { ts-&gt;flag1 = 2; // 停止 printf(&#34;stop\\n&#34;); } else if (buff[0] == 0xFA &amp;&amp; buff[7] == 0x03) { ts-&gt;flag1 = 3; } } else { close(connect_fd); break; } } usleep(100); } close(connect_fd); close(socket_fd); return 0; } 参考链接 socket基于tcp通信实例\n">
+<meta property='og:url' content='https://ynhugo.github.io/p/socket%E5%9F%BA%E4%BA%8Etcp%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%AE%9E%E4%BE%8B/'>
+<meta property='og:site_name' content='ynhugo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='socket' /><meta property='article:tag' content='tcp' /><meta property='article:tag' content='程序员' /><meta property='article:published_time' content='2025-03-18T10:51:57&#43;08:00'/><meta property='article:modified_time' content='2025-03-18T10:51:57&#43;08:00'/>
+<meta name="twitter:title" content="socket基于tcp服务端实例">
+<meta name="twitter:description" content=" socket基于tcp服务端实例 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 #include &lt;stdlib.h&gt; #include &lt;stdio.h&gt; #include &lt;stdbool.h&gt; #include &lt;assert.h&gt; #include &lt;fcntl.h&gt; // Flags for open() #include &lt;sys/stat.h&gt; // Open() system call #include &lt;sys/types.h&gt; // Types for open() #include &lt;unistd.h&gt; // Close() system call #include &lt;string.h&gt; // Memory setting and copying #include &lt;getopt.h&gt; // Option parsing #include &lt;errno.h&gt; // Error codes #include&lt;sys/socket.h&gt; #include&lt;netinet/in.h&gt; #include &lt;pthread.h&gt; #define DEFAULT_PORT 7 #define MAXLINE 4096 int socket_fd, connect_fd; int flag1; struct test { int flag1; }; /*---------------------------------------------------------------------------- * DMA File Transfer Functions *----------------------------------------------------------------------------*/ void *receive_file(void *arg) { struct test *my = (struct test *)arg; while (1) { if (my-&gt;flag1 == 1) { printf(&#34;test1\\n&#34;); } else if (my-&gt;flag1 == 2) { printf(&#34;test2\\n&#34;); } sleep(1); } // pthread_exit(NULL); return NULL; } /*---------------------------------------------------------------------------- * Main *----------------------------------------------------------------------------*/ int main(void) { // Socket相关变量 struct sockaddr_in servaddr; unsigned char buff[MAXLINE]; int n; int err; pthread_t tid; struct test *ts = (struct test *)malloc(sizeof(struct test)); ts-&gt;flag1 = 0; //初始化Socket if( (socket_fd = socket(AF_INET, SOCK_STREAM, 0)) == -1 ) { printf(&#34;create socket error: %s(errno: %d)\\n&#34;,strerror(errno),errno); exit(0); } // 解决 Address already in use 问题 int opt = 1; setsockopt(socket_fd, SOL_SOCKET, SO_REUSEADDR, &amp;opt, sizeof(opt)); //初始化 memset(&amp;servaddr, 0, sizeof(servaddr)); servaddr.sin_family = AF_INET; servaddr.sin_addr.s_addr = htonl(INADDR_ANY);//IP地址设置成INADDR_ANY,让系统自动获取本机的IP地址。 servaddr.sin_port = htons(DEFAULT_PORT);//设置的端口为DEFAULT_PORT //将本地地址绑定到所创建的套接字上 if( bind(socket_fd, (struct sockaddr*)&amp;servaddr, sizeof(servaddr)) == -1) { printf(&#34;bind socket error: %s(errno: %d)\\n&#34;,strerror(errno),errno); exit(0); } //开始监听是否有客户端连接 if( listen(socket_fd, 2) == -1) { printf(&#34;listen socket error: %s(errno: %d)\\n&#34;,strerror(errno),errno); exit(0); } printf(&#34;======waiting for client&#39;s request======\\n&#34;); // 启动线程 if ((err = pthread_create(&amp;tid, NULL, &amp;receive_file, ts)) != 0) { printf(&#34;err = %d, can&#39;t create thread&#34;, err); } pthread_detach(tid); //分离线程，避免僵尸进程 while (1) { //阻塞直到有客户端连接，不然多浪费CPU资源。 if( (connect_fd = accept(socket_fd, (struct sockaddr*)NULL, NULL)) == -1) { printf(&#34;accept socket error: %s(errno: %d)&#34;,strerror(errno),errno); continue; } while (1) { //接受客户端传过来的数据 n = recv(connect_fd, buff, MAXLINE, 0); if(n &gt; 0) { // 判断是开始还是停止 if (buff[0] == 0xFA &amp;&amp; buff[7] == 0x01) { ts-&gt;flag1 = 1; printf(&#34;start\\n&#34;); } else if (buff[0] == 0xFA &amp;&amp; buff[7] == 0x02) { ts-&gt;flag1 = 2; // 停止 printf(&#34;stop\\n&#34;); } else if (buff[0] == 0xFA &amp;&amp; buff[7] == 0x03) { ts-&gt;flag1 = 3; } } else { close(connect_fd); break; } } usleep(100); } close(connect_fd); close(socket_fd); return 0; } 参考链接 socket基于tcp通信实例\n">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_f509edb42ecc0ebd.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🍥</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">ynhugo</a></h1>
+            <h2 class="site-description">ynhugo.github.io</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/CaiJimmy/hugo-theme-stack'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://x.com'
+                        target="_blank"
+                        title="x"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E5%85%B3%E4%BA%8E/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                    
+                        <li id="i18n-switch">  
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                            <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
+                                
+                                    <option value="https://ynhugo.github.io/en/" >English</option>
+                                
+                                    <option value="https://ynhugo.github.io/" selected>中文</option>
+                                
+                                    <option value="https://ynhugo.github.io/ar/" >عربي</option>
+                                
+                            </select>
+                        </li>
+                    
+                
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+<ul>
+<li><a href="#headline-1">socket基于tcp服务端实例</a>
+<ul>
+<li><a href="#headline-2">参考链接</a>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/socket%E5%9F%BA%E4%BA%8Etcp%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%AE%9E%E4%BE%8B/">socket基于tcp服务端实例</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Mar 18, 2025</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 3 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    
+<div id="outline-container-headline-1" class="outline-2">
+<h2 id="headline-1">
+socket基于tcp服务端实例
+</h2>
+<div id="outline-text-headline-1" class="outline-text-2">
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">#include &lt;stdlib.h&gt;
+</span></span><span class="line"><span class="cl">#include &lt;stdio.h&gt;
+</span></span><span class="line"><span class="cl">#include &lt;stdbool.h&gt;
+</span></span><span class="line"><span class="cl">#include &lt;assert.h&gt;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">#include &lt;fcntl.h&gt;              // Flags for open()
+</span></span><span class="line"><span class="cl">#include &lt;sys/stat.h&gt;           // Open() system call
+</span></span><span class="line"><span class="cl">#include &lt;sys/types.h&gt;          // Types for open()
+</span></span><span class="line"><span class="cl">#include &lt;unistd.h&gt;             // Close() system call
+</span></span><span class="line"><span class="cl">#include &lt;string.h&gt;             // Memory setting and copying
+</span></span><span class="line"><span class="cl">#include &lt;getopt.h&gt;             // Option parsing
+</span></span><span class="line"><span class="cl">#include &lt;errno.h&gt;              // Error codes
+</span></span><span class="line"><span class="cl">#include&lt;sys/socket.h&gt;
+</span></span><span class="line"><span class="cl">#include&lt;netinet/in.h&gt;
+</span></span><span class="line"><span class="cl">#include &lt;pthread.h&gt;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">#define DEFAULT_PORT 7
+</span></span><span class="line"><span class="cl">#define MAXLINE 4096
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">int    socket_fd, connect_fd;
+</span></span><span class="line"><span class="cl">int    flag1;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">struct test {
+</span></span><span class="line"><span class="cl">	int    flag1;
+</span></span><span class="line"><span class="cl">};
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">/*----------------------------------------------------------------------------
+</span></span><span class="line"><span class="cl"> * DMA File Transfer Functions
+</span></span><span class="line"><span class="cl"> *----------------------------------------------------------------------------*/
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">void *receive_file(void *arg)
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">	struct test *my = (struct test *)arg;
+</span></span><span class="line"><span class="cl">    while (1) {
+</span></span><span class="line"><span class="cl">    	if (my-&gt;flag1 == 1) {
+</span></span><span class="line"><span class="cl">    		printf(&#34;test1\n&#34;);
+</span></span><span class="line"><span class="cl">    	} else if (my-&gt;flag1 == 2) {
+</span></span><span class="line"><span class="cl">    		printf(&#34;test2\n&#34;);
+</span></span><span class="line"><span class="cl">    	}
+</span></span><span class="line"><span class="cl">    	sleep(1);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">//    pthread_exit(NULL);
+</span></span><span class="line"><span class="cl">    return NULL;
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">/*----------------------------------------------------------------------------
+</span></span><span class="line"><span class="cl"> * Main
+</span></span><span class="line"><span class="cl"> *----------------------------------------------------------------------------*/
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">int main(void)
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">	// Socket相关变量
+</span></span><span class="line"><span class="cl">    struct sockaddr_in     servaddr;
+</span></span><span class="line"><span class="cl">	unsigned char    buff[MAXLINE];
+</span></span><span class="line"><span class="cl">	int     n;
+</span></span><span class="line"><span class="cl">	int err;
+</span></span><span class="line"><span class="cl">	pthread_t tid;
+</span></span><span class="line"><span class="cl">	struct test *ts = (struct test *)malloc(sizeof(struct test));
+</span></span><span class="line"><span class="cl">	ts-&gt;flag1 = 0;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    //初始化Socket
+</span></span><span class="line"><span class="cl">	if( (socket_fd = socket(AF_INET, SOCK_STREAM, 0)) == -1 ) {
+</span></span><span class="line"><span class="cl">		printf(&#34;create socket error: %s(errno: %d)\n&#34;,strerror(errno),errno);
+</span></span><span class="line"><span class="cl">		exit(0);
+</span></span><span class="line"><span class="cl">	}
+</span></span><span class="line"><span class="cl">	// 解决 Address already in use 问题
+</span></span><span class="line"><span class="cl">    int opt = 1;
+</span></span><span class="line"><span class="cl">    setsockopt(socket_fd, SOL_SOCKET, SO_REUSEADDR, &amp;opt, sizeof(opt));
+</span></span><span class="line"><span class="cl">	//初始化
+</span></span><span class="line"><span class="cl">	memset(&amp;servaddr, 0, sizeof(servaddr));
+</span></span><span class="line"><span class="cl">	servaddr.sin_family = AF_INET;
+</span></span><span class="line"><span class="cl">	servaddr.sin_addr.s_addr = htonl(INADDR_ANY);//IP地址设置成INADDR_ANY,让系统自动获取本机的IP地址。
+</span></span><span class="line"><span class="cl">	servaddr.sin_port = htons(DEFAULT_PORT);//设置的端口为DEFAULT_PORT
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	//将本地地址绑定到所创建的套接字上
+</span></span><span class="line"><span class="cl">	if( bind(socket_fd, (struct sockaddr*)&amp;servaddr, sizeof(servaddr)) == -1) {
+</span></span><span class="line"><span class="cl">		printf(&#34;bind socket error: %s(errno: %d)\n&#34;,strerror(errno),errno);
+</span></span><span class="line"><span class="cl">		exit(0);
+</span></span><span class="line"><span class="cl">	}
+</span></span><span class="line"><span class="cl">	//开始监听是否有客户端连接
+</span></span><span class="line"><span class="cl">	if( listen(socket_fd, 2) == -1) {
+</span></span><span class="line"><span class="cl">		printf(&#34;listen socket error: %s(errno: %d)\n&#34;,strerror(errno),errno);
+</span></span><span class="line"><span class="cl">		exit(0);
+</span></span><span class="line"><span class="cl">	}
+</span></span><span class="line"><span class="cl">	printf(&#34;======waiting for client&#39;s request======\n&#34;);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	// 启动线程
+</span></span><span class="line"><span class="cl">	if ((err = pthread_create(&amp;tid, NULL, &amp;receive_file, ts)) != 0) {
+</span></span><span class="line"><span class="cl">		printf(&#34;err = %d, can&#39;t create thread&#34;, err);
+</span></span><span class="line"><span class="cl">	}
+</span></span><span class="line"><span class="cl">	pthread_detach(tid); //分离线程，避免僵尸进程
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	while (1) {
+</span></span><span class="line"><span class="cl">		//阻塞直到有客户端连接，不然多浪费CPU资源。
+</span></span><span class="line"><span class="cl">		if( (connect_fd = accept(socket_fd, (struct sockaddr*)NULL, NULL)) == -1) {
+</span></span><span class="line"><span class="cl">			printf(&#34;accept socket error: %s(errno: %d)&#34;,strerror(errno),errno);
+</span></span><span class="line"><span class="cl">			continue;
+</span></span><span class="line"><span class="cl">		}
+</span></span><span class="line"><span class="cl">		while (1) {
+</span></span><span class="line"><span class="cl">			//接受客户端传过来的数据
+</span></span><span class="line"><span class="cl">			n = recv(connect_fd, buff, MAXLINE, 0);
+</span></span><span class="line"><span class="cl">			if(n &gt; 0) {
+</span></span><span class="line"><span class="cl">				// 判断是开始还是停止
+</span></span><span class="line"><span class="cl">				if (buff[0] == 0xFA &amp;&amp; buff[7] == 0x01) {
+</span></span><span class="line"><span class="cl">					ts-&gt;flag1 = 1;
+</span></span><span class="line"><span class="cl">					printf(&#34;start\n&#34;);
+</span></span><span class="line"><span class="cl">				}
+</span></span><span class="line"><span class="cl">				else if (buff[0] == 0xFA &amp;&amp; buff[7] == 0x02) {
+</span></span><span class="line"><span class="cl">					ts-&gt;flag1 = 2;
+</span></span><span class="line"><span class="cl">					// 停止
+</span></span><span class="line"><span class="cl">					printf(&#34;stop\n&#34;);
+</span></span><span class="line"><span class="cl">				} else if (buff[0] == 0xFA &amp;&amp; buff[7] == 0x03) {
+</span></span><span class="line"><span class="cl">					ts-&gt;flag1 = 3;
+</span></span><span class="line"><span class="cl">				}
+</span></span><span class="line"><span class="cl">			} else {
+</span></span><span class="line"><span class="cl">				close(connect_fd);
+</span></span><span class="line"><span class="cl">				break;
+</span></span><span class="line"><span class="cl">			}
+</span></span><span class="line"><span class="cl">		}
+</span></span><span class="line"><span class="cl">		usleep(100);
+</span></span><span class="line"><span class="cl">	}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    close(connect_fd);
+</span></span><span class="line"><span class="cl">    close(socket_fd);
+</span></span><span class="line"><span class="cl">    return 0;
+</span></span><span class="line"><span class="cl">}</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-2" class="outline-3">
+<h3 id="headline-2">
+参考链接
+</h3>
+<div id="outline-text-headline-2" class="outline-text-3">
+<p>
+<a href="https://ynhugo.github.io/p/socket基于tcp通信实例/">socket基于tcp通信实例</a></p>
+</div>
+</div>
+</div>
+</div>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/socket/">Socket</a>
+        
+            <a href="/tags/tcp/">Tcp</a>
+        
+            <a href="/tags/%E7%A8%8B%E5%BA%8F%E5%91%98/">程序员</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            最后更新于 Mar 18, 2025 10:51 &#43;0800
+        </span>
+    </section></footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/p/socket%E5%9F%BA%E4%BA%8Etcp%E7%9A%84%E6%9C%8D%E5%8A%A1%E7%AB%AF%E4%B8%8E%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%AE%9E%E4%BE%8B/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">socket基于tcp的服务端与客户端实例</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/socket%E5%9F%BA%E4%BA%8Etcp%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%AE%9E%E4%BE%8B/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">socket基于tcp客户端实例</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/socket-%E6%9C%8D%E5%8A%A1%E7%AB%AF%E4%B8%8E%E7%BA%BF%E7%A8%8B%E7%AE%A1%E7%90%86%E7%9A%84%E7%BB%93%E5%90%88-deepseek/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Socket 服务端与线程管理的结合-Deepseek</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "hugo-theme-stack" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2025 Example Person
+    </section>
+    
+    <section class="powerby">
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

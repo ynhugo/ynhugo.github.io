@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" mysql安装教程 我准备安装的是mysql-8.0.34，如果想安装其他版本可以在下载页面的归档里面进行更换，然后进入mysql的bin目录，然后复制当前路径，将路径添加到环境变量\n下载mysql 下载链接：https://dev.mysql.com/downloads/windows/installer/\n开始安装 在开始菜单搜索 cmd，然后以管理员身份运行 cmd 在cmd窗口执行以下命令进行安装\n1 mysqld --install 如果是重装mysql失败，明明已删除mysql可是在安装的时候提示已存在，可以如下操作\n1 2 3 4 5 6 7 8 9 10 11 12 13 输入安装命令mysqld --install 出现问题The service already exists 这是由于之前已经安装过mysql并且没有删除干净 重新以管理员身份运行，输入&#34;sc query mysql&#34;，查看一下名为mysql的服务： 发现之前确实有安装过。 命令&#34;sc delete mysql&#34;，删除该mysql 之后继续安装，就能成功 初始化mysql，在这里，初始化会产生一个随机密码,如下图框框所示，记住这个密码，后面会用到\n1 mysqld --initialize --console 启动mysql服务\n1 net start mysql 如果提示：MySQL 服务正在启动 . MySQL 服务无法启动 服务没有报告任何错误 解决方案\n">
+<title>Windows安装mysql教程</title>
+
+<link rel='canonical' href='https://ynhugo.github.io/p/windows%E5%AE%89%E8%A3%85mysql%E6%95%99%E7%A8%8B/'>
+
+<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="Windows安装mysql教程">
+<meta property='og:description' content=" mysql安装教程 我准备安装的是mysql-8.0.34，如果想安装其他版本可以在下载页面的归档里面进行更换，然后进入mysql的bin目录，然后复制当前路径，将路径添加到环境变量\n下载mysql 下载链接：https://dev.mysql.com/downloads/windows/installer/\n开始安装 在开始菜单搜索 cmd，然后以管理员身份运行 cmd 在cmd窗口执行以下命令进行安装\n1 mysqld --install 如果是重装mysql失败，明明已删除mysql可是在安装的时候提示已存在，可以如下操作\n1 2 3 4 5 6 7 8 9 10 11 12 13 输入安装命令mysqld --install 出现问题The service already exists 这是由于之前已经安装过mysql并且没有删除干净 重新以管理员身份运行，输入&#34;sc query mysql&#34;，查看一下名为mysql的服务： 发现之前确实有安装过。 命令&#34;sc delete mysql&#34;，删除该mysql 之后继续安装，就能成功 初始化mysql，在这里，初始化会产生一个随机密码,如下图框框所示，记住这个密码，后面会用到\n1 mysqld --initialize --console 启动mysql服务\n1 net start mysql 如果提示：MySQL 服务正在启动 . MySQL 服务无法启动 服务没有报告任何错误 解决方案\n">
+<meta property='og:url' content='https://ynhugo.github.io/p/windows%E5%AE%89%E8%A3%85mysql%E6%95%99%E7%A8%8B/'>
+<meta property='og:site_name' content='ynhugo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2023-09-23T15:51:47&#43;08:00'/><meta property='article:modified_time' content='2023-09-23T15:51:47&#43;08:00'/>
+<meta name="twitter:title" content="Windows安装mysql教程">
+<meta name="twitter:description" content=" mysql安装教程 我准备安装的是mysql-8.0.34，如果想安装其他版本可以在下载页面的归档里面进行更换，然后进入mysql的bin目录，然后复制当前路径，将路径添加到环境变量\n下载mysql 下载链接：https://dev.mysql.com/downloads/windows/installer/\n开始安装 在开始菜单搜索 cmd，然后以管理员身份运行 cmd 在cmd窗口执行以下命令进行安装\n1 mysqld --install 如果是重装mysql失败，明明已删除mysql可是在安装的时候提示已存在，可以如下操作\n1 2 3 4 5 6 7 8 9 10 11 12 13 输入安装命令mysqld --install 出现问题The service already exists 这是由于之前已经安装过mysql并且没有删除干净 重新以管理员身份运行，输入&#34;sc query mysql&#34;，查看一下名为mysql的服务： 发现之前确实有安装过。 命令&#34;sc delete mysql&#34;，删除该mysql 之后继续安装，就能成功 初始化mysql，在这里，初始化会产生一个随机密码,如下图框框所示，记住这个密码，后面会用到\n1 mysqld --initialize --console 启动mysql服务\n1 net start mysql 如果提示：MySQL 服务正在启动 . MySQL 服务无法启动 服务没有报告任何错误 解决方案\n">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_f509edb42ecc0ebd.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🍥</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">ynhugo</a></h1>
+            <h2 class="site-description">ynhugo.github.io</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/CaiJimmy/hugo-theme-stack'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://x.com'
+                        target="_blank"
+                        title="x"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E5%85%B3%E4%BA%8E/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                    
+                        <li id="i18n-switch">  
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                            <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
+                                
+                                    <option value="https://ynhugo.github.io/en/" >English</option>
+                                
+                                    <option value="https://ynhugo.github.io/" selected>中文</option>
+                                
+                                    <option value="https://ynhugo.github.io/ar/" >عربي</option>
+                                
+                            </select>
+                        </li>
+                    
+                
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+<ul>
+<li><a href="#headline-1">mysql安装教程</a>
+<ul>
+<li><a href="#headline-2">下载mysql</a>
+</li>
+<li><a href="#headline-3">开始安装</a>
+</li>
+<li><a href="#headline-4">登录验证</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-5">参考链接</a>
+</li>
+<li><a href="#headline-6">MySQL修改、忘记root密码（8.0版本）</a>
+<ul>
+<li><a href="#headline-7">解决方法：</a>
+</li>
+<li><a href="#headline-8">1、首先终止MySQL服务</a>
+</li>
+<li><a href="#headline-9">2、以管理员身份新开cmd，进入mysql安装的bin目录后执行：</a>
+</li>
+<li><a href="#headline-10">3、保持上述的窗口（切记），再以管理员身份新开cmd，执行：</a>
+</li>
+<li><a href="#headline-11">4、接下来修改root的密码为空</a>
+</li>
+<li><a href="#headline-12">5、此时关闭所有命令行界面，正常开启MySQL服务后进行登录，无需密码即可进入成功。</a>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/windows%E5%AE%89%E8%A3%85mysql%E6%95%99%E7%A8%8B/">Windows安装mysql教程</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Sep 23, 2023</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 2 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    
+<div id="outline-container-headline-1" class="outline-2">
+<h2 id="headline-1">
+mysql安装教程
+</h2>
+<div id="outline-text-headline-1" class="outline-text-2">
+<p>我准备安装的是mysql-8.0.34，如果想安装其他版本可以在下载页面的归档里面进行更换，然后进入mysql的bin目录，然后复制当前路径，将路径添加到环境变量</p>
+<div id="outline-container-headline-2" class="outline-3">
+<h3 id="headline-2">
+下载mysql
+</h3>
+<div id="outline-text-headline-2" class="outline-text-3">
+<p>下载链接：<a href="https://dev.mysql.com/downloads/windows/installer/">https://dev.mysql.com/downloads/windows/installer/</a></p>
+</div>
+</div>
+<div id="outline-container-headline-3" class="outline-3">
+<h3 id="headline-3">
+开始安装
+</h3>
+<div id="outline-text-headline-3" class="outline-text-3">
+<p>在开始菜单搜索 cmd，然后以管理员身份运行 cmd
+在cmd窗口执行以下命令进行安装</p>
+<div class="src src-emacs-lisp">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl">  <span class="nv">mysqld</span> <span class="nv">--install</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>如果是重装mysql失败，明明已删除mysql可是在安装的时候提示已存在，可以如下操作</p>
+<div class="src src-emacs-lisp">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl">  <span class="nv">输入安装命令mysqld</span> <span class="nv">--install</span> 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nv">出现问题The</span> <span class="nv">service</span> <span class="nv">already</span> <span class="nv">exists</span> 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nv">这是由于之前已经安装过mysql并且没有删除干净</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nv">重新以管理员身份运行</span><span class="err">，</span><span class="nv">输入</span><span class="s">&#34;sc query mysql&#34;</span><span class="err">，</span><span class="nv">查看一下名为mysql的服务</span><span class="err">：</span> 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nv">发现之前确实有安装过</span><span class="err">。</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nv">命令</span><span class="s">&#34;sc delete mysql&#34;</span><span class="err">，</span><span class="nv">删除该mysql</span> 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nv">之后继续安装</span><span class="err">，</span><span class="nv">就能成功</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>初始化mysql，在这里，初始化会产生一个随机密码,如下图框框所示，记住这个密码，后面会用到</p>
+<div class="src src-emacs-lisp">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl">  <span class="nv">mysqld</span> <span class="nv">--initialize</span> <span class="nv">--console</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>启动mysql服务</p>
+<div class="src src-emacs-lisp">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl">  <span class="nv">net</span> <span class="nv">start</span> <span class="nv">mysql</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>如果提示：MySQL 服务正在启动 . MySQL 服务无法启动 服务没有报告任何错误 解决方案</p>
+<div class="src src-emacs-lisp">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl">  <span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="nv">找到MySQL的安装目录,将data删除</span> <span class="p">(</span><span class="nv">注意该文件下会有一些你自己建立的数据库的数据!</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="nv">然后复制bin文件的路径</span>
+</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="nv">从开始里搜索cmd</span> <span class="nv">右键以管理员身份运行</span>
+</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="nv">cd</span> <span class="nv">bin文件的路径</span> <span class="nv">进入后输入mysqld</span> <span class="nv">--initialize</span>
+</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="nv">关闭cmd</span> <span class="nv">重新启动</span> <span class="nv">输入net</span> <span class="nv">start</span> <span class="nv">mysql即可启动成功!</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>修改密码，将密码设为 root</p>
+<div class="src src-emacs-lisp">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl">  <span class="nv">alter</span> <span class="nv">user</span> <span class="ss">&#39;root&#39;@&#39;localhost</span><span class="o">&#39;</span> <span class="nv">identified</span> <span class="nv">by</span> <span class="ss">&#39;root</span><span class="o">&#39;</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>不用的时候停止mysql服务</p>
+<div class="src src-emacs-lisp">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl">  <span class="nv">net</span> <span class="nv">stop</span> <span class="nv">mysql</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>停止mysql服务，添加配置文件，在mysql的bin目录创建mysql.ini，添加以下内容</p>
+<div class="src src-emacs-lisp">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl">  <span class="nv">mysqld</span>
+</span></span><span class="line"><span class="cl">  <span class="err">#</span><span class="nv">设置MySQL默认端口号</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">port=3306</span>
+</span></span><span class="line"><span class="cl">  <span class="err">#</span><span class="nv">设置mysql的安装目录-你的文件路径</span><span class="err">，</span><span class="nv">如果mysql要存放的目录不存在</span><span class="err">，</span><span class="nv">可以创建一下</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">basedir=D:\ProgramFiles\mysql-8.0.34-winx64</span>
+</span></span><span class="line"><span class="cl">  <span class="err">#</span><span class="nv">mysql数据库的数据的存放目录</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">datadir=D:\ProgramFiles\mysql-8.0.34-winx64\data</span>
+</span></span><span class="line"><span class="cl">  <span class="err">#</span><span class="nv">允许最大连接数</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">max_connections=200</span>
+</span></span><span class="line"><span class="cl">  <span class="err">#</span><span class="nv">允许连接失败的次数</span><span class="err">。</span><span class="nv">可防止有人从该主机试图攻击数据库系统</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">max_connect_errors=10</span>
+</span></span><span class="line"><span class="cl">  <span class="err">#</span><span class="nv">服务端使用的字符集默认为UTF8</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">character-set-server=utf8</span>
+</span></span><span class="line"><span class="cl">  <span class="err">#</span><span class="nv">创建新表时将使用的默认存储引擎</span>
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">  <span class="nv">default-storage-engine=INNODB</span>
+</span></span><span class="line"><span class="cl">  <span class="err">#</span><span class="nv">默认使用</span><span class="err">“</span><span class="nv">mysql_native_password</span><span class="err">”</span><span class="nv">插件认证</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">default_authentication_plugin=mysql_native_password</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">mysql</span>
+</span></span><span class="line"><span class="cl">  <span class="err">#</span><span class="nv">设置mysql客户端默认字符集</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">default-character-set=utf8</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">client</span>
+</span></span><span class="line"><span class="cl">  <span class="err">#</span><span class="nv">设置mysql客户端连接服务端时默认使用的端口</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">port=3306</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">default-character-set=utf8</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-4" class="outline-3">
+<h3 id="headline-4">
+登录验证
+</h3>
+<div id="outline-text-headline-4" class="outline-text-3">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  mysql -u root -p</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-5" class="outline-2">
+<h2 id="headline-5">
+参考链接
+</h2>
+<div id="outline-text-headline-5" class="outline-text-2">
+<p><a href="https://www.cnblogs.com/winton-nfs/p/11524007.html">MySQL的安装与配置——详细教程</a></p>
+</div>
+</div>
+<div id="outline-container-headline-6" class="outline-2">
+<h2 id="headline-6">
+MySQL修改、忘记root密码（8.0版本）
+</h2>
+<div id="outline-text-headline-6" class="outline-text-2">
+<p>
+在修改MySQL数据库的root密码时很多老帖子的方式不成功</p>
+<div class="src src-mysql">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="kt">set</span><span class="w"> </span><span class="n">password</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="err">用户名</span><span class="o">@</span><span class="n">localhost</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">password</span><span class="p">(</span><span class="s1">&#39;新密码&#39;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="err">例如（将用户</span><span class="n">root的密码更改为root</span><span class="err">）：</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="kt">set</span><span class="w"> </span><span class="n">password</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">root</span><span class="o">@</span><span class="n">localhost</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">password</span><span class="p">(</span><span class="s1">&#39;root&#39;</span><span class="p">);</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+以及</p>
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">mysqladmin -u用户名 -p旧密码； password 新密码
+</span></span><span class="line"><span class="cl">例如：
+</span></span><span class="line"><span class="cl">mysqladmin -uroot -proot password 123</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+以及用UPDATE直接编辑user表方法也是不管用的。</p>
+<p>
+这是由于版本在8.0以上已经不再支持。</p>
+<div id="outline-container-headline-7" class="outline-3">
+<h3 id="headline-7">
+解决方法：
+</h3>
+</div>
+<div id="outline-container-headline-8" class="outline-3">
+<h3 id="headline-8">
+1、首先终止MySQL服务
+</h3>
+<div id="outline-text-headline-8" class="outline-text-3">
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">1、右键此电脑-管理-服务-MySQL
+</span></span><span class="line"><span class="cl">或者
+</span></span><span class="line"><span class="cl">2、以管理员身份打开cmd,执行：
+</span></span><span class="line"><span class="cl">net stop mysql</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-9" class="outline-3">
+<h3 id="headline-9">
+2、以管理员身份新开cmd，进入mysql安装的bin目录后执行：
+</h3>
+<div id="outline-text-headline-9" class="outline-text-3">
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">mysqld --console --skip-grant-tables --shared-memory</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+此时，命令行框会处于持续运行状态：</p>
+<p>
+<img src="https://pic3.zhimg.com/v2-f6cd8bb4ed0c3ec910159302b0a9b926_b.jpg" alt="https://pic3.zhimg.com/v2-f6cd8bb4ed0c3ec910159302b0a9b926_b.jpg" title="https://pic3.zhimg.com/v2-f6cd8bb4ed0c3ec910159302b0a9b926_b.jpg" /></p>
+<p>
+<img src="./20231105073338_files/v2-f6cd8bb4ed0c3ec910159302b0a9b926_r.jpg" alt="./20231105073338_files/v2-f6cd8bb4ed0c3ec910159302b0a9b926_r.jpg" title="./20231105073338_files/v2-f6cd8bb4ed0c3ec910159302b0a9b926_r.jpg" /></p>
+</div>
+</div>
+<div id="outline-container-headline-10" class="outline-3">
+<h3 id="headline-10">
+3、保持上述的窗口（切记），再以管理员身份新开cmd，执行：
+</h3>
+<div id="outline-text-headline-10" class="outline-text-3">
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">mysql -uroot -p</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+这时就已经绕过密码登录进入mysql了。</p>
+</div>
+</div>
+<div id="outline-container-headline-11" class="outline-3">
+<h3 id="headline-11">
+4、接下来修改root的密码为空
+</h3>
+<div id="outline-text-headline-11" class="outline-text-3">
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">UPDATE mysql.user SET authentication_string=&#39;&#39; WHERE user=&#39;root&#39;;</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-12" class="outline-3">
+<h3 id="headline-12">
+5、此时关闭所有命令行界面，正常开启MySQL服务后进行登录，无需密码即可进入成功。
+</h3>
+<div id="outline-text-headline-12" class="outline-text-3">
+<p>此时进行修改密码操作：</p>
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">use mysql 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">ALTER user root@&#39;localhost&#39; identified by &#39;123456&#39;;</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+密码修改成功，退出mysql,即可通过密码：123456登录.</p>
+<p>
+\\</p>
+<p>
+或者，修改当前用户的密码（最简单）：</p>
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">set password = ‘123456’;</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "hugo-theme-stack" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2025 Example Person
+    </section>
+    
+    <section class="powerby">
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

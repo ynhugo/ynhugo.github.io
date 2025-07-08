@@ -1,0 +1,326 @@
+---
+title: bash脚本+python+uiautomator2实现手机自动化配置
+tags: ["bash", "python", "uiautomator2", "安卓"]
+date: 2025-07-03T17:40:20.84+0800
+---
+
+* bash脚本+python+uiautomator2实现手机自动化配置
+
+** 前言
+
+*须知* ：该项目执行的手机切勿黑屏，不然安装软件会报异常导致软件不能正常安装。
+
+该项目基本实现完全自动化，除了订阅链接的配置，之所以没有也根据自动化的方式实现，是考虑到用户根据自身需要可以手动添加根软件真正匹配的订阅链接，因为不是有的订阅链接不是很通用，这样做可以为了避免出问题。
+
+另外该项目中某些软件的下载链接可能国内不能顺利访问或速度很慢，如果遇到这样的情况，可以电脑安装clash-verge科学上网软件，电脑通过该软件实现科学上网后，将该软件的TUN（在软件的设置界面中）打开，这样就可以实现终端也能访问外网了，这样在终端执行该项目会更方便一些。
+
+[[/software/bash脚本+python+uiautomator2实现手机自动化配置/bash脚本+python+uiautomator2实现手机自动化配置.zip][源代码：python+uiautomator2实现手机自动化配置.zip]]
+
+** 环境配置
+
+1. windows安装好python3的版本
+2. 安装git-bash
+3. 安装配置好Cygwin，在Cygwin中要安装常用工具如 curl、wget、jq
+4. 如果要配置科学上网软件的订阅链接的话，首先修改
+5. 科学上网软件如果更换了，同时需要通过该项目配置科学上网软件的订阅链接，可以查看自己的科学上网软件的包名，将实际的包名替换进该项目中，该项目配置了两个科学上网软件订阅链接，如果只需要配置一个科学上网软件，可以将另外一个注释掉。另外项目中两个软件的界面操作是根据软件界面的实际控件进行操作的，如果更换其他软件了，请根据软件的控制进行修改。
+6. 如果需要知道查看包名的方法的话，请按照如下方式操作：
+#+begin_src bash
+# 根据关键词 v2ray 匹配科学上网软件v2ranNG的包名
+adb -s aefcb1f3 shell pm list packages | grep "v2ray" | awk -F ':' '{print $2}'
+# 同时查看软件软件对应的包名
+adb -s aefcb1f3 shell pm list packages | grep -e "v2ray" -e "clash" | awk -F ':' '{print $2}'
+#+end_src   
+7. 在执行该项目前，需要基本确保环境配置好了，如果实际执行提示缺少什么库，可以根据终端提示的打印信息，再借助Deepseek完成环境的配置。
+#+begin_src bash
+pip install uiautomator2
+pip install keyboard
+adb devices # 确认设备已连接
+#+end_src
+
+** 执行方式
+
+在git-bash中运行该项目，cfg.sh与cfg.py和cfg.json要在同一目录下
+
+根据以下执行方式运动该项目后，bash脚本会自动下载软件并安装，同时python脚本会根据手机界面的提示是否继续安装来作出反应，如果要配置科学上网软件的订阅链接的话，按字母 =p= 键（可长按，避免按一下时间太短导致脚本检测不到），当订阅链接配置完成后，根据提示按 =q= 键或按Ctrl-c结束该项目即可。
+#+begin_src bash :tangle no
+bash cfg.sh &                   # 第一步，先以后台执行的方式执行bash脚本，当所有程序安装完后自动结束该脚本
+python cfg.py                   # 第二步，运行python脚本，循环检测，直到所有程序安装完后手动暂停该脚本
+# 或
+bash cfg.sh & \python cfg.py    # 跟前边的执行方式一样，不过这个执行方式是通过一条命令完成
+#+end_src
+
+** cfg.json
+:PROPERTIES:
+:EXPORT_FILE_NAME: cfg.json
+:END:
+
+.android.url对应的值对应软件下载链接，如果链接运行直接就能下载文件的话，则直接将下载链接添加到json文件中，如果是类似于api.github.com/repos这样格式的链接，返回的是json格式的数据，需要从中提取出需要下载的文件的下载链接，将提取表达式添加到json中即可。
+
+github的文件之所以没有下载指定版本，是为了通过对api.github.com/repos内容中提出最新版本的文件。
+
+airport_name 对应科学上网的机场，如果需要用到该键值的话，可以将 airport subscribed links 替换为自己真实的订阅链接，然后通过修改代码添加到科学上网软件中。同时安装好科学上网软件，如果安装的科学上网软件更换了，记得将python代码中的对应科学上网软件的包名也给替换成实际的。
+
+#+begin_src json :tangle cfg.json 
+{
+    "android":{
+        "url":[            
+            {"lawnchair":"$(curl -s https://api.github.com/repos/LawnchairLauncher/lawnchair/releases/latest | jq -r '.assets[]' | jq -r '.browser_download_url' | grep 'Lawnchair')"},
+            {"via":"https://res.viayoo.com/v1/via-release-cn.apk"},
+            {"termux":"https://f-droid.org/repo/com.termux_1022.apk"},
+            {"clash-meta":"$(curl -s https://api.github.com/repos/MetaCubeX/ClashMetaForAndroid/releases/latest | jq -r '.assets[]' | jq -r '.browser_download_url' | grep 'arm64')"},
+            {"v2rayng":"$(curl -s https://api.github.com/repos/2dust/v2rayNG/releases/latest | jq -r '.assets[]' | jq -r '.browser_download_url' | grep 'arm64')"}
+        ],
+        "value":[
+            {"lawnchair":"y"},
+            {"via":"y"},
+            {"termux":"y"},
+            {"clash-meta":"y"},
+            {"v2rayng":"y"}
+        ]
+    },
+    "airport":{
+        "airport_name":"https://example.AirportSubscribedLinks.test"
+    },
+    "function":[
+        {"download_application":"y"},
+        {"install_application":"y"},
+        {"get_subscription":"y"}
+    ]
+}
+#+end_src
+
+** cfg.sh
+:PROPERTIES:
+:EXPORT_FILE_NAME: cfg.sh
+:END:
+
+
+根据json文件中要下载文件对应的value判断是否下载，如果value值为y，则下载对应文件，否则跳过
+
+#+begin_src bash :tangle cfg.sh
+#!/usr/bin/bash
+
+# 定义总文件数组
+apk_array=($(jq -r '.android.value[] | keys[]' cfg.json))
+# printf '%s\n' "${apk_array[@]}"
+
+# 定义要安装文件的数组
+apk_files=()
+
+# 两种文件下载方式：
+# 方式一
+# # 下载安装文件，如果文件已存在则跳过
+# download_application() {  
+#   while IFS= read -r url; do
+#     if [[ "$url" == \$\(* ]]; then url=$(eval echo "$url"); fi    
+#     apk_files+=($(basename "$url"))
+#     if [[ ! -f $(basename "$url") ]]; then wget --no-check-certificate "$url"; fi
+#   done < <(jq -r '.android.url[].[]' cfg.json)
+# }
+# 方式二
+# 根据json文件中要下载文件对应的value判断是否下载，如果value值为y，则下载对应文件，否则跳过
+download_application() {    
+  for i in ${apk_array[@]}; do
+    # printf '%s\n' $i;
+    value=$(jq -r ".android.value[] | select(has(\"$i\")) | .\"$i\"" cfg.json)
+    if [ "$value" == "y" ]; then
+      url=$(jq -r ".android.url[] | select(has(\"$i\")) | .\"$i\"" cfg.json)
+      if [[ "$url" == \$\(* ]]; then url=$(eval echo "$url"); fi
+      # echo "$url"
+      apk_files+=($(basename "$url"))
+      if [[ ! -f $(basename "$url") ]]; then wget "$url"; fi
+      
+    fi
+  done
+}
+
+# 安装文件
+install_application() {    
+  # printf '%s\n' "${apk_files[@]}"
+  for i in  "${apk_files[@]}"; do
+    adb -s $(adb devices | grep -w "device" | awk 'NR==1{print $1}') install "$i"
+  done
+  echo "所有程序已安装完成，如果要配置科学上网软件的订阅链接的话请按字母 p 健，然后等待python脚本自动配置，完成配置或不需要配置可按Ctrl-c结束"
+}
+
+function main() {
+  set -e
+  
+  download_application
+  install_application $1
+}
+
+main $1
+
+#+end_src
+
+** cfg.py
+:PROPERTIES:
+:EXPORT_FILE_NAME: cfg.py
+:END:
+
+#+begin_src python :tangle cfg.py
+# coding: utf-8
+#
+import signal
+import sys
+import subprocess
+import uiautomator2 as u2
+import keyboard
+import json
+import time
+
+def get_device_id():
+    # 获取第第一个已连接的Android设备ID
+    try:
+        result = subprocess.check_output(['adb', 'devices']).decode('utf-8')
+        devices = [line.split('\t')[0]
+            for line in result.splitlines()
+            if '\tdevice' in line]
+        return devices[0] if devices else None
+    except (subprocess.CalledProcessError, IndexError):
+        return None
+
+def signal_handler(signal, frame):
+    # print('Caught Ctrl+C / SIGINT signal')
+    # 在这里添加你想要做的清理操作
+    # 例如停止子进程，关闭文件等
+    # ...
+    # 退出程序的代码
+    sys.exit(0)
+
+# def parse_json_airport():
+#     with open('cfg.json', 'r') as fcc_file:
+#         fcc_data = json.load(fcc_file)
+#         print(fcc_data)
+def parse_json_airport():
+    with open('cfg.json', 'r') as file:
+        data = file.read()
+        data_dict = json.loads(data)
+        # name_value = data_dict['airport']
+        # print(name_value)
+        # # 或
+        # airport_value = data_dict.get('airport', 'airport not found')
+        # print(f"Name: {name_value}, airport: {airport_value}")
+        sub_value=data_dict['airport'] ['airport_name']
+        # print(test_value)
+        return sub_value    
+    
+def main():
+    running = True
+    
+    device_id = get_device_id()    
+    if not device_id:
+        print("Error: No connect Android device found")
+        sys.exit(1)
+
+    print(f"Connected device: {device_id}")
+
+    # 初始化uiautomator2连接
+    try:
+        d = u2.connect(device_id)
+        print("Device connected successfully")
+        
+        while running:
+            try:
+                # 检测元素A是否存在
+                if d(resourceId="com.android.packageinstaller:id/vbutton_title", text="继续安装").exists(timeout=0):
+                    d(resourceId="com.android.packageinstaller:id/vbutton_title", text="继续安装").click()        
+                    print("点击元素")
+                    time.sleep(1)  # 操作后等待页面稳定
+                    continue  # 回到循环开头重新检测
+                elif keyboard.is_pressed('p'): 
+                    print("按下了键盘上的 p 键，暂停while循环")
+
+                    # 配置科学上网软件的订阅链接
+                    print("开始配置科学上网软件的订阅链接")
+                    print("开始调用 parse_json_airport()")
+                    airport_sub_value = parse_json_airport() # 获取json文件中配置的订阅链接
+
+                    # 以下两个软件的界面操作是根据软件界面的实际控件进行操作的，如果更换其他软件了，请根据软件的控制进行修改
+                    print("配置v2rayNG订阅链接")
+                    d.app_stop('com.v2ray.ang')
+                    d.app_start('com.v2ray.ang')    
+                    d(description="Open navigation drawer").click()    
+                    d(resourceId="com.v2ray.ang:id/design_menu_item_text", text="订阅分组设置").click()
+                    d(resourceId="com.v2ray.ang:id/add_config").click()
+                    d(resourceId="com.v2ray.ang:id/et_remarks").click()
+                    d.send_keys("tolink", clear=True)
+                    d(resourceId="com.v2ray.ang:id/et_url").click()                    
+                    d.send_keys(airport_sub_value, clear=True)
+                    d(resourceId="com.v2ray.ang:id/save_config").click()
+                    time.sleep(1.5)
+                    d.app_stop('com.v2ray.ang')
+
+                    print("配置clash-meta订阅链接")
+                    d.app_stop('com.github.metacubex.clash.meta')
+                    d.app_start('com.github.metacubex.clash.meta')
+                    d(resourceId="com.github.metacubex.clash.meta:id/text_view", text="配置").click()
+                    d(resourceId="com.github.metacubex.clash.meta:id/add_view").click()
+                    d.xpath('//*[@resource-id="com.github.metacubex.clash.meta:id/main_list"]/android.widget.LinearLayout[2]').click()
+                    d(resourceId="com.github.metacubex.clash.meta:id/text_view", text="新配置").click()
+                    d.send_keys("tolink", clear=True)    
+                    d(resourceId="android:id/button1").click()
+                    d(resourceId="com.github.metacubex.clash.meta:id/text_view", text="仅接受 http(s) 和 content 类型").click()                    
+                    d.send_keys(airport_sub_value, clear=True)
+                    d(resourceId="android:id/button1").click()
+                    d(resourceId="com.github.metacubex.clash.meta:id/action_layout").click()
+                    d.xpath('//*[@resource-id="com.github.metacubex.clash.meta:id/main_list"]/android.widget.RelativeLayout[1]/android.widget.RadioButton[1]').click()
+                    time.sleep(1.5)
+                    d.app_stop('com.github.metacubex.clash.meta')
+                    
+                    input("按回车继续，然后按字母 q 键退出或按 Ctrl-c 结束")
+                elif keyboard.is_pressed('q'):                    
+                    print("按下了键盘上的 'q' 键，退出while循环")
+                    running = False
+                else:
+                    # print("未找到目标元素，等待重试...")
+                    time.sleep(0.5)  # 降低CPU占用
+            except Exception as e:
+                print(f"发生异常: {e}，尝试重新连接设备")                
+                d = u2.connect(device_id) # 重新初始化设备连接
+                time.sleep(2)
+                
+        return d
+    
+    except Exception as e:
+        print(f"Connected failed: {str(e)}")
+        sys.exit(1)
+
+if __name__ == '__main__':
+    signal.signal(signal.SIGINT, signal_handler)
+    d = main()
+
+#+end_src
+
+** 参考链接
+
+[[https://ynhugo.github.io/p/jq用法/][jq用法]]
+
+[[https://zhuanlan.zhihu.com/p/14712100305][如何获取 Github 上最新的 release 文件]]
+
+[[https://cn.bing.com/search?q=python脚本自动配置手机&PC=U316&FORM=CHROMN][python脚本自动配置手机 - 搜索]]
+
+[[https://blog.csdn.net/weixin_40901068/article/details/121242489][使用Python控制手机（一）_python操作手机的脚本-CSDN博客]]
+
+[[https://ynhugo.github.io/p/termux-uiautomator2自动化/][termux+uiautomator2自动化]]
+
+[[https://ynhugo.github.io/p/termux-uiautomator2%E7%BB%99%E5%A4%9A%E4%B8%AAqq%E5%A5%BD%E5%8F%8B%E7%82%B9%E8%B5%9E/][termux+uiautomator2给多个QQ好友点赞]]
+
+[[https://app.raindrop.io/my/57091357][uiautomator]]
+
+[[https://zhuanlan.zhihu.com/p/25181382631][(12 条消息) UIAutomator2 的使用教程 - 知乎]]
+
+[[https://cn.bing.com/search?q=uiautomator%2Bwhile%E5%BE%AA%E7%8E%AF&PC=U316&FORM=CHROMN][uiautomator+while循环 - 搜索]]
+
+[[https://wenku.csdn.net/answer/81959ba44add4a52910204c54207cc4f][Android的uiautomator设置循环检测 - CSDN文库]]
+
+[[https://blog.csdn.net/qdPython/article/details/134951806][用Python程序如何捕获Ctrl+C终止信号？]]
+
+[[https://geek-docs.com/python/python-ask-answer/489_python_catch_ctrlc_sigint_and_exit_multiprocesses_gracefully_in_python.html][Python 在Python中优雅地捕捉Ctrl + C / SIGINT并优雅地退出多进程]]
+
+[[https://www.freecodecamp.org/chinese/news/python-parse-json-how-to-read-a-json-file/][Python 解析 JSON――如何读取 JSON 文件]]
+
+[[https://blog.51cto.com/u_16213426/11667050][python json 读取指定key]]
+
+[[https://blog.csdn.net/weixin_46264660/article/details/130269096][Python | 一文搞定Python中对于json数据键值对遍历]]
