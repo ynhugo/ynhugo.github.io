@@ -10,7 +10,7 @@
 <meta property='og:description' content="搭建alist教程 alist配置官方文档。\n安装alist 安装程序后在命令行界面运行就可以了，第一次运行的时候先获取到用户名和密码，然后根据提供的用户名和密码进行网页访问并修改密码。\n后台运行 在termux的家目录编辑&quot;.bashrc&quot;文件，如果没有这个文件可以创建这个文件，该命名的文件在启动termux后可以自动运行，不过alist不能重复启动，为避免使用ssh连接termux时再次启动启动alist，我写了一个脚本进行判断，如果alist已经运行就不再重复运行，执行命令时产生的附带文件如nohup.out和null也通过判断是否存在，如果存在则删除，在这一部分我在网上找了两个链接参考了一下，分别是shell判断进程是否存在，不存在则启动和Shell脚本实用小技巧-教你屏蔽执行命令的所有显示信息，包含错误信息和Shell 判断文件或文件夹是否存在（不存在则创建），这样这个脚本就可以实现alist在后台运行了，并且不需要自己手动做任何操作了。 想要完成上面描述的效果，则需要将下面的脚本内容添加到&quot;.bashrc&quot;中\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 #!/data/data/com.termux/files/usr/bin/bash ps -ef | grep &#34;alist&#34; | grep -v &#34;grep&#34; &gt; /dev/null 2&gt;&amp;1 if [ $? -ne 0 ] then nohup alist server &amp; fi if [ -e &#34;/data/data/com.termux/files/home/null&#34; ] then rm /data/data/com.termux/files/home/null fi if [ -e &#34;/data/data/com.termux/files/home/nohup.out&#34; ] then rm /data/data/com.termux/files/home/nohup.out fi[&lt;35;177;4m 最后启动该文件即可\n">
 <meta property='og:url' content='https://ynhugo.github.io/p/termux%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BAalist%E6%95%99%E7%A8%8B/'>
 <meta property='og:site_name' content='ynhugo'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='alist' />
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='alist' /><meta property='article:published_time' content='2025-07-08T18:57:42&#43;08:00'/><meta property='article:modified_time' content='2025-07-08T18:57:42&#43;08:00'/>
 <meta name="twitter:title" content="termux环境搭建alist教程">
 <meta name="twitter:description" content="搭建alist教程 alist配置官方文档。\n安装alist 安装程序后在命令行界面运行就可以了，第一次运行的时候先获取到用户名和密码，然后根据提供的用户名和密码进行网页访问并修改密码。\n后台运行 在termux的家目录编辑&quot;.bashrc&quot;文件，如果没有这个文件可以创建这个文件，该命名的文件在启动termux后可以自动运行，不过alist不能重复启动，为避免使用ssh连接termux时再次启动启动alist，我写了一个脚本进行判断，如果alist已经运行就不再重复运行，执行命令时产生的附带文件如nohup.out和null也通过判断是否存在，如果存在则删除，在这一部分我在网上找了两个链接参考了一下，分别是shell判断进程是否存在，不存在则启动和Shell脚本实用小技巧-教你屏蔽执行命令的所有显示信息，包含错误信息和Shell 判断文件或文件夹是否存在（不存在则创建），这样这个脚本就可以实现alist在后台运行了，并且不需要自己手动做任何操作了。 想要完成上面描述的效果，则需要将下面的脚本内容添加到&quot;.bashrc&quot;中\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 #!/data/data/com.termux/files/usr/bin/bash ps -ef | grep &#34;alist&#34; | grep -v &#34;grep&#34; &gt; /dev/null 2&gt;&amp;1 if [ $? -ne 0 ] then nohup alist server &amp; fi if [ -e &#34;/data/data/com.termux/files/home/null&#34; ] then rm /data/data/com.termux/files/home/null fi if [ -e &#34;/data/data/com.termux/files/home/nohup.out&#34; ] then rm /data/data/com.termux/files/home/nohup.out fi[&lt;35;177;4m 最后启动该文件即可\n">
     </head>
@@ -352,6 +352,19 @@
     
     <footer class="article-time">
         
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jul 08, 2025</time>
+            </div>
+        
 
         
             <div>
@@ -504,7 +517,19 @@
 
         <span>Licensed under CC BY-NC-SA 4.0</span>
     </section>
-    </footer>
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            最后更新于 Jul 08, 2025 18:57 &#43;0800
+        </span>
+    </section></footer>
 
 
     
