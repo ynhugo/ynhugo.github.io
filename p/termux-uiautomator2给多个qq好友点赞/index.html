@@ -530,27 +530,31 @@ termux+uiautomator2给多个QQ好友点赞
 </span><span class="lnt">17
 </span><span class="lnt">18
 </span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">sys</span>
 </span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">uiautomator2</span> <span class="k">as</span> <span class="nn">u2</span>
 </span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">d</span> <span class="o">=</span> <span class="n">u2</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># 可以通过传入ip参数执行该程序，如：python qq好友点赞.py 192.168.1.101</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># d = u2.connect(sys.argv[1])</span>
-</span></span><span class="line"><span class="cl"><span class="n">d</span> <span class="o">=</span> <span class="n">u2</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">d</span><span class="o">.</span><span class="n">app_start</span><span class="p">(</span><span class="s1">&#39;com.tencent.mobileqq&#39;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">d</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//*[@resource-id=&#34;com.tencent.mobileqq:id/e3u&#34;]/android.widget.FrameLayout[1]&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl"><span class="n">d</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//*[@resource-id=&#34;com.tencent.mobileqq:id/ury&#34;]&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># d.xpath(&#39;//*[@resource-id=&#34;com.tencent.mobileqq:id/l0l&#34;]&#39;).click()</span>
+</span></span><span class="line"><span class="cl"><span class="n">d</span><span class="p">(</span><span class="n">resourceId</span><span class="o">=</span><span class="s2">&#34;com.tencent.mobileqq:id/us4&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl"><span class="n">d</span><span class="o">.</span><span class="n">click</span><span class="p">(</span><span class="mi">949</span><span class="p">,</span><span class="mi">650</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">    <span class="n">xpath</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;//*[@resource-id=&#34;com.tencent.mobileqq:id/kzn&#34;]/android.widget.LinearLayout[</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">]/android.widget.RelativeLayout[1]/android.widget.RelativeLayout[1]/android.widget.ImageView[1]&#39;</span>
-</span></span><span class="line"><span class="cl">    <span class="n">d</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="n">xpath</span><span class="p">)</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">d</span><span class="o">.</span><span class="n">app_stop</span><span class="p">(</span><span class="s1">&#39;com.tencent.mobileqq&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># d.app_clear(&#39;com.tencent.mobileqq&#39;)</span></span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="n">d</span><span class="p">(</span><span class="n">resourceId</span><span class="o">=</span><span class="s2">&#34;com.tencent.mobileqq:id/h7s&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">  <span class="n">d</span><span class="p">(</span><span class="n">resourceId</span><span class="o">=</span><span class="s2">&#34;com.tencent.mobileqq:id/h7s&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">12</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">      <span class="n">xpath</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;//*[@resource-id=&#34;com.tencent.mobileqq:id/kzn&#34;]/android.widget.LinearLayout[</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">]/android.widget.RelativeLayout[1]/android.widget.RelativeLayout[1]/android.widget.ImageView[1]&#39;</span>
+</span></span><span class="line"><span class="cl">      <span class="n">d</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="n">xpath</span><span class="p">)</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">d</span><span class="o">.</span><span class="n">app_stop</span><span class="p">(</span><span class="s1">&#39;com.tencent.mobileqq&#39;</span><span class="p">)</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
@@ -566,7 +570,7 @@ termux+uiautomator2给多个QQ好友点赞
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  python qq好友点赞.py 192.168.1.101</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  python qq好友点赞.py</span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
