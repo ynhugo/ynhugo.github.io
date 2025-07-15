@@ -4373,14 +4373,14 @@ v</li>
 </h2>
 <div id="outline-text-headline-141" class="outline-text-2">
 <p>
-pcie4通道测试，测试回环，会产生4个文件，文件是以通道号命名的，4个文件存放在以时间戳命名的目录中，将原始文件与以时间戳命名的目录中的4个文件对比是否一致，假如多次进行回环测试，会产生多个以时间戳命名的目录，那个每次比对文件是否一致就会比较麻烦，因为每次都要手动指定以时间戳命名的目录，为了方便，我简单写了个脚本。2025开头的是以时间戳命名的目录，~/00_zdk/TestFiles/111asdfasdf.dat是原始文件。</p>
+pcie4通道测试，测试回环，会产生4个文件，文件是以通道号命名的，4个文件存放在以时间戳命名的目录中，将原始文件与以时间戳命名的目录中的4个文件对比是否一致，假如多次进行回环测试，会产生多个以时间戳命名的目录，那个每次比对文件是否一致就会比较麻烦，因为每次都要手动指定以时间戳命名的目录，为了方便，我简单写了个脚本。2025开头的是以时间戳命名的目录，~/00_zdk/TestFiles/111asdfasdf.dat是原始文件，原始文件需手动指定。</p>
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nv">nr</span><span class="o">=</span>1<span class="p">;</span> <span class="nv">dir</span><span class="o">=</span><span class="k">$(</span>find ./ -name <span class="s2">&#34;2025*&#34;</span> -type d <span class="p">|</span> sort <span class="p">|</span> awk -v <span class="nv">line</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$nr</span><span class="s2">&#34;</span> <span class="s1">&#39;NR==line{print}&#39;</span><span class="k">)</span><span class="p">;</span> <span class="nb">echo</span> <span class="nv">$dir</span><span class="p">;</span> <span class="k">for</span> i in <span class="s2">&#34;</span><span class="nv">$dir</span><span class="s2">&#34;</span>/*.dat<span class="p">;</span> <span class="k">do</span> diff ~/00_zdk/TestFiles/111asdfasdf.dat <span class="si">${</span><span class="nv">i</span><span class="si">}</span><span class="p">;</span> <span class="k">done</span></span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nv">nr</span><span class="o">=</span>1<span class="p">;</span> <span class="nv">dir</span><span class="o">=</span><span class="k">$(</span>find ./ -name <span class="s2">&#34;2025*&#34;</span> -type d <span class="p">|</span> sort <span class="p">|</span> awk -v <span class="nv">line</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$nr</span><span class="s2">&#34;</span> <span class="s1">&#39;NR==line{print}&#39;</span><span class="k">)</span><span class="p">;</span> <span class="nb">echo</span> <span class="nv">$dir</span><span class="p">;</span> <span class="k">for</span> i in <span class="s2">&#34;</span><span class="nv">$dir</span><span class="s2">&#34;</span>/*.dat<span class="p">;</span> <span class="k">do</span> diff <span class="si">${</span><span class="nv">i</span><span class="si">}</span> ~/00_zdk/TestFiles/111asdfasdf.dat<span class="p">;</span> <span class="k">done</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
