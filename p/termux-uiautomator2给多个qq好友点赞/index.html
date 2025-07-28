@@ -312,17 +312,13 @@
 <ul>
 <li><a href="#headline-4">脚本优化-1</a>
 <ul>
-<li><a href="#headline-5">执行方式</a>
-<ul>
+<li><a href="#headline-5">参考链接</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 <li><a href="#headline-6">参考链接</a>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#headline-7">参考链接</a>
 </li>
 </ul>
 </li>
@@ -542,9 +538,20 @@ termux+uiautomator2给多个QQ好友点赞
 </span><span class="lnt">29
 </span><span class="lnt">30
 </span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">os</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">time</span>
 </span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">uiautomator2</span> <span class="k">as</span> <span class="nn">u2</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">connect</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s1">&#39;adb devices | grep -w &#34;device&#34; | awk </span><span class="se">\&#39;</span><span class="s1">{print $1}</span><span class="se">\&#39;</span><span class="s1">&#39;</span><span class="p">)</span>
@@ -565,40 +572,33 @@ termux+uiautomator2给多个QQ好友点赞
 </span></span><span class="line"><span class="cl"><span class="n">d</span><span class="p">(</span><span class="n">resourceId</span><span class="o">=</span><span class="s2">&#34;com.tencent.mobileqq:id/l0g&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="n">d</span><span class="p">(</span><span class="n">resourceId</span><span class="o">=</span><span class="s2">&#34;com.tencent.mobileqq:id/l0g&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">  <span class="n">d</span><span class="p">(</span><span class="n">resourceId</span><span class="o">=</span><span class="s2">&#34;com.tencent.mobileqq:id/l0g&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">  <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="n">d</span><span class="p">(</span><span class="n">resourceId</span><span class="o">=</span><span class="s2">&#34;com.tencent.mobileqq:id/h7s&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="n">d</span><span class="p">(</span><span class="n">resourceId</span><span class="o">=</span><span class="s2">&#34;com.tencent.mobileqq:id/h7r&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">  <span class="n">d</span><span class="p">(</span><span class="n">resourceId</span><span class="o">=</span><span class="s2">&#34;com.tencent.mobileqq:id/h7s&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">  <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.3</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="k">else</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="n">xpath</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;//*[@resource-id=&#34;com.tencent.mobileqq:id/kzn&#34;]/android.widget.LinearLayout[</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">]/android.widget.RelativeLayout[1]/android.widget.RelativeLayout[1]/android.widget.ImageView[1]&#39;</span>
 </span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">      <span class="n">d</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="n">xpath</span><span class="p">)</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.3</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">d</span><span class="o">.</span><span class="n">app_stop</span><span class="p">(</span><span class="s1">&#39;com.tencent.mobileqq&#39;</span><span class="p">)</span></span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">d</span><span class="o">.</span><span class="n">app_stop</span><span class="p">(</span><span class="s1">&#39;com.tencent.mobileqq&#39;</span><span class="p">)</span><span class="c1">#+end_src</span>
+</span></span><span class="line"><span class="cl"><span class="n">最后添加了d</span><span class="o">.</span><span class="n">app_stop</span><span class="p">()</span><span class="err">，</span><span class="n">qq点完赞后会自动关闭</span><span class="err">。</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">****</span> <span class="n">执行方式</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">#+begin_src bash</span>
+</span></span><span class="line"><span class="cl">  <span class="n">python</span> <span class="n">qq好友点赞</span><span class="o">.</span><span class="n">py</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
-<p>最后添加了d.app_stop()，qq点完赞后会自动关闭。</p>
-<div id="outline-container-headline-5" class="outline-5">
-<h5 id="headline-5">
-执行方式
-</h5>
-<div id="outline-text-headline-5" class="outline-text-5">
-<div class="src src-bash">
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  python qq好友点赞.py</span></span></code></pre></td></tr></table>
-</div>
-</div>
-</div>
-<div id="outline-container-headline-6" class="outline-6">
-<h6 id="headline-6">
+<div id="outline-container-headline-5" class="outline-6">
+<h6 id="headline-5">
 参考链接
 </h6>
-<div id="outline-text-headline-6" class="outline-text-6">
+<div id="outline-text-headline-5" class="outline-text-6">
 <p>
 <a href="https://blog.csdn.net/weixin_44847326/article/details/112366677">运行python脚本时传入参数的几种方式（接收外部参数）</a></p>
 </div>
@@ -607,13 +607,11 @@ termux+uiautomator2给多个QQ好友点赞
 </div>
 </div>
 </div>
-</div>
-</div>
-<div id="outline-container-headline-7" class="outline-3">
-<h3 id="headline-7">
+<div id="outline-container-headline-6" class="outline-3">
+<h3 id="headline-6">
 参考链接
 </h3>
-<div id="outline-text-headline-7" class="outline-text-3">
+<div id="outline-text-headline-6" class="outline-text-3">
 <p>
 <a href="https://ynhugo.github.io/p/无线调试adb使用配对码链接android/">无线调试ADB使用配对码链接Android</a></p>
 <p>
