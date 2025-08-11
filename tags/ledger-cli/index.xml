@@ -212,6 +212,59 @@
 &lt;p&gt;如果你愿意，我可以帮你写一个&lt;strong&gt;健身房会员费循环扣款 + 合同到期自动停止&lt;/strong&gt;的 ledger 文件，你运行一条命令就能直接看到未来的所有扣款。
 这样你就能直观看到 &lt;code&gt;--end&lt;/code&gt; 的效果。
 要我帮你写吗？&lt;/p&gt;
+&lt;h2 id=&#34;-every-week-不能单独写成一行它必须放在交易日期行或交易的末尾属性位置&#34;&gt;~ every week 不能单独写成一行，它必须放在交易日期行或交易的末尾属性位置
+&lt;/h2&gt;&lt;p&gt;这样写 &lt;strong&gt;ledger-cli&lt;/strong&gt; 是不行的，主要是 &lt;code&gt;~ every week&lt;/code&gt; 不能单独写成一行，它必须放在交易日期行或交易的末尾属性位置。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;正确写法&#34;&gt;正确写法
+&lt;/h3&gt;&lt;p&gt;&lt;code&gt;~ every week&lt;/code&gt; 必须跟在交易头部行的最后，比如：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2025/08/10 话费充值  ~ every week
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    Assets:Bank:工商银行        -49.75 CNY
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    Expenses:运营商:中国联通
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;这样 ledger 才会理解这笔交易是 &lt;strong&gt;每周重复一次&lt;/strong&gt;。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;解析&#34;&gt;解析
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;2025/08/10&lt;/code&gt; → 起始日期&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;~ every week&lt;/code&gt; → 从该日期起，每周生成一次同样的交易（预测时才会出现未来的交易）&lt;/li&gt;
+&lt;li&gt;科目顺序随意，但必须保证借贷平衡（上例中 &lt;code&gt;Assets&lt;/code&gt; 扣款，&lt;code&gt;Expenses&lt;/code&gt; 增加支出）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;例子只看未来一个月的预测&#34;&gt;例子：只看未来一个月的预测
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ledger register --end 2025-09-10
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;会输出从 2025/08/10 开始，每周一次，共 4~5 次的记录。&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;如果你想要 &lt;strong&gt;到某个日期自动停止扣款&lt;/strong&gt;（比如套餐三个月后到期），可以这样：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2025/08/10 话费充值  ~ every week until 2025/11/09
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    Assets:Bank:工商银行        -49.75 CNY
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    Expenses:运营商:中国联通
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;这样即使不加 &lt;code&gt;--end&lt;/code&gt;，ledger 也不会无限生成。&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;要不要我帮你把这个例子改成 &lt;strong&gt;org-mode + ledger 源码块&lt;/strong&gt; 的版本？这样你可以直接在 Emacs 里跑预测，星号问题也能避免。&lt;/p&gt;
 </description>
         </item>
         

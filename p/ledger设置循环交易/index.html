@@ -319,6 +319,13 @@
         <li><a href="#常见组合">常见组合</a></li>
       </ol>
     </li>
+    <li><a href="#-every-week-不能单独写成一行它必须放在交易日期行或交易的末尾属性位置">~ every week 不能单独写成一行，它必须放在交易日期行或交易的末尾属性位置</a>
+      <ol>
+        <li><a href="#正确写法">正确写法</a></li>
+        <li><a href="#解析">解析</a></li>
+        <li><a href="#例子只看未来一个月的预测">例子：只看未来一个月的预测</a></li>
+      </ol>
+    </li>
   </ol>
 </nav>
         </div>
@@ -589,6 +596,59 @@
 <p>如果你愿意，我可以帮你写一个<strong>健身房会员费循环扣款 + 合同到期自动停止</strong>的 ledger 文件，你运行一条命令就能直接看到未来的所有扣款。
 这样你就能直观看到 <code>--end</code> 的效果。
 要我帮你写吗？</p>
+<h2 id="-every-week-不能单独写成一行它必须放在交易日期行或交易的末尾属性位置">~ every week 不能单独写成一行，它必须放在交易日期行或交易的末尾属性位置
+</h2><p>这样写 <strong>ledger-cli</strong> 是不行的，主要是 <code>~ every week</code> 不能单独写成一行，它必须放在交易日期行或交易的末尾属性位置。</p>
+<hr>
+<h3 id="正确写法">正确写法
+</h3><p><code>~ every week</code> 必须跟在交易头部行的最后，比如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">2025/08/10 话费充值  ~ every week
+</span></span><span class="line"><span class="cl">    Assets:Bank:工商银行        -49.75 CNY
+</span></span><span class="line"><span class="cl">    Expenses:运营商:中国联通
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这样 ledger 才会理解这笔交易是 <strong>每周重复一次</strong>。</p>
+<hr>
+<h3 id="解析">解析
+</h3><ul>
+<li><code>2025/08/10</code> → 起始日期</li>
+<li><code>~ every week</code> → 从该日期起，每周生成一次同样的交易（预测时才会出现未来的交易）</li>
+<li>科目顺序随意，但必须保证借贷平衡（上例中 <code>Assets</code> 扣款，<code>Expenses</code> 增加支出）</li>
+</ul>
+<hr>
+<h3 id="例子只看未来一个月的预测">例子：只看未来一个月的预测
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ledger register --end 2025-09-10
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>会输出从 2025/08/10 开始，每周一次，共 4~5 次的记录。</p>
+<hr>
+<p>如果你想要 <strong>到某个日期自动停止扣款</strong>（比如套餐三个月后到期），可以这样：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">2025/08/10 话费充值  ~ every week until 2025/11/09
+</span></span><span class="line"><span class="cl">    Assets:Bank:工商银行        -49.75 CNY
+</span></span><span class="line"><span class="cl">    Expenses:运营商:中国联通
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这样即使不加 <code>--end</code>，ledger 也不会无限生成。</p>
+<hr>
+<p>要不要我帮你把这个例子改成 <strong>org-mode + ledger 源码块</strong> 的版本？这样你可以直接在 Emacs 里跑预测，星号问题也能避免。</p>
 
 </section>
 
