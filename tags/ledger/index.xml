@@ -7,7 +7,214 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
         <copyright>Example Person</copyright>
-        <lastBuildDate>Mon, 11 Nov 2024 04:57:15 +0800</lastBuildDate><atom:link href="https://ynhugo.github.io/tags/ledger/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Mon, 11 Aug 2025 16:30:52 +0800</lastBuildDate><atom:link href="https://ynhugo.github.io/tags/ledger/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>ledger设置循环交易</title>
+        <link>https://ynhugo.github.io/p/ledger%E8%AE%BE%E7%BD%AE%E5%BE%AA%E7%8E%AF%E4%BA%A4%E6%98%93/</link>
+        <pubDate>Mon, 11 Aug 2025 16:30:52 +0800</pubDate>
+        
+        <guid>https://ynhugo.github.io/p/ledger%E8%AE%BE%E7%BD%AE%E5%BE%AA%E7%8E%AF%E4%BA%A4%E6%98%93/</guid>
+        <description>&lt;h1 id=&#34;ledger设置循环交易chatgpt&#34;&gt;ledger设置循环交易（ChatGPT）
+&lt;/h1&gt;&lt;h2 id=&#34;ledger-cli如何记录每周自动扣款&#34;&gt;ledger-cli如何记录每周自动扣款
+&lt;/h2&gt;&lt;p&gt;&lt;code&gt;ledger-cli&lt;/code&gt; 记录&lt;strong&gt;每周自动扣款&lt;/strong&gt;有两种思路：&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;1-用&#34;&gt;&lt;strong&gt;1. 用 &lt;code&gt;~&lt;/code&gt; 循环交易（推荐）&lt;/strong&gt;
+&lt;/h3&gt;&lt;p&gt;&lt;code&gt;ledger&lt;/code&gt; 支持在交易日期后加 &lt;code&gt;~&lt;/code&gt; 表示重复周期。
+比如，每周一从银行自动扣 100 元给健身房，可以这样写：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2025-01-06=2025-01-06 * 健身房会员费  ; 每周一扣款
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    Expenses:Health:Gym          100 CNY
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    Assets:Bank:Checking
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    ~ every week
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;解释：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;2025-01-06=2025-01-06&lt;/code&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;第一部分是交易日期&lt;/li&gt;
+&lt;li&gt;第二部分（可选）是实际生效日期（一般相同即可）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;~ every week&lt;/code&gt; → 表示每周重复一次&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;这样 &lt;code&gt;ledger&lt;/code&gt; 会在报表中自动生成未来的扣款记录，直到你用 &lt;code&gt;--end&lt;/code&gt; 限制日期&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;例子：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ledger register Expenses:Health --end 2025-03-01
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;就会看到从 1 月 6 日开始，每周 100 元的支出条目。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;2-手动多条录入适合固定周期且短期&#34;&gt;&lt;strong&gt;2. 手动多条录入（适合固定周期且短期）&lt;/strong&gt;
+&lt;/h3&gt;&lt;p&gt;如果只想记录过去的扣款，不需要未来预测，可以一次性写多条：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2025-01-06 * 健身房会员费
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    Expenses:Health:Gym          100 CNY
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    Assets:Bank:Checking
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2025-01-13 * 健身房会员费
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    Expenses:Health:Gym          100 CNY
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    Assets:Bank:Checking
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2025-01-20 * 健身房会员费
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    Expenses:Health:Gym          100 CNY
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    Assets:Bank:Checking
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;虽然啰嗦，但这样生成的报表完全是实际历史数据。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;3-注意事项&#34;&gt;&lt;strong&gt;3. 注意事项&lt;/strong&gt;
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;如果用方法 1，需要在 &lt;code&gt;ledger&lt;/code&gt; 命令里加 &lt;code&gt;--forecast&lt;/code&gt; 或 &lt;code&gt;--end&lt;/code&gt; 来控制预测范围，否则未来会无限生成&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;周期语法支持：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;~ every day&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;~ every week&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;~ every month&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;~ every 2 weeks&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;如果金额会变（比如扣款金额随汇率变），&lt;code&gt;~&lt;/code&gt; 就不适合，需要手动维护&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;我可以帮你写一个&lt;strong&gt;每周自动扣款 + 每月统计&lt;/strong&gt;的 &lt;code&gt;ledger&lt;/code&gt; 示例，这样你运行一条命令就能看到未来扣款计划。
+你要我帮你做这个吗？这样你可以直接复制用。&lt;/p&gt;
+&lt;h2 id=&#34;end到期怎么用&#34;&gt;&amp;ndash;end到期怎么用
+&lt;/h2&gt;&lt;p&gt;在 &lt;strong&gt;ledger-cli&lt;/strong&gt; 里，&lt;code&gt;--end&lt;/code&gt; 用来限制&lt;strong&gt;报表输出的截止日期&lt;/strong&gt;，配合 &lt;code&gt;~ every week&lt;/code&gt; 这种循环交易就能“到期停止”。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;基本用法&#34;&gt;基本用法
+&lt;/h3&gt;&lt;p&gt;假设你有一个每周自动扣款的循环交易：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2025-01-06=2025-01-06 * 健身房会员费
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    Expenses:Health:Gym          100 CNY
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    Assets:Bank:Checking
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    ~ every week
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;如果你直接看：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ledger register
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;它会一直生成到无限未来（只要符合循环规则）。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;只看到到期前的记录&#34;&gt;只看到到期前的记录
+&lt;/h3&gt;&lt;p&gt;比如，你只想看到 &lt;strong&gt;2025-03-01&lt;/strong&gt; 之前的自动扣款：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ledger register --end 2025-03-01
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;输出就只会到 3 月 1 日前为止。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;限制到某个时间点合同到期&#34;&gt;限制到某个时间点“合同到期”
+&lt;/h3&gt;&lt;p&gt;如果合同到期时间是 2025-06-30，你可以这样：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ledger register --end 2025-06-30
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;或者在交易本身加一个&lt;strong&gt;生效截止日期&lt;/strong&gt;（这样就不用每次都加 &lt;code&gt;--end&lt;/code&gt;）：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2025-01-06=2025-01-06 * 健身房会员费
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    Expenses:Health:Gym          100 CNY
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    Assets:Bank:Checking
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    ~ every week until 2025-06-30
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;这样即使不加 &lt;code&gt;--end&lt;/code&gt;，ledger 也只会生成到 2025-06-30。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;常见组合&#34;&gt;常见组合
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;只看未来 3 个月的预测：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ledger register --begin &lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;date +%Y-%m-%d&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt; --end &lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;date -d &lt;span class=&#34;s2&#34;&gt;&amp;#34;+3 months&amp;#34;&lt;/span&gt; +%Y-%m-%d&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;统计到期前总共会花多少钱：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ledger balance Expenses:Health:Gym --end 2025-06-30
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;如果你愿意，我可以帮你写一个&lt;strong&gt;健身房会员费循环扣款 + 合同到期自动停止&lt;/strong&gt;的 ledger 文件，你运行一条命令就能直接看到未来的所有扣款。
+这样你就能直观看到 &lt;code&gt;--end&lt;/code&gt; 的效果。
+要我帮你写吗？&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>Ledger进行复式记账</title>
         <link>https://ynhugo.github.io/p/ledger%E8%BF%9B%E8%A1%8C%E5%A4%8D%E5%BC%8F%E8%AE%B0%E8%B4%A6/</link>
         <pubDate>Mon, 11 Nov 2024 04:57:15 +0800</pubDate>
