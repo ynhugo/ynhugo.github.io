@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-cn" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" 学习git-bash的网站 廖雪峰的官方网站-git教程\n菜鸟教程-git\nw3cschool-git教程\ngit-简易指南\ncsdn-git\ngitee-git\ngit的核心概念\n博客园-git\ngit-scm教程\ngitee-git命令学习\ngit初始化本地仓库和基本操作 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 mkdir cangku\t# 建一个空文件夹 cd cangku\t# 进入创建的文件夹 git init # 将该文件夹初始化为本地仓库 git config --global user.name &#34;name&#34; # &#34;name&#34;对应github注册时的用户名 git config --global user.email &#34;email&#34; # &#34;email&#34;对应github注册时的用户名 git remote add origin &lt;远程仓库地址&gt; # 添加远程仓库地址 echo &#34;Hello&#34; &gt;&gt; newFile\t# 创建一个&#34;newFile&#34;文件并添加&#34;Hello&#34; git add .\t# 添加本地仓库所有文件到暂存区 git commit -m &#34;Commit a file.&#34;\t# 对添加到文件暂存区的内容添加文件描述 git checkout -b main\t# 创建本地分支 git push -u origin main\t# 将文件暂存区的内容推送到远程的&#34;main&#34;分支 git checkout -b develop master\t# 创建一个基于 master 的叫做 develop 的新分支 git checkout main # 切换到 main 分支 git merge --no-ff develop\t# Git执行&#34;快进式合并&#34;（fast-farward merge），会直接将 Master 分支指向 Develop 分支 git submodule add https://github.com/theNewDynamic/gohugo-theme-ananke themes/ananke # 将一个仓库克隆到某一子目录下，并且会添加子模块到当前目录，这样的操作不会影响主目录的 git 仓库操作 git log 或 git reflog\t# 查看提交记录 git reset --hard 894bece\t# 版本回退到该提前记录 git push -f\t# 强制推送 git rebase -i HEAD~n # 使用 git rebase -i HEAD~5 压缩5个commit为1个，或者git rebase -i 51efaef517abdbf674478de6073c12239d78a56a （第一个commit的id），然后在vim编辑器中，按i编辑，将后4个commit的pick修改为fixup，保留第一个pick。按esc键，输入:wq保存退出。 .gitmodules 内容展示 1 2 3 [submodule &#34;hugo1/themes/hugo-theme-stack&#34;] path = hugo1/themes/hugo-theme-stack url = https://github.com/CaiJimmy/hugo-theme-stack/ 参考链接 git进行版本回退（文件恢复、恢复误提交、已提交）\n">
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" 学习git-bash的网站 廖雪峰的官方网站-git教程\n菜鸟教程-git\nw3cschool-git教程\ngit-简易指南\ncsdn-git\ngitee-git\ngit的核心概念\n博客园-git\ngit-scm教程\ngitee-git命令学习\ngit初始化本地仓库和基本操作 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 mkdir cangku\t# 建一个空文件夹 cd cangku\t# 进入创建的文件夹 git init # 将该文件夹初始化为本地仓库 git config --global user.name &#34;name&#34; # &#34;name&#34;对应github注册时的用户名 git config --global user.email &#34;email&#34; # &#34;email&#34;对应github注册时的用户名 git remote add origin &lt;远程仓库地址&gt; # 添加远程仓库地址 git remote set-url --add origin &lt;远程仓库地址&gt; # 添加第二个远程仓库地址 echo &#34;Hello&#34; &gt;&gt; newFile\t# 创建一个&#34;newFile&#34;文件并添加&#34;Hello&#34; git add .\t# 添加本地仓库所有文件到暂存区 git commit -m &#34;Commit a file.&#34;\t# 对添加到文件暂存区的内容添加文件描述 git checkout -b main\t# 创建本地分支 git push -u origin main\t# 将文件暂存区的内容推送到远程的&#34;main&#34;分支 git checkout -b develop master\t# 创建一个基于 master 的叫做 develop 的新分支 git checkout main # 切换到 main 分支 git merge --no-ff develop\t# Git执行&#34;快进式合并&#34;（fast-farward merge），会直接将 Master 分支指向 Develop 分支 git submodule add https://github.com/theNewDynamic/gohugo-theme-ananke themes/ananke # 将一个仓库克隆到某一子目录下，并且会添加子模块到当前目录，这样的操作不会影响主目录的 git 仓库操作 git log 或 git reflog\t# 查看提交记录 git reset --hard 894bece\t# 版本回退到该提前记录 git push -f\t# 强制推送 git rebase -i HEAD~n # 使用 git rebase -i HEAD~5 压缩5个commit为1个，或者git rebase -i 51efaef517abdbf674478de6073c12239d78a56a （第一个commit的id），然后在vim编辑器中，按i编辑，将后4个commit的pick修改为fixup，保留第一个pick。按esc键，输入:wq保存退出。 .gitmodules 内容展示 1 2 3 [submodule &#34;hugo1/themes/hugo-theme-stack&#34;] path = hugo1/themes/hugo-theme-stack url = https://github.com/CaiJimmy/hugo-theme-stack/ 参考链接 git进行版本回退（文件恢复、恢复误提交、已提交）\n">
 <title>Github_study</title>
 
 <link rel='canonical' href='https://ynhugo.github.io/p/github_study/'>
 
 <link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="Github_study">
-<meta property='og:description' content=" 学习git-bash的网站 廖雪峰的官方网站-git教程\n菜鸟教程-git\nw3cschool-git教程\ngit-简易指南\ncsdn-git\ngitee-git\ngit的核心概念\n博客园-git\ngit-scm教程\ngitee-git命令学习\ngit初始化本地仓库和基本操作 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 mkdir cangku\t# 建一个空文件夹 cd cangku\t# 进入创建的文件夹 git init # 将该文件夹初始化为本地仓库 git config --global user.name &#34;name&#34; # &#34;name&#34;对应github注册时的用户名 git config --global user.email &#34;email&#34; # &#34;email&#34;对应github注册时的用户名 git remote add origin &lt;远程仓库地址&gt; # 添加远程仓库地址 echo &#34;Hello&#34; &gt;&gt; newFile\t# 创建一个&#34;newFile&#34;文件并添加&#34;Hello&#34; git add .\t# 添加本地仓库所有文件到暂存区 git commit -m &#34;Commit a file.&#34;\t# 对添加到文件暂存区的内容添加文件描述 git checkout -b main\t# 创建本地分支 git push -u origin main\t# 将文件暂存区的内容推送到远程的&#34;main&#34;分支 git checkout -b develop master\t# 创建一个基于 master 的叫做 develop 的新分支 git checkout main # 切换到 main 分支 git merge --no-ff develop\t# Git执行&#34;快进式合并&#34;（fast-farward merge），会直接将 Master 分支指向 Develop 分支 git submodule add https://github.com/theNewDynamic/gohugo-theme-ananke themes/ananke # 将一个仓库克隆到某一子目录下，并且会添加子模块到当前目录，这样的操作不会影响主目录的 git 仓库操作 git log 或 git reflog\t# 查看提交记录 git reset --hard 894bece\t# 版本回退到该提前记录 git push -f\t# 强制推送 git rebase -i HEAD~n # 使用 git rebase -i HEAD~5 压缩5个commit为1个，或者git rebase -i 51efaef517abdbf674478de6073c12239d78a56a （第一个commit的id），然后在vim编辑器中，按i编辑，将后4个commit的pick修改为fixup，保留第一个pick。按esc键，输入:wq保存退出。 .gitmodules 内容展示 1 2 3 [submodule &#34;hugo1/themes/hugo-theme-stack&#34;] path = hugo1/themes/hugo-theme-stack url = https://github.com/CaiJimmy/hugo-theme-stack/ 参考链接 git进行版本回退（文件恢复、恢复误提交、已提交）\n">
+<meta property='og:description' content=" 学习git-bash的网站 廖雪峰的官方网站-git教程\n菜鸟教程-git\nw3cschool-git教程\ngit-简易指南\ncsdn-git\ngitee-git\ngit的核心概念\n博客园-git\ngit-scm教程\ngitee-git命令学习\ngit初始化本地仓库和基本操作 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 mkdir cangku\t# 建一个空文件夹 cd cangku\t# 进入创建的文件夹 git init # 将该文件夹初始化为本地仓库 git config --global user.name &#34;name&#34; # &#34;name&#34;对应github注册时的用户名 git config --global user.email &#34;email&#34; # &#34;email&#34;对应github注册时的用户名 git remote add origin &lt;远程仓库地址&gt; # 添加远程仓库地址 git remote set-url --add origin &lt;远程仓库地址&gt; # 添加第二个远程仓库地址 echo &#34;Hello&#34; &gt;&gt; newFile\t# 创建一个&#34;newFile&#34;文件并添加&#34;Hello&#34; git add .\t# 添加本地仓库所有文件到暂存区 git commit -m &#34;Commit a file.&#34;\t# 对添加到文件暂存区的内容添加文件描述 git checkout -b main\t# 创建本地分支 git push -u origin main\t# 将文件暂存区的内容推送到远程的&#34;main&#34;分支 git checkout -b develop master\t# 创建一个基于 master 的叫做 develop 的新分支 git checkout main # 切换到 main 分支 git merge --no-ff develop\t# Git执行&#34;快进式合并&#34;（fast-farward merge），会直接将 Master 分支指向 Develop 分支 git submodule add https://github.com/theNewDynamic/gohugo-theme-ananke themes/ananke # 将一个仓库克隆到某一子目录下，并且会添加子模块到当前目录，这样的操作不会影响主目录的 git 仓库操作 git log 或 git reflog\t# 查看提交记录 git reset --hard 894bece\t# 版本回退到该提前记录 git push -f\t# 强制推送 git rebase -i HEAD~n # 使用 git rebase -i HEAD~5 压缩5个commit为1个，或者git rebase -i 51efaef517abdbf674478de6073c12239d78a56a （第一个commit的id），然后在vim编辑器中，按i编辑，将后4个commit的pick修改为fixup，保留第一个pick。按esc键，输入:wq保存退出。 .gitmodules 内容展示 1 2 3 [submodule &#34;hugo1/themes/hugo-theme-stack&#34;] path = hugo1/themes/hugo-theme-stack url = https://github.com/CaiJimmy/hugo-theme-stack/ 参考链接 git进行版本回退（文件恢复、恢复误提交、已提交）\n">
 <meta property='og:url' content='https://ynhugo.github.io/p/github_study/'>
 <meta property='og:site_name' content='ynhugo'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Git' /><meta property='article:published_time' content='2023-07-29T11:15:46&#43;08:00'/><meta property='article:modified_time' content='2023-07-29T11:15:46&#43;08:00'/>
 <meta name="twitter:title" content="Github_study">
-<meta name="twitter:description" content=" 学习git-bash的网站 廖雪峰的官方网站-git教程\n菜鸟教程-git\nw3cschool-git教程\ngit-简易指南\ncsdn-git\ngitee-git\ngit的核心概念\n博客园-git\ngit-scm教程\ngitee-git命令学习\ngit初始化本地仓库和基本操作 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 mkdir cangku\t# 建一个空文件夹 cd cangku\t# 进入创建的文件夹 git init # 将该文件夹初始化为本地仓库 git config --global user.name &#34;name&#34; # &#34;name&#34;对应github注册时的用户名 git config --global user.email &#34;email&#34; # &#34;email&#34;对应github注册时的用户名 git remote add origin &lt;远程仓库地址&gt; # 添加远程仓库地址 echo &#34;Hello&#34; &gt;&gt; newFile\t# 创建一个&#34;newFile&#34;文件并添加&#34;Hello&#34; git add .\t# 添加本地仓库所有文件到暂存区 git commit -m &#34;Commit a file.&#34;\t# 对添加到文件暂存区的内容添加文件描述 git checkout -b main\t# 创建本地分支 git push -u origin main\t# 将文件暂存区的内容推送到远程的&#34;main&#34;分支 git checkout -b develop master\t# 创建一个基于 master 的叫做 develop 的新分支 git checkout main # 切换到 main 分支 git merge --no-ff develop\t# Git执行&#34;快进式合并&#34;（fast-farward merge），会直接将 Master 分支指向 Develop 分支 git submodule add https://github.com/theNewDynamic/gohugo-theme-ananke themes/ananke # 将一个仓库克隆到某一子目录下，并且会添加子模块到当前目录，这样的操作不会影响主目录的 git 仓库操作 git log 或 git reflog\t# 查看提交记录 git reset --hard 894bece\t# 版本回退到该提前记录 git push -f\t# 强制推送 git rebase -i HEAD~n # 使用 git rebase -i HEAD~5 压缩5个commit为1个，或者git rebase -i 51efaef517abdbf674478de6073c12239d78a56a （第一个commit的id），然后在vim编辑器中，按i编辑，将后4个commit的pick修改为fixup，保留第一个pick。按esc键，输入:wq保存退出。 .gitmodules 内容展示 1 2 3 [submodule &#34;hugo1/themes/hugo-theme-stack&#34;] path = hugo1/themes/hugo-theme-stack url = https://github.com/CaiJimmy/hugo-theme-stack/ 参考链接 git进行版本回退（文件恢复、恢复误提交、已提交）\n">
+<meta name="twitter:description" content=" 学习git-bash的网站 廖雪峰的官方网站-git教程\n菜鸟教程-git\nw3cschool-git教程\ngit-简易指南\ncsdn-git\ngitee-git\ngit的核心概念\n博客园-git\ngit-scm教程\ngitee-git命令学习\ngit初始化本地仓库和基本操作 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 mkdir cangku\t# 建一个空文件夹 cd cangku\t# 进入创建的文件夹 git init # 将该文件夹初始化为本地仓库 git config --global user.name &#34;name&#34; # &#34;name&#34;对应github注册时的用户名 git config --global user.email &#34;email&#34; # &#34;email&#34;对应github注册时的用户名 git remote add origin &lt;远程仓库地址&gt; # 添加远程仓库地址 git remote set-url --add origin &lt;远程仓库地址&gt; # 添加第二个远程仓库地址 echo &#34;Hello&#34; &gt;&gt; newFile\t# 创建一个&#34;newFile&#34;文件并添加&#34;Hello&#34; git add .\t# 添加本地仓库所有文件到暂存区 git commit -m &#34;Commit a file.&#34;\t# 对添加到文件暂存区的内容添加文件描述 git checkout -b main\t# 创建本地分支 git push -u origin main\t# 将文件暂存区的内容推送到远程的&#34;main&#34;分支 git checkout -b develop master\t# 创建一个基于 master 的叫做 develop 的新分支 git checkout main # 切换到 main 分支 git merge --no-ff develop\t# Git执行&#34;快进式合并&#34;（fast-farward merge），会直接将 Master 分支指向 Develop 分支 git submodule add https://github.com/theNewDynamic/gohugo-theme-ananke themes/ananke # 将一个仓库克隆到某一子目录下，并且会添加子模块到当前目录，这样的操作不会影响主目录的 git 仓库操作 git log 或 git reflog\t# 查看提交记录 git reset --hard 894bece\t# 版本回退到该提前记录 git push -f\t# 强制推送 git rebase -i HEAD~n # 使用 git rebase -i HEAD~5 压缩5个commit为1个，或者git rebase -i 51efaef517abdbf674478de6073c12239d78a56a （第一个commit的id），然后在vim编辑器中，按i编辑，将后4个commit的pick修改为fixup，保留第一个pick。按esc键，输入:wq保存退出。 .gitmodules 内容展示 1 2 3 [submodule &#34;hugo1/themes/hugo-theme-stack&#34;] path = hugo1/themes/hugo-theme-stack url = https://github.com/CaiJimmy/hugo-theme-stack/ 参考链接 git进行版本回退（文件恢复、恢复误提交、已提交）\n">
     </head>
     <body class="
     article-page
@@ -620,45 +620,49 @@ git初始化本地仓库和基本操作
 </span><span class="lnt">35
 </span><span class="lnt">36
 </span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  mkdir cangku					<span class="c1"># 建一个空文件夹</span>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mkdir cangku					<span class="c1"># 建一个空文件夹</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="nb">cd</span> cangku						<span class="c1"># 进入创建的文件夹</span>
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> cangku						<span class="c1"># 进入创建的文件夹</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  git init 						<span class="c1"># 将该文件夹初始化为本地仓库</span>
+</span></span><span class="line"><span class="cl">git init 						<span class="c1"># 将该文件夹初始化为本地仓库</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  git config --global user.name <span class="s2">&#34;name&#34;</span> <span class="c1"># &#34;name&#34;对应github注册时的用户名</span>
+</span></span><span class="line"><span class="cl">git config --global user.name <span class="s2">&#34;name&#34;</span> <span class="c1"># &#34;name&#34;对应github注册时的用户名</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  git config --global user.email <span class="s2">&#34;email&#34;</span> <span class="c1"># &#34;email&#34;对应github注册时的用户名</span>
+</span></span><span class="line"><span class="cl">git config --global user.email <span class="s2">&#34;email&#34;</span> <span class="c1"># &#34;email&#34;对应github注册时的用户名</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  git remote add origin &lt;远程仓库地址&gt; <span class="c1"># 添加远程仓库地址</span>
+</span></span><span class="line"><span class="cl">git remote add origin &lt;远程仓库地址&gt; <span class="c1"># 添加远程仓库地址</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;Hello&#34;</span> &gt;&gt; newFile			<span class="c1"># 创建一个&#34;newFile&#34;文件并添加&#34;Hello&#34;</span>
+</span></span><span class="line"><span class="cl">git remote set-url --add origin &lt;远程仓库地址&gt; <span class="c1"># 添加第二个远程仓库地址</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  git add .						<span class="c1"># 添加本地仓库所有文件到暂存区</span>
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;Hello&#34;</span> &gt;&gt; newFile			<span class="c1"># 创建一个&#34;newFile&#34;文件并添加&#34;Hello&#34;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  git commit -m <span class="s2">&#34;Commit a file.&#34;</span>	<span class="c1"># 对添加到文件暂存区的内容添加文件描述</span>
+</span></span><span class="line"><span class="cl">git add .						<span class="c1"># 添加本地仓库所有文件到暂存区</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  git checkout -b main			<span class="c1"># 创建本地分支</span>
+</span></span><span class="line"><span class="cl">git commit -m <span class="s2">&#34;Commit a file.&#34;</span>	<span class="c1"># 对添加到文件暂存区的内容添加文件描述</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  git push -u origin main			<span class="c1"># 将文件暂存区的内容推送到远程的&#34;main&#34;分支</span>
+</span></span><span class="line"><span class="cl">git checkout -b main			<span class="c1"># 创建本地分支</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  git checkout -b develop master	<span class="c1"># 创建一个基于 master 的叫做 develop 的新分支</span>
+</span></span><span class="line"><span class="cl">git push -u origin main			<span class="c1"># 将文件暂存区的内容推送到远程的&#34;main&#34;分支</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  git checkout main 				<span class="c1"># 切换到 main 分支</span>
+</span></span><span class="line"><span class="cl">git checkout -b develop master	<span class="c1"># 创建一个基于 master 的叫做 develop 的新分支</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  git merge --no-ff develop		<span class="c1"># Git执行&#34;快进式合并&#34;（fast-farward merge），会直接将 Master 分支指向 Develop 分支</span>
+</span></span><span class="line"><span class="cl">git checkout main 				<span class="c1"># 切换到 main 分支</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  git submodule add https://github.com/theNewDynamic/gohugo-theme-ananke themes/ananke <span class="c1"># 将一个仓库克隆到某一子目录下，并且会添加子模块到当前目录，这样的操作不会影响主目录的 git 仓库操作</span>
+</span></span><span class="line"><span class="cl">git merge --no-ff develop		<span class="c1"># Git执行&#34;快进式合并&#34;（fast-farward merge），会直接将 Master 分支指向 Develop 分支</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  git log 或 git reflog			<span class="c1"># 查看提交记录</span>
+</span></span><span class="line"><span class="cl">git submodule add https://github.com/theNewDynamic/gohugo-theme-ananke themes/ananke <span class="c1"># 将一个仓库克隆到某一子目录下，并且会添加子模块到当前目录，这样的操作不会影响主目录的 git 仓库操作</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  git reset --hard 894bece		<span class="c1"># 版本回退到该提前记录</span>
+</span></span><span class="line"><span class="cl">git log 或 git reflog			<span class="c1"># 查看提交记录</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  git push -f						<span class="c1"># 强制推送</span>
+</span></span><span class="line"><span class="cl">git reset --hard 894bece		<span class="c1"># 版本回退到该提前记录</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  git rebase -i HEAD~n 			<span class="c1"># 使用 git rebase -i HEAD~5 压缩5个commit为1个，或者git rebase -i 51efaef517abdbf674478de6073c12239d78a56a （第一个commit的id），然后在vim编辑器中，按i编辑，将后4个commit的pick修改为fixup，保留第一个pick。按esc键，输入:wq保存退出。</span></span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">git push -f						<span class="c1"># 强制推送</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">git rebase -i HEAD~n 			<span class="c1"># 使用 git rebase -i HEAD~5 压缩5个commit为1个，或者git rebase -i 51efaef517abdbf674478de6073c12239d78a56a （第一个commit的id），然后在vim编辑器中，按i编辑，将后4个commit的pick修改为fixup，保留第一个pick。按esc键，输入:wq保存退出。</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
@@ -692,6 +696,8 @@ git初始化本地仓库和基本操作
 <a href="https://blog.csdn.net/qing040513/article/details/109150075">git进行版本回退（文件恢复、恢复误提交、已提交）</a></p>
 <p>
 <a href="https://blog.csdn.net/Spade_/article/details/108698036">[Git] 两种方法合并多个commit为一个</a></p>
+<p>
+<a href="https://www.cnblogs.com/teamemory/p/11607613.html">一个项目设置两个git地址，并最终实现一次性同时推送到到两个git地址上的方法总结</a></p>
 </div>
 </div>
 </div>
