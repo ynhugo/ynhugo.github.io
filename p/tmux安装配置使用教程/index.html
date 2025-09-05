@@ -362,29 +362,35 @@
 </li>
 </ul>
 </li>
-<li><a href="#headline-25">安装方法</a>
+<li><a href="#headline-25">tmux发送到某个会话指定命令/按键</a>
 <ul>
-<li><a href="#headline-26">安装</a>
-</li>
-<li><a href="#headline-27">git-bash安装tmux</a>
-<ul>
-<li><a href="#headline-28">配置tmux</a>
-</li>
-<li><a href="#headline-29">复制如下配置到刚才新建的配置文件中即可</a>
+<li><a href="#headline-26">参考链接</a>
 </li>
 </ul>
 </li>
-<li><a href="#headline-30">一键安装配置脚本</a>
+<li><a href="#headline-27">安装方法</a>
+<ul>
+<li><a href="#headline-28">安装</a>
 </li>
-<li><a href="#headline-31">Ubuntu 或 Debian</a>
+<li><a href="#headline-29">git-bash安装tmux</a>
+<ul>
+<li><a href="#headline-30">配置tmux</a>
 </li>
-<li><a href="#headline-32">CentOS 或 Fedora</a>
-</li>
-<li><a href="#headline-33">Mac</a>
+<li><a href="#headline-31">复制如下配置到刚才新建的配置文件中即可</a>
 </li>
 </ul>
 </li>
-<li><a href="#headline-34">参考链接</a>
+<li><a href="#headline-32">一键安装配置脚本</a>
+</li>
+<li><a href="#headline-33">Ubuntu 或 Debian</a>
+</li>
+<li><a href="#headline-34">CentOS 或 Fedora</a>
+</li>
+<li><a href="#headline-35">Mac</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-36">参考链接</a>
 </li>
 </ul>
 </nav>
@@ -442,7 +448,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 2 分钟
+                    阅读时长: 3 分钟
                 </time>
             </div>
         
@@ -1053,23 +1059,73 @@ Tmux可以将窗口分成多个窗格（pane），每个窗格运行不同的命
 </div>
 <div id="outline-container-headline-25" class="outline-2">
 <h2 id="headline-25">
-安装方法
+tmux发送到某个会话指定命令/按键
 </h2>
 <div id="outline-text-headline-25" class="outline-text-2">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">tmux send-keys <span class="o">[</span>-t &lt;session-name&gt;<span class="o">]</span> &lt;key&gt;</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+例如，向会话mc发送指令ls并按回车执行</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">tmux send-keys -t mc ls Enter</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+向会话mc发送bash start.sh并按回车执行</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">tmux send-keys -t mc bash Space start.sh Enter</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
 <div id="outline-container-headline-26" class="outline-3">
 <h3 id="headline-26">
-安装
+参考链接
 </h3>
 <div id="outline-text-headline-26" class="outline-text-3">
+<p>
+<a href="https://www.cnblogs.com/wangbingbing/p/16473526.html">tmux发送到某个会话指定命令/按键</a></p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-27" class="outline-2">
+<h2 id="headline-27">
+安装方法
+</h2>
+<div id="outline-text-headline-27" class="outline-text-2">
+<div id="outline-container-headline-28" class="outline-3">
+<h3 id="headline-28">
+安装
+</h3>
+<div id="outline-text-headline-28" class="outline-text-3">
 <p>
 Tmux 一般需要自己安装。</p>
 </div>
 </div>
-<div id="outline-container-headline-27" class="outline-3">
-<h3 id="headline-27">
+<div id="outline-container-headline-29" class="outline-3">
+<h3 id="headline-29">
 git-bash安装tmux
 </h3>
-<div id="outline-text-headline-27" class="outline-text-3">
+<div id="outline-text-headline-29" class="outline-text-3">
 <p>
 git bash中执行以下命令，即可安装tmux。如果以下操作完tmux没法使用，注意git升级到最新版，我遇到的坑就是git2.9版本安装完tmux后打tmux命令没反应。升级完git2.26后即可。</p>
 <div class="src src-bash">
@@ -1088,11 +1144,11 @@ git bash中执行以下命令，即可安装tmux。如果以下操作完tmux没�
 </div>
 </div>
 </div>
-<div id="outline-container-headline-28" class="outline-4">
-<h4 id="headline-28">
+<div id="outline-container-headline-30" class="outline-4">
+<h4 id="headline-30">
 配置tmux
 </h4>
-<div id="outline-text-headline-28" class="outline-text-4">
+<div id="outline-text-headline-30" class="outline-text-4">
 <p>
 新建tmux配置文件</p>
 <div class="src src-bash">
@@ -1107,11 +1163,11 @@ git bash中执行以下命令，即可安装tmux。如果以下操作完tmux没�
 </div>
 </div>
 </div>
-<div id="outline-container-headline-29" class="outline-4">
-<h4 id="headline-29">
+<div id="outline-container-headline-31" class="outline-4">
+<h4 id="headline-31">
 复制如下配置到刚才新建的配置文件中即可
 </h4>
-<div id="outline-text-headline-29" class="outline-text-4">
+<div id="outline-text-headline-31" class="outline-text-4">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1134,11 +1190,11 @@ git bash中执行以下命令，即可安装tmux。如果以下操作完tmux没�
 </div>
 </div>
 </div>
-<div id="outline-container-headline-30" class="outline-3">
-<h3 id="headline-30">
+<div id="outline-container-headline-32" class="outline-3">
+<h3 id="headline-32">
 一键安装配置脚本
 </h3>
-<div id="outline-text-headline-30" class="outline-text-3">
+<div id="outline-text-headline-32" class="outline-text-3">
 <p>
 为便安装与配置tmux，特地将所有需要操作的内容都写到脚本里了，到时候只要打开git-bash，然后运行该脚本就可以了</p>
 <p>
@@ -1157,11 +1213,11 @@ git bash中执行以下命令，即可安装tmux。如果以下操作完tmux没�
 </div>
 </div>
 </div>
-<div id="outline-container-headline-31" class="outline-3">
-<h3 id="headline-31">
+<div id="outline-container-headline-33" class="outline-3">
+<h3 id="headline-33">
 Ubuntu 或 Debian
 </h3>
-<div id="outline-text-headline-31" class="outline-text-3">
+<div id="outline-text-headline-33" class="outline-text-3">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1174,11 +1230,11 @@ Ubuntu 或 Debian
 </div>
 </div>
 </div>
-<div id="outline-container-headline-32" class="outline-3">
-<h3 id="headline-32">
+<div id="outline-container-headline-34" class="outline-3">
+<h3 id="headline-34">
 CentOS 或 Fedora
 </h3>
-<div id="outline-text-headline-32" class="outline-text-3">
+<div id="outline-text-headline-34" class="outline-text-3">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1191,11 +1247,11 @@ CentOS 或 Fedora
 </div>
 </div>
 </div>
-<div id="outline-container-headline-33" class="outline-3">
-<h3 id="headline-33">
+<div id="outline-container-headline-35" class="outline-3">
+<h3 id="headline-35">
 Mac
 </h3>
-<div id="outline-text-headline-33" class="outline-text-3">
+<div id="outline-text-headline-35" class="outline-text-3">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1210,11 +1266,11 @@ Mac
 </div>
 </div>
 </div>
-<div id="outline-container-headline-34" class="outline-2">
-<h2 id="headline-34">
+<div id="outline-container-headline-36" class="outline-2">
+<h2 id="headline-36">
 参考链接
 </h2>
-<div id="outline-text-headline-34" class="outline-text-2">
+<div id="outline-text-headline-36" class="outline-text-2">
 <p>
 <a href="https://www.jianshu.com/p/2defec71e2de">git bash安装tmux实现多标签</a></p>
 <p>
