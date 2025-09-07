@@ -640,6 +640,12 @@
 </li>
 <li><a href="#headline-141">对比文件是否一致</a>
 </li>
+<li><a href="#headline-142">为wget命令设置代理</a>
+<ul>
+<li><a href="#headline-143">参考链接</a>
+</li>
+</ul>
+</li>
 </ul>
 </nav>
         </div>
@@ -4382,6 +4388,34 @@ pcie4通道测试，测试回环，会产生4个文件，文件是以通道号�
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nv">nr</span><span class="o">=</span>1<span class="p">;</span> <span class="nv">dir</span><span class="o">=</span><span class="k">$(</span>find ./ -name <span class="s2">&#34;2025*&#34;</span> -type d <span class="p">|</span> sort <span class="p">|</span> awk -v <span class="nv">line</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$nr</span><span class="s2">&#34;</span> <span class="s1">&#39;NR==line{print}&#39;</span><span class="k">)</span><span class="p">;</span> <span class="nb">echo</span> <span class="nv">$dir</span><span class="p">;</span> <span class="k">for</span> i in <span class="s2">&#34;</span><span class="nv">$dir</span><span class="s2">&#34;</span>/*.dat<span class="p">;</span> <span class="k">do</span> diff <span class="si">${</span><span class="nv">i</span><span class="si">}</span> ~/00_zdk/TestFiles/111asdfasdf.dat<span class="p">;</span> <span class="k">done</span></span></span></code></pre></td></tr></table>
 </div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-142" class="outline-2">
+<h2 id="headline-142">
+为wget命令设置代理
+</h2>
+<div id="outline-text-headline-142" class="outline-text-2">
+<p>
+端口号根据实际代理进行配置，以下命令仅供参考：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">wget -c -e <span class="s2">&#34;https_proxy=https://127.0.0.1:8087&#34;</span> <span class="nv">$file</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-143" class="outline-3">
+<h3 id="headline-143">
+参考链接
+</h3>
+<div id="outline-text-headline-143" class="outline-text-3">
+<p>
+<a href="https://www.cnblogs.com/frankyou/p/6693256.html">为wget命令设置代理</a></p>
 </div>
 </div>
 </div>
