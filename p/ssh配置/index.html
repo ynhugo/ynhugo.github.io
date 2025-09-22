@@ -314,51 +314,53 @@
 </li>
 <li><a href="#headline-4">SSH 连接失败: no matching host key type found. Their offer: ssh-rs</a>
 </li>
-<li><a href="#headline-5">ubuntu自动配置sshd_config</a>
-<ul>
-<li><a href="#headline-6">操作步骤</a>
+<li><a href="#headline-5">sshd: no hostkeys available – exiting.</a>
 </li>
-<li><a href="#headline-7">脚本内容-sshd_config.sh</a>
+<li><a href="#headline-6">ubuntu自动配置sshd_config</a>
+<ul>
+<li><a href="#headline-7">操作步骤</a>
+</li>
+<li><a href="#headline-8">脚本内容-sshd_config.sh</a>
 </li>
 </ul>
 </li>
-<li><a href="#headline-8">客户端.ssh目录下config文件基本配置</a>
+<li><a href="#headline-9">客户端.ssh目录下config文件基本配置</a>
 </li>
-<li><a href="#headline-9">如何不让ssh连接断开</a>
+<li><a href="#headline-10">如何不让ssh连接断开</a>
 <ul>
-<li><a href="#headline-10">只在客户端设置 SSH 保活选项</a>
+<li><a href="#headline-11">只在客户端设置 SSH 保活选项</a>
 </li>
-<li><a href="#headline-11">只在服务器端设置 SSH 保活选项</a>
+<li><a href="#headline-12">只在服务器端设置 SSH 保活选项</a>
 </li>
-<li><a href="#headline-12">ssh连接，如果超过3秒没有连上则断开</a>
+<li><a href="#headline-13">ssh连接，如果超过3秒没有连上则断开</a>
 </li>
-<li><a href="#headline-13">使用 tmux 或 screen 会话</a>
+<li><a href="#headline-14">使用 tmux 或 screen 会话</a>
 </li>
-<li><a href="#headline-14">查看 ssh 版本</a>
+<li><a href="#headline-15">查看 ssh 版本</a>
 <ul>
-<li><a href="#headline-15">处理 ssh 版本信息</a>
+<li><a href="#headline-16">处理 ssh 版本信息</a>
 </li>
-<li><a href="#headline-16">判断 ssh 版本</a>
+<li><a href="#headline-17">判断 ssh 版本</a>
 </li>
 </ul>
 </li>
-<li><a href="#headline-17">注意事项</a>
+<li><a href="#headline-18">注意事项</a>
 </li>
-<li><a href="#headline-18">参考链接</a>
+<li><a href="#headline-19">参考链接</a>
 </li>
 </ul>
 </li>
-<li><a href="#headline-19">ssh公钥登录远程服务器配置</a>
+<li><a href="#headline-20">ssh公钥登录远程服务器配置</a>
 <ul>
-<li><a href="#headline-20">第一步，ssh-keygen命令生成公钥私钥</a>
+<li><a href="#headline-21">第一步，ssh-keygen命令生成公钥私钥</a>
 </li>
-<li><a href="#headline-21">第二步，使用ssh-copy-id命令将公钥复制到远程服务器</a>
+<li><a href="#headline-22">第二步，使用ssh-copy-id命令将公钥复制到远程服务器</a>
 </li>
-<li><a href="#headline-22">第三步，检查服务端.ssh/的权限</a>
+<li><a href="#headline-23">第三步，检查服务端.ssh/的权限</a>
 </li>
-<li><a href="#headline-23">第四步，配置快捷命令</a>
+<li><a href="#headline-24">第四步，配置快捷命令</a>
 </li>
-<li><a href="#headline-24">参考链接</a>
+<li><a href="#headline-25">参考链接</a>
 </li>
 </ul>
 </li>
@@ -588,14 +590,47 @@ SSH 连接失败: no matching host key type found. Their offer: ssh-rs
 </div>
 <div id="outline-container-headline-5" class="outline-2">
 <h2 id="headline-5">
-ubuntu自动配置sshd_config
+sshd: no hostkeys available – exiting.
 </h2>
 <div id="outline-text-headline-5" class="outline-text-2">
-<div id="outline-container-headline-6" class="outline-3">
-<h3 id="headline-6">
+<p>
+生成 SSH 主机密钥</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 生成 RSA 密钥</span>
+</span></span><span class="line"><span class="cl">ssh-keygen -t rsa -f <span class="nv">$PREFIX</span>/etc/ssh/ssh_host_rsa_key -N <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 生成 ECDSA 密钥</span>
+</span></span><span class="line"><span class="cl">ssh-keygen -t ecdsa -f <span class="nv">$PREFIX</span>/etc/ssh/ssh_host_ecdsa_key -N <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 生成 ED25519 密钥</span>
+</span></span><span class="line"><span class="cl">ssh-keygen -t ed25519 -f <span class="nv">$PREFIX</span>/etc/ssh/ssh_host_ed25519_key -N <span class="s2">&#34;&#34;</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-6" class="outline-2">
+<h2 id="headline-6">
+ubuntu自动配置sshd_config
+</h2>
+<div id="outline-text-headline-6" class="outline-text-2">
+<div id="outline-container-headline-7" class="outline-3">
+<h3 id="headline-7">
 操作步骤
 </h3>
-<div id="outline-text-headline-6" class="outline-text-3">
+<div id="outline-text-headline-7" class="outline-text-3">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -608,11 +643,11 @@ ubuntu自动配置sshd_config
 </div>
 </div>
 </div>
-<div id="outline-container-headline-7" class="outline-3">
-<h3 id="headline-7">
+<div id="outline-container-headline-8" class="outline-3">
+<h3 id="headline-8">
 脚本内容-sshd_config.sh
 </h3>
-<div id="outline-text-headline-7" class="outline-text-3">
+<div id="outline-text-headline-8" class="outline-text-3">
 <div class="src src-text">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -735,11 +770,11 @@ ubuntu自动配置sshd_config
 </div>
 </div>
 </div>
-<div id="outline-container-headline-8" class="outline-2">
-<h2 id="headline-8">
+<div id="outline-container-headline-9" class="outline-2">
+<h2 id="headline-9">
 客户端.ssh目录下config文件基本配置
 </h2>
-<div id="outline-text-headline-8" class="outline-text-2">
+<div id="outline-text-headline-9" class="outline-text-2">
 <p>
 .ssh/config</p>
 <div class="src src-bash">
@@ -807,11 +842,11 @@ ubuntu自动配置sshd_config
 这样的话，上述的 ServerAliveInterval 和 ServerAliveCountMax 参数将只会应用到 example.com 主机的连接上，而其他主机的连接则不受影响。</p>
 </div>
 </div>
-<div id="outline-container-headline-9" class="outline-2">
-<h2 id="headline-9">
+<div id="outline-container-headline-10" class="outline-2">
+<h2 id="headline-10">
 如何不让ssh连接断开
 </h2>
-<div id="outline-text-headline-9" class="outline-text-2">
+<div id="outline-text-headline-10" class="outline-text-2">
 <ul>
 <li>客户端设置可以确保客户端定期向服务器发送空闲检查，以确保服务器仍然活跃。如果服务器在一段时间内没有响应，客户端可以主动断开连接，避免连接僵死。</li>
 <li>服务端设置可以确保服务器定期向客户端发送空闲检查，以确保客户端仍然活跃。如果客户端在一段时间内没有响应，服务器可以主动断开连接，释放资源并提高安全性。</li>
@@ -819,11 +854,11 @@ ubuntu自动配置sshd_config
 <p>总结：如果客户端和服务端都设置保活选项，就可以确保连接的双向活跃性和稳定性。这样的设置可以在两个方向上都进行检查，以确保连接始终保持活跃，并及时处理失活的连接。</p>
 <p>
 可以只设置客户端或只设置服务端，这取决于你想要达到的目的，也可以通过同时设置客户端和服务端，可以确保连接的稳定性和可靠性，从而更好地管理连接并提高系统的安全性和稳定性。</p>
-<div id="outline-container-headline-10" class="outline-3">
-<h3 id="headline-10">
+<div id="outline-container-headline-11" class="outline-3">
+<h3 id="headline-11">
 只在客户端设置 SSH 保活选项
 </h3>
-<div id="outline-text-headline-10" class="outline-text-3">
+<div id="outline-text-headline-11" class="outline-text-3">
 <p>
 您可以在 SSH 客户端的配置文件中设置保活选项，以防止连接因为长时间无活动而断开。这通常在客户端的 ~/.ssh/config 文件中设置：</p>
 <div class="src src-bash">
@@ -849,11 +884,11 @@ ServerAliveCountMax：在没有收到任何服务器响应的情况下，客户�
 </ul>
 </div>
 </div>
-<div id="outline-container-headline-11" class="outline-3">
-<h3 id="headline-11">
+<div id="outline-container-headline-12" class="outline-3">
+<h3 id="headline-12">
 只在服务器端设置 SSH 保活选项
 </h3>
-<div id="outline-text-headline-11" class="outline-text-3">
+<div id="outline-text-headline-12" class="outline-text-3">
 <p>
 同样，您也可以在 SSH 服务器端设置保活选项，来防止客户端连接由于超时而断开。在服务器的 SSH 配置文件 /etc/ssh/sshd_config 中设置：</p>
 <div class="src src-bash">
@@ -888,11 +923,11 @@ ClientAliveCountMax：在没有收到客户端响应的情况下，服务器尝�
 <p>总结：单独设置客户端或服务端的一个方面可以达到一定的活跃性和稳定性，但是为了最佳效果，建议同时设置客户端和服务端。这可以确保连接在双向上都得到监视和保持活跃，从而更好地管理连接和资源。</p>
 </div>
 </div>
-<div id="outline-container-headline-12" class="outline-3">
-<h3 id="headline-12">
+<div id="outline-container-headline-13" class="outline-3">
+<h3 id="headline-13">
 ssh连接，如果超过3秒没有连上则断开
 </h3>
-<div id="outline-text-headline-12" class="outline-text-3">
+<div id="outline-text-headline-13" class="outline-text-3">
 <p>
 要在 SSH 连接时设置超时时间，可以在命令行中直接指定 -o 选项来设置 ConnectTimeout。以下是一个示例：</p>
 <div class="src src-bash">
@@ -911,11 +946,11 @@ ssh连接，如果超过3秒没有连上则断开
 这样，在执行以上命令时，如果连接未能在指定的时间内建立，则会自动断开连接。</p>
 </div>
 </div>
-<div id="outline-container-headline-13" class="outline-3">
-<h3 id="headline-13">
+<div id="outline-container-headline-14" class="outline-3">
+<h3 id="headline-14">
 使用 tmux 或 screen 会话
 </h3>
-<div id="outline-text-headline-13" class="outline-text-3">
+<div id="outline-text-headline-14" class="outline-text-3">
 <p>
 termux教程：<a href="https://ynhugo.github.io/p/tmux">https://ynhugo.github.io/p/tmux</a>%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/</p>
 <p>
@@ -962,11 +997,11 @@ screen教程：<a href="https://ynhugo.github.io/p/screen">https://ynhugo.github
 </div>
 </div>
 </div>
-<div id="outline-container-headline-14" class="outline-3">
-<h3 id="headline-14">
+<div id="outline-container-headline-15" class="outline-3">
+<h3 id="headline-15">
 查看 ssh 版本
 </h3>
-<div id="outline-text-headline-14" class="outline-text-3">
+<div id="outline-text-headline-15" class="outline-text-3">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -977,11 +1012,11 @@ screen教程：<a href="https://ynhugo.github.io/p/screen">https://ynhugo.github
 </div>
 </div>
 </div>
-<div id="outline-container-headline-15" class="outline-4">
-<h4 id="headline-15">
+<div id="outline-container-headline-16" class="outline-4">
+<h4 id="headline-16">
 处理 ssh 版本信息
 </h4>
-<div id="outline-text-headline-15" class="outline-text-4">
+<div id="outline-text-headline-16" class="outline-text-4">
 <p>
 ssh -V 命令输出的版本信息是直接打印在标准错误输出（stderr）中，而不是标准输出（stdout）。因此需要使用重定向来处理。</p>
 <p>
@@ -1002,11 +1037,11 @@ ssh -V 命令输出的版本信息是直接打印在标准错误输出（stderr�
 对于 OpenSSH 版本信息的输出，它通常类似于 &#34;OpenSSH_x.x&#34; 的格式，通过使用 $1 来提取第一个字段，可以获取到版本号。</p>
 </div>
 </div>
-<div id="outline-container-headline-16" class="outline-4">
-<h4 id="headline-16">
+<div id="outline-container-headline-17" class="outline-4">
+<h4 id="headline-17">
 判断 ssh 版本
 </h4>
-<div id="outline-text-headline-16" class="outline-text-4">
+<div id="outline-text-headline-17" class="outline-text-4">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1043,11 +1078,11 @@ ssh -V 命令输出的版本信息是直接打印在标准错误输出（stderr�
 </div>
 </div>
 </div>
-<div id="outline-container-headline-17" class="outline-3">
-<h3 id="headline-17">
+<div id="outline-container-headline-18" class="outline-3">
+<h3 id="headline-18">
 注意事项
 </h3>
-<div id="outline-text-headline-17" class="outline-text-3">
+<div id="outline-text-headline-18" class="outline-text-3">
 <ul>
 <li>长时间保持 SSH 连接可能会有安全风险，特别是在公共或不受信任的网络中。</li>
 <li>确保您有足够的权限来修改 SSH 配置文件。</li>
@@ -1056,22 +1091,22 @@ ssh -V 命令输出的版本信息是直接打印在标准错误输出（stderr�
 <p>通过上述方法，您可以有效地防止 SSH 连接因为长时间无活动而断开，提高远程工作的连续性和便捷性。</p>
 </div>
 </div>
-<div id="outline-container-headline-18" class="outline-3">
-<h3 id="headline-18">
+<div id="outline-container-headline-19" class="outline-3">
+<h3 id="headline-19">
 参考链接
 </h3>
-<div id="outline-text-headline-18" class="outline-text-3">
+<div id="outline-text-headline-19" class="outline-text-3">
 <p>
 <a href="https://blog.csdn.net/m0_57236802/article/details/134729088">如何不让ssh连接断开</a></p>
 </div>
 </div>
 </div>
 </div>
-<div id="outline-container-headline-19" class="outline-2">
-<h2 id="headline-19">
+<div id="outline-container-headline-20" class="outline-2">
+<h2 id="headline-20">
 ssh公钥登录远程服务器配置
 </h2>
-<div id="outline-text-headline-19" class="outline-text-2">
+<div id="outline-text-headline-20" class="outline-text-2">
 <p>
 每次通过ssh登陆远程服务器都要输入用户名和密码，很麻烦，比如：</p>
 <div class="src src-bash">
@@ -1086,11 +1121,11 @@ ssh公钥登录远程服务器配置
 </div>
 <p>
 我们可以通过公钥的方式，无密码登陆远程服务器。</p>
-<div id="outline-container-headline-20" class="outline-3">
-<h3 id="headline-20">
+<div id="outline-container-headline-21" class="outline-3">
+<h3 id="headline-21">
 第一步，ssh-keygen命令生成公钥私钥
 </h3>
-<div id="outline-text-headline-20" class="outline-text-3">
+<div id="outline-text-headline-21" class="outline-text-3">
 <p>
 全过程有三步，第一步是输入公钥私钥的保存路径，第二步和第三步是设置私钥密码和确认密码。</p>
 <div class="src src-bash">
@@ -1107,11 +1142,11 @@ ssh公钥登录远程服务器配置
 如果是第一次生成公钥，则直接一路回车确认就行。公钥和私钥会自动生成到/Users/[用户名]/.ssh路径下。默认公钥文件名为id_rsa.pub，私钥文件名为id_rsa。如果不想覆盖之前已有的公钥，那在第一步指定一个保存路径即可。</p>
 </div>
 </div>
-<div id="outline-container-headline-21" class="outline-3">
-<h3 id="headline-21">
+<div id="outline-container-headline-22" class="outline-3">
+<h3 id="headline-22">
 第二步，使用ssh-copy-id命令将公钥复制到远程服务器
 </h3>
-<div id="outline-text-headline-21" class="outline-text-3">
+<div id="outline-text-headline-22" class="outline-text-3">
 <p>
 在用户路径下，执行命令：</p>
 <div class="src src-bash">
@@ -1133,11 +1168,11 @@ ssh公钥登录远程服务器配置
 <p>本质上，这一步的操作，是将你的公钥追加到服务器/home/[用户名]/.ssh/authorized_keys文件后面。如果你手动复制进去，也可以，但是麻烦哦。</p>
 </div>
 </div>
-<div id="outline-container-headline-22" class="outline-3">
-<h3 id="headline-22">
+<div id="outline-container-headline-23" class="outline-3">
+<h3 id="headline-23">
 第三步，检查服务端.ssh/的权限
 </h3>
-<div id="outline-text-headline-22" class="outline-text-3">
+<div id="outline-text-headline-23" class="outline-text-3">
 <p>
 以上配置之后，就可以无需密码直接登陆了，命令：</p>
 <div class="src src-bash">
@@ -1166,11 +1201,11 @@ ssh公钥登录远程服务器配置
 为什么有这个限制呢？其实思考一下就能理解。因为你想通过公钥快捷登录A用户。而实现方式是将自己的公钥追加到A用户目录下的authorized_keys。这种情况下，如果同用户组的B用户，也有对.ssh/路径下的写权限，那么其他人就可以通过登录B用户，修改A用户下的authorized_keys，将自己的公钥追加进去，这样就可以直接用A用户登录了。所以这会出现漏洞。</p>
 </div>
 </div>
-<div id="outline-container-headline-23" class="outline-3">
-<h3 id="headline-23">
+<div id="outline-container-headline-24" class="outline-3">
+<h3 id="headline-24">
 第四步，配置快捷命令
 </h3>
-<div id="outline-text-headline-23" class="outline-text-3">
+<div id="outline-text-headline-24" class="outline-text-3">
 <p>
 目前为止，登录还需要输入用户名和ip，依旧比较麻烦。我们可以在本地的.ssh/config文件中，配置快捷登录命令。</p>
 <p>
@@ -1227,11 +1262,11 @@ ssh公钥登录远程服务器配置
 就可以直接登录了。</p>
 </div>
 </div>
-<div id="outline-container-headline-24" class="outline-3">
-<h3 id="headline-24">
+<div id="outline-container-headline-25" class="outline-3">
+<h3 id="headline-25">
 参考链接
 </h3>
-<div id="outline-text-headline-24" class="outline-text-3">
+<div id="outline-text-headline-25" class="outline-text-3">
 <p>
 <a href="https://blog.csdn.net/u011291072/article/details/119298179">快速实战派：ssh公钥登录远程服务器配置</a></p>
 </div>
