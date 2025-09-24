@@ -626,7 +626,7 @@ Windows搭建环境
 </span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">uiautomator2</span> <span class="k">as</span> <span class="nn">u2</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">get_device_id</span><span class="p">():</span>
-</span></span><span class="line"><span class="cl">	<span class="c1"># 获取第第一个已连接的Android设备ID</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 获取第第一个已连接的Android设备ID</span>
 </span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="n">result</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">([</span><span class="s1">&#39;adb&#39;</span><span class="p">,</span> <span class="s1">&#39;devices&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">        <span class="n">devices</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
@@ -646,21 +646,21 @@ Windows搭建环境
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Connected device: </span><span class="si">{</span><span class="n">device_id</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="c1"># 初始化uiautomator2连接</span>
+</span></span><span class="line"><span class="cl">     <span class="c1"># 初始化uiautomator2连接</span>
 </span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="n">d</span> <span class="o">=</span> <span class="n">u2</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">device_id</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Device connected successfully&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">        <span class="k">while</span> <span class="n">running</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">            <span class="n">d</span><span class="p">(</span><span class="n">resourceId</span><span class="o">=</span><span class="s2">&#34;cn.soulapp.android:id/tvChat&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">            <span class="n">d</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="s2">&#34;❤️加入我们单身社交交友大家庭</span><span class="se">\n</span><span class="s2">💛包脱单，包分配，包售后，包打假</span><span class="se">\n</span><span class="s2">💚看群主瞬间小猪🐷猪蹄下边的水槽那一串黑黑的摩斯密码，备注soul名字，拉你进大家庭～&#34;</span><span class="p">,</span> <span class="n">clear</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># d.send_keys(&#34;test&#34;, clear=True)</span>
 </span></span><span class="line"><span class="cl">            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">            <span class="n">d</span><span class="p">(</span><span class="n">resourceId</span><span class="o">=</span><span class="s2">&#34;cn.soulapp.android:id/btnSend&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">            <span class="n">d</span><span class="o">.</span><span class="n">click</span><span class="p">(</span><span class="mf">0.402</span><span class="p">,</span><span class="mf">0.745</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">60</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">d</span>
+</span></span><span class="line"><span class="cl">            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">57</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Connected failed: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
