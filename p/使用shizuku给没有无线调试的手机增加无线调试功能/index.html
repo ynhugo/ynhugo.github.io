@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-cn" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" 给没有无线调试的手机增加无线调试功能 先安装shizuku，根据软件指导让shizuku运行起来，然后实现在终端应用中使用Shizuku，我是把rish相关文件导出到Termux家目录下（在导出的时候可以选择Termux），然后在Termux中修改rish文件，把rish文件中的PKG配置为变量，变量值为Termux的包名，把引用PKG的地方改为$PKG，接着添加环境变量变激活一下，再然后在USB调试下修改端口为5555，接着在Termux中使用adb连接127.0.0.1，这个时候手机界面弹出授权申请，点击授权，接着在Termux中重启adb服务，最后再查看adb设备的时候就会发现本地设备了，这个时候再电脑上连接手机的局域网IP也能连接成功。关键词列出如下：\n实现前提 先使用USB数据线连接电脑和手机，接着在电脑上配置adb工具（下载相关工具并添加环境变量）\n修改rish文件 1 2 3 4 5 # 第1处 PKG=&#34;com.termux&#34; # 第2处 [ -z &#34;$RISH_APPLICATION_ID&#34; ] &amp;&amp; export RISH_APPLICATION_ID=&#34;$PKG&#34; 添加环境变量 1 2 3 4 5 6 7 8 9 10 11 12 # Termux echo &#39;export PATH=&#34;$PATH:/data/data/com.termux/files/home/rish&#34;&#39; &gt;&gt; ~/.bashrc source ~/.bashrc # Windows在USB调式下配置adb端口 adb tcpip 5555 # Termux中连接本地IP并授权 adb connect 127.0.0.1 # Windows连接局域网下的手机的IP adb connect 192.168.x.x ">
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" 给没有无线调试的手机增加无线调试功能 先安装shizuku，根据软件指导让shizuku运行起来，然后实现在终端应用中使用Shizuku，我是把rish相关文件导出到Termux家目录下（在导出的时候可以选择Termux），然后在Termux中修改rish文件，把rish文件中的PKG配置为变量，变量值为Termux的包名，把引用PKG的地方改为$PKG，接着添加环境变量变激活一下，再然后在USB调试下修改端口为5555，接着在Termux中使用adb连接127.0.0.1，这个时候手机界面弹出授权申请，点击授权，接着在Termux中重启adb服务，最后再查看adb设备的时候就会发现本地设备了，这个时候再电脑上连接手机的局域网IP也能连接成功。关键词列出如下：\n实现前提 先使用USB数据线连接电脑和手机，接着在电脑上配置adb工具（下载相关工具并添加环境变量）\n修改rish文件 1 2 3 4 5 # 第1处 PKG=&#34;com.termux&#34; # 第2处 [ -z &#34;$RISH_APPLICATION_ID&#34; ] &amp;&amp; export RISH_APPLICATION_ID=&#34;$PKG&#34; 添加环境变量 1 2 3 4 5 6 7 8 9 10 11 12 # Termux echo &#39;export PATH=&#34;$PATH:/data/data/com.termux/files/home/rish&#34;&#39; &gt;&gt; ~/.bashrc source ~/.bashrc # Windows在USB调式下配置adb端口 adb tcpip 5555 # Termux中连接本地IP并授权 adb connect 127.0.0.1 # Windows连接局域网下的手机的IP adb connect 192.168.x.x 参考链接 Shizuku（Github）\n">
 <title>使用shizuku给没有无线调试的手机增加无线调试功能</title>
 
 <link rel='canonical' href='https://ynhugo.github.io/p/%E4%BD%BF%E7%94%A8shizuku%E7%BB%99%E6%B2%A1%E6%9C%89%E6%97%A0%E7%BA%BF%E8%B0%83%E8%AF%95%E7%9A%84%E6%89%8B%E6%9C%BA%E5%A2%9E%E5%8A%A0%E6%97%A0%E7%BA%BF%E8%B0%83%E8%AF%95%E5%8A%9F%E8%83%BD/'>
 
 <link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="使用shizuku给没有无线调试的手机增加无线调试功能">
-<meta property='og:description' content=" 给没有无线调试的手机增加无线调试功能 先安装shizuku，根据软件指导让shizuku运行起来，然后实现在终端应用中使用Shizuku，我是把rish相关文件导出到Termux家目录下（在导出的时候可以选择Termux），然后在Termux中修改rish文件，把rish文件中的PKG配置为变量，变量值为Termux的包名，把引用PKG的地方改为$PKG，接着添加环境变量变激活一下，再然后在USB调试下修改端口为5555，接着在Termux中使用adb连接127.0.0.1，这个时候手机界面弹出授权申请，点击授权，接着在Termux中重启adb服务，最后再查看adb设备的时候就会发现本地设备了，这个时候再电脑上连接手机的局域网IP也能连接成功。关键词列出如下：\n实现前提 先使用USB数据线连接电脑和手机，接着在电脑上配置adb工具（下载相关工具并添加环境变量）\n修改rish文件 1 2 3 4 5 # 第1处 PKG=&#34;com.termux&#34; # 第2处 [ -z &#34;$RISH_APPLICATION_ID&#34; ] &amp;&amp; export RISH_APPLICATION_ID=&#34;$PKG&#34; 添加环境变量 1 2 3 4 5 6 7 8 9 10 11 12 # Termux echo &#39;export PATH=&#34;$PATH:/data/data/com.termux/files/home/rish&#34;&#39; &gt;&gt; ~/.bashrc source ~/.bashrc # Windows在USB调式下配置adb端口 adb tcpip 5555 # Termux中连接本地IP并授权 adb connect 127.0.0.1 # Windows连接局域网下的手机的IP adb connect 192.168.x.x ">
+<meta property='og:description' content=" 给没有无线调试的手机增加无线调试功能 先安装shizuku，根据软件指导让shizuku运行起来，然后实现在终端应用中使用Shizuku，我是把rish相关文件导出到Termux家目录下（在导出的时候可以选择Termux），然后在Termux中修改rish文件，把rish文件中的PKG配置为变量，变量值为Termux的包名，把引用PKG的地方改为$PKG，接着添加环境变量变激活一下，再然后在USB调试下修改端口为5555，接着在Termux中使用adb连接127.0.0.1，这个时候手机界面弹出授权申请，点击授权，接着在Termux中重启adb服务，最后再查看adb设备的时候就会发现本地设备了，这个时候再电脑上连接手机的局域网IP也能连接成功。关键词列出如下：\n实现前提 先使用USB数据线连接电脑和手机，接着在电脑上配置adb工具（下载相关工具并添加环境变量）\n修改rish文件 1 2 3 4 5 # 第1处 PKG=&#34;com.termux&#34; # 第2处 [ -z &#34;$RISH_APPLICATION_ID&#34; ] &amp;&amp; export RISH_APPLICATION_ID=&#34;$PKG&#34; 添加环境变量 1 2 3 4 5 6 7 8 9 10 11 12 # Termux echo &#39;export PATH=&#34;$PATH:/data/data/com.termux/files/home/rish&#34;&#39; &gt;&gt; ~/.bashrc source ~/.bashrc # Windows在USB调式下配置adb端口 adb tcpip 5555 # Termux中连接本地IP并授权 adb connect 127.0.0.1 # Windows连接局域网下的手机的IP adb connect 192.168.x.x 参考链接 Shizuku（Github）\n">
 <meta property='og:url' content='https://ynhugo.github.io/p/%E4%BD%BF%E7%94%A8shizuku%E7%BB%99%E6%B2%A1%E6%9C%89%E6%97%A0%E7%BA%BF%E8%B0%83%E8%AF%95%E7%9A%84%E6%89%8B%E6%9C%BA%E5%A2%9E%E5%8A%A0%E6%97%A0%E7%BA%BF%E8%B0%83%E8%AF%95%E5%8A%9F%E8%83%BD/'>
 <meta property='og:site_name' content='ynhugo'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='adb' /><meta property='article:tag' content='termux' /><meta property='article:tag' content='shizuku' /><meta property='article:published_time' content='2025-10-31T02:05:01&#43;08:00'/><meta property='article:modified_time' content='2025-10-31T02:05:01&#43;08:00'/>
 <meta name="twitter:title" content="使用shizuku给没有无线调试的手机增加无线调试功能">
-<meta name="twitter:description" content=" 给没有无线调试的手机增加无线调试功能 先安装shizuku，根据软件指导让shizuku运行起来，然后实现在终端应用中使用Shizuku，我是把rish相关文件导出到Termux家目录下（在导出的时候可以选择Termux），然后在Termux中修改rish文件，把rish文件中的PKG配置为变量，变量值为Termux的包名，把引用PKG的地方改为$PKG，接着添加环境变量变激活一下，再然后在USB调试下修改端口为5555，接着在Termux中使用adb连接127.0.0.1，这个时候手机界面弹出授权申请，点击授权，接着在Termux中重启adb服务，最后再查看adb设备的时候就会发现本地设备了，这个时候再电脑上连接手机的局域网IP也能连接成功。关键词列出如下：\n实现前提 先使用USB数据线连接电脑和手机，接着在电脑上配置adb工具（下载相关工具并添加环境变量）\n修改rish文件 1 2 3 4 5 # 第1处 PKG=&#34;com.termux&#34; # 第2处 [ -z &#34;$RISH_APPLICATION_ID&#34; ] &amp;&amp; export RISH_APPLICATION_ID=&#34;$PKG&#34; 添加环境变量 1 2 3 4 5 6 7 8 9 10 11 12 # Termux echo &#39;export PATH=&#34;$PATH:/data/data/com.termux/files/home/rish&#34;&#39; &gt;&gt; ~/.bashrc source ~/.bashrc # Windows在USB调式下配置adb端口 adb tcpip 5555 # Termux中连接本地IP并授权 adb connect 127.0.0.1 # Windows连接局域网下的手机的IP adb connect 192.168.x.x ">
+<meta name="twitter:description" content=" 给没有无线调试的手机增加无线调试功能 先安装shizuku，根据软件指导让shizuku运行起来，然后实现在终端应用中使用Shizuku，我是把rish相关文件导出到Termux家目录下（在导出的时候可以选择Termux），然后在Termux中修改rish文件，把rish文件中的PKG配置为变量，变量值为Termux的包名，把引用PKG的地方改为$PKG，接着添加环境变量变激活一下，再然后在USB调试下修改端口为5555，接着在Termux中使用adb连接127.0.0.1，这个时候手机界面弹出授权申请，点击授权，接着在Termux中重启adb服务，最后再查看adb设备的时候就会发现本地设备了，这个时候再电脑上连接手机的局域网IP也能连接成功。关键词列出如下：\n实现前提 先使用USB数据线连接电脑和手机，接着在电脑上配置adb工具（下载相关工具并添加环境变量）\n修改rish文件 1 2 3 4 5 # 第1处 PKG=&#34;com.termux&#34; # 第2处 [ -z &#34;$RISH_APPLICATION_ID&#34; ] &amp;&amp; export RISH_APPLICATION_ID=&#34;$PKG&#34; 添加环境变量 1 2 3 4 5 6 7 8 9 10 11 12 # Termux echo &#39;export PATH=&#34;$PATH:/data/data/com.termux/files/home/rish&#34;&#39; &gt;&gt; ~/.bashrc source ~/.bashrc # Windows在USB调式下配置adb端口 adb tcpip 5555 # Termux中连接本地IP并授权 adb connect 127.0.0.1 # Windows连接局域网下的手机的IP adb connect 192.168.x.x 参考链接 Shizuku（Github）\n">
     </head>
     <body class="
     article-page
@@ -312,6 +312,8 @@
 </li>
 <li><a href="#headline-4">添加环境变量</a>
 </li>
+<li><a href="#headline-5">参考链接</a>
+</li>
 </ul>
 </li>
 </ul>
@@ -464,6 +466,15 @@
 </div>
 </div>
 </div>
+</div>
+</div>
+<div id="outline-container-headline-5" class="outline-3">
+<h3 id="headline-5">
+参考链接
+</h3>
+<div id="outline-text-headline-5" class="outline-text-3">
+<p>
+<a href="https://github.com/RikkaApps/Shizuku/releases/latest">Shizuku（Github）</a></p>
 </div>
 </div>
 </div>
