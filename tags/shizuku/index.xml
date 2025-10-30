@@ -23,9 +23,18 @@
 先安装shizuku，根据软件指导让shizuku运行起来，然后实现在终端应用中使用Shizuku，我是把rish相关文件导出到Termux家目录下（在导出的时候可以选择Termux），然后在Termux中修改rish文件，把rish文件中的PKG配置为变量，变量值为Termux的包名，把引用PKG的地方改为$PKG，接着添加环境变量变激活一下，再然后在USB调试下修改端口为5555，接着在Termux中使用adb连接127.0.0.1，这个时候手机界面弹出授权申请，点击授权，接着在Termux中重启adb服务，最后再查看adb设备的时候就会发现本地设备了，这个时候再电脑上连接手机的局域网IP也能连接成功。关键词列出如下：&lt;/p&gt;
 &lt;div id=&#34;outline-container-headline-2&#34; class=&#34;outline-3&#34;&gt;
 &lt;h3 id=&#34;headline-2&#34;&gt;
-修改rish文件
+实现前提
 &lt;/h3&gt;
 &lt;div id=&#34;outline-text-headline-2&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;p&gt;
+先使用USB数据线连接电脑和手机，接着在电脑上配置adb工具（下载相关工具并添加环境变量）&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-3&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-3&#34;&gt;
+修改rish文件
+&lt;/h3&gt;
+&lt;div id=&#34;outline-text-headline-3&#34; class=&#34;outline-text-3&#34;&gt;
 &lt;div class=&#34;src src-bash&#34;&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -46,11 +55,11 @@
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;outline-container-headline-3&#34; class=&#34;outline-3&#34;&gt;
-&lt;h3 id=&#34;headline-3&#34;&gt;
+&lt;div id=&#34;outline-container-headline-4&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-4&#34;&gt;
 添加环境变量
 &lt;/h3&gt;
-&lt;div id=&#34;outline-text-headline-3&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;div id=&#34;outline-text-headline-4&#34; class=&#34;outline-text-3&#34;&gt;
 &lt;div class=&#34;src src-bash&#34;&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
