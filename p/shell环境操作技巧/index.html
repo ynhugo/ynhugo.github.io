@@ -648,6 +648,8 @@
 </li>
 <li><a href="#headline-144">bash shell生成一个指定范围内的随机数：</a>
 </li>
+<li><a href="#headline-145">Qt项目多文件添加到追加到org文件中</a>
+</li>
 </ul>
 </nav>
         </div>
@@ -4448,6 +4450,23 @@ bash shell生成一个指定范围内的随机数：
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># 生成 50-150 之间的随机数</span>
 </span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="k">$((</span> RANDOM <span class="o">%</span> <span class="m">101</span> <span class="o">+</span> <span class="m">50</span> <span class="k">))</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-145" class="outline-2">
+<h2 id="headline-145">
+Qt项目多文件添加到追加到org文件中
+</h2>
+<div id="outline-text-headline-145" class="outline-text-2">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mapfile -t files &lt; &lt;<span class="o">(</span>find ./ -name <span class="s2">&#34;*&#34;</span><span class="o">)</span><span class="p">;</span> <span class="nb">echo</span> -e <span class="s2">&#34;* </span><span class="k">$(</span>basename <span class="k">$(</span><span class="nb">pwd</span><span class="k">))</span><span class="s2">\n&#34;</span> &gt; tempFile.org<span class="p">;</span> <span class="k">for</span> <span class="o">((</span><span class="nv">i</span> <span class="o">=</span> 1<span class="p">;</span> i &lt; <span class="si">${#</span><span class="nv">files</span><span class="p">[@]</span><span class="si">}</span><span class="p">;</span> i++<span class="o">))</span><span class="p">;</span> <span class="k">do</span> <span class="nb">echo</span> -e <span class="s2">&#34;** </span><span class="k">$(</span>basename <span class="si">${</span><span class="nv">files</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span><span class="si">}</span><span class="k">)</span><span class="s2">\n&#34;</span><span class="p">;</span> cat <span class="s2">&#34;</span><span class="si">${</span><span class="nv">files</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span> <span class="k">done</span> &gt;&gt; tempFile.org</span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
