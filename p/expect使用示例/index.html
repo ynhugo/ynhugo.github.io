@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-cn" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" expect使用示例 如果通过对expect重定向的方式写脚本的话，这样的脚本适合出现在脚本文件中，如果是通过expect -c这样的方式调用，则运行在命令行上\n示例一 该示例适合运行在脚本文件中，然后通过expect命令运行脚本文件，比如脚本名test.sh\n1 2 3 4 5 6 7 8 9 10 11 12 expect &lt;&lt; &#39;END&#39; set pass &#34;segfault&#34; spawn ssh root@segfault.net expect { &#34;yes/no&#34; { send &#34;yes\\r&#34;; exp_continue } &#34;password:&#34; { send -- &#34;$pass\\r&#34; } } expect &#34;Continuing in 60 sec...&#34; { sleep 60; send &#34;\\r&#34; } # expect &#34;Press any key to continue&#34; { send &#34;\\r&#34; } expect &#34;Would you like to see your SECRET now? (y/N)&#34; { send &#34;y&#34; } interact END 运行方式 1 expect test.sh 示例二 该示例适合运行在命令行，如果将该示例添加到脚本文件运行则会执行不了，直接复制该示例粘贴到命令行上回车运行即可\n">
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" expect使用示例 如果通过对expect重定向的方式写脚本的话，这样的脚本适合出现在脚本文件中，如果是通过expect -c这样的方式调用，则运行在命令行上\n示例一 该示例适合运行在脚本文件中，然后通过expect命令运行脚本文件，比如脚本名test.sh\n1 2 3 4 5 6 7 8 9 10 11 12 expect &lt;&lt; &#39;END&#39; set pass &#34;segfault&#34; spawn ssh root@segfault.net expect { &#34;yes/no&#34; { send &#34;yes\\r&#34;; exp_continue } &#34;password:&#34; { send -- &#34;$pass\\n&#34; } } expect &#34;Continuing in 30 sec...&#34; { sleep 30; send &#34;\\r&#34; } expect &#34;Press any key to continue&#34; { send &#34;\\r&#34; } # expect &#34;Would you like to see your SECRET now? (y/N)&#34; { send &#34;y&#34; } interact END 运行方式 1 expect test.sh 示例二 该示例适合运行在命令行，如果将该示例添加到脚本文件运行则会执行不了，直接复制该示例粘贴到命令行上回车运行即可\n">
 <title>expect使用示例</title>
 
 <link rel='canonical' href='https://ynhugo.github.io/p/expect%E4%BD%BF%E7%94%A8%E7%A4%BA%E4%BE%8B/'>
 
 <link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="expect使用示例">
-<meta property='og:description' content=" expect使用示例 如果通过对expect重定向的方式写脚本的话，这样的脚本适合出现在脚本文件中，如果是通过expect -c这样的方式调用，则运行在命令行上\n示例一 该示例适合运行在脚本文件中，然后通过expect命令运行脚本文件，比如脚本名test.sh\n1 2 3 4 5 6 7 8 9 10 11 12 expect &lt;&lt; &#39;END&#39; set pass &#34;segfault&#34; spawn ssh root@segfault.net expect { &#34;yes/no&#34; { send &#34;yes\\r&#34;; exp_continue } &#34;password:&#34; { send -- &#34;$pass\\r&#34; } } expect &#34;Continuing in 60 sec...&#34; { sleep 60; send &#34;\\r&#34; } # expect &#34;Press any key to continue&#34; { send &#34;\\r&#34; } expect &#34;Would you like to see your SECRET now? (y/N)&#34; { send &#34;y&#34; } interact END 运行方式 1 expect test.sh 示例二 该示例适合运行在命令行，如果将该示例添加到脚本文件运行则会执行不了，直接复制该示例粘贴到命令行上回车运行即可\n">
+<meta property='og:description' content=" expect使用示例 如果通过对expect重定向的方式写脚本的话，这样的脚本适合出现在脚本文件中，如果是通过expect -c这样的方式调用，则运行在命令行上\n示例一 该示例适合运行在脚本文件中，然后通过expect命令运行脚本文件，比如脚本名test.sh\n1 2 3 4 5 6 7 8 9 10 11 12 expect &lt;&lt; &#39;END&#39; set pass &#34;segfault&#34; spawn ssh root@segfault.net expect { &#34;yes/no&#34; { send &#34;yes\\r&#34;; exp_continue } &#34;password:&#34; { send -- &#34;$pass\\n&#34; } } expect &#34;Continuing in 30 sec...&#34; { sleep 30; send &#34;\\r&#34; } expect &#34;Press any key to continue&#34; { send &#34;\\r&#34; } # expect &#34;Would you like to see your SECRET now? (y/N)&#34; { send &#34;y&#34; } interact END 运行方式 1 expect test.sh 示例二 该示例适合运行在命令行，如果将该示例添加到脚本文件运行则会执行不了，直接复制该示例粘贴到命令行上回车运行即可\n">
 <meta property='og:url' content='https://ynhugo.github.io/p/expect%E4%BD%BF%E7%94%A8%E7%A4%BA%E4%BE%8B/'>
 <meta property='og:site_name' content='ynhugo'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='expect' /><meta property='article:published_time' content='2025-06-27T14:26:36&#43;08:00'/><meta property='article:modified_time' content='2025-06-27T14:26:36&#43;08:00'/>
 <meta name="twitter:title" content="expect使用示例">
-<meta name="twitter:description" content=" expect使用示例 如果通过对expect重定向的方式写脚本的话，这样的脚本适合出现在脚本文件中，如果是通过expect -c这样的方式调用，则运行在命令行上\n示例一 该示例适合运行在脚本文件中，然后通过expect命令运行脚本文件，比如脚本名test.sh\n1 2 3 4 5 6 7 8 9 10 11 12 expect &lt;&lt; &#39;END&#39; set pass &#34;segfault&#34; spawn ssh root@segfault.net expect { &#34;yes/no&#34; { send &#34;yes\\r&#34;; exp_continue } &#34;password:&#34; { send -- &#34;$pass\\r&#34; } } expect &#34;Continuing in 60 sec...&#34; { sleep 60; send &#34;\\r&#34; } # expect &#34;Press any key to continue&#34; { send &#34;\\r&#34; } expect &#34;Would you like to see your SECRET now? (y/N)&#34; { send &#34;y&#34; } interact END 运行方式 1 expect test.sh 示例二 该示例适合运行在命令行，如果将该示例添加到脚本文件运行则会执行不了，直接复制该示例粘贴到命令行上回车运行即可\n">
+<meta name="twitter:description" content=" expect使用示例 如果通过对expect重定向的方式写脚本的话，这样的脚本适合出现在脚本文件中，如果是通过expect -c这样的方式调用，则运行在命令行上\n示例一 该示例适合运行在脚本文件中，然后通过expect命令运行脚本文件，比如脚本名test.sh\n1 2 3 4 5 6 7 8 9 10 11 12 expect &lt;&lt; &#39;END&#39; set pass &#34;segfault&#34; spawn ssh root@segfault.net expect { &#34;yes/no&#34; { send &#34;yes\\r&#34;; exp_continue } &#34;password:&#34; { send -- &#34;$pass\\n&#34; } } expect &#34;Continuing in 30 sec...&#34; { sleep 30; send &#34;\\r&#34; } expect &#34;Press any key to continue&#34; { send &#34;\\r&#34; } # expect &#34;Would you like to see your SECRET now? (y/N)&#34; { send &#34;y&#34; } interact END 运行方式 1 expect test.sh 示例二 该示例适合运行在命令行，如果将该示例添加到脚本文件运行则会执行不了，直接复制该示例粘贴到命令行上回车运行即可\n">
     </head>
     <body class="
     article-page
@@ -404,7 +404,7 @@ expect使用示例
 <div id="outline-text-headline-2" class="outline-text-3">
 <p>
 该示例适合运行在脚本文件中，然后通过expect命令运行脚本文件，比如脚本名test.sh</p>
-<div class="src src-text">
+<div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -421,18 +421,18 @@ expect使用示例
 </span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">expect &lt;&lt; &#39;END&#39;
-</span></span><span class="line"><span class="cl">  set pass &#34;segfault&#34;
-</span></span><span class="line"><span class="cl">  spawn ssh root@segfault.net
-</span></span><span class="line"><span class="cl">  expect {
-</span></span><span class="line"><span class="cl">        &#34;yes/no&#34; { send &#34;yes\r&#34;; exp_continue }
-</span></span><span class="line"><span class="cl">        &#34;password:&#34; { send -- &#34;$pass\r&#34; }
-</span></span><span class="line"><span class="cl">  }
-</span></span><span class="line"><span class="cl">  expect &#34;Continuing in 60 sec...&#34; { sleep 60; send &#34;\r&#34; }
-</span></span><span class="line"><span class="cl">  # expect &#34;Press any key to continue&#34; { send &#34;\r&#34; }
-</span></span><span class="line"><span class="cl">  expect &#34;Would you like to see your SECRET now? (y/N)&#34; { send &#34;y&#34; }  
-</span></span><span class="line"><span class="cl">  interact
-</span></span><span class="line"><span class="cl">END</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">expect <span class="s">&lt;&lt; &#39;END&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s">  set pass &#34;segfault&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s">  spawn ssh root@segfault.net
+</span></span></span><span class="line"><span class="cl"><span class="s">  expect {
+</span></span></span><span class="line"><span class="cl"><span class="s">        &#34;yes/no&#34; { send &#34;yes\r&#34;; exp_continue }
+</span></span></span><span class="line"><span class="cl"><span class="s">        &#34;password:&#34; { send -- &#34;$pass\n&#34; }
+</span></span></span><span class="line"><span class="cl"><span class="s">  }
+</span></span></span><span class="line"><span class="cl"><span class="s">  expect &#34;Continuing in 30 sec...&#34; { sleep 30; send &#34;\r&#34; }
+</span></span></span><span class="line"><span class="cl"><span class="s">  expect &#34;Press any key to continue&#34; { send &#34;\r&#34; }
+</span></span></span><span class="line"><span class="cl"><span class="s">  # expect &#34;Would you like to see your SECRET now? (y/N)&#34; { send &#34;y&#34; }  
+</span></span></span><span class="line"><span class="cl"><span class="s">  interact
+</span></span></span><span class="line"><span class="cl"><span class="s">END</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
@@ -462,7 +462,7 @@ expect使用示例
 <div id="outline-text-headline-4" class="outline-text-3">
 <p>
 该示例适合运行在命令行，如果将该示例添加到脚本文件运行则会执行不了，直接复制该示例粘贴到命令行上回车运行即可</p>
-<div class="src src-text">
+<div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -479,18 +479,18 @@ expect使用示例
 </span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">expect -c &#39;
-</span></span><span class="line"><span class="cl">  set pass &#34;segfault&#34;
-</span></span><span class="line"><span class="cl">  spawn ssh root@segfault.net
-</span></span><span class="line"><span class="cl">  expect {
-</span></span><span class="line"><span class="cl">        &#34;yes/no&#34; { send &#34;yes\r&#34;; exp_continue }
-</span></span><span class="line"><span class="cl">        &#34;password:&#34; { send -- &#34;$pass\r&#34; }
-</span></span><span class="line"><span class="cl">  }
-</span></span><span class="line"><span class="cl">  expect &#34;Continuing in 60 sec...&#34; { sleep 60; send &#34;\r&#34; }
-</span></span><span class="line"><span class="cl">  # expect &#34;Press any key to continue&#34; { send &#34;\r&#34; }
-</span></span><span class="line"><span class="cl">  expect &#34;Would you like to see your SECRET now? (y/N)&#34; { send &#34;y&#34; }  
-</span></span><span class="line"><span class="cl">  interact
-</span></span><span class="line"><span class="cl">&#39;</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">expect -c <span class="s1">&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">  set pass &#34;segfault&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s1">  spawn ssh root@segfault.net
+</span></span></span><span class="line"><span class="cl"><span class="s1">  expect {
+</span></span></span><span class="line"><span class="cl"><span class="s1">        &#34;yes/no&#34; { send &#34;yes\r&#34;; exp_continue }
+</span></span></span><span class="line"><span class="cl"><span class="s1">        &#34;password:&#34; { send -- &#34;$pass\n&#34; }
+</span></span></span><span class="line"><span class="cl"><span class="s1">  }
+</span></span></span><span class="line"><span class="cl"><span class="s1">  expect &#34;Continuing in 60 sec...&#34; { sleep 60; send &#34;\r&#34; }
+</span></span></span><span class="line"><span class="cl"><span class="s1">  expect &#34;Press any key to continue&#34; { send &#34;\r&#34; }
+</span></span></span><span class="line"><span class="cl"><span class="s1">  # expect &#34;Would you like to see your SECRET now? (y/N)&#34; { send &#34;y&#34; }  
+</span></span></span><span class="line"><span class="cl"><span class="s1">  interact
+</span></span></span><span class="line"><span class="cl"><span class="s1">&#39;</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
