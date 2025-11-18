@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-cn" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="A brief description of Hugo Shortcodes">
-<title>Rich Content</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" 定制Ubuntu 20.04.4文件系统及板卡通过个人电脑访问互联网 方法一：直接从 ISO 内提取 rootfs（标准方式） 我是在Vmware的Ubuntu20.04虚拟操作系统中实现：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 # 进入超级用户下 wget https://old-releases.ubuntu.com/releases/20.04.4/ubuntu-20.04.4-live-server-arm64.iso mount ubuntu-20.04.4-live-server-arm64.iso /mnt cp /mnt/casper/filesystem.squashfs ./ umount /mnt unsquashfs filesystem.squashfs echo &#39;nameserver 8.8.8.8&#39; &gt;&gt; squashfs-root/etc/resolv.conf echo &#39;nameserver 8.8.4.4&#39; &gt;&gt; squashfs-root/etc/resolv.conf chroot squashfs-root apt-get update apt-get install -y unzip vim sysstat libnuma1 dmidecode rsync net-tools psmisc parted arping ntpdate iproute2 iputils-ping mawk cracklib-runtime ethtool ntp fdisk libssl-dev libpam-cracklib logrotate # 自定义一个密码 passwd root exit cd squashfs-root # find . | cpio -o -H newc | gzip &gt; ../Sample-root-filesystem-soc_ubuntu-20.04.4-aarch64.img find . | cpio -H newc -o | gzip &gt; ../Sample-root-filesystem-soc_ubuntu-20.04.4-aarch64.cpio.gz # find . | cpio -H newc -o | gzip &gt; ../ubuntu20.04.4_rootfs.cpio.gz # # 制作 squashfs（用于 ISO） # sudo mksquashfs rootfs filesystem.squashfs -comp xz -wildcards 方法二：使用 debootstrap 构建 Ubuntu 20.04 arm64 rootfs（最干净） 我是在Vmware的Ubuntu20.04虚拟操作系统中实现：\n">
+<title>定制Ubuntu 20.04.4文件系统及板卡通过个人电脑访问互联网</title>
 
-<link rel='canonical' href='https://ynhugo.github.io/p/rich-content/'>
+<link rel='canonical' href='https://ynhugo.github.io/p/%E5%AE%9A%E5%88%B6ubuntu-20.04.4%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E5%8F%8A%E6%9D%BF%E5%8D%A1%E9%80%9A%E8%BF%87%E4%B8%AA%E4%BA%BA%E7%94%B5%E8%84%91%E8%AE%BF%E9%97%AE%E4%BA%92%E8%81%94%E7%BD%91/'>
 
-<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="Rich Content">
-<meta property='og:description' content="A brief description of Hugo Shortcodes">
-<meta property='og:url' content='https://ynhugo.github.io/p/rich-content/'>
+<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="定制Ubuntu 20.04.4文件系统及板卡通过个人电脑访问互联网">
+<meta property='og:description' content=" 定制Ubuntu 20.04.4文件系统及板卡通过个人电脑访问互联网 方法一：直接从 ISO 内提取 rootfs（标准方式） 我是在Vmware的Ubuntu20.04虚拟操作系统中实现：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 # 进入超级用户下 wget https://old-releases.ubuntu.com/releases/20.04.4/ubuntu-20.04.4-live-server-arm64.iso mount ubuntu-20.04.4-live-server-arm64.iso /mnt cp /mnt/casper/filesystem.squashfs ./ umount /mnt unsquashfs filesystem.squashfs echo &#39;nameserver 8.8.8.8&#39; &gt;&gt; squashfs-root/etc/resolv.conf echo &#39;nameserver 8.8.4.4&#39; &gt;&gt; squashfs-root/etc/resolv.conf chroot squashfs-root apt-get update apt-get install -y unzip vim sysstat libnuma1 dmidecode rsync net-tools psmisc parted arping ntpdate iproute2 iputils-ping mawk cracklib-runtime ethtool ntp fdisk libssl-dev libpam-cracklib logrotate # 自定义一个密码 passwd root exit cd squashfs-root # find . | cpio -o -H newc | gzip &gt; ../Sample-root-filesystem-soc_ubuntu-20.04.4-aarch64.img find . | cpio -H newc -o | gzip &gt; ../Sample-root-filesystem-soc_ubuntu-20.04.4-aarch64.cpio.gz # find . | cpio -H newc -o | gzip &gt; ../ubuntu20.04.4_rootfs.cpio.gz # # 制作 squashfs（用于 ISO） # sudo mksquashfs rootfs filesystem.squashfs -comp xz -wildcards 方法二：使用 debootstrap 构建 Ubuntu 20.04 arm64 rootfs（最干净） 我是在Vmware的Ubuntu20.04虚拟操作系统中实现：\n">
+<meta property='og:url' content='https://ynhugo.github.io/p/%E5%AE%9A%E5%88%B6ubuntu-20.04.4%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E5%8F%8A%E6%9D%BF%E5%8D%A1%E9%80%9A%E8%BF%87%E4%B8%AA%E4%BA%BA%E7%94%B5%E8%84%91%E8%AE%BF%E9%97%AE%E4%BA%92%E8%81%94%E7%BD%91/'>
 <meta property='og:site_name' content='ynhugo'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='shortcodes' /><meta property='article:tag' content='privacy' /><meta property='article:published_time' content='2019-03-10T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2019-03-10T00:00:00&#43;00:00'/>
-<meta name="twitter:title" content="Rich Content">
-<meta name="twitter:description" content="A brief description of Hugo Shortcodes">
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Ubuntu' /><meta property='article:tag' content='20.04' /><meta property='article:published_time' content='2025-11-18T14:13:12&#43;08:00'/><meta property='article:modified_time' content='2025-11-18T14:13:12&#43;08:00'/>
+<meta name="twitter:title" content="定制Ubuntu 20.04.4文件系统及板卡通过个人电脑访问互联网">
+<meta name="twitter:description" content=" 定制Ubuntu 20.04.4文件系统及板卡通过个人电脑访问互联网 方法一：直接从 ISO 内提取 rootfs（标准方式） 我是在Vmware的Ubuntu20.04虚拟操作系统中实现：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 # 进入超级用户下 wget https://old-releases.ubuntu.com/releases/20.04.4/ubuntu-20.04.4-live-server-arm64.iso mount ubuntu-20.04.4-live-server-arm64.iso /mnt cp /mnt/casper/filesystem.squashfs ./ umount /mnt unsquashfs filesystem.squashfs echo &#39;nameserver 8.8.8.8&#39; &gt;&gt; squashfs-root/etc/resolv.conf echo &#39;nameserver 8.8.4.4&#39; &gt;&gt; squashfs-root/etc/resolv.conf chroot squashfs-root apt-get update apt-get install -y unzip vim sysstat libnuma1 dmidecode rsync net-tools psmisc parted arping ntpdate iproute2 iputils-ping mawk cracklib-runtime ethtool ntp fdisk libssl-dev libpam-cracklib logrotate # 自定义一个密码 passwd root exit cd squashfs-root # find . | cpio -o -H newc | gzip &gt; ../Sample-root-filesystem-soc_ubuntu-20.04.4-aarch64.img find . | cpio -H newc -o | gzip &gt; ../Sample-root-filesystem-soc_ubuntu-20.04.4-aarch64.cpio.gz # find . | cpio -H newc -o | gzip &gt; ../ubuntu20.04.4_rootfs.cpio.gz # # 制作 squashfs（用于 ISO） # sudo mksquashfs rootfs filesystem.squashfs -comp xz -wildcards 方法二：使用 debootstrap 构建 Ubuntu 20.04 arm64 rootfs（最干净） 我是在Vmware的Ubuntu20.04虚拟操作系统中实现：\n">
     </head>
     <body class="
     article-page
@@ -303,15 +303,24 @@
         
         <div class="widget--toc">
             <nav id="TableOfContents">
-  <ol>
-    <li><a href="#youtube-privacy-enhanced-shortcode">YouTube Privacy Enhanced Shortcode</a></li>
-    <li><a href="#twitter-simple-shortcode">Twitter Simple Shortcode</a></li>
-    <li><a href="#vimeo-simple-shortcode">Vimeo Simple Shortcode</a></li>
-    <li><a href="#bilibilibi-shortcode">bilibilibi Shortcode</a></li>
-    <li><a href="#gist-shortcode">Gist Shortcode</a></li>
-    <li><a href="#gitlab-snippets-shortcode">Gitlab Snippets Shortcode</a></li>
-    <li><a href="#quote-shortcode">Quote Shortcode</a></li>
-  </ol>
+<ul>
+<li><a href="#headline-1">定制Ubuntu 20.04.4文件系统及板卡通过个人电脑访问互联网</a>
+<ul>
+<li><a href="#headline-2">方法一：直接从 ISO 内提取 rootfs（标准方式）</a>
+</li>
+<li><a href="#headline-3">方法二：使用 debootstrap 构建 Ubuntu 20.04 arm64 rootfs（最干净）</a>
+<ul>
+<li><a href="#headline-4">Ubuntu 版本与 codename 对照表（你需要的关键表）</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-5">板卡通过个人电脑访问互联网</a>
+</li>
+<li><a href="#headline-6">参考链接</a>
+</li>
+</ul>
+</li>
+</ul>
 </nav>
         </div>
     </section>
@@ -330,13 +339,9 @@
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="/p/rich-content/">Rich Content</a>
+            <a href="/p/%E5%AE%9A%E5%88%B6ubuntu-20.04.4%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E5%8F%8A%E6%9D%BF%E5%8D%A1%E9%80%9A%E8%BF%87%E4%B8%AA%E4%BA%BA%E7%94%B5%E8%84%91%E8%AE%BF%E9%97%AE%E4%BA%92%E8%81%94%E7%BD%91/">定制Ubuntu 20.04.4文件系统及板卡通过个人电脑访问互联网</a>
         </h2>
     
-        
-        <h3 class="article-subtitle">
-            A brief description of Hugo Shortcodes
-        </h3>
         
     </div>
 
@@ -356,7 +361,7 @@
   <path d="M3 11h16" />
   <path d="M18 16.496v1.504l1 1" />
 </svg>
-                <time class="article-time--published">Mar 10, 2019</time>
+                <time class="article-time--published">Nov 18, 2025</time>
             </div>
         
 
@@ -386,85 +391,216 @@
     <section class="article-content">
     
     
-    <p>Hugo ships with several <a class="link" href="https://gohugo.io/content-management/shortcodes/#use-hugo-s-built-in-shortcodes"  target="_blank" rel="noopener"
-    >Built-in Shortcodes</a> for rich content, along with a <a class="link" href="https://gohugo.io/about/hugo-and-gdpr/"  target="_blank" rel="noopener"
-    >Privacy Config</a> and a set of Simple Shortcodes that enable static and no-JS versions of various social media embeds.</p>
-<hr>
-<h2 id="youtube-privacy-enhanced-shortcode">YouTube Privacy Enhanced Shortcode
-</h2><div class="video-wrapper">
-    <iframe loading="lazy" 
-            src="https://www.youtube.com/embed/ZJthWmvUzzc" 
-            allowfullscreen 
-            title="YouTube Video"
-    >
-    </iframe>
+    
+<div id="outline-container-headline-1" class="outline-2">
+<h2 id="headline-1">
+定制Ubuntu 20.04.4文件系统及板卡通过个人电脑访问互联网
+</h2>
+<div id="outline-text-headline-1" class="outline-text-2">
+<div id="outline-container-headline-2" class="outline-3">
+<h3 id="headline-2">
+方法一：直接从 ISO 内提取 rootfs（标准方式）
+</h3>
+<div id="outline-text-headline-2" class="outline-text-3">
+<p>
+我是在Vmware的Ubuntu20.04虚拟操作系统中实现：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 进入超级用户下</span>
+</span></span><span class="line"><span class="cl">wget https://old-releases.ubuntu.com/releases/20.04.4/ubuntu-20.04.4-live-server-arm64.iso
+</span></span><span class="line"><span class="cl">mount ubuntu-20.04.4-live-server-arm64.iso /mnt
+</span></span><span class="line"><span class="cl">cp /mnt/casper/filesystem.squashfs ./
+</span></span><span class="line"><span class="cl">umount /mnt
+</span></span><span class="line"><span class="cl">unsquashfs filesystem.squashfs
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s1">&#39;nameserver 8.8.8.8&#39;</span> &gt;&gt; squashfs-root/etc/resolv.conf
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s1">&#39;nameserver 8.8.4.4&#39;</span> &gt;&gt; squashfs-root/etc/resolv.conf
+</span></span><span class="line"><span class="cl">chroot squashfs-root
+</span></span><span class="line"><span class="cl">apt-get update
+</span></span><span class="line"><span class="cl">apt-get install -y unzip vim  sysstat  libnuma1  dmidecode  rsync  net-tools  psmisc  parted  arping  ntpdate  iproute2  iputils-ping  mawk  cracklib-runtime  ethtool  ntp  fdisk  libssl-dev  libpam-cracklib  logrotate
+</span></span><span class="line"><span class="cl"><span class="c1"># 自定义一个密码</span>
+</span></span><span class="line"><span class="cl">passwd root
+</span></span><span class="line"><span class="cl"><span class="nb">exit</span>
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> squashfs-root
+</span></span><span class="line"><span class="cl"><span class="c1"># find . | cpio -o -H newc | gzip &gt; ../Sample-root-filesystem-soc_ubuntu-20.04.4-aarch64.img</span>
+</span></span><span class="line"><span class="cl">find . <span class="p">|</span> cpio -H newc -o <span class="p">|</span> gzip &gt; ../Sample-root-filesystem-soc_ubuntu-20.04.4-aarch64.cpio.gz
+</span></span><span class="line"><span class="cl"><span class="c1"># find . | cpio -H newc -o | gzip &gt; ../ubuntu20.04.4_rootfs.cpio.gz</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># # 制作 squashfs（用于 ISO）</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># sudo mksquashfs rootfs filesystem.squashfs -comp xz -wildcards</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-3" class="outline-3">
+<h3 id="headline-3">
+方法二：使用 debootstrap 构建 Ubuntu 20.04 arm64 rootfs（最干净）
+</h3>
+<div id="outline-text-headline-3" class="outline-text-3">
+<p>
+我是在Vmware的Ubuntu20.04虚拟操作系统中实现：</p>
+<p>
+如果你需要 完全可控的最小 rootfs，推荐你用 debootstrap。</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 1. 安装工具</span>
+</span></span><span class="line"><span class="cl">sudo apt install qemu-user-static debootstrap
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 2. 生成 ARM64 的 20.04 rootfs</span>
+</span></span><span class="line"><span class="cl">sudo debootstrap --arch<span class="o">=</span>arm64 focal rootfs http://ports.ubuntu.com/
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 3. 可选：进入 rootfs 继续定制</span>
+</span></span><span class="line"><span class="cl">sudo chroot rootfs
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 自定义一个密码</span>
+</span></span><span class="line"><span class="cl">passwd root
+</span></span><span class="line"><span class="cl"><span class="nb">exit</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 4. 打包成 cpio</span>
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> rootfs
+</span></span><span class="line"><span class="cl">sudo find . <span class="p">|</span> sudo cpio -H newc -o <span class="p">|</span> sudo gzip &gt; ../ubuntu20.04.4_rootfs.cpio.gz
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># # 3. 制作 squashfs（用于 ISO）</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># sudo mksquashfs rootfs filesystem.squashfs -comp xz -wildcards</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-4" class="outline-4">
+<h4 id="headline-4">
+Ubuntu 版本与 codename 对照表（你需要的关键表）
+</h4>
+<div id="outline-text-headline-4" class="outline-text-4">
+<div class="table-wrapper"><table>
+<tbody>
+<tr>
+<td>版本号</td>
+<td>codename (用于 debootstrap)</td>
+</tr>
+<tr>
+<td>————</td>
+<td>————————-</td>
+</tr>
+<tr>
+<td>Ubuntu 18.04</td>
+<td>bionic</td>
+</tr>
+<tr>
+<td>Ubuntu 20.04</td>
+<td>focal</td>
+</tr>
+<tr>
+<td>Ubuntu 22.04</td>
+<td>jammy</td>
+</tr>
+<tr>
+<td>Ubuntu 24.04</td>
+<td>noble</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-5" class="outline-3">
+<h3 id="headline-5">
+板卡通过个人电脑访问互联网
+</h3>
+<div id="outline-text-headline-5" class="outline-text-3">
+<p>
+前提：首先将有互联网的网卡共享网络给连接了板卡与电脑的网卡</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo vim /etc/network/interfaces
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 修改内容如下：</span>
+</span></span><span class="line"><span class="cl">auto eth0
+</span></span><span class="line"><span class="cl">iface eth0 inet static
+</span></span><span class="line"><span class="cl">address 192.168.137.101 <span class="c1"># 此处改为192.168.137.x，x为2～255内的任意数</span>
+</span></span><span class="line"><span class="cl">netmask 255.255.255.0
+</span></span><span class="line"><span class="cl">gateway 192.168.137.1
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 重启板卡并ping百度或必应</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-6" class="outline-3">
+<h3 id="headline-6">
+参考链接
+</h3>
+<div id="outline-text-headline-6" class="outline-text-3">
+<p>
+<a href="https://www.hiascend.com/document/detail/zh/Atlas%20200I%20A2/24.1.0/RC/driverdevelopmentguide/atlasdg_11_0197.html">定制Ubuntu 22.04文件系统</a></p>
+<p>
+<a href="https://chatgpt.com/share/691c0bc5-a03c-8013-8362-8424643f8a7c">定制Ubuntu根文件系统</a></p>
+<p>
+<a href="https://zhuanlan.zhihu.com/p/378814739">让开发板通过个人电脑访问互联网</a></p>
+</div>
+</div>
+</div>
 </div>
 
-<br>
-<hr>
-<h2 id="twitter-simple-shortcode">Twitter Simple Shortcode
-</h2><style type="text/css">
-      .twitter-tweet {
-        font:
-          14px/1.45 -apple-system,
-          BlinkMacSystemFont,
-          "Segoe UI",
-          Roboto,
-          Oxygen-Sans,
-          Ubuntu,
-          Cantarell,
-          "Helvetica Neue",
-          sans-serif;
-        border-left: 4px solid #2b7bb9;
-        padding-left: 1.5em;
-        color: #555;
-      }
-      .twitter-tweet a {
-        color: #2b7bb9;
-        text-decoration: none;
-      }
-      blockquote.twitter-tweet a:hover,
-      blockquote.twitter-tweet a:focus {
-        text-decoration: underline;
-      }
-    </style><blockquote class="twitter-tweet"><p lang="en" dir="ltr">“In addition to being more logical, asymmetry has the advantage that its complete appearance is far more optically effective than symmetry.”<br>— Jan Tschichold <a href="https://t.co/gcv7SrhvJb">pic.twitter.com/gcv7SrhvJb</a></p>&mdash; Design Reviewed | Graphic Design History (@DesignReviewed) <a href="https://twitter.com/DesignReviewed/status/1085870671291310081?ref_src=twsrc%5Etfw">January 17, 2019</a></blockquote>
-
-
-<br>
-<hr>
-<h2 id="vimeo-simple-shortcode">Vimeo Simple Shortcode
-</h2>
-<h2 id="bilibilibi-shortcode">bilibilibi Shortcode
-</h2><iframe
-     src="//player.bilibili.com/player.html?bvid=av498363026&page=1&as_wide=1&high_quality=1"
-     scrolling="no"
-     height="100%"
-     width="100%"
-     border="0"
-     frameborder="no"
-     framespacing="0"
-     allowfullscreen="true"
- >
- </iframe>
-
-<h2 id="gist-shortcode">Gist Shortcode
-</h2><script src="https://gist.github.com/spf13/7896402.js"></script>
-
-<h2 id="gitlab-snippets-shortcode">Gitlab Snippets Shortcode
-</h2><script
-    type="application/javascript"
-    src="https://gitlab.com/-/snippets/2349278.js"
-></script>
-<h2 id="quote-shortcode">Quote Shortcode
-</h2><p>Stack adds a <code>quote</code> shortcode.  For example:</p>
-<blockquote>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p><span class="cite"><span>― </span><span>A famous person, </span><a href="https://en.wikipedia.org/wiki/Book"><cite>The book they wrote</cite></a></span></blockquote>
-<blockquote>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p><span class="cite"><span>― </span><a href="https://en.wikipedia.org/wiki/Book"><cite>Anonymous book</cite></a></span></blockquote>
-<blockquote>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p><span class="cite"><span>― </span><cite>Some book</cite></span></blockquote>
-<blockquote>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p><span class="cite"><span>― </span><span>Somebody</span><cite></cite></span></blockquote>
 </section>
 
 
@@ -472,9 +608,9 @@
     
     <section class="article-tags">
         
-            <a href="/tags/shortcodes/">Shortcodes</a>
+            <a href="/tags/ubuntu/">Ubuntu</a>
         
-            <a href="/tags/privacy/">Privacy</a>
+            <a href="/tags/20.04/">20.04</a>
         
     </section>
 
@@ -491,7 +627,19 @@
 
         <span>Licensed under CC BY-NC-SA 4.0</span>
     </section>
-    </footer>
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            最后更新于 Nov 18, 2025 14:13 &#43;0800
+        </span>
+    </section></footer>
 
 
     
