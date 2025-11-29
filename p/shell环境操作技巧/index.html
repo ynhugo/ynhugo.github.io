@@ -4432,14 +4432,17 @@ bash shell生成一个指定范围内的随机数：
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 生成 0-32767 之间的随机数</span>
@@ -4449,7 +4452,10 @@ bash shell生成一个指定范围内的随机数：
 </span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="k">$((</span> RANDOM <span class="o">%</span> <span class="m">100</span> <span class="o">+</span> <span class="m">1</span> <span class="k">))</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># 生成 50-150 之间的随机数</span>
-</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="k">$((</span> RANDOM <span class="o">%</span> <span class="m">101</span> <span class="o">+</span> <span class="m">50</span> <span class="k">))</span></span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="k">$((</span> RANDOM <span class="o">%</span> <span class="m">101</span> <span class="o">+</span> <span class="m">50</span> <span class="k">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 生成4个指定范围内的随机数，shell命令分别生成51-100、151-200、251-300、351-400，单行命令执行</span>
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;</span><span class="k">$(</span>shuf -i 51-100 -n 1<span class="k">)</span><span class="s2"> </span><span class="k">$(</span>shuf -i 151-200 -n 1<span class="k">)</span><span class="s2"> </span><span class="k">$(</span>shuf -i 251-300 -n 1<span class="k">)</span><span class="s2"> </span><span class="k">$(</span>shuf -i 351-400 -n 1<span class="k">)</span><span class="s2">&#34;</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
