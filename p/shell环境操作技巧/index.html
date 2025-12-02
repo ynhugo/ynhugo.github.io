@@ -654,6 +654,16 @@
 </li>
 <li><a href="#headline-146">Qt项目多文件添加到追加到org文件中</a>
 </li>
+<li><a href="#headline-147">Linux/shell生成随机密码的方法</a>
+<ul>
+<li><a href="#headline-148">使用 gpg 工具生成密码</a>
+</li>
+<li><a href="#headline-149">使用openssl生成密码</a>
+</li>
+<li><a href="#headline-150">参考链接</a>
+</li>
+</ul>
+</li>
 </ul>
 </nav>
         </div>
@@ -710,7 +720,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 19 分钟
+                    阅读时长: 20 分钟
                 </time>
             </div>
         
@@ -4487,6 +4497,70 @@ Qt项目多文件添加到追加到org文件中
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mapfile -t files &lt; &lt;<span class="o">(</span>find ./ -name <span class="s2">&#34;*&#34;</span><span class="o">)</span><span class="p">;</span> <span class="nb">echo</span> -e <span class="s2">&#34;* </span><span class="k">$(</span>basename <span class="k">$(</span><span class="nb">pwd</span><span class="k">))</span><span class="s2">\n&#34;</span> &gt; tempFile.org<span class="p">;</span> <span class="k">for</span> <span class="o">((</span><span class="nv">i</span> <span class="o">=</span> 1<span class="p">;</span> i &lt; <span class="si">${#</span><span class="nv">files</span><span class="p">[@]</span><span class="si">}</span><span class="p">;</span> i++<span class="o">))</span><span class="p">;</span> <span class="k">do</span> <span class="nb">echo</span> -e <span class="s2">&#34;** </span><span class="k">$(</span>basename <span class="si">${</span><span class="nv">files</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span><span class="si">}</span><span class="k">)</span><span class="s2">\n&#34;</span><span class="p">;</span> cat <span class="s2">&#34;</span><span class="si">${</span><span class="nv">files</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span> <span class="k">done</span> &gt;&gt; tempFile.org</span></span></code></pre></td></tr></table>
 </div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-147" class="outline-2">
+<h2 id="headline-147">
+Linux/shell生成随机密码的方法
+</h2>
+<div id="outline-text-headline-147" class="outline-text-2">
+<div id="outline-container-headline-148" class="outline-3">
+<h3 id="headline-148">
+使用 gpg 工具生成密码
+</h3>
+<div id="outline-text-headline-148" class="outline-text-3">
+<p>
+GPG 是一个遵循 OpenPGP 标准的加密及签名工具。大部分 gpg 工具都预先被安装好了（至少在我的 RHEL7 上是这样）。但如果没有的话你可以寻找 gpg 或 gpg2 软件包并安装它。</p>
+<p>
+使用下面的命令以从 gpg 工具生成密码。</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">root@kerneltalks <span class="c1"># gpg --gen-random --armor 1 12</span>
+</span></span><span class="line"><span class="cl">mL8i+PKZ3IuN6a7a</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+这里我们传了生成随机字节序列选项（–gen-random），质量为 1（第一个参数），次数 12 （第二个参数）。选项 –armor 保证以 base64 编码输出。</p>
+</div>
+</div>
+<div id="outline-container-headline-149" class="outline-3">
+<h3 id="headline-149">
+使用openssl生成密码
+</h3>
+<div id="outline-text-headline-149" class="outline-text-3">
+<p>
+几乎所有 Linux 发行版都包含 openssl。我们可以利用它的随机功能来生成可以用作密码的随机字母字符串。</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">root@kerneltalks <span class="c1"># openssl rand -base64 10</span>
+</span></span><span class="line"><span class="cl"><span class="nv">nU9LlHO5nsuUvw</span><span class="o">==</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+这里我们使用 base64 编码随机函数，最后一个数字参数表示长度。</p>
+</div>
+</div>
+<div id="outline-container-headline-150" class="outline-3">
+<h3 id="headline-150">
+参考链接
+</h3>
+<div id="outline-text-headline-150" class="outline-text-3">
+<p>
+<a href="https://zhuanlan.zhihu.com/p/33752388">八种在 Linux 上生成随机密码的方法</a></p>
 </div>
 </div>
 </div>
