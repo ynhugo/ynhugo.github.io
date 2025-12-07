@@ -362,7 +362,9 @@
 </li>
 </ul>
 </li>
-<li><a href="#headline-24">参考链接</a>
+<li><a href="#headline-24">把文件制作成iso，上传并将挂载到服务器</a>
+</li>
+<li><a href="#headline-25">参考链接</a>
 </li>
 </ul>
 </li>
@@ -1103,9 +1105,44 @@ apt命令安装
 </div>
 <div id="outline-container-headline-24" class="outline-3">
 <h3 id="headline-24">
-参考链接
+把文件制作成iso，上传并将挂载到服务器
 </h3>
 <div id="outline-text-headline-24" class="outline-text-3">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># windows使用软碟通制作iso文件</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 从windows将iso文件上传到服务器</span>
+</span></span><span class="line"><span class="cl">rsync -rP nvidia-driver.iso root@192.168.234.38:~/
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 服务器操作</span>
+</span></span><span class="line"><span class="cl">mount -t auto nvidia-driver.iso /mnt/
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> /mnt/
+</span></span><span class="line"><span class="cl">dpkg -i /*.deb
+</span></span><span class="line"><span class="cl">./NVIDIA-Linux-x86_64-580.105.08.run</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-25" class="outline-3">
+<h3 id="headline-25">
+参考链接
+</h3>
+<div id="outline-text-headline-25" class="outline-text-3">
 <p>
 <a href="https://blog.csdn.net/zgp210317/article/details/120586189">在Ubuntu本地下载软件包并递归下载其所有依赖包</a></p>
 <p>
@@ -1116,6 +1153,8 @@ apt命令安装
 <a href="https://zhuanlan.zhihu.com/p/1894051813780615541">如何把文件夹或文件封装/制作成iso</a></p>
 <p>
 <a href="https://blog.csdn.net/Eric_xkk/article/details/131800365">Ubuntu22.04安装显卡驱动(高速、避错版)</a></p>
+<p>
+<a href="https://blog.csdn.net/qq_34777982/article/details/145182505">ubuntu使用iso镜像作为本地apt源――筑梦之路</a></p>
 </div>
 </div>
 </div>

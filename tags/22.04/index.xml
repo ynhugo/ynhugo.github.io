@@ -679,9 +679,44 @@ apt命令安装
 &lt;/div&gt;
 &lt;div id=&#34;outline-container-headline-24&#34; class=&#34;outline-3&#34;&gt;
 &lt;h3 id=&#34;headline-24&#34;&gt;
-参考链接
+把文件制作成iso，上传并将挂载到服务器
 &lt;/h3&gt;
 &lt;div id=&#34;outline-text-headline-24&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;div class=&#34;src src-bash&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# windows使用软碟通制作iso文件&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 从windows将iso文件上传到服务器&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rsync -rP nvidia-driver.iso root@192.168.234.38:~/
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 服务器操作&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;mount -t auto nvidia-driver.iso /mnt/
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; /mnt/
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;dpkg -i /*.deb
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;./NVIDIA-Linux-x86_64-580.105.08.run&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-25&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-25&#34;&gt;
+参考链接
+&lt;/h3&gt;
+&lt;div id=&#34;outline-text-headline-25&#34; class=&#34;outline-text-3&#34;&gt;
 &lt;p&gt;
 &lt;a href=&#34;https://blog.csdn.net/zgp210317/article/details/120586189&#34;&gt;在Ubuntu本地下载软件包并递归下载其所有依赖包&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;
@@ -692,6 +727,8 @@ apt命令安装
 &lt;a href=&#34;https://zhuanlan.zhihu.com/p/1894051813780615541&#34;&gt;如何把文件夹或文件封装/制作成iso&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;
 &lt;a href=&#34;https://blog.csdn.net/Eric_xkk/article/details/131800365&#34;&gt;Ubuntu22.04安装显卡驱动(高速、避错版)&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://blog.csdn.net/qq_34777982/article/details/145182505&#34;&gt;ubuntu使用iso镜像作为本地apt源――筑梦之路&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
