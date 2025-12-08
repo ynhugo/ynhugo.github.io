@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-cn" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" ubuntu 22.04 server安装Nvidia驱动 1 2 3 4 sudo apt install -y net-toolsb sudo apt install -y openssh-server sudo apt install -y openssh-server sudo apt install -y apt-rdepends 方法一 Nvidia驱动安装准备操作（同步机不需要操作，服务器操作） 确定系统识别到了显卡\n1 lspci | grep -i nvidia 列出已安装的NVIDIA软件包\n1 dpkg -l | grep -i nvidia 确保卸载干净残留的nvidia驱动\n1 sudo apt remove --purge &#39;^nvidia-.*&#39; 安装必要依赖（同步机操作）\n1 2 3 # sudo apt install gcc make sudo apt download $(apt-rdepends gcc make | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) sudo dpkg -i *.deb 禁用nouveau显卡驱动（服务器操作） 1 nouveau是第三方开发的开源显卡驱动，安装NVIDIA官方的显卡驱动之前，需要先禁用它。 编辑vim /etc/modprobe.d/blacklist.conf文件，末尾添加如下代码\n">
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" ubuntu 22.04 server安装Nvidia驱动 1 2 3 4 sudo apt install -y net-toolsb sudo apt install -y openssh-server sudo apt install -y openssh-server sudo apt install -y apt-rdepends 方法一 Nvidia驱动安装准备操作（同步机不需要操作，服务器操作） 确定系统识别到了显卡\n1 lspci | grep -i nvidia 列出已安装的NVIDIA软件包\n1 dpkg -l | grep -i nvidia 确保卸载干净残留的nvidia驱动\n1 sudo apt remove --purge &#39;^nvidia-.*&#39; 安装必要依赖（同步机操作）\n1 2 3 4 5 # sudo apt install -y net-tools sudo apt download $(apt-rdepends net-tools | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) # sudo apt install -y gcc make sudo apt download $(apt-rdepends gcc make | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) sudo dpkg -i *.deb 禁用nouveau显卡驱动（服务器操作） 1 nouveau是第三方开发的开源显卡驱动，安装NVIDIA官方的显卡驱动之前，需要先禁用它。 编辑vim /etc/modprobe.d/blacklist.conf文件，末尾添加如下代码\n">
 <title>ubuntu 22.04 server安装Nvidia驱动</title>
 
 <link rel='canonical' href='https://ynhugo.github.io/p/ubuntu-22.04-server%E5%AE%89%E8%A3%85nvidia%E9%A9%B1%E5%8A%A8/'>
 
 <link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="ubuntu 22.04 server安装Nvidia驱动">
-<meta property='og:description' content=" ubuntu 22.04 server安装Nvidia驱动 1 2 3 4 sudo apt install -y net-toolsb sudo apt install -y openssh-server sudo apt install -y openssh-server sudo apt install -y apt-rdepends 方法一 Nvidia驱动安装准备操作（同步机不需要操作，服务器操作） 确定系统识别到了显卡\n1 lspci | grep -i nvidia 列出已安装的NVIDIA软件包\n1 dpkg -l | grep -i nvidia 确保卸载干净残留的nvidia驱动\n1 sudo apt remove --purge &#39;^nvidia-.*&#39; 安装必要依赖（同步机操作）\n1 2 3 # sudo apt install gcc make sudo apt download $(apt-rdepends gcc make | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) sudo dpkg -i *.deb 禁用nouveau显卡驱动（服务器操作） 1 nouveau是第三方开发的开源显卡驱动，安装NVIDIA官方的显卡驱动之前，需要先禁用它。 编辑vim /etc/modprobe.d/blacklist.conf文件，末尾添加如下代码\n">
+<meta property='og:description' content=" ubuntu 22.04 server安装Nvidia驱动 1 2 3 4 sudo apt install -y net-toolsb sudo apt install -y openssh-server sudo apt install -y openssh-server sudo apt install -y apt-rdepends 方法一 Nvidia驱动安装准备操作（同步机不需要操作，服务器操作） 确定系统识别到了显卡\n1 lspci | grep -i nvidia 列出已安装的NVIDIA软件包\n1 dpkg -l | grep -i nvidia 确保卸载干净残留的nvidia驱动\n1 sudo apt remove --purge &#39;^nvidia-.*&#39; 安装必要依赖（同步机操作）\n1 2 3 4 5 # sudo apt install -y net-tools sudo apt download $(apt-rdepends net-tools | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) # sudo apt install -y gcc make sudo apt download $(apt-rdepends gcc make | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) sudo dpkg -i *.deb 禁用nouveau显卡驱动（服务器操作） 1 nouveau是第三方开发的开源显卡驱动，安装NVIDIA官方的显卡驱动之前，需要先禁用它。 编辑vim /etc/modprobe.d/blacklist.conf文件，末尾添加如下代码\n">
 <meta property='og:url' content='https://ynhugo.github.io/p/ubuntu-22.04-server%E5%AE%89%E8%A3%85nvidia%E9%A9%B1%E5%8A%A8/'>
 <meta property='og:site_name' content='ynhugo'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='ubuntu' /><meta property='article:tag' content='22.04' /><meta property='article:tag' content='server' /><meta property='article:tag' content='nvidia' /><meta property='article:published_time' content='2025-12-06T08:38:24&#43;08:00'/><meta property='article:modified_time' content='2025-12-06T08:38:24&#43;08:00'/>
 <meta name="twitter:title" content="ubuntu 22.04 server安装Nvidia驱动">
-<meta name="twitter:description" content=" ubuntu 22.04 server安装Nvidia驱动 1 2 3 4 sudo apt install -y net-toolsb sudo apt install -y openssh-server sudo apt install -y openssh-server sudo apt install -y apt-rdepends 方法一 Nvidia驱动安装准备操作（同步机不需要操作，服务器操作） 确定系统识别到了显卡\n1 lspci | grep -i nvidia 列出已安装的NVIDIA软件包\n1 dpkg -l | grep -i nvidia 确保卸载干净残留的nvidia驱动\n1 sudo apt remove --purge &#39;^nvidia-.*&#39; 安装必要依赖（同步机操作）\n1 2 3 # sudo apt install gcc make sudo apt download $(apt-rdepends gcc make | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) sudo dpkg -i *.deb 禁用nouveau显卡驱动（服务器操作） 1 nouveau是第三方开发的开源显卡驱动，安装NVIDIA官方的显卡驱动之前，需要先禁用它。 编辑vim /etc/modprobe.d/blacklist.conf文件，末尾添加如下代码\n">
+<meta name="twitter:description" content=" ubuntu 22.04 server安装Nvidia驱动 1 2 3 4 sudo apt install -y net-toolsb sudo apt install -y openssh-server sudo apt install -y openssh-server sudo apt install -y apt-rdepends 方法一 Nvidia驱动安装准备操作（同步机不需要操作，服务器操作） 确定系统识别到了显卡\n1 lspci | grep -i nvidia 列出已安装的NVIDIA软件包\n1 dpkg -l | grep -i nvidia 确保卸载干净残留的nvidia驱动\n1 sudo apt remove --purge &#39;^nvidia-.*&#39; 安装必要依赖（同步机操作）\n1 2 3 4 5 # sudo apt install -y net-tools sudo apt download $(apt-rdepends net-tools | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) # sudo apt install -y gcc make sudo apt download $(apt-rdepends gcc make | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) sudo dpkg -i *.deb 禁用nouveau显卡驱动（服务器操作） 1 nouveau是第三方开发的开源显卡驱动，安装NVIDIA官方的显卡驱动之前，需要先禁用它。 编辑vim /etc/modprobe.d/blacklist.conf文件，末尾添加如下代码\n">
     </head>
     <body class="
     article-page
@@ -515,9 +515,13 @@ Nvidia驱动安装准备操作（同步机不需要操作，服务器操作）
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># sudo apt install gcc make</span>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># sudo apt install -y net-tools</span>
+</span></span><span class="line"><span class="cl">sudo apt download <span class="k">$(</span>apt-rdepends net-tools <span class="p">|</span> grep -v <span class="s2">&#34;^ &#34;</span> <span class="p">|</span> sed <span class="s1">&#39;s/debconf-2.0/debconf/g&#39;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># sudo apt install -y gcc make</span>
 </span></span><span class="line"><span class="cl">sudo apt download <span class="k">$(</span>apt-rdepends gcc make <span class="p">|</span> grep -v <span class="s2">&#34;^ &#34;</span> <span class="p">|</span> sed <span class="s1">&#39;s/debconf-2.0/debconf/g&#39;</span><span class="k">)</span>
 </span></span><span class="line"><span class="cl">sudo dpkg -i *.deb</span></span></code></pre></td></tr></table>
 </div>
