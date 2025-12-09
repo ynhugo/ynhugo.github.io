@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-cn" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" ubuntu 22.04 server安装Nvidia驱动 1 2 3 4 sudo apt install -y net-toolsb sudo apt install -y openssh-server sudo apt install -y openssh-server sudo apt install -y apt-rdepends 方法一 Nvidia驱动安装准备操作（同步机不需要操作，服务器操作） 确定系统识别到了显卡\n1 lspci | grep -i nvidia 列出已安装的NVIDIA软件包\n1 dpkg -l | grep -i nvidia 确保卸载干净残留的nvidia驱动\n1 sudo apt remove --purge &#39;^nvidia-.*&#39; 安装必要依赖（同步机操作）\n1 2 3 4 5 # sudo apt install -y net-tools sudo apt download $(apt-rdepends net-tools | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) # sudo apt install -y gcc make sudo apt download $(apt-rdepends gcc make | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) sudo dpkg -i *.deb 禁用nouveau显卡驱动（服务器操作） 1 nouveau是第三方开发的开源显卡驱动，安装NVIDIA官方的显卡驱动之前，需要先禁用它。 编辑vim /etc/modprobe.d/blacklist.conf文件，末尾添加如下代码\n">
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" ubuntu 22.04 server安装Nvidia驱动 1 2 3 4 5 sudo apt install -y apt-rdepends # sudo apt install -y net-toolsb # sudo apt install -y openssh-server sudo apt download $(apt-rdepends apt-rdepends | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39; | grep -v &#34;perlapi-&#34;) sudo apt download $(apt-rdepends net-tools | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) 方法一 Nvidia驱动安装准备操作（同步机不需要操作，服务器操作） 确定系统识别到了显卡\n1 lspci | grep -i nvidia 列出已安装的NVIDIA软件包\n1 dpkg -l | grep -i nvidia 确保卸载干净残留的nvidia驱动\n1 sudo apt remove --purge &#39;^nvidia-.*&#39; 安装必要依赖（同步机操作）\n">
 <title>ubuntu 22.04 server安装Nvidia驱动</title>
 
 <link rel='canonical' href='https://ynhugo.github.io/p/ubuntu-22.04-server%E5%AE%89%E8%A3%85nvidia%E9%A9%B1%E5%8A%A8/'>
 
 <link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="ubuntu 22.04 server安装Nvidia驱动">
-<meta property='og:description' content=" ubuntu 22.04 server安装Nvidia驱动 1 2 3 4 sudo apt install -y net-toolsb sudo apt install -y openssh-server sudo apt install -y openssh-server sudo apt install -y apt-rdepends 方法一 Nvidia驱动安装准备操作（同步机不需要操作，服务器操作） 确定系统识别到了显卡\n1 lspci | grep -i nvidia 列出已安装的NVIDIA软件包\n1 dpkg -l | grep -i nvidia 确保卸载干净残留的nvidia驱动\n1 sudo apt remove --purge &#39;^nvidia-.*&#39; 安装必要依赖（同步机操作）\n1 2 3 4 5 # sudo apt install -y net-tools sudo apt download $(apt-rdepends net-tools | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) # sudo apt install -y gcc make sudo apt download $(apt-rdepends gcc make | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) sudo dpkg -i *.deb 禁用nouveau显卡驱动（服务器操作） 1 nouveau是第三方开发的开源显卡驱动，安装NVIDIA官方的显卡驱动之前，需要先禁用它。 编辑vim /etc/modprobe.d/blacklist.conf文件，末尾添加如下代码\n">
+<meta property='og:description' content=" ubuntu 22.04 server安装Nvidia驱动 1 2 3 4 5 sudo apt install -y apt-rdepends # sudo apt install -y net-toolsb # sudo apt install -y openssh-server sudo apt download $(apt-rdepends apt-rdepends | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39; | grep -v &#34;perlapi-&#34;) sudo apt download $(apt-rdepends net-tools | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) 方法一 Nvidia驱动安装准备操作（同步机不需要操作，服务器操作） 确定系统识别到了显卡\n1 lspci | grep -i nvidia 列出已安装的NVIDIA软件包\n1 dpkg -l | grep -i nvidia 确保卸载干净残留的nvidia驱动\n1 sudo apt remove --purge &#39;^nvidia-.*&#39; 安装必要依赖（同步机操作）\n">
 <meta property='og:url' content='https://ynhugo.github.io/p/ubuntu-22.04-server%E5%AE%89%E8%A3%85nvidia%E9%A9%B1%E5%8A%A8/'>
 <meta property='og:site_name' content='ynhugo'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='ubuntu' /><meta property='article:tag' content='22.04' /><meta property='article:tag' content='server' /><meta property='article:tag' content='nvidia' /><meta property='article:published_time' content='2025-12-06T08:38:24&#43;08:00'/><meta property='article:modified_time' content='2025-12-06T08:38:24&#43;08:00'/>
 <meta name="twitter:title" content="ubuntu 22.04 server安装Nvidia驱动">
-<meta name="twitter:description" content=" ubuntu 22.04 server安装Nvidia驱动 1 2 3 4 sudo apt install -y net-toolsb sudo apt install -y openssh-server sudo apt install -y openssh-server sudo apt install -y apt-rdepends 方法一 Nvidia驱动安装准备操作（同步机不需要操作，服务器操作） 确定系统识别到了显卡\n1 lspci | grep -i nvidia 列出已安装的NVIDIA软件包\n1 dpkg -l | grep -i nvidia 确保卸载干净残留的nvidia驱动\n1 sudo apt remove --purge &#39;^nvidia-.*&#39; 安装必要依赖（同步机操作）\n1 2 3 4 5 # sudo apt install -y net-tools sudo apt download $(apt-rdepends net-tools | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) # sudo apt install -y gcc make sudo apt download $(apt-rdepends gcc make | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) sudo dpkg -i *.deb 禁用nouveau显卡驱动（服务器操作） 1 nouveau是第三方开发的开源显卡驱动，安装NVIDIA官方的显卡驱动之前，需要先禁用它。 编辑vim /etc/modprobe.d/blacklist.conf文件，末尾添加如下代码\n">
+<meta name="twitter:description" content=" ubuntu 22.04 server安装Nvidia驱动 1 2 3 4 5 sudo apt install -y apt-rdepends # sudo apt install -y net-toolsb # sudo apt install -y openssh-server sudo apt download $(apt-rdepends apt-rdepends | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39; | grep -v &#34;perlapi-&#34;) sudo apt download $(apt-rdepends net-tools | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) 方法一 Nvidia驱动安装准备操作（同步机不需要操作，服务器操作） 确定系统识别到了显卡\n1 lspci | grep -i nvidia 列出已安装的NVIDIA软件包\n1 dpkg -l | grep -i nvidia 确保卸载干净残留的nvidia驱动\n1 sudo apt remove --purge &#39;^nvidia-.*&#39; 安装必要依赖（同步机操作）\n">
     </head>
     <body class="
     article-page
@@ -326,45 +326,47 @@
 </li>
 <li><a href="#headline-10">更新软件列表和安装必要软件、依赖</a>
 </li>
-<li><a href="#headline-11">禁用nouveau (nouveau是通用的驱动程序)</a>
+<li><a href="#headline-11">配置wifi</a>
 </li>
-<li><a href="#headline-12">安装lightdm</a>
+<li><a href="#headline-12">禁用nouveau (nouveau是通用的驱动程序)</a>
+</li>
+<li><a href="#headline-13">安装lightdm</a>
 </li>
 </ul>
 </li>
-<li><a href="#headline-13">安装驱动</a>
+<li><a href="#headline-14">安装驱动</a>
 <ul>
-<li><a href="#headline-14">安装 nvidia-cuda-toolkit 工具</a>
+<li><a href="#headline-15">安装 nvidia-cuda-toolkit 工具</a>
 </li>
-<li><a href="#headline-15">检查系统推荐显卡驱动，记录下recommend选项</a>
+<li><a href="#headline-16">检查系统推荐显卡驱动，记录下recommend选项</a>
 </li>
 </ul>
 </li>
-<li><a href="#headline-16">安装NVIDIA显卡驱动</a>
+<li><a href="#headline-17">安装NVIDIA显卡驱动</a>
 <ul>
-<li><a href="#headline-17">方法一：安装NVIDIA显卡驱动（服务器操作）</a>
+<li><a href="#headline-18">方法一：安装NVIDIA显卡驱动（服务器操作）</a>
 </li>
-<li><a href="#headline-18">方法二</a>
+<li><a href="#headline-19">方法二</a>
 <ul>
-<li><a href="#headline-19">添加驱动源</a>
+<li><a href="#headline-20">添加驱动源</a>
 </li>
-<li><a href="#headline-20">在Ubuntu系统中找到 软件和更新 选择 驱动</a>
-</li>
-</ul>
-</li>
-<li><a href="#headline-21">方法三</a>
+<li><a href="#headline-21">在Ubuntu系统中找到 软件和更新 选择 驱动</a>
 </li>
 </ul>
 </li>
-<li><a href="#headline-22">重启后测试安装</a>
-</li>
-<li><a href="#headline-23">出错急救</a>
+<li><a href="#headline-22">方法三</a>
 </li>
 </ul>
 </li>
-<li><a href="#headline-24">把文件制作成iso，上传并将挂载到服务器</a>
+<li><a href="#headline-23">重启后测试安装</a>
 </li>
-<li><a href="#headline-25">参考链接</a>
+<li><a href="#headline-24">出错急救</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-25">把文件制作成iso，上传并将挂载到服务器</a>
+</li>
+<li><a href="#headline-26">参考链接</a>
 </li>
 </ul>
 </li>
@@ -424,7 +426,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 4 分钟
+                    阅读时长: 5 分钟
                 </time>
             </div>
         
@@ -452,12 +454,14 @@ ubuntu 22.04 server安装Nvidia驱动
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
+</span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo apt install -y net-toolsb
-</span></span><span class="line"><span class="cl">sudo apt install -y openssh-server
-</span></span><span class="line"><span class="cl">sudo apt install -y openssh-server
-</span></span><span class="line"><span class="cl">sudo apt install -y apt-rdepends</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo apt install -y apt-rdepends
+</span></span><span class="line"><span class="cl"><span class="c1"># sudo apt install -y net-toolsb</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># sudo apt install -y openssh-server</span>
+</span></span><span class="line"><span class="cl">sudo apt download <span class="k">$(</span>apt-rdepends apt-rdepends <span class="p">|</span> grep -v <span class="s2">&#34;^ &#34;</span> <span class="p">|</span> sed <span class="s1">&#39;s/debconf-2.0/debconf/g&#39;</span> <span class="p">|</span> grep -v <span class="s2">&#34;perlapi-&#34;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">sudo apt download <span class="k">$(</span>apt-rdepends net-tools <span class="p">|</span> grep -v <span class="s2">&#34;^ &#34;</span> <span class="p">|</span> sed <span class="s1">&#39;s/debconf-2.0/debconf/g&#39;</span><span class="k">)</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
@@ -700,16 +704,34 @@ apt命令安装
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo apt-get update   <span class="c1">#更新软件列表</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># sudo apt-get install -y g++ gcc make</span>
-</span></span><span class="line"><span class="cl">sudo apt download <span class="k">$(</span>apt-rdepends g++ gcc make <span class="p">|</span> grep -v <span class="s2">&#34;^ &#34;</span> <span class="p">|</span> sed <span class="s1">&#39;s/debconf-2.0/debconf/g&#39;</span><span class="k">)</span></span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">sudo apt download <span class="k">$(</span>apt-rdepends g++ gcc make <span class="p">|</span> grep -v <span class="s2">&#34;^ &#34;</span> <span class="p">|</span> sed <span class="s1">&#39;s/debconf-2.0/debconf/g&#39;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">sudo apt download <span class="k">$(</span>apt-rdepends python3-pip <span class="p">|</span> grep -v <span class="s2">&#34;^ &#34;</span> <span class="p">|</span> sed <span class="s1">&#39;s/debconf-2.0/debconf/g&#39;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">sudo apt download <span class="k">$(</span>apt-rdepends build-essential cmake git <span class="p">|</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>                      grep -v <span class="s2">&#34;^ &#34;</span> <span class="p">|</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>                      sed <span class="s1">&#39;s/debconf-2.0/debconf/g&#39;</span> <span class="p">|</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>                      sed -e <span class="s1">&#39;s/libc-dev/libc6-dev/g&#39;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>                          -e <span class="s1">&#39;s/libc6-dev-bin/libc6-dev/g&#39;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>                          -e <span class="s1">&#39;s/linux-libc6-dev/linux-libc-dev/g&#39;</span> <span class="p">|</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>                      grep -vE <span class="s2">&#34;^(default-logind|logind)</span>$<span class="s2">&#34;</span><span class="k">)</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
@@ -717,9 +739,104 @@ apt命令安装
 </div>
 <div id="outline-container-headline-11" class="outline-5">
 <h5 id="headline-11">
-禁用nouveau (nouveau是通用的驱动程序)
+配置wifi
 </h5>
 <div id="outline-text-headline-11" class="outline-text-5">
+<p>
+输入如下指令来安装network-manager</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># sudo apt install network-manager</span>
+</span></span><span class="line"><span class="cl">sudo apt download <span class="k">$(</span>apt-rdepends network-manager <span class="p">|</span> grep -v <span class="s2">&#34;^ &#34;</span> <span class="p">|</span> sed <span class="s1">&#39;s/debconf-2.0/debconf/g&#39;</span> <span class="p">|</span> grep -vE <span class="s2">&#34;^(default-logind|logind)</span>$<span class="s2">&#34;</span><span class="k">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+启动NetworkManager服务</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo systemctl start NetworkManager
+</span></span><span class="line"><span class="cl">sudo systemctl <span class="nb">enable</span> NetworkManager</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+查找可用的WiFi</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">nmcli dev wifi list</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+选择一个WiFi并连接，将&lt;SSID&gt;改为你的wifi名，&lt;password&gt;改为密码</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">nmcli dev wifi connect &lt;SSID&gt; password &lt;password&gt;</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+确认网络是否连接</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">nmcli connection show</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+设置为自动连接，这样每次开机后即自动连接该wifi</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">nmcli connection modify &lt;SSID&gt; connection.autoconnect yes</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+检查自动连接是否启用，如果connection.autoconnect为yes则已启用</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">nmcli connection show &lt;SSID&gt;</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-12" class="outline-5">
+<h5 id="headline-12">
+禁用nouveau (nouveau是通用的驱动程序)
+</h5>
+<div id="outline-text-headline-12" class="outline-text-5">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -770,11 +887,11 @@ apt命令安装
 </div>
 </div>
 </div>
-<div id="outline-container-headline-12" class="outline-5">
-<h5 id="headline-12">
+<div id="outline-container-headline-13" class="outline-5">
+<h5 id="headline-13">
 安装lightdm
 </h5>
-<div id="outline-text-headline-12" class="outline-text-5">
+<div id="outline-text-headline-13" class="outline-text-5">
 <p>
 lightdm和gdm3一样都是图形界面管理插件，但是lightdm兼容性更好</p>
 <div class="src src-bash">
@@ -794,11 +911,11 @@ lightdm和gdm3一样都是图形界面管理插件，但是lightdm兼容性更�
 </div>
 </div>
 </div>
-<div id="outline-container-headline-13" class="outline-4">
-<h4 id="headline-13">
+<div id="outline-container-headline-14" class="outline-4">
+<h4 id="headline-14">
 安装驱动
 </h4>
-<div id="outline-text-headline-13" class="outline-text-4">
+<div id="outline-text-headline-14" class="outline-text-4">
 <div class="src src-text">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -809,11 +926,11 @@ lightdm和gdm3一样都是图形界面管理插件，但是lightdm兼容性更�
 </div>
 </div>
 </div>
-<div id="outline-container-headline-14" class="outline-5">
-<h5 id="headline-14">
+<div id="outline-container-headline-15" class="outline-5">
+<h5 id="headline-15">
 安装 nvidia-cuda-toolkit 工具
 </h5>
-<div id="outline-text-headline-14" class="outline-text-5">
+<div id="outline-text-headline-15" class="outline-text-5">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -828,11 +945,11 @@ lightdm和gdm3一样都是图形界面管理插件，但是lightdm兼容性更�
 </div>
 </div>
 </div>
-<div id="outline-container-headline-15" class="outline-5">
-<h5 id="headline-15">
+<div id="outline-container-headline-16" class="outline-5">
+<h5 id="headline-16">
 检查系统推荐显卡驱动，记录下recommend选项
 </h5>
-<div id="outline-text-headline-15" class="outline-text-5">
+<div id="outline-text-headline-16" class="outline-text-5">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -871,16 +988,16 @@ lightdm和gdm3一样都是图形界面管理插件，但是lightdm兼容性更�
 </div>
 </div>
 </div>
-<div id="outline-container-headline-16" class="outline-4">
-<h4 id="headline-16">
+<div id="outline-container-headline-17" class="outline-4">
+<h4 id="headline-17">
 安装NVIDIA显卡驱动
 </h4>
-<div id="outline-text-headline-16" class="outline-text-4">
-<div id="outline-container-headline-17" class="outline-5">
-<h5 id="headline-17">
+<div id="outline-text-headline-17" class="outline-text-4">
+<div id="outline-container-headline-18" class="outline-5">
+<h5 id="headline-18">
 方法一：安装NVIDIA显卡驱动（服务器操作）
 </h5>
-<div id="outline-text-headline-17" class="outline-text-5">
+<div id="outline-text-headline-18" class="outline-text-5">
 <p>
 apt命令安装
 执行如下命令，查看适合的驱动</p>
@@ -924,16 +1041,16 @@ apt命令安装
 </div>
 </div>
 </div>
-<div id="outline-container-headline-18" class="outline-5">
-<h5 id="headline-18">
+<div id="outline-container-headline-19" class="outline-5">
+<h5 id="headline-19">
 方法二
 </h5>
-<div id="outline-text-headline-18" class="outline-text-5">
-<div id="outline-container-headline-19" class="outline-6">
-<h6 id="headline-19">
+<div id="outline-text-headline-19" class="outline-text-5">
+<div id="outline-container-headline-20" class="outline-6">
+<h6 id="headline-20">
 添加驱动源
 </h6>
-<div id="outline-text-headline-19" class="outline-text-6">
+<div id="outline-text-headline-20" class="outline-text-6">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -948,11 +1065,11 @@ apt命令安装
 </div>
 </div>
 </div>
-<div id="outline-container-headline-20" class="outline-6">
-<h6 id="headline-20">
+<div id="outline-container-headline-21" class="outline-6">
+<h6 id="headline-21">
 在Ubuntu系统中找到 软件和更新 选择 驱动
 </h6>
-<div id="outline-text-headline-20" class="outline-text-6">
+<div id="outline-text-headline-21" class="outline-text-6">
 <div class="src src-text">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -970,11 +1087,11 @@ apt命令安装
 </div>
 </div>
 </div>
-<div id="outline-container-headline-21" class="outline-5">
-<h5 id="headline-21">
+<div id="outline-container-headline-22" class="outline-5">
+<h5 id="headline-22">
 方法三
 </h5>
-<div id="outline-text-headline-21" class="outline-text-5">
+<div id="outline-text-headline-22" class="outline-text-5">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -991,11 +1108,11 @@ apt命令安装
 </div>
 </div>
 </div>
-<div id="outline-container-headline-22" class="outline-4">
-<h4 id="headline-22">
+<div id="outline-container-headline-23" class="outline-4">
+<h4 id="headline-23">
 重启后测试安装
 </h4>
-<div id="outline-text-headline-22" class="outline-text-4">
+<div id="outline-text-headline-23" class="outline-text-4">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1030,38 +1147,38 @@ apt命令安装
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">Wed Jul <span class="m">19</span> 11:08:47 <span class="m">2023</span>       
 </span></span><span class="line"><span class="cl">+---------------------------------------------------------------------------------------+
-</span></span><span class="line"><span class="cl"><span class="p">|</span> NVIDIA-SMI 535.54.03              Driver Version: 535.54.03    CUDA Version: 12.2     <span class="p">|</span>
-</span></span><span class="line"><span class="cl"><span class="p">|</span>-----------------------------------------+----------------------+----------------------+
-</span></span><span class="line"><span class="cl"><span class="p">|</span> GPU  Name                 Persistence-M <span class="p">|</span> Bus-Id        Disp.A <span class="p">|</span> Volatile Uncorr. ECC <span class="p">|</span>
-</span></span><span class="line"><span class="cl"><span class="p">|</span> Fan  Temp   Perf          Pwr:Usage/Cap <span class="p">|</span>         Memory-Usage <span class="p">|</span> GPU-Util  Compute M. <span class="p">|</span>
-</span></span><span class="line"><span class="cl"><span class="p">|</span>                                         <span class="p">|</span>                      <span class="p">|</span>               MIG M. <span class="p">|</span>
-</span></span><span class="line"><span class="cl"><span class="p">|</span><span class="o">=========================================</span>+<span class="o">======================</span>+<span class="o">======================</span><span class="p">|</span>
-</span></span><span class="line"><span class="cl"><span class="p">|</span>   <span class="m">0</span>  NVIDIA GeForce RTX <span class="m">4060</span> ...    Off <span class="p">|</span> 00000000:01:00.0  On <span class="p">|</span>                  N/A <span class="p">|</span>
-</span></span><span class="line"><span class="cl"><span class="p">|</span> N/A   40C    P8               2W /  80W <span class="p">|</span>    571MiB /  8188MiB <span class="p">|</span>      0%      Default <span class="p">|</span>
-</span></span><span class="line"><span class="cl"><span class="p">|</span>                                         <span class="p">|</span>                      <span class="p">|</span>                  N/A <span class="p">|</span>
-</span></span><span class="line"><span class="cl">+-----------------------------------------+----------------------+----------------------+
-</span></span><span class="line"><span class="cl">                                                                                         
-</span></span><span class="line"><span class="cl">+---------------------------------------------------------------------------------------+
-</span></span><span class="line"><span class="cl"><span class="p">|</span> Processes:                                                                            <span class="p">|</span>
-</span></span><span class="line"><span class="cl"><span class="p">|</span>  GPU   GI   CI        PID   Type   Process name                            GPU Memory <span class="p">|</span>
-</span></span><span class="line"><span class="cl"><span class="p">|</span>        ID   ID                                                             Usage      <span class="p">|</span>
-</span></span><span class="line"><span class="cl"><span class="p">|</span><span class="o">=======================================================================================</span><span class="p">|</span>
-</span></span><span class="line"><span class="cl"><span class="p">|</span>    <span class="m">0</span>   N/A  N/A      <span class="m">1489</span>      G   /usr/lib/xorg/Xorg                          202MiB <span class="p">|</span>
-</span></span><span class="line"><span class="cl"><span class="p">|</span>    <span class="m">0</span>   N/A  N/A      <span class="m">2539</span>      G   /usr/bin/gnome-shell                         57MiB <span class="p">|</span>
-</span></span><span class="line"><span class="cl"><span class="p">|</span>    <span class="m">0</span>   N/A  N/A      <span class="m">3848</span>      G   ...irefox/2908/usr/lib/firefox/firefox      205MiB <span class="p">|</span>
-</span></span><span class="line"><span class="cl"><span class="p">|</span>    <span class="m">0</span>   N/A  N/A     <span class="m">20451</span>      G   ...dererForSitePerProcess --no-sandbox       94MiB <span class="p">|</span>
-</span></span><span class="line"><span class="cl">+---------------------------------------------------------------------------------------+</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">    <span class="p">|</span> NVIDIA-SMI 535.54.03              Driver Version: 535.54.03    CUDA Version: 12.2     <span class="p">|</span>
+</span></span><span class="line"><span class="cl">    <span class="p">|</span>-----------------------------------------+----------------------+----------------------+
+</span></span><span class="line"><span class="cl">    <span class="p">|</span> GPU  Name                 Persistence-M <span class="p">|</span> Bus-Id        Disp.A <span class="p">|</span> Volatile Uncorr. ECC <span class="p">|</span>
+</span></span><span class="line"><span class="cl">    <span class="p">|</span> Fan  Temp   Perf          Pwr:Usage/Cap <span class="p">|</span>         Memory-Usage <span class="p">|</span> GPU-Util  Compute M. <span class="p">|</span>
+</span></span><span class="line"><span class="cl">    <span class="p">|</span>                                         <span class="p">|</span>                      <span class="p">|</span>               MIG M. <span class="p">|</span>
+</span></span><span class="line"><span class="cl">    <span class="p">|</span><span class="o">=========================================</span>+<span class="o">======================</span>+<span class="o">======================</span><span class="p">|</span>
+</span></span><span class="line"><span class="cl">    <span class="p">|</span>   <span class="m">0</span>  NVIDIA GeForce RTX <span class="m">4060</span> ...    Off <span class="p">|</span> 00000000:01:00.0  On <span class="p">|</span>                  N/A <span class="p">|</span>
+</span></span><span class="line"><span class="cl">    <span class="p">|</span> N/A   40C    P8               2W /  80W <span class="p">|</span>    571MiB /  8188MiB <span class="p">|</span>      0%      Default <span class="p">|</span>
+</span></span><span class="line"><span class="cl">    <span class="p">|</span>                                         <span class="p">|</span>                      <span class="p">|</span>                  N/A <span class="p">|</span>
+</span></span><span class="line"><span class="cl">    +-----------------------------------------+----------------------+----------------------+
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    +---------------------------------------------------------------------------------------+
+</span></span><span class="line"><span class="cl">    <span class="p">|</span> Processes:                                                                            <span class="p">|</span>
+</span></span><span class="line"><span class="cl">    <span class="p">|</span>  GPU   GI   CI        PID   Type   Process name                            GPU Memory <span class="p">|</span>
+</span></span><span class="line"><span class="cl">    <span class="p">|</span>        ID   ID                                                             Usage      <span class="p">|</span>
+</span></span><span class="line"><span class="cl">    <span class="p">|</span><span class="o">=======================================================================================</span><span class="p">|</span>
+</span></span><span class="line"><span class="cl">    <span class="p">|</span>    <span class="m">0</span>   N/A  N/A      <span class="m">1489</span>      G   /usr/lib/xorg/Xorg                          202MiB <span class="p">|</span>
+</span></span><span class="line"><span class="cl">    <span class="p">|</span>    <span class="m">0</span>   N/A  N/A      <span class="m">2539</span>      G   /usr/bin/gnome-shell                         57MiB <span class="p">|</span>
+</span></span><span class="line"><span class="cl">    <span class="p">|</span>    <span class="m">0</span>   N/A  N/A      <span class="m">3848</span>      G   ...irefox/2908/usr/lib/firefox/firefox      205MiB <span class="p">|</span>
+</span></span><span class="line"><span class="cl">    <span class="p">|</span>    <span class="m">0</span>   N/A  N/A     <span class="m">20451</span>      G   ...dererForSitePerProcess --no-sandbox       94MiB <span class="p">|</span>
+</span></span><span class="line"><span class="cl">    +---------------------------------------------------------------------------------------+</span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
 <p>显示如上则表示安装完成。</p>
 </div>
 </div>
-<div id="outline-container-headline-23" class="outline-4">
-<h4 id="headline-23">
+<div id="outline-container-headline-24" class="outline-4">
+<h4 id="headline-24">
 出错急救
 </h4>
-<div id="outline-text-headline-23" class="outline-text-4">
+<div id="outline-text-headline-24" class="outline-text-4">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1107,11 +1224,11 @@ apt命令安装
 </div>
 </div>
 </div>
-<div id="outline-container-headline-24" class="outline-3">
-<h3 id="headline-24">
+<div id="outline-container-headline-25" class="outline-3">
+<h3 id="headline-25">
 把文件制作成iso，上传并将挂载到服务器
 </h3>
-<div id="outline-text-headline-24" class="outline-text-3">
+<div id="outline-text-headline-25" class="outline-text-3">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1142,11 +1259,11 @@ apt命令安装
 </div>
 </div>
 </div>
-<div id="outline-container-headline-25" class="outline-3">
-<h3 id="headline-25">
+<div id="outline-container-headline-26" class="outline-3">
+<h3 id="headline-26">
 参考链接
 </h3>
-<div id="outline-text-headline-25" class="outline-text-3">
+<div id="outline-text-headline-26" class="outline-text-3">
 <p>
 <a href="https://blog.csdn.net/zgp210317/article/details/120586189">在Ubuntu本地下载软件包并递归下载其所有依赖包</a></p>
 <p>
