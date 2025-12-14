@@ -1309,6 +1309,23 @@ apt命令安装
 </span><span class="lnt">11
 </span><span class="lnt">12
 </span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 然后安装需要用到的图形化服务软件</span>
@@ -1319,11 +1336,28 @@ apt命令安装
 </span></span><span class="line"><span class="cl"><span class="c1"># apt install -y tigervnc-standalone-server tigervnc-common</span>
 </span></span><span class="line"><span class="cl">apt download <span class="k">$(</span>apt-rdepends tigervnc-standalone-server tigervnc-common <span class="p">|</span> grep -v <span class="s2">&#34;^ &#34;</span> <span class="p">|</span> sed <span class="s2">&#34;s/debconf-2.0/debconf/g&#34;</span><span class="k">)</span>
 </span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 安装tigervnc-tools</span>
+</span></span><span class="line"><span class="cl">apt download <span class="k">$(</span>apt-rdepends tigervnc-tools <span class="p">|</span> grep -v <span class="s2">&#34;^ &#34;</span> <span class="p">|</span> sed <span class="s2">&#34;s/debconf-2.0/debconf/g&#34;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># 安装下载的deb包</span>
 </span></span><span class="line"><span class="cl">dpkg -i ./*.deb
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># 运行并设置密码</span>
-</span></span><span class="line"><span class="cl">vncserver</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">vncserver
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 然后创建启动脚本：</span>
+</span></span><span class="line"><span class="cl">vim .vnc/xstartup
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 如上命令就是用文本编辑器nano(当然你可以用其他文本编辑器)编辑用户文件夹下的.vnc文件夹下的xstartup文件(如果没有就创建一个)内容如下：</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#!/usr/bin/bash</span>
+</span></span><span class="line"><span class="cl">xfce4-session
+</span></span><span class="line"><span class="cl"><span class="c1"># 注意xfce4-session后面不要跟&amp;号，不然会在运行vncserver时提示过早退出，然后记得给它加执行的权限。</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">chmod +x .vnc/xstartup
+</span></span><span class="line"><span class="cl"><span class="c1"># 首次设置VNC时，它将在端口5901上启动默认服务器实例。</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 如下是一个启动vnc服务器的例子：</span>
+</span></span><span class="line"><span class="cl">vncserver :1 -localhost no -geometry 1920x1080</span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
