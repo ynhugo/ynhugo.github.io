@@ -326,47 +326,57 @@
 </li>
 <li><a href="#headline-10">更新软件列表和安装必要软件、依赖</a>
 </li>
-<li><a href="#headline-11">配置wifi</a>
-</li>
-<li><a href="#headline-12">禁用nouveau (nouveau是通用的驱动程序)</a>
-</li>
-<li><a href="#headline-13">安装lightdm</a>
-</li>
-</ul>
-</li>
-<li><a href="#headline-14">安装驱动</a>
+<li><a href="#headline-11">配置网络</a>
 <ul>
-<li><a href="#headline-15">安装 nvidia-cuda-toolkit 工具</a>
+<li><a href="#headline-12">配置wifi</a>
 </li>
-<li><a href="#headline-16">检查系统推荐显卡驱动，记录下recommend选项</a>
+<li><a href="#headline-13">配置静态IP</a>
 </li>
-<li><a href="#headline-17">安装NVIDIA显卡驱动</a>
+</ul>
+</li>
+<li><a href="#headline-14">禁用nouveau (nouveau是通用的驱动程序)</a>
+</li>
+<li><a href="#headline-15">安装lightdm</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-16">安装驱动</a>
 <ul>
-<li><a href="#headline-18">方法一：安装NVIDIA显卡驱动（服务器操作）</a>
+<li><a href="#headline-17">安装 nvidia-cuda-toolkit 工具</a>
 </li>
-<li><a href="#headline-19">方法二</a>
+<li><a href="#headline-18">检查系统推荐显卡驱动，记录下recommend选项</a>
+</li>
+<li><a href="#headline-19">安装NVIDIA显卡驱动</a>
 <ul>
-<li><a href="#headline-20">添加驱动源</a>
+<li><a href="#headline-20">方法一：安装NVIDIA显卡驱动（服务器操作）</a>
 </li>
-<li><a href="#headline-21">在Ubuntu系统中找到 软件和更新 选择 驱动</a>
+<li><a href="#headline-21">方法二</a>
+<ul>
+<li><a href="#headline-22">添加驱动源</a>
 </li>
-</ul>
-</li>
-<li><a href="#headline-22">方法三</a>
-</li>
-</ul>
+<li><a href="#headline-23">在Ubuntu系统中找到 软件和更新 选择 驱动</a>
 </li>
 </ul>
 </li>
-<li><a href="#headline-23">重启后测试安装</a>
-</li>
-<li><a href="#headline-24">出错急救</a>
+<li><a href="#headline-24">方法三</a>
 </li>
 </ul>
 </li>
-<li><a href="#headline-25">把文件制作成iso，上传并将挂载到服务器</a>
+</ul>
 </li>
-<li><a href="#headline-26">参考链接</a>
+<li><a href="#headline-25">重启后测试安装</a>
+</li>
+<li><a href="#headline-26">出错急救</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-27">搭建VNC</a>
+</li>
+<li><a href="#headline-28">把文件制作成iso，上传并将挂载到服务器</a>
+</li>
+<li><a href="#headline-29">Linux 系统下硬盘自动挂载完全指南</a>
+</li>
+<li><a href="#headline-30">参考链接</a>
 </li>
 </ul>
 </li>
@@ -739,9 +749,14 @@ apt命令安装
 </div>
 <div id="outline-container-headline-11" class="outline-5">
 <h5 id="headline-11">
-配置wifi
+配置网络
 </h5>
 <div id="outline-text-headline-11" class="outline-text-5">
+<div id="outline-container-headline-12" class="outline-6">
+<h6 id="headline-12">
+配置wifi
+</h6>
+<div id="outline-text-headline-12" class="outline-text-6">
 <p>
 输入如下指令来安装network-manager</p>
 <div class="src src-bash">
@@ -832,11 +847,60 @@ apt命令安装
 </div>
 </div>
 </div>
-<div id="outline-container-headline-12" class="outline-5">
-<h5 id="headline-12">
+<div id="outline-container-headline-13" class="outline-6">
+<h6 id="headline-13">
+配置静态IP
+</h6>
+<div id="outline-text-headline-13" class="outline-text-6">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> /etc/netplan
+</span></span><span class="line"><span class="cl">cp 50-cloud-init.yaml 50-cloud-init.yaml.bak
+</span></span><span class="line"><span class="cl">cat &gt; 50-cloud-init.yaml <span class="s">&lt;&lt;&#39;EOF&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s">network:
+</span></span></span><span class="line"><span class="cl"><span class="s">   version: 2
+</span></span></span><span class="line"><span class="cl"><span class="s">   renderer: networkd
+</span></span></span><span class="line"><span class="cl"><span class="s">   ethernets:
+</span></span></span><span class="line"><span class="cl"><span class="s">       ens33: # 替换为你的网卡名称
+</span></span></span><span class="line"><span class="cl"><span class="s">           dhcp4: false
+</span></span></span><span class="line"><span class="cl"><span class="s">           addresses:
+</span></span></span><span class="line"><span class="cl"><span class="s">             - 192.168.128.100/24 # 静态 IP 和子网掩码
+</span></span></span><span class="line"><span class="cl"><span class="s">           gateway4: 192.168.128.1 # 网关地址
+</span></span></span><span class="line"><span class="cl"><span class="s">           nameservers:
+</span></span></span><span class="line"><span class="cl"><span class="s">               addresses: [8.8.8.8, 8.8.4.4] # DNS 服务器地址
+</span></span></span><span class="line"><span class="cl"><span class="s">EOF</span>
+</span></span><span class="line"><span class="cl">netplan apply</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-14" class="outline-5">
+<h5 id="headline-14">
 禁用nouveau (nouveau是通用的驱动程序)
 </h5>
-<div id="outline-text-headline-12" class="outline-text-5">
+<div id="outline-text-headline-14" class="outline-text-5">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -887,11 +951,11 @@ apt命令安装
 </div>
 </div>
 </div>
-<div id="outline-container-headline-13" class="outline-5">
-<h5 id="headline-13">
+<div id="outline-container-headline-15" class="outline-5">
+<h5 id="headline-15">
 安装lightdm
 </h5>
-<div id="outline-text-headline-13" class="outline-text-5">
+<div id="outline-text-headline-15" class="outline-text-5">
 <p>
 lightdm和gdm3一样都是图形界面管理插件，但是lightdm兼容性更好</p>
 <div class="src src-bash">
@@ -911,11 +975,11 @@ lightdm和gdm3一样都是图形界面管理插件，但是lightdm兼容性更�
 </div>
 </div>
 </div>
-<div id="outline-container-headline-14" class="outline-4">
-<h4 id="headline-14">
+<div id="outline-container-headline-16" class="outline-4">
+<h4 id="headline-16">
 安装驱动
 </h4>
-<div id="outline-text-headline-14" class="outline-text-4">
+<div id="outline-text-headline-16" class="outline-text-4">
 <div class="src src-text">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -926,11 +990,11 @@ lightdm和gdm3一样都是图形界面管理插件，但是lightdm兼容性更�
 </div>
 </div>
 </div>
-<div id="outline-container-headline-15" class="outline-5">
-<h5 id="headline-15">
+<div id="outline-container-headline-17" class="outline-5">
+<h5 id="headline-17">
 安装 nvidia-cuda-toolkit 工具
 </h5>
-<div id="outline-text-headline-15" class="outline-text-5">
+<div id="outline-text-headline-17" class="outline-text-5">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -945,11 +1009,11 @@ lightdm和gdm3一样都是图形界面管理插件，但是lightdm兼容性更�
 </div>
 </div>
 </div>
-<div id="outline-container-headline-16" class="outline-5">
-<h5 id="headline-16">
+<div id="outline-container-headline-18" class="outline-5">
+<h5 id="headline-18">
 检查系统推荐显卡驱动，记录下recommend选项
 </h5>
-<div id="outline-text-headline-16" class="outline-text-5">
+<div id="outline-text-headline-18" class="outline-text-5">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -986,16 +1050,16 @@ lightdm和gdm3一样都是图形界面管理插件，但是lightdm兼容性更�
 </div>
 </div>
 </div>
-<div id="outline-container-headline-17" class="outline-5">
-<h5 id="headline-17">
+<div id="outline-container-headline-19" class="outline-5">
+<h5 id="headline-19">
 安装NVIDIA显卡驱动
 </h5>
-<div id="outline-text-headline-17" class="outline-text-5">
-<div id="outline-container-headline-18" class="outline-6">
-<h6 id="headline-18">
+<div id="outline-text-headline-19" class="outline-text-5">
+<div id="outline-container-headline-20" class="outline-6">
+<h6 id="headline-20">
 方法一：安装NVIDIA显卡驱动（服务器操作）
 </h6>
-<div id="outline-text-headline-18" class="outline-text-6">
+<div id="outline-text-headline-20" class="outline-text-6">
 <p>
 apt命令安装
 执行如下命令，查看适合的驱动</p>
@@ -1039,16 +1103,16 @@ apt命令安装
 </div>
 </div>
 </div>
-<div id="outline-container-headline-19" class="outline-6">
-<h6 id="headline-19">
+<div id="outline-container-headline-21" class="outline-6">
+<h6 id="headline-21">
 方法二
 </h6>
-<div id="outline-text-headline-19" class="outline-text-6">
-<div id="outline-container-headline-20" class="outline-7">
-<h7 id="headline-20">
+<div id="outline-text-headline-21" class="outline-text-6">
+<div id="outline-container-headline-22" class="outline-7">
+<h7 id="headline-22">
 添加驱动源
 </h7>
-<div id="outline-text-headline-20" class="outline-text-7">
+<div id="outline-text-headline-22" class="outline-text-7">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1063,11 +1127,11 @@ apt命令安装
 </div>
 </div>
 </div>
-<div id="outline-container-headline-21" class="outline-7">
-<h7 id="headline-21">
+<div id="outline-container-headline-23" class="outline-7">
+<h7 id="headline-23">
 在Ubuntu系统中找到 软件和更新 选择 驱动
 </h7>
-<div id="outline-text-headline-21" class="outline-text-7">
+<div id="outline-text-headline-23" class="outline-text-7">
 <div class="src src-text">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1085,11 +1149,11 @@ apt命令安装
 </div>
 </div>
 </div>
-<div id="outline-container-headline-22" class="outline-6">
-<h6 id="headline-22">
+<div id="outline-container-headline-24" class="outline-6">
+<h6 id="headline-24">
 方法三
 </h6>
-<div id="outline-text-headline-22" class="outline-text-6">
+<div id="outline-text-headline-24" class="outline-text-6">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1108,11 +1172,11 @@ apt命令安装
 </div>
 </div>
 </div>
-<div id="outline-container-headline-23" class="outline-4">
-<h4 id="headline-23">
+<div id="outline-container-headline-25" class="outline-4">
+<h4 id="headline-25">
 重启后测试安装
 </h4>
-<div id="outline-text-headline-23" class="outline-text-4">
+<div id="outline-text-headline-25" class="outline-text-4">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1174,11 +1238,11 @@ apt命令安装
 <p>显示如上则表示安装完成。</p>
 </div>
 </div>
-<div id="outline-container-headline-24" class="outline-4">
-<h4 id="headline-24">
+<div id="outline-container-headline-26" class="outline-4">
+<h4 id="headline-26">
 出错急救
 </h4>
-<div id="outline-text-headline-24" class="outline-text-4">
+<div id="outline-text-headline-26" class="outline-text-4">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1224,11 +1288,67 @@ apt命令安装
 </div>
 </div>
 </div>
-<div id="outline-container-headline-25" class="outline-3">
-<h3 id="headline-25">
+<div id="outline-container-headline-27" class="outline-3">
+<h3 id="headline-27">
+搭建VNC
+</h3>
+<div id="outline-text-headline-27" class="outline-text-3">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 然后安装需要用到的图形化服务软件</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># apt install -y xfce4 xfce4-goodies</span>
+</span></span><span class="line"><span class="cl">apt download <span class="k">$(</span>apt-rdepends xfce4 xfce4-goodies <span class="p">|</span> grep -v <span class="s2">&#34;^ &#34;</span> <span class="p">|</span> sed <span class="s2">&#34;s/debconf-2.0/debconf/g&#34;</span> <span class="p">|</span> xargs apt-cache show 2&gt;/dev/null <span class="p">|</span> grep <span class="s2">&#34;Package:&#34;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span> <span class="p">|</span> sort -u<span class="k">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 然后安装tigervnc。tigervnc感觉比tightvnc要配置简单一些</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># apt install -y tigervnc-standalone-server tigervnc-common</span>
+</span></span><span class="line"><span class="cl">apt download <span class="k">$(</span>apt-rdepends tigervnc-standalone-server tigervnc-common <span class="p">|</span> grep -v <span class="s2">&#34;^ &#34;</span> <span class="p">|</span> sed <span class="s2">&#34;s/debconf-2.0/debconf/g&#34;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 安装下载的deb包</span>
+</span></span><span class="line"><span class="cl">dpkg -i ./*.deb
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 运行并设置密码</span>
+</span></span><span class="line"><span class="cl">vncserver</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>然后就可以通过vnc的客户端登陆了，为了能够远端登陆不仅仅是本机登陆，设置-localhost no 是必要的。由于VNC是不加密的，会在登陆时提示如下，当然也可以自行百度实现在此基础上的外加SSH通道的加密。</p>
+<p>
+输入刚才设置的密码就可以登陆了</p>
+<p>
+之后就是熟悉的ubuntu界面了，可以自由安装自己喜欢的程序了</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">在客户端地址栏输入192.168.x.x:5901，再输入前边创建的密码即可</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-28" class="outline-3">
+<h3 id="headline-28">
 把文件制作成iso，上传并将挂载到服务器
 </h3>
-<div id="outline-text-headline-25" class="outline-text-3">
+<div id="outline-text-headline-28" class="outline-text-3">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1259,11 +1379,40 @@ apt命令安装
 </div>
 </div>
 </div>
-<div id="outline-container-headline-26" class="outline-3">
-<h3 id="headline-26">
+<div id="outline-container-headline-29" class="outline-3">
+<h3 id="headline-29">
+Linux 系统下硬盘自动挂载完全指南
+</h3>
+<div id="outline-text-headline-29" class="outline-text-3">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">dd <span class="k">if</span><span class="o">=</span>/dev/zero <span class="nv">of</span><span class="o">=</span>test.img <span class="nv">bs</span><span class="o">=</span>1M <span class="nv">count</span><span class="o">=</span><span class="m">1024</span>
+</span></span><span class="line"><span class="cl"><span class="nv">image</span><span class="o">=</span><span class="k">$(</span>realpath test.img<span class="k">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">mkfs.ext4 <span class="si">${</span><span class="nv">image</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">mkdir -p /mnt/myimg
+</span></span><span class="line"><span class="cl"><span class="nv">image</span><span class="o">=</span><span class="k">$(</span>realpath test.img<span class="k">)</span><span class="p">;</span> mount -o loop <span class="si">${</span><span class="nv">image</span><span class="si">}</span> /mnt/myimg
+</span></span><span class="line"><span class="cl"><span class="c1"># image=$(realpath test.img); echo &#34;UUID=$(blkid ${image} | awk -F &#34;\&#34;&#34; &#39;{print $2}&#39;) ${image} $(blkid ${image} | awk -F &#39;=&#39; &#39;{print $4}&#39;) defaults,noatime 0 0&#34; | cat &gt;&gt; /etc/fstab</span>
+</span></span><span class="line"><span class="cl"><span class="nv">image</span><span class="o">=</span><span class="k">$(</span>realpath test.img<span class="k">)</span><span class="p">;</span> <span class="nb">echo</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">image</span><span class="si">}</span><span class="s2"> /mnt/myimg loop,defaults,noatime 0 0&#34;</span> <span class="p">|</span> cat &gt;&gt; /etc/fstab</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-30" class="outline-3">
+<h3 id="headline-30">
 参考链接
 </h3>
-<div id="outline-text-headline-26" class="outline-text-3">
+<div id="outline-text-headline-30" class="outline-text-3">
 <p>
 <a href="https://blog.csdn.net/zgp210317/article/details/120586189">在Ubuntu本地下载软件包并递归下载其所有依赖包</a></p>
 <p>
@@ -1276,6 +1425,10 @@ apt命令安装
 <a href="https://blog.csdn.net/Eric_xkk/article/details/131800365">Ubuntu22.04安装显卡驱动(高速、避错版)</a></p>
 <p>
 <a href="https://blog.csdn.net/qq_34777982/article/details/145182505">ubuntu使用iso镜像作为本地apt源――筑梦之路</a></p>
+<p>
+<a href="https://my.oschina.net/emacs_8895024/blog/17529533">Linux 系统下硬盘自动挂载完全指南</a></p>
+<p>
+<a href="https://ynhugo.github.io/p/termux_study/#headline-6">通过Termux和VNC实现以手机为服务器的桌面办公</a></p>
 </div>
 </div>
 </div>
@@ -1337,6 +1490,19 @@ apt命令安装
     <h2 class="section-title">相关文章</h2>
     <div class="related-content">
         <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/p/ubuntu-22.04-server%E5%AE%89%E8%A3%85nvidia%E9%A9%B1%E5%8A%A8/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">ubuntu 22.04 server安装Nvidia驱动</h2>
+        </div>
+    </a>
+</article>
+
             
                 
 <article class="">
