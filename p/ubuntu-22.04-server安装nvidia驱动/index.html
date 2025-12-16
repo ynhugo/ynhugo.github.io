@@ -436,7 +436,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 6 分钟
+                    阅读时长: 7 分钟
                 </time>
             </div>
         
@@ -871,23 +871,27 @@ apt命令安装
 </span><span class="lnt">14
 </span><span class="lnt">15
 </span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> /etc/netplan
-</span></span><span class="line"><span class="cl">cp 50-cloud-init.yaml 50-cloud-init.yaml.bak
-</span></span><span class="line"><span class="cl">cat &gt; 50-cloud-init.yaml <span class="s">&lt;&lt;&#39;EOF&#39;
+</span></span><span class="line"><span class="cl">mv 50-cloud-init.yaml 50-cloud-init.yaml.bak
+</span></span><span class="line"><span class="cl">cat &gt; 01-network-manager-all.yaml  <span class="s">&lt;&lt;&#39;EOF&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s"># This file is generated from information provided by the datasource.  Changes
+</span></span></span><span class="line"><span class="cl"><span class="s"># to it will not persist across an instance reboot.  To disable cloud-init&#39;s
+</span></span></span><span class="line"><span class="cl"><span class="s"># network configuration capabilities, write a file
+</span></span></span><span class="line"><span class="cl"><span class="s"># /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg with the following:
+</span></span></span><span class="line"><span class="cl"><span class="s"># network: {config: disabled}
 </span></span></span><span class="line"><span class="cl"><span class="s">network:
-</span></span></span><span class="line"><span class="cl"><span class="s">   version: 2
-</span></span></span><span class="line"><span class="cl"><span class="s">   renderer: networkd
-</span></span></span><span class="line"><span class="cl"><span class="s">   ethernets:
-</span></span></span><span class="line"><span class="cl"><span class="s">       ens33: # 替换为你的网卡名称
-</span></span></span><span class="line"><span class="cl"><span class="s">           dhcp4: false
-</span></span></span><span class="line"><span class="cl"><span class="s">           addresses:
-</span></span></span><span class="line"><span class="cl"><span class="s">             - 192.168.128.100/24 # 静态 IP 和子网掩码
-</span></span></span><span class="line"><span class="cl"><span class="s">           gateway4: 192.168.128.1 # 网关地址
-</span></span></span><span class="line"><span class="cl"><span class="s">           nameservers:
-</span></span></span><span class="line"><span class="cl"><span class="s">               addresses: [8.8.8.8, 8.8.4.4] # DNS 服务器地址
+</span></span></span><span class="line"><span class="cl"><span class="s">    ethernets:
+</span></span></span><span class="line"><span class="cl"><span class="s">        ens33:
+</span></span></span><span class="line"><span class="cl"><span class="s">            dhcp4: no
+</span></span></span><span class="line"><span class="cl"><span class="s">            addresses:
+</span></span></span><span class="line"><span class="cl"><span class="s">              - 192.168.128.50/24
+</span></span></span><span class="line"><span class="cl"><span class="s">    version: 2
 </span></span></span><span class="line"><span class="cl"><span class="s">EOF</span>
+</span></span><span class="line"><span class="cl">chmod <span class="m">600</span> 01-network-manager-all.yaml
 </span></span><span class="line"><span class="cl">netplan apply</span></span></code></pre></td></tr></table>
 </div>
 </div>
@@ -1326,6 +1330,56 @@ apt命令安装
 </span><span class="lnt">28
 </span><span class="lnt">29
 </span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 然后安装需要用到的图形化服务软件</span>
@@ -1339,25 +1393,75 @@ apt命令安装
 </span></span><span class="line"><span class="cl"><span class="c1"># 安装tigervnc-tools</span>
 </span></span><span class="line"><span class="cl">apt download <span class="k">$(</span>apt-rdepends tigervnc-tools <span class="p">|</span> grep -v <span class="s2">&#34;^ &#34;</span> <span class="p">|</span> sed <span class="s2">&#34;s/debconf-2.0/debconf/g&#34;</span><span class="k">)</span>
 </span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 安装dbus-x11 dbus</span>
+</span></span><span class="line"><span class="cl">apt download <span class="k">$(</span>apt-rdepends dbus-x11 dbus <span class="p">|</span> grep -v <span class="s2">&#34;^ &#34;</span> <span class="p">|</span> sed <span class="s2">&#34;s/debconf-2.0/debconf/g&#34;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># 安装下载的deb包</span>
 </span></span><span class="line"><span class="cl">dpkg -i ./*.deb
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># 运行并设置密码</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># --------------------------------</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 创建用户</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 创建用户：sudo adduser 用户名</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 删除用户：sudo deluser 用户名</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 创建test用户，根据提示默认回车，最后输入Y确认：</span>
+</span></span><span class="line"><span class="cl">sudo adduser <span class="nb">test</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 添加sudo权限</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 以添加 test 这个用户到 sudo 用户组为例子，输入下面命令：</span>
+</span></span><span class="line"><span class="cl">sudo usermod -aG sudo <span class="nb">test</span>
+</span></span><span class="line"><span class="cl">sudo tee /etc/sudoers.d/test <span class="o">&lt;&lt;&lt;</span> <span class="s1">&#39;test ALL=(ALL) ALL&#39;</span>
+</span></span><span class="line"><span class="cl">sudo chmod <span class="m">440</span> /etc/sudoers.d/test
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 如果要删除用户：</span>
+</span></span><span class="line"><span class="cl">su root                         <span class="c1"># 切换到root用户或其他用户</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 停止所有 test 用户的进程（如果有）</span>
+</span></span><span class="line"><span class="cl">sudo pkill -u <span class="nb">test</span>
+</span></span><span class="line"><span class="cl">sudo sleep <span class="m">2</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 删除用户及其所有文件</span>
+</span></span><span class="line"><span class="cl">sudo userdel <span class="nb">test</span>               <span class="c1"># 只删除用户</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># sudo userdel -r test            # 完全删除用户及其主目录</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 删除 sudo 配置</span>
+</span></span><span class="line"><span class="cl">sudo rm -f /etc/sudoers.d/test
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 验证删除：</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 检查用户是否已删除</span>
+</span></span><span class="line"><span class="cl">getent passwd <span class="nb">test</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 检查用户组</span>
+</span></span><span class="line"><span class="cl">getent group <span class="nb">test</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 检查主目录是否还存在</span>
+</span></span><span class="line"><span class="cl">ls -la /home/
+</span></span><span class="line"><span class="cl"><span class="c1"># --------------------------------</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 运行并设置密码（当前用户已设置密码则跳过），根据提示输入n</span>
 </span></span><span class="line"><span class="cl">vncserver
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># 然后创建启动脚本：</span>
-</span></span><span class="line"><span class="cl">vim .vnc/xstartup
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># 如上命令就是用文本编辑器nano(当然你可以用其他文本编辑器)编辑用户文件夹下的.vnc文件夹下的xstartup文件(如果没有就创建一个)内容如下：</span>
-</span></span><span class="line"><span class="cl"><span class="c1">#!/usr/bin/bash</span>
-</span></span><span class="line"><span class="cl">xfce4-session
+</span></span><span class="line"><span class="cl"><span class="c1"># 然后创建启动脚本， 编辑用户文件夹下的.vnc文件夹下的xstartup文件(如果没有就创建一个)内容如下：</span>
+</span></span><span class="line"><span class="cl">cat &gt; <span class="nv">$HOME</span>/.vnc/xstartup <span class="s">&lt;&lt;&#39;EOF&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s">#!/usr/bin/bash
+</span></span></span><span class="line"><span class="cl"><span class="s">xfce4-session
+</span></span></span><span class="line"><span class="cl"><span class="s">EOF</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># 注意xfce4-session后面不要跟&amp;号，不然会在运行vncserver时提示过早退出，然后记得给它加执行的权限。</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">chmod +x .vnc/xstartup
+</span></span><span class="line"><span class="cl">chmod +x <span class="nv">$HOME</span>/.vnc/xstartup
 </span></span><span class="line"><span class="cl"><span class="c1"># 首次设置VNC时，它将在端口5901上启动默认服务器实例。</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># 如下是一个启动vnc服务器的例子：</span>
-</span></span><span class="line"><span class="cl">vncserver :1 -localhost no -geometry 1920x1080</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="c1"># vncserver :1 -localhost no -geometry 1920x1080</span>
+</span></span><span class="line"><span class="cl">vncserver :1  -geometry 1920x1080  -depth <span class="m">24</span> -localhost no
+</span></span><span class="line"><span class="cl"><span class="s">&lt;&lt;&#39;CONTENT&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s">-depth 24 表示 24 位色深（24 bits per pixel, 24bpp）
+</span></span></span><span class="line"><span class="cl"><span class="s">| depth 值 | 含义            | 颜色数量    | 典型用途      |
+</span></span></span><span class="line"><span class="cl"><span class="s">| ------- | ------------- | ------- | --------- |
+</span></span></span><span class="line"><span class="cl"><span class="s">| 8       | 256 色         | 2^8     | 低带宽 / 老设备 |
+</span></span></span><span class="line"><span class="cl"><span class="s">| 16      | High Color    | 65536 色 | 嵌入式 / 低性能 |
+</span></span></span><span class="line"><span class="cl"><span class="s">| 24      | True Color    | 1670 万色 | **推荐默认**  |
+</span></span></span><span class="line"><span class="cl"><span class="s">| 32      | 24 位色 + Alpha | 同 24 位  | 某些桌面环境    |
+</span></span></span><span class="line"><span class="cl"><span class="s">CONTENT</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 查看已启动的实例</span>
+</span></span><span class="line"><span class="cl">vncserver -list
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 关闭启动的实例</span>
+</span></span><span class="line"><span class="cl">vncserver -kill :1</span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
@@ -1396,6 +1500,7 @@ apt命令安装
 </span><span class="lnt"> 8
 </span><span class="lnt"> 9
 </span><span class="lnt">10
+</span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># windows使用软碟通制作iso文件</span>
@@ -1407,6 +1512,7 @@ apt命令安装
 </span></span><span class="line"><span class="cl">mount -t auto nvidia-driver.iso /mnt/
 </span></span><span class="line"><span class="cl"><span class="nb">cd</span> /mnt/
 </span></span><span class="line"><span class="cl">dpkg -i /*.deb
+</span></span><span class="line"><span class="cl"><span class="c1"># sudo apt --fix-broken install</span>
 </span></span><span class="line"><span class="cl">./NVIDIA-Linux-x86_64-580.105.08.run</span></span></code></pre></td></tr></table>
 </div>
 </div>
@@ -1463,6 +1569,14 @@ Linux 系统下硬盘自动挂载完全指南
 <a href="https://my.oschina.net/emacs_8895024/blog/17529533">Linux 系统下硬盘自动挂载完全指南</a></p>
 <p>
 <a href="https://ynhugo.github.io/p/termux_study/#headline-6">通过Termux和VNC实现以手机为服务器的桌面办公</a></p>
+<p>
+<a href="https://zhuanlan.zhihu.com/p/1898542254144071601">在Ubuntu Server 22.04上配置静态IP地址</a></p>
+<p>
+<a href="https://blog.csdn.net/lxh413458727/article/details/144369407">ubuntu-22.04 配置静态IP成功，系统重启后失效</a></p>
+<p>
+<a href="https://www.cnblogs.com/milton/p/16730512.html">Ubuntu22.04下VNC和远程桌面的区别</a></p>
+<p>
+<a href="https://blog.csdn.net/ZhrXg/article/details/126831072">Ubuntu安装VNC，配置多用户vnc连接Ubuntu，开机自启vnc命令</a></p>
 </div>
 </div>
 </div>
