@@ -375,8 +375,12 @@
 <li><a href="#headline-28">把文件制作成iso，上传并将挂载到服务器</a>
 </li>
 <li><a href="#headline-29">Linux 系统下硬盘自动挂载完全指南</a>
+<ul>
+<li><a href="#headline-30">挂载nvme硬盘示例</a>
 </li>
-<li><a href="#headline-30">参考链接</a>
+</ul>
+</li>
+<li><a href="#headline-31">参考链接</a>
 </li>
 </ul>
 </li>
@@ -1562,13 +1566,47 @@ Linux 系统下硬盘自动挂载完全指南
 </div>
 </div>
 </div>
+<div id="outline-container-headline-30" class="outline-4">
+<h4 id="headline-30">
+挂载nvme硬盘示例
+</h4>
+<div id="outline-text-headline-30" class="outline-text-4">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo fdisk /dev/nvme1n1
+</span></span><span class="line"><span class="cl">sudo mkfs.ext4 /dev/nvme1n1p1
+</span></span><span class="line"><span class="cl">mkdir /nvme1n1p1
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;UUID=c3e4baa4-40c7-48a5-a804-081af08b5e31 /nvme1n1p1 ext4 defaults 0 0&#34;</span> &gt;&gt; /etc/fstab
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">sudo fdisk /dev/nvme2n1 
+</span></span><span class="line"><span class="cl">sudo mkfs.ext4 /dev/nvme2n1p1
+</span></span><span class="line"><span class="cl">sudo mkdir /nvme2n1p1
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;UUID=3eca7f75-ecdc-4400-89c8-a7f481a25d43 /nvme2n1p1 ext4 defaults 0 0&#34;</span> &gt;&gt; /etc/fstab</span></span></code></pre></td></tr></table>
 </div>
 </div>
-<div id="outline-container-headline-30" class="outline-3">
-<h3 id="headline-30">
+</div>
+<p>大于2T的分区，需要在进入fdisk交互环境下时先执行g选项并回车，将硬盘转gpt，然后才能完整分区，否则只能分区2T空间</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-31" class="outline-3">
+<h3 id="headline-31">
 参考链接
 </h3>
-<div id="outline-text-headline-30" class="outline-text-3">
+<div id="outline-text-headline-31" class="outline-text-3">
 <p>
 <a href="https://blog.csdn.net/zgp210317/article/details/120586189">在Ubuntu本地下载软件包并递归下载其所有依赖包</a></p>
 <p>
