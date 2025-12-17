@@ -436,7 +436,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 7 分钟
+                    阅读时长: 8 分钟
                 </time>
             </div>
         
@@ -730,6 +730,9 @@ apt命令安装
 </span><span class="lnt">14
 </span><span class="lnt">15
 </span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo apt-get update   <span class="c1">#更新软件列表</span>
@@ -747,7 +750,10 @@ apt命令安装
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>                      grep -vE <span class="s2">&#34;^(default-logind|logind)</span>$<span class="s2">&#34;</span><span class="k">)</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># 安装hwinfo</span>
-</span></span><span class="line"><span class="cl">sudo apt download <span class="k">$(</span>apt-rdepends hwinfo <span class="p">|</span> grep -v<span class="s2">&#34;^ &#34;</span> <span class="p">|</span> sed <span class="s1">&#39;s/debconf-2.0/debconf/g&#39;</span><span class="k">)</span></span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">sudo apt download <span class="k">$(</span>apt-rdepends hwinfo <span class="p">|</span> grep -v <span class="s2">&#34;^ &#34;</span> <span class="p">|</span> sed <span class="s1">&#39;s/debconf-2.0/debconf/g&#39;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 安装alsa-utils</span>
+</span></span><span class="line"><span class="cl">sudo apt download <span class="k">$(</span>apt-rdepends alsa-utils <span class="p">|</span> grep -v <span class="s2">&#34;^ &#34;</span> <span class="p">|</span> sed <span class="s1">&#39;s/debconf-2.0/debconf/g&#39;</span><span class="k">)</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
@@ -879,6 +885,7 @@ apt命令安装
 </span><span class="lnt">16
 </span><span class="lnt">17
 </span><span class="lnt">18
+</span><span class="lnt">19
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> /etc/netplan
@@ -891,10 +898,11 @@ apt命令安装
 </span></span></span><span class="line"><span class="cl"><span class="s"># network: {config: disabled}
 </span></span></span><span class="line"><span class="cl"><span class="s">network:
 </span></span></span><span class="line"><span class="cl"><span class="s">    ethernets:
-</span></span></span><span class="line"><span class="cl"><span class="s">        ens33:
+</span></span></span><span class="line"><span class="cl"><span class="s">        # ens33:
+</span></span></span><span class="line"><span class="cl"><span class="s">        ens5f0:
 </span></span></span><span class="line"><span class="cl"><span class="s">            dhcp4: no
-</span></span></span><span class="line"><span class="cl"><span class="s">            addresses:
-</span></span></span><span class="line"><span class="cl"><span class="s">              - 192.168.128.50/24
+</span></span></span><span class="line"><span class="cl"><span class="s">            addresses:              
+</span></span></span><span class="line"><span class="cl"><span class="s">              - 192.168.1.4/24
 </span></span></span><span class="line"><span class="cl"><span class="s">    version: 2
 </span></span></span><span class="line"><span class="cl"><span class="s">EOF</span>
 </span></span><span class="line"><span class="cl">chmod <span class="m">600</span> 01-network-manager-all.yaml
