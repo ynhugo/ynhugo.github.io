@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-cn" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" ubuntu 22.04 server安装Nvidia驱动 1 2 3 4 5 sudo apt install -y apt-rdepends # sudo apt install -y net-toolsb # sudo apt install -y openssh-server sudo apt download $(apt-rdepends apt-rdepends | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39; | grep -v &#34;perlapi-&#34;) sudo apt download $(apt-rdepends net-tools | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) 方法一 Nvidia驱动安装准备操作（同步机不需要操作，服务器操作） 确定系统识别到了显卡\n1 lspci | grep -i nvidia 列出已安装的NVIDIA软件包\n1 dpkg -l | grep -i nvidia 确保卸载干净残留的nvidia驱动\n1 sudo apt remove --purge &#39;^nvidia-.*&#39; 安装必要依赖（同步机操作）\n">
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" ubuntu 22.04 server安装Nvidia驱动 1 2 3 4 5 sudo apt install -y apt-rdepends # sudo apt install -y net-toolsb # sudo apt install -y openssh-server sudo apt download $(apt-rdepends apt-rdepends | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39; | grep -v &#34;perlapi-&#34;) sudo apt download $(apt-rdepends net-tools | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) 准备工作 1 2 为了避免踩坑，建议按照流程完成准备工作！ 这些准备工作并不会影响你的计算机，不做的话可能会导致装驱动后黑屏！ 关闭安全模式 1 重启计算机，在开机前狂按’ESC’进入bios设置，找到安全设置，并关闭它。 注：不同品牌电脑进入bios方式和安全设置的位置都不相同\n切换独显模式（笔记本电脑单显卡注意，服务器略过） 1 在bios设置中找到显卡设置，系统默认的为集显模式，将其修改为独显模式。 更新软件列表和安装必要软件、依赖 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 sudo apt-get update #更新软件列表 # sudo apt-get install -y g++ gcc make sudo apt download $(apt-rdepends g++ gcc make | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) sudo apt download $(apt-rdepends python3-pip | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) sudo apt download $(apt-rdepends build-essential cmake git | \\ grep -v &#34;^ &#34; | \\ sed &#39;s/debconf-2.0/debconf/g&#39; | \\ sed -e &#39;s/libc-dev/libc6-dev/g&#39; \\ -e &#39;s/libc6-dev-bin/libc6-dev/g&#39; \\ -e &#39;s/linux-libc6-dev/linux-libc-dev/g&#39; | \\ grep -vE &#34;^(default-logind|logind)$&#34;) # 安装hwinfo sudo apt download $(apt-rdepends hwinfo | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) # 安装alsa-utils sudo apt download $(apt-rdepends alsa-utils | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) 禁用nouveau (nouveau是通用的驱动程序) 1 sudo vim /etc/modprobe.d/blacklist.conf 文件末尾添加下面两行内容\n">
 <title>ubuntu 22.04 server安装Nvidia驱动</title>
 
 <link rel='canonical' href='https://ynhugo.github.io/p/ubuntu-22.04-server%E5%AE%89%E8%A3%85nvidia%E9%A9%B1%E5%8A%A8/'>
 
 <link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="ubuntu 22.04 server安装Nvidia驱动">
-<meta property='og:description' content=" ubuntu 22.04 server安装Nvidia驱动 1 2 3 4 5 sudo apt install -y apt-rdepends # sudo apt install -y net-toolsb # sudo apt install -y openssh-server sudo apt download $(apt-rdepends apt-rdepends | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39; | grep -v &#34;perlapi-&#34;) sudo apt download $(apt-rdepends net-tools | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) 方法一 Nvidia驱动安装准备操作（同步机不需要操作，服务器操作） 确定系统识别到了显卡\n1 lspci | grep -i nvidia 列出已安装的NVIDIA软件包\n1 dpkg -l | grep -i nvidia 确保卸载干净残留的nvidia驱动\n1 sudo apt remove --purge &#39;^nvidia-.*&#39; 安装必要依赖（同步机操作）\n">
+<meta property='og:description' content=" ubuntu 22.04 server安装Nvidia驱动 1 2 3 4 5 sudo apt install -y apt-rdepends # sudo apt install -y net-toolsb # sudo apt install -y openssh-server sudo apt download $(apt-rdepends apt-rdepends | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39; | grep -v &#34;perlapi-&#34;) sudo apt download $(apt-rdepends net-tools | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) 准备工作 1 2 为了避免踩坑，建议按照流程完成准备工作！ 这些准备工作并不会影响你的计算机，不做的话可能会导致装驱动后黑屏！ 关闭安全模式 1 重启计算机，在开机前狂按’ESC’进入bios设置，找到安全设置，并关闭它。 注：不同品牌电脑进入bios方式和安全设置的位置都不相同\n切换独显模式（笔记本电脑单显卡注意，服务器略过） 1 在bios设置中找到显卡设置，系统默认的为集显模式，将其修改为独显模式。 更新软件列表和安装必要软件、依赖 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 sudo apt-get update #更新软件列表 # sudo apt-get install -y g++ gcc make sudo apt download $(apt-rdepends g++ gcc make | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) sudo apt download $(apt-rdepends python3-pip | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) sudo apt download $(apt-rdepends build-essential cmake git | \\ grep -v &#34;^ &#34; | \\ sed &#39;s/debconf-2.0/debconf/g&#39; | \\ sed -e &#39;s/libc-dev/libc6-dev/g&#39; \\ -e &#39;s/libc6-dev-bin/libc6-dev/g&#39; \\ -e &#39;s/linux-libc6-dev/linux-libc-dev/g&#39; | \\ grep -vE &#34;^(default-logind|logind)$&#34;) # 安装hwinfo sudo apt download $(apt-rdepends hwinfo | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) # 安装alsa-utils sudo apt download $(apt-rdepends alsa-utils | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) 禁用nouveau (nouveau是通用的驱动程序) 1 sudo vim /etc/modprobe.d/blacklist.conf 文件末尾添加下面两行内容\n">
 <meta property='og:url' content='https://ynhugo.github.io/p/ubuntu-22.04-server%E5%AE%89%E8%A3%85nvidia%E9%A9%B1%E5%8A%A8/'>
 <meta property='og:site_name' content='ynhugo'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='ubuntu' /><meta property='article:tag' content='22.04' /><meta property='article:tag' content='server' /><meta property='article:tag' content='nvidia' /><meta property='article:published_time' content='2025-12-06T08:38:24&#43;08:00'/><meta property='article:modified_time' content='2025-12-06T08:38:24&#43;08:00'/>
 <meta name="twitter:title" content="ubuntu 22.04 server安装Nvidia驱动">
-<meta name="twitter:description" content=" ubuntu 22.04 server安装Nvidia驱动 1 2 3 4 5 sudo apt install -y apt-rdepends # sudo apt install -y net-toolsb # sudo apt install -y openssh-server sudo apt download $(apt-rdepends apt-rdepends | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39; | grep -v &#34;perlapi-&#34;) sudo apt download $(apt-rdepends net-tools | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) 方法一 Nvidia驱动安装准备操作（同步机不需要操作，服务器操作） 确定系统识别到了显卡\n1 lspci | grep -i nvidia 列出已安装的NVIDIA软件包\n1 dpkg -l | grep -i nvidia 确保卸载干净残留的nvidia驱动\n1 sudo apt remove --purge &#39;^nvidia-.*&#39; 安装必要依赖（同步机操作）\n">
+<meta name="twitter:description" content=" ubuntu 22.04 server安装Nvidia驱动 1 2 3 4 5 sudo apt install -y apt-rdepends # sudo apt install -y net-toolsb # sudo apt install -y openssh-server sudo apt download $(apt-rdepends apt-rdepends | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39; | grep -v &#34;perlapi-&#34;) sudo apt download $(apt-rdepends net-tools | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) 准备工作 1 2 为了避免踩坑，建议按照流程完成准备工作！ 这些准备工作并不会影响你的计算机，不做的话可能会导致装驱动后黑屏！ 关闭安全模式 1 重启计算机，在开机前狂按’ESC’进入bios设置，找到安全设置，并关闭它。 注：不同品牌电脑进入bios方式和安全设置的位置都不相同\n切换独显模式（笔记本电脑单显卡注意，服务器略过） 1 在bios设置中找到显卡设置，系统默认的为集显模式，将其修改为独显模式。 更新软件列表和安装必要软件、依赖 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 sudo apt-get update #更新软件列表 # sudo apt-get install -y g++ gcc make sudo apt download $(apt-rdepends g++ gcc make | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) sudo apt download $(apt-rdepends python3-pip | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) sudo apt download $(apt-rdepends build-essential cmake git | \\ grep -v &#34;^ &#34; | \\ sed &#39;s/debconf-2.0/debconf/g&#39; | \\ sed -e &#39;s/libc-dev/libc6-dev/g&#39; \\ -e &#39;s/libc6-dev-bin/libc6-dev/g&#39; \\ -e &#39;s/linux-libc6-dev/linux-libc-dev/g&#39; | \\ grep -vE &#34;^(default-logind|logind)$&#34;) # 安装hwinfo sudo apt download $(apt-rdepends hwinfo | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) # 安装alsa-utils sudo apt download $(apt-rdepends alsa-utils | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) 禁用nouveau (nouveau是通用的驱动程序) 1 sudo vim /etc/modprobe.d/blacklist.conf 文件末尾添加下面两行内容\n">
     </head>
     <body class="
     article-page
@@ -306,83 +306,77 @@
 <ul>
 <li><a href="#headline-1">ubuntu 22.04 server安装Nvidia驱动</a>
 <ul>
-<li><a href="#headline-2">方法一</a>
+<li><a href="#headline-2">准备工作</a>
 <ul>
-<li><a href="#headline-3">Nvidia驱动安装准备操作（同步机不需要操作，服务器操作）</a>
+<li><a href="#headline-3">关闭安全模式</a>
 </li>
-<li><a href="#headline-4">禁用nouveau显卡驱动（服务器操作）</a>
+<li><a href="#headline-4">切换独显模式（笔记本电脑单显卡注意，服务器略过）</a>
 </li>
-<li><a href="#headline-5">安装NVIDIA显卡驱动（服务器操作）</a>
+<li><a href="#headline-5">更新软件列表和安装必要软件、依赖</a>
+</li>
+<li><a href="#headline-6">禁用nouveau (nouveau是通用的驱动程序)</a>
+</li>
+<li><a href="#headline-7">安装lightdm（笔记本电脑默认gdm3,不要选择lightdm，不然会启动不起来，需要恢复模式下rusume执行sudo dpkg-reconfigure lightdm）</a>
 </li>
 </ul>
 </li>
-<li><a href="#headline-6">方法二</a>
+<li><a href="#headline-8">安装驱动</a>
 <ul>
-<li><a href="#headline-7">准备工作</a>
+<li><a href="#headline-9">安装 nvidia-cuda-toolkit 工具</a>
+</li>
+<li><a href="#headline-10">检查系统推荐显卡驱动，记录下recommend选项</a>
+</li>
+<li><a href="#headline-11">安装NVIDIA显卡驱动</a>
 <ul>
-<li><a href="#headline-8">关闭安全模式</a>
+<li><a href="#headline-12">方法一：安装NVIDIA显卡驱动（推荐，服务器操作）</a>
 </li>
-<li><a href="#headline-9">切换独显模式</a>
-</li>
-<li><a href="#headline-10">更新软件列表和安装必要软件、依赖</a>
-</li>
-<li><a href="#headline-11">配置网络</a>
+<li><a href="#headline-13">方法二（带桌面的操作系统可尝试一下）</a>
 <ul>
-<li><a href="#headline-12">配置wifi</a>
+<li><a href="#headline-14">添加驱动源</a>
 </li>
-<li><a href="#headline-13">配置静态IP</a>
+<li><a href="#headline-15">在Ubuntu系统中找到 软件和更新 选择 驱动</a>
 </li>
 </ul>
 </li>
-<li><a href="#headline-14">禁用nouveau (nouveau是通用的驱动程序)</a>
-</li>
-<li><a href="#headline-15">安装lightdm</a>
-</li>
-</ul>
-</li>
-<li><a href="#headline-16">安装驱动</a>
-<ul>
-<li><a href="#headline-17">安装 nvidia-cuda-toolkit 工具</a>
-</li>
-<li><a href="#headline-18">检查系统推荐显卡驱动，记录下recommend选项</a>
-</li>
-<li><a href="#headline-19">安装NVIDIA显卡驱动</a>
-<ul>
-<li><a href="#headline-20">方法一：安装NVIDIA显卡驱动（服务器操作）</a>
-</li>
-<li><a href="#headline-21">方法二</a>
-<ul>
-<li><a href="#headline-22">添加驱动源</a>
-</li>
-<li><a href="#headline-23">在Ubuntu系统中找到 软件和更新 选择 驱动</a>
-</li>
-</ul>
-</li>
-<li><a href="#headline-24">方法三</a>
+<li><a href="#headline-16">方法三（下载nvidia官方驱动文件可以尝试一下）</a>
 </li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#headline-25">重启后测试安装</a>
+<li><a href="#headline-17">重启后测试安装</a>
 </li>
-<li><a href="#headline-26">出错急救</a>
+<li><a href="#headline-18">出错急救</a>
 </li>
-</ul>
+<li><a href="#headline-19">安装Anaconda3</a>
 </li>
-<li><a href="#headline-27">搭建VNC</a>
+<li><a href="#headline-20">安装CUDA</a>
 </li>
-<li><a href="#headline-28">搭建XRDP</a>
+<li><a href="#headline-21">安装nvidia-cudnn</a>
 </li>
-<li><a href="#headline-29">把文件制作成iso，上传并将挂载到服务器</a>
+<li><a href="#headline-22">搭建PyTorch框架</a>
 </li>
-<li><a href="#headline-30">Linux 系统下硬盘自动挂载完全指南</a>
+<li><a href="#headline-23">配置网络</a>
 <ul>
-<li><a href="#headline-31">挂载nvme硬盘示例</a>
+<li><a href="#headline-24">配置wifi</a>
+</li>
+<li><a href="#headline-25">配置静态IP</a>
 </li>
 </ul>
 </li>
-<li><a href="#headline-32">参考链接</a>
+<li><a href="#headline-26">搭建VNC</a>
+</li>
+<li><a href="#headline-27">搭建XRDP</a>
+</li>
+<li><a href="#headline-28">把文件制作成iso，上传并将挂载到服务器</a>
+</li>
+<li><a href="#headline-29">Linux 系统下硬盘自动挂载完全指南</a>
+<ul>
+<li><a href="#headline-30">挂载nvme硬盘示例</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-31">参考链接</a>
 </li>
 </ul>
 </li>
@@ -483,188 +477,9 @@ ubuntu 22.04 server安装Nvidia驱动
 </div>
 <div id="outline-container-headline-2" class="outline-3">
 <h3 id="headline-2">
-方法一
+准备工作
 </h3>
 <div id="outline-text-headline-2" class="outline-text-3">
-<div id="outline-container-headline-3" class="outline-4">
-<h4 id="headline-3">
-Nvidia驱动安装准备操作（同步机不需要操作，服务器操作）
-</h4>
-<div id="outline-text-headline-3" class="outline-text-4">
-<p>
-确定系统识别到了显卡</p>
-<div class="src src-bash">
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">lspci <span class="p">|</span> grep -i nvidia</span></span></code></pre></td></tr></table>
-</div>
-</div>
-</div>
-<p>
-列出已安装的NVIDIA软件包</p>
-<div class="src src-bash">
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">dpkg -l <span class="p">|</span> grep -i nvidia</span></span></code></pre></td></tr></table>
-</div>
-</div>
-</div>
-<p>
-确保卸载干净残留的nvidia驱动</p>
-<div class="src src-bash">
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo apt remove --purge <span class="s1">&#39;^nvidia-.*&#39;</span></span></span></code></pre></td></tr></table>
-</div>
-</div>
-</div>
-<p>
-安装必要依赖（同步机操作）</p>
-<div class="src src-bash">
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># sudo apt install -y net-tools</span>
-</span></span><span class="line"><span class="cl">sudo apt download <span class="k">$(</span>apt-rdepends net-tools <span class="p">|</span> grep -v <span class="s2">&#34;^ &#34;</span> <span class="p">|</span> sed <span class="s1">&#39;s/debconf-2.0/debconf/g&#39;</span><span class="k">)</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># sudo apt install -y gcc make</span>
-</span></span><span class="line"><span class="cl">sudo apt download <span class="k">$(</span>apt-rdepends gcc make <span class="p">|</span> grep -v <span class="s2">&#34;^ &#34;</span> <span class="p">|</span> sed <span class="s1">&#39;s/debconf-2.0/debconf/g&#39;</span><span class="k">)</span>
-</span></span><span class="line"><span class="cl">sudo dpkg -i *.deb</span></span></code></pre></td></tr></table>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div id="outline-container-headline-4" class="outline-4">
-<h4 id="headline-4">
-禁用nouveau显卡驱动（服务器操作）
-</h4>
-<div id="outline-text-headline-4" class="outline-text-4">
-<div class="src src-text">
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">nouveau是第三方开发的开源显卡驱动，安装NVIDIA官方的显卡驱动之前，需要先禁用它。</span></span></code></pre></td></tr></table>
-</div>
-</div>
-</div>
-<p>
-编辑vim /etc/modprobe.d/blacklist.conf文件，末尾添加如下代码</p>
-<div class="src src-bash">
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">blacklist nouveau
-</span></span><span class="line"><span class="cl">options nouveau <span class="nv">modeset</span><span class="o">=</span><span class="m">0</span></span></span></code></pre></td></tr></table>
-</div>
-</div>
-</div>
-<p>
-更新内核</p>
-<div class="src src-bash">
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo update-initramfs -u</span></span></code></pre></td></tr></table>
-</div>
-</div>
-</div>
-<p>
-更新后reboot重启
-重启后通过以下命令验证，没有任何输出结果则代表禁用成功</p>
-<div class="src src-bash">
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">lsmod <span class="p">|</span> grep nouveau</span></span></code></pre></td></tr></table>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div id="outline-container-headline-5" class="outline-4">
-<h4 id="headline-5">
-安装NVIDIA显卡驱动（服务器操作）
-</h4>
-<div id="outline-text-headline-5" class="outline-text-4">
-<p>
-apt命令安装
-执行如下命令，查看适合的驱动</p>
-<div class="src src-bash">
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ubuntu-drivers devices</span></span></code></pre></td></tr></table>
-</div>
-</div>
-</div>
-<p>
-安装驱动</p>
-<div class="src src-bash">
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># apt-get install nvidia-driver-535</span>
-</span></span><span class="line"><span class="cl">sudo apt download <span class="k">$(</span>apt-rdepends nvidia-driver-535 <span class="p">|</span> grep -v <span class="s2">&#34;^ &#34;</span> <span class="p">|</span> grep -v -e <span class="s2">&#34;xorg-video-abi&#34;</span> -e <span class="s2">&#34;libc-dev&#34;</span> -e <span class="s2">&#34;kldutils&#34;</span> -e <span class="s2">&#34;perlapi-5.34&#34;</span> <span class="p">|</span> sed <span class="s1">&#39;s/debconf-2.0/debconf/g&#39;</span><span class="k">)</span>
-</span></span><span class="line"><span class="cl">sudo dpkg -i *.deb</span></span></code></pre></td></tr></table>
-</div>
-</div>
-</div>
-<p>
-测试驱动是否正常工作</p>
-<div class="src src-bash">
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">nvidia-smi</span></span></code></pre></td></tr></table>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div id="outline-container-headline-6" class="outline-3">
-<h3 id="headline-6">
-方法二
-</h3>
-<div id="outline-text-headline-6" class="outline-text-3">
-<div id="outline-container-headline-7" class="outline-4">
-<h4 id="headline-7">
-准备工作
-</h4>
-<div id="outline-text-headline-7" class="outline-text-4">
 <div class="src src-text">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -677,11 +492,11 @@ apt命令安装
 </div>
 </div>
 </div>
-<div id="outline-container-headline-8" class="outline-5">
-<h5 id="headline-8">
+<div id="outline-container-headline-3" class="outline-4">
+<h4 id="headline-3">
 关闭安全模式
-</h5>
-<div id="outline-text-headline-8" class="outline-text-5">
+</h4>
+<div id="outline-text-headline-3" class="outline-text-4">
 <div class="src src-text">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -695,11 +510,11 @@ apt命令安装
 <p>注：不同品牌电脑进入bios方式和安全设置的位置都不相同</p>
 </div>
 </div>
-<div id="outline-container-headline-9" class="outline-5">
-<h5 id="headline-9">
-切换独显模式
-</h5>
-<div id="outline-text-headline-9" class="outline-text-5">
+<div id="outline-container-headline-4" class="outline-4">
+<h4 id="headline-4">
+切换独显模式（笔记本电脑单显卡注意，服务器略过）
+</h4>
+<div id="outline-text-headline-4" class="outline-text-4">
 <div class="src src-text">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -712,11 +527,11 @@ apt命令安装
 </div>
 </div>
 </div>
-<div id="outline-container-headline-10" class="outline-5">
-<h5 id="headline-10">
+<div id="outline-container-headline-5" class="outline-4">
+<h4 id="headline-5">
 更新软件列表和安装必要软件、依赖
-</h5>
-<div id="outline-text-headline-10" class="outline-text-5">
+</h4>
+<div id="outline-text-headline-5" class="outline-text-4">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -765,16 +580,512 @@ apt命令安装
 </div>
 </div>
 </div>
-<div id="outline-container-headline-11" class="outline-5">
-<h5 id="headline-11">
-配置网络
+<div id="outline-container-headline-6" class="outline-4">
+<h4 id="headline-6">
+禁用nouveau (nouveau是通用的驱动程序)
+</h4>
+<div id="outline-text-headline-6" class="outline-text-4">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo vim /etc/modprobe.d/blacklist.conf</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>文件末尾添加下面两行内容</p>
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">blacklist nouveau
+</span></span><span class="line"><span class="cl">options nouveau modeset=0</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+文件修改后在终端执行：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo update-initramfs -u
+</span></span><span class="line"><span class="cl">sudo reboot <span class="c1">#重启电脑</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>电脑重启后执行：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">lsmod <span class="p">|</span> grep nouveau  <span class="c1">#输出内容为空，则表示成功禁用</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-7" class="outline-4">
+<h4 id="headline-7">
+安装lightdm（笔记本电脑默认gdm3,不要选择lightdm，不然会启动不起来，需要恢复模式下rusume执行sudo dpkg-reconfigure lightdm）
+</h4>
+<div id="outline-text-headline-7" class="outline-text-4">
+<p>
+lightdm和gdm3一样都是图形界面管理插件，但是lightdm兼容性更好</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># sudo apt-get install lightdm</span>
+</span></span><span class="line"><span class="cl">sudo apt download <span class="k">$(</span>apt-rdepends lightdm <span class="p">|</span> grep -v <span class="s2">&#34;^ &#34;</span> <span class="p">|</span> sed <span class="s1">&#39;s/debconf-2.0/debconf/g&#39;</span> <span class="p">|</span> grep -v <span class="s2">&#34;^awk</span>$<span class="s2">&#34;</span><span class="k">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>用上下按键选中lightdm</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-8" class="outline-3">
+<h3 id="headline-8">
+安装驱动
+</h3>
+<div id="outline-text-headline-8" class="outline-text-3">
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">网上安装方式杂七杂八很多，推荐把Ubuntu升级到22版本后使用系统推荐安装方式。</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-9" class="outline-4">
+<h4 id="headline-9">
+安装 nvidia-cuda-toolkit 工具
+</h4>
+<div id="outline-text-headline-9" class="outline-text-4">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># sudo apt-get install nvidia-cuda-toolkit</span>
+</span></span><span class="line"><span class="cl">sudo apt download <span class="k">$(</span>apt-rdepends nvidia-cuda-toolkit <span class="p">|</span> grep -v <span class="s2">&#34;^ &#34;</span> <span class="p">|</span> grep -v -E <span class="s2">&#34;^(debconf-2.0|libcuda|libnvidia|opencl-dev|clang-[0-9]|g\+\+-[0-9]|gcc-[0-9])&#34;</span> <span class="p">|</span> sed <span class="s1">&#39;s/debconf-2.0/debconf/g&#39;</span><span class="k">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-10" class="outline-4">
+<h4 id="headline-10">
+检查系统推荐显卡驱动，记录下recommend选项
+</h4>
+<div id="outline-text-headline-10" class="outline-text-4">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ sudo ubuntu-drivers <span class="nv">devices</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">==</span> /sys/devices/pci0000:00/0000:00:01.0/0000:01:00.0 <span class="o">==</span>
+</span></span><span class="line"><span class="cl">modalias : pci:v000010DEd000028E0sv0000103Csd00008BABbc03sc00i00
+</span></span><span class="line"><span class="cl">vendor   : NVIDIA Corporation
+</span></span><span class="line"><span class="cl">driver   : nvidia-driver-535-open - distro non-free
+</span></span><span class="line"><span class="cl">driver   : nvidia-driver-535-server-open - distro non-free
+</span></span><span class="line"><span class="cl">driver   : nvidia-driver-535 - distro non-free recommended <span class="c1">#记下推荐版本</span>
+</span></span><span class="line"><span class="cl">driver   : nvidia-driver-525-server - distro non-free
+</span></span><span class="line"><span class="cl">driver   : nvidia-driver-535-server - distro non-free
+</span></span><span class="line"><span class="cl">driver   : nvidia-driver-525 - distro non-free
+</span></span><span class="line"><span class="cl">driver   : nvidia-driver-525-open - distro non-free
+</span></span><span class="line"><span class="cl">driver   : xserver-xorg-video-nouveau - distro free builtin</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-11" class="outline-4">
+<h4 id="headline-11">
+安装NVIDIA显卡驱动
+</h4>
+<div id="outline-text-headline-11" class="outline-text-4">
+<div id="outline-container-headline-12" class="outline-5">
+<h5 id="headline-12">
+方法一：安装NVIDIA显卡驱动（推荐，服务器操作）
 </h5>
-<div id="outline-text-headline-11" class="outline-text-5">
-<div id="outline-container-headline-12" class="outline-6">
-<h6 id="headline-12">
-配置wifi
+<div id="outline-text-headline-12" class="outline-text-5">
+<p>
+apt命令安装
+执行如下命令，查看适合的驱动</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ubuntu-drivers devices</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+安装驱动</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="c1"># apt-get install nvidia-driver-535</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># sudo apt download $(apt-rdepends nvidia-driver-535 | grep -v &#34;^ &#34; | grep -v -e &#34;xorg-video-abi&#34; -e &#34;libc-dev&#34; -e &#34;kldutils&#34; -e &#34;perlapi-5.34&#34; | sed &#39;s/debconf-2.0/debconf/g&#39;)</span>
+</span></span><span class="line"><span class="cl">  sudo apt-get install -d -o dir::cache::archives<span class="o">=</span><span class="s2">&#34;</span><span class="nv">$HOME</span><span class="s2">/ubuntu-drivers&#34;</span> nvidia-driver-580
+</span></span><span class="line"><span class="cl">sudo dpkg -i <span class="nv">$HOME</span>/ubuntu-drivers/*.deb</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+测试驱动是否正常工作</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">nvidia-smi</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-13" class="outline-5">
+<h5 id="headline-13">
+方法二（带桌面的操作系统可尝试一下）
+</h5>
+<div id="outline-text-headline-13" class="outline-text-5">
+<div id="outline-container-headline-14" class="outline-6">
+<h6 id="headline-14">
+添加驱动源
 </h6>
-<div id="outline-text-headline-12" class="outline-text-6">
+<div id="outline-text-headline-14" class="outline-text-6">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo add-apt-repository ppa:graphics-drivers/ppa
+</span></span><span class="line"><span class="cl">sudo apt-get update</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-15" class="outline-6">
+<h6 id="headline-15">
+在Ubuntu系统中找到 软件和更新 选择 驱动
+</h6>
+<div id="outline-text-headline-15" class="outline-text-6">
+<div class="src src-text">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">按照图示找到附加驱动，选择推荐版本
+</span></span><span class="line"><span class="cl">注意：不要选择第一项，可能会导致黑屏</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>安装完成后sudo reboot重启计算机</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-16" class="outline-5">
+<h5 id="headline-16">
+方法三（下载nvidia官方驱动文件可以尝试一下）
+</h5>
+<div id="outline-text-headline-16" class="outline-text-5">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 根据前边的教程获取推荐版本，然后下载对应的版本进行如下方式安装</span>
+</span></span><span class="line"><span class="cl">./NVIDIA-Linux-x86_64-580.105.08.run --no-opengl-files</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-17" class="outline-3">
+<h3 id="headline-17">
+重启后测试安装
+</h3>
+<div id="outline-text-headline-17" class="outline-text-3">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ nvidia-smi
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Wed Jul <span class="m">19</span> 11:08:47 <span class="m">2023</span>       
+</span></span><span class="line"><span class="cl">+---------------------------------------------------------------------------------------+
+</span></span><span class="line"><span class="cl">    <span class="p">|</span> NVIDIA-SMI 535.54.03              Driver Version: 535.54.03    CUDA Version: 12.2     <span class="p">|</span>
+</span></span><span class="line"><span class="cl">    <span class="p">|</span>-----------------------------------------+----------------------+----------------------+
+</span></span><span class="line"><span class="cl">    <span class="p">|</span> GPU  Name                 Persistence-M <span class="p">|</span> Bus-Id        Disp.A <span class="p">|</span> Volatile Uncorr. ECC <span class="p">|</span>
+</span></span><span class="line"><span class="cl">    <span class="p">|</span> Fan  Temp   Perf          Pwr:Usage/Cap <span class="p">|</span>         Memory-Usage <span class="p">|</span> GPU-Util  Compute M. <span class="p">|</span>
+</span></span><span class="line"><span class="cl">    <span class="p">|</span>                                         <span class="p">|</span>                      <span class="p">|</span>               MIG M. <span class="p">|</span>
+</span></span><span class="line"><span class="cl">    <span class="p">|</span><span class="o">=========================================</span>+<span class="o">======================</span>+<span class="o">======================</span><span class="p">|</span>
+</span></span><span class="line"><span class="cl">    <span class="p">|</span>   <span class="m">0</span>  NVIDIA GeForce RTX <span class="m">4060</span> ...    Off <span class="p">|</span> 00000000:01:00.0  On <span class="p">|</span>                  N/A <span class="p">|</span>
+</span></span><span class="line"><span class="cl">    <span class="p">|</span> N/A   40C    P8               2W /  80W <span class="p">|</span>    571MiB /  8188MiB <span class="p">|</span>      0%      Default <span class="p">|</span>
+</span></span><span class="line"><span class="cl">    <span class="p">|</span>                                         <span class="p">|</span>                      <span class="p">|</span>                  N/A <span class="p">|</span>
+</span></span><span class="line"><span class="cl">    +-----------------------------------------+----------------------+----------------------+
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    +---------------------------------------------------------------------------------------+
+</span></span><span class="line"><span class="cl">    <span class="p">|</span> Processes:                                                                            <span class="p">|</span>
+</span></span><span class="line"><span class="cl">    <span class="p">|</span>  GPU   GI   CI        PID   Type   Process name                            GPU Memory <span class="p">|</span>
+</span></span><span class="line"><span class="cl">    <span class="p">|</span>        ID   ID                                                             Usage      <span class="p">|</span>
+</span></span><span class="line"><span class="cl">    <span class="p">|</span><span class="o">=======================================================================================</span><span class="p">|</span>
+</span></span><span class="line"><span class="cl">    <span class="p">|</span>    <span class="m">0</span>   N/A  N/A      <span class="m">1489</span>      G   /usr/lib/xorg/Xorg                          202MiB <span class="p">|</span>
+</span></span><span class="line"><span class="cl">    <span class="p">|</span>    <span class="m">0</span>   N/A  N/A      <span class="m">2539</span>      G   /usr/bin/gnome-shell                         57MiB <span class="p">|</span>
+</span></span><span class="line"><span class="cl">    <span class="p">|</span>    <span class="m">0</span>   N/A  N/A      <span class="m">3848</span>      G   ...irefox/2908/usr/lib/firefox/firefox      205MiB <span class="p">|</span>
+</span></span><span class="line"><span class="cl">    <span class="p">|</span>    <span class="m">0</span>   N/A  N/A     <span class="m">20451</span>      G   ...dererForSitePerProcess --no-sandbox       94MiB <span class="p">|</span>
+</span></span><span class="line"><span class="cl">    +---------------------------------------------------------------------------------------+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>显示如上则表示安装完成。</p>
+</div>
+</div>
+<div id="outline-container-headline-18" class="outline-3">
+<h3 id="headline-18">
+出错急救
+</h3>
+<div id="outline-text-headline-18" class="outline-text-3">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">如果驱动安装后不幸导致黑屏，尝试以下操作删除驱动，恢复安装前状态。</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1">#在黑屏界面 ctrl+alt+f1 进入tty命令行，正确输入用户名和密码，再进行接下来的操作</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#在tty中先修改字符集</span>
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">LANGUAGE</span><span class="o">=</span><span class="s2">&#34;UTF-8&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#执行删除操作</span>
+</span></span><span class="line"><span class="cl">sudo apt-get --purge remove nvidia*
+</span></span><span class="line"><span class="cl">sudo apt autoremove
+</span></span><span class="line"><span class="cl"><span class="c1">#重启</span>
+</span></span><span class="line"><span class="cl">reboot
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">#如果上述操作不超过，尝试以下命令删除</span>
+</span></span><span class="line"><span class="cl">sudo apt-get remove --purge nvidia*</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>删除驱动后，进入系统界面，从第一步开始重新安装即可。</p>
+</div>
+</div>
+<div id="outline-container-headline-19" class="outline-3">
+<h3 id="headline-19">
+安装Anaconda3
+</h3>
+<div id="outline-text-headline-19" class="outline-text-3">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  wget https://repo.anaconda.com/archive/Anaconda3-2025.12-1-Linux-x86_64.sh
+</span></span><span class="line"><span class="cl">  chmod +x Anaconda3-2025.12-1-Linux-x86_64.sh
+</span></span><span class="line"><span class="cl">  sh Anaconda3-2025.12-1-Linux-x86_64.sh</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-20" class="outline-3">
+<h3 id="headline-20">
+安装CUDA
+</h3>
+<div id="outline-text-headline-20" class="outline-text-3">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-ubuntu2204.pin
+</span></span><span class="line"><span class="cl">sudo mv cuda-ubuntu2204.pin /etc/apt/preferences.d/cuda-repository-pin-600
+</span></span><span class="line"><span class="cl">wget https://developer.download.nvidia.com/compute/cuda/13.0.2/local_installers/cuda-repo-ubuntu2204-13-0-local_13.0.2-580.95.05-1_amd64.deb
+</span></span><span class="line"><span class="cl">sudo dpkg -i cuda-repo-ubuntu2204-13-0-local_13.0.2-580.95.05-1_amd64.deb
+</span></span><span class="line"><span class="cl">sudo cp /var/cuda-repo-ubuntu2204-13-0-local/cuda-*-keyring.gpg /usr/share/keyrings/
+</span></span><span class="line"><span class="cl">sudo apt-get update
+</span></span><span class="line"><span class="cl">sudo apt-get -y install cuda-toolkit-13-0</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-21" class="outline-3">
+<h3 id="headline-21">
+安装nvidia-cudnn
+</h3>
+<div id="outline-text-headline-21" class="outline-text-3">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 1. 先安装 nvidia-pyindex（添加 NVIDIA 源）</span>
+</span></span><span class="line"><span class="cl">pip install nvidia-pyindex
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 2. 再下载 nvidia-cudnn 到指定目录（./）</span>
+</span></span><span class="line"><span class="cl">pip download nvidia-cudnn -d ./
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 3. pip自动处理顺序（推荐）</span>
+</span></span><span class="line"><span class="cl">pip install ./setuptools-80.9.0-py3-none-any.whl ./wheel-0.45.1-py3-none-any.whl ./nvidia_cudnn-8.2.0.51-py3-none-manylinux1_x86_64.whl</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-22" class="outline-3">
+<h3 id="headline-22">
+搭建PyTorch框架
+</h3>
+<div id="outline-text-headline-22" class="outline-text-3">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="c1"># wget https://download.pytorch.org/whl/cu130/torch-2.9.0%2Bcu130-cp314-cp314-manylinux_2_28_x86_64.whl</span>
+</span></span><span class="line"><span class="cl">  pip download <span class="nv">torch</span><span class="o">==</span>2.9.0 <span class="nv">torchvision</span><span class="o">==</span>0.24.0 <span class="nv">torchaudio</span><span class="o">==</span>2.9.0 --index-url https://download.pytorch.org/whl/cu130 -d ./
+</span></span><span class="line"><span class="cl">  <span class="c1"># pip install *.whl</span>
+</span></span><span class="line"><span class="cl">  pip install --no-index --find-links<span class="o">=</span>./ *.whl</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-23" class="outline-3">
+<h3 id="headline-23">
+配置网络
+</h3>
+<div id="outline-text-headline-23" class="outline-text-3">
+<div id="outline-container-headline-24" class="outline-4">
+<h4 id="headline-24">
+配置wifi
+</h4>
+<div id="outline-text-headline-24" class="outline-text-4">
 <p>
 输入如下指令来安装network-manager</p>
 <div class="src src-bash">
@@ -865,11 +1176,11 @@ apt命令安装
 </div>
 </div>
 </div>
-<div id="outline-container-headline-13" class="outline-6">
-<h6 id="headline-13">
+<div id="outline-container-headline-25" class="outline-4">
+<h4 id="headline-25">
 配置静态IP
-</h6>
-<div id="outline-text-headline-13" class="outline-text-6">
+</h4>
+<div id="outline-text-headline-25" class="outline-text-4">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -928,403 +1239,11 @@ apt命令安装
 </div>
 </div>
 </div>
-<div id="outline-container-headline-14" class="outline-5">
-<h5 id="headline-14">
-禁用nouveau (nouveau是通用的驱动程序)
-</h5>
-<div id="outline-text-headline-14" class="outline-text-5">
-<div class="src src-bash">
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo vim /etc/modprobe.d/blacklist.conf</span></span></code></pre></td></tr></table>
-</div>
-</div>
-</div>
-<p>文件末尾添加下面两行内容</p>
-<div class="src src-text">
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">blacklist nouveau
-</span></span><span class="line"><span class="cl">options nouveau modeset=0</span></span></code></pre></td></tr></table>
-</div>
-</div>
-</div>
-<p>
-文件修改后在终端执行：</p>
-<div class="src src-bash">
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo update-initramfs -u
-</span></span><span class="line"><span class="cl">sudo reboot <span class="c1">#重启电脑</span></span></span></code></pre></td></tr></table>
-</div>
-</div>
-</div>
-<p>电脑重启后执行：</p>
-<div class="src src-bash">
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">lsmod <span class="p">|</span> grep nouveau  <span class="c1">#输出内容为空，则表示成功禁用</span></span></span></code></pre></td></tr></table>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div id="outline-container-headline-15" class="outline-5">
-<h5 id="headline-15">
-安装lightdm
-</h5>
-<div id="outline-text-headline-15" class="outline-text-5">
-<p>
-lightdm和gdm3一样都是图形界面管理插件，但是lightdm兼容性更好</p>
-<div class="src src-bash">
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># sudo apt-get install lightdm</span>
-</span></span><span class="line"><span class="cl">sudo apt download <span class="k">$(</span>apt-rdepends lightdm <span class="p">|</span> grep -v <span class="s2">&#34;^ &#34;</span> <span class="p">|</span> sed <span class="s1">&#39;s/debconf-2.0/debconf/g&#39;</span> <span class="p">|</span> grep -v <span class="s2">&#34;^awk</span>$<span class="s2">&#34;</span><span class="k">)</span></span></span></code></pre></td></tr></table>
-</div>
-</div>
-</div>
-<p>用上下按键选中lightdm</p>
-</div>
-</div>
-</div>
-</div>
-<div id="outline-container-headline-16" class="outline-4">
-<h4 id="headline-16">
-安装驱动
-</h4>
-<div id="outline-text-headline-16" class="outline-text-4">
-<div class="src src-text">
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">网上安装方式杂七杂八很多，推荐把Ubuntu升级到22版本后使用系统推荐安装方式。</span></span></code></pre></td></tr></table>
-</div>
-</div>
-</div>
-<div id="outline-container-headline-17" class="outline-5">
-<h5 id="headline-17">
-安装 nvidia-cuda-toolkit 工具
-</h5>
-<div id="outline-text-headline-17" class="outline-text-5">
-<div class="src src-bash">
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># sudo apt-get install nvidia-cuda-toolkit</span>
-</span></span><span class="line"><span class="cl">sudo apt download <span class="k">$(</span>apt-rdepends nvidia-cuda-toolkit <span class="p">|</span> grep -v <span class="s2">&#34;^ &#34;</span> <span class="p">|</span> grep -v -E <span class="s2">&#34;^(debconf-2.0|libcuda|libnvidia|opencl-dev|clang-[0-9]|g\+\+-[0-9]|gcc-[0-9])&#34;</span> <span class="p">|</span> sed <span class="s1">&#39;s/debconf-2.0/debconf/g&#39;</span><span class="k">)</span></span></span></code></pre></td></tr></table>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div id="outline-container-headline-18" class="outline-5">
-<h5 id="headline-18">
-检查系统推荐显卡驱动，记录下recommend选项
-</h5>
-<div id="outline-text-headline-18" class="outline-text-5">
-<div class="src src-bash">
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ sudo ubuntu-drivers <span class="nv">devices</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="o">==</span> /sys/devices/pci0000:00/0000:00:01.0/0000:01:00.0 <span class="o">==</span>
-</span></span><span class="line"><span class="cl">modalias : pci:v000010DEd000028E0sv0000103Csd00008BABbc03sc00i00
-</span></span><span class="line"><span class="cl">vendor   : NVIDIA Corporation
-</span></span><span class="line"><span class="cl">driver   : nvidia-driver-535-open - distro non-free
-</span></span><span class="line"><span class="cl">driver   : nvidia-driver-535-server-open - distro non-free
-</span></span><span class="line"><span class="cl">driver   : nvidia-driver-535 - distro non-free recommended <span class="c1">#记下推荐版本</span>
-</span></span><span class="line"><span class="cl">driver   : nvidia-driver-525-server - distro non-free
-</span></span><span class="line"><span class="cl">driver   : nvidia-driver-535-server - distro non-free
-</span></span><span class="line"><span class="cl">driver   : nvidia-driver-525 - distro non-free
-</span></span><span class="line"><span class="cl">driver   : nvidia-driver-525-open - distro non-free
-</span></span><span class="line"><span class="cl">driver   : xserver-xorg-video-nouveau - distro free builtin</span></span></code></pre></td></tr></table>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div id="outline-container-headline-19" class="outline-5">
-<h5 id="headline-19">
-安装NVIDIA显卡驱动
-</h5>
-<div id="outline-text-headline-19" class="outline-text-5">
-<div id="outline-container-headline-20" class="outline-6">
-<h6 id="headline-20">
-方法一：安装NVIDIA显卡驱动（服务器操作）
-</h6>
-<div id="outline-text-headline-20" class="outline-text-6">
-<p>
-apt命令安装
-执行如下命令，查看适合的驱动</p>
-<div class="src src-bash">
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ubuntu-drivers devices</span></span></code></pre></td></tr></table>
-</div>
-</div>
-</div>
-<p>
-安装驱动</p>
-<div class="src src-bash">
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># apt-get install nvidia-driver-535</span>
-</span></span><span class="line"><span class="cl">sudo apt download <span class="k">$(</span>apt-rdepends nvidia-driver-535 <span class="p">|</span> grep -v <span class="s2">&#34;^ &#34;</span> <span class="p">|</span> grep -v -e <span class="s2">&#34;xorg-video-abi&#34;</span> -e <span class="s2">&#34;libc-dev&#34;</span> -e <span class="s2">&#34;kldutils&#34;</span> -e <span class="s2">&#34;perlapi-5.34&#34;</span> <span class="p">|</span> sed <span class="s1">&#39;s/debconf-2.0/debconf/g&#39;</span><span class="k">)</span>
-</span></span><span class="line"><span class="cl">sudo dpkg -i *.deb</span></span></code></pre></td></tr></table>
-</div>
-</div>
-</div>
-<p>
-测试驱动是否正常工作</p>
-<div class="src src-bash">
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">nvidia-smi</span></span></code></pre></td></tr></table>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div id="outline-container-headline-21" class="outline-6">
-<h6 id="headline-21">
-方法二
-</h6>
-<div id="outline-text-headline-21" class="outline-text-6">
-<div id="outline-container-headline-22" class="outline-7">
-<h7 id="headline-22">
-添加驱动源
-</h7>
-<div id="outline-text-headline-22" class="outline-text-7">
-<div class="src src-bash">
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo add-apt-repository ppa:graphics-drivers/ppa
-</span></span><span class="line"><span class="cl">sudo apt-get update</span></span></code></pre></td></tr></table>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div id="outline-container-headline-23" class="outline-7">
-<h7 id="headline-23">
-在Ubuntu系统中找到 软件和更新 选择 驱动
-</h7>
-<div id="outline-text-headline-23" class="outline-text-7">
-<div class="src src-text">
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">按照图示找到附加驱动，选择推荐版本
-</span></span><span class="line"><span class="cl">注意：不要选择第一项，可能会导致黑屏</span></span></code></pre></td></tr></table>
-</div>
-</div>
-</div>
-<p>安装完成后sudo reboot重启计算机</p>
-</div>
-</div>
-</div>
-</div>
-<div id="outline-container-headline-24" class="outline-6">
-<h6 id="headline-24">
-方法三
-</h6>
-<div id="outline-text-headline-24" class="outline-text-6">
-<div class="src src-bash">
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 根据前边的教程获取推荐版本，然后下载对应的版本进行如下方式安装</span>
-</span></span><span class="line"><span class="cl">./NVIDIA-Linux-x86_64-580.105.08.run --no-opengl-files</span></span></code></pre></td></tr></table>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div id="outline-container-headline-25" class="outline-4">
-<h4 id="headline-25">
-重启后测试安装
-</h4>
-<div id="outline-text-headline-25" class="outline-text-4">
-<div class="src src-bash">
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ nvidia-smi
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">Wed Jul <span class="m">19</span> 11:08:47 <span class="m">2023</span>       
-</span></span><span class="line"><span class="cl">+---------------------------------------------------------------------------------------+
-</span></span><span class="line"><span class="cl">    <span class="p">|</span> NVIDIA-SMI 535.54.03              Driver Version: 535.54.03    CUDA Version: 12.2     <span class="p">|</span>
-</span></span><span class="line"><span class="cl">    <span class="p">|</span>-----------------------------------------+----------------------+----------------------+
-</span></span><span class="line"><span class="cl">    <span class="p">|</span> GPU  Name                 Persistence-M <span class="p">|</span> Bus-Id        Disp.A <span class="p">|</span> Volatile Uncorr. ECC <span class="p">|</span>
-</span></span><span class="line"><span class="cl">    <span class="p">|</span> Fan  Temp   Perf          Pwr:Usage/Cap <span class="p">|</span>         Memory-Usage <span class="p">|</span> GPU-Util  Compute M. <span class="p">|</span>
-</span></span><span class="line"><span class="cl">    <span class="p">|</span>                                         <span class="p">|</span>                      <span class="p">|</span>               MIG M. <span class="p">|</span>
-</span></span><span class="line"><span class="cl">    <span class="p">|</span><span class="o">=========================================</span>+<span class="o">======================</span>+<span class="o">======================</span><span class="p">|</span>
-</span></span><span class="line"><span class="cl">    <span class="p">|</span>   <span class="m">0</span>  NVIDIA GeForce RTX <span class="m">4060</span> ...    Off <span class="p">|</span> 00000000:01:00.0  On <span class="p">|</span>                  N/A <span class="p">|</span>
-</span></span><span class="line"><span class="cl">    <span class="p">|</span> N/A   40C    P8               2W /  80W <span class="p">|</span>    571MiB /  8188MiB <span class="p">|</span>      0%      Default <span class="p">|</span>
-</span></span><span class="line"><span class="cl">    <span class="p">|</span>                                         <span class="p">|</span>                      <span class="p">|</span>                  N/A <span class="p">|</span>
-</span></span><span class="line"><span class="cl">    +-----------------------------------------+----------------------+----------------------+
-</span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl">    +---------------------------------------------------------------------------------------+
-</span></span><span class="line"><span class="cl">    <span class="p">|</span> Processes:                                                                            <span class="p">|</span>
-</span></span><span class="line"><span class="cl">    <span class="p">|</span>  GPU   GI   CI        PID   Type   Process name                            GPU Memory <span class="p">|</span>
-</span></span><span class="line"><span class="cl">    <span class="p">|</span>        ID   ID                                                             Usage      <span class="p">|</span>
-</span></span><span class="line"><span class="cl">    <span class="p">|</span><span class="o">=======================================================================================</span><span class="p">|</span>
-</span></span><span class="line"><span class="cl">    <span class="p">|</span>    <span class="m">0</span>   N/A  N/A      <span class="m">1489</span>      G   /usr/lib/xorg/Xorg                          202MiB <span class="p">|</span>
-</span></span><span class="line"><span class="cl">    <span class="p">|</span>    <span class="m">0</span>   N/A  N/A      <span class="m">2539</span>      G   /usr/bin/gnome-shell                         57MiB <span class="p">|</span>
-</span></span><span class="line"><span class="cl">    <span class="p">|</span>    <span class="m">0</span>   N/A  N/A      <span class="m">3848</span>      G   ...irefox/2908/usr/lib/firefox/firefox      205MiB <span class="p">|</span>
-</span></span><span class="line"><span class="cl">    <span class="p">|</span>    <span class="m">0</span>   N/A  N/A     <span class="m">20451</span>      G   ...dererForSitePerProcess --no-sandbox       94MiB <span class="p">|</span>
-</span></span><span class="line"><span class="cl">    +---------------------------------------------------------------------------------------+</span></span></code></pre></td></tr></table>
-</div>
-</div>
-</div>
-<p>显示如上则表示安装完成。</p>
-</div>
-</div>
-<div id="outline-container-headline-26" class="outline-4">
-<h4 id="headline-26">
-出错急救
-</h4>
-<div id="outline-text-headline-26" class="outline-text-4">
-<div class="src src-bash">
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">如果驱动安装后不幸导致黑屏，尝试以下操作删除驱动，恢复安装前状态。</span></span></code></pre></td></tr></table>
-</div>
-</div>
-</div>
-<div class="src src-bash">
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1">#在黑屏界面 ctrl+alt+f1 进入tty命令行，正确输入用户名和密码，再进行接下来的操作</span>
-</span></span><span class="line"><span class="cl"><span class="c1">#在tty中先修改字符集</span>
-</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">LANGUAGE</span><span class="o">=</span><span class="s2">&#34;UTF-8&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="c1">#执行删除操作</span>
-</span></span><span class="line"><span class="cl">sudo apt-get --purge remove nvidia*
-</span></span><span class="line"><span class="cl">sudo apt autoremove
-</span></span><span class="line"><span class="cl"><span class="c1">#重启</span>
-</span></span><span class="line"><span class="cl">reboot
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1">#如果上述操作不超过，尝试以下命令删除</span>
-</span></span><span class="line"><span class="cl">sudo apt-get remove --purge nvidia*</span></span></code></pre></td></tr></table>
-</div>
-</div>
-</div>
-<p>删除驱动后，进入系统界面，从第一步开始重新安装即可。</p>
-</div>
-</div>
-</div>
-</div>
-<div id="outline-container-headline-27" class="outline-3">
-<h3 id="headline-27">
+<div id="outline-container-headline-26" class="outline-3">
+<h3 id="headline-26">
 搭建VNC
 </h3>
-<div id="outline-text-headline-27" class="outline-text-3">
+<div id="outline-text-headline-26" class="outline-text-3">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1512,11 +1431,11 @@ apt命令安装
 </div>
 </div>
 </div>
-<div id="outline-container-headline-28" class="outline-3">
-<h3 id="headline-28">
+<div id="outline-container-headline-27" class="outline-3">
+<h3 id="headline-27">
 搭建XRDP
 </h3>
-<div id="outline-text-headline-28" class="outline-text-3">
+<div id="outline-text-headline-27" class="outline-text-3">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1565,11 +1484,11 @@ apt命令安装
 </div>
 </div>
 </div>
-<div id="outline-container-headline-29" class="outline-3">
-<h3 id="headline-29">
+<div id="outline-container-headline-28" class="outline-3">
+<h3 id="headline-28">
 把文件制作成iso，上传并将挂载到服务器
 </h3>
-<div id="outline-text-headline-29" class="outline-text-3">
+<div id="outline-text-headline-28" class="outline-text-3">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1602,11 +1521,11 @@ apt命令安装
 </div>
 </div>
 </div>
-<div id="outline-container-headline-30" class="outline-3">
-<h3 id="headline-30">
+<div id="outline-container-headline-29" class="outline-3">
+<h3 id="headline-29">
 Linux 系统下硬盘自动挂载完全指南
 </h3>
-<div id="outline-text-headline-30" class="outline-text-3">
+<div id="outline-text-headline-29" class="outline-text-3">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1629,11 +1548,11 @@ Linux 系统下硬盘自动挂载完全指南
 </div>
 </div>
 </div>
-<div id="outline-container-headline-31" class="outline-4">
-<h4 id="headline-31">
+<div id="outline-container-headline-30" class="outline-4">
+<h4 id="headline-30">
 挂载nvme硬盘示例
 </h4>
-<div id="outline-text-headline-31" class="outline-text-4">
+<div id="outline-text-headline-30" class="outline-text-4">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1665,11 +1584,11 @@ Linux 系统下硬盘自动挂载完全指南
 </div>
 </div>
 </div>
-<div id="outline-container-headline-32" class="outline-3">
-<h3 id="headline-32">
+<div id="outline-container-headline-31" class="outline-3">
+<h3 id="headline-31">
 参考链接
 </h3>
-<div id="outline-text-headline-32" class="outline-text-3">
+<div id="outline-text-headline-31" class="outline-text-3">
 <p>
 <a href="https://blog.csdn.net/zgp210317/article/details/120586189">在Ubuntu本地下载软件包并递归下载其所有依赖包</a></p>
 <p>
@@ -1710,6 +1629,14 @@ Linux 系统下硬盘自动挂载完全指南
 <a href="https://www.bilibili.com/opus/1101233390016790561">在Ubuntu 22.04上安装远程桌面服务</a></p>
 <p>
 <a href="https://cloud.tencent.com/developer/article/2428030">在Ubuntu22.04上使用xrdp启用远程桌面协议实现图形化</a></p>
+<p>
+<a href="https://zhuanlan.zhihu.com/p/630067986">Ubuntu安装GPU驱动、CUDA、cuDNN,以及是否安装成功的检测</a></p>
+<p>
+<a href="https://blog.csdn.net/qq_44004676/article/details/126511759">linux离线环境下安装anaconda</a></p>
+<p>
+<a href="https://juejin.cn/post/7517227110244417588"> 离线安装 Python 依赖：利用 pip download 构建本地包仓库 </a></p>
+<p>
+<a href="https://blog.csdn.net/weixin_44956153/article/details/142303905">PyTorch离线版本安装（超详细版！）</a></p>
 </div>
 </div>
 </div>
