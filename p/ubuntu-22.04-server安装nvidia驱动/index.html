@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-cn" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" ubuntu 22.04 server安装Nvidia驱动 1 2 3 4 5 sudo apt install -y apt-rdepends # sudo apt install -y net-toolsb # sudo apt install -y openssh-server sudo apt download $(apt-rdepends apt-rdepends | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39; | grep -v &#34;perlapi-&#34;) sudo apt download $(apt-rdepends net-tools | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) 准备工作 1 2 为了避免踩坑，建议按照流程完成准备工作！ 这些准备工作并不会影响你的计算机，不做的话可能会导致装驱动后黑屏！ 关闭安全模式 1 重启计算机，在开机前狂按’ESC’进入bios设置，找到安全设置，并关闭它。 注：不同品牌电脑进入bios方式和安全设置的位置都不相同\n切换独显模式（笔记本电脑单显卡注意，服务器略过） 1 在bios设置中找到显卡设置，系统默认的为集显模式，将其修改为独显模式。 更新软件列表和安装必要软件、依赖 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 sudo apt-get update #更新软件列表 # sudo apt-get install -y g++ gcc make sudo apt download $(apt-rdepends g++ gcc make | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) sudo apt download $(apt-rdepends python3-pip | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) sudo apt download $(apt-rdepends build-essential cmake git | \\ grep -v &#34;^ &#34; | \\ sed &#39;s/debconf-2.0/debconf/g&#39; | \\ sed -e &#39;s/libc-dev/libc6-dev/g&#39; \\ -e &#39;s/libc6-dev-bin/libc6-dev/g&#39; \\ -e &#39;s/linux-libc6-dev/linux-libc-dev/g&#39; | \\ grep -vE &#34;^(default-logind|logind)$&#34;) # 安装hwinfo sudo apt download $(apt-rdepends hwinfo | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) # 安装alsa-utils sudo apt download $(apt-rdepends alsa-utils | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) 禁用nouveau (nouveau是通用的驱动程序) 1 sudo vim /etc/modprobe.d/blacklist.conf 文件末尾添加下面两行内容\n">
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" ubuntu 22.04 server安装Nvidia驱动 1 2 3 4 5 sudo apt install -y apt-rdepends # sudo apt install -y net-tools # sudo apt install -y openssh-server sudo apt download $(apt-rdepends apt-rdepends | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39; | grep -v &#34;perlapi-&#34;) sudo apt download $(apt-rdepends net-tools | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) 准备工作 1 2 为了避免踩坑，建议按照流程完成准备工作！ 这些准备工作并不会影响你的计算机，不做的话可能会导致装驱动后黑屏！ 关闭安全模式 1 重启计算机，在开机前狂按’ESC’进入bios设置，找到安全设置，并关闭它。 注：不同品牌电脑进入bios方式和安全设置的位置都不相同\n切换独显模式（笔记本电脑单显卡注意，服务器略过） 1 在bios设置中找到显卡设置，系统默认的为集显模式，将其修改为独显模式。 更新软件列表和安装必要软件、依赖 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 sudo apt-get update #更新软件列表 # sudo apt-get install -y g++ gcc make sudo apt download $(apt-rdepends g++ gcc make | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) sudo apt download $(apt-rdepends python3-pip | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) sudo apt download $(apt-rdepends build-essential cmake git | \\ grep -v &#34;^ &#34; | \\ sed &#39;s/debconf-2.0/debconf/g&#39; | \\ sed -e &#39;s/libc-dev/libc6-dev/g&#39; \\ -e &#39;s/libc6-dev-bin/libc6-dev/g&#39; \\ -e &#39;s/linux-libc6-dev/linux-libc-dev/g&#39; | \\ grep -vE &#34;^(default-logind|logind)$&#34;) # 安装hwinfo sudo apt download $(apt-rdepends hwinfo | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) # 安装alsa-utils sudo apt download $(apt-rdepends alsa-utils | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) 禁用nouveau (nouveau是通用的驱动程序) 1 sudo vim /etc/modprobe.d/blacklist.conf 文件末尾添加下面两行内容\n">
 <title>ubuntu 22.04 server安装Nvidia驱动</title>
 
 <link rel='canonical' href='https://ynhugo.github.io/p/ubuntu-22.04-server%E5%AE%89%E8%A3%85nvidia%E9%A9%B1%E5%8A%A8/'>
 
 <link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="ubuntu 22.04 server安装Nvidia驱动">
-<meta property='og:description' content=" ubuntu 22.04 server安装Nvidia驱动 1 2 3 4 5 sudo apt install -y apt-rdepends # sudo apt install -y net-toolsb # sudo apt install -y openssh-server sudo apt download $(apt-rdepends apt-rdepends | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39; | grep -v &#34;perlapi-&#34;) sudo apt download $(apt-rdepends net-tools | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) 准备工作 1 2 为了避免踩坑，建议按照流程完成准备工作！ 这些准备工作并不会影响你的计算机，不做的话可能会导致装驱动后黑屏！ 关闭安全模式 1 重启计算机，在开机前狂按’ESC’进入bios设置，找到安全设置，并关闭它。 注：不同品牌电脑进入bios方式和安全设置的位置都不相同\n切换独显模式（笔记本电脑单显卡注意，服务器略过） 1 在bios设置中找到显卡设置，系统默认的为集显模式，将其修改为独显模式。 更新软件列表和安装必要软件、依赖 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 sudo apt-get update #更新软件列表 # sudo apt-get install -y g++ gcc make sudo apt download $(apt-rdepends g++ gcc make | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) sudo apt download $(apt-rdepends python3-pip | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) sudo apt download $(apt-rdepends build-essential cmake git | \\ grep -v &#34;^ &#34; | \\ sed &#39;s/debconf-2.0/debconf/g&#39; | \\ sed -e &#39;s/libc-dev/libc6-dev/g&#39; \\ -e &#39;s/libc6-dev-bin/libc6-dev/g&#39; \\ -e &#39;s/linux-libc6-dev/linux-libc-dev/g&#39; | \\ grep -vE &#34;^(default-logind|logind)$&#34;) # 安装hwinfo sudo apt download $(apt-rdepends hwinfo | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) # 安装alsa-utils sudo apt download $(apt-rdepends alsa-utils | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) 禁用nouveau (nouveau是通用的驱动程序) 1 sudo vim /etc/modprobe.d/blacklist.conf 文件末尾添加下面两行内容\n">
+<meta property='og:description' content=" ubuntu 22.04 server安装Nvidia驱动 1 2 3 4 5 sudo apt install -y apt-rdepends # sudo apt install -y net-tools # sudo apt install -y openssh-server sudo apt download $(apt-rdepends apt-rdepends | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39; | grep -v &#34;perlapi-&#34;) sudo apt download $(apt-rdepends net-tools | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) 准备工作 1 2 为了避免踩坑，建议按照流程完成准备工作！ 这些准备工作并不会影响你的计算机，不做的话可能会导致装驱动后黑屏！ 关闭安全模式 1 重启计算机，在开机前狂按’ESC’进入bios设置，找到安全设置，并关闭它。 注：不同品牌电脑进入bios方式和安全设置的位置都不相同\n切换独显模式（笔记本电脑单显卡注意，服务器略过） 1 在bios设置中找到显卡设置，系统默认的为集显模式，将其修改为独显模式。 更新软件列表和安装必要软件、依赖 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 sudo apt-get update #更新软件列表 # sudo apt-get install -y g++ gcc make sudo apt download $(apt-rdepends g++ gcc make | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) sudo apt download $(apt-rdepends python3-pip | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) sudo apt download $(apt-rdepends build-essential cmake git | \\ grep -v &#34;^ &#34; | \\ sed &#39;s/debconf-2.0/debconf/g&#39; | \\ sed -e &#39;s/libc-dev/libc6-dev/g&#39; \\ -e &#39;s/libc6-dev-bin/libc6-dev/g&#39; \\ -e &#39;s/linux-libc6-dev/linux-libc-dev/g&#39; | \\ grep -vE &#34;^(default-logind|logind)$&#34;) # 安装hwinfo sudo apt download $(apt-rdepends hwinfo | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) # 安装alsa-utils sudo apt download $(apt-rdepends alsa-utils | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) 禁用nouveau (nouveau是通用的驱动程序) 1 sudo vim /etc/modprobe.d/blacklist.conf 文件末尾添加下面两行内容\n">
 <meta property='og:url' content='https://ynhugo.github.io/p/ubuntu-22.04-server%E5%AE%89%E8%A3%85nvidia%E9%A9%B1%E5%8A%A8/'>
 <meta property='og:site_name' content='ynhugo'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='ubuntu' /><meta property='article:tag' content='22.04' /><meta property='article:tag' content='server' /><meta property='article:tag' content='nvidia' /><meta property='article:published_time' content='2025-12-06T08:38:24&#43;08:00'/><meta property='article:modified_time' content='2025-12-06T08:38:24&#43;08:00'/>
 <meta name="twitter:title" content="ubuntu 22.04 server安装Nvidia驱动">
-<meta name="twitter:description" content=" ubuntu 22.04 server安装Nvidia驱动 1 2 3 4 5 sudo apt install -y apt-rdepends # sudo apt install -y net-toolsb # sudo apt install -y openssh-server sudo apt download $(apt-rdepends apt-rdepends | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39; | grep -v &#34;perlapi-&#34;) sudo apt download $(apt-rdepends net-tools | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) 准备工作 1 2 为了避免踩坑，建议按照流程完成准备工作！ 这些准备工作并不会影响你的计算机，不做的话可能会导致装驱动后黑屏！ 关闭安全模式 1 重启计算机，在开机前狂按’ESC’进入bios设置，找到安全设置，并关闭它。 注：不同品牌电脑进入bios方式和安全设置的位置都不相同\n切换独显模式（笔记本电脑单显卡注意，服务器略过） 1 在bios设置中找到显卡设置，系统默认的为集显模式，将其修改为独显模式。 更新软件列表和安装必要软件、依赖 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 sudo apt-get update #更新软件列表 # sudo apt-get install -y g++ gcc make sudo apt download $(apt-rdepends g++ gcc make | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) sudo apt download $(apt-rdepends python3-pip | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) sudo apt download $(apt-rdepends build-essential cmake git | \\ grep -v &#34;^ &#34; | \\ sed &#39;s/debconf-2.0/debconf/g&#39; | \\ sed -e &#39;s/libc-dev/libc6-dev/g&#39; \\ -e &#39;s/libc6-dev-bin/libc6-dev/g&#39; \\ -e &#39;s/linux-libc6-dev/linux-libc-dev/g&#39; | \\ grep -vE &#34;^(default-logind|logind)$&#34;) # 安装hwinfo sudo apt download $(apt-rdepends hwinfo | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) # 安装alsa-utils sudo apt download $(apt-rdepends alsa-utils | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) 禁用nouveau (nouveau是通用的驱动程序) 1 sudo vim /etc/modprobe.d/blacklist.conf 文件末尾添加下面两行内容\n">
+<meta name="twitter:description" content=" ubuntu 22.04 server安装Nvidia驱动 1 2 3 4 5 sudo apt install -y apt-rdepends # sudo apt install -y net-tools # sudo apt install -y openssh-server sudo apt download $(apt-rdepends apt-rdepends | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39; | grep -v &#34;perlapi-&#34;) sudo apt download $(apt-rdepends net-tools | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) 准备工作 1 2 为了避免踩坑，建议按照流程完成准备工作！ 这些准备工作并不会影响你的计算机，不做的话可能会导致装驱动后黑屏！ 关闭安全模式 1 重启计算机，在开机前狂按’ESC’进入bios设置，找到安全设置，并关闭它。 注：不同品牌电脑进入bios方式和安全设置的位置都不相同\n切换独显模式（笔记本电脑单显卡注意，服务器略过） 1 在bios设置中找到显卡设置，系统默认的为集显模式，将其修改为独显模式。 更新软件列表和安装必要软件、依赖 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 sudo apt-get update #更新软件列表 # sudo apt-get install -y g++ gcc make sudo apt download $(apt-rdepends g++ gcc make | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) sudo apt download $(apt-rdepends python3-pip | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) sudo apt download $(apt-rdepends build-essential cmake git | \\ grep -v &#34;^ &#34; | \\ sed &#39;s/debconf-2.0/debconf/g&#39; | \\ sed -e &#39;s/libc-dev/libc6-dev/g&#39; \\ -e &#39;s/libc6-dev-bin/libc6-dev/g&#39; \\ -e &#39;s/linux-libc6-dev/linux-libc-dev/g&#39; | \\ grep -vE &#34;^(default-logind|logind)$&#34;) # 安装hwinfo sudo apt download $(apt-rdepends hwinfo | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) # 安装alsa-utils sudo apt download $(apt-rdepends alsa-utils | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) 禁用nouveau (nouveau是通用的驱动程序) 1 sudo vim /etc/modprobe.d/blacklist.conf 文件末尾添加下面两行内容\n">
     </head>
     <body class="
     article-page
@@ -376,7 +376,17 @@
 </li>
 </ul>
 </li>
-<li><a href="#headline-31">参考链接</a>
+<li><a href="#headline-31">多用户创建与删除</a>
+<ul>
+<li><a href="#headline-32">用户列表</a>
+</li>
+<li><a href="#headline-33">创建用户</a>
+</li>
+<li><a href="#headline-34">删除用户</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-35">参考链接</a>
 </li>
 </ul>
 </li>
@@ -436,7 +446,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 8 分钟
+                    阅读时长: 9 分钟
                 </time>
             </div>
         
@@ -468,7 +478,7 @@ ubuntu 22.04 server安装Nvidia驱动
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo apt install -y apt-rdepends
-</span></span><span class="line"><span class="cl"><span class="c1"># sudo apt install -y net-toolsb</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># sudo apt install -y net-tools</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># sudo apt install -y openssh-server</span>
 </span></span><span class="line"><span class="cl">sudo apt download <span class="k">$(</span>apt-rdepends apt-rdepends <span class="p">|</span> grep -v <span class="s2">&#34;^ &#34;</span> <span class="p">|</span> sed <span class="s1">&#39;s/debconf-2.0/debconf/g&#39;</span> <span class="p">|</span> grep -v <span class="s2">&#34;perlapi-&#34;</span><span class="k">)</span>
 </span></span><span class="line"><span class="cl">sudo apt download <span class="k">$(</span>apt-rdepends net-tools <span class="p">|</span> grep -v <span class="s2">&#34;^ &#34;</span> <span class="p">|</span> sed <span class="s1">&#39;s/debconf-2.0/debconf/g&#39;</span><span class="k">)</span></span></span></code></pre></td></tr></table>
@@ -560,7 +570,7 @@ ubuntu 22.04 server安装Nvidia驱动
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># sudo apt-get install -y g++ gcc make</span>
 </span></span><span class="line"><span class="cl">sudo apt download <span class="k">$(</span>apt-rdepends g++ gcc make <span class="p">|</span> grep -v <span class="s2">&#34;^ &#34;</span> <span class="p">|</span> sed <span class="s1">&#39;s/debconf-2.0/debconf/g&#39;</span><span class="k">)</span>
-</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">sudo apt download <span class="k">$(</span>apt-rdepends python3-pip <span class="p">|</span> grep -v <span class="s2">&#34;^ &#34;</span> <span class="p">|</span> sed <span class="s1">&#39;s/debconf-2.0/debconf/g&#39;</span><span class="k">)</span>
 </span></span><span class="line"><span class="cl">sudo apt download <span class="k">$(</span>apt-rdepends build-essential cmake git <span class="p">|</span> <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>                      grep -v <span class="s2">&#34;^ &#34;</span> <span class="p">|</span> <span class="se">\
@@ -768,9 +778,9 @@ apt命令安装
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="c1"># apt-get install nvidia-driver-535</span>
-</span></span><span class="line"><span class="cl">  <span class="c1"># sudo apt download $(apt-rdepends nvidia-driver-535 | grep -v &#34;^ &#34; | grep -v -e &#34;xorg-video-abi&#34; -e &#34;libc-dev&#34; -e &#34;kldutils&#34; -e &#34;perlapi-5.34&#34; | sed &#39;s/debconf-2.0/debconf/g&#39;)</span>
-</span></span><span class="line"><span class="cl">  sudo apt-get install -d -o dir::cache::archives<span class="o">=</span><span class="s2">&#34;</span><span class="nv">$HOME</span><span class="s2">/ubuntu-drivers&#34;</span> nvidia-driver-580
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># apt-get install nvidia-driver-535</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># sudo apt download $(apt-rdepends nvidia-driver-535 | grep -v &#34;^ &#34; | grep -v -e &#34;xorg-video-abi&#34; -e &#34;libc-dev&#34; -e &#34;kldutils&#34; -e &#34;perlapi-5.34&#34; | sed &#39;s/debconf-2.0/debconf/g&#39;)</span>
+</span></span><span class="line"><span class="cl">sudo apt-get install -d -o dir::cache::archives<span class="o">=</span><span class="s2">&#34;</span><span class="nv">$HOME</span><span class="s2">/ubuntu-drivers&#34;</span> nvidia-driver-580
 </span></span><span class="line"><span class="cl">sudo dpkg -i <span class="nv">$HOME</span>/ubuntu-drivers/*.deb</span></span></code></pre></td></tr></table>
 </div>
 </div>
@@ -897,27 +907,27 @@ apt命令安装
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">Wed Jul <span class="m">19</span> 11:08:47 <span class="m">2023</span>       
 </span></span><span class="line"><span class="cl">+---------------------------------------------------------------------------------------+
-</span></span><span class="line"><span class="cl">    <span class="p">|</span> NVIDIA-SMI 535.54.03              Driver Version: 535.54.03    CUDA Version: 12.2     <span class="p">|</span>
-</span></span><span class="line"><span class="cl">    <span class="p">|</span>-----------------------------------------+----------------------+----------------------+
-</span></span><span class="line"><span class="cl">    <span class="p">|</span> GPU  Name                 Persistence-M <span class="p">|</span> Bus-Id        Disp.A <span class="p">|</span> Volatile Uncorr. ECC <span class="p">|</span>
-</span></span><span class="line"><span class="cl">    <span class="p">|</span> Fan  Temp   Perf          Pwr:Usage/Cap <span class="p">|</span>         Memory-Usage <span class="p">|</span> GPU-Util  Compute M. <span class="p">|</span>
-</span></span><span class="line"><span class="cl">    <span class="p">|</span>                                         <span class="p">|</span>                      <span class="p">|</span>               MIG M. <span class="p">|</span>
-</span></span><span class="line"><span class="cl">    <span class="p">|</span><span class="o">=========================================</span>+<span class="o">======================</span>+<span class="o">======================</span><span class="p">|</span>
-</span></span><span class="line"><span class="cl">    <span class="p">|</span>   <span class="m">0</span>  NVIDIA GeForce RTX <span class="m">4060</span> ...    Off <span class="p">|</span> 00000000:01:00.0  On <span class="p">|</span>                  N/A <span class="p">|</span>
-</span></span><span class="line"><span class="cl">    <span class="p">|</span> N/A   40C    P8               2W /  80W <span class="p">|</span>    571MiB /  8188MiB <span class="p">|</span>      0%      Default <span class="p">|</span>
-</span></span><span class="line"><span class="cl">    <span class="p">|</span>                                         <span class="p">|</span>                      <span class="p">|</span>                  N/A <span class="p">|</span>
-</span></span><span class="line"><span class="cl">    +-----------------------------------------+----------------------+----------------------+
-</span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl">    +---------------------------------------------------------------------------------------+
-</span></span><span class="line"><span class="cl">    <span class="p">|</span> Processes:                                                                            <span class="p">|</span>
-</span></span><span class="line"><span class="cl">    <span class="p">|</span>  GPU   GI   CI        PID   Type   Process name                            GPU Memory <span class="p">|</span>
-</span></span><span class="line"><span class="cl">    <span class="p">|</span>        ID   ID                                                             Usage      <span class="p">|</span>
-</span></span><span class="line"><span class="cl">    <span class="p">|</span><span class="o">=======================================================================================</span><span class="p">|</span>
-</span></span><span class="line"><span class="cl">    <span class="p">|</span>    <span class="m">0</span>   N/A  N/A      <span class="m">1489</span>      G   /usr/lib/xorg/Xorg                          202MiB <span class="p">|</span>
-</span></span><span class="line"><span class="cl">    <span class="p">|</span>    <span class="m">0</span>   N/A  N/A      <span class="m">2539</span>      G   /usr/bin/gnome-shell                         57MiB <span class="p">|</span>
-</span></span><span class="line"><span class="cl">    <span class="p">|</span>    <span class="m">0</span>   N/A  N/A      <span class="m">3848</span>      G   ...irefox/2908/usr/lib/firefox/firefox      205MiB <span class="p">|</span>
-</span></span><span class="line"><span class="cl">    <span class="p">|</span>    <span class="m">0</span>   N/A  N/A     <span class="m">20451</span>      G   ...dererForSitePerProcess --no-sandbox       94MiB <span class="p">|</span>
-</span></span><span class="line"><span class="cl">    +---------------------------------------------------------------------------------------+</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">      <span class="p">|</span> NVIDIA-SMI 535.54.03              Driver Version: 535.54.03    CUDA Version: 12.2     <span class="p">|</span>
+</span></span><span class="line"><span class="cl">      <span class="p">|</span>-----------------------------------------+----------------------+----------------------+
+</span></span><span class="line"><span class="cl">      <span class="p">|</span> GPU  Name                 Persistence-M <span class="p">|</span> Bus-Id        Disp.A <span class="p">|</span> Volatile Uncorr. ECC <span class="p">|</span>
+</span></span><span class="line"><span class="cl">      <span class="p">|</span> Fan  Temp   Perf          Pwr:Usage/Cap <span class="p">|</span>         Memory-Usage <span class="p">|</span> GPU-Util  Compute M. <span class="p">|</span>
+</span></span><span class="line"><span class="cl">      <span class="p">|</span>                                         <span class="p">|</span>                      <span class="p">|</span>               MIG M. <span class="p">|</span>
+</span></span><span class="line"><span class="cl">      <span class="p">|</span><span class="o">=========================================</span>+<span class="o">======================</span>+<span class="o">======================</span><span class="p">|</span>
+</span></span><span class="line"><span class="cl">      <span class="p">|</span>   <span class="m">0</span>  NVIDIA GeForce RTX <span class="m">4060</span> ...    Off <span class="p">|</span> 00000000:01:00.0  On <span class="p">|</span>                  N/A <span class="p">|</span>
+</span></span><span class="line"><span class="cl">      <span class="p">|</span> N/A   40C    P8               2W /  80W <span class="p">|</span>    571MiB /  8188MiB <span class="p">|</span>      0%      Default <span class="p">|</span>
+</span></span><span class="line"><span class="cl">      <span class="p">|</span>                                         <span class="p">|</span>                      <span class="p">|</span>                  N/A <span class="p">|</span>
+</span></span><span class="line"><span class="cl">      +-----------------------------------------+----------------------+----------------------+
+</span></span><span class="line"><span class="cl">      
+</span></span><span class="line"><span class="cl">      +---------------------------------------------------------------------------------------+
+</span></span><span class="line"><span class="cl">      <span class="p">|</span> Processes:                                                                            <span class="p">|</span>
+</span></span><span class="line"><span class="cl">      <span class="p">|</span>  GPU   GI   CI        PID   Type   Process name                            GPU Memory <span class="p">|</span>
+</span></span><span class="line"><span class="cl">      <span class="p">|</span>        ID   ID                                                             Usage      <span class="p">|</span>
+</span></span><span class="line"><span class="cl">      <span class="p">|</span><span class="o">=======================================================================================</span><span class="p">|</span>
+</span></span><span class="line"><span class="cl">      <span class="p">|</span>    <span class="m">0</span>   N/A  N/A      <span class="m">1489</span>      G   /usr/lib/xorg/Xorg                          202MiB <span class="p">|</span>
+</span></span><span class="line"><span class="cl">      <span class="p">|</span>    <span class="m">0</span>   N/A  N/A      <span class="m">2539</span>      G   /usr/bin/gnome-shell                         57MiB <span class="p">|</span>
+</span></span><span class="line"><span class="cl">      <span class="p">|</span>    <span class="m">0</span>   N/A  N/A      <span class="m">3848</span>      G   ...irefox/2908/usr/lib/firefox/firefox      205MiB <span class="p">|</span>
+</span></span><span class="line"><span class="cl">      <span class="p">|</span>    <span class="m">0</span>   N/A  N/A     <span class="m">20451</span>      G   ...dererForSitePerProcess --no-sandbox       94MiB <span class="p">|</span>
+</span></span><span class="line"><span class="cl">      +---------------------------------------------------------------------------------------+</span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
@@ -985,9 +995,9 @@ apt命令安装
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  wget https://repo.anaconda.com/archive/Anaconda3-2025.12-1-Linux-x86_64.sh
-</span></span><span class="line"><span class="cl">  chmod +x Anaconda3-2025.12-1-Linux-x86_64.sh
-</span></span><span class="line"><span class="cl">  sh Anaconda3-2025.12-1-Linux-x86_64.sh</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">wget https://repo.anaconda.com/archive/Anaconda3-2025.12-1-Linux-x86_64.sh
+</span></span><span class="line"><span class="cl">chmod +x Anaconda3-2025.12-1-Linux-x86_64.sh
+</span></span><span class="line"><span class="cl">sh Anaconda3-2025.12-1-Linux-x86_64.sh</span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
@@ -1067,10 +1077,10 @@ apt命令安装
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="c1"># wget https://download.pytorch.org/whl/cu130/torch-2.9.0%2Bcu130-cp314-cp314-manylinux_2_28_x86_64.whl</span>
-</span></span><span class="line"><span class="cl">  pip download <span class="nv">torch</span><span class="o">==</span>2.9.0 <span class="nv">torchvision</span><span class="o">==</span>0.24.0 <span class="nv">torchaudio</span><span class="o">==</span>2.9.0 --index-url https://download.pytorch.org/whl/cu130 -d ./
-</span></span><span class="line"><span class="cl">  <span class="c1"># pip install *.whl</span>
-</span></span><span class="line"><span class="cl">  pip install --no-index --find-links<span class="o">=</span>./ *.whl</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># wget https://download.pytorch.org/whl/cu130/torch-2.9.0%2Bcu130-cp314-cp314-manylinux_2_28_x86_64.whl</span>
+</span></span><span class="line"><span class="cl">pip download <span class="nv">torch</span><span class="o">==</span>2.9.0 <span class="nv">torchvision</span><span class="o">==</span>0.24.0 <span class="nv">torchaudio</span><span class="o">==</span>2.9.0 --index-url https://download.pytorch.org/whl/cu130 -d ./
+</span></span><span class="line"><span class="cl"><span class="c1"># pip install *.whl</span>
+</span></span><span class="line"><span class="cl">pip install --no-index --find-links<span class="o">=</span>./ *.whl</span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
@@ -1586,9 +1596,147 @@ Linux 系统下硬盘自动挂载完全指南
 </div>
 <div id="outline-container-headline-31" class="outline-3">
 <h3 id="headline-31">
-参考链接
+多用户创建与删除
 </h3>
 <div id="outline-text-headline-31" class="outline-text-3">
+<div id="outline-container-headline-32" class="outline-4">
+<h4 id="headline-32">
+用户列表
+</h4>
+<div id="outline-text-headline-32" class="outline-text-4">
+<div class="table-wrapper"><table>
+<tbody>
+<tr>
+<td>user1</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>user2</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>user3</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>user4</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div id="outline-container-headline-33" class="outline-4">
+<h4 id="headline-33">
+创建用户
+</h4>
+<div id="outline-text-headline-33" class="outline-text-4">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/usr/bin/bash
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="nv">users</span><span class="o">=(</span>
+</span></span><span class="line"><span class="cl">  user1
+</span></span><span class="line"><span class="cl">  user2
+</span></span><span class="line"><span class="cl">  user3
+</span></span><span class="line"><span class="cl">  user4
+</span></span><span class="line"><span class="cl"><span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> i in <span class="s2">&#34;</span><span class="si">${</span><span class="nv">users</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># sudo adduser ${i}</span>
+</span></span><span class="line"><span class="cl">  sudo adduser --quiet --disabled-password --shell <span class="k">$(</span>which bash<span class="k">)</span> --home /home/<span class="si">${</span><span class="nv">i</span><span class="si">}</span> --gecos <span class="s2">&#34;User&#34;</span> <span class="si">${</span><span class="nv">i</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">  sleep <span class="m">1</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># 添加sudo权限</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># 以添加 test 这个用户到 sudo 用户组为例子，输入下面命令：</span>
+</span></span><span class="line"><span class="cl">  sudo usermod -aG sudo <span class="si">${</span><span class="nv">i</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">  sudo tee /etc/sudoers.d/<span class="si">${</span><span class="nv">i</span><span class="si">}</span> <span class="o">&lt;&lt;&lt;</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">i</span><span class="si">}</span><span class="s2"> ALL=(ALL) ALL&#34;</span>
+</span></span><span class="line"><span class="cl">  sudo chmod <span class="m">440</span> /etc/sudoers.d/<span class="si">${</span><span class="nv">i</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">done</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-34" class="outline-4">
+<h4 id="headline-34">
+删除用户
+</h4>
+<div id="outline-text-headline-34" class="outline-text-4">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/usr/bin/bash
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="nv">users</span><span class="o">=(</span>
+</span></span><span class="line"><span class="cl">  user1
+</span></span><span class="line"><span class="cl">  user2
+</span></span><span class="line"><span class="cl">  user3
+</span></span><span class="line"><span class="cl">  user4
+</span></span><span class="line"><span class="cl"><span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> i in <span class="s2">&#34;</span><span class="si">${</span><span class="nv">users</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">i</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  sudo pkill -u <span class="si">${</span><span class="nv">i</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">  sudo sleep <span class="m">2</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># 删除用户及其所有文件</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># sudo userdel ${i}               # 只删除用户</span>
+</span></span><span class="line"><span class="cl">  sudo userdel -r <span class="si">${</span><span class="nv">i</span><span class="si">}</span>            <span class="c1"># 完全删除用户及其主目录</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># 删除 sudo 配置</span>
+</span></span><span class="line"><span class="cl">  sudo rm -f /etc/sudoers.d/<span class="si">${</span><span class="nv">i</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">done</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-35" class="outline-3">
+<h3 id="headline-35">
+参考链接
+</h3>
+<div id="outline-text-headline-35" class="outline-text-3">
 <p>
 <a href="https://blog.csdn.net/zgp210317/article/details/120586189">在Ubuntu本地下载软件包并递归下载其所有依赖包</a></p>
 <p>
@@ -1636,7 +1784,7 @@ Linux 系统下硬盘自动挂载完全指南
 <p>
 <a href="https://juejin.cn/post/7517227110244417588"> 离线安装 Python 依赖：利用 pip download 构建本地包仓库 </a></p>
 <p>
-<a href="https://blog.csdn.net/weixin_44956153/article/details/142303905">PyTorch离线版本安装（超详细版！）</a></p>
+ <a href="https://blog.csdn.net/weixin_44956153/article/details/142303905">PyTorch离线版本安装（超详细版！）</a></p>
 </div>
 </div>
 </div>
