@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" PyTorch安装方式全面归纳 一、核心安装命令对比 1. 标准安装命令（最新稳定版） 1 2 3 4 5 # Conda（自动处理CUDA依赖） conda install pytorch torchvision torchaudio pytorch-cuda=13.0 -c pytorch -c nvidia # Pip（需系统已安装CUDA） pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu130 2. CUDA版本对应表 CUDA版本 Conda命令 Pip索引URL 13.0 pytorch-cuda=13.0 https://.../whl/cu130 12.1 pytorch-cuda=12.1 https://.../whl/cu121 11.8 pytorch-cuda=11.8 https://.../whl/cu118 CPU cpuonly 不加=–index-url=参数 二、Conda与Pip的本质区别 维度 Conda Pip 管理范围 跨语言包管理器 Python专用包管理器 依赖处理 自动安装二进制依赖（CUDA/cuDNN等） 仅Python包，需手动安装系统依赖 环境隔离 内置完整环境隔离 依赖venv/virtualenv 适用场景 科学计算、深度学习、多语言项目 纯Python项目、生产部署 国内镜像 清华源、中科大源等 清华源、阿里源等 三、国内镜像源使用策略 1. 已配置清华源的情况 1 2 3 4 5 # 优先尝试（不指定通道，让conda自动选择） conda install pytorch torchvision torchaudio pytorch-cuda=13.0 # 如果清华源没有，强制使用官方源 conda install ... -c pytorch -c nvidia --override-channels 2. 清华源配置命令 1 2 3 4 5 6 # 配置conda清华源 conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/ conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/pytorch/ # 配置pip清华源 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple 四、安装流程决策树 开始安装PyTorch ↓ 是否有GPU？ → 否 → 安装CPU版本 ↓是 CUDA版本？ → 检查 nvidia-smi ↓ 选择安装方式： ├─ Conda（推荐新手、Windows用户） │ ├─ 已配清华源 → conda install pytorch... │ └─ 未配/无包 → conda install ... -c pytorch -c nvidia │ └─ Pip（推荐生产、Docker环境） ├─ 系统已装CUDA → pip install torch... --index-url cuXXX └─ 需装CUDA → 先安装CUDA Toolkit，再pip安装 五、验证安装的正确方式 1 2 3 4 5 6 7 8 9 10 import torch print(f&#34;PyTorch版本: {torch.__version__}&#34;) print(f&#34;CUDA可用: {torch.cuda.is_available()}&#34;) if torch.cuda.is_available(): print(f&#34;CUDA版本: {torch.version.cuda}&#34;) print(f&#34;GPU名称: {torch.cuda.get_device_name(0)}&#34;) # 简单测试 x = torch.randn(3, 3).cuda() print(f&#34;GPU计算测试通过: {x.sum()}&#34;) 六、各场景推荐方案 1. 学术研究/实验环境 1 2 3 4 # 使用Conda创建独立环境 conda create -n research python=3.10 conda activate research conda install pytorch torchvision torchaudio pytorch-cuda=13.0 2. 生产服务器部署 1 2 3 # 使用Docker + Pip FROM nvidia/cuda:13.0-base RUN pip install torch torchvision torchaudio --index-url https://.../cu130 3. 团队协作项目 1 2 3 4 5 6 7 8 9 10 11 12 13 # 使用environment.yml（Conda） # environment.yml内容： name: project_env channels: - pytorch - nvidia - defaults dependencies: - python=3.10 - pytorch=2.0.0 - torchvision - torchaudio - pytorch-cuda=13.0 4. 离线/内网环境 1 2 3 4 5 6 7 8 9 # 在有网环境下载包 conda pack -n pytorch_env -o pytorch_env.tar.gz # 或 pip download torch torchvision torchaudio --index-url ... # 离线环境安装 conda create -n pytorch_env --offline --file pkgs.txt # 或 pip install --no-index --find-links=./packages torch 七、常见问题速查 问题 可能原因 解决方案 CUDA不可用 1. 驱动版本低2. CUDA版本不匹配3. 安装了CPU版本 更新驱动、检查CUDA版本、重装GPU版本 安装太慢 网络问题 使用国内镜像源、设置超时参数 包冲突 环境中有冲突包 创建新环境、使用conda clean 内存不足 包太大或内存小 使用pip安装、清理缓存 八、最佳实践总结 *环境隔离优先*：始终在虚拟环境中安装 *版本明确*：生产环境固定版本号 *镜像加速*：国内用户优先配置清华源 *验证安装*：安装后务必运行验证脚本 *文档记录*：记录安装命令和环境配置 九、一句话选择指南 新手/Windows/快速开始 → Conda安装（自动处理依赖） 生产/服务器/Docker → Pip安装（轻量可控） 国内网络 → 配置清华源加速 团队协作 → 使用environment.yml固化环境 特定版本 → 明确指定版本号和CUDA版本 记住：*没有绝对最好的方式，只有最适合当前场景的方式*。根据具体需求选择，并保持团队内的一致性。\n">
+<title>PyTorch安装方式全面归纳</title>
+
+<link rel='canonical' href='https://ynhugo.github.io/p/pytorch%E5%AE%89%E8%A3%85%E6%96%B9%E5%BC%8F%E5%85%A8%E9%9D%A2%E5%BD%92%E7%BA%B3/'>
+
+<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="PyTorch安装方式全面归纳">
+<meta property='og:description' content=" PyTorch安装方式全面归纳 一、核心安装命令对比 1. 标准安装命令（最新稳定版） 1 2 3 4 5 # Conda（自动处理CUDA依赖） conda install pytorch torchvision torchaudio pytorch-cuda=13.0 -c pytorch -c nvidia # Pip（需系统已安装CUDA） pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu130 2. CUDA版本对应表 CUDA版本 Conda命令 Pip索引URL 13.0 pytorch-cuda=13.0 https://.../whl/cu130 12.1 pytorch-cuda=12.1 https://.../whl/cu121 11.8 pytorch-cuda=11.8 https://.../whl/cu118 CPU cpuonly 不加=–index-url=参数 二、Conda与Pip的本质区别 维度 Conda Pip 管理范围 跨语言包管理器 Python专用包管理器 依赖处理 自动安装二进制依赖（CUDA/cuDNN等） 仅Python包，需手动安装系统依赖 环境隔离 内置完整环境隔离 依赖venv/virtualenv 适用场景 科学计算、深度学习、多语言项目 纯Python项目、生产部署 国内镜像 清华源、中科大源等 清华源、阿里源等 三、国内镜像源使用策略 1. 已配置清华源的情况 1 2 3 4 5 # 优先尝试（不指定通道，让conda自动选择） conda install pytorch torchvision torchaudio pytorch-cuda=13.0 # 如果清华源没有，强制使用官方源 conda install ... -c pytorch -c nvidia --override-channels 2. 清华源配置命令 1 2 3 4 5 6 # 配置conda清华源 conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/ conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/pytorch/ # 配置pip清华源 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple 四、安装流程决策树 开始安装PyTorch ↓ 是否有GPU？ → 否 → 安装CPU版本 ↓是 CUDA版本？ → 检查 nvidia-smi ↓ 选择安装方式： ├─ Conda（推荐新手、Windows用户） │ ├─ 已配清华源 → conda install pytorch... │ └─ 未配/无包 → conda install ... -c pytorch -c nvidia │ └─ Pip（推荐生产、Docker环境） ├─ 系统已装CUDA → pip install torch... --index-url cuXXX └─ 需装CUDA → 先安装CUDA Toolkit，再pip安装 五、验证安装的正确方式 1 2 3 4 5 6 7 8 9 10 import torch print(f&#34;PyTorch版本: {torch.__version__}&#34;) print(f&#34;CUDA可用: {torch.cuda.is_available()}&#34;) if torch.cuda.is_available(): print(f&#34;CUDA版本: {torch.version.cuda}&#34;) print(f&#34;GPU名称: {torch.cuda.get_device_name(0)}&#34;) # 简单测试 x = torch.randn(3, 3).cuda() print(f&#34;GPU计算测试通过: {x.sum()}&#34;) 六、各场景推荐方案 1. 学术研究/实验环境 1 2 3 4 # 使用Conda创建独立环境 conda create -n research python=3.10 conda activate research conda install pytorch torchvision torchaudio pytorch-cuda=13.0 2. 生产服务器部署 1 2 3 # 使用Docker + Pip FROM nvidia/cuda:13.0-base RUN pip install torch torchvision torchaudio --index-url https://.../cu130 3. 团队协作项目 1 2 3 4 5 6 7 8 9 10 11 12 13 # 使用environment.yml（Conda） # environment.yml内容： name: project_env channels: - pytorch - nvidia - defaults dependencies: - python=3.10 - pytorch=2.0.0 - torchvision - torchaudio - pytorch-cuda=13.0 4. 离线/内网环境 1 2 3 4 5 6 7 8 9 # 在有网环境下载包 conda pack -n pytorch_env -o pytorch_env.tar.gz # 或 pip download torch torchvision torchaudio --index-url ... # 离线环境安装 conda create -n pytorch_env --offline --file pkgs.txt # 或 pip install --no-index --find-links=./packages torch 七、常见问题速查 问题 可能原因 解决方案 CUDA不可用 1. 驱动版本低2. CUDA版本不匹配3. 安装了CPU版本 更新驱动、检查CUDA版本、重装GPU版本 安装太慢 网络问题 使用国内镜像源、设置超时参数 包冲突 环境中有冲突包 创建新环境、使用conda clean 内存不足 包太大或内存小 使用pip安装、清理缓存 八、最佳实践总结 *环境隔离优先*：始终在虚拟环境中安装 *版本明确*：生产环境固定版本号 *镜像加速*：国内用户优先配置清华源 *验证安装*：安装后务必运行验证脚本 *文档记录*：记录安装命令和环境配置 九、一句话选择指南 新手/Windows/快速开始 → Conda安装（自动处理依赖） 生产/服务器/Docker → Pip安装（轻量可控） 国内网络 → 配置清华源加速 团队协作 → 使用environment.yml固化环境 特定版本 → 明确指定版本号和CUDA版本 记住：*没有绝对最好的方式，只有最适合当前场景的方式*。根据具体需求选择，并保持团队内的一致性。\n">
+<meta property='og:url' content='https://ynhugo.github.io/p/pytorch%E5%AE%89%E8%A3%85%E6%96%B9%E5%BC%8F%E5%85%A8%E9%9D%A2%E5%BD%92%E7%BA%B3/'>
+<meta property='og:site_name' content='ynhugo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='conda' /><meta property='article:tag' content='python' /><meta property='article:tag' content='gpu' /><meta property='article:published_time' content='2025-12-24T17:20:58&#43;08:00'/><meta property='article:modified_time' content='2025-12-24T17:20:58&#43;08:00'/>
+<meta name="twitter:title" content="PyTorch安装方式全面归纳">
+<meta name="twitter:description" content=" PyTorch安装方式全面归纳 一、核心安装命令对比 1. 标准安装命令（最新稳定版） 1 2 3 4 5 # Conda（自动处理CUDA依赖） conda install pytorch torchvision torchaudio pytorch-cuda=13.0 -c pytorch -c nvidia # Pip（需系统已安装CUDA） pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu130 2. CUDA版本对应表 CUDA版本 Conda命令 Pip索引URL 13.0 pytorch-cuda=13.0 https://.../whl/cu130 12.1 pytorch-cuda=12.1 https://.../whl/cu121 11.8 pytorch-cuda=11.8 https://.../whl/cu118 CPU cpuonly 不加=–index-url=参数 二、Conda与Pip的本质区别 维度 Conda Pip 管理范围 跨语言包管理器 Python专用包管理器 依赖处理 自动安装二进制依赖（CUDA/cuDNN等） 仅Python包，需手动安装系统依赖 环境隔离 内置完整环境隔离 依赖venv/virtualenv 适用场景 科学计算、深度学习、多语言项目 纯Python项目、生产部署 国内镜像 清华源、中科大源等 清华源、阿里源等 三、国内镜像源使用策略 1. 已配置清华源的情况 1 2 3 4 5 # 优先尝试（不指定通道，让conda自动选择） conda install pytorch torchvision torchaudio pytorch-cuda=13.0 # 如果清华源没有，强制使用官方源 conda install ... -c pytorch -c nvidia --override-channels 2. 清华源配置命令 1 2 3 4 5 6 # 配置conda清华源 conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/ conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/pytorch/ # 配置pip清华源 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple 四、安装流程决策树 开始安装PyTorch ↓ 是否有GPU？ → 否 → 安装CPU版本 ↓是 CUDA版本？ → 检查 nvidia-smi ↓ 选择安装方式： ├─ Conda（推荐新手、Windows用户） │ ├─ 已配清华源 → conda install pytorch... │ └─ 未配/无包 → conda install ... -c pytorch -c nvidia │ └─ Pip（推荐生产、Docker环境） ├─ 系统已装CUDA → pip install torch... --index-url cuXXX └─ 需装CUDA → 先安装CUDA Toolkit，再pip安装 五、验证安装的正确方式 1 2 3 4 5 6 7 8 9 10 import torch print(f&#34;PyTorch版本: {torch.__version__}&#34;) print(f&#34;CUDA可用: {torch.cuda.is_available()}&#34;) if torch.cuda.is_available(): print(f&#34;CUDA版本: {torch.version.cuda}&#34;) print(f&#34;GPU名称: {torch.cuda.get_device_name(0)}&#34;) # 简单测试 x = torch.randn(3, 3).cuda() print(f&#34;GPU计算测试通过: {x.sum()}&#34;) 六、各场景推荐方案 1. 学术研究/实验环境 1 2 3 4 # 使用Conda创建独立环境 conda create -n research python=3.10 conda activate research conda install pytorch torchvision torchaudio pytorch-cuda=13.0 2. 生产服务器部署 1 2 3 # 使用Docker + Pip FROM nvidia/cuda:13.0-base RUN pip install torch torchvision torchaudio --index-url https://.../cu130 3. 团队协作项目 1 2 3 4 5 6 7 8 9 10 11 12 13 # 使用environment.yml（Conda） # environment.yml内容： name: project_env channels: - pytorch - nvidia - defaults dependencies: - python=3.10 - pytorch=2.0.0 - torchvision - torchaudio - pytorch-cuda=13.0 4. 离线/内网环境 1 2 3 4 5 6 7 8 9 # 在有网环境下载包 conda pack -n pytorch_env -o pytorch_env.tar.gz # 或 pip download torch torchvision torchaudio --index-url ... # 离线环境安装 conda create -n pytorch_env --offline --file pkgs.txt # 或 pip install --no-index --find-links=./packages torch 七、常见问题速查 问题 可能原因 解决方案 CUDA不可用 1. 驱动版本低2. CUDA版本不匹配3. 安装了CPU版本 更新驱动、检查CUDA版本、重装GPU版本 安装太慢 网络问题 使用国内镜像源、设置超时参数 包冲突 环境中有冲突包 创建新环境、使用conda clean 内存不足 包太大或内存小 使用pip安装、清理缓存 八、最佳实践总结 *环境隔离优先*：始终在虚拟环境中安装 *版本明确*：生产环境固定版本号 *镜像加速*：国内用户优先配置清华源 *验证安装*：安装后务必运行验证脚本 *文档记录*：记录安装命令和环境配置 九、一句话选择指南 新手/Windows/快速开始 → Conda安装（自动处理依赖） 生产/服务器/Docker → Pip安装（轻量可控） 国内网络 → 配置清华源加速 团队协作 → 使用environment.yml固化环境 特定版本 → 明确指定版本号和CUDA版本 记住：*没有绝对最好的方式，只有最适合当前场景的方式*。根据具体需求选择，并保持团队内的一致性。\n">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_f509edb42ecc0ebd.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🍥</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">ynhugo</a></h1>
+            <h2 class="site-description">ynhugo.github.io</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/CaiJimmy/hugo-theme-stack'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://x.com'
+                        target="_blank"
+                        title="x"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/book/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 512 512" fill="none" stroke="#808080" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m443.6,11h-321c-35.4,0-64.6,26.1-64.6,59.4v371.1c0,33.4 26.1,59.4 59.4,59.4h326.2c6.3,0 10.4-4.2 10.4-11.5v-468c0-6.2-4.2-10.4-10.4-10.4zm-321,20.9h310.5v350.3h-315.7c-14.9,0-28.3,5.2-38.6,13.9v-325.7c-1.42109e-14-21.9 19.8-38.5 43.8-38.5zm310.6,449.3h-315.8c-21.9,0-38.6-16.7-38.6-38.6 0-21.9 17.7-38.6 38.6-38.6l315.8,.1v77.1z"/>
+</svg>
+                
+                <span>Book</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E5%85%B3%E4%BA%8E/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                    
+                        <li id="i18n-switch">  
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                            <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
+                                
+                                    <option value="https://ynhugo.github.io/en/" >English</option>
+                                
+                                    <option value="https://ynhugo.github.io/" selected>中文</option>
+                                
+                                    <option value="https://ynhugo.github.io/ar/" >عربي</option>
+                                
+                            </select>
+                        </li>
+                    
+                
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+<ul>
+<li><a href="#pytorch安装方式全面归纳">PyTorch安装方式全面归纳</a>
+<ul>
+<li><a href="#一核心安装命令对比">一、核心安装命令对比</a>
+<ul>
+<li><a href="#标准安装命令最新稳定版">1. <strong>标准安装命令（最新稳定版）</strong></a>
+</li>
+<li><a href="#cuda版本对应表">2. <strong>CUDA版本对应表</strong></a>
+</li>
+</ul>
+</li>
+<li><a href="#二conda与pip的本质区别">二、Conda与Pip的本质区别</a>
+</li>
+<li><a href="#三国内镜像源使用策略">三、国内镜像源使用策略</a>
+<ul>
+<li><a href="#已配置清华源的情况">1. <strong>已配置清华源的情况</strong></a>
+</li>
+<li><a href="#清华源配置命令">2. <strong>清华源配置命令</strong></a>
+</li>
+</ul>
+</li>
+<li><a href="#四安装流程决策树">四、安装流程决策树</a>
+</li>
+<li><a href="#五验证安装的正确方式">五、验证安装的正确方式</a>
+</li>
+<li><a href="#六各场景推荐方案">六、各场景推荐方案</a>
+<ul>
+<li><a href="#学术研究实验环境">1. <strong>学术研究/实验环境</strong></a>
+</li>
+<li><a href="#生产服务器部署">2. <strong>生产服务器部署</strong></a>
+</li>
+<li><a href="#团队协作项目">3. <strong>团队协作项目</strong></a>
+</li>
+<li><a href="#离线内网环境">4. <strong>离线/内网环境</strong></a>
+</li>
+</ul>
+</li>
+<li><a href="#七常见问题速查">七、常见问题速查</a>
+</li>
+<li><a href="#八最佳实践总结">八、最佳实践总结</a>
+</li>
+<li><a href="#九一句话选择指南">九、一句话选择指南</a>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/pytorch%E5%AE%89%E8%A3%85%E6%96%B9%E5%BC%8F%E5%85%A8%E9%9D%A2%E5%BD%92%E7%BA%B3/">PyTorch安装方式全面归纳</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Dec 24, 2025</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 2 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    
+<div id="outline-container-pytorch安装方式全面归纳" class="outline-2">
+<h2 id="pytorch安装方式全面归纳">
+PyTorch安装方式全面归纳
+</h2>
+<div id="outline-text-pytorch安装方式全面归纳" class="outline-text-2">
+<div id="outline-container-一核心安装命令对比" class="outline-3">
+<h3 id="一核心安装命令对比">
+一、核心安装命令对比
+</h3>
+<div id="outline-text-一核心安装命令对比" class="outline-text-3">
+<div id="outline-container-标准安装命令最新稳定版" class="outline-4">
+<h4 id="标准安装命令最新稳定版">
+1. <strong>标准安装命令（最新稳定版）</strong>
+</h4>
+<div id="outline-text-标准安装命令最新稳定版" class="outline-text-4">
+<div class="src src-sh">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="c1"># Conda（自动处理CUDA依赖）</span>
+</span></span><span class="line"><span class="cl">conda install pytorch torchvision torchaudio pytorch-cuda<span class="o">=</span>13.0 -c pytorch -c nvidia
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Pip（需系统已安装CUDA）</span>
+</span></span><span class="line"><span class="cl">pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu130</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-cuda版本对应表" class="outline-4">
+<h4 id="cuda版本对应表">
+2. <strong>CUDA版本对应表</strong>
+</h4>
+<div id="outline-text-cuda版本对应表" class="outline-text-4">
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th class="align-right">CUDA版本</th>
+<th>Conda命令</th>
+<th>Pip索引URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="align-right">13.0</td>
+<td><code class="verbatim">pytorch-cuda=13.0</code></td>
+<td><code class="verbatim">https://.../whl/cu130</code></td>
+</tr>
+<tr>
+<td class="align-right">12.1</td>
+<td><code class="verbatim">pytorch-cuda=12.1</code></td>
+<td><code class="verbatim">https://.../whl/cu121</code></td>
+</tr>
+<tr>
+<td class="align-right">11.8</td>
+<td><code class="verbatim">pytorch-cuda=11.8</code></td>
+<td><code class="verbatim">https://.../whl/cu118</code></td>
+</tr>
+<tr>
+<td class="align-right">CPU</td>
+<td><code class="verbatim">cpuonly</code></td>
+<td>不加=–index-url=参数</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-二conda与pip的本质区别" class="outline-3">
+<h3 id="二conda与pip的本质区别">
+二、Conda与Pip的本质区别
+</h3>
+<div id="outline-text-二conda与pip的本质区别" class="outline-text-3">
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th><strong>Conda</strong></th>
+<th><strong>Pip</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>管理范围</strong></td>
+<td>跨语言包管理器</td>
+<td>Python专用包管理器</td>
+</tr>
+<tr>
+<td><strong>依赖处理</strong></td>
+<td>自动安装二进制依赖（CUDA/cuDNN等）</td>
+<td>仅Python包，需手动安装系统依赖</td>
+</tr>
+<tr>
+<td><strong>环境隔离</strong></td>
+<td>内置完整环境隔离</td>
+<td>依赖venv/virtualenv</td>
+</tr>
+<tr>
+<td><strong>适用场景</strong></td>
+<td>科学计算、深度学习、多语言项目</td>
+<td>纯Python项目、生产部署</td>
+</tr>
+<tr>
+<td><strong>国内镜像</strong></td>
+<td>清华源、中科大源等</td>
+<td>清华源、阿里源等</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div id="outline-container-三国内镜像源使用策略" class="outline-3">
+<h3 id="三国内镜像源使用策略">
+三、国内镜像源使用策略
+</h3>
+<div id="outline-text-三国内镜像源使用策略" class="outline-text-3">
+<div id="outline-container-已配置清华源的情况" class="outline-4">
+<h4 id="已配置清华源的情况">
+1. <strong>已配置清华源的情况</strong>
+</h4>
+<div id="outline-text-已配置清华源的情况" class="outline-text-4">
+<div class="src src-sh">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="c1"># 优先尝试（不指定通道，让conda自动选择）</span>
+</span></span><span class="line"><span class="cl">conda install pytorch torchvision torchaudio pytorch-cuda<span class="o">=</span>13.0
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 如果清华源没有，强制使用官方源</span>
+</span></span><span class="line"><span class="cl">conda install ... -c pytorch -c nvidia --override-channels</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-清华源配置命令" class="outline-4">
+<h4 id="清华源配置命令">
+2. <strong>清华源配置命令</strong>
+</h4>
+<div id="outline-text-清华源配置命令" class="outline-text-4">
+<div class="src src-sh">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="c1"># 配置conda清华源</span>
+</span></span><span class="line"><span class="cl">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/
+</span></span><span class="line"><span class="cl">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/pytorch/
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 配置pip清华源</span>
+</span></span><span class="line"><span class="cl">pip config <span class="nb">set</span> global.index-url https://pypi.tuna.tsinghua.edu.cn/simple</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-四安装流程决策树" class="outline-3">
+<h3 id="四安装流程决策树">
+四、安装流程决策树
+</h3>
+<div id="outline-text-四安装流程决策树" class="outline-text-3">
+<pre class="example">
+开始安装PyTorch
+    ↓
+是否有GPU？ → 否 → 安装CPU版本
+    ↓是
+CUDA版本？ → 检查 nvidia-smi
+    ↓
+选择安装方式：
+├─ Conda（推荐新手、Windows用户）
+│   ├─ 已配清华源 → conda install pytorch...
+│   └─ 未配/无包 → conda install ... -c pytorch -c nvidia
+│
+└─ Pip（推荐生产、Docker环境）
+    ├─ 系统已装CUDA → pip install torch... --index-url cuXXX
+    └─ 需装CUDA → 先安装CUDA Toolkit，再pip安装
+</pre>
+</div>
+</div>
+<div id="outline-container-五验证安装的正确方式" class="outline-3">
+<h3 id="五验证安装的正确方式">
+五、验证安装的正确方式
+</h3>
+<div id="outline-text-五验证安装的正确方式" class="outline-text-3">
+<div class="src src-python">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">torch</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;PyTorch版本: </span><span class="si">{</span><span class="n">torch</span><span class="o">.</span><span class="n">__version__</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;CUDA可用: </span><span class="si">{</span><span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;CUDA版本: </span><span class="si">{</span><span class="n">torch</span><span class="o">.</span><span class="n">version</span><span class="o">.</span><span class="n">cuda</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;GPU名称: </span><span class="si">{</span><span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">get_device_name</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl"><span class="c1"># 简单测试</span>
+</span></span><span class="line"><span class="cl"><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;GPU计算测试通过: </span><span class="si">{</span><span class="n">x</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-六各场景推荐方案" class="outline-3">
+<h3 id="六各场景推荐方案">
+六、各场景推荐方案
+</h3>
+<div id="outline-text-六各场景推荐方案" class="outline-text-3">
+<div id="outline-container-学术研究实验环境" class="outline-4">
+<h4 id="学术研究实验环境">
+1. <strong>学术研究/实验环境</strong>
+</h4>
+<div id="outline-text-学术研究实验环境" class="outline-text-4">
+<div class="src src-sh">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="c1"># 使用Conda创建独立环境</span>
+</span></span><span class="line"><span class="cl">conda create -n research <span class="nv">python</span><span class="o">=</span>3.10
+</span></span><span class="line"><span class="cl">conda activate research
+</span></span><span class="line"><span class="cl">conda install pytorch torchvision torchaudio pytorch-cuda<span class="o">=</span>13.0</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-生产服务器部署" class="outline-4">
+<h4 id="生产服务器部署">
+2. <strong>生产服务器部署</strong>
+</h4>
+<div id="outline-text-生产服务器部署" class="outline-text-4">
+<div class="src src-sh">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="c1"># 使用Docker + Pip</span>
+</span></span><span class="line"><span class="cl">FROM nvidia/cuda:13.0-base
+</span></span><span class="line"><span class="cl">RUN pip install torch torchvision torchaudio --index-url https://.../cu130</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-团队协作项目" class="outline-4">
+<h4 id="团队协作项目">
+3. <strong>团队协作项目</strong>
+</h4>
+<div id="outline-text-团队协作项目" class="outline-text-4">
+<div class="src src-sh">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="c1"># 使用environment.yml（Conda）</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># environment.yml内容：</span>
+</span></span><span class="line"><span class="cl">name: project_env
+</span></span><span class="line"><span class="cl">channels:
+</span></span><span class="line"><span class="cl">  - pytorch
+</span></span><span class="line"><span class="cl">  - nvidia
+</span></span><span class="line"><span class="cl">  - defaults
+</span></span><span class="line"><span class="cl">dependencies:
+</span></span><span class="line"><span class="cl">  - <span class="nv">python</span><span class="o">=</span>3.10
+</span></span><span class="line"><span class="cl">  - <span class="nv">pytorch</span><span class="o">=</span>2.0.0
+</span></span><span class="line"><span class="cl">  - torchvision
+</span></span><span class="line"><span class="cl">  - torchaudio
+</span></span><span class="line"><span class="cl">  - pytorch-cuda<span class="o">=</span>13.0</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-离线内网环境" class="outline-4">
+<h4 id="离线内网环境">
+4. <strong>离线/内网环境</strong>
+</h4>
+<div id="outline-text-离线内网环境" class="outline-text-4">
+<div class="src src-sh">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="c1"># 在有网环境下载包</span>
+</span></span><span class="line"><span class="cl">conda pack -n pytorch_env -o pytorch_env.tar.gz
+</span></span><span class="line"><span class="cl"><span class="c1"># 或</span>
+</span></span><span class="line"><span class="cl">pip download torch torchvision torchaudio --index-url ...
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 离线环境安装</span>
+</span></span><span class="line"><span class="cl">conda create -n pytorch_env --offline --file pkgs.txt
+</span></span><span class="line"><span class="cl"><span class="c1"># 或</span>
+</span></span><span class="line"><span class="cl">pip install --no-index --find-links<span class="o">=</span>./packages torch</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-七常见问题速查" class="outline-3">
+<h3 id="七常见问题速查">
+七、常见问题速查
+</h3>
+<div id="outline-text-七常见问题速查" class="outline-text-3">
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>问题</th>
+<th>可能原因</th>
+<th>解决方案</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CUDA不可用</td>
+<td>1. 驱动版本低2. CUDA版本不匹配3. 安装了CPU版本</td>
+<td>更新驱动、检查CUDA版本、重装GPU版本</td>
+</tr>
+<tr>
+<td>安装太慢</td>
+<td>网络问题</td>
+<td>使用国内镜像源、设置超时参数</td>
+</tr>
+<tr>
+<td>包冲突</td>
+<td>环境中有冲突包</td>
+<td>创建新环境、使用conda clean</td>
+</tr>
+<tr>
+<td>内存不足</td>
+<td>包太大或内存小</td>
+<td>使用pip安装、清理缓存</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div id="outline-container-八最佳实践总结" class="outline-3">
+<h3 id="八最佳实践总结">
+八、最佳实践总结
+</h3>
+<div id="outline-text-八最佳实践总结" class="outline-text-3">
+<ol>
+<li>*环境隔离优先*：始终在虚拟环境中安装</li>
+<li>*版本明确*：生产环境固定版本号</li>
+<li>*镜像加速*：国内用户优先配置清华源</li>
+<li>*验证安装*：安装后务必运行验证脚本</li>
+<li>*文档记录*：记录安装命令和环境配置</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-九一句话选择指南" class="outline-3">
+<h3 id="九一句话选择指南">
+九、一句话选择指南
+</h3>
+<div id="outline-text-九一句话选择指南" class="outline-text-3">
+<ul>
+<li><strong>新手/Windows/快速开始</strong> → Conda安装（自动处理依赖）</li>
+<li><strong>生产/服务器/Docker</strong> → Pip安装（轻量可控）</li>
+<li><strong>国内网络</strong> → 配置清华源加速</li>
+<li><strong>团队协作</strong> → 使用environment.yml固化环境</li>
+<li><strong>特定版本</strong> → 明确指定版本号和CUDA版本</li>
+</ul>
+<p>记住：*没有绝对最好的方式，只有最适合当前场景的方式*。根据具体需求选择，并保持团队内的一致性。</p>
+</div>
+</div>
+</div>
+</div>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/conda/">Conda</a>
+        
+            <a href="/tags/python/">Python</a>
+        
+            <a href="/tags/gpu/">Gpu</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            最后更新于 Dec 24, 2025 17:20 &#43;0800
+        </span>
+    </section></footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "hugo-theme-stack" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2025 Example Person
+    </section>
+    
+    <section class="powerby">
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
