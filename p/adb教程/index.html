@@ -432,6 +432,12 @@
 </li>
 </ul>
 </li>
+<li><a href="#headline-55">adb 读取短信，通话记录、日历等的方法</a>
+<ul>
+<li><a href="#headline-56">参考链接</a>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -2780,6 +2786,74 @@ temp-book文件夹会从PC端被拷贝到安卓设备的test目录下，test目�
 <a href="https://sspai.com/post/23631">安卓教程：使用adb工具进行文件推送</a></p>
 <p>
 <a href="https://blog.csdn.net/kala_/article/details/121141567">adb命令从PC端传输文件到安卓手机端指定目录下</a></p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-55" class="outline-4">
+<h4 id="headline-55">
+adb 读取短信，通话记录、日历等的方法
+</h4>
+<div id="outline-text-headline-55" class="outline-text-4">
+<p>读取手机短信：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">adb shell content query --uri content://sms/</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>这将列出所有短信消息的详细信息，例如短信内容、发送者和接收者的电话号码、时间戳等。</p>
+<p>
+读取手机通话记录：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">adb shell content query --uri content://call_log/calls</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>这将列出所有通话记录的详细信息，例如通话类型、通话时间、对方号码、通话持续时间等。</p>
+<p>
+读取手机日历：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">adb shell content query --uri content://com.android.calendar/events</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>这将列出所有日历事件的详细信息，例如事件名称、开始时间、结束时间、位置等。</p>
+<p>
+读取手机通讯录：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">adb shell content query --uri content://contacts/phones/</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+请注意，读取手机短信、通话记录、日历和通讯录需要在手机上启用开发人员选项，并在ADB连接时授权访问。您可以在手机设置中找到开发人员选项，并启用“USB调试”选项。在执行上述命令之前，还需要在计算机上安装ADB，并确保ADB已正确连接到手机。</p>
+<div id="outline-container-headline-56" class="outline-5">
+<h5 id="headline-56">
+参考链接
+</h5>
+<div id="outline-text-headline-56" class="outline-text-5">
+<p>
+<a href="https://blog.csdn.net/babytiger/article/details/130101812">adb 读取短信，通话记录、日历、通讯录等的方法</a></p>
 </div>
 </div>
 </div>
