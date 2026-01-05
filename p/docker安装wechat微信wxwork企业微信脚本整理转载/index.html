@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://ynhugo.github.io/p/docker%E5%AE%89%E8%A3%85wechat%E5%BE%AE%E4%BF%A1wxwork%E4%BC%81%E4%B8%9A%E5%BE%AE%E4%BF%A1%E8%84%9A%E6%9C%AC%E6%95%B4%E7%90%86%E8%BD%AC%E8%BD%BD/'>
 
-<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="docker安装wechat微信、wxwork企业微信脚本整理(转载)">
+<link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="docker安装wechat微信、wxwork企业微信脚本整理(转载)">
 <meta property='og:description' content=" 假设已安装docker\n还需要安装fcitx，如果安装ibus的话需要将脚本中的输入法替换一下\nwechat微信 1 2 3 4 5 6 7 8 9 10 11 sudo docker run -d --name wechat --rm --device /dev/snd --ipc=&#34;host&#34; \\ -v /tmp/.X11-unix:/tmp/.X11-unix \\ -v /D/CACHE/docker/WeChatFiles:/WeChatFiles \\ -e DISPLAY=unix$DISPLAY \\ -e XMODIFIERS=@im=fcitx \\ -e QT_IM_MODULE=fcitx \\ -e GTK_IM_MODULE=fcitx \\ -e AUDIO_GID=`getent group audio | cut -d: -f3` \\ -e GID=`id -g` \\ -e UID=`id -u` \\ bestwu/wechat wxwork企业微信 linux环境登录的时候提示版本太低，因此登录不上去\n">
 <meta property='og:url' content='https://ynhugo.github.io/p/docker%E5%AE%89%E8%A3%85wechat%E5%BE%AE%E4%BF%A1wxwork%E4%BC%81%E4%B8%9A%E5%BE%AE%E4%BF%A1%E8%84%9A%E6%9C%AC%E6%95%B4%E7%90%86%E8%BD%AC%E8%BD%BD/'>
 <meta property='og:site_name' content='ynhugo'>
@@ -56,7 +56,7 @@
                     
                     
                         
-                        <img src="/img/avatar_hu_f509edb42ecc0ebd.png" width="300"
+                        <img src="/img/avatar_hu_b5976aa1afdc1d2e.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -408,16 +408,16 @@ wechat微信
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  sudo docker run -d --name wechat --rm --device /dev/snd --ipc<span class="o">=</span><span class="s2">&#34;host&#34;</span> <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -v /tmp/.X11-unix:/tmp/.X11-unix <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -v /D/CACHE/docker/WeChatFiles:/WeChatFiles <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -e <span class="nv">DISPLAY</span><span class="o">=</span>unix<span class="nv">$DISPLAY</span> <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -e <span class="nv">XMODIFIERS</span><span class="o">=</span>@im<span class="o">=</span>fcitx <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -e <span class="nv">QT_IM_MODULE</span><span class="o">=</span>fcitx <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -e <span class="nv">GTK_IM_MODULE</span><span class="o">=</span>fcitx <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -e <span class="nv">AUDIO_GID</span><span class="o">=</span><span class="sb">`</span>getent group audio <span class="p">|</span> cut -d: -f3<span class="sb">`</span> <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -e <span class="nv">GID</span><span class="o">=</span><span class="sb">`</span>id -g<span class="sb">`</span> <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -e <span class="nv">UID</span><span class="o">=</span><span class="sb">`</span>id -u<span class="sb">`</span> <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   bestwu/wechat</span></span></code></pre></td></tr></table>
+</span></span></span><span class="line"><span class="cl">	   -v /tmp/.X11-unix:/tmp/.X11-unix <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   -v /D/CACHE/docker/WeChatFiles:/WeChatFiles <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   -e <span class="nv">DISPLAY</span><span class="o">=</span>unix<span class="nv">$DISPLAY</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   -e <span class="nv">XMODIFIERS</span><span class="o">=</span>@im<span class="o">=</span>fcitx <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   -e <span class="nv">QT_IM_MODULE</span><span class="o">=</span>fcitx <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   -e <span class="nv">GTK_IM_MODULE</span><span class="o">=</span>fcitx <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   -e <span class="nv">AUDIO_GID</span><span class="o">=</span><span class="sb">`</span>getent group audio <span class="p">|</span> cut -d: -f3<span class="sb">`</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   -e <span class="nv">GID</span><span class="o">=</span><span class="sb">`</span>id -g<span class="sb">`</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   -e <span class="nv">UID</span><span class="o">=</span><span class="sb">`</span>id -u<span class="sb">`</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   bestwu/wechat</span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
@@ -451,20 +451,20 @@ linux环境登录的时候提示版本太低，因此登录不上去</p>
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  sudo docker run -d --name wxwork --rm --device /dev/snd --ipc<span class="o">=</span><span class="s2">&#34;host&#34;</span> <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -v /tmp/.X11-unix:/tmp/.X11-unix <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -v <span class="nv">$HOME</span>/WXWork:/WXWork <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -v <span class="nv">$HOME</span>:/HostHome <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -v <span class="nv">$HOME</span>/wine-WXWork:/home/wechat/.deepinwine/Deepin-WXWork <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -e <span class="nv">DISPLAY</span><span class="o">=</span>unix<span class="nv">$DISPLAY</span> <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -e <span class="nv">XMODIFIERS</span><span class="o">=</span>@im<span class="o">=</span>fcitx <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -e <span class="nv">QT_IM_MODULE</span><span class="o">=</span>fcitx <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -e <span class="nv">GTK_IM_MODULE</span><span class="o">=</span>fcitx <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -e <span class="nv">AUDIO_GID</span><span class="o">=</span><span class="sb">`</span>getent group audio <span class="p">|</span> cut -d: -f3<span class="sb">`</span> <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -e <span class="nv">GID</span><span class="o">=</span><span class="sb">`</span>id -g<span class="sb">`</span> <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -e <span class="nv">UID</span><span class="o">=</span><span class="sb">`</span>id -u<span class="sb">`</span> <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -e <span class="nv">DPI</span><span class="o">=</span><span class="m">96</span> <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -e <span class="nv">WAIT_FOR_SLEEP</span><span class="o">=</span><span class="m">1</span> <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   boringcat/wechat:work</span></span></code></pre></td></tr></table>
+</span></span></span><span class="line"><span class="cl">	   -v /tmp/.X11-unix:/tmp/.X11-unix <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   -v <span class="nv">$HOME</span>/WXWork:/WXWork <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   -v <span class="nv">$HOME</span>:/HostHome <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   -v <span class="nv">$HOME</span>/wine-WXWork:/home/wechat/.deepinwine/Deepin-WXWork <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   -e <span class="nv">DISPLAY</span><span class="o">=</span>unix<span class="nv">$DISPLAY</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   -e <span class="nv">XMODIFIERS</span><span class="o">=</span>@im<span class="o">=</span>fcitx <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   -e <span class="nv">QT_IM_MODULE</span><span class="o">=</span>fcitx <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   -e <span class="nv">GTK_IM_MODULE</span><span class="o">=</span>fcitx <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   -e <span class="nv">AUDIO_GID</span><span class="o">=</span><span class="sb">`</span>getent group audio <span class="p">|</span> cut -d: -f3<span class="sb">`</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   -e <span class="nv">GID</span><span class="o">=</span><span class="sb">`</span>id -g<span class="sb">`</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   -e <span class="nv">UID</span><span class="o">=</span><span class="sb">`</span>id -u<span class="sb">`</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   -e <span class="nv">DPI</span><span class="o">=</span><span class="m">96</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   -e <span class="nv">WAIT_FOR_SLEEP</span><span class="o">=</span><span class="m">1</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   boringcat/wechat:work</span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>

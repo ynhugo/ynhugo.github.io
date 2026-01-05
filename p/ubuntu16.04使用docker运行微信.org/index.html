@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://ynhugo.github.io/p/ubuntu16.04%E4%BD%BF%E7%94%A8docker%E8%BF%90%E8%A1%8C%E5%BE%AE%E4%BF%A1.org/'>
 
-<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="ubuntu16.04使用docker运行微信.org">
+<link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="ubuntu16.04使用docker运行微信.org">
 <meta property='og:description' content=" 参考链接 [已更新: 安装原生版微信] 超详细教程 - Ubuntu等Linux分支利用Docker安装并使用微信详细教程\n使用 Docker 运行微信 PC 客户端\nUbuntu等Linux分支利用Docker安装并使用微信详细教程 引言 通过Docker安装微信相比于wine和deepwine都稳定的多，毕竟整个环境是被测试过重新封装好的，所以这种又稳定又不占用太多内存的方式在我使用一段时间之后还是基本满意的。\n但是毕竟是第三方做的，肯定没有深度(deepin)或者windows那种官方维护的体验好，不过只要能解决基本通信使用的需求就谢天谢地了。\n安装Docker（已经有docker的直接跳过这部分，去看第二步） 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 #先来更新一下包管理库 sudo apt update #添加一下docker的包仓库的依赖文件 sudo apt install apt-transport-https ca-certificates curl gnupg-agent software-properties-common #添加仓库钥匙 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - #把在线仓库连接加到你的更新源里 sudo add-apt-repository &#34;deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable&#34; #默认安装最新版docker sudo apt update sudo apt install docker-ce docker-ce-cli containerd.io -y 检查一下docker状态：\n">
 <meta property='og:url' content='https://ynhugo.github.io/p/ubuntu16.04%E4%BD%BF%E7%94%A8docker%E8%BF%90%E8%A1%8C%E5%BE%AE%E4%BF%A1.org/'>
 <meta property='og:site_name' content='ynhugo'>
@@ -56,7 +56,7 @@
                     
                     
                         
-                        <img src="/img/avatar_hu_f509edb42ecc0ebd.png" width="300"
+                        <img src="/img/avatar_hu_b5976aa1afdc1d2e.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -564,26 +564,26 @@ Ubuntu等Linux分支利用Docker安装并使用微信详细教程
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  sudo docker run <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   --name DoChat <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   --rm <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -i <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -v <span class="s2">&#34;</span><span class="nv">$HOME</span><span class="s2">/DoChat/WeChat Files/&#34;</span>:<span class="s1">&#39;/home/$USER/WeChat Files/&#39;</span> <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -v <span class="s2">&#34;</span><span class="nv">$HOME</span><span class="s2">/DoChat/Applcation Data&#34;</span>:<span class="s1">&#39;/home/$USER/.wine/drive_c/users/user/Application Data/&#39;</span> <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -v /tmp/.X11-unix:/tmp/.X11-unix <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -e DISPLAY <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -e <span class="nv">XMODIFIERS</span><span class="o">=</span>@im<span class="o">=</span>fcitx <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -e <span class="nv">GTK_IM_MODULE</span><span class="o">=</span>fcitx <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -e <span class="nv">QT_IM_MODULE</span><span class="o">=</span>fcitx <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -e <span class="nv">GID</span><span class="o">=</span><span class="s2">&#34;</span><span class="k">$(</span>id -g<span class="k">)</span><span class="s2">&#34;</span> <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -e <span class="nv">UID</span><span class="o">=</span><span class="s2">&#34;</span><span class="k">$(</span>id -u<span class="k">)</span><span class="s2">&#34;</span> <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   --ipc<span class="o">=</span>host <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   --privileged <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   zixia/wechat</span></span></code></pre></td></tr></table>
+</span></span></span><span class="line"><span class="cl">	   --name DoChat <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   --rm <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   -i <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   -v <span class="s2">&#34;</span><span class="nv">$HOME</span><span class="s2">/DoChat/WeChat Files/&#34;</span>:<span class="s1">&#39;/home/$USER/WeChat Files/&#39;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   -v <span class="s2">&#34;</span><span class="nv">$HOME</span><span class="s2">/DoChat/Applcation Data&#34;</span>:<span class="s1">&#39;/home/$USER/.wine/drive_c/users/user/Application Data/&#39;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   -v /tmp/.X11-unix:/tmp/.X11-unix <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   -e DISPLAY <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   -e <span class="nv">XMODIFIERS</span><span class="o">=</span>@im<span class="o">=</span>fcitx <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   -e <span class="nv">GTK_IM_MODULE</span><span class="o">=</span>fcitx <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   -e <span class="nv">QT_IM_MODULE</span><span class="o">=</span>fcitx <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   -e <span class="nv">GID</span><span class="o">=</span><span class="s2">&#34;</span><span class="k">$(</span>id -g<span class="k">)</span><span class="s2">&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   -e <span class="nv">UID</span><span class="o">=</span><span class="s2">&#34;</span><span class="k">$(</span>id -u<span class="k">)</span><span class="s2">&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   --ipc<span class="o">=</span>host <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   --privileged <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   zixia/wechat</span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
@@ -717,26 +717,26 @@ Ubuntu等Linux分支利用Docker安装并使用微信详细教程
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  sudo docker run <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   --name DoChat <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   --rm <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -i <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -v <span class="s2">&#34;</span><span class="nv">$HOME</span><span class="s2">/DoChat/WeChat Files/&#34;</span>:<span class="s1">&#39;/home/$USER/WeChat Files/&#39;</span> <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -v <span class="s2">&#34;</span><span class="nv">$HOME</span><span class="s2">/DoChat/Applcation Data&#34;</span>:<span class="s1">&#39;/home/$USER/.wine/drive_c/users/user/Application Data/&#39;</span> <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -v /tmp/.X11-unix:/tmp/.X11-unix <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -e DISPLAY <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -e <span class="nv">XMODIFIERS</span><span class="o">=</span>@im<span class="o">=</span>fcitx <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -e <span class="nv">GTK_IM_MODULE</span><span class="o">=</span>fcitx <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -e <span class="nv">QT_IM_MODULE</span><span class="o">=</span>fcitx <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -e <span class="nv">GID</span><span class="o">=</span><span class="s2">&#34;</span><span class="k">$(</span>id -g<span class="k">)</span><span class="s2">&#34;</span> <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   -e <span class="nv">UID</span><span class="o">=</span><span class="s2">&#34;</span><span class="k">$(</span>id -u<span class="k">)</span><span class="s2">&#34;</span> <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   --ipc<span class="o">=</span>host <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   --privileged <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	   zixia/wechat</span></span></code></pre></td></tr></table>
+</span></span></span><span class="line"><span class="cl">	   --name DoChat <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   --rm <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   -i <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   -v <span class="s2">&#34;</span><span class="nv">$HOME</span><span class="s2">/DoChat/WeChat Files/&#34;</span>:<span class="s1">&#39;/home/$USER/WeChat Files/&#39;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   -v <span class="s2">&#34;</span><span class="nv">$HOME</span><span class="s2">/DoChat/Applcation Data&#34;</span>:<span class="s1">&#39;/home/$USER/.wine/drive_c/users/user/Application Data/&#39;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   -v /tmp/.X11-unix:/tmp/.X11-unix <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   -e DISPLAY <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   -e <span class="nv">XMODIFIERS</span><span class="o">=</span>@im<span class="o">=</span>fcitx <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   -e <span class="nv">GTK_IM_MODULE</span><span class="o">=</span>fcitx <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   -e <span class="nv">QT_IM_MODULE</span><span class="o">=</span>fcitx <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   -e <span class="nv">GID</span><span class="o">=</span><span class="s2">&#34;</span><span class="k">$(</span>id -g<span class="k">)</span><span class="s2">&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   -e <span class="nv">UID</span><span class="o">=</span><span class="s2">&#34;</span><span class="k">$(</span>id -u<span class="k">)</span><span class="s2">&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   --ipc<span class="o">=</span>host <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   --privileged <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   <span class="se">\
+</span></span></span><span class="line"><span class="cl">	   zixia/wechat</span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>

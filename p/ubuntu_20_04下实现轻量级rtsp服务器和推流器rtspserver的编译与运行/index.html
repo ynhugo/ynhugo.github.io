@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://ynhugo.github.io/p/ubuntu_20_04%E4%B8%8B%E5%AE%9E%E7%8E%B0%E8%BD%BB%E9%87%8F%E7%BA%A7rtsp%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%92%8C%E6%8E%A8%E6%B5%81%E5%99%A8rtspserver%E7%9A%84%E7%BC%96%E8%AF%91%E4%B8%8E%E8%BF%90%E8%A1%8C/'>
 
-<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="ubuntu_20_04下实现轻量级RTSP服务器和推流器RtspServer的编译与运行">
+<link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="ubuntu_20_04下实现轻量级RTSP服务器和推流器RtspServer的编译与运行">
 <meta property='og:description' content=" 项目概述 RtspServer 是由 PHZ76 开发的高效、可定制的实时流媒体服务器解决方案。它基于作者编写的网络基础库 xop，允许开发者轻松处理和分发实时音视频流。项目提供了一个名为 DesktopSharing 的示例应用，可以捕获桌面和麦克风声音，并在编码后通过 RTSP 协议进行转发和推流。该项目支持Windows 和 Linux 平台，代码量少，相比于 live555 等经典的流媒体库，RtspServer 更加轻量级，易于集成和二次开发。\n技术分析 支持的编码格式 RtspServer 支持多种音视频编码格式，涵盖了广泛的应用场景：\n视频编码：H.264、H.265 音频编码：G.711A、AAC 传输方式 单播 (Unicast)： RTP_OVER_UDP：通过 UDP 协议传输 RTP 数据，延迟低，但在网络不稳定时可能会丢包。 RTP_OVER_RTSP (TCP)：通过 RTSP 协议在 TCP 连接上传输 RTP 数据，可靠性高，适用于防火墙或 NAT 环境。\n组播 (Multicast)： 适用于需要将同一流媒体数据发送给多个客户端的场景，节省网络带宽。\n心跳检测机制 针对单播传输，RtspServer 内置了心跳检测机制，可以及时发现和处理连接异常，确保数据传输的稳定性。\nRTSP 推流 RtspServer 支持 RTSP 推流功能，使用 TCP 协议进行数据传输，保证了数据的可靠传输，适用于对传输可靠性要求较高的应用场景。\n安全性 RtspServer 内置了摘要认证（Digest Authentication），为服务提供了安全保障，防止未经授权的访问。\n">
 <meta property='og:url' content='https://ynhugo.github.io/p/ubuntu_20_04%E4%B8%8B%E5%AE%9E%E7%8E%B0%E8%BD%BB%E9%87%8F%E7%BA%A7rtsp%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%92%8C%E6%8E%A8%E6%B5%81%E5%99%A8rtspserver%E7%9A%84%E7%BC%96%E8%AF%91%E4%B8%8E%E8%BF%90%E8%A1%8C/'>
 <meta property='og:site_name' content='ynhugo'>
@@ -56,7 +56,7 @@
                     
                     
                         
-                        <img src="/img/avatar_hu_f509edb42ecc0ebd.png" width="300"
+                        <img src="/img/avatar_hu_b5976aa1afdc1d2e.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -651,19 +651,7 @@ xop 基础库
 
         <span>Licensed under CC BY-NC-SA 4.0</span>
     </section>
-    <section class="article-lastmod">
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="12" r="9" />
-  <polyline points="12 7 12 12 15 15" />
-</svg>
-
-
-
-        <span>
-            最后更新于 Dec 24, 2024 21:01 &#43;0800
-        </span>
-    </section></footer>
+    </footer>
 
 
     

@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://ynhugo.github.io/p/ubuntu-22.04-server%E5%AE%89%E8%A3%85nvidia%E9%A9%B1%E5%8A%A8/'>
 
-<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="ubuntu 22.04 server安装Nvidia驱动">
+<link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="ubuntu 22.04 server安装Nvidia驱动">
 <meta property='og:description' content=" ubuntu 22.04 server安装Nvidia驱动 1 2 3 4 5 sudo apt install -y apt-rdepends # sudo apt install -y net-tools # sudo apt install -y openssh-server sudo apt download $(apt-rdepends apt-rdepends | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39; | grep -v &#34;perlapi-&#34;) sudo apt download $(apt-rdepends net-tools | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) 准备工作 1 2 为了避免踩坑，建议按照流程完成准备工作！ 这些准备工作并不会影响你的计算机，不做的话可能会导致装驱动后黑屏！ 关闭安全模式 1 重启计算机，在开机前狂按’ESC’进入bios设置，找到安全设置，并关闭它。 注：不同品牌电脑进入bios方式和安全设置的位置都不相同\n切换独显模式（笔记本电脑单显卡注意，服务器略过） 1 在bios设置中找到显卡设置，系统默认的为集显模式，将其修改为独显模式。 更新软件列表和安装必要软件、依赖 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 sudo apt-get update #更新软件列表 # sudo apt-get install -y g++ gcc make sudo apt download $(apt-rdepends g++ gcc make | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) sudo apt download $(apt-rdepends python3-pip | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) sudo apt download $(apt-rdepends build-essential cmake git | \\ grep -v &#34;^ &#34; | \\ sed &#39;s/debconf-2.0/debconf/g&#39; | \\ sed -e &#39;s/libc-dev/libc6-dev/g&#39; \\ -e &#39;s/libc6-dev-bin/libc6-dev/g&#39; \\ -e &#39;s/linux-libc6-dev/linux-libc-dev/g&#39; | \\ grep -vE &#34;^(default-logind|logind)$&#34;) # 安装hwinfo sudo apt download $(apt-rdepends hwinfo | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) # 安装alsa-utils sudo apt download $(apt-rdepends alsa-utils | grep -v &#34;^ &#34; | sed &#39;s/debconf-2.0/debconf/g&#39;) 禁用nouveau (nouveau是通用的驱动程序) 1 sudo vim /etc/modprobe.d/blacklist.conf 文件末尾添加下面两行内容\n">
 <meta property='og:url' content='https://ynhugo.github.io/p/ubuntu-22.04-server%E5%AE%89%E8%A3%85nvidia%E9%A9%B1%E5%8A%A8/'>
 <meta property='og:site_name' content='ynhugo'>
@@ -56,7 +56,7 @@
                     
                     
                         
-                        <img src="/img/avatar_hu_f509edb42ecc0ebd.png" width="300"
+                        <img src="/img/avatar_hu_b5976aa1afdc1d2e.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -573,12 +573,12 @@ ubuntu 22.04 server安装Nvidia驱动
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">sudo apt download <span class="k">$(</span>apt-rdepends python3-pip <span class="p">|</span> grep -v <span class="s2">&#34;^ &#34;</span> <span class="p">|</span> sed <span class="s1">&#39;s/debconf-2.0/debconf/g&#39;</span><span class="k">)</span>
 </span></span><span class="line"><span class="cl">sudo apt download <span class="k">$(</span>apt-rdepends build-essential cmake git <span class="p">|</span> <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>                      grep -v <span class="s2">&#34;^ &#34;</span> <span class="p">|</span> <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>                      sed <span class="s1">&#39;s/debconf-2.0/debconf/g&#39;</span> <span class="p">|</span> <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>                      sed -e <span class="s1">&#39;s/libc-dev/libc6-dev/g&#39;</span> <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>                          -e <span class="s1">&#39;s/libc6-dev-bin/libc6-dev/g&#39;</span> <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>                          -e <span class="s1">&#39;s/linux-libc6-dev/linux-libc-dev/g&#39;</span> <span class="p">|</span> <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>                      grep -vE <span class="s2">&#34;^(default-logind|logind)</span>$<span class="s2">&#34;</span><span class="k">)</span>
+</span></span></span><span class="line"><span class="cl">                      grep -v <span class="s2">&#34;^ &#34;</span> <span class="p">|</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl">                      sed <span class="s1">&#39;s/debconf-2.0/debconf/g&#39;</span> <span class="p">|</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl">                      sed -e <span class="s1">&#39;s/libc-dev/libc6-dev/g&#39;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl">                          -e <span class="s1">&#39;s/libc6-dev-bin/libc6-dev/g&#39;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl">                          -e <span class="s1">&#39;s/linux-libc6-dev/linux-libc-dev/g&#39;</span> <span class="p">|</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl">                      grep -vE <span class="s2">&#34;^(default-logind|logind)</span>$<span class="s2">&#34;</span><span class="k">)</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># 安装hwinfo</span>
 </span></span><span class="line"><span class="cl">sudo apt download <span class="k">$(</span>apt-rdepends hwinfo <span class="p">|</span> grep -v <span class="s2">&#34;^ &#34;</span> <span class="p">|</span> sed <span class="s1">&#39;s/debconf-2.0/debconf/g&#39;</span><span class="k">)</span>
@@ -1657,7 +1657,7 @@ Linux 系统下硬盘自动挂载完全指南
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/usr/bin/bash
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="nv">users</span><span class="o">=(</span>
+</span></span></span><span class="line"><span class="cl"><span class="nv">users</span><span class="o">=(</span>
 </span></span><span class="line"><span class="cl">  user1
 </span></span><span class="line"><span class="cl">  user2
 </span></span><span class="line"><span class="cl">  user3
@@ -1708,7 +1708,7 @@ Linux 系统下硬盘自动挂载完全指南
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/usr/bin/bash
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="nv">users</span><span class="o">=(</span>
+</span></span></span><span class="line"><span class="cl"><span class="nv">users</span><span class="o">=(</span>
 </span></span><span class="line"><span class="cl">  user1
 </span></span><span class="line"><span class="cl">  user2
 </span></span><span class="line"><span class="cl">  user3
@@ -1820,19 +1820,7 @@ Linux 系统下硬盘自动挂载完全指南
 
         <span>Licensed under CC BY-NC-SA 4.0</span>
     </section>
-    <section class="article-lastmod">
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="12" r="9" />
-  <polyline points="12 7 12 12 15 15" />
-</svg>
-
-
-
-        <span>
-            最后更新于 Dec 06, 2025 08:38 &#43;0800
-        </span>
-    </section></footer>
+    </footer>
 
 
     

@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://ynhugo.github.io/p/bash%E8%84%9A%E6%9C%AC-python-uiautomator2%E5%AE%9E%E7%8E%B0%E6%89%8B%E6%9C%BA%E8%87%AA%E5%8A%A8%E5%8C%96%E9%85%8D%E7%BD%AE/'>
 
-<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="bash脚本+python+uiautomator2实现手机自动化配置">
+<link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="bash脚本+python+uiautomator2实现手机自动化配置">
 <meta property='og:description' content=" bash脚本+python+uiautomator2实现手机自动化配置 项目资源 bash脚本+python+uiautomator2实现手机自动化配置.zip\n实现功能 批量软件下载与安装，以及安装的软件中的科学上网软件的订阅链接配置，订阅链接的配置需要等所以软件下载安装完后根据终端提示进行操作，进行相应按键操作后python脚本会自动进行订阅链接配置。\n须知 ：该项目执行的手机切勿黑屏，不然安装软件会报异常导致软件不能正常安装。\n该项目基本实现完全自动化，除了订阅链接的配置，之所以没有也根据自动化的方式实现，是考虑到用户根据自身需要可以手动添加根软件真正匹配的订阅链接，因为不是有的订阅链接不是很通用，这样做可以为了避免出问题。\n另外该项目中某些软件的下载链接可能国内不能顺利访问或速度很慢，如果遇到这样的情况，可以电脑安装clash-verge科学上网软件，电脑通过该软件实现科学上网后，将该软件的TUN（在软件的设置界面中）打开，这样就可以实现终端也能访问外网了，这样在终端执行该项目会更方便一些。\n环境配置 windows安装好python3的版本 安装git-bash 安装配置好Cygwin，在Cygwin中要安装常用工具如 curl、wget、jq 如果要配置科学上网软件的订阅链接的话，首先修改 科学上网软件如果更换了，同时需要通过该项目配置科学上网软件的订阅链接，可以查看自己的科学上网软件的包名，将实际的包名替换进该项目中，该项目配置了两个科学上网软件订阅链接，如果只需要配置一个科学上网软件，可以将另外一个注释掉。另外项目中两个软件的界面操作是根据软件界面的实际控件进行操作的，如果更换其他软件了，请根据软件的控制进行修改。 如果需要知道查看包名的方法的话，请按照如下方式操作： 1 2 3 4 # 根据关键词 v2ray 匹配科学上网软件v2ranNG的包名 adb -s aefcb1f3 shell pm list packages | grep &#34;v2ray&#34; | awk -F &#39;:&#39; &#39;{print $2}&#39; # 同时查看软件软件对应的包名 adb -s aefcb1f3 shell pm list packages | grep -e &#34;v2ray&#34; -e &#34;clash&#34; | awk -F &#39;:&#39; &#39;{print $2}&#39; 在执行该项目前，需要基本确保环境配置好了，如果实际执行提示缺少什么库，可以根据终端提示的打印信息，再借助Deepseek完成环境的配置。 1 2 3 4 5 pip install uiautomator2 pip install keyboard pip install -U weditor # -U 选项是 --upgrade 的简写，如果系统中已经安装了 weditor（或指定的包），-U 会强制 检查最新版本 并升级到最新版。 PYTHONIOENCODING=utf-8 PYTHONUTF8=1 pip install -U weditor # 在git-bash有时候直接安装会提示编码问题，因此临时设置 Python 默认编码为 utf-8（推荐），-U 选项是 --upgrade 的简写，如果系统中已经安装了 weditor（或指定的包），-U 会强制 检查最新版本 并升级到最新版。 adb devices # 确认设备已连接 执行方式 在git-bash中运行该项目，cfg.sh与cfg.py和cfg.json要在同一目录下\n">
 <meta property='og:url' content='https://ynhugo.github.io/p/bash%E8%84%9A%E6%9C%AC-python-uiautomator2%E5%AE%9E%E7%8E%B0%E6%89%8B%E6%9C%BA%E8%87%AA%E5%8A%A8%E5%8C%96%E9%85%8D%E7%BD%AE/'>
 <meta property='og:site_name' content='ynhugo'>
@@ -56,7 +56,7 @@
                     
                     
                         
-                        <img src="/img/avatar_hu_f509edb42ecc0ebd.png" width="300"
+                        <img src="/img/avatar_hu_b5976aa1afdc1d2e.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -643,7 +643,7 @@ cfg.sh
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/usr/bin/bash
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># 定义总文件数组</span>
 </span></span><span class="line"><span class="cl"><span class="nv">apk_array</span><span class="o">=(</span><span class="k">$(</span>jq -r <span class="s1">&#39;.android.value[] | keys[]&#39;</span> cfg.json<span class="k">)</span><span class="o">)</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># printf &#39;%s\n&#39; &#34;${apk_array[@]}&#34;</span>
@@ -1047,19 +1047,7 @@ cfg.py
 
         <span>Licensed under CC BY-NC-SA 4.0</span>
     </section>
-    <section class="article-lastmod">
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="12" r="9" />
-  <polyline points="12 7 12 12 15 15" />
-</svg>
-
-
-
-        <span>
-            最后更新于 Jul 03, 2025 17:40 &#43;0800
-        </span>
-    </section></footer>
+    </footer>
 
 
     

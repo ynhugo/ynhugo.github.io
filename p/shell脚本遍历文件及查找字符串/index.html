@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://ynhugo.github.io/p/shell%E8%84%9A%E6%9C%AC%E9%81%8D%E5%8E%86%E6%96%87%E4%BB%B6%E5%8F%8A%E6%9F%A5%E6%89%BE%E5%AD%97%E7%AC%A6%E4%B8%B2/'>
 
-<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="shell脚本遍历文件及查找字符串">
+<link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="shell脚本遍历文件及查找字符串">
 <meta property='og:description' content=" shell脚本遍历文件及查找字符串 粘贴在终端执行效果最佳，这样只需要执行一次完整脚本，然后接下来再查找内容就只需从第3步复制粘贴到终端执行了\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 # 1. 遍历一级目录中满足 *P*IE* 条件的目录 mapfile -t dirs1 &lt; &lt;(find ./ -maxdepth 1 -name &#34;*P*IE*&#34; -type d); echo &#34;${dirs1[@]}&#34; # 2. 在第一次遍历中的所以一级目录下查找满足 *windows 或 *linux 的目录，不区分大小写，作为第二次遍历的结果 for ((i = 0; i &lt; &#34;${#dirs1[${i}]}&#34;; i++)); do mapfile -t -O &#34;${#dirs2[@]}&#34; dirs2 &lt; &lt;(find &#34;${dirs1[${i}]}&#34; -iname &#34;*windows&#34; -o -iname &#34;*linux&#34;) done echo &#34;${dirs2[@]}&#34; # 3. 在第二次遍历的目录中查找指定字符串 for ((j = 0; j &lt; &#34;${#dirs2[@]}&#34;; j++)); do find &#34;${dirs2[${j}]}&#34; -name &#34;*.c&#34;\\ -o -name &#34;*.cpp&#34;\\ -o -name &#34;*.h&#34;\\ | xargs grep --color=always -ain\\ &#34;YPcie_Set_Read_DMA_Blk&#34; done ">
 <meta property='og:url' content='https://ynhugo.github.io/p/shell%E8%84%9A%E6%9C%AC%E9%81%8D%E5%8E%86%E6%96%87%E4%BB%B6%E5%8F%8A%E6%9F%A5%E6%89%BE%E5%AD%97%E7%AC%A6%E4%B8%B2/'>
 <meta property='og:site_name' content='ynhugo'>
@@ -56,7 +56,7 @@
                     
                     
                         
-                        <img src="/img/avatar_hu_f509edb42ecc0ebd.png" width="300"
+                        <img src="/img/avatar_hu_b5976aa1afdc1d2e.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -425,10 +425,10 @@ shell脚本遍历文件及查找字符串
 </span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="o">((</span><span class="nv">j</span> <span class="o">=</span> 0<span class="p">;</span> j &lt; <span class="s2">&#34;</span><span class="si">${#</span><span class="nv">dirs2</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span> j++<span class="o">))</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="k">do</span>
 </span></span><span class="line"><span class="cl">  find <span class="s2">&#34;</span><span class="si">${</span><span class="nv">dirs2</span><span class="p">[</span><span class="si">${</span><span class="nv">j</span><span class="si">}</span><span class="p">]</span><span class="si">}</span><span class="s2">&#34;</span> -name <span class="s2">&#34;*.c&#34;</span><span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>       -o -name <span class="s2">&#34;*.cpp&#34;</span><span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>       -o -name <span class="s2">&#34;*.h&#34;</span><span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>    <span class="p">|</span> xargs grep --color<span class="o">=</span>always -ain<span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>           <span class="s2">&#34;YPcie_Set_Read_DMA_Blk&#34;</span>
+</span></span></span><span class="line"><span class="cl">       -o -name <span class="s2">&#34;*.cpp&#34;</span><span class="se">\
+</span></span></span><span class="line"><span class="cl">       -o -name <span class="s2">&#34;*.h&#34;</span><span class="se">\
+</span></span></span><span class="line"><span class="cl">    <span class="p">|</span> xargs grep --color<span class="o">=</span>always -ain<span class="se">\
+</span></span></span><span class="line"><span class="cl">           <span class="s2">&#34;YPcie_Set_Read_DMA_Blk&#34;</span>
 </span></span><span class="line"><span class="cl"><span class="k">done</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
@@ -460,19 +460,7 @@ shell脚本遍历文件及查找字符串
 
         <span>Licensed under CC BY-NC-SA 4.0</span>
     </section>
-    <section class="article-lastmod">
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="12" r="9" />
-  <polyline points="12 7 12 12 15 15" />
-</svg>
-
-
-
-        <span>
-            最后更新于 Jul 11, 2025 12:43 &#43;0800
-        </span>
-    </section></footer>
+    </footer>
 
 
     

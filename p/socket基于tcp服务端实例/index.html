@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://ynhugo.github.io/p/socket%E5%9F%BA%E4%BA%8Etcp%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%AE%9E%E4%BE%8B/'>
 
-<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="socket基于tcp服务端实例">
+<link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="socket基于tcp服务端实例">
 <meta property='og:description' content=" socket基于tcp服务端实例 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 #include &lt;stdlib.h&gt; #include &lt;stdio.h&gt; #include &lt;stdbool.h&gt; #include &lt;assert.h&gt; #include &lt;fcntl.h&gt; // Flags for open() #include &lt;sys/stat.h&gt; // Open() system call #include &lt;sys/types.h&gt; // Types for open() #include &lt;unistd.h&gt; // Close() system call #include &lt;string.h&gt; // Memory setting and copying #include &lt;getopt.h&gt; // Option parsing #include &lt;errno.h&gt; // Error codes #include&lt;sys/socket.h&gt; #include&lt;netinet/in.h&gt; #include &lt;pthread.h&gt; #define DEFAULT_PORT 7 #define MAXLINE 4096 int socket_fd, connect_fd; int flag1; struct test { int flag1; }; /*---------------------------------------------------------------------------- * DMA File Transfer Functions *----------------------------------------------------------------------------*/ void *receive_file(void *arg) { struct test *my = (struct test *)arg; while (1) { if (my-&gt;flag1 == 1) { printf(&#34;test1\\n&#34;); } else if (my-&gt;flag1 == 2) { printf(&#34;test2\\n&#34;); } sleep(1); } // pthread_exit(NULL); return NULL; } /*---------------------------------------------------------------------------- * Main *----------------------------------------------------------------------------*/ int main(void) { // Socket相关变量 struct sockaddr_in servaddr; unsigned char buff[MAXLINE]; int n; int err; pthread_t tid; struct test *ts = (struct test *)malloc(sizeof(struct test)); ts-&gt;flag1 = 0; //初始化Socket if( (socket_fd = socket(AF_INET, SOCK_STREAM, 0)) == -1 ) { printf(&#34;create socket error: %s(errno: %d)\\n&#34;,strerror(errno),errno); exit(0); } // 解决 Address already in use 问题 int opt = 1; setsockopt(socket_fd, SOL_SOCKET, SO_REUSEADDR, &amp;opt, sizeof(opt)); //初始化 memset(&amp;servaddr, 0, sizeof(servaddr)); servaddr.sin_family = AF_INET; servaddr.sin_addr.s_addr = htonl(INADDR_ANY);//IP地址设置成INADDR_ANY,让系统自动获取本机的IP地址。 servaddr.sin_port = htons(DEFAULT_PORT);//设置的端口为DEFAULT_PORT //将本地地址绑定到所创建的套接字上 if( bind(socket_fd, (struct sockaddr*)&amp;servaddr, sizeof(servaddr)) == -1) { printf(&#34;bind socket error: %s(errno: %d)\\n&#34;,strerror(errno),errno); exit(0); } //开始监听是否有客户端连接 if( listen(socket_fd, 2) == -1) { printf(&#34;listen socket error: %s(errno: %d)\\n&#34;,strerror(errno),errno); exit(0); } printf(&#34;======waiting for client&#39;s request======\\n&#34;); // 启动线程 if ((err = pthread_create(&amp;tid, NULL, &amp;receive_file, ts)) != 0) { printf(&#34;err = %d, can&#39;t create thread&#34;, err); } pthread_detach(tid); //分离线程，避免僵尸进程 while (1) { //阻塞直到有客户端连接，不然多浪费CPU资源。 if( (connect_fd = accept(socket_fd, (struct sockaddr*)NULL, NULL)) == -1) { printf(&#34;accept socket error: %s(errno: %d)&#34;,strerror(errno),errno); continue; } while (1) { //接受客户端传过来的数据 n = recv(connect_fd, buff, MAXLINE, 0); if(n &gt; 0) { // 判断是开始还是停止 if (buff[0] == 0xFA &amp;&amp; buff[7] == 0x01) { ts-&gt;flag1 = 1; printf(&#34;start\\n&#34;); } else if (buff[0] == 0xFA &amp;&amp; buff[7] == 0x02) { ts-&gt;flag1 = 2; // 停止 printf(&#34;stop\\n&#34;); } else if (buff[0] == 0xFA &amp;&amp; buff[7] == 0x03) { ts-&gt;flag1 = 3; } } else { close(connect_fd); break; } } usleep(100); } close(connect_fd); close(socket_fd); return 0; } 参考链接 socket基于tcp通信实例\n">
 <meta property='og:url' content='https://ynhugo.github.io/p/socket%E5%9F%BA%E4%BA%8Etcp%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%AE%9E%E4%BE%8B/'>
 <meta property='og:site_name' content='ynhugo'>
@@ -56,7 +56,7 @@
                     
                     
                         
-                        <img src="/img/avatar_hu_f509edb42ecc0ebd.png" width="300"
+                        <img src="/img/avatar_hu_b5976aa1afdc1d2e.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -691,19 +691,7 @@ socket基于tcp服务端实例
 
         <span>Licensed under CC BY-NC-SA 4.0</span>
     </section>
-    <section class="article-lastmod">
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="12" r="9" />
-  <polyline points="12 7 12 12 15 15" />
-</svg>
-
-
-
-        <span>
-            最后更新于 Mar 18, 2025 10:51 &#43;0800
-        </span>
-    </section></footer>
+    </footer>
 
 
     

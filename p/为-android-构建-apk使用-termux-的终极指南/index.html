@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://ynhugo.github.io/p/%E4%B8%BA-android-%E6%9E%84%E5%BB%BA-apk%E4%BD%BF%E7%94%A8-termux-%E7%9A%84%E7%BB%88%E6%9E%81%E6%8C%87%E5%8D%97/'>
 
-<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="为 Android 构建 APK：使用 Termux 的终极指南">
+<link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="为 Android 构建 APK：使用 Termux 的终极指南">
 <meta property='og:description' content=" 为 Android 构建 APK：使用 Termux 的终极指南 配置编译环境部分可以忽略，原本想配置android-sdk的，但是下载的文件跟安卓架构好像不是很匹配，先略过。\n第 1 部分：下载并安装 Termux 获取 Termux Termux 可从 Google Play 商店或 F-Droid 获取。安装后，启动 Termux 并等待初始化过程完成。\n第 2 部分：安装 Gradle 安装 Gradle Gradle 是构建、测试和部署 Android 应用程序的构建自动化工具。在 Termux 中，使用以下命令安装 Gradle：\n1 pkg install gradle Termux配置安卓编译环境 直接复制粘贴到终端运行即可\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 if [ ! &#34;$(env | grep --color=always &#34;cmdline-tools/latest/bin&#34;)&#34; ]; then if [ ! -f &#34;$(basename $HOME/commandlinetools*.zip)&#34; ]; then cd $HOME curl -O https://googledownloads.cn/android/repository/commandlinetools-linux-13114758_latest.zip ANDROID_HOME=~/android/sdk mkdir -p ${ANDROID_HOME}/latest unzip $(basename commandlinetools*.zip) -d $ANDROID_HOME # cmdline-tools 的产物需要移动到cmdline-tools/latest目录中，这是android sdk固定的路径组织形式 # 压缩包没有包含在latest文件夹中，自己移动一下 mv $ANDROID_HOME/cmdline-tools/* $ANDROID_HOME/latest mv $ANDROID_HOME/latest $ANDROID_HOME/cmdline-tools # 双引号与单引号不要动，单引号是为了避免通过echo命令重定向到~/.bashrc的内容中的变量被执行 echo &#34;export ANDROID_HOME=~/android/sdk&#34; &gt;&gt; ~/.bashrc echo &#39;export PATH=$ANDROID_HOME/cmdline-tools/latest/bin:$PATH&#39; &gt;&gt; ~/.bashrc source ~/.bashrc rm $(basename $HOME/commandlinetools*.zip) fi fi 参考链接 Termux配置安卓编译环境\n">
 <meta property='og:url' content='https://ynhugo.github.io/p/%E4%B8%BA-android-%E6%9E%84%E5%BB%BA-apk%E4%BD%BF%E7%94%A8-termux-%E7%9A%84%E7%BB%88%E6%9E%81%E6%8C%87%E5%8D%97/'>
 <meta property='og:site_name' content='ynhugo'>
@@ -56,7 +56,7 @@
                     
                     
                         
-                        <img src="/img/avatar_hu_f509edb42ecc0ebd.png" width="300"
+                        <img src="/img/avatar_hu_b5976aa1afdc1d2e.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -582,7 +582,7 @@ gradle-apk.sh
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/usr/bin/bash
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="nv">java_version</span><span class="o">=</span><span class="k">$(</span>java --version <span class="p">|</span> awk <span class="s1">&#39;NR==1{print $2}&#39;</span> <span class="p">|</span> awk -F. <span class="s1">&#39;{print $1}&#39;</span><span class="k">)</span>
 </span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;Detected Java version: </span><span class="nv">$java_version</span><span class="s2">&#34;</span>
 </span></span><span class="line"><span class="cl">
@@ -689,19 +689,7 @@ gradle-apk.sh
 
         <span>Licensed under CC BY-NC-SA 4.0</span>
     </section>
-    <section class="article-lastmod">
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="12" r="9" />
-  <polyline points="12 7 12 12 15 15" />
-</svg>
-
-
-
-        <span>
-            最后更新于 Jul 06, 2025 17:12 &#43;0800
-        </span>
-    </section></footer>
+    </footer>
 
 
     

@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://ynhugo.github.io/p/linux_config/'>
 
-<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="Linux_config">
+<link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="Linux_config">
 <meta property='og:description' content=" ubuntu18.04配置~/.bashrc 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 #!/bin/bash cat &gt;&gt; ~/.bashrc &lt;&lt;EOF find ./ -name &#34;*~&#34; | xargs rm ps -ef | grep &#34;emacs --daemon&#34; | grep -v &#34;grep&#34; &gt; /dev/null 2&gt;&amp;1 if [ $? -ne 0 ] then nohup emacs --daemon &amp; fi alias &#39;emacs&#39;=&#39;emacsclient&#39; if [ -e &#34;/data/data/com.termux/files/home/null&#34; ] then rm /data/data/com.termux/files/home/null fi if [ -e &#34;/data/data/com.termux/files/home/nohup.out&#34; ] then rm /data/data/com.termux/files/home/nohup.out fi EOF * ubuntu换源脚本 #!/bin/bash cp /etc/apt/sources.list /etc/apt/sources.list.bak cat /etc/apt/sources.list &gt; /etc/apt/sources.list cat &gt; /etc/apt/sources.list &lt;&lt;EOF ## 18.04LTS # 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释 deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic main restricted universe multiverse # deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic main restricted universe multiverse deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-updates main restricted universe multiverse # deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-updates main restricted universe multiverse deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-backports main restricted universe multiverse # deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-backports main restricted universe multiverse deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-security main restricted universe multiverse # deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-security main restricted universe multiverse # 预发布软件源，不建议启用 # deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-proposed main restricted universe multiverse # deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-proposed main restricted universe multiverse EOF sudo apt update -y &amp;&amp; sudo apt upgrade -y * 卸载wsl-ubuntu18.04.6参考链接： [[https://blog.csdn.net/qq_39645262/article/details/125644647][Windows子系统(WSL2)中自定义安装Ubuntu并换源] [[https://blog.csdn.net/qq_38162575/article/details/116202725][Windows 10(WSL) 安装Linux发行版Ubuntu18.04] ">
 <meta property='og:url' content='https://ynhugo.github.io/p/linux_config/'>
 <meta property='og:site_name' content='ynhugo'>
@@ -56,7 +56,7 @@
                     
                     
                         
-                        <img src="/img/avatar_hu_f509edb42ecc0ebd.png" width="300"
+                        <img src="/img/avatar_hu_b5976aa1afdc1d2e.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 

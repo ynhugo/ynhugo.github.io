@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://ynhugo.github.io/p/%E8%B0%B7%E6%AD%8Capi%E7%BF%BB%E8%AF%91/'>
 
-<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="谷歌api翻译">
+<link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="谷歌api翻译">
 <meta property='og:description' content=" 使用方式 1 curl &#34;http://translate.google.com/translate_a/single?client=gtx&amp;sl=en&amp;tl=zh-CN&amp;dt=t&amp;q=good&#34; 使用示例 使用门槛，该api由谷歌提供，因此使用的话需要具备一定的上网条件\n1 2 3 ┌──(root💀adm-RecipeKit)-[~] └─# curl &#34;http://translate.google.com/translate_a/single?client=gtx&amp;sl=en&amp;tl=zh-CN&amp;dt=t&amp;q=good&#34; [[[&#34;好的&#34;,&#34;good&#34;,null,null,10]],null,&#34;en&#34;,null,null,null,null,[]] 翻译单词-脚本实现 1 curl &#34;http://translate.google.com/translate_a/single?client=gtx&amp;sl=en&amp;tl=zh-CN&amp;dt=t&amp;q=$1&#34; 使用示例 1 2 3 ┌──(root💀adm-RecipeKit)-[~] └─# ./translate.sh good [[[&#34;好的&#34;,&#34;good&#34;,null,null,10]],null,&#34;en&#34;,null,null,null,null,[]] 翻译句子-脚本实现-1 1 2 date=&#34;$(echo &#34;$1&#34; | sed -e &#39;s/ /%20/g&#39;)&#34; curl &#34;http://translate.google.com/translate_a/single?client=gtx&amp;sl=en&amp;tl=zh-CN&amp;dt=t&amp;q=${date}&#34; 使用示例 1 2 3 ┌──(root💀adm-RecipeKit)-[~] └─# ./translate.sh &#34;HOW old are you?&#34; [[[&#34;你今年多大？&#34;,&#34;HOW old are you.&#34;,null,null,10]],null,&#34;en&#34;,null,null,null,null,[]] 使用示例-VPS 1 2 3 4 $ ssh sdf &#39;./translate.sh &#34;How old are you?&#34;&#39; % Total % Received % Xferd Average Speed Time Time Time Current Dload Upload Total Spent Left Speed 100 91 0 91 0 0 1101 0 --:--:-- --:--:-[[[&#34;你今年多大？&#34;,&#34;How old are you?&#34;,null,null,10]],null,&#34;en&#34;,null,null,null,null,[]]- --:--:-- 1109 翻译句子-脚本实现-2 1 2 3 4 5 6 7 8 9 10 #!/usr/bin/bash args=&#34;$#&#34; for ((i = 1; i &lt; args; i++)); do data+=&#34;${!i}%20&#34; done # echo &#34;${data}${!#}&#34; curl &#34;http://translate.google.com/translate_a/single?client=gtx&amp;sl=en&amp;tl=zh-CN&amp;dt=t&amp;q=${data} 使用示例 1 2 3 ┌──(root💀adm-RecipeKit)-[~] └─# echo &#34;How old are you?&#34; | xargs ./translate.sh [[[&#34;几岁了&#34;,&#34;How old are&#34;,null,null,3,null,null,[[]],[[[&#34;6ffafab0da7e640be86ac09d0d5e539c&#34;,&#34;en_zh_2023q1.md&#34;]]]]],null,&#34;en&#34;,null,null,null,null,[]] 参考链接 Google 单词翻译 API.py\n">
 <meta property='og:url' content='https://ynhugo.github.io/p/%E8%B0%B7%E6%AD%8Capi%E7%BF%BB%E8%AF%91/'>
 <meta property='og:site_name' content='ynhugo'>
@@ -56,7 +56,7 @@
                     
                     
                         
-                        <img src="/img/avatar_hu_f509edb42ecc0ebd.png" width="300"
+                        <img src="/img/avatar_hu_b5976aa1afdc1d2e.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -637,19 +637,7 @@
 
         <span>Licensed under CC BY-NC-SA 4.0</span>
     </section>
-    <section class="article-lastmod">
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="12" r="9" />
-  <polyline points="12 7 12 12 15 15" />
-</svg>
-
-
-
-        <span>
-            最后更新于 Apr 05, 2024 17:38 &#43;0800
-        </span>
-    </section></footer>
+    </footer>
 
 
     

@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://ynhugo.github.io/p/ubuntu%E9%80%9A%E8%BF%87%E9%85%8D%E7%BD%AEgrub%E6%96%87%E4%BB%B6%E4%BF%AE%E6%94%B9%E5%90%AF%E5%8A%A8%E8%8F%9C%E5%8D%95%E5%90%AF%E5%8A%A8%E9%A1%BA%E5%BA%8F/'>
 
-<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="ubuntu通过配置grub文件修改启动菜单启动顺序">
+<link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="ubuntu通过配置grub文件修改启动菜单启动顺序">
 <meta property='og:description' content=" ubuntu通过配置grub文件修改启动菜单启动顺序和修改默认启动内核 ubuntu设置启动菜单默认启动项 计算您的启动菜单条目。 无需记住所有引导条目的完整图块，您可以对它们进行计数并使用该数字来设置默认引导条目。\n要预览菜单，请按 Ctrl+Alt+T 打开终端窗口，然后运行以下命令来安装 grub-emu 工具并使用它模拟启动菜单：\n首先，运行命令安装 grub-emu：\n1 sudo apt install grub-emu 然后，运行 grub-emu 以启动一个带有系统启动菜单的窗口：\n1 sudo grub-emu 计数从数字 0 开始。第一个条目是 0，第二个条目是 1，第三个条目是 2 …\n如果你想设置一个子菜单项来默认启动另一个内核，例如第二主菜单选项（在我的例子中为Ubuntu的高级选项，计数1）和第三 子菜单项（例如，Ubuntu with Linux Kernel 6.x.x…，计数 2），则目标编号为 1&gt;2。\n编辑默认操作系统/内核的配置文件 接下来，打开终端 (Ctrl+Alt+T) 并运行命令来编辑 grub 配置文件：\n1 sudo emacs /etc/default/grub 并且，当文件打开时，通过将数字 0（表示第一个）替换为上一步中获得的相应数字来设置 GRUB_DEFAULT=”0″。\n提示：您可以设置 GRUB_DEFAULT=saved 加上新行 GRUB_SAVEDEFAULT=true ，这样它会记住上次的启动项，并在下次启动时将其设置为默认值。\n1 2 GRUB_DEFAULT=saved GRUB_SAVEDEFAULT=true 最后，保存文件并退出。并且，运行以下命令来更新更改。\n1 sudo update-grub 更改系统内核版本 查看都有那些内核 1 cat /boot/grub/grub.cfg | grep menuentry 查看 /boot/grub/grub.cfg 中的内容 menuentry(主菜单）：是系统每次启动默认的kernel，对应 /etc/default/grub 中 GRUB_DEFAULT=0\n">
 <meta property='og:url' content='https://ynhugo.github.io/p/ubuntu%E9%80%9A%E8%BF%87%E9%85%8D%E7%BD%AEgrub%E6%96%87%E4%BB%B6%E4%BF%AE%E6%94%B9%E5%90%AF%E5%8A%A8%E8%8F%9C%E5%8D%95%E5%90%AF%E5%8A%A8%E9%A1%BA%E5%BA%8F/'>
 <meta property='og:site_name' content='ynhugo'>
@@ -56,7 +56,7 @@
                     
                     
                         
-                        <img src="/img/avatar_hu_f509edb42ecc0ebd.png" width="300"
+                        <img src="/img/avatar_hu_b5976aa1afdc1d2e.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -571,19 +571,7 @@ submenu(子菜单）：包含系统中所有的启动kernel。</p>
 
         <span>Licensed under CC BY-NC-SA 4.0</span>
     </section>
-    <section class="article-lastmod">
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="12" r="9" />
-  <polyline points="12 7 12 12 15 15" />
-</svg>
-
-
-
-        <span>
-            最后更新于 Apr 28, 2025 17:05 &#43;0800
-        </span>
-    </section></footer>
+    </footer>
 
 
     

@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://ynhugo.github.io/p/emacs%E5%A4%9A%E7%A7%8D%E9%85%8D%E7%BD%AE%E5%85%B1%E5%AD%98%E7%9A%84%E6%80%9D%E8%B7%AF/'>
 
-<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="emacs多种配置共存的思路">
+<link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="emacs多种配置共存的思路">
 <meta property='og:description' content=" emacs多种配置共存的思路 将配置放在early-init.el文件中，可以不需要init.el文件，将其他用户或其他独立的配置的init.el文件改成对应用户或独立的的配置后在early-init.el中加载即可\n如果你希望增加通用性，可以让配置更加灵活，以便将来可以轻松切换或添加其他配置文件。以下是一个示例代码： 1 2 3 4 5 6 7 8 9 10 11 12 13 (defun load-emacs-config (config-name) &#34;Load a specific Emacs configuration based on CONFIG-NAME.&#34; (let ((config-path (expand-file-name (concat config-name &#34;.el&#34;) &#34;~/.emacs.d/&#34;))) (if (file-exists-p config-path) (load config-path) (message &#34;Config file not found: %s&#34; config-path)))) ;; 加载 remacs 配置 (load-emacs-config &#34;remacs&#34;) ;; 以后可以通过更改参数来加载不同的配置 ;; (load-emacs-config &#34;spacemacs&#34;) ;; (load-emacs-config &#34;prelude&#34;) 这样，你可以通过调用 `load-emacs-config` 函数并传入配置文件名来加载不同的配置。\n">
 <meta property='og:url' content='https://ynhugo.github.io/p/emacs%E5%A4%9A%E7%A7%8D%E9%85%8D%E7%BD%AE%E5%85%B1%E5%AD%98%E7%9A%84%E6%80%9D%E8%B7%AF/'>
 <meta property='og:site_name' content='ynhugo'>
@@ -56,7 +56,7 @@
                     
                     
                         
-                        <img src="/img/avatar_hu_f509edb42ecc0ebd.png" width="300"
+                        <img src="/img/avatar_hu_b5976aa1afdc1d2e.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -459,19 +459,7 @@ emacs多种配置共存的思路
 
         <span>Licensed under CC BY-NC-SA 4.0</span>
     </section>
-    <section class="article-lastmod">
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="12" r="9" />
-  <polyline points="12 7 12 12 15 15" />
-</svg>
-
-
-
-        <span>
-            最后更新于 Sep 18, 2024 11:26 &#43;0800
-        </span>
-    </section></footer>
+    </footer>
 
 
     

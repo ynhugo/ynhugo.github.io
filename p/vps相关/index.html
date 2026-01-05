@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://ynhugo.github.io/p/vps%E7%9B%B8%E5%85%B3/'>
 
-<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="VPS相关">
+<link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="VPS相关">
 <meta property='og:description' content=" 付费 VPS raksmart 支持最低3美元的 VPS，可以用于搭建 ChatGPT，可以在 web 界面进行开关机和重装系统，重装系统时可以重置密码，配置的话通过 ssh 访问\n链接：https://www.raksmart.com/home\n免费 VPS 永久免费的公共 UNIX 服务器 注册方法 打开网址：https://sdf.org/ 直接填写邮箱和登录名称，确认即可注册。\n注册后，请在邮箱中查找来自 SDF 的邮件，极有可能是在垃圾箱中，里面给出了服务器登录的方法，包括用户名和密码。\n使用 ssh 工具，直接登录即可。\n操作建议 一款持续提供35年的服务商是值得尊敬的，如果有条件可以赞助一下；筹款商店还有光盘和徽章售卖。终身会员只要36刀！\n新人可以看看 freeBSD 的文档，对于提升有很大帮助：https://docs.freebsd.org/doc/\nSDF 提示信息 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 $ notes -r Welcome to the SDF Public Access UNIX system. (est. 1987) For quick help, type &#39;help&#39; For detailed questions and answers, type &#39;faq&#39; For user discussion boards, type &#39;bboard&#39; For interactive discussions, type &#39;com&#39; For adding yourself to the SDF User Map, see http://sdf1.org/map To setup your homepage, type &#39;mkhomepg&#39; To create your URL http://qq182sdf.freeshell.org, type &#39;addlink&#39; Classroom Student programs are located in /sys/classroom Explore and Enjoy! [1:2] (P)ROCEED, (D)ELETE, (C)ATCH UP, (R)ESPOND or (Q)UIT: PROCEED 参考链接 永久免费的公共UNIX服务器\n">
 <meta property='og:url' content='https://ynhugo.github.io/p/vps%E7%9B%B8%E5%85%B3/'>
 <meta property='og:site_name' content='ynhugo'>
@@ -56,7 +56,7 @@
                     
                     
                         
-                        <img src="/img/avatar_hu_f509edb42ecc0ebd.png" width="300"
+                        <img src="/img/avatar_hu_b5976aa1afdc1d2e.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -356,15 +356,17 @@
 </li>
 <li><a href="#headline-22">Segfault 提示信息</a>
 </li>
-<li><a href="#headline-23">startfb 教程</a>
+<li><a href="#headline-23">允许端口转发和代理</a>
 </li>
-<li><a href="#headline-24">参考链接</a>
+<li><a href="#headline-24">startfb 教程</a>
+</li>
+<li><a href="#headline-25">参考链接</a>
 </li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#headline-25">SSH 注意事项</a>
+<li><a href="#headline-26">SSH 注意事项</a>
 </li>
 </ul>
 </nav>
@@ -799,11 +801,11 @@ Segfault 提示信息
 </span></span><span class="line"><span class="cl">  Your Onion WWW    : /onion                     <span class="o">(</span>encrypted<span class="o">)</span>
 </span></span><span class="line"><span class="cl">  Your Web Page     : http://2xyr7jug4b5uhndzelsf7vgrxygttutc6h5mqzpwp7y6blk6owhxliqd.onion/recipekit/
 </span></span><span class="line"><span class="cl">  SSH               : ssh -o <span class="s2">&#34;SetEnv SECRET=W7NHhPqWvpNKPTcpEgkez4P2&#34;</span> <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>						 root@adm.segfault.net
+</span></span></span><span class="line"><span class="cl">						 root@adm.segfault.net
 </span></span><span class="line"><span class="cl">  SSH <span class="o">(</span>TOR<span class="o">)</span>         : torsocks ssh -o <span class="s2">&#34;SetEnv SECRET=W7NHhPqWvpNKPTcpEgkez4P2&#34;</span> <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>						 root@w5wc42fbltkdxpycsurj4zwxouhb3es3t2334lyte6euewrebjx4ryid.onion
+</span></span></span><span class="line"><span class="cl">						 root@w5wc42fbltkdxpycsurj4zwxouhb3es3t2334lyte6euewrebjx4ryid.onion
 </span></span><span class="line"><span class="cl">  SSH <span class="o">(</span>gsocket<span class="o">)</span>     : gsocket -s NGExNzFhNMYm ssh -o <span class="s2">&#34;SetEnv SECRET=W7NHhPqWvpNKPTcpEgkez4P2&#34;</span> <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>						 root@adm.segfault.gsocket
+</span></span></span><span class="line"><span class="cl">						 root@adm.segfault.gsocket
 </span></span><span class="line"><span class="cl">  SECRET            : W7NHhPqWvpNKPTcpEgkez4P2</span></span></code></pre></td></tr></table>
 </div>
 </div>
@@ -812,9 +814,32 @@ Segfault 提示信息
 </div>
 <div id="outline-container-headline-23" class="outline-4">
 <h4 id="headline-23">
-startfb 教程
+允许端口转发和代理
 </h4>
 <div id="outline-text-headline-23" class="outline-text-4">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ssh -D 127.0.0.1:1080 root@segfault.net
+</span></span><span class="line"><span class="cl"><span class="c1"># then from another Terminal on your workstation:</span>
+</span></span><span class="line"><span class="cl">curl -x socks5h://0 ipinfo.io
+</span></span><span class="line"><span class="cl">curl -x socks5h://0 http://6nhmgdpnyoljh5uzr5kwlatx2u3diou4ldeommfxjz3wkhalzgjqxzqd.onion/</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-24" class="outline-4">
+<h4 id="headline-24">
+startfb 教程
+</h4>
+<div id="outline-text-headline-24" class="outline-text-4">
 <p>
 使用下面所示的端口转发登录，密码还是 segfault，登录后在vps终端键入 startfb，保持登录状态，然后将浏览器指向 <a href="http://127.0.0.1:2900">http://127.0.0.1:2900</a></p>
 <p>
@@ -857,11 +882,11 @@ startfb 教程
 <img src="/images/segfault_vps教程/png14.png" alt="/images/segfault_vps教程/png14.png" title="/images/segfault_vps教程/png14.png" /></p>
 </div>
 </div>
-<div id="outline-container-headline-24" class="outline-4">
-<h4 id="headline-24">
+<div id="outline-container-headline-25" class="outline-4">
+<h4 id="headline-25">
 参考链接
 </h4>
-<div id="outline-text-headline-24" class="outline-text-4">
+<div id="outline-text-headline-25" class="outline-text-4">
 <p>
 https://www.thc.org/segfault/</p>
 <p>
@@ -872,11 +897,11 @@ https://www.thc.org/segfault/gui/</p>
 </div>
 </div>
 </div>
-<div id="outline-container-headline-25" class="outline-2">
-<h2 id="headline-25">
+<div id="outline-container-headline-26" class="outline-2">
+<h2 id="headline-26">
 SSH 注意事项
 </h2>
-<div id="outline-text-headline-25" class="outline-text-2">
+<div id="outline-text-headline-26" class="outline-text-2">
 <p>
 首先无论是付费 vps 还是免费 vps，如果需要自己配置 ssh 连接的话一定要注意配置文件里除了默认允许密码登录授权的配置以外还要确认并配置允许 ssh 公钥登录授权，如果 vps 配置这两项都是 yes，那就不需要更改了，其他配置根据自己的需要进行修改</p>
 <p>

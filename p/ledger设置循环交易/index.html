@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://ynhugo.github.io/p/ledger%E8%AE%BE%E7%BD%AE%E5%BE%AA%E7%8E%AF%E4%BA%A4%E6%98%93/'>
 
-<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="ledger设置循环交易">
+<link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="ledger设置循环交易">
 <meta property='og:description' content=" ledger设置循环交易 ledger-cli如何支持循环交易 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 在 **ledger-cli** 里，“循环交易” 一般是指一种定期重复发生的交易，比如每周/每月的工资、房租、水电费、转账等。 Ledger 本身并不会像记账软件那样自动生成未来的交易，但它有两种机制可以支持这种场景： --- ## **1. 用 `~` 定义周期性交易（Periodic Transactions）** Ledger 的 journal 文件可以直接写定期规则，让它在报表时自动扩展出这些交易。 语法大致是： ```ledger ~ every month on the 5th Expenses:Rent 2000 CNY Assets:Bank:ICBC ``` ### 常用的周期表达式 ,* `~ monthly` / `~ every month` → 每月 ,* `~ weekly` / `~ every week` → 每周 ,* `~ daily` / `~ every day` → 每天 ,* 可以指定日期：`~ every month on the 15th` ,* 可以指定范围：`~ weekly from 2025/01/01 until 2025/12/31` 例如： ```ledger ~ every week Expenses:运营商:中国联通 49.75 CNY Assets:Bank:工商银行 ``` 这个不会直接写入账本，只会在你运行报表命令时自动计算这些交易的总额。 --- ## **2. 生成实际交易（Materializing Periodic Transactions）** 如果你想让循环交易“落地”成普通交易（方便将来修改或导出），可以用 Ledger 自带的扩展功能： ```bash ledger -f ledger.dat print --period &#34;from 2025/01/01 to 2025/12/31&#34; ``` 配合 `--actual` 可以生成真实交易而不是仅显示。 也可以用 **ledger-autoschedule**（第三方脚本）将周期交易展开为实际的交易条目存到文件里。 --- ## **3. 注意事项** ,* 周期交易不会自动影响期初余额，因为它是计算时临时展开的。 ,* 如果你的循环交易金额会变化（比如水费），那最好生成实际交易手动调整。 ,* Ledger 的日期计算遵循 `boost::date_time` 规则，复杂的周期需要测试一下（例如“每月最后一天”要用 `on last day of month`）。 --- 如果你愿意，我可以帮你写一个 **可以在 ledger-cli 里自动生成全年循环交易的脚本**，这样 journal 文件里就是全部真实交易而不是临时规则。这样你就可以和普通账目一起查询和编辑。 你是想要这种**脚本生成法**还是**\\~ every week**这种原生 Ledger 周期规则？ 问答1 问：\n">
 <meta property='og:url' content='https://ynhugo.github.io/p/ledger%E8%AE%BE%E7%BD%AE%E5%BE%AA%E7%8E%AF%E4%BA%A4%E6%98%93/'>
 <meta property='og:site_name' content='ynhugo'>
@@ -56,7 +56,7 @@
                     
                     
                         
-                        <img src="/img/avatar_hu_f509edb42ecc0ebd.png" width="300"
+                        <img src="/img/avatar_hu_b5976aa1afdc1d2e.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -472,18 +472,18 @@ ledger-cli如何支持循环交易
 </span></span><span class="line"><span class="cl">---
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="gu">## **1. 用 `~` 定义周期性交易（Periodic Transactions）**
-</span></span></span><span class="line"><span class="cl"><span class="gu"></span>
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">Ledger 的 journal 文件可以直接写定期规则，让它在报表时自动扩展出这些交易。
 </span></span><span class="line"><span class="cl">语法大致是：
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="s">```ledger
-</span></span></span><span class="line"><span class="cl"><span class="s"></span>~ every month on the 5th
+</span></span></span><span class="line"><span class="cl">~ every month on the 5th
 </span></span><span class="line"><span class="cl">    Expenses:Rent               2000 CNY
 </span></span><span class="line"><span class="cl">    Assets:Bank:ICBC
 </span></span><span class="line"><span class="cl"><span class="s">```</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="gu">### 常用的周期表达式
-</span></span></span><span class="line"><span class="cl"><span class="gu"></span>
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">,* <span class="sb">`~ monthly`</span> / <span class="sb">`~ every month`</span> → 每月
 </span></span><span class="line"><span class="cl">,* <span class="sb">`~ weekly`</span> / <span class="sb">`~ every week`</span> → 每周
 </span></span><span class="line"><span class="cl">,* <span class="sb">`~ daily`</span> / <span class="sb">`~ every day`</span> → 每天
@@ -493,7 +493,7 @@ ledger-cli如何支持循环交易
 </span></span><span class="line"><span class="cl">例如：
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="s">```ledger
-</span></span></span><span class="line"><span class="cl"><span class="s"></span>~ every week
+</span></span></span><span class="line"><span class="cl">~ every week
 </span></span><span class="line"><span class="cl">    Expenses:运营商:中国联通    49.75 CNY
 </span></span><span class="line"><span class="cl">    Assets:Bank:工商银行
 </span></span><span class="line"><span class="cl"><span class="s">```</span>
@@ -503,11 +503,11 @@ ledger-cli如何支持循环交易
 </span></span><span class="line"><span class="cl">---
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="gu">## **2. 生成实际交易（Materializing Periodic Transactions）**
-</span></span></span><span class="line"><span class="cl"><span class="gu"></span>
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">如果你想让循环交易“落地”成普通交易（方便将来修改或导出），可以用 Ledger 自带的扩展功能：
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="s">```bash
-</span></span></span><span class="line"><span class="cl"><span class="s"></span>ledger -f ledger.dat print --period <span class="s2">&#34;from 2025/01/01 to 2025/12/31&#34;</span>
+</span></span></span><span class="line"><span class="cl">ledger -f ledger.dat print --period <span class="s2">&#34;from 2025/01/01 to 2025/12/31&#34;</span>
 </span></span><span class="line"><span class="cl"><span class="s">```</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">配合 <span class="sb">`--actual`</span> 可以生成真实交易而不是仅显示。
@@ -517,7 +517,7 @@ ledger-cli如何支持循环交易
 </span></span><span class="line"><span class="cl">---
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="gu">## **3. 注意事项**
-</span></span></span><span class="line"><span class="cl"><span class="gu"></span>
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">,* 周期交易不会自动影响期初余额，因为它是计算时临时展开的。
 </span></span><span class="line"><span class="cl">,* 如果你的循环交易金额会变化（比如水费），那最好生成实际交易手动调整。
 </span></span><span class="line"><span class="cl">,* Ledger 的日期计算遵循 <span class="sb">`boost::date_time`</span> 规则，复杂的周期需要测试一下（例如“每月最后一天”要用 <span class="sb">`on last day of month`</span>）。
@@ -622,7 +622,7 @@ ledger-cli如何支持循环交易
 </span></span><span class="line"><span class="cl">,**所以改成这样就行：**
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="s">```ledger
-</span></span></span><span class="line"><span class="cl"><span class="s"></span>~ daily
+</span></span></span><span class="line"><span class="cl">~ daily
 </span></span><span class="line"><span class="cl">    Expenses:运营商:中国联通    49.75 CNY
 </span></span><span class="line"><span class="cl">    Assets:Bank:工商银行
 </span></span><span class="line"><span class="cl"><span class="s">```</span>
@@ -630,7 +630,7 @@ ledger-cli如何支持循环交易
 </span></span><span class="line"><span class="cl">或者：
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="s">```ledger
-</span></span></span><span class="line"><span class="cl"><span class="s"></span>~ every day
+</span></span></span><span class="line"><span class="cl">~ every day
 </span></span><span class="line"><span class="cl">    Expenses:运营商:中国联通    49.75 CNY
 </span></span><span class="line"><span class="cl">    Assets:Bank:工商银行
 </span></span><span class="line"><span class="cl"><span class="s">```</span>
@@ -638,9 +638,9 @@ ledger-cli如何支持循环交易
 </span></span><span class="line"><span class="cl">---
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="gu">### 补充：一些合法写法
-</span></span></span><span class="line"><span class="cl"><span class="gu"></span>
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="s">```ledger
-</span></span></span><span class="line"><span class="cl"><span class="s"></span>~ every week
+</span></span></span><span class="line"><span class="cl">~ every week
 </span></span><span class="line"><span class="cl">~ weekly
 </span></span><span class="line"><span class="cl">~ every month
 </span></span><span class="line"><span class="cl">~ monthly
@@ -760,25 +760,25 @@ ledger-cli如何支持循环交易
 </span></span><span class="line"><span class="cl">---
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="gu">### 解决方法
-</span></span></span><span class="line"><span class="cl"><span class="gu"></span>
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="gu">#### 如果只是想让它在余额里生效
-</span></span></span><span class="line"><span class="cl"><span class="gu"></span>
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="s">```bash
-</span></span></span><span class="line"><span class="cl"><span class="s"></span>ledger -f ledger.ledger bal -b 2025/08/01 --forecast
+</span></span></span><span class="line"><span class="cl">ledger -f ledger.ledger bal -b 2025/08/01 --forecast
 </span></span><span class="line"><span class="cl"><span class="s">```</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="sb">`--forecast`</span> 会把周期规则展开成未来的交易（直到你设定的结束日期）。
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="gu">#### 如果想查看具体展开的交易
-</span></span></span><span class="line"><span class="cl"><span class="gu"></span>
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="s">```bash
-</span></span></span><span class="line"><span class="cl"><span class="s"></span>ledger -f ledger.ledger register --period <span class="s2">&#34;2025/08/01 to 2025/08/31&#34;</span> --forecast
+</span></span></span><span class="line"><span class="cl">ledger -f ledger.ledger register --period <span class="s2">&#34;2025/08/01 to 2025/08/31&#34;</span> --forecast
 </span></span><span class="line"><span class="cl"><span class="s">```</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="gu">#### 如果要生成实际交易到文件
-</span></span></span><span class="line"><span class="cl"><span class="gu"></span>
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="s">```bash
-</span></span></span><span class="line"><span class="cl"><span class="s"></span>ledger -f ledger.ledger print --forecast --period <span class="s2">&#34;2025/08/01 to 2025/08/31&#34;</span> &gt; expanded.ledger
+</span></span></span><span class="line"><span class="cl">ledger -f ledger.ledger print --forecast --period <span class="s2">&#34;2025/08/01 to 2025/08/31&#34;</span> &gt; expanded.ledger
 </span></span><span class="line"><span class="cl"><span class="s">```</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">这样 <span class="sb">`expanded.ledger`</span> 里就是每天的那笔 49.75 CNY，跟普通交易一样。
@@ -882,25 +882,25 @@ ledger-cli如何支持循环交易
 </span></span><span class="line"><span class="cl">也就是说，旧版本的：
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="s">```bash
-</span></span></span><span class="line"><span class="cl"><span class="s"></span>ledger ... --forecast
+</span></span></span><span class="line"><span class="cl">ledger ... --forecast
 </span></span><span class="line"><span class="cl"><span class="s">```</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">在你这个版本里变成了：
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="s">```bash
-</span></span></span><span class="line"><span class="cl"><span class="s"></span>ledger ... --forecast-while &lt;EXPRESSION&gt;
+</span></span></span><span class="line"><span class="cl">ledger ... --forecast-while &lt;EXPRESSION&gt;
 </span></span><span class="line"><span class="cl"><span class="s">```</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">---
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="gu">## 用法示例
-</span></span></span><span class="line"><span class="cl"><span class="gu"></span>
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">比如你想让它一直生成交易直到 2025/08/31：
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="s">```bash
-</span></span></span><span class="line"><span class="cl"><span class="s"></span>ledger -f ledger.ledger bal <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>    -b 2025/08/01 <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>    --forecast-while <span class="s2">&#34;date &lt;= [2025-08-31]&#34;</span>
+</span></span></span><span class="line"><span class="cl">ledger -f ledger.ledger bal <span class="se">\
+</span></span></span><span class="line"><span class="cl">    -b 2025/08/01 <span class="se">\
+</span></span></span><span class="line"><span class="cl">    --forecast-while <span class="s2">&#34;date &lt;= [2025-08-31]&#34;</span>
 </span></span><span class="line"><span class="cl"><span class="s">```</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">这样 ledger 会展开 <span class="sb">`~ daily`</span> 规则，从 8/1 到 8/31 每天一笔。
@@ -908,14 +908,14 @@ ledger-cli如何支持循环交易
 </span></span><span class="line"><span class="cl">如果想看具体的交易明细而不是余额：
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="s">```bash
-</span></span></span><span class="line"><span class="cl"><span class="s"></span>ledger -f ledger.ledger register <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>    --forecast-while <span class="s2">&#34;date &lt;= [2025-08-31]&#34;</span>
+</span></span></span><span class="line"><span class="cl">ledger -f ledger.ledger register <span class="se">\
+</span></span></span><span class="line"><span class="cl">    --forecast-while <span class="s2">&#34;date &lt;= [2025-08-31]&#34;</span>
 </span></span><span class="line"><span class="cl"><span class="s">```</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">---
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="gu">## 解释
-</span></span></span><span class="line"><span class="cl"><span class="gu"></span>
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">,* <span class="sb">`--forecast-while`</span> 会不断展开 periodic transactions，直到条件不成立。
 </span></span><span class="line"><span class="cl">,* 条件里可以用 <span class="sb">`date`</span>（交易日期）、<span class="sb">`amount`</span> 等 ledger 表达式。
 </span></span><span class="line"><span class="cl">,* 日期要用方括号 <span class="sb">`[YYYY-MM-DD]`</span>，这样它会被当成日期而不是字符串。
@@ -960,19 +960,7 @@ ledger-cli如何支持循环交易
 
         <span>Licensed under CC BY-NC-SA 4.0</span>
     </section>
-    <section class="article-lastmod">
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="12" r="9" />
-  <polyline points="12 7 12 12 15 15" />
-</svg>
-
-
-
-        <span>
-            最后更新于 Aug 13, 2025 18:04 &#43;0800
-        </span>
-    </section></footer>
+    </footer>
 
 
     

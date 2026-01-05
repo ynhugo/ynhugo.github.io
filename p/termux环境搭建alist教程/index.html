@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://ynhugo.github.io/p/termux%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BAalist%E6%95%99%E7%A8%8B/'>
 
-<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="termux环境搭建alist教程">
+<link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="termux环境搭建alist教程">
 <meta property='og:description' content="搭建alist教程 alist配置官方文档。\n安装alist 安装程序后在命令行界面运行就可以了，第一次运行的时候先获取到用户名和密码，然后根据提供的用户名和密码进行网页访问并修改密码。\n后台运行 在termux的家目录编辑&quot;.bashrc&quot;文件，如果没有这个文件可以创建这个文件，该命名的文件在启动termux后可以自动运行，不过alist不能重复启动，为避免使用ssh连接termux时再次启动启动alist，我写了一个脚本进行判断，如果alist已经运行就不再重复运行，执行命令时产生的附带文件如nohup.out和null也通过判断是否存在，如果存在则删除，在这一部分我在网上找了两个链接参考了一下，分别是shell判断进程是否存在，不存在则启动和Shell脚本实用小技巧-教你屏蔽执行命令的所有显示信息，包含错误信息和Shell 判断文件或文件夹是否存在（不存在则创建），这样这个脚本就可以实现alist在后台运行了，并且不需要自己手动做任何操作了。 想要完成上面描述的效果，则需要将下面的脚本内容添加到&quot;.bashrc&quot;中\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 #!/data/data/com.termux/files/usr/bin/bash ps -ef | grep &#34;alist&#34; | grep -v &#34;grep&#34; &gt; /dev/null 2&gt;&amp;1 if [ $? -ne 0 ] then nohup alist server &amp; fi if [ -e &#34;/data/data/com.termux/files/home/null&#34; ] then rm /data/data/com.termux/files/home/null fi if [ -e &#34;/data/data/com.termux/files/home/nohup.out&#34; ] then rm /data/data/com.termux/files/home/nohup.out fi[&lt;35;177;4m 最后启动该文件即可\n">
 <meta property='og:url' content='https://ynhugo.github.io/p/termux%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BAalist%E6%95%99%E7%A8%8B/'>
 <meta property='og:site_name' content='ynhugo'>
@@ -56,7 +56,7 @@
                     
                     
                         
-                        <img src="/img/avatar_hu_f509edb42ecc0ebd.png" width="300"
+                        <img src="/img/avatar_hu_b5976aa1afdc1d2e.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -425,7 +425,7 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/data/data/com.termux/files/usr/bin/bash
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">ps -ef <span class="p">|</span> grep <span class="s2">&#34;alist&#34;</span> <span class="p">|</span> grep -v <span class="s2">&#34;grep&#34;</span> &gt; /dev/null 2&gt;<span class="p">&amp;</span><span class="m">1</span>
 </span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -ne <span class="m">0</span> <span class="o">]</span>
 </span></span><span class="line"><span class="cl"><span class="k">then</span>
@@ -517,19 +517,7 @@
 
         <span>Licensed under CC BY-NC-SA 4.0</span>
     </section>
-    <section class="article-lastmod">
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="12" r="9" />
-  <polyline points="12 7 12 12 15 15" />
-</svg>
-
-
-
-        <span>
-            最后更新于 Jul 08, 2025 18:57 &#43;0800
-        </span>
-    </section></footer>
+    </footer>
 
 
     

@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://ynhugo.github.io/p/linux%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4%E5%BC%82%E5%B8%B8%E7%88%86%E6%BB%A1%E7%9A%84%E6%8E%92%E6%9F%A5%E5%92%8C%E5%A4%84%E7%90%86/'>
 
-<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="Linux磁盘空间异常爆满的排查和处理">
+<link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="Linux磁盘空间异常爆满的排查和处理">
 <meta property='og:description' content=" Linux磁盘空间异常爆满的排查和处理 我采用了笨方法：在根目录下，通过du -hs命令，列出各目录所占空间大小\n1 2 3 sudo su cd / du -sh * 然后看哪个文件夹占用空间最大，再进入目录继续执行 du -sh * ，这样一步一步的追踪，通过这样的方式最终找到占用空间最大的文件。\n通过追溯，我发现有两个文件占用空间特别大，分别是这两个文件：\n1 2 /var/log/kern.log /var/log/syslog 我可以通过删除临时解决空间占用的问题，不过最根本的是解决问题产生的原因。由于我运行PCIE相关的程序，导致空间异常爆满，为了先临时解决问题是，我可以先删除这两个文件，然后再重启，发现空间异常爆满的问题解决了。\n1 2 3 4 5 6 7 8 rm /var/log/kern.log rm /var/log/syslog reboot # 或 echo &#34;&#34; &gt; /var/log/kern.log echo &#34;&#34; &gt; /var/log/syslog service syslog restart journalctl --vacuum-size=50M 您需要成为根用户:输入sudo su，密码，然后输入上面的命令\n这里有一个更安全的方法，允许您在回收磁盘空间的同时保留日志文件，同时也可以阻止日志文件再次这样做 安全地清除日志:在查看(或备份)日志以确定系统问题后，通过键入 &gt; /var/log/syslog (包括 &gt;)清除它们。您可能需要成为根用户，在这种情况下输入 sudo su 、您的密码，然后输入上面的命令)。 然后重新启动 syslog 服务( systemctl restart syslog 或 service syslog restart)。 然后，可以使用 logrotate 强制日志在达到一定大小时自动旋转和删除。在本例中，您可以使用 sudo vim /etc/logrotate.d/rsyslog 编辑配置并添加一行： maxsize 1G\n">
 <meta property='og:url' content='https://ynhugo.github.io/p/linux%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4%E5%BC%82%E5%B8%B8%E7%88%86%E6%BB%A1%E7%9A%84%E6%8E%92%E6%9F%A5%E5%92%8C%E5%A4%84%E7%90%86/'>
 <meta property='og:site_name' content='ynhugo'>
@@ -56,7 +56,7 @@
                     
                     
                         
-                        <img src="/img/avatar_hu_f509edb42ecc0ebd.png" width="300"
+                        <img src="/img/avatar_hu_b5976aa1afdc1d2e.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -579,19 +579,7 @@ Linux磁盘空间异常爆满的排查和处理
 
         <span>Licensed under CC BY-NC-SA 4.0</span>
     </section>
-    <section class="article-lastmod">
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="12" r="9" />
-  <polyline points="12 7 12 12 15 15" />
-</svg>
-
-
-
-        <span>
-            最后更新于 Jul 11, 2025 15:03 &#43;0800
-        </span>
-    </section></footer>
+    </footer>
 
 
     

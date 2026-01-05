@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://ynhugo.github.io/p/c%E8%AF%AD%E8%A8%80%E8%8E%B7%E5%8F%96%E6%93%8D%E4%BD%9C%E6%97%B6%E9%97%B4/'>
 
-<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="c语言获取操作时间">
+<link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="c语言获取操作时间">
 <meta property='og:description' content=" 使用 C 语言在 Linux 环境下获得微秒级时间 数据结构 1 int gettimeofday(struct timeval*tv, struct timezone *tz); /* 其参数 tv 是保存获取时间结果的结构体，参数 tz 用于保存时区结果： */ 结构体timezone的定义 1 2 3 4 struct timezone{ int tz_minuteswest;/*格林威治时间往西方的时差*/ int tz_dsttime;/*DST 时间的修正方式*/ } timezone 参数若不使用则传入NULL即可。\n结构体timeval的定义 1 2 3 4 struct timeval{ long int tv_sec; // 秒数 long int tv_usec; // 微秒数 } 代码实例 temp.cpp 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 #include &lt;stdio.h&gt; // for printf() #include &lt;sys/time.h&gt; // for gettimeofday() #include &lt;unistd.h&gt; // for sleep() int main() { struct timeval start, end; gettimeofday( &amp;start, NULL ); printf(&#34;start : %d.%d\\n&#34;, start.tv_sec, start.tv_usec); sleep(1); gettimeofday( &amp;end, NULL ); printf(&#34;end : %d.%d\\n&#34;, end.tv_sec, end.tv_usec); return 0; } 编译 1 g++ -o temp temp.cpp 运行及结果 1 2 3 $ ./temp start : 1418118324.633128 end : 1418118325.634616 usleep函数 1 2 #include &lt;unistd.h&gt; usleep(time);\t// 百万分之一秒 使用 C 语言在 windows 环境下获得微秒级时间 C 语言如何实现微秒级计算程序运行时间\n">
 <meta property='og:url' content='https://ynhugo.github.io/p/c%E8%AF%AD%E8%A8%80%E8%8E%B7%E5%8F%96%E6%93%8D%E4%BD%9C%E6%97%B6%E9%97%B4/'>
 <meta property='og:site_name' content='ynhugo'>
@@ -56,7 +56,7 @@
                     
                     
                         
-                        <img src="/img/avatar_hu_f509edb42ecc0ebd.png" width="300"
+                        <img src="/img/avatar_hu_b5976aa1afdc1d2e.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -468,8 +468,8 @@
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">  <span class="k">struct</span> <span class="n">timeval</span><span class="p">{</span>
 </span></span><span class="line"><span class="cl">  <span class="kt">long</span> <span class="kt">int</span> <span class="n">tv_sec</span><span class="p">;</span> <span class="c1">// 秒数
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kt">long</span> <span class="kt">int</span> <span class="n">tv_usec</span><span class="p">;</span> <span class="c1">// 微秒数
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="p">}</span></span></span></code></pre></td></tr></table>
+</span></span></span><span class="line"><span class="cl">  <span class="kt">long</span> <span class="kt">int</span> <span class="n">tv_usec</span><span class="p">;</span> <span class="c1">// 微秒数
+</span></span></span><span class="line"><span class="cl">  <span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
@@ -503,9 +503,9 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">  <span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;        // for printf()</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span>  <span class="cp">#include</span> <span class="cpf">&lt;sys/time.h&gt;    // for gettimeofday()</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span>  <span class="cp">#include</span> <span class="cpf">&lt;unistd.h&gt;        // for sleep()</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span></span><span class="line"><span class="cl">  <span class="cp">#include</span> <span class="cpf">&lt;sys/time.h&gt;    // for gettimeofday()</span><span class="cp">
+</span></span></span><span class="line"><span class="cl">  <span class="cp">#include</span> <span class="cpf">&lt;unistd.h&gt;        // for sleep()</span><span class="cp">
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">  <span class="p">{</span>
 </span></span><span class="line"><span class="cl">	  <span class="k">struct</span> <span class="n">timeval</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">;</span>
@@ -569,7 +569,7 @@ usleep函数
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">  <span class="cp">#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span>  <span class="nf">usleep</span><span class="p">(</span><span class="n">time</span><span class="p">);</span>	<span class="c1">// 百万分之一秒
+</span></span></span><span class="line"><span class="cl">  <span class="nf">usleep</span><span class="p">(</span><span class="n">time</span><span class="p">);</span>	<span class="c1">// 百万分之一秒
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div>
@@ -630,8 +630,8 @@ C 语言中用 clock() 函数计算程序运行时间只能达到毫秒级,要�
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">  <span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span>  <span class="cp">#include</span> <span class="cpf">&lt;windows.h&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span></span><span class="line"><span class="cl">  <span class="cp">#include</span> <span class="cpf">&lt;windows.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">  <span class="p">{</span>
 </span></span><span class="line"><span class="cl">	  <span class="n">LARGE_INTEGER</span> <span class="n">fre</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>

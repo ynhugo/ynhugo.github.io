@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://ynhugo.github.io/p/emacs%E4%BD%BF%E7%94%A8%E6%9C%AC%E5%9C%B0elpa%E9%95%9C%E5%83%8F/'>
 
-<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="Emacs使用本地elpa镜像">
+<link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="Emacs使用本地elpa镜像">
 <meta property='og:description' content=" Emacs使用本地elpa镜像 搭建本地镜像源 可以将国内的elpa镜像同步到本地作为自己的镜像源，以清华elpa镜像源为例。\n同步镜像源 国内的elpa镜像源都有同步地址，如清华镜像同步地址为rsync://mirrors.tuna.tsinghua.edu.cn/elpa/,使用 rsync 命令进行同步。\n1 2 3 4 // 查看同步内容 rsync rsync://mirrors.tuna.tsinghua.edu.cn/elpa/ // 将镜像内容同步到本机 ~/elpa 目录下 rsync -avz rsync://mirrors.tuna.tsinghua.edu.cn/elpa/ ~/elpa 等待一段时间即可同步完成。注意同步时要仔细阅读同步要求，尽量不要对镜像服务器造成流量压力。\nemacs 中使用本地镜像 1 2 3 4 5 6 7 ;; emacs 初始化文件中添加以下代码 (setq package-archives &#39;((&#34;gnu&#34; . &#34;~/elpa/gnu/&#34;) (&#34;melpa&#34; . &#34;~/elpa/melpa/&#34;) (&#34;nongnu&#34; . &#34;~/elpa/nongnu/&#34;) (&#34;org&#34; . &#34;~/elpa/org/&#34;) (&#34;melpa-stable&#34; . &#34;~/elpa/stable-melpa/&#34;))) (package-initialize) 添加完成后保存重启emacs，然后使用 M-x package-list-packages 命令既可以查看本地melpa等镜像中的包，而且如果电脑处于断网离线状态，依然可以安装本地镜像中存在的包。\n参考链接 1. Emacs使用本地elpa镜像\n">
 <meta property='og:url' content='https://ynhugo.github.io/p/emacs%E4%BD%BF%E7%94%A8%E6%9C%AC%E5%9C%B0elpa%E9%95%9C%E5%83%8F/'>
 <meta property='og:site_name' content='ynhugo'>
@@ -56,7 +56,7 @@
                     
                     
                         
-                        <img src="/img/avatar_hu_f509edb42ecc0ebd.png" width="300"
+                        <img src="/img/avatar_hu_b5976aa1afdc1d2e.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -498,19 +498,7 @@ emacs 中使用本地镜像
 
         <span>Licensed under CC BY-NC-SA 4.0</span>
     </section>
-    <section class="article-lastmod">
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="12" r="9" />
-  <polyline points="12 7 12 12 15 15" />
-</svg>
-
-
-
-        <span>
-            最后更新于 Dec 07, 2024 23:34 &#43;0800
-        </span>
-    </section></footer>
+    </footer>
 
 
     

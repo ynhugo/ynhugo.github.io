@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://ynhugo.github.io/p/linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E5%AE%89%E8%A3%85anaconda/'>
 
-<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="Linux服务器上安装Anaconda">
+<link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="Linux服务器上安装Anaconda">
 <meta property='og:description' content=" 安装Anaconda 1.1 下载anaconda的安装包\n这里我们需要在官网上查找自己需要的版本，地址链接在下面:\nhttps://repo.anaconda.com/archive/\n这里以我自己安装的版本为例：\nhttps://repo.anaconda.com/archive/Anaconda3-5.3.0-Linux-x86_64.sh\n这是我选择的版本，然后我们在控制台输入这句话：\nwget https://repo.anaconda.com/archive/Anaconda3-5.3.0-Linux-x86_64.sh\n如果使用wget下载不下来的话，可以手动下载安装文件\n1.3 安装anaconda\n接下来我们需要首先赋权再执行安装程序，依次输入下面两句命令:\nchmod +x Anaconda3-5.3.0-Linux-x86_64.sh\n./Anaconda3-5.3.0-Linux-x86_64.sh\n1.4 点击Enter（回车键）\n此时显示Anaconda的信息，并且会出现More，继续按Enter，直到提示输入yes/no\n1.5 输入 yes\n1.6 继续点击 Enter\n1.7 输入 yes，添加环境变量\n这里需要注意点的就是如果你直接跳过这部设置环境变量的话：\n[no ] &gt;&gt;&gt;\n那你需要自己到这个文件夹设置你安装Anaconda路径（比如上面显示我的是）\nhome/wangke.bashrc\n单击进去，在最后一行添加：\nexport PATH=/home/anaconda3/bin:$PATH\n需要把之前的那句话给注释掉如下所示：\n1 # export PATH=/usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/sbin:/sbin:$PATH export PATH=/root/anaconda3/bin:$PATH\n这里只是个示例，具体的还是要看你们自己安装的路径。\n然后保存更改，输入下面这句指令：\nsource ~/.bashrc\n1.8 完成安装以及检测是否安装成功\n打开新的终端后，进入自己的文件夹目录下，输入anaconda -V（注意a要小写，V要大写），conda -V ,显示版本信息，若显示则表示安装成功。\nroot@dev-wyf-react:~/wyf# conda -V\nconda 4.5.11\nubuntu下conda如何设置镜像源（清华镜像源） ubuntu下如何设置镜像源 首先贴出.condarc，直接给出清华的镜像源，需要的小伙伴直接使用，别看内容了\n1 2 3 4 5 6 # ~/.condarc channels: - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free show_channel_urls: True 添加conda镜像源命令（直接使用）\n">
 <meta property='og:url' content='https://ynhugo.github.io/p/linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E5%AE%89%E8%A3%85anaconda/'>
 <meta property='og:site_name' content='ynhugo'>
@@ -56,7 +56,7 @@
                     
                     
                         
-                        <img src="/img/avatar_hu_f509edb42ecc0ebd.png" width="300"
+                        <img src="/img/avatar_hu_b5976aa1afdc1d2e.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -554,19 +554,7 @@ ubuntu下如何设置镜像源
 
         <span>Licensed under CC BY-NC-SA 4.0</span>
     </section>
-    <section class="article-lastmod">
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="12" r="9" />
-  <polyline points="12 7 12 12 15 15" />
-</svg>
-
-
-
-        <span>
-            最后更新于 Aug 21, 2024 00:46 &#43;0800
-        </span>
-    </section></footer>
+    </footer>
 
 
     

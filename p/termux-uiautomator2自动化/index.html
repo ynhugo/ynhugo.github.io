@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://ynhugo.github.io/p/termux-uiautomator2%E8%87%AA%E5%8A%A8%E5%8C%96/'>
 
-<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="termux+uiautomator2自动化">
+<link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="termux+uiautomator2自动化">
 <meta property='og:description' content=" termux+uiautomator2自动化 termux环境设置 1 2 3 4 5 6 7 8 9 10 11 apt install -y clang libxml2 libxslt python-pip libjpeg-turbo zlib android-tools pip install cython lxml pip install --pre uiautomator2 python -m uiautomator2 init\t# 前提是USB调试打开的情况下已经连接无线调试或者USB连接电脑 adb connect 192.168.3.175:5555 { echo &#39;import uiautomator2 as u2&#39; echo &#39;dev = u2.connect(&#34;192.168.3.175&#34;)&#39; echo &#39;print (dev.info)&#39; } &gt; testdemo.py python testdemo.py 给QQ好友点赞 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 import uiautomator2 as u2 def main(): u = u2.connect(&#39;192.168.3.193&#39;) # 输入设备 # print(u.info) # QQ好友点赞 u.app_start(&#39;com.tencent.mobileqq&#39;) u.click(88,173) u(text=&#39;夜闹&#39;).click() u.click(975,695) for i in range(10): u.click(1018,1157) if __name__ == &#39;__main__&#39;: main() 元素定位 1 2 3 4 5 6 7 8 9 10 11 12 13 14 import uiautomator2 as u2 def main(): u = u2.connect(&#39;192.168.3.193&#39;) # 元素定位 xml = u.dump_hierarchy() # print(xml) # 保存到文件（方便分析） with open(&#34;ui_dump.xml&#34;, &#34;w&#34;, encoding=&#34;utf-8&#34;) as f: f.write(xml) if __name__ == &#39;__main__&#39;: main() 使用 weditor 可视化查看元素 1 2 pip install weditor setuptools python -m weditor 浏览器会自动打开 http://localhost:17310，选择设备后即可 实时查看界面元素（类似 Appium Inspector）。\n">
 <meta property='og:url' content='https://ynhugo.github.io/p/termux-uiautomator2%E8%87%AA%E5%8A%A8%E5%8C%96/'>
 <meta property='og:site_name' content='ynhugo'>
@@ -56,7 +56,7 @@
                     
                     
                         
-                        <img src="/img/avatar_hu_f509edb42ecc0ebd.png" width="300"
+                        <img src="/img/avatar_hu_b5976aa1afdc1d2e.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -609,19 +609,7 @@ termux环境设置
 
         <span>Licensed under CC BY-NC-SA 4.0</span>
     </section>
-    <section class="article-lastmod">
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="12" r="9" />
-  <polyline points="12 7 12 12 15 15" />
-</svg>
-
-
-
-        <span>
-            最后更新于 Jun 27, 2025 20:34 &#43;0800
-        </span>
-    </section></footer>
+    </footer>
 
 
     

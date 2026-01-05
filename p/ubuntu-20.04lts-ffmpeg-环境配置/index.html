@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://ynhugo.github.io/p/ubuntu-20.04lts-ffmpeg-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/'>
 
-<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="Ubuntu 20.04LTS FFmpeg 环境配置">
+<link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="Ubuntu 20.04LTS FFmpeg 环境配置">
 <meta property='og:description' content=" Ubuntu 20.04LTS FFmpeg 环境配置 FFmpeg 是音视频开发工作中不可缺少的工作技能，本文主要讲解如何在 Ubuntu 系统之上编译、搭建 FFmpeg 开发环境。\nChapter 1 安装前的环境配置 Part 1 安装环境依赖 1 sudo apt-get update 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 sudo apt-get install -y \\ autoconf \\ automake \\ build-essential \\ cmake \\ git-core \\ libass-dev \\ libfreetype6-dev \\ libsdl2-dev \\ libtool \\ libva-dev \\ libvdpau-dev \\ libvorbis-dev \\ libxcb1-dev \\ libxcb-shm0-dev \\ libxcb-xfixes0-dev \\ pkg-config \\ texinfo \\ wget \\ zlib1g-dev 1 sudo apt install -y ffmpeg libavcodec-dev libavformat-dev libavutil-dev Part 2 安装相关库 1 2 3 4 5 6 7 8 9 sudo apt-get install -y \\ nasm \\ yasm \\ libx264-dev \\ libx265-dev \\ libnuma-dev \\ libvpx-dev \\ libfdk-aac-dev \\ libopus-dev \\ Chapter 2 安装 FFmpeg Part 1 下载 FFmpeg 使用 4.3.1 版本\n">
 <meta property='og:url' content='https://ynhugo.github.io/p/ubuntu-20.04lts-ffmpeg-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/'>
 <meta property='og:site_name' content='ynhugo'>
@@ -56,7 +56,7 @@
                     
                     
                         
-                        <img src="/img/avatar_hu_f509edb42ecc0ebd.png" width="300"
+                        <img src="/img/avatar_hu_b5976aa1afdc1d2e.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -649,7 +649,7 @@ Part 4 测试
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">  <span class="cp">#include</span> <span class="cpf">&lt;libavutil/avutil.h&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span> <span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">	  <span class="nf">av_log</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span> <span class="n">AV_LOG_INFO</span><span class="p">,</span> <span class="s">&#34;hello world</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">  <span class="p">}</span></span></span></code></pre></td></tr></table>
@@ -701,12 +701,12 @@ Part 4 测试
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">  <span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="c1">// 因为FFmpeg源码使用C语言编写，所以在C++代码中调用FFmpeg的话，要使用标记“extern &#34;C&#34;{……}”把FFmpeg的头文件包含进来
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="k">extern</span> <span class="s">&#34;C&#34;</span>
+</span></span></span><span class="line"><span class="cl">  <span class="k">extern</span> <span class="s">&#34;C&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="p">{</span>
 </span></span><span class="line"><span class="cl">  <span class="cp">#include</span> <span class="cpf">&lt;libavutil/avutil.h&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span>  <span class="p">}</span>
+</span></span></span><span class="line"><span class="cl">  <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span> <span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">	  <span class="nf">av_log</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span> <span class="n">AV_LOG_INFO</span><span class="p">,</span> <span class="s">&#34;hello world</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
@@ -815,19 +815,7 @@ Part 4 测试
 
         <span>Licensed under CC BY-NC-SA 4.0</span>
     </section>
-    <section class="article-lastmod">
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="12" r="9" />
-  <polyline points="12 7 12 12 15 15" />
-</svg>
-
-
-
-        <span>
-            最后更新于 Sep 05, 2024 17:06 &#43;0800
-        </span>
-    </section></footer>
+    </footer>
 
 
     

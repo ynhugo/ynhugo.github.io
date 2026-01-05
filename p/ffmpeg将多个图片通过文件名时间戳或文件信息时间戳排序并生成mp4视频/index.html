@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://ynhugo.github.io/p/ffmpeg%E5%B0%86%E5%A4%9A%E4%B8%AA%E5%9B%BE%E7%89%87%E9%80%9A%E8%BF%87%E6%96%87%E4%BB%B6%E5%90%8D%E6%97%B6%E9%97%B4%E6%88%B3%E6%88%96%E6%96%87%E4%BB%B6%E4%BF%A1%E6%81%AF%E6%97%B6%E9%97%B4%E6%88%B3%E6%8E%92%E5%BA%8F%E5%B9%B6%E7%94%9F%E6%88%90mp4%E8%A7%86%E9%A2%91/'>
 
-<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="ffmpeg将多个图片通过文件名时间戳或文件信息时间戳排序并生成mp4视频">
+<link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="ffmpeg将多个图片通过文件名时间戳或文件信息时间戳排序并生成mp4视频">
 <meta property='og:description' content=" ffmpeg将多个图片通过文件名时间戳或文件信息时间戳排序并生成mp4视频 1 2 3 4 5 6 7 8 # 1、准备文件列表，如果是根据文件信息时间戳排序，推荐第一种准备文件列表方式，如果是根据文件命名时间戳排序，推荐第2种方式准备文件列表 find ./ -name &#34;*.jpg&#34; -newermt &#34;2025-08-01&#34; -exec echo &#34;file &#34; &gt;&gt; jpgList.txt {} \\; # 或 ls P_*.jpg | sort -n &gt; jpgList.txt; sed -i &#39;s/^/file /&#39; jpgList.txt # 2、根据准备的文件列表生成调色板 ffmpeg -f concat -safe 0 -i jpglist.txt -vf palettegen -y paletteg.jpg # 3、根据调色板及对应文件合成mp4视频 ffmpeg -r 1 -f image2 -f concat -safe 0 -i jpgList.txt -i paletteg.jpg -vcodec libx264 -crf 25 -pix_fmt yuv420p -y demo.mp4 参考链接 FFmpeg将有序帧（图片）转换成视频（解决了生成视频后播放闪烁的问题）\n">
 <meta property='og:url' content='https://ynhugo.github.io/p/ffmpeg%E5%B0%86%E5%A4%9A%E4%B8%AA%E5%9B%BE%E7%89%87%E9%80%9A%E8%BF%87%E6%96%87%E4%BB%B6%E5%90%8D%E6%97%B6%E9%97%B4%E6%88%B3%E6%88%96%E6%96%87%E4%BB%B6%E4%BF%A1%E6%81%AF%E6%97%B6%E9%97%B4%E6%88%B3%E6%8E%92%E5%BA%8F%E5%B9%B6%E7%94%9F%E6%88%90mp4%E8%A7%86%E9%A2%91/'>
 <meta property='og:site_name' content='ynhugo'>
@@ -56,7 +56,7 @@
                     
                     
                         
-                        <img src="/img/avatar_hu_f509edb42ecc0ebd.png" width="300"
+                        <img src="/img/avatar_hu_b5976aa1afdc1d2e.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -455,19 +455,7 @@ ffmpeg将多个图片通过文件名时间戳或文件信息时间戳排序并�
 
         <span>Licensed under CC BY-NC-SA 4.0</span>
     </section>
-    <section class="article-lastmod">
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="12" r="9" />
-  <polyline points="12 7 12 12 15 15" />
-</svg>
-
-
-
-        <span>
-            最后更新于 Aug 05, 2025 02:12 &#43;0800
-        </span>
-    </section></footer>
+    </footer>
 
 
     

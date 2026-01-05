@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://ynhugo.github.io/p/emacs_config/'>
 
-<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="emacs_config">
+<link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="emacs_config">
 <meta property='og:description' content=" 设置Emacs的HOME目录 总的来说，Emacs的默认配置文件放在变量HOME所指的路径下，所以，只要我们把.emacs扔到HOME所指向的目录就可以了，下面就简单介绍一下在Windows下设置home目录的几种方法，并进行简单的对比。\n第一种方法，改变home环境变量的值。 这种方法，改变了$home变量，也会影响Cygwin或是其他一些应用程序，因为有一些程序会根据Windows的home环境变量来寻找数据存放的路径。\n第二种方法，不改变Windows默认的home值，设置默认的.emacs文件读取你自己的Emacs配置文件，并重新设定Emacs的home目录。 你可以在Emacs中输入C-x C-f，然后打开路径~（即当前的home环境变量所指的路径，一般来说是这样的路径：C:/Documents and Settings/water/Application Data）。\n看看显示的是哪个目录，如果此目录下没有.emacs，可以创建一个.emacs或_emacs，然后在这个.emacs文件里，加入如下语句： (load-file &#34;E:/water/.emacs&#34;) 文件 E:/water/.emacs 才是我们真正的Emacs配置文件，我们可以在这个真正的配置文件里用如下语句设置我们的home目录：\n1 2 3 4 ;; (setenv &#34;HOME&#34; &#34;C:/cygwin/home/username&#34;) ;; (setenv &#34;PATH&#34; &#34;C:/cygwin/home/username&#34;) ;; (set default-directory &#34;C:/cygwin/home/username&#34;) ;; (add-to-list &#39;load-path &#34;C:/cygwin/home/username/.emacs.d/init.el&#34;) 这个方法的优点是比较简单同样也方便对.emacs文件备份，不会对其它应用程序产生任何影响。\n第三种方法，修改注册表，在注册表中进行如下设置： HKEY_LOCAL_MACHINE§OFTWARE\\GNU\\Emacs\\HOME=%emacs_dir% 以上三种方法都可以设置好Emacs的Home目录，但是，系统是按什么顺序来解析它们的呢？大体上的顺序是这样的：\n如果设置了环境变量HOME，则使用HOME指定的目录。 如果设置了注册表里的值HKCU§OFTWARE\\GNU\\Emacs\\HOME，则使用这个值所指定的目录作为home目录。并不是太推荐使用这种方法，因为会导致用户共享一个home目录。 如果 C:\\.emacs 文件存在，则使用 C:\\.emacs 这个文件。这个是为了向低版本的Emacs兼容，因为低版本的Emacs就是默认用这个文件作为配置文件。 把用户的AppData目录作为home目录（通常来说，就是类似这样的目录 C:/Documents and Settings/water/Application Data ），这个用户的数据目录根据Windows版本的不同而有所不同。 我个人比较喜欢用第二种方法，即简单又方便备份。\n其实，如果你只是想要Emacs能找到你的.emacs的话，也可以不用管HOME目录的，写个批处理文件emacs.bat: path-of-emacs.exe -q -l path-of-your.emacs\nemacs查看快捷键是否被占用 先执行C-h c，然后按下执行某快捷键，查看minibuffer提示快捷键情况\nemacs查看函数 先执行C-h a，然后输入某一函数并回车，查看函数说明\n">
 <meta property='og:url' content='https://ynhugo.github.io/p/emacs_config/'>
 <meta property='og:site_name' content='ynhugo'>
@@ -56,7 +56,7 @@
                     
                     
                         
-                        <img src="/img/avatar_hu_f509edb42ecc0ebd.png" width="300"
+                        <img src="/img/avatar_hu_b5976aa1afdc1d2e.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -1137,19 +1137,7 @@ emacs的init.el，我保存在.emacs.d/init.el中
 
         <span>Licensed under CC BY-NC-SA 4.0</span>
     </section>
-    <section class="article-lastmod">
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="12" r="9" />
-  <polyline points="12 7 12 12 15 15" />
-</svg>
-
-
-
-        <span>
-            最后更新于 Jul 08, 2025 18:57 &#43;0800
-        </span>
-    </section></footer>
+    </footer>
 
 
     

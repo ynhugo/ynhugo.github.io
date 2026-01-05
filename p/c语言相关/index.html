@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://ynhugo.github.io/p/c%E8%AF%AD%E8%A8%80%E7%9B%B8%E5%85%B3/'>
 
-<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="C语言相关">
+<link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="C语言相关">
 <meta property='og:description' content=" 详解 const uint8_t * const* 类型： const uint8_t * const* 是 C 语言中的一种复杂指针类型，用于指向指向常量的指针。让我们详细拆解这个类型：\n类型拆解 const uint8_t：\nuint8_t 是无符号的 8 位整数类型，通常用于表示一个字节。 const 关键字在 uint8_t 前面，表示这个 uint8_t 类型的数据是常量，即在指针指向的数据位置上的值不能被修改。 const uint8_t *：\n这是一个指向 const uint8_t 类型的指针。 它表示你可以通过这个指针访问 const uint8_t 类型的数据，但不能修改这些数据。 const uint8_t * const：\n这是一个指向 const uint8_t 的指针，但这个指针本身也是常量。 也就是说，你不能通过这个指针去修改指针的值（即你不能改变指针所指向的位置），但你依然可以读取它所指向的数据。 const uint8_t * const*：\n这是一个指向 const uint8_t * const 的指针，也就是一个指向常量指针的指针。 这意味着你有一个指针，它指向另一个指针，而这个被指向的指针是 const 的（即你不能修改它指向的位置），并且这个被指向的位置的数据也是 const 的（即你不能修改这些数据）。 用途和示例 这个类型经常用于表示一个指针数组，其中每个指针指向一个常量数据，并且这些指针本身也是不可修改的。它在处理图像数据时非常有用，因为图像数据通常是由多个平面组成的，每个平面的数据可能需要被读取但不应被修改。\n示例 假设我们有如下的数据：\n">
 <meta property='og:url' content='https://ynhugo.github.io/p/c%E8%AF%AD%E8%A8%80%E7%9B%B8%E5%85%B3/'>
 <meta property='og:site_name' content='ynhugo'>
@@ -56,7 +56,7 @@
                     
                     
                         
-                        <img src="/img/avatar_hu_f509edb42ecc0ebd.png" width="300"
+                        <img src="/img/avatar_hu_b5976aa1afdc1d2e.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -510,10 +510,10 @@ const uint8_t * const* 是 C 语言中的一种复杂指针类型，用于指向
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">  <span class="k">const</span> <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">plane1</span><span class="p">;</span>  <span class="c1">// 指向第一个平面的数据，数据不能被修改
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="k">const</span> <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">plane2</span><span class="p">;</span>  <span class="c1">// 指向第二个平面的数据，数据不能被修改
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span></span><span class="line"><span class="cl">  <span class="k">const</span> <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">plane2</span><span class="p">;</span>  <span class="c1">// 指向第二个平面的数据，数据不能被修改
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="k">const</span> <span class="kt">uint8_t</span> <span class="o">*</span> <span class="k">const</span> <span class="n">planes</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span> <span class="n">plane1</span><span class="p">,</span> <span class="n">plane2</span> <span class="p">};</span>  <span class="c1">// 指针数组，数组中的每个指针都指向常量数据
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="k">const</span> <span class="kt">uint8_t</span> <span class="o">*</span> <span class="k">const</span> <span class="o">*</span> <span class="n">planes_ptr</span> <span class="o">=</span> <span class="n">planes</span><span class="p">;</span>  <span class="c1">// 指向指针数组的指针，不能修改指针数组中的指针
 </span></span></span></code></pre></td></tr></table>
 </div>
@@ -619,16 +619,16 @@ C语言打印格式%x与%#x有什么区别
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">  <span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">	  <span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="mi">255</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">	  <span class="c1">// 使用 %x
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	  <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;Using %%x: %x</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">num</span><span class="p">);</span>  <span class="c1">// 输出: Using %x: ff
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span></span><span class="line"><span class="cl">	  <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;Using %%x: %x</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">num</span><span class="p">);</span>  <span class="c1">// 输出: Using %x: ff
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">	  <span class="c1">// 使用 %#x
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	  <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;Using %%#x: %#x</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">num</span><span class="p">);</span>  <span class="c1">// 输出: Using %#x: 0xff
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span></span><span class="line"><span class="cl">	  <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;Using %%#x: %#x</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">num</span><span class="p">);</span>  <span class="c1">// 输出: Using %#x: 0xff
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">	  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
@@ -1316,19 +1316,7 @@ extractNumbers 函数：
 
         <span>Licensed under CC BY-NC-SA 4.0</span>
     </section>
-    <section class="article-lastmod">
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="12" r="9" />
-  <polyline points="12 7 12 12 15 15" />
-</svg>
-
-
-
-        <span>
-            最后更新于 Sep 06, 2024 18:49 &#43;0800
-        </span>
-    </section></footer>
+    </footer>
 
 
     

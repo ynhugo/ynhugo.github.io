@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://ynhugo.github.io/p/%E5%A6%82%E4%BD%95%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AAlinux%E5%86%85%E6%A0%B8%E6%A8%A1%E5%9D%97/'>
 
-<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="如何编写一个Linux内核模块">
+<link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="如何编写一个Linux内核模块">
 <meta property='og:description' content=" 参考链接 https://zhuanlan.zhihu.com/p/420194002\n如何编写一个Linux内核模块 前言 Linux 系统为应用程序提供了功能强大且容易扩展的 API，但在某些情况下，这还远远不够。与硬件交互或进行需要访问系统中特权信息的操作时，就需要一个内核模块。\nLinux 内核模块是一段编译后的二进制代码，直接插入 Linux 内核中，在 Ring 0 （x86–64处理器中执行最低和受保护程度最低的执行环）上运行。这里的代码完全不受检查，但是运行速度很快，可以访问系统中的所有内容。\nIntel X86架构使用了4个级别来标明不同的特权级。 Ring 0 实际就是内核态，拥有最高权限。而一般应用程序处于 Ring 3状态–用户态。在Linux中，还存在 Ring 1 和 Ring 2 两个级别，一般归属驱动程序的级别。在Windows平台没有 Ring 1 和 Ring 2 两个级别，只用 Ring 0 内核态和 Ring 3 用户态。在权限约束上，高特权等级状态可以阅读低特权等级状态的数据，例如进程上下文、代码、数据等等，但反之则不可。 Ring 0 最高可以读取 Ring 0-3 所有的内容， Ring 1 可以读 Ring 1-3 的， Ring 2 以此类推， Ring 3 只能读自己的数据。\n为什么要开发内核模块 编写 Linux 内核模块并不是因为内核太庞大而不敢修改。直接修改内核源码会导致很多问题，例如：通过更改内核，你将面临数据丢失和系统损坏的风险。内核代码没有常规 Linux 应用程序所拥有的安全防护机制，如果内核发生故障，将锁死整个系统。\n">
 <meta property='og:url' content='https://ynhugo.github.io/p/%E5%A6%82%E4%BD%95%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AAlinux%E5%86%85%E6%A0%B8%E6%A8%A1%E5%9D%97/'>
 <meta property='og:site_name' content='ynhugo'>
@@ -56,7 +56,7 @@
                     
                     
                         
-                        <img src="/img/avatar_hu_f509edb42ecc0ebd.png" width="300"
+                        <img src="/img/avatar_hu_b5976aa1afdc1d2e.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -494,9 +494,9 @@ Intel X86架构使用了4个级别来标明不同的特权级。 Ring 0 实际�
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">  <span class="cp">#include</span> <span class="cpf">&lt;linux/init.h&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span>  <span class="cp">#include</span> <span class="cpf">&lt;linux/module.h&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span>  <span class="cp">#include</span> <span class="cpf">&lt;linux/kernel.h&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span></span><span class="line"><span class="cl">  <span class="cp">#include</span> <span class="cpf">&lt;linux/module.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl">  <span class="cp">#include</span> <span class="cpf">&lt;linux/kernel.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="nf">MODULE_LICENSE</span><span class="p">(</span><span class="s">&#34;GPL&#34;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">  <span class="nf">MODULE_AUTHOR</span><span class="p">(</span><span class="s">&#34;abin&#34;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">  <span class="nf">MODULE_DESCRIPTION</span><span class="p">(</span><span class="s">&#34;A simple example Linux module.&#34;</span><span class="p">);</span>
@@ -768,20 +768,20 @@ Intel X86架构使用了4个级别来标明不同的特权级。 Ring 0 实际�
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">  <span class="cp">#include</span> <span class="cpf">&lt;linux/init.h&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span>  <span class="cp">#include</span> <span class="cpf">&lt;linux/module.h&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span>  <span class="cp">#include</span> <span class="cpf">&lt;linux/kernel.h&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span>  <span class="cp">#include</span> <span class="cpf">&lt;linux/fs.h&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span>  <span class="cp">#include</span> <span class="cpf">&lt;linux/uaccess.h&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span></span><span class="line"><span class="cl">  <span class="cp">#include</span> <span class="cpf">&lt;linux/module.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl">  <span class="cp">#include</span> <span class="cpf">&lt;linux/kernel.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl">  <span class="cp">#include</span> <span class="cpf">&lt;linux/fs.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl">  <span class="cp">#include</span> <span class="cpf">&lt;linux/uaccess.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="nf">MODULE_LICENSE</span><span class="p">(</span><span class="s">&#34;GPL&#34;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">  <span class="nf">MODULE_AUTHOR</span><span class="p">(</span><span class="s">&#34;Robert W. Oliver II&#34;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">  <span class="nf">MODULE_DESCRIPTION</span><span class="p">(</span><span class="s">&#34;A simple example Linux module.&#34;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">  <span class="nf">MODULE_VERSION</span><span class="p">(</span><span class="s">&#34;0.01&#34;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="cp">#define DEVICE_NAME &#34;lkm_example&#34;
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span>  <span class="cp">#define EXAMPLE_MSG &#34;Hello, World!\n&#34;
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span>  <span class="cp">#define MSG_BUFFER_LEN 15
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span></span><span class="line"><span class="cl">  <span class="cp">#define EXAMPLE_MSG &#34;Hello, World!\n&#34;
+</span></span></span><span class="line"><span class="cl">  <span class="cp">#define MSG_BUFFER_LEN 15
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="cm">/* Prototypes for device functions */</span>
 </span></span><span class="line"><span class="cl">  <span class="k">static</span> <span class="kt">int</span> <span class="nf">device_open</span><span class="p">(</span><span class="k">struct</span> <span class="n">inode</span> <span class="o">*</span><span class="p">,</span> <span class="k">struct</span> <span class="n">file</span> <span class="o">*</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">  <span class="k">static</span> <span class="kt">int</span> <span class="nf">device_release</span><span class="p">(</span><span class="k">struct</span> <span class="n">inode</span> <span class="o">*</span><span class="p">,</span> <span class="k">struct</span> <span class="n">file</span> <span class="o">*</span><span class="p">);</span>
