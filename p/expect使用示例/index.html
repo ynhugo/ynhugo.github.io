@@ -476,7 +476,6 @@ expect使用示例
 </span><span class="lnt"> 9
 </span><span class="lnt">10
 </span><span class="lnt">11
-</span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">expect -c <span class="s1">&#39;
@@ -486,9 +485,8 @@ expect使用示例
 </span></span></span><span class="line"><span class="cl"><span class="s1">        &#34;yes/no&#34; { send &#34;yes\r&#34;; exp_continue }
 </span></span></span><span class="line"><span class="cl"><span class="s1">        &#34;password:&#34; { send -- &#34;$pass\n&#34; }
 </span></span></span><span class="line"><span class="cl"><span class="s1">  }
-</span></span></span><span class="line"><span class="cl"><span class="s1">  expect &#34;Continuing in 60 sec...&#34; { sleep 60; send &#34;\r&#34; }
-</span></span></span><span class="line"><span class="cl"><span class="s1">  expect &#34;Press any key to continue&#34; { send &#34;\r&#34; }
-</span></span></span><span class="line"><span class="cl"><span class="s1">  # expect &#34;Would you like to see your SECRET now? (y/N)&#34; { send &#34;y&#34; }  
+</span></span></span><span class="line"><span class="cl"><span class="s1">  expect &#34;Continuing in * sec...&#34; { send &#34;\n&#34; }
+</span></span></span><span class="line"><span class="cl"><span class="s1">  expect &#34;Press*&#34; { send &#34;\n&#34; }
 </span></span></span><span class="line"><span class="cl"><span class="s1">  interact
 </span></span></span><span class="line"><span class="cl"><span class="s1">&#39;</span></span></span></code></pre></td></tr></table>
 </div>
