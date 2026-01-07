@@ -315,10 +315,14 @@
 <li><a href="#headline-4">示例二</a>
 <ul>
 <li><a href="#headline-5">增加端口转发和代理</a>
+<ul>
+<li><a href="#headline-6">验证代理</a>
 </li>
 </ul>
 </li>
-<li><a href="#headline-6">示例三</a>
+</ul>
+</li>
+<li><a href="#headline-7">示例三</a>
 </li>
 </ul>
 </li>
@@ -532,15 +536,44 @@ expect使用示例
 </div>
 </div>
 <p>-D 127.0.0.1:1080：开启一个 SOCKS5 代理，监听在本机的 127.0.0.1:1080</p>
+<div id="outline-container-headline-6" class="outline-5">
+<h5 id="headline-6">
+验证代理
+</h5>
+<div id="outline-text-headline-6" class="outline-text-5">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ curl --proxy socks5://127.0.0.1:1080 google.com
+</span></span><span class="line"><span class="cl">&lt;HTML&gt;&lt;HEAD&gt;&lt;meta http-equiv<span class="o">=</span><span class="s2">&#34;content-type&#34;</span> <span class="nv">content</span><span class="o">=</span><span class="s2">&#34;text/html;charset=utf-8&#34;</span>&gt;
+</span></span><span class="line"><span class="cl">&lt;TITLE&gt;301 Moved&lt;/TITLE&gt;&lt;/HEAD&gt;&lt;BODY&gt;
+</span></span><span class="line"><span class="cl">&lt;H1&gt;301 Moved&lt;/H1&gt;
+</span></span><span class="line"><span class="cl">The document has moved
+</span></span><span class="line"><span class="cl">&lt;A <span class="nv">HREF</span><span class="o">=</span><span class="s2">&#34;http://www.google.com/&#34;</span>&gt;here&lt;/A&gt;.
+</span></span><span class="line"><span class="cl">&lt;/BODY&gt;&lt;/HTML&gt;</span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
 </div>
-<div id="outline-container-headline-6" class="outline-3">
-<h3 id="headline-6">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-7" class="outline-3">
+<h3 id="headline-7">
 示例三
 </h3>
-<div id="outline-text-headline-6" class="outline-text-3">
+<div id="outline-text-headline-7" class="outline-text-3">
 <p>
 这是一个常规示例，同样，运行在命令行上</p>
 <div class="src src-text">
