@@ -313,8 +313,12 @@
 </ul>
 </li>
 <li><a href="#headline-4">示例二</a>
+<ul>
+<li><a href="#headline-5">增加端口转发和代理</a>
 </li>
-<li><a href="#headline-5">示例三</a>
+</ul>
+</li>
+<li><a href="#headline-6">示例三</a>
 </li>
 </ul>
 </li>
@@ -374,7 +378,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 1 分钟
+                    阅读时长: 2 分钟
                 </time>
             </div>
         
@@ -492,13 +496,50 @@ expect使用示例
 </div>
 </div>
 </div>
+<div id="outline-container-headline-5" class="outline-4">
+<h4 id="headline-5">
+增加端口转发和代理
+</h4>
+<div id="outline-text-headline-5" class="outline-text-4">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">expect -c <span class="s1">&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">  set pass &#34;segfault&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s1">  spawn ssh -D 127.0.0.1:1080 root@segfault.net
+</span></span></span><span class="line"><span class="cl"><span class="s1">  expect {
+</span></span></span><span class="line"><span class="cl"><span class="s1">        &#34;yes/no&#34; { send &#34;yes\r&#34;; exp_continue }
+</span></span></span><span class="line"><span class="cl"><span class="s1">        &#34;password:&#34; { send -- &#34;$pass\n&#34; }
+</span></span></span><span class="line"><span class="cl"><span class="s1">  }
+</span></span></span><span class="line"><span class="cl"><span class="s1">  expect &#34;Continuing in * sec...&#34; { send &#34;\n&#34; }
+</span></span></span><span class="line"><span class="cl"><span class="s1">  expect &#34;Press*&#34; { send &#34;\n&#34; }
+</span></span></span><span class="line"><span class="cl"><span class="s1">  interact
+</span></span></span><span class="line"><span class="cl"><span class="s1">&#39;</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
-<div id="outline-container-headline-5" class="outline-3">
-<h3 id="headline-5">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-6" class="outline-3">
+<h3 id="headline-6">
 示例三
 </h3>
-<div id="outline-text-headline-5" class="outline-text-3">
+<div id="outline-text-headline-6" class="outline-text-3">
 <p>
 这是一个常规示例，同样，运行在命令行上</p>
 <div class="src src-text">
