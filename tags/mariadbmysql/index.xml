@@ -37,6 +37,9 @@ ZeroTermux: &lt;a href=&#34;https://github.com/hanxinhao000/ZeroTermux/releases&
 搭建 DVWA 和 SQLI 靶场
 &lt;/h3&gt;
 &lt;div id=&#34;outline-text-headline-3&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;p&gt;
+127.0.0.1只能本地访问
+0.0.0.0可以在局域网访问对应手机的IP，使用ifconfig查看手机IP&lt;/p&gt;
 &lt;div class=&#34;src src-bash&#34;&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -281,7 +284,7 @@ ZeroTermux: &lt;a href=&#34;https://github.com/hanxinhao000/ZeroTermux/releases&
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 改配置&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;cp &lt;span class=&#34;nv&#34;&gt;$PREFIX&lt;/span&gt;/etc/php-fpm.d/www.conf &lt;span class=&#34;nv&#34;&gt;$PREFIX&lt;/span&gt;/etc/php-fpm.d/www.conf.bak &lt;span class=&#34;c1&#34;&gt;# 做备份&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sed -i &lt;span class=&#34;s2&#34;&gt;&amp;#34;s#listen = /data/data/com.termux/files/usr/var/run/php-fpm.sock#listen = 127.0.0.1:9000#g&amp;#34;&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$PREFIX&lt;/span&gt;/etc/php-fpm.d/www.conf
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# sed -i &amp;#34;s#listen = /data/data/com.termux/files/usr/var/run/php-fpm.sock#listen = 127.0.0.1:9000#g&amp;#34; $PREFIX/etc/php-fpm.d/www.conf&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sed -i &lt;span class=&#34;s2&#34;&gt;&amp;#34;s#listen = /data/data/com.termux/files/usr/var/run/php-fpm.sock#listen = 0.0.0.0:9000#g&amp;#34;&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$PREFIX&lt;/span&gt;/etc/php-fpm.d/www.conf
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 恢复&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# sed -i &amp;#34;s#listen = 127.0.0.1:9000#listen = /data/data/com.termux/files/usr/var/run/php-fpm.sock#g&amp;#34; $PREFIX/etc/php-fpm.d/www.conf&lt;/span&gt;
