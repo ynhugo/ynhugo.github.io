@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" DONE 在安卓系统上搭建 DVWA 和 SQLI 靶场 CLOSED: [2026-01-08 星期四 18:38]\nState &#34;DONE&#34; from &#34;WIP&#34; [2026-01-08 星期四 18:38] State &#34;WIP&#34; from [2026-01-08 星期四 16:06] &lt;2026-01-08 星期四 16:06&gt;\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129 130 131 132 133 134 135 136 137 138 139 140 141 142 143 144 145 146 147 148 149 150 151 152 153 154 155 156 157 158 159 160 161 162 163 164 165 166 167 168 169 170 171 172 173 174 175 176 177 178 179 180 181 182 183 184 185 186 187 188 # 安装 nginx pkg install nginx -y nginx -v nginx curl -I 127.0.0.1:8080 # 能看到200状态码则说明服务器已运行 # 安装 php-fpm # DVWA 是使用 PHP 编写的，而 nginx 服务器本身并不处理 php 文件，它会把 php 文件的请求转发给 php-fpm 处理，然后将处理结果返回给客户端。因此需要再安装 php-fpm: pkg install php-fpm -y php-fpm -v # 改配置 cp $PREFIX/etc/php-fpm.d/www.conf $PREFIX/etc/php-fpm.d/www.conf.bak # 做备份 sed -i &#34;s#listen = /data/data/com.termux/files/usr/var/run/php-fpm.sock#listen = 127.0.0.1:9000#g&#34; $PREFIX/etc/php-fpm.d/www.conf sed -i &#34;s#listen = /data/data/com.termux/files/usr/var/run/php-fpm.sock#listen = 0.0.0.0:9000#g&#34; $PREFIX/etc/php-fpm.d/www.conf # 恢复 # sed -i &#34;s#listen = 127.0.0.1:9000#listen = /data/data/com.termux/files/usr/var/run/php-fpm.sock#g&#34; $PREFIX/etc/php-fpm.d/www.conf # sed -i &#34;s#listen = 0.0.0.0:9000#listen = /data/data/com.termux/files/usr/var/run/php-fpm.sock#g&#34; $PREFIX/etc/php-fpm.d/www.conf # sed -i &#34;s#listen = 127.0.0.1:9000#listen = 0.0.0.0:9000#g&#34; $PREFIX/etc/php-fpm.d/www.conf # sed -i &#34;s#listen = 0.0.0.0:9000#listen = 127.0.0.1:9000#g&#34; $PREFIX/etc/php-fpm.d/www.conf cp $PREFIX/etc/nginx/nginx.conf $PREFIX/etc/nginx/nginx.conf.bak # 做备份 cat &gt; $PREFIX/etc/nginx/nginx.conf &lt;&lt;&#39;EOF&#39; worker_processes 1; events { worker_connections 1024; } http { include mime.types; default_type application/octet-stream; sendfile on; keepalive_timeout 65; server { listen 8080; server_name localhost; location / { root /data/data/com.termux/files/usr/share/nginx/html; index index.html index.htm index.php; } error_page 500 502 503 504 /50x.html; location = /50x.html { root /data/data/com.termux/files/usr/share/nginx/html; } location ~ \\.php$ { root html; # fastcgi_pass 127.0.0.1:9000; fastcgi_pass 0.0.0.0:9000; fastcgi_index index.php; fastcgi_param SCRIPT_FILENAME /data/data/com.termux/files/usr/share/nginx/html$fastcgi_script_name; include fastcgi_params; } } } EOF # 测试 PHP 解析 nginx -s reload # 重启nginx echo &#34;&lt;?php phpinfo();?&gt;&#34; &gt; $PREFIX/share/nginx/html/info.php # 创建测试文件 curl -I 127.0.0.1:8080/info.php # 能看到X-Powered-By响应头显示php的版本则说明服务已运行 # nginx -s stop # 停止 Nginx # 安装 MariaDB (MySQL) # 当 MariaDB Server 的前身 MySQL 于 2009 年被 Oracle 收购时，MySQL 创始人 Michael “Monty” Widenius 出于对 Oracle 管理权的担忧而 fork 了该项目，并将新项目命名为 MariaDB。 MySQL 以他的第一个女儿 My 命名，而 MariaDB 则以他的第二个女儿 Maria 命名。 pkg install -y mariadb mariadb --version # 或 mysql --version mkdir -p $HOME/log; nohup mysqld &gt; $HOME/log/mariadb.log 2&gt;&amp;1 &amp; # 将mysql守护进程挂到后台运行 ps aux | grep -v grep | grep &#34;mysqld&#34; | awk &#39;{print $2}&#39; | xargs kill -9 # 终止mysqld进程 # 克隆 DVWA 仓库并进行配置 pkg install git git clone -c http.proxy=&#34;127.0.0.1:10808&#34; https://github.com/digininja/DVWA.git $PREFIX/share/nginx/html/dvwa # http代理需要自行研究，如果不使用代理也能克隆的话可以去掉代理 cp $PREFIX/share/nginx/html/dvwa/config/config.inc.php.dist $PREFIX/share/nginx/html/dvwa/config/config.inc.php cp $PREFIX/share/nginx/html/dvwa/config/config.inc.php $PREFIX/share/nginx/html/dvwa/config/config.inc.php.bak cat &gt; $PREFIX/share/nginx/html/dvwa/config/config.inc.php &lt;&lt;&#39;EOF&#39; &lt;?php # If you are having problems connecting to the MySQL database and all of the variables below are correct # try changing the &#39;db_server&#39; variable from localhost to 127.0.0.1. Fixes a problem due to sockets. # Thanks to @digininja for the fix. # Database management system to use $DBMS = getenv(&#39;DBMS&#39;) ?: &#39;MySQL&#39;; #$DBMS = &#39;PGSQL&#39;; // Currently disabled # Database variables # WARNING: The database specified under db_database WILL BE ENTIRELY DELETED during setup. # Please use a database dedicated to DVWA. # # If you are using MariaDB then you cannot use root, you must use create a dedicated DVWA user. # See README.md for more information on this. $_DVWA = array(); # $_DVWA[ &#39;db_server&#39; ] = getenv(&#39;DB_SERVER&#39;) ?: &#39;127.0.0.1&#39;; $_DVWA[ &#39;db_server&#39; ] = getenv(&#39;DB_SERVER&#39;) ?: &#39;0.0.0.0&#39;; $_DVWA[ &#39;db_database&#39; ] = getenv(&#39;DB_DATABASE&#39;) ?: &#39;dvwa&#39;; # $_DVWA[ &#39;db_user&#39; ] = getenv(&#39;DB_USER&#39;) ?: &#39;dvwa&#39;; # $_DVWA[ &#39;db_password&#39; ] = getenv(&#39;DB_PASSWORD&#39;) ?: &#39;p@ssw0rd&#39;; $_DVWA[ &#39;db_user&#39; ] = &#39;root&#39;; $_DVWA[ &#39;db_password&#39; ] = &#39;&#39;; $_DVWA[ &#39;db_port&#39;] = getenv(&#39;DB_PORT&#39;) ?: &#39;3306&#39;; # ReCAPTCHA settings # Used for the &#39;Insecure CAPTCHA&#39; module # You&#39;ll need to generate your own keys at: https://www.google.com/recaptcha/admin $_DVWA[ &#39;recaptcha_public_key&#39; ] = getenv(&#39;RECAPTCHA_PUBLIC_KEY&#39;) ?: &#39;&#39;; $_DVWA[ &#39;recaptcha_private_key&#39; ] = getenv(&#39;RECAPTCHA_PRIVATE_KEY&#39;) ?: &#39;&#39;; # Default security level # Default value for the security level with each session. # The default is &#39;impossible&#39;. You may wish to set this to either &#39;low&#39;, &#39;medium&#39;, &#39;high&#39; or impossible&#39;. $_DVWA[ &#39;default_security_level&#39; ] = getenv(&#39;DEFAULT_SECURITY_LEVEL&#39;) ?: &#39;impossible&#39;; # Default locale # Default locale for the help page shown with each session. # The default is &#39;en&#39;. You may wish to set this to either &#39;en&#39; or &#39;zh&#39;. $_DVWA[ &#39;default_locale&#39; ] = getenv(&#39;DEFAULT_LOCALE&#39;) ?: &#39;en&#39;; # Disable authentication # Some tools don&#39;t like working with authentication and passing cookies around # so this setting lets you turn off authentication. $_DVWA[ &#39;disable_authentication&#39; ] = getenv(&#39;DISABLE_AUTHENTICATION&#39;) ?: false; define (&#39;MYSQL&#39;, &#39;mysql&#39;); define (&#39;SQLITE&#39;, &#39;sqlite&#39;); # SQLi DB Backend # Use this to switch the backend database used in the SQLi and Blind SQLi labs. # This does not affect the backend for any other services, just these two labs. # If you do not understand what this means, do not change it. $_DVWA[&#39;SQLI_DB&#39;] = getenv(&#39;SQLI_DB&#39;) ?: MYSQL; #$_DVWA[&#39;SQLI_DB&#39;] = SQLITE; #$_DVWA[&#39;SQLITE_DB&#39;] = &#39;sqli.db&#39;; ?&gt; EOF # 完成配置后手机浏览器访问 http://127.0.0.1:8080/dvwa/setup.php 即可看到 DVWA 的设置页面，点击底部的 Create/Reset Database 即可配置好数据库并进入 DVWA 的登录界面，输入 m 默认用户名 admin 和密码 password 即可登录到 DVWA # 默认情况下 php 的 allow_url_include 函数是禁用的，这会影响到 DVWA 文件包含漏洞实验的正常进行，因此需要启用此函数： # ~ $ php --ini # Configuration File (php.ini) Path: &#34;/data/data/com.termux/files/usr/etc/php&#34; # Loaded Configuration File: (none) # Scan for additional .ini files in: &#34;/data/data/com.termux/files/usr/etc/php/conf.d&#34; # Additional .ini files parsed: (none) # 发现 php.ini 的文件应该存放在 /data/data/com.termux/files/usr/etc/php 或 /data/data/com.termux/files/usr/etc/php/conf.d目录下，但是 PHP 没有找到配置文件，所以需要我们手动在这个目录下新建 php.ini 配置文件: # echo &#34;allow_url_include = On&#34; &gt;&gt; $PREFIX/lib/php.ini mkdir -p $PREFIX/etc/php/conf.d/; echo &#39;allow_url_include = On&#39; &gt; $PREFIX/etc/php/conf.d/custom.ini # 创建配置文件 # mkdir -p $PREFIX/etc/php/conf.d/; echo &#39;allow_url_include = Off&#39; &gt; $PREFIX/etc/php/conf.d/custom.ini # 创建配置文件 # 修改完成之后需要重启 php-fpm： ps aux | grep -v grep | grep &#34;php-fpm&#34; | awk &#39;{print $2}&#39; | xargs kill -9 # 终止php-fpm进程 php-fpm # 再次启动php-fpm # 克隆 sqli 仓库并进行配置 # 由于原版的 sqli-labs 的上一次更新提交已是 2014 年，其内置的 mysql_connect () 函数已被 php7 + 版本删除，这导致了 sqli-labs 连接不上数据库，推荐的解决方法是直接使用 Sqli_Edited_Version 这个修改了连接函数为受支持函数的复刻版： git clone -c http.proxy=&#34;127.0.0.1:10808&#34; https://github.com/Rinkish/Sqli_Edited_Version.git $PREFIX/share/nginx/html/sqli cp -r $PREFIX/share/nginx/html/sqli $PREFIX/share/nginx/html/sqli_bak mv $PREFIX/share/nginx/html/sqli/sqlilabs/ $PREFIX/share/nginx/html/sqli/sqli &amp;&amp; mv $PREFIX/share/nginx/html/sqli/sqli/* $PREFIX/share/nginx/html/sqli # 执行以下命令修改配置文件： # sed -i &#34;/^\\$host = &#39;localhost&#39;;/c#\\$host = &#39;localhost&#39;;\\n\\$host = &#39;127.0.0.1&#39;;&#34; $PREFIX/share/nginx/html/sqli/sql-connections/db-creds.inc sed -i &#34;/^\\$host = &#39;localhost&#39;;/c#\\$host = &#39;localhost&#39;;\\n\\$host = &#39;0.0.0.0&#39;;&#34; $PREFIX/share/nginx/html/sqli/sql-connections/db-creds.inc # 此时再用手机浏览器访问 http://127.0.0.1:8080/sqli/sql-connections/setup-db.php 即可自动创建好 sqli-labs 的数据库： http://127.0.0.1:8080/sqli/sql-connections/setup-db.php # 服务自启 # 要想启动手机的 Termux 的同时也启动 sshd、nginx、mariadb、php-fpm, 需要再执行以下命令： cp $HOME/.bashrc $HOME/.bashrc_bak mkdir -p $HOME/log; # echo -e &#34;sshd\\nnohup nginx &gt; \\$HOME/log/nginx.log 2&gt;&amp;1 &amp;\\nnohup mysqld &gt; \\$HOME/log/mariadb.log 2&gt;&amp;1 &amp;\\nnohup php-fpm &gt; \\$HOME/log/php-fpm.log 2&gt;&amp;1 &amp;&#34; &gt;&gt; ~/.bashrc cat &gt;&gt; $HOME/.bashrc &lt;&lt;&#39;EOF&#39; sshd nohup nginx &gt; $HOME/log/nginx.log 2&gt;&amp;1 &amp; nohup mysqld &gt; $HOME/log/mariadb.log 2&gt;&amp;1 &amp; nohup php-fpm &gt; $HOME/log/php-fpm.log 2&gt;&amp;1 &amp; source $HOME/.bashrc EOF ps aux | grep -v grep | grep -E &#34;(nginx|mysqld|php-fpm)&#34; # 查看指定进程 ps aux | grep -v grep | grep -E &#34;(nginx|mysqld|php-fpm)&#34; | awk &#39;{print $2}&#39; | xargs kill -9 # 批量终止指定进程 # 如果存在 runsv 和 svlogd 进程导入终止失败，则执行以下命令再次终止 # 停止所有runit服务 pkill -9 runsv pkill -9 runsvdir # 对于希望手机自启 Termux 应用，由于不同定制安卓系统的操作方式皆有所不同，这里不做解释，请自行寻找相关设置。 批量运行与批量终止 1 2 3 4 5 6 7 8 9 10 11 # 批量运行 nohup nginx &gt; $HOME/log/nginx.log 2&gt;&amp;1 &amp; nohup mysqld &gt; $HOME/log/mariadb.log 2&gt;&amp;1 &amp; nohup php-fpm &gt; $HOME/log/php-fpm.log 2&gt;&amp;1 &amp; # 批量终止 ps aux | grep -v grep | grep -E &#34;(nginx|mysqld|php-fpm)&#34; # 查看指定进程 ps aux | grep -v grep | grep -E &#34;(nginx|mysqld|php-fpm)&#34; | awk &#39;{print $2}&#39; | xargs kill -9 # 批量终止指定进程 # 如果存在 runsv 和 svlogd 进程导致终止不彻底，这是因为在Termux中使用了runsv（runit）作为服务管理器，则执行以下命令停止所有runit服务 pkill -9 runsv pkill -9 runsvdir 参考链接 在安卓系统上搭建 DVWA 和 SQLI 靶场\n">
+<title>在安卓系统上搭建 DVWA 和 SQLI 靶场</title>
+
+<link rel='canonical' href='https://ynhugo.github.io/p/%E5%9C%A8%E5%AE%89%E5%8D%93%E7%B3%BB%E7%BB%9F%E4%B8%8A%E6%90%AD%E5%BB%BA-dvwa-%E5%92%8C-sqli-%E9%9D%B6%E5%9C%BA/'>
+
+<link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="在安卓系统上搭建 DVWA 和 SQLI 靶场">
+<meta property='og:description' content=" DONE 在安卓系统上搭建 DVWA 和 SQLI 靶场 CLOSED: [2026-01-08 星期四 18:38]\nState &#34;DONE&#34; from &#34;WIP&#34; [2026-01-08 星期四 18:38] State &#34;WIP&#34; from [2026-01-08 星期四 16:06] &lt;2026-01-08 星期四 16:06&gt;\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129 130 131 132 133 134 135 136 137 138 139 140 141 142 143 144 145 146 147 148 149 150 151 152 153 154 155 156 157 158 159 160 161 162 163 164 165 166 167 168 169 170 171 172 173 174 175 176 177 178 179 180 181 182 183 184 185 186 187 188 # 安装 nginx pkg install nginx -y nginx -v nginx curl -I 127.0.0.1:8080 # 能看到200状态码则说明服务器已运行 # 安装 php-fpm # DVWA 是使用 PHP 编写的，而 nginx 服务器本身并不处理 php 文件，它会把 php 文件的请求转发给 php-fpm 处理，然后将处理结果返回给客户端。因此需要再安装 php-fpm: pkg install php-fpm -y php-fpm -v # 改配置 cp $PREFIX/etc/php-fpm.d/www.conf $PREFIX/etc/php-fpm.d/www.conf.bak # 做备份 sed -i &#34;s#listen = /data/data/com.termux/files/usr/var/run/php-fpm.sock#listen = 127.0.0.1:9000#g&#34; $PREFIX/etc/php-fpm.d/www.conf sed -i &#34;s#listen = /data/data/com.termux/files/usr/var/run/php-fpm.sock#listen = 0.0.0.0:9000#g&#34; $PREFIX/etc/php-fpm.d/www.conf # 恢复 # sed -i &#34;s#listen = 127.0.0.1:9000#listen = /data/data/com.termux/files/usr/var/run/php-fpm.sock#g&#34; $PREFIX/etc/php-fpm.d/www.conf # sed -i &#34;s#listen = 0.0.0.0:9000#listen = /data/data/com.termux/files/usr/var/run/php-fpm.sock#g&#34; $PREFIX/etc/php-fpm.d/www.conf # sed -i &#34;s#listen = 127.0.0.1:9000#listen = 0.0.0.0:9000#g&#34; $PREFIX/etc/php-fpm.d/www.conf # sed -i &#34;s#listen = 0.0.0.0:9000#listen = 127.0.0.1:9000#g&#34; $PREFIX/etc/php-fpm.d/www.conf cp $PREFIX/etc/nginx/nginx.conf $PREFIX/etc/nginx/nginx.conf.bak # 做备份 cat &gt; $PREFIX/etc/nginx/nginx.conf &lt;&lt;&#39;EOF&#39; worker_processes 1; events { worker_connections 1024; } http { include mime.types; default_type application/octet-stream; sendfile on; keepalive_timeout 65; server { listen 8080; server_name localhost; location / { root /data/data/com.termux/files/usr/share/nginx/html; index index.html index.htm index.php; } error_page 500 502 503 504 /50x.html; location = /50x.html { root /data/data/com.termux/files/usr/share/nginx/html; } location ~ \\.php$ { root html; # fastcgi_pass 127.0.0.1:9000; fastcgi_pass 0.0.0.0:9000; fastcgi_index index.php; fastcgi_param SCRIPT_FILENAME /data/data/com.termux/files/usr/share/nginx/html$fastcgi_script_name; include fastcgi_params; } } } EOF # 测试 PHP 解析 nginx -s reload # 重启nginx echo &#34;&lt;?php phpinfo();?&gt;&#34; &gt; $PREFIX/share/nginx/html/info.php # 创建测试文件 curl -I 127.0.0.1:8080/info.php # 能看到X-Powered-By响应头显示php的版本则说明服务已运行 # nginx -s stop # 停止 Nginx # 安装 MariaDB (MySQL) # 当 MariaDB Server 的前身 MySQL 于 2009 年被 Oracle 收购时，MySQL 创始人 Michael “Monty” Widenius 出于对 Oracle 管理权的担忧而 fork 了该项目，并将新项目命名为 MariaDB。 MySQL 以他的第一个女儿 My 命名，而 MariaDB 则以他的第二个女儿 Maria 命名。 pkg install -y mariadb mariadb --version # 或 mysql --version mkdir -p $HOME/log; nohup mysqld &gt; $HOME/log/mariadb.log 2&gt;&amp;1 &amp; # 将mysql守护进程挂到后台运行 ps aux | grep -v grep | grep &#34;mysqld&#34; | awk &#39;{print $2}&#39; | xargs kill -9 # 终止mysqld进程 # 克隆 DVWA 仓库并进行配置 pkg install git git clone -c http.proxy=&#34;127.0.0.1:10808&#34; https://github.com/digininja/DVWA.git $PREFIX/share/nginx/html/dvwa # http代理需要自行研究，如果不使用代理也能克隆的话可以去掉代理 cp $PREFIX/share/nginx/html/dvwa/config/config.inc.php.dist $PREFIX/share/nginx/html/dvwa/config/config.inc.php cp $PREFIX/share/nginx/html/dvwa/config/config.inc.php $PREFIX/share/nginx/html/dvwa/config/config.inc.php.bak cat &gt; $PREFIX/share/nginx/html/dvwa/config/config.inc.php &lt;&lt;&#39;EOF&#39; &lt;?php # If you are having problems connecting to the MySQL database and all of the variables below are correct # try changing the &#39;db_server&#39; variable from localhost to 127.0.0.1. Fixes a problem due to sockets. # Thanks to @digininja for the fix. # Database management system to use $DBMS = getenv(&#39;DBMS&#39;) ?: &#39;MySQL&#39;; #$DBMS = &#39;PGSQL&#39;; // Currently disabled # Database variables # WARNING: The database specified under db_database WILL BE ENTIRELY DELETED during setup. # Please use a database dedicated to DVWA. # # If you are using MariaDB then you cannot use root, you must use create a dedicated DVWA user. # See README.md for more information on this. $_DVWA = array(); # $_DVWA[ &#39;db_server&#39; ] = getenv(&#39;DB_SERVER&#39;) ?: &#39;127.0.0.1&#39;; $_DVWA[ &#39;db_server&#39; ] = getenv(&#39;DB_SERVER&#39;) ?: &#39;0.0.0.0&#39;; $_DVWA[ &#39;db_database&#39; ] = getenv(&#39;DB_DATABASE&#39;) ?: &#39;dvwa&#39;; # $_DVWA[ &#39;db_user&#39; ] = getenv(&#39;DB_USER&#39;) ?: &#39;dvwa&#39;; # $_DVWA[ &#39;db_password&#39; ] = getenv(&#39;DB_PASSWORD&#39;) ?: &#39;p@ssw0rd&#39;; $_DVWA[ &#39;db_user&#39; ] = &#39;root&#39;; $_DVWA[ &#39;db_password&#39; ] = &#39;&#39;; $_DVWA[ &#39;db_port&#39;] = getenv(&#39;DB_PORT&#39;) ?: &#39;3306&#39;; # ReCAPTCHA settings # Used for the &#39;Insecure CAPTCHA&#39; module # You&#39;ll need to generate your own keys at: https://www.google.com/recaptcha/admin $_DVWA[ &#39;recaptcha_public_key&#39; ] = getenv(&#39;RECAPTCHA_PUBLIC_KEY&#39;) ?: &#39;&#39;; $_DVWA[ &#39;recaptcha_private_key&#39; ] = getenv(&#39;RECAPTCHA_PRIVATE_KEY&#39;) ?: &#39;&#39;; # Default security level # Default value for the security level with each session. # The default is &#39;impossible&#39;. You may wish to set this to either &#39;low&#39;, &#39;medium&#39;, &#39;high&#39; or impossible&#39;. $_DVWA[ &#39;default_security_level&#39; ] = getenv(&#39;DEFAULT_SECURITY_LEVEL&#39;) ?: &#39;impossible&#39;; # Default locale # Default locale for the help page shown with each session. # The default is &#39;en&#39;. You may wish to set this to either &#39;en&#39; or &#39;zh&#39;. $_DVWA[ &#39;default_locale&#39; ] = getenv(&#39;DEFAULT_LOCALE&#39;) ?: &#39;en&#39;; # Disable authentication # Some tools don&#39;t like working with authentication and passing cookies around # so this setting lets you turn off authentication. $_DVWA[ &#39;disable_authentication&#39; ] = getenv(&#39;DISABLE_AUTHENTICATION&#39;) ?: false; define (&#39;MYSQL&#39;, &#39;mysql&#39;); define (&#39;SQLITE&#39;, &#39;sqlite&#39;); # SQLi DB Backend # Use this to switch the backend database used in the SQLi and Blind SQLi labs. # This does not affect the backend for any other services, just these two labs. # If you do not understand what this means, do not change it. $_DVWA[&#39;SQLI_DB&#39;] = getenv(&#39;SQLI_DB&#39;) ?: MYSQL; #$_DVWA[&#39;SQLI_DB&#39;] = SQLITE; #$_DVWA[&#39;SQLITE_DB&#39;] = &#39;sqli.db&#39;; ?&gt; EOF # 完成配置后手机浏览器访问 http://127.0.0.1:8080/dvwa/setup.php 即可看到 DVWA 的设置页面，点击底部的 Create/Reset Database 即可配置好数据库并进入 DVWA 的登录界面，输入 m 默认用户名 admin 和密码 password 即可登录到 DVWA # 默认情况下 php 的 allow_url_include 函数是禁用的，这会影响到 DVWA 文件包含漏洞实验的正常进行，因此需要启用此函数： # ~ $ php --ini # Configuration File (php.ini) Path: &#34;/data/data/com.termux/files/usr/etc/php&#34; # Loaded Configuration File: (none) # Scan for additional .ini files in: &#34;/data/data/com.termux/files/usr/etc/php/conf.d&#34; # Additional .ini files parsed: (none) # 发现 php.ini 的文件应该存放在 /data/data/com.termux/files/usr/etc/php 或 /data/data/com.termux/files/usr/etc/php/conf.d目录下，但是 PHP 没有找到配置文件，所以需要我们手动在这个目录下新建 php.ini 配置文件: # echo &#34;allow_url_include = On&#34; &gt;&gt; $PREFIX/lib/php.ini mkdir -p $PREFIX/etc/php/conf.d/; echo &#39;allow_url_include = On&#39; &gt; $PREFIX/etc/php/conf.d/custom.ini # 创建配置文件 # mkdir -p $PREFIX/etc/php/conf.d/; echo &#39;allow_url_include = Off&#39; &gt; $PREFIX/etc/php/conf.d/custom.ini # 创建配置文件 # 修改完成之后需要重启 php-fpm： ps aux | grep -v grep | grep &#34;php-fpm&#34; | awk &#39;{print $2}&#39; | xargs kill -9 # 终止php-fpm进程 php-fpm # 再次启动php-fpm # 克隆 sqli 仓库并进行配置 # 由于原版的 sqli-labs 的上一次更新提交已是 2014 年，其内置的 mysql_connect () 函数已被 php7 + 版本删除，这导致了 sqli-labs 连接不上数据库，推荐的解决方法是直接使用 Sqli_Edited_Version 这个修改了连接函数为受支持函数的复刻版： git clone -c http.proxy=&#34;127.0.0.1:10808&#34; https://github.com/Rinkish/Sqli_Edited_Version.git $PREFIX/share/nginx/html/sqli cp -r $PREFIX/share/nginx/html/sqli $PREFIX/share/nginx/html/sqli_bak mv $PREFIX/share/nginx/html/sqli/sqlilabs/ $PREFIX/share/nginx/html/sqli/sqli &amp;&amp; mv $PREFIX/share/nginx/html/sqli/sqli/* $PREFIX/share/nginx/html/sqli # 执行以下命令修改配置文件： # sed -i &#34;/^\\$host = &#39;localhost&#39;;/c#\\$host = &#39;localhost&#39;;\\n\\$host = &#39;127.0.0.1&#39;;&#34; $PREFIX/share/nginx/html/sqli/sql-connections/db-creds.inc sed -i &#34;/^\\$host = &#39;localhost&#39;;/c#\\$host = &#39;localhost&#39;;\\n\\$host = &#39;0.0.0.0&#39;;&#34; $PREFIX/share/nginx/html/sqli/sql-connections/db-creds.inc # 此时再用手机浏览器访问 http://127.0.0.1:8080/sqli/sql-connections/setup-db.php 即可自动创建好 sqli-labs 的数据库： http://127.0.0.1:8080/sqli/sql-connections/setup-db.php # 服务自启 # 要想启动手机的 Termux 的同时也启动 sshd、nginx、mariadb、php-fpm, 需要再执行以下命令： cp $HOME/.bashrc $HOME/.bashrc_bak mkdir -p $HOME/log; # echo -e &#34;sshd\\nnohup nginx &gt; \\$HOME/log/nginx.log 2&gt;&amp;1 &amp;\\nnohup mysqld &gt; \\$HOME/log/mariadb.log 2&gt;&amp;1 &amp;\\nnohup php-fpm &gt; \\$HOME/log/php-fpm.log 2&gt;&amp;1 &amp;&#34; &gt;&gt; ~/.bashrc cat &gt;&gt; $HOME/.bashrc &lt;&lt;&#39;EOF&#39; sshd nohup nginx &gt; $HOME/log/nginx.log 2&gt;&amp;1 &amp; nohup mysqld &gt; $HOME/log/mariadb.log 2&gt;&amp;1 &amp; nohup php-fpm &gt; $HOME/log/php-fpm.log 2&gt;&amp;1 &amp; source $HOME/.bashrc EOF ps aux | grep -v grep | grep -E &#34;(nginx|mysqld|php-fpm)&#34; # 查看指定进程 ps aux | grep -v grep | grep -E &#34;(nginx|mysqld|php-fpm)&#34; | awk &#39;{print $2}&#39; | xargs kill -9 # 批量终止指定进程 # 如果存在 runsv 和 svlogd 进程导入终止失败，则执行以下命令再次终止 # 停止所有runit服务 pkill -9 runsv pkill -9 runsvdir # 对于希望手机自启 Termux 应用，由于不同定制安卓系统的操作方式皆有所不同，这里不做解释，请自行寻找相关设置。 批量运行与批量终止 1 2 3 4 5 6 7 8 9 10 11 # 批量运行 nohup nginx &gt; $HOME/log/nginx.log 2&gt;&amp;1 &amp; nohup mysqld &gt; $HOME/log/mariadb.log 2&gt;&amp;1 &amp; nohup php-fpm &gt; $HOME/log/php-fpm.log 2&gt;&amp;1 &amp; # 批量终止 ps aux | grep -v grep | grep -E &#34;(nginx|mysqld|php-fpm)&#34; # 查看指定进程 ps aux | grep -v grep | grep -E &#34;(nginx|mysqld|php-fpm)&#34; | awk &#39;{print $2}&#39; | xargs kill -9 # 批量终止指定进程 # 如果存在 runsv 和 svlogd 进程导致终止不彻底，这是因为在Termux中使用了runsv（runit）作为服务管理器，则执行以下命令停止所有runit服务 pkill -9 runsv pkill -9 runsvdir 参考链接 在安卓系统上搭建 DVWA 和 SQLI 靶场\n">
+<meta property='og:url' content='https://ynhugo.github.io/p/%E5%9C%A8%E5%AE%89%E5%8D%93%E7%B3%BB%E7%BB%9F%E4%B8%8A%E6%90%AD%E5%BB%BA-dvwa-%E5%92%8C-sqli-%E9%9D%B6%E5%9C%BA/'>
+<meta property='og:site_name' content='ynhugo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='termux' /><meta property='article:tag' content='nginx' /><meta property='article:tag' content='php' /><meta property='article:tag' content='php-fpm' /><meta property='article:tag' content='dvwa' /><meta property='article:tag' content='MariaDB(MySQL)' /><meta property='article:tag' content='sqli' /><meta property='article:published_time' content='2026-01-08T18:50:37&#43;08:00'/><meta property='article:modified_time' content='2026-01-08T18:50:37&#43;08:00'/>
+<meta name="twitter:title" content="在安卓系统上搭建 DVWA 和 SQLI 靶场">
+<meta name="twitter:description" content=" DONE 在安卓系统上搭建 DVWA 和 SQLI 靶场 CLOSED: [2026-01-08 星期四 18:38]\nState &#34;DONE&#34; from &#34;WIP&#34; [2026-01-08 星期四 18:38] State &#34;WIP&#34; from [2026-01-08 星期四 16:06] &lt;2026-01-08 星期四 16:06&gt;\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129 130 131 132 133 134 135 136 137 138 139 140 141 142 143 144 145 146 147 148 149 150 151 152 153 154 155 156 157 158 159 160 161 162 163 164 165 166 167 168 169 170 171 172 173 174 175 176 177 178 179 180 181 182 183 184 185 186 187 188 # 安装 nginx pkg install nginx -y nginx -v nginx curl -I 127.0.0.1:8080 # 能看到200状态码则说明服务器已运行 # 安装 php-fpm # DVWA 是使用 PHP 编写的，而 nginx 服务器本身并不处理 php 文件，它会把 php 文件的请求转发给 php-fpm 处理，然后将处理结果返回给客户端。因此需要再安装 php-fpm: pkg install php-fpm -y php-fpm -v # 改配置 cp $PREFIX/etc/php-fpm.d/www.conf $PREFIX/etc/php-fpm.d/www.conf.bak # 做备份 sed -i &#34;s#listen = /data/data/com.termux/files/usr/var/run/php-fpm.sock#listen = 127.0.0.1:9000#g&#34; $PREFIX/etc/php-fpm.d/www.conf sed -i &#34;s#listen = /data/data/com.termux/files/usr/var/run/php-fpm.sock#listen = 0.0.0.0:9000#g&#34; $PREFIX/etc/php-fpm.d/www.conf # 恢复 # sed -i &#34;s#listen = 127.0.0.1:9000#listen = /data/data/com.termux/files/usr/var/run/php-fpm.sock#g&#34; $PREFIX/etc/php-fpm.d/www.conf # sed -i &#34;s#listen = 0.0.0.0:9000#listen = /data/data/com.termux/files/usr/var/run/php-fpm.sock#g&#34; $PREFIX/etc/php-fpm.d/www.conf # sed -i &#34;s#listen = 127.0.0.1:9000#listen = 0.0.0.0:9000#g&#34; $PREFIX/etc/php-fpm.d/www.conf # sed -i &#34;s#listen = 0.0.0.0:9000#listen = 127.0.0.1:9000#g&#34; $PREFIX/etc/php-fpm.d/www.conf cp $PREFIX/etc/nginx/nginx.conf $PREFIX/etc/nginx/nginx.conf.bak # 做备份 cat &gt; $PREFIX/etc/nginx/nginx.conf &lt;&lt;&#39;EOF&#39; worker_processes 1; events { worker_connections 1024; } http { include mime.types; default_type application/octet-stream; sendfile on; keepalive_timeout 65; server { listen 8080; server_name localhost; location / { root /data/data/com.termux/files/usr/share/nginx/html; index index.html index.htm index.php; } error_page 500 502 503 504 /50x.html; location = /50x.html { root /data/data/com.termux/files/usr/share/nginx/html; } location ~ \\.php$ { root html; # fastcgi_pass 127.0.0.1:9000; fastcgi_pass 0.0.0.0:9000; fastcgi_index index.php; fastcgi_param SCRIPT_FILENAME /data/data/com.termux/files/usr/share/nginx/html$fastcgi_script_name; include fastcgi_params; } } } EOF # 测试 PHP 解析 nginx -s reload # 重启nginx echo &#34;&lt;?php phpinfo();?&gt;&#34; &gt; $PREFIX/share/nginx/html/info.php # 创建测试文件 curl -I 127.0.0.1:8080/info.php # 能看到X-Powered-By响应头显示php的版本则说明服务已运行 # nginx -s stop # 停止 Nginx # 安装 MariaDB (MySQL) # 当 MariaDB Server 的前身 MySQL 于 2009 年被 Oracle 收购时，MySQL 创始人 Michael “Monty” Widenius 出于对 Oracle 管理权的担忧而 fork 了该项目，并将新项目命名为 MariaDB。 MySQL 以他的第一个女儿 My 命名，而 MariaDB 则以他的第二个女儿 Maria 命名。 pkg install -y mariadb mariadb --version # 或 mysql --version mkdir -p $HOME/log; nohup mysqld &gt; $HOME/log/mariadb.log 2&gt;&amp;1 &amp; # 将mysql守护进程挂到后台运行 ps aux | grep -v grep | grep &#34;mysqld&#34; | awk &#39;{print $2}&#39; | xargs kill -9 # 终止mysqld进程 # 克隆 DVWA 仓库并进行配置 pkg install git git clone -c http.proxy=&#34;127.0.0.1:10808&#34; https://github.com/digininja/DVWA.git $PREFIX/share/nginx/html/dvwa # http代理需要自行研究，如果不使用代理也能克隆的话可以去掉代理 cp $PREFIX/share/nginx/html/dvwa/config/config.inc.php.dist $PREFIX/share/nginx/html/dvwa/config/config.inc.php cp $PREFIX/share/nginx/html/dvwa/config/config.inc.php $PREFIX/share/nginx/html/dvwa/config/config.inc.php.bak cat &gt; $PREFIX/share/nginx/html/dvwa/config/config.inc.php &lt;&lt;&#39;EOF&#39; &lt;?php # If you are having problems connecting to the MySQL database and all of the variables below are correct # try changing the &#39;db_server&#39; variable from localhost to 127.0.0.1. Fixes a problem due to sockets. # Thanks to @digininja for the fix. # Database management system to use $DBMS = getenv(&#39;DBMS&#39;) ?: &#39;MySQL&#39;; #$DBMS = &#39;PGSQL&#39;; // Currently disabled # Database variables # WARNING: The database specified under db_database WILL BE ENTIRELY DELETED during setup. # Please use a database dedicated to DVWA. # # If you are using MariaDB then you cannot use root, you must use create a dedicated DVWA user. # See README.md for more information on this. $_DVWA = array(); # $_DVWA[ &#39;db_server&#39; ] = getenv(&#39;DB_SERVER&#39;) ?: &#39;127.0.0.1&#39;; $_DVWA[ &#39;db_server&#39; ] = getenv(&#39;DB_SERVER&#39;) ?: &#39;0.0.0.0&#39;; $_DVWA[ &#39;db_database&#39; ] = getenv(&#39;DB_DATABASE&#39;) ?: &#39;dvwa&#39;; # $_DVWA[ &#39;db_user&#39; ] = getenv(&#39;DB_USER&#39;) ?: &#39;dvwa&#39;; # $_DVWA[ &#39;db_password&#39; ] = getenv(&#39;DB_PASSWORD&#39;) ?: &#39;p@ssw0rd&#39;; $_DVWA[ &#39;db_user&#39; ] = &#39;root&#39;; $_DVWA[ &#39;db_password&#39; ] = &#39;&#39;; $_DVWA[ &#39;db_port&#39;] = getenv(&#39;DB_PORT&#39;) ?: &#39;3306&#39;; # ReCAPTCHA settings # Used for the &#39;Insecure CAPTCHA&#39; module # You&#39;ll need to generate your own keys at: https://www.google.com/recaptcha/admin $_DVWA[ &#39;recaptcha_public_key&#39; ] = getenv(&#39;RECAPTCHA_PUBLIC_KEY&#39;) ?: &#39;&#39;; $_DVWA[ &#39;recaptcha_private_key&#39; ] = getenv(&#39;RECAPTCHA_PRIVATE_KEY&#39;) ?: &#39;&#39;; # Default security level # Default value for the security level with each session. # The default is &#39;impossible&#39;. You may wish to set this to either &#39;low&#39;, &#39;medium&#39;, &#39;high&#39; or impossible&#39;. $_DVWA[ &#39;default_security_level&#39; ] = getenv(&#39;DEFAULT_SECURITY_LEVEL&#39;) ?: &#39;impossible&#39;; # Default locale # Default locale for the help page shown with each session. # The default is &#39;en&#39;. You may wish to set this to either &#39;en&#39; or &#39;zh&#39;. $_DVWA[ &#39;default_locale&#39; ] = getenv(&#39;DEFAULT_LOCALE&#39;) ?: &#39;en&#39;; # Disable authentication # Some tools don&#39;t like working with authentication and passing cookies around # so this setting lets you turn off authentication. $_DVWA[ &#39;disable_authentication&#39; ] = getenv(&#39;DISABLE_AUTHENTICATION&#39;) ?: false; define (&#39;MYSQL&#39;, &#39;mysql&#39;); define (&#39;SQLITE&#39;, &#39;sqlite&#39;); # SQLi DB Backend # Use this to switch the backend database used in the SQLi and Blind SQLi labs. # This does not affect the backend for any other services, just these two labs. # If you do not understand what this means, do not change it. $_DVWA[&#39;SQLI_DB&#39;] = getenv(&#39;SQLI_DB&#39;) ?: MYSQL; #$_DVWA[&#39;SQLI_DB&#39;] = SQLITE; #$_DVWA[&#39;SQLITE_DB&#39;] = &#39;sqli.db&#39;; ?&gt; EOF # 完成配置后手机浏览器访问 http://127.0.0.1:8080/dvwa/setup.php 即可看到 DVWA 的设置页面，点击底部的 Create/Reset Database 即可配置好数据库并进入 DVWA 的登录界面，输入 m 默认用户名 admin 和密码 password 即可登录到 DVWA # 默认情况下 php 的 allow_url_include 函数是禁用的，这会影响到 DVWA 文件包含漏洞实验的正常进行，因此需要启用此函数： # ~ $ php --ini # Configuration File (php.ini) Path: &#34;/data/data/com.termux/files/usr/etc/php&#34; # Loaded Configuration File: (none) # Scan for additional .ini files in: &#34;/data/data/com.termux/files/usr/etc/php/conf.d&#34; # Additional .ini files parsed: (none) # 发现 php.ini 的文件应该存放在 /data/data/com.termux/files/usr/etc/php 或 /data/data/com.termux/files/usr/etc/php/conf.d目录下，但是 PHP 没有找到配置文件，所以需要我们手动在这个目录下新建 php.ini 配置文件: # echo &#34;allow_url_include = On&#34; &gt;&gt; $PREFIX/lib/php.ini mkdir -p $PREFIX/etc/php/conf.d/; echo &#39;allow_url_include = On&#39; &gt; $PREFIX/etc/php/conf.d/custom.ini # 创建配置文件 # mkdir -p $PREFIX/etc/php/conf.d/; echo &#39;allow_url_include = Off&#39; &gt; $PREFIX/etc/php/conf.d/custom.ini # 创建配置文件 # 修改完成之后需要重启 php-fpm： ps aux | grep -v grep | grep &#34;php-fpm&#34; | awk &#39;{print $2}&#39; | xargs kill -9 # 终止php-fpm进程 php-fpm # 再次启动php-fpm # 克隆 sqli 仓库并进行配置 # 由于原版的 sqli-labs 的上一次更新提交已是 2014 年，其内置的 mysql_connect () 函数已被 php7 + 版本删除，这导致了 sqli-labs 连接不上数据库，推荐的解决方法是直接使用 Sqli_Edited_Version 这个修改了连接函数为受支持函数的复刻版： git clone -c http.proxy=&#34;127.0.0.1:10808&#34; https://github.com/Rinkish/Sqli_Edited_Version.git $PREFIX/share/nginx/html/sqli cp -r $PREFIX/share/nginx/html/sqli $PREFIX/share/nginx/html/sqli_bak mv $PREFIX/share/nginx/html/sqli/sqlilabs/ $PREFIX/share/nginx/html/sqli/sqli &amp;&amp; mv $PREFIX/share/nginx/html/sqli/sqli/* $PREFIX/share/nginx/html/sqli # 执行以下命令修改配置文件： # sed -i &#34;/^\\$host = &#39;localhost&#39;;/c#\\$host = &#39;localhost&#39;;\\n\\$host = &#39;127.0.0.1&#39;;&#34; $PREFIX/share/nginx/html/sqli/sql-connections/db-creds.inc sed -i &#34;/^\\$host = &#39;localhost&#39;;/c#\\$host = &#39;localhost&#39;;\\n\\$host = &#39;0.0.0.0&#39;;&#34; $PREFIX/share/nginx/html/sqli/sql-connections/db-creds.inc # 此时再用手机浏览器访问 http://127.0.0.1:8080/sqli/sql-connections/setup-db.php 即可自动创建好 sqli-labs 的数据库： http://127.0.0.1:8080/sqli/sql-connections/setup-db.php # 服务自启 # 要想启动手机的 Termux 的同时也启动 sshd、nginx、mariadb、php-fpm, 需要再执行以下命令： cp $HOME/.bashrc $HOME/.bashrc_bak mkdir -p $HOME/log; # echo -e &#34;sshd\\nnohup nginx &gt; \\$HOME/log/nginx.log 2&gt;&amp;1 &amp;\\nnohup mysqld &gt; \\$HOME/log/mariadb.log 2&gt;&amp;1 &amp;\\nnohup php-fpm &gt; \\$HOME/log/php-fpm.log 2&gt;&amp;1 &amp;&#34; &gt;&gt; ~/.bashrc cat &gt;&gt; $HOME/.bashrc &lt;&lt;&#39;EOF&#39; sshd nohup nginx &gt; $HOME/log/nginx.log 2&gt;&amp;1 &amp; nohup mysqld &gt; $HOME/log/mariadb.log 2&gt;&amp;1 &amp; nohup php-fpm &gt; $HOME/log/php-fpm.log 2&gt;&amp;1 &amp; source $HOME/.bashrc EOF ps aux | grep -v grep | grep -E &#34;(nginx|mysqld|php-fpm)&#34; # 查看指定进程 ps aux | grep -v grep | grep -E &#34;(nginx|mysqld|php-fpm)&#34; | awk &#39;{print $2}&#39; | xargs kill -9 # 批量终止指定进程 # 如果存在 runsv 和 svlogd 进程导入终止失败，则执行以下命令再次终止 # 停止所有runit服务 pkill -9 runsv pkill -9 runsvdir # 对于希望手机自启 Termux 应用，由于不同定制安卓系统的操作方式皆有所不同，这里不做解释，请自行寻找相关设置。 批量运行与批量终止 1 2 3 4 5 6 7 8 9 10 11 # 批量运行 nohup nginx &gt; $HOME/log/nginx.log 2&gt;&amp;1 &amp; nohup mysqld &gt; $HOME/log/mariadb.log 2&gt;&amp;1 &amp; nohup php-fpm &gt; $HOME/log/php-fpm.log 2&gt;&amp;1 &amp; # 批量终止 ps aux | grep -v grep | grep -E &#34;(nginx|mysqld|php-fpm)&#34; # 查看指定进程 ps aux | grep -v grep | grep -E &#34;(nginx|mysqld|php-fpm)&#34; | awk &#39;{print $2}&#39; | xargs kill -9 # 批量终止指定进程 # 如果存在 runsv 和 svlogd 进程导致终止不彻底，这是因为在Termux中使用了runsv（runit）作为服务管理器，则执行以下命令停止所有runit服务 pkill -9 runsv pkill -9 runsvdir 参考链接 在安卓系统上搭建 DVWA 和 SQLI 靶场\n">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_b5976aa1afdc1d2e.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🍥</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">ynhugo</a></h1>
+            <h2 class="site-description">ynhugo.github.io</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/CaiJimmy/hugo-theme-stack'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://x.com'
+                        target="_blank"
+                        title="x"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/book/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 512 512" fill="none" stroke="#808080" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m443.6,11h-321c-35.4,0-64.6,26.1-64.6,59.4v371.1c0,33.4 26.1,59.4 59.4,59.4h326.2c6.3,0 10.4-4.2 10.4-11.5v-468c0-6.2-4.2-10.4-10.4-10.4zm-321,20.9h310.5v350.3h-315.7c-14.9,0-28.3,5.2-38.6,13.9v-325.7c-1.42109e-14-21.9 19.8-38.5 43.8-38.5zm310.6,449.3h-315.8c-21.9,0-38.6-16.7-38.6-38.6 0-21.9 17.7-38.6 38.6-38.6l315.8,.1v77.1z"/>
+</svg>
+                
+                <span>Book</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E5%85%B3%E4%BA%8E/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                    
+                        <li id="i18n-switch">  
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                            <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
+                                
+                                    <option value="https://ynhugo.github.io/en/" >English</option>
+                                
+                                    <option value="https://ynhugo.github.io/" selected>中文</option>
+                                
+                                    <option value="https://ynhugo.github.io/ar/" >عربي</option>
+                                
+                            </select>
+                        </li>
+                    
+                
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+<ul>
+<li><a href="#headline-1">在安卓系统上搭建 DVWA 和 SQLI 靶场</a>
+<ul>
+<li><a href="#headline-2">批量运行与批量终止</a>
+</li>
+<li><a href="#headline-3">参考链接</a>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/%E5%9C%A8%E5%AE%89%E5%8D%93%E7%B3%BB%E7%BB%9F%E4%B8%8A%E6%90%AD%E5%BB%BA-dvwa-%E5%92%8C-sqli-%E9%9D%B6%E5%9C%BA/">在安卓系统上搭建 DVWA 和 SQLI 靶场</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jan 08, 2026</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 7 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    
+<div id="outline-container-headline-1" class="outline-2">
+<h2 id="headline-1">
+<span class="todo status-done">DONE</span>
+在安卓系统上搭建 DVWA 和 SQLI 靶场
+</h2>
+<div id="outline-text-headline-1" class="outline-text-2">
+<p>CLOSED: [2026-01-08 星期四 18:38]</p>
+<ul>
+<li>State &#34;DONE&#34;       from &#34;WIP&#34;        [2026-01-08 星期四 18:38]</li>
+<li>State &#34;WIP&#34;        from              [2026-01-08 星期四 16:06]</li>
+</ul>
+<p>&lt;2026-01-08 星期四 16:06&gt;</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span><span class="lnt">154
+</span><span class="lnt">155
+</span><span class="lnt">156
+</span><span class="lnt">157
+</span><span class="lnt">158
+</span><span class="lnt">159
+</span><span class="lnt">160
+</span><span class="lnt">161
+</span><span class="lnt">162
+</span><span class="lnt">163
+</span><span class="lnt">164
+</span><span class="lnt">165
+</span><span class="lnt">166
+</span><span class="lnt">167
+</span><span class="lnt">168
+</span><span class="lnt">169
+</span><span class="lnt">170
+</span><span class="lnt">171
+</span><span class="lnt">172
+</span><span class="lnt">173
+</span><span class="lnt">174
+</span><span class="lnt">175
+</span><span class="lnt">176
+</span><span class="lnt">177
+</span><span class="lnt">178
+</span><span class="lnt">179
+</span><span class="lnt">180
+</span><span class="lnt">181
+</span><span class="lnt">182
+</span><span class="lnt">183
+</span><span class="lnt">184
+</span><span class="lnt">185
+</span><span class="lnt">186
+</span><span class="lnt">187
+</span><span class="lnt">188
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 安装 nginx</span>
+</span></span><span class="line"><span class="cl">pkg install nginx -y
+</span></span><span class="line"><span class="cl">nginx -v
+</span></span><span class="line"><span class="cl">nginx
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">curl -I 127.0.0.1:8080  <span class="c1"># 能看到200状态码则说明服务器已运行</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 安装 php-fpm</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># DVWA 是使用 PHP 编写的，而 nginx 服务器本身并不处理 php 文件，它会把 php 文件的请求转发给 php-fpm 处理，然后将处理结果返回给客户端。因此需要再安装 php-fpm:</span>
+</span></span><span class="line"><span class="cl">pkg install php-fpm -y
+</span></span><span class="line"><span class="cl">php-fpm -v
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 改配置</span>
+</span></span><span class="line"><span class="cl">cp <span class="nv">$PREFIX</span>/etc/php-fpm.d/www.conf <span class="nv">$PREFIX</span>/etc/php-fpm.d/www.conf.bak <span class="c1"># 做备份</span>
+</span></span><span class="line"><span class="cl">sed -i <span class="s2">&#34;s#listen = /data/data/com.termux/files/usr/var/run/php-fpm.sock#listen = 127.0.0.1:9000#g&#34;</span> <span class="nv">$PREFIX</span>/etc/php-fpm.d/www.conf
+</span></span><span class="line"><span class="cl">sed -i <span class="s2">&#34;s#listen = /data/data/com.termux/files/usr/var/run/php-fpm.sock#listen = 0.0.0.0:9000#g&#34;</span> <span class="nv">$PREFIX</span>/etc/php-fpm.d/www.conf
+</span></span><span class="line"><span class="cl"><span class="c1"># 恢复</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># sed -i &#34;s#listen = 127.0.0.1:9000#listen = /data/data/com.termux/files/usr/var/run/php-fpm.sock#g&#34; $PREFIX/etc/php-fpm.d/www.conf</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># sed -i &#34;s#listen = 0.0.0.0:9000#listen = /data/data/com.termux/files/usr/var/run/php-fpm.sock#g&#34; $PREFIX/etc/php-fpm.d/www.conf</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># sed -i &#34;s#listen = 127.0.0.1:9000#listen = 0.0.0.0:9000#g&#34; $PREFIX/etc/php-fpm.d/www.conf</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># sed -i &#34;s#listen = 0.0.0.0:9000#listen = 127.0.0.1:9000#g&#34; $PREFIX/etc/php-fpm.d/www.conf</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">cp <span class="nv">$PREFIX</span>/etc/nginx/nginx.conf <span class="nv">$PREFIX</span>/etc/nginx/nginx.conf.bak <span class="c1"># 做备份</span>
+</span></span><span class="line"><span class="cl">cat &gt; <span class="nv">$PREFIX</span>/etc/nginx/nginx.conf <span class="s">&lt;&lt;&#39;EOF&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s">worker_processes  1;
+</span></span></span><span class="line"><span class="cl"><span class="s">events {
+</span></span></span><span class="line"><span class="cl"><span class="s">    worker_connections  1024;
+</span></span></span><span class="line"><span class="cl"><span class="s">}
+</span></span></span><span class="line"><span class="cl"><span class="s">
+</span></span></span><span class="line"><span class="cl"><span class="s">http {
+</span></span></span><span class="line"><span class="cl"><span class="s">    include       mime.types;
+</span></span></span><span class="line"><span class="cl"><span class="s">    default_type  application/octet-stream;
+</span></span></span><span class="line"><span class="cl"><span class="s">    sendfile        on;
+</span></span></span><span class="line"><span class="cl"><span class="s">    keepalive_timeout  65;
+</span></span></span><span class="line"><span class="cl"><span class="s">
+</span></span></span><span class="line"><span class="cl"><span class="s">    server {
+</span></span></span><span class="line"><span class="cl"><span class="s">        listen       8080;
+</span></span></span><span class="line"><span class="cl"><span class="s">        server_name  localhost;
+</span></span></span><span class="line"><span class="cl"><span class="s">        location / {
+</span></span></span><span class="line"><span class="cl"><span class="s">            root   /data/data/com.termux/files/usr/share/nginx/html;
+</span></span></span><span class="line"><span class="cl"><span class="s">            index  index.html index.htm index.php;
+</span></span></span><span class="line"><span class="cl"><span class="s">        }
+</span></span></span><span class="line"><span class="cl"><span class="s">
+</span></span></span><span class="line"><span class="cl"><span class="s">        error_page   500 502 503 504  /50x.html;
+</span></span></span><span class="line"><span class="cl"><span class="s">        location = /50x.html {
+</span></span></span><span class="line"><span class="cl"><span class="s">            root   /data/data/com.termux/files/usr/share/nginx/html;
+</span></span></span><span class="line"><span class="cl"><span class="s">        }
+</span></span></span><span class="line"><span class="cl"><span class="s">
+</span></span></span><span class="line"><span class="cl"><span class="s">        location ~ \.php$ {
+</span></span></span><span class="line"><span class="cl"><span class="s">            root           html;
+</span></span></span><span class="line"><span class="cl"><span class="s">            # fastcgi_pass   127.0.0.1:9000;
+</span></span></span><span class="line"><span class="cl"><span class="s">            fastcgi_pass   0.0.0.0:9000;
+</span></span></span><span class="line"><span class="cl"><span class="s">            fastcgi_index  index.php;
+</span></span></span><span class="line"><span class="cl"><span class="s">            fastcgi_param  SCRIPT_FILENAME  /data/data/com.termux/files/usr/share/nginx/html$fastcgi_script_name;
+</span></span></span><span class="line"><span class="cl"><span class="s">            include        fastcgi_params;
+</span></span></span><span class="line"><span class="cl"><span class="s">        }
+</span></span></span><span class="line"><span class="cl"><span class="s">    }
+</span></span></span><span class="line"><span class="cl"><span class="s">}
+</span></span></span><span class="line"><span class="cl"><span class="s">EOF</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 测试 PHP 解析</span>
+</span></span><span class="line"><span class="cl">nginx -s reload <span class="c1"># 重启nginx</span>
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;&lt;?php phpinfo();?&gt;&#34;</span> &gt; <span class="nv">$PREFIX</span>/share/nginx/html/info.php  <span class="c1"># 创建测试文件</span>
+</span></span><span class="line"><span class="cl">curl -I 127.0.0.1:8080/info.php  <span class="c1"># 能看到X-Powered-By响应头显示php的版本则说明服务已运行</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># nginx -s stop                   # 停止 Nginx</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 安装 MariaDB (MySQL)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 当 MariaDB Server 的前身 MySQL 于 2009 年被 Oracle 收购时，MySQL 创始人 Michael “Monty” Widenius 出于对 Oracle 管理权的担忧而 fork 了该项目，并将新项目命名为 MariaDB。 MySQL 以他的第一个女儿 My 命名，而 MariaDB 则以他的第二个女儿 Maria 命名。</span>
+</span></span><span class="line"><span class="cl">pkg install -y mariadb
+</span></span><span class="line"><span class="cl">mariadb --version  <span class="c1"># 或 mysql --version</span>
+</span></span><span class="line"><span class="cl">mkdir -p <span class="nv">$HOME</span>/log<span class="p">;</span> nohup mysqld &gt; <span class="nv">$HOME</span>/log/mariadb.log 2&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="p">&amp;</span>  <span class="c1"># 将mysql守护进程挂到后台运行</span>
+</span></span><span class="line"><span class="cl">ps aux <span class="p">|</span> grep -v grep <span class="p">|</span> grep <span class="s2">&#34;mysqld&#34;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span> <span class="p">|</span> xargs <span class="nb">kill</span> -9 <span class="c1"># 终止mysqld进程</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 克隆 DVWA 仓库并进行配置</span>
+</span></span><span class="line"><span class="cl">pkg install git
+</span></span><span class="line"><span class="cl">git clone -c http.proxy<span class="o">=</span><span class="s2">&#34;127.0.0.1:10808&#34;</span> https://github.com/digininja/DVWA.git <span class="nv">$PREFIX</span>/share/nginx/html/dvwa <span class="c1"># http代理需要自行研究，如果不使用代理也能克隆的话可以去掉代理</span>
+</span></span><span class="line"><span class="cl">cp <span class="nv">$PREFIX</span>/share/nginx/html/dvwa/config/config.inc.php.dist <span class="nv">$PREFIX</span>/share/nginx/html/dvwa/config/config.inc.php
+</span></span><span class="line"><span class="cl">cp <span class="nv">$PREFIX</span>/share/nginx/html/dvwa/config/config.inc.php <span class="nv">$PREFIX</span>/share/nginx/html/dvwa/config/config.inc.php.bak
+</span></span><span class="line"><span class="cl">cat &gt; <span class="nv">$PREFIX</span>/share/nginx/html/dvwa/config/config.inc.php <span class="s">&lt;&lt;&#39;EOF&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s">&lt;?php
+</span></span></span><span class="line"><span class="cl"><span class="s">
+</span></span></span><span class="line"><span class="cl"><span class="s"># If you are having problems connecting to the MySQL database and all of the variables below are correct
+</span></span></span><span class="line"><span class="cl"><span class="s"># try changing the &#39;db_server&#39; variable from localhost to 127.0.0.1. Fixes a problem due to sockets.
+</span></span></span><span class="line"><span class="cl"><span class="s">#   Thanks to @digininja for the fix.
+</span></span></span><span class="line"><span class="cl"><span class="s">
+</span></span></span><span class="line"><span class="cl"><span class="s"># Database management system to use
+</span></span></span><span class="line"><span class="cl"><span class="s">$DBMS = getenv(&#39;DBMS&#39;) ?: &#39;MySQL&#39;;
+</span></span></span><span class="line"><span class="cl"><span class="s">#$DBMS = &#39;PGSQL&#39;; // Currently disabled
+</span></span></span><span class="line"><span class="cl"><span class="s">
+</span></span></span><span class="line"><span class="cl"><span class="s"># Database variables
+</span></span></span><span class="line"><span class="cl"><span class="s">#   WARNING: The database specified under db_database WILL BE ENTIRELY DELETED during setup.
+</span></span></span><span class="line"><span class="cl"><span class="s">#   Please use a database dedicated to DVWA.
+</span></span></span><span class="line"><span class="cl"><span class="s">#
+</span></span></span><span class="line"><span class="cl"><span class="s"># If you are using MariaDB then you cannot use root, you must use create a dedicated DVWA user.
+</span></span></span><span class="line"><span class="cl"><span class="s">#   See README.md for more information on this.
+</span></span></span><span class="line"><span class="cl"><span class="s">$_DVWA = array();
+</span></span></span><span class="line"><span class="cl"><span class="s"># $_DVWA[ &#39;db_server&#39; ]   = getenv(&#39;DB_SERVER&#39;) ?: &#39;127.0.0.1&#39;;
+</span></span></span><span class="line"><span class="cl"><span class="s">$_DVWA[ &#39;db_server&#39; ]   = getenv(&#39;DB_SERVER&#39;) ?: &#39;0.0.0.0&#39;;
+</span></span></span><span class="line"><span class="cl"><span class="s">$_DVWA[ &#39;db_database&#39; ] = getenv(&#39;DB_DATABASE&#39;) ?: &#39;dvwa&#39;;
+</span></span></span><span class="line"><span class="cl"><span class="s"># $_DVWA[ &#39;db_user&#39; ]     = getenv(&#39;DB_USER&#39;) ?: &#39;dvwa&#39;;
+</span></span></span><span class="line"><span class="cl"><span class="s"># $_DVWA[ &#39;db_password&#39; ] = getenv(&#39;DB_PASSWORD&#39;) ?: &#39;p@ssw0rd&#39;;
+</span></span></span><span class="line"><span class="cl"><span class="s">$_DVWA[ &#39;db_user&#39; ]     = &#39;root&#39;;
+</span></span></span><span class="line"><span class="cl"><span class="s">$_DVWA[ &#39;db_password&#39; ] = &#39;&#39;;
+</span></span></span><span class="line"><span class="cl"><span class="s">$_DVWA[ &#39;db_port&#39;]      = getenv(&#39;DB_PORT&#39;) ?: &#39;3306&#39;;
+</span></span></span><span class="line"><span class="cl"><span class="s">
+</span></span></span><span class="line"><span class="cl"><span class="s"># ReCAPTCHA settings
+</span></span></span><span class="line"><span class="cl"><span class="s">#   Used for the &#39;Insecure CAPTCHA&#39; module
+</span></span></span><span class="line"><span class="cl"><span class="s">#   You&#39;ll need to generate your own keys at: https://www.google.com/recaptcha/admin
+</span></span></span><span class="line"><span class="cl"><span class="s">$_DVWA[ &#39;recaptcha_public_key&#39; ]  = getenv(&#39;RECAPTCHA_PUBLIC_KEY&#39;) ?: &#39;&#39;;
+</span></span></span><span class="line"><span class="cl"><span class="s">$_DVWA[ &#39;recaptcha_private_key&#39; ] = getenv(&#39;RECAPTCHA_PRIVATE_KEY&#39;) ?: &#39;&#39;;
+</span></span></span><span class="line"><span class="cl"><span class="s">
+</span></span></span><span class="line"><span class="cl"><span class="s"># Default security level
+</span></span></span><span class="line"><span class="cl"><span class="s">#   Default value for the security level with each session.
+</span></span></span><span class="line"><span class="cl"><span class="s">#   The default is &#39;impossible&#39;. You may wish to set this to either &#39;low&#39;, &#39;medium&#39;, &#39;high&#39; or impossible&#39;.
+</span></span></span><span class="line"><span class="cl"><span class="s">$_DVWA[ &#39;default_security_level&#39; ] = getenv(&#39;DEFAULT_SECURITY_LEVEL&#39;) ?: &#39;impossible&#39;;
+</span></span></span><span class="line"><span class="cl"><span class="s">
+</span></span></span><span class="line"><span class="cl"><span class="s"># Default locale
+</span></span></span><span class="line"><span class="cl"><span class="s">#   Default locale for the help page shown with each session.
+</span></span></span><span class="line"><span class="cl"><span class="s">#   The default is &#39;en&#39;. You may wish to set this to either &#39;en&#39; or &#39;zh&#39;.
+</span></span></span><span class="line"><span class="cl"><span class="s">$_DVWA[ &#39;default_locale&#39; ] = getenv(&#39;DEFAULT_LOCALE&#39;) ?: &#39;en&#39;;
+</span></span></span><span class="line"><span class="cl"><span class="s">
+</span></span></span><span class="line"><span class="cl"><span class="s"># Disable authentication
+</span></span></span><span class="line"><span class="cl"><span class="s">#   Some tools don&#39;t like working with authentication and passing cookies around
+</span></span></span><span class="line"><span class="cl"><span class="s">#   so this setting lets you turn off authentication.
+</span></span></span><span class="line"><span class="cl"><span class="s">$_DVWA[ &#39;disable_authentication&#39; ] = getenv(&#39;DISABLE_AUTHENTICATION&#39;) ?: false;
+</span></span></span><span class="line"><span class="cl"><span class="s">
+</span></span></span><span class="line"><span class="cl"><span class="s">define (&#39;MYSQL&#39;, &#39;mysql&#39;);
+</span></span></span><span class="line"><span class="cl"><span class="s">define (&#39;SQLITE&#39;, &#39;sqlite&#39;);
+</span></span></span><span class="line"><span class="cl"><span class="s">
+</span></span></span><span class="line"><span class="cl"><span class="s"># SQLi DB Backend
+</span></span></span><span class="line"><span class="cl"><span class="s">#   Use this to switch the backend database used in the SQLi and Blind SQLi labs.
+</span></span></span><span class="line"><span class="cl"><span class="s">#   This does not affect the backend for any other services, just these two labs.
+</span></span></span><span class="line"><span class="cl"><span class="s">#   If you do not understand what this means, do not change it.
+</span></span></span><span class="line"><span class="cl"><span class="s">$_DVWA[&#39;SQLI_DB&#39;] = getenv(&#39;SQLI_DB&#39;) ?: MYSQL;
+</span></span></span><span class="line"><span class="cl"><span class="s">#$_DVWA[&#39;SQLI_DB&#39;] = SQLITE;
+</span></span></span><span class="line"><span class="cl"><span class="s">#$_DVWA[&#39;SQLITE_DB&#39;] = &#39;sqli.db&#39;;
+</span></span></span><span class="line"><span class="cl"><span class="s">
+</span></span></span><span class="line"><span class="cl"><span class="s">?&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s">EOF</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 完成配置后手机浏览器访问 http://127.0.0.1:8080/dvwa/setup.php 即可看到 DVWA 的设置页面，点击底部的 Create/Reset Database 即可配置好数据库并进入 DVWA 的登录界面，输入 m 默认用户名 admin 和密码 password 即可登录到 DVWA</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 默认情况下 php 的 allow_url_include 函数是禁用的，这会影响到 DVWA 文件包含漏洞实验的正常进行，因此需要启用此函数：</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># ~ $ php --ini</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Configuration File (php.ini) Path: &#34;/data/data/com.termux/files/usr/etc/php&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Loaded Configuration File:         (none)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Scan for additional .ini files in: &#34;/data/data/com.termux/files/usr/etc/php/conf.d&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Additional .ini files parsed:      (none)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 发现 php.ini 的文件应该存放在 /data/data/com.termux/files/usr/etc/php 或 /data/data/com.termux/files/usr/etc/php/conf.d目录下，但是 PHP 没有找到配置文件，所以需要我们手动在这个目录下新建 php.ini 配置文件:</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># echo &#34;allow_url_include = On&#34; &gt;&gt; $PREFIX/lib/php.ini</span>
+</span></span><span class="line"><span class="cl">mkdir -p <span class="nv">$PREFIX</span>/etc/php/conf.d/<span class="p">;</span> <span class="nb">echo</span> <span class="s1">&#39;allow_url_include = On&#39;</span> &gt; <span class="nv">$PREFIX</span>/etc/php/conf.d/custom.ini <span class="c1"># 创建配置文件</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># mkdir -p $PREFIX/etc/php/conf.d/; echo &#39;allow_url_include = Off&#39; &gt; $PREFIX/etc/php/conf.d/custom.ini # 创建配置文件</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 修改完成之后需要重启 php-fpm：</span>
+</span></span><span class="line"><span class="cl">ps aux <span class="p">|</span> grep -v grep <span class="p">|</span> grep <span class="s2">&#34;php-fpm&#34;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span> <span class="p">|</span> xargs <span class="nb">kill</span> -9 <span class="c1"># 终止php-fpm进程</span>
+</span></span><span class="line"><span class="cl">php-fpm  <span class="c1"># 再次启动php-fpm</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 克隆 sqli 仓库并进行配置</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 由于原版的 sqli-labs 的上一次更新提交已是 2014 年，其内置的 mysql_connect () 函数已被 php7 + 版本删除，这导致了 sqli-labs 连接不上数据库，推荐的解决方法是直接使用 Sqli_Edited_Version 这个修改了连接函数为受支持函数的复刻版：</span>
+</span></span><span class="line"><span class="cl">git clone -c http.proxy<span class="o">=</span><span class="s2">&#34;127.0.0.1:10808&#34;</span> https://github.com/Rinkish/Sqli_Edited_Version.git <span class="nv">$PREFIX</span>/share/nginx/html/sqli
+</span></span><span class="line"><span class="cl">cp -r <span class="nv">$PREFIX</span>/share/nginx/html/sqli <span class="nv">$PREFIX</span>/share/nginx/html/sqli_bak
+</span></span><span class="line"><span class="cl">mv <span class="nv">$PREFIX</span>/share/nginx/html/sqli/sqlilabs/ <span class="nv">$PREFIX</span>/share/nginx/html/sqli/sqli <span class="o">&amp;&amp;</span> mv <span class="nv">$PREFIX</span>/share/nginx/html/sqli/sqli/* <span class="nv">$PREFIX</span>/share/nginx/html/sqli
+</span></span><span class="line"><span class="cl"><span class="c1"># 执行以下命令修改配置文件：</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># sed -i &#34;/^\$host = &#39;localhost&#39;;/c#\$host = &#39;localhost&#39;;\n\$host = &#39;127.0.0.1&#39;;&#34; $PREFIX/share/nginx/html/sqli/sql-connections/db-creds.inc</span>
+</span></span><span class="line"><span class="cl">sed -i <span class="s2">&#34;/^\$host = &#39;localhost&#39;;/c#\$host = &#39;localhost&#39;;\n\$host = &#39;0.0.0.0&#39;;&#34;</span> <span class="nv">$PREFIX</span>/share/nginx/html/sqli/sql-connections/db-creds.inc
+</span></span><span class="line"><span class="cl"><span class="c1"># 此时再用手机浏览器访问 http://127.0.0.1:8080/sqli/sql-connections/setup-db.php 即可自动创建好 sqli-labs 的数据库：</span>
+</span></span><span class="line"><span class="cl">http://127.0.0.1:8080/sqli/sql-connections/setup-db.php
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 服务自启</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 要想启动手机的 Termux 的同时也启动 sshd、nginx、mariadb、php-fpm, 需要再执行以下命令：</span>
+</span></span><span class="line"><span class="cl">cp <span class="nv">$HOME</span>/.bashrc <span class="nv">$HOME</span>/.bashrc_bak
+</span></span><span class="line"><span class="cl">mkdir -p <span class="nv">$HOME</span>/log<span class="p">;</span> 
+</span></span><span class="line"><span class="cl"><span class="c1"># echo -e &#34;sshd\nnohup nginx &gt; \$HOME/log/nginx.log 2&gt;&amp;1 &amp;\nnohup mysqld &gt; \$HOME/log/mariadb.log 2&gt;&amp;1 &amp;\nnohup php-fpm &gt; \$HOME/log/php-fpm.log 2&gt;&amp;1 &amp;&#34; &gt;&gt; ~/.bashrc</span>
+</span></span><span class="line"><span class="cl">cat &gt;&gt; <span class="nv">$HOME</span>/.bashrc <span class="s">&lt;&lt;&#39;EOF&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s">sshd
+</span></span></span><span class="line"><span class="cl"><span class="s">nohup nginx &gt; $HOME/log/nginx.log 2&gt;&amp;1 &amp;
+</span></span></span><span class="line"><span class="cl"><span class="s">nohup mysqld &gt; $HOME/log/mariadb.log 2&gt;&amp;1 &amp;
+</span></span></span><span class="line"><span class="cl"><span class="s">nohup php-fpm &gt; $HOME/log/php-fpm.log 2&gt;&amp;1 &amp;
+</span></span></span><span class="line"><span class="cl"><span class="s">source $HOME/.bashrc
+</span></span></span><span class="line"><span class="cl"><span class="s">EOF</span>
+</span></span><span class="line"><span class="cl">ps aux <span class="p">|</span> grep -v grep <span class="p">|</span> grep -E <span class="s2">&#34;(nginx|mysqld|php-fpm)&#34;</span> <span class="c1"># 查看指定进程</span>
+</span></span><span class="line"><span class="cl">ps aux <span class="p">|</span> grep -v grep <span class="p">|</span> grep -E <span class="s2">&#34;(nginx|mysqld|php-fpm)&#34;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span> <span class="p">|</span> xargs <span class="nb">kill</span> -9 <span class="c1"># 批量终止指定进程</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 如果存在 runsv 和 svlogd 进程导入终止失败，则执行以下命令再次终止</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 停止所有runit服务</span>
+</span></span><span class="line"><span class="cl">pkill -9 runsv
+</span></span><span class="line"><span class="cl">pkill -9 runsvdir
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 对于希望手机自启 Termux 应用，由于不同定制安卓系统的操作方式皆有所不同，这里不做解释，请自行寻找相关设置。</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-2" class="outline-3">
+<h3 id="headline-2">
+批量运行与批量终止
+</h3>
+<div id="outline-text-headline-2" class="outline-text-3">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 批量运行</span>
+</span></span><span class="line"><span class="cl">nohup nginx &gt; <span class="nv">$HOME</span>/log/nginx.log 2&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="p">&amp;</span>
+</span></span><span class="line"><span class="cl">nohup mysqld &gt; <span class="nv">$HOME</span>/log/mariadb.log 2&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="p">&amp;</span>
+</span></span><span class="line"><span class="cl">nohup php-fpm &gt; <span class="nv">$HOME</span>/log/php-fpm.log 2&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="p">&amp;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 批量终止</span>
+</span></span><span class="line"><span class="cl">ps aux <span class="p">|</span> grep -v grep <span class="p">|</span> grep -E <span class="s2">&#34;(nginx|mysqld|php-fpm)&#34;</span> <span class="c1"># 查看指定进程</span>
+</span></span><span class="line"><span class="cl">ps aux <span class="p">|</span> grep -v grep <span class="p">|</span> grep -E <span class="s2">&#34;(nginx|mysqld|php-fpm)&#34;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span> <span class="p">|</span> xargs <span class="nb">kill</span> -9 <span class="c1"># 批量终止指定进程</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 如果存在 runsv 和 svlogd 进程导致终止不彻底，这是因为在Termux中使用了runsv（runit）作为服务管理器，则执行以下命令停止所有runit服务</span>
+</span></span><span class="line"><span class="cl">pkill -9 runsv
+</span></span><span class="line"><span class="cl">pkill -9 runsvdir</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-3" class="outline-3">
+<h3 id="headline-3">
+参考链接
+</h3>
+<div id="outline-text-headline-3" class="outline-text-3">
+<p>
+<a href="https://blog.lololowe.com/posts/1dc3/">在安卓系统上搭建 DVWA 和 SQLI 靶场</a></p>
+<p>
+<a href="https://www.sqlsec.com/2018/05/termux.html#Nginx">Termux 高级终端安装使用配置教程 - Nginx</a></p>
+<p>
+<a href="https://www.sqlsec.com/2018/05/termux.html#Nginx-解析-PHP">Termux 高级终端安装使用配置教程 - Nginx 解析 PHP</a></p>
+<p>
+<a href="https://www.sqlsec.com/2018/05/termux.html#DVWA">Termux 高级终端安装使用配置教程 - DVWA</a></p>
+</div>
+</div>
+</div>
+</div>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/termux/">Termux</a>
+        
+            <a href="/tags/nginx/">Nginx</a>
+        
+            <a href="/tags/php/">Php</a>
+        
+            <a href="/tags/php-fpm/">Php-Fpm</a>
+        
+            <a href="/tags/dvwa/">Dvwa</a>
+        
+            <a href="/tags/mariadbmysql/">MariaDB(MySQL)</a>
+        
+            <a href="/tags/sqli/">Sqli</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "hugo-theme-stack" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2026 Example Person
+    </section>
+    
+    <section class="powerby">
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
