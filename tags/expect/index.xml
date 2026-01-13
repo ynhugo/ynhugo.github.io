@@ -244,9 +244,9 @@ expect使用示例
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s1&#34;&gt;    expect &amp;#34;Press&amp;#34;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s1&#34;&gt;    for {set i 0} {$i &amp;lt; 3} {incr i} {
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s1&#34;&gt;        send &amp;#34;\n&amp;#34;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s1&#34;&gt;        sleep 1
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s1&#34;&gt;        sleep 0.1
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s1&#34;&gt;    }                       
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s1&#34;&gt;    interact
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s1&#34;&gt;    expect eof    
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -255,13 +255,132 @@ expect使用示例
 &lt;/div&gt;
 &lt;div id=&#34;outline-container-headline-9&#34; class=&#34;outline-3&#34;&gt;
 &lt;h3 id=&#34;headline-9&#34;&gt;
-参考链接
+expect eof 和 interact 有什么区别
 &lt;/h3&gt;
 &lt;div id=&#34;outline-text-headline-9&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;p&gt;expect eof 和 interact 是 Expect 脚本中两个非常重要的命令，它们有着本质的区别：&lt;/p&gt;
+&lt;div id=&#34;outline-container-headline-10&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-10&#34;&gt;
+expect eof - 等待子进程结束
+&lt;/h4&gt;
+&lt;div id=&#34;outline-text-headline-10&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;p&gt;作用：等待 spawn 启动的子进程执行完毕&lt;/p&gt;
 &lt;p&gt;
-&lt;a href=&#34;https://blog.csdn.net/qq_46227568/article/details/148049057&#34;&gt;使用 curl 通过 SOCKS5 代理访问目标网站&lt;/a&gt;&lt;/p&gt;
+行为：阻塞直到子进程退出&lt;/p&gt;
+&lt;p&gt;
+适用场景：自动化脚本执行，不需要用户交互&lt;/p&gt;
+&lt;p&gt;
+示例：&lt;/p&gt;
+&lt;div class=&#34;src src-bash&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;expect
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;spawn some_command
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;expect &lt;span class=&#34;s2&#34;&gt;&amp;#34;some pattern&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;send &lt;span class=&#34;s2&#34;&gt;&amp;#34;some input\r&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;expect eof  &lt;span class=&#34;c1&#34;&gt;# 等待 some_command 执行完成&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-11&#34; class=&#34;outline-4&#34;&gt;
+&lt;h4 id=&#34;headline-11&#34;&gt;
+interact - 将控制权交还给用户
+&lt;/h4&gt;
+&lt;div id=&#34;outline-text-headline-11&#34; class=&#34;outline-text-4&#34;&gt;
+&lt;p&gt;作用：将键盘输入传递给子进程，允许用户与程序交互&lt;/p&gt;
+&lt;p&gt;
+行为：Expect 停止自动化控制，用户可以直接操作&lt;/p&gt;
+&lt;p&gt;
+适用场景：部分自动化后需要用户手动操作&lt;/p&gt;
+&lt;p&gt;
+示例：&lt;/p&gt;
+&lt;div class=&#34;src src-bash&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;expect
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;spawn ssh user@host
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;expect &lt;span class=&#34;s2&#34;&gt;&amp;#34;password:&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;send &lt;span class=&#34;s2&#34;&gt;&amp;#34;mypassword\r&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;interact  &lt;span class=&#34;c1&#34;&gt;# 登录后，用户可以直接操作ssh会话&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;
+对比表格：&lt;/p&gt;
+&lt;table&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;特性&lt;/td&gt;
+&lt;td&gt;expect eof&lt;/td&gt;
+&lt;td&gt;interact&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;控制权&lt;/td&gt;
+&lt;td&gt;Expect 保持控制&lt;/td&gt;
+&lt;td&gt;交还给用户&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;等待对象&lt;/td&gt;
+&lt;td&gt;等待进程结束&lt;/td&gt;
+&lt;td&gt;不等待，立即返回&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;典型用途&lt;/td&gt;
+&lt;td&gt;完全自动化&lt;/td&gt;
+&lt;td&gt;半自动化&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;后续代码&lt;/td&gt;
+&lt;td&gt;可以继续执行&lt;/td&gt;
+&lt;td&gt;通常放在脚本末尾&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;进程状态&lt;/td&gt;
+&lt;td&gt;进程结束后继续&lt;/td&gt;
+&lt;td&gt;进程继续运行&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outline-container-headline-12&#34; class=&#34;outline-3&#34;&gt;
+&lt;h3 id=&#34;headline-12&#34;&gt;
+参考链接
+&lt;/h3&gt;
+&lt;div id=&#34;outline-text-headline-12&#34; class=&#34;outline-text-3&#34;&gt;
+&lt;p&gt;&lt;a href=&#34;https://blog.csdn.net/qq_46227568/article/details/148049057&#34;&gt;使用 curl 通过 SOCKS5 代理访问目标网站&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;
 &lt;a href=&#34;https://www.cnblogs.com/iloveyoucc/archive/2012/06/17/2552553.html&#34;&gt;expect语法基础： while、for 循环、if 语句的用法示例&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://chat.deepseek.com/share/4uo1i163nfgxuq2cim&#34;&gt;expect eof 和 interact 有什么区别 | DeepSeek&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;

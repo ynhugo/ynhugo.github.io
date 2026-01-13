@@ -326,7 +326,15 @@
 </li>
 <li><a href="#headline-8">使用for循环</a>
 </li>
-<li><a href="#headline-9">参考链接</a>
+<li><a href="#headline-9">expect eof 和 interact 有什么区别</a>
+<ul>
+<li><a href="#headline-10">expect eof - 等待子进程结束</a>
+</li>
+<li><a href="#headline-11">interact - 将控制权交还给用户</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-12">参考链接</a>
 </li>
 </ul>
 </li>
@@ -632,9 +640,9 @@ expect使用示例
 </span></span></span><span class="line"><span class="cl"><span class="s1">    expect &#34;Press&#34;
 </span></span></span><span class="line"><span class="cl"><span class="s1">    for {set i 0} {$i &lt; 3} {incr i} {
 </span></span></span><span class="line"><span class="cl"><span class="s1">        send &#34;\n&#34;
-</span></span></span><span class="line"><span class="cl"><span class="s1">        sleep 1
+</span></span></span><span class="line"><span class="cl"><span class="s1">        sleep 0.1
 </span></span></span><span class="line"><span class="cl"><span class="s1">    }                       
-</span></span></span><span class="line"><span class="cl"><span class="s1">    interact
+</span></span></span><span class="line"><span class="cl"><span class="s1">    expect eof    
 </span></span></span><span class="line"><span class="cl"><span class="s1">&#39;</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
@@ -643,13 +651,132 @@ expect使用示例
 </div>
 <div id="outline-container-headline-9" class="outline-3">
 <h3 id="headline-9">
-参考链接
+expect eof 和 interact 有什么区别
 </h3>
 <div id="outline-text-headline-9" class="outline-text-3">
+<p>expect eof 和 interact 是 Expect 脚本中两个非常重要的命令，它们有着本质的区别：</p>
+<div id="outline-container-headline-10" class="outline-4">
+<h4 id="headline-10">
+expect eof - 等待子进程结束
+</h4>
+<div id="outline-text-headline-10" class="outline-text-4">
+<p>作用：等待 spawn 启动的子进程执行完毕</p>
 <p>
-<a href="https://blog.csdn.net/qq_46227568/article/details/148049057">使用 curl 通过 SOCKS5 代理访问目标网站</a></p>
+行为：阻塞直到子进程退出</p>
+<p>
+适用场景：自动化脚本执行，不需要用户交互</p>
+<p>
+示例：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">expect
+</span></span><span class="line"><span class="cl">spawn some_command
+</span></span><span class="line"><span class="cl">expect <span class="s2">&#34;some pattern&#34;</span>
+</span></span><span class="line"><span class="cl">send <span class="s2">&#34;some input\r&#34;</span>
+</span></span><span class="line"><span class="cl">expect eof  <span class="c1"># 等待 some_command 执行完成</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-11" class="outline-4">
+<h4 id="headline-11">
+interact - 将控制权交还给用户
+</h4>
+<div id="outline-text-headline-11" class="outline-text-4">
+<p>作用：将键盘输入传递给子进程，允许用户与程序交互</p>
+<p>
+行为：Expect 停止自动化控制，用户可以直接操作</p>
+<p>
+适用场景：部分自动化后需要用户手动操作</p>
+<p>
+示例：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">expect
+</span></span><span class="line"><span class="cl">spawn ssh user@host
+</span></span><span class="line"><span class="cl">expect <span class="s2">&#34;password:&#34;</span>
+</span></span><span class="line"><span class="cl">send <span class="s2">&#34;mypassword\r&#34;</span>
+</span></span><span class="line"><span class="cl">interact  <span class="c1"># 登录后，用户可以直接操作ssh会话</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+对比表格：</p>
+<div class="table-wrapper"><table>
+<tbody>
+<tr>
+<td>特性</td>
+<td>expect eof</td>
+<td>interact</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>控制权</td>
+<td>Expect 保持控制</td>
+<td>交还给用户</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>等待对象</td>
+<td>等待进程结束</td>
+<td>不等待，立即返回</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>典型用途</td>
+<td>完全自动化</td>
+<td>半自动化</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>后续代码</td>
+<td>可以继续执行</td>
+<td>通常放在脚本末尾</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>进程状态</td>
+<td>进程结束后继续</td>
+<td>进程继续运行</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-12" class="outline-3">
+<h3 id="headline-12">
+参考链接
+</h3>
+<div id="outline-text-headline-12" class="outline-text-3">
+<p><a href="https://blog.csdn.net/qq_46227568/article/details/148049057">使用 curl 通过 SOCKS5 代理访问目标网站</a></p>
 <p>
 <a href="https://www.cnblogs.com/iloveyoucc/archive/2012/06/17/2552553.html">expect语法基础： while、for 循环、if 语句的用法示例</a></p>
+<p>
+<a href="https://chat.deepseek.com/share/4uo1i163nfgxuq2cim">expect eof 和 interact 有什么区别 | DeepSeek</a></p>
 </div>
 </div>
 </div>
