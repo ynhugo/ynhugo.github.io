@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-cn" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" conda换源 1 2 3 4 5 6 7 8 9 # 移除现有的配置 conda config --remove-key channels # 重新添加 https 镜像源 conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/ conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/ conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/ conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/pytorch/ conda config --set show_channel_urls yes 参考链接 conda install 下载过慢问题的解决方法\n">
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" conda换源 1 2 3 4 5 6 7 8 9 10 11 12 cat &gt; ~/.condarc &lt;&lt;&#39;EOF&#39; channels: - defaults show_channel_urls: true default_channels: - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/msys2 custom_channels: conda-forge: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud pytorch: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud EOF 参考链接 Anaconda 软件仓库\n">
 <title>conda换源</title>
 
 <link rel='canonical' href='https://ynhugo.github.io/p/conda%E6%8D%A2%E6%BA%90/'>
 
 <link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="conda换源">
-<meta property='og:description' content=" conda换源 1 2 3 4 5 6 7 8 9 # 移除现有的配置 conda config --remove-key channels # 重新添加 https 镜像源 conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/ conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/ conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/ conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/pytorch/ conda config --set show_channel_urls yes 参考链接 conda install 下载过慢问题的解决方法\n">
+<meta property='og:description' content=" conda换源 1 2 3 4 5 6 7 8 9 10 11 12 cat &gt; ~/.condarc &lt;&lt;&#39;EOF&#39; channels: - defaults show_channel_urls: true default_channels: - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/msys2 custom_channels: conda-forge: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud pytorch: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud EOF 参考链接 Anaconda 软件仓库\n">
 <meta property='og:url' content='https://ynhugo.github.io/p/conda%E6%8D%A2%E6%BA%90/'>
 <meta property='og:site_name' content='ynhugo'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='conda' /><meta property='article:published_time' content='2026-01-16T15:19:57&#43;08:00'/><meta property='article:modified_time' content='2026-01-16T15:19:57&#43;08:00'/>
 <meta name="twitter:title" content="conda换源">
-<meta name="twitter:description" content=" conda换源 1 2 3 4 5 6 7 8 9 # 移除现有的配置 conda config --remove-key channels # 重新添加 https 镜像源 conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/ conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/ conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/ conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/pytorch/ conda config --set show_channel_urls yes 参考链接 conda install 下载过慢问题的解决方法\n">
+<meta name="twitter:description" content=" conda换源 1 2 3 4 5 6 7 8 9 10 11 12 cat &gt; ~/.condarc &lt;&lt;&#39;EOF&#39; channels: - defaults show_channel_urls: true default_channels: - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/msys2 custom_channels: conda-forge: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud pytorch: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud EOF 参考链接 Anaconda 软件仓库\n">
     </head>
     <body class="
     article-page
@@ -390,26 +390,32 @@ conda换源
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
-</span><span class="lnt">9
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 移除现有的配置</span>
-</span></span><span class="line"><span class="cl">conda config --remove-key channels
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># 重新添加 https 镜像源</span>
-</span></span><span class="line"><span class="cl">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/
-</span></span><span class="line"><span class="cl">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
-</span></span><span class="line"><span class="cl">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/
-</span></span><span class="line"><span class="cl">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/pytorch/
-</span></span><span class="line"><span class="cl">conda config --set show_channel_urls yes</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">cat &gt; ~/.condarc <span class="s">&lt;&lt;&#39;EOF&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s">channels:
+</span></span></span><span class="line"><span class="cl"><span class="s">  - defaults
+</span></span></span><span class="line"><span class="cl"><span class="s">show_channel_urls: true
+</span></span></span><span class="line"><span class="cl"><span class="s">default_channels:
+</span></span></span><span class="line"><span class="cl"><span class="s">  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main
+</span></span></span><span class="line"><span class="cl"><span class="s">  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r
+</span></span></span><span class="line"><span class="cl"><span class="s">  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/msys2
+</span></span></span><span class="line"><span class="cl"><span class="s">custom_channels:
+</span></span></span><span class="line"><span class="cl"><span class="s">  conda-forge: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+</span></span></span><span class="line"><span class="cl"><span class="s">  pytorch: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+</span></span></span><span class="line"><span class="cl"><span class="s">EOF</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
@@ -418,7 +424,7 @@ conda换源
 参考链接
 </h3>
 <div id="outline-text-headline-2" class="outline-text-3">
-<p><a href="https://zhuanlan.zhihu.com/p/660518532">conda install 下载过慢问题的解决方法</a></p>
+<p><a href="https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/">Anaconda 软件仓库</a></p>
 </div>
 </div>
 </div>
