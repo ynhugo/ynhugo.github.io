@@ -361,8 +361,14 @@
 </ul>
 </li>
 <li><a href="#headline-22">使用自定义数据，数据加载与预处理、模型加载与保存、模型推理与加载</a>
+<ul>
+<li><a href="#headline-23">ts5.py</a>
 </li>
-<li><a href="#headline-23">参考链接</a>
+<li><a href="#headline-24">ts5.py运行效果</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-25">参考链接</a>
 </li>
 </ul>
 </li>
@@ -422,7 +428,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 20 分钟
+                    阅读时长: 22 分钟
                 </time>
             </div>
         
@@ -2056,6 +2062,11 @@ ts4.py的作用
 使用自定义数据，数据加载与预处理、模型加载与保存、模型推理与加载
 </h3>
 <div id="outline-text-headline-22" class="outline-text-3">
+<div id="outline-container-headline-23" class="outline-4">
+<h4 id="headline-23">
+ts5.py
+</h4>
+<div id="outline-text-headline-23" class="outline-text-4">
 <div class="src src-python">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -2884,11 +2895,174 @@ ts4.py的作用
 </div>
 </div>
 </div>
-<div id="outline-container-headline-23" class="outline-3">
-<h3 id="headline-23">
+<div id="outline-container-headline-24" class="outline-4">
+<h4 id="headline-24">
+ts5.py运行效果
+</h4>
+<div id="outline-text-headline-24" class="outline-text-4">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ python ts5.py
+</span></span><span class="line"><span class="cl">Some weights of BertForSequenceClassification were not initialized from the model checkpoint at bert-base-uncased and are newly initialized: <span class="o">[</span><span class="s1">&#39;classifier.bias&#39;</span>, <span class="s1">&#39;classifier.weight&#39;</span><span class="o">]</span>
+</span></span><span class="line"><span class="cl">You should probably TRAIN this model on a down-stream task to be able to use it <span class="k">for</span> predictions and inference.
+</span></span><span class="line"><span class="cl">D:<span class="se">\t</span>emp<span class="se">\t</span>emp<span class="se">\t</span>s8.py:260: FutureWarning: You are using <span class="sb">`</span>torch.load<span class="sb">`</span> with <span class="sb">`</span><span class="nv">weights_only</span><span class="o">=</span>False<span class="sb">`</span> <span class="o">(</span>the current default value<span class="o">)</span>, which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling <span class="o">(</span>See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models <span class="k">for</span> more details<span class="o">)</span>. In a future release, the default value <span class="k">for</span> <span class="sb">`</span>weights_only<span class="sb">`</span> will be flipped to <span class="sb">`</span>True<span class="sb">`</span>. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via <span class="sb">`</span>torch.serialization.add_safe_globals<span class="sb">`</span>. We recommend you start setting <span class="sb">`</span><span class="nv">weights_only</span><span class="o">=</span>True<span class="sb">`</span> <span class="k">for</span> any use <span class="k">case</span> where you don<span class="s1">&#39;t have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+</span></span></span><span class="line"><span class="cl"><span class="s1">  checkpoint = torch.load(path, map_location=self.device)
+</span></span></span><span class="line"><span class="cl"><span class="s1">D:\temp\temp\ts8.py:365: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don&#39;</span>t have full control of the loaded file. Please open an issue on GitHub <span class="k">for</span> any issues related to this experimental feature.
+</span></span><span class="line"><span class="cl">  <span class="nv">checkpoint</span> <span class="o">=</span> torch.load<span class="o">(</span>model_path, <span class="nv">map_location</span><span class="o">=</span>device<span class="o">)</span>
+</span></span><span class="line"><span class="cl">Some weights of BertForSequenceClassification were not initialized from the model checkpoint at bert-base-uncased and are newly initialized: <span class="o">[</span><span class="s1">&#39;classifier.bias&#39;</span>, <span class="s1">&#39;classifier.weight&#39;</span><span class="o">]</span>
+</span></span><span class="line"><span class="cl">You should probably TRAIN this model on a down-stream task to be able to use it <span class="k">for</span> predictions and inference.
+</span></span><span class="line"><span class="cl"><span class="o">============================================================</span>
+</span></span><span class="line"><span class="cl"><span class="nv">文本分类完整流程演示</span>
+</span></span><span class="line"><span class="cl"><span class="o">============================================================</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">1. 准备数据...
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">2. 初始化训练器...
+</span></span><span class="line"><span class="cl">使用设备: cpu
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">3. 创建数据加载器...
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">4. 开始训练模型...
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">==================================================</span>
+</span></span><span class="line"><span class="cl">Epoch 1/3
+</span></span><span class="line"><span class="cl"><span class="o">==================================================</span>
+</span></span><span class="line"><span class="cl">训练结果 - Loss: 0.6826, Accuracy: 0.6250
+</span></span><span class="line"><span class="cl">验证结果 - Loss: 0.7525, Accuracy: 0.5000
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">==================================================</span>
+</span></span><span class="line"><span class="cl">Epoch 2/3
+</span></span><span class="line"><span class="cl"><span class="o">==================================================</span>
+</span></span><span class="line"><span class="cl">训练结果 - Loss: 0.6311, Accuracy: 0.6250
+</span></span><span class="line"><span class="cl">验证结果 - Loss: 0.6439, Accuracy: 0.5000
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">==================================================</span>
+</span></span><span class="line"><span class="cl">Epoch 3/3
+</span></span><span class="line"><span class="cl"><span class="o">==================================================</span>
+</span></span><span class="line"><span class="cl">训练结果 - Loss: 0.4965, Accuracy: 0.7500
+</span></span><span class="line"><span class="cl">验证结果 - Loss: 0.5111, Accuracy: 1.0000
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">模型已保存到: text_classifier_model.pt
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">5. 加载模型并进行推理...
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">6. 测试推理...
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">文本: This is the best product I<span class="s1">&#39;ve ever bought!
+</span></span></span><span class="line"><span class="cl"><span class="s1">情感: 正面
+</span></span></span><span class="line"><span class="cl"><span class="s1">置信度: 71.61%
+</span></span></span><span class="line"><span class="cl"><span class="s1">概率分布: [负面: 0.2839, 正面: 0.7161]
+</span></span></span><span class="line"><span class="cl"><span class="s1">
+</span></span></span><span class="line"><span class="cl"><span class="s1">文本: I&#39;</span>m very disappointed with the quality.
+</span></span><span class="line"><span class="cl">情感: 正面
+</span></span><span class="line"><span class="cl">置信度: 63.62%
+</span></span><span class="line"><span class="cl">概率分布: <span class="o">[</span>负面: 0.3638, 正面: 0.6362<span class="o">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">文本: It<span class="s1">&#39;s okay, nothing special.
+</span></span></span><span class="line"><span class="cl"><span class="s1">情感: 正面
+</span></span></span><span class="line"><span class="cl"><span class="s1">置信度: 59.90%
+</span></span></span><span class="line"><span class="cl"><span class="s1">概率分布: [负面: 0.4010, 正面: 0.5990]
+</span></span></span><span class="line"><span class="cl"><span class="s1">
+</span></span></span><span class="line"><span class="cl"><span class="s1">文本: The service was absolutely fantastic!
+</span></span></span><span class="line"><span class="cl"><span class="s1">情感: 正面
+</span></span></span><span class="line"><span class="cl"><span class="s1">置信度: 69.58%
+</span></span></span><span class="line"><span class="cl"><span class="s1">概率分布: [负面: 0.3042, 正面: 0.6958]
+</span></span></span><span class="line"><span class="cl"><span class="s1">
+</span></span></span><span class="line"><span class="cl"><span class="s1">============================================================
+</span></span></span><span class="line"><span class="cl"><span class="s1">流程完成！
+</span></span></span><span class="line"><span class="cl"><span class="s1">============================================================
+</span></span></span><span class="line"><span class="cl"><span class="s1">
+</span></span></span><span class="line"><span class="cl"><span class="s1">
+</span></span></span><span class="line"><span class="cl"><span class="s1">独立函数调用示例:
+</span></span></span><span class="line"><span class="cl"><span class="s1">预测结果: {&#39;</span>prediction<span class="s1">&#39;: 1, &#39;</span>probabilities<span class="s1">&#39;: array([0.28677344, 0.7132265 ], dtype=float32), &#39;</span>confidence<span class="err">&#39;</span>: 0.7132264971733093<span class="o">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-25" class="outline-3">
+<h3 id="headline-25">
 参考链接
 </h3>
-<div id="outline-text-headline-23" class="outline-text-3">
+<div id="outline-text-headline-25" class="outline-text-3">
 <p><a href="https://ynhugo.github.io/p/ubuntu-22.04-server安装nvidia驱动/">ubuntu 22.04 server安装Nvidia驱动</a></p>
 <p>
 <a href="https://developer.aliyun.com/article/1675559">大模型开发从入门到部署</a></p>
