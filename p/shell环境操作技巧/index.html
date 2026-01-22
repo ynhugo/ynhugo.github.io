@@ -664,6 +664,12 @@
 </li>
 </ul>
 </li>
+<li><a href="#headline-151">Linux: Shell脚本实现支持长选项参数</a>
+<ul>
+<li><a href="#headline-152">参考链接</a>
+</li>
+</ul>
+</li>
 </ul>
 </nav>
         </div>
@@ -4561,6 +4567,87 @@ GPG 是一个遵循 OpenPGP 标准的加密及签名工具。大部分 gpg 工�
 <div id="outline-text-headline-150" class="outline-text-3">
 <p>
 <a href="https://zhuanlan.zhihu.com/p/33752388">八种在 Linux 上生成随机密码的方法</a></p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-151" class="outline-2">
+<h2 id="headline-151">
+Linux: Shell脚本实现支持长选项参数
+</h2>
+<div id="outline-text-headline-151" class="outline-text-2">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/data/data/com.termux/files/usr/bin/bash
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 定义短选项和长选项</span>
+</span></span><span class="line"><span class="cl"><span class="nv">short_opts</span><span class="o">=</span><span class="s2">&#34;lri&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">long_opts</span><span class="o">=</span><span class="s2">&#34;login, reinstall, install&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 解析命令行选项</span>
+</span></span><span class="line"><span class="cl"><span class="nv">parsed_opts</span><span class="o">=</span><span class="k">$(</span>getopt -o <span class="nv">$short_opts</span> -l <span class="nv">$long_opts</span> -- <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[[</span> <span class="nv">$?</span> -ne <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">exit</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 将解析结果设置为选项参数</span>
+</span></span><span class="line"><span class="cl"><span class="nb">eval</span> <span class="nb">set</span> -- <span class="s2">&#34;</span><span class="nv">$parsed_opts</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">while</span> true<span class="p">;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">    <span class="k">case</span> <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> in
+</span></span><span class="line"><span class="cl">        -l<span class="p">|</span>--login<span class="o">)</span>
+</span></span><span class="line"><span class="cl">            proot-distro login ubuntu
+</span></span><span class="line"><span class="cl">            <span class="p">;;</span>
+</span></span><span class="line"><span class="cl">        -r<span class="p">|</span>--reinstall<span class="o">)</span>
+</span></span><span class="line"><span class="cl">            proot-distro reset ubuntu
+</span></span><span class="line"><span class="cl">            <span class="p">;;</span>
+</span></span><span class="line"><span class="cl">        -i<span class="p">|</span>--install<span class="o">)</span>
+</span></span><span class="line"><span class="cl">            proot-distro install ubuntu
+</span></span><span class="line"><span class="cl">            <span class="p">;;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">esac</span>
+</span></span><span class="line"><span class="cl"><span class="k">done</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-152" class="outline-3">
+<h3 id="headline-152">
+参考链接
+</h3>
+<div id="outline-text-headline-152" class="outline-text-3">
+<p><a href="https://cloud.tencent.com/developer/article/2431702">Linux: Shell脚本实现支持长选项参数</a></p>
+<p>
+<a href="https://zhuanlan.zhihu.com/p/673908518">如何使用getopt和getopts命令解析命令行选项和参数？</a></p>
 </div>
 </div>
 </div>
