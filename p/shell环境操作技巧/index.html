@@ -4607,13 +4607,23 @@ Linux: Shell脚本实现支持长选项参数
 </span><span class="lnt">26
 </span><span class="lnt">27
 </span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/data/data/com.termux/files/usr/bin/bash
 </span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># 定义短选项和长选项</span>
 </span></span><span class="line"><span class="cl"><span class="nv">short_opts</span><span class="o">=</span><span class="s2">&#34;lri&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="nv">long_opts</span><span class="o">=</span><span class="s2">&#34;login, reinstall, install&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">long_opts</span><span class="o">=</span><span class="s2">&#34;login,reinstall,install&#34;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># 解析命令行选项</span>
 </span></span><span class="line"><span class="cl"><span class="nv">parsed_opts</span><span class="o">=</span><span class="k">$(</span>getopt -o <span class="nv">$short_opts</span> -l <span class="nv">$long_opts</span> -- <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="k">)</span>
@@ -4628,12 +4638,22 @@ Linux: Shell脚本实现支持长选项参数
 </span></span><span class="line"><span class="cl">    <span class="k">case</span> <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> in
 </span></span><span class="line"><span class="cl">        -l<span class="p">|</span>--login<span class="o">)</span>
 </span></span><span class="line"><span class="cl">            proot-distro login ubuntu
+</span></span><span class="line"><span class="cl">            <span class="nb">shift</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">exit</span> <span class="m">0</span>
 </span></span><span class="line"><span class="cl">            <span class="p">;;</span>
 </span></span><span class="line"><span class="cl">        -r<span class="p">|</span>--reinstall<span class="o">)</span>
 </span></span><span class="line"><span class="cl">            proot-distro reset ubuntu
+</span></span><span class="line"><span class="cl">            <span class="nb">shift</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">exit</span> <span class="m">0</span>
 </span></span><span class="line"><span class="cl">            <span class="p">;;</span>
 </span></span><span class="line"><span class="cl">        -i<span class="p">|</span>--install<span class="o">)</span>
 </span></span><span class="line"><span class="cl">            proot-distro install ubuntu
+</span></span><span class="line"><span class="cl">            <span class="nb">shift</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">exit</span> <span class="m">0</span>
+</span></span><span class="line"><span class="cl">            <span class="p">;;</span>
+</span></span><span class="line"><span class="cl">        --<span class="o">)</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">shift</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">break</span>
 </span></span><span class="line"><span class="cl">            <span class="p">;;</span>
 </span></span><span class="line"><span class="cl">    <span class="k">esac</span>
 </span></span><span class="line"><span class="cl"><span class="k">done</span></span></span></code></pre></td></tr></table>
