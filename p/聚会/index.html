@@ -348,7 +348,23 @@
 <ul>
 <li><a href="#headline-17">SKILL.md </a>
 </li>
-<li><a href="#headline-18">题库下载</a>
+<li><a href="#headline-18">四个尺度数字范围</a>
+<ul>
+<li><a href="#headline-19">第一等级：小尺度（第1-200题）</a>
+</li>
+<li><a href="#headline-20">第二等级：中尺度（第201-380题）</a>
+</li>
+<li><a href="#headline-21">第三等级：大尺度（第381-540题）</a>
+</li>
+<li><a href="#headline-22">第三等级：成人尺度（第541-715题）</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-23">Linux下生成指定范围随机数</a>
+</li>
+<li><a href="#headline-24">xlsx2csv安装</a>
+</li>
+<li><a href="#headline-25">题库下载</a>
 </li>
 </ul>
 </li>
@@ -410,7 +426,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 8 分钟
+                    阅读时长: 9 分钟
                 </time>
             </div>
         
@@ -1587,11 +1603,153 @@ SKILL.md
 </div>
 <div id="outline-container-headline-18" class="outline-4">
 <h4 id="headline-18">
-题库下载
+四个尺度数字范围
 </h4>
 <div id="outline-text-headline-18" class="outline-text-4">
+<div id="outline-container-headline-19" class="outline-5">
+<h5 id="headline-19">
+第一等级：小尺度（第1-200题）
+</h5>
+<div id="outline-text-headline-19" class="outline-text-5">
+<p>真心话（1-100）</p>
 <p>
-<a href="/images/聚会/超大型真心话大冒险题库-715题.xlsx">超大型真心话大冒险题库-715题.xlsx</a></p>
+大冒险（101-200）</p>
+</div>
+</div>
+<div id="outline-container-headline-20" class="outline-5">
+<h5 id="headline-20">
+第二等级：中尺度（第201-380题）
+</h5>
+<div id="outline-text-headline-20" class="outline-text-5">
+<p>真心话（201-280）</p>
+<p>
+大冒险（281-380）</p>
+</div>
+</div>
+<div id="outline-container-headline-21" class="outline-5">
+<h5 id="headline-21">
+第三等级：大尺度（第381-540题）
+</h5>
+<div id="outline-text-headline-21" class="outline-text-5">
+<p>真心话（381-460）</p>
+<p>
+大冒险（461-540）</p>
+</div>
+</div>
+<div id="outline-container-headline-22" class="outline-5">
+<h5 id="headline-22">
+第三等级：成人尺度（第541-715题）
+</h5>
+<div id="outline-text-headline-22" class="outline-text-5">
+<p>真心话（541-620）</p>
+<p>
+大冒险（621-715）</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-23" class="outline-4">
+<h4 id="headline-23">
+Linux下生成指定范围随机数
+</h4>
+<div id="outline-text-headline-23" class="outline-text-4">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 如果要用以xlsx2csv，假设真心话大冒险题库是在我的博客中，我会这样做：</span>
+</span></span><span class="line"><span class="cl">ln -s ../blogs/ynhugo/static/images/聚会/超大型真心话大冒险题库-715题.xlsx</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 完整题库715题生成随机数</span>
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="k">$((</span>RANDOM%716<span class="k">))</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="o">((</span><span class="nv">i</span> <span class="o">=</span> 0<span class="p">;</span> i &lt; 4<span class="p">;</span> i++<span class="o">))</span><span class="p">;</span> <span class="k">do</span> <span class="nb">echo</span> <span class="k">$((</span>RANDOM%716<span class="k">))</span><span class="p">;</span> <span class="k">done</span>
+</span></span><span class="line"><span class="cl"><span class="nv">num</span><span class="o">=</span>1<span class="p">;</span> <span class="k">for</span> <span class="o">((</span><span class="nv">i</span> <span class="o">=</span> 0<span class="p">;</span> i &lt; num<span class="p">;</span> i++<span class="o">))</span><span class="p">;</span> <span class="k">do</span> xlsx2csv -a 超大型真心话大冒险题库-715题.xlsx <span class="p">|</span> grep <span class="k">$((</span>RANDOM%95+621<span class="k">))</span><span class="p">;</span> <span class="k">done</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 大冒险（101-200）</span>
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="k">$((</span>RANDOM%100+101<span class="k">))</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="o">((</span><span class="nv">i</span> <span class="o">=</span> 0<span class="p">;</span> i &lt; 4<span class="p">;</span> i++<span class="o">))</span><span class="p">;</span> <span class="k">do</span> <span class="nb">echo</span> <span class="k">$((</span>RANDOM%100+101<span class="k">))</span><span class="p">;</span> <span class="k">done</span>
+</span></span><span class="line"><span class="cl"><span class="nv">num</span><span class="o">=</span>1<span class="p">;</span> <span class="k">for</span> <span class="o">((</span><span class="nv">i</span> <span class="o">=</span> 0<span class="p">;</span> i &lt; num<span class="p">;</span> i++<span class="o">))</span><span class="p">;</span> <span class="k">do</span> xlsx2csv -a 超大型真心话大冒险题库-715题.xlsx <span class="p">|</span> grep <span class="k">$((</span>RANDOM%100+101<span class="k">))</span><span class="p">;</span> <span class="k">done</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 大冒险（281-380）</span>
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="k">$((</span>RANDOM%100+281<span class="k">))</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="o">((</span><span class="nv">i</span> <span class="o">=</span> 0<span class="p">;</span> i &lt; 4<span class="p">;</span> i++<span class="o">))</span><span class="p">;</span> <span class="k">do</span> <span class="nb">echo</span> <span class="k">$((</span>RANDOM%100+281<span class="k">))</span><span class="p">;</span> <span class="k">done</span>
+</span></span><span class="line"><span class="cl"><span class="nv">num</span><span class="o">=</span>1<span class="p">;</span> <span class="k">for</span> <span class="o">((</span><span class="nv">i</span> <span class="o">=</span> 0<span class="p">;</span> i &lt; num<span class="p">;</span> i++<span class="o">))</span><span class="p">;</span> <span class="k">do</span> xlsx2csv -a 超大型真心话大冒险题库-715题.xlsx <span class="p">|</span> grep <span class="k">$((</span>RANDOM%100+281<span class="k">))</span><span class="p">;</span> <span class="k">done</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 大冒险（461-540）</span>
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="k">$((</span>RANDOM%80+461<span class="k">))</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="o">((</span><span class="nv">i</span> <span class="o">=</span> 0<span class="p">;</span> i &lt; 4<span class="p">;</span> i++<span class="o">))</span><span class="p">;</span> <span class="k">do</span> <span class="nb">echo</span> <span class="k">$((</span>RANDOM%80+461<span class="k">))</span><span class="p">;</span> <span class="k">done</span>
+</span></span><span class="line"><span class="cl"><span class="nv">num</span><span class="o">=</span>1<span class="p">;</span> <span class="k">for</span> <span class="o">((</span><span class="nv">i</span> <span class="o">=</span> 0<span class="p">;</span> i &lt; num<span class="p">;</span> i++<span class="o">))</span><span class="p">;</span> <span class="k">do</span> xlsx2csv -a 超大型真心话大冒险题库-715题.xlsx <span class="p">|</span> grep <span class="k">$((</span>RANDOM%80+461<span class="k">))</span><span class="p">;</span> <span class="k">done</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 大冒险（621-715）</span>
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="k">$((</span>RANDOM%95+621<span class="k">))</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="o">((</span><span class="nv">i</span> <span class="o">=</span> 0<span class="p">;</span> i &lt; 4<span class="p">;</span> i++<span class="o">))</span><span class="p">;</span> <span class="k">do</span> <span class="nb">echo</span> <span class="k">$((</span>RANDOM%95+621<span class="k">))</span><span class="p">;</span> <span class="k">done</span>
+</span></span><span class="line"><span class="cl"><span class="nv">num</span><span class="o">=</span>1<span class="p">;</span> <span class="k">for</span> <span class="o">((</span><span class="nv">i</span> <span class="o">=</span> 0<span class="p">;</span> i &lt; num<span class="p">;</span> i++<span class="o">))</span><span class="p">;</span> <span class="k">do</span> xlsx2csv -a 超大型真心话大冒险题库-715题.xlsx <span class="p">|</span> grep <span class="k">$((</span>RANDOM%95+621<span class="k">))</span><span class="p">;</span> <span class="k">done</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-24" class="outline-4">
+<h4 id="headline-24">
+xlsx2csv安装
+</h4>
+<div id="outline-text-headline-24" class="outline-text-4">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">pip install xlsx2csv
+</span></span><span class="line"><span class="cl">或
+</span></span><span class="line"><span class="cl">apt install xlsx2csv</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-25" class="outline-4">
+<h4 id="headline-25">
+题库下载
+</h4>
+<div id="outline-text-headline-25" class="outline-text-4">
+<p><a href="/images/聚会/超大型真心话大冒险题库-715题.xlsx">超大型真心话大冒险题库-715题.xlsx</a></p>
 </div>
 </div>
 </div>
