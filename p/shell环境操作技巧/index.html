@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="zh-cn" dir="ltr">
     <head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" 在shell环境提取书签文件中某一链接的技巧 1 cat bookmarks_2023_7_12.html | grep &#34;emacs&#34; | grep &#34;https&#34; | awk &#39;{print $2}&#39; | tr &#39;&#34;&#39; &#39; &#39; | awk &#39;{print $2}&#39; 使某命令在后台运行的方法，但是我没有感受到效果 1 2 3 4 if [[ &#34;$@&#34; == *&#34;syncthing&#34;* ]]; then nohup &#34;$@&#34; &amp; fi 查找某项目所有文件包含的头文件并排序去重 1 2 grep --color=auto -rain &#34;#include&#34; ./ | tr &#39;:&#39; &#39; &#39; | awk &#39;{print $4}&#39; | sort | uniq ;; 如果要查看有多少个结果，可以在上面命令的最后以管道的形式加上 wc -l linux如何只复制目录结构而不复制数据 1 find ./ -type d | xargs tar -cvf anna.tar --no-recursion 将目录结构压缩到指定目录，然后手动解压即可得到目录结构\n&#34;–no-recursion&#34;表示不递归\nfind + grep 查找关键词 这个命令是在当前目录及其子目录中查找所有扩展名为 .h 或 .cpp 的文件，并在找到的文件中搜索包含 &#34;sigToTh&#34; 的内容\n1 find ./ -name &#34;*.cpp&#34; -o -name &#34;*.h&#34; | xargs grep --color=auto -rwin &#34;keyword&#34; 查看Zynq各工程版本的命令 1 find ./ -maxdepth 2 -name &#34;*.xpr&#34; | xargs head -5 linux命令将&#34;./&#34;替换为空格 1 find ./ -maxdepth 1 -type f | sed -e &#39;s/\\.\\//\\ /g&#39; linux命令将&#34;./&#34;删除 在sed命令中，替换操作的分隔符可以使用除了反斜杠 (\\)、换行符以及所选字符之一以外的任何字符。在上面的命令中，我们使用了竖线 (|) 作为分隔符，因为这个字符不太可能出现在文件路径中，以避免干扰正则表达式的匹配。\n">
 <title>shell环境操作技巧</title>
@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="shell环境操作技巧">
 <meta property='og:description' content=" 在shell环境提取书签文件中某一链接的技巧 1 cat bookmarks_2023_7_12.html | grep &#34;emacs&#34; | grep &#34;https&#34; | awk &#39;{print $2}&#39; | tr &#39;&#34;&#39; &#39; &#39; | awk &#39;{print $2}&#39; 使某命令在后台运行的方法，但是我没有感受到效果 1 2 3 4 if [[ &#34;$@&#34; == *&#34;syncthing&#34;* ]]; then nohup &#34;$@&#34; &amp; fi 查找某项目所有文件包含的头文件并排序去重 1 2 grep --color=auto -rain &#34;#include&#34; ./ | tr &#39;:&#39; &#39; &#39; | awk &#39;{print $4}&#39; | sort | uniq ;; 如果要查看有多少个结果，可以在上面命令的最后以管道的形式加上 wc -l linux如何只复制目录结构而不复制数据 1 find ./ -type d | xargs tar -cvf anna.tar --no-recursion 将目录结构压缩到指定目录，然后手动解压即可得到目录结构\n&#34;–no-recursion&#34;表示不递归\nfind + grep 查找关键词 这个命令是在当前目录及其子目录中查找所有扩展名为 .h 或 .cpp 的文件，并在找到的文件中搜索包含 &#34;sigToTh&#34; 的内容\n1 find ./ -name &#34;*.cpp&#34; -o -name &#34;*.h&#34; | xargs grep --color=auto -rwin &#34;keyword&#34; 查看Zynq各工程版本的命令 1 find ./ -maxdepth 2 -name &#34;*.xpr&#34; | xargs head -5 linux命令将&#34;./&#34;替换为空格 1 find ./ -maxdepth 1 -type f | sed -e &#39;s/\\.\\//\\ /g&#39; linux命令将&#34;./&#34;删除 在sed命令中，替换操作的分隔符可以使用除了反斜杠 (\\)、换行符以及所选字符之一以外的任何字符。在上面的命令中，我们使用了竖线 (|) 作为分隔符，因为这个字符不太可能出现在文件路径中，以避免干扰正则表达式的匹配。\n">
 <meta property='og:url' content='https://ynhugo.github.io/p/shell%E7%8E%AF%E5%A2%83%E6%93%8D%E4%BD%9C%E6%8A%80%E5%B7%A7/'>
-<meta property='og:site_name' content='Example Site'>
+<meta property='og:site_name' content='ynhugo.github.io'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='shell' /><meta property='article:published_time' content='2025-06-15T12:28:46&#43;08:00'/><meta property='article:modified_time' content='2025-06-15T12:28:46&#43;08:00'/>
 <meta name="twitter:title" content="shell环境操作技巧">
 <meta name="twitter:description" content=" 在shell环境提取书签文件中某一链接的技巧 1 cat bookmarks_2023_7_12.html | grep &#34;emacs&#34; | grep &#34;https&#34; | awk &#39;{print $2}&#39; | tr &#39;&#34;&#39; &#39; &#39; | awk &#39;{print $2}&#39; 使某命令在后台运行的方法，但是我没有感受到效果 1 2 3 4 if [[ &#34;$@&#34; == *&#34;syncthing&#34;* ]]; then nohup &#34;$@&#34; &amp; fi 查找某项目所有文件包含的头文件并排序去重 1 2 grep --color=auto -rain &#34;#include&#34; ./ | tr &#39;:&#39; &#39; &#39; | awk &#39;{print $4}&#39; | sort | uniq ;; 如果要查看有多少个结果，可以在上面命令的最后以管道的形式加上 wc -l linux如何只复制目录结构而不复制数据 1 find ./ -type d | xargs tar -cvf anna.tar --no-recursion 将目录结构压缩到指定目录，然后手动解压即可得到目录结构\n&#34;–no-recursion&#34;表示不递归\nfind + grep 查找关键词 这个命令是在当前目录及其子目录中查找所有扩展名为 .h 或 .cpp 的文件，并在找到的文件中搜索包含 &#34;sigToTh&#34; 的内容\n1 find ./ -name &#34;*.cpp&#34; -o -name &#34;*.h&#34; | xargs grep --color=auto -rwin &#34;keyword&#34; 查看Zynq各工程版本的命令 1 find ./ -maxdepth 2 -name &#34;*.xpr&#34; | xargs head -5 linux命令将&#34;./&#34;替换为空格 1 find ./ -maxdepth 1 -type f | sed -e &#39;s/\\.\\//\\ /g&#39; linux命令将&#34;./&#34;删除 在sed命令中，替换操作的分隔符可以使用除了反斜杠 (\\)、换行符以及所选字符之一以外的任何字符。在上面的命令中，我们使用了竖线 (|) 作为分隔符，因为这个字符不太可能出现在文件路径中，以避免干扰正则表达式的匹配。\n">
@@ -40,7 +40,7 @@
     })();
 </script>
 <div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
-    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
         <span class="hamburger-box">
             <span class="hamburger-inner"></span>
         </span>
@@ -69,8 +69,8 @@
         
         
         <div class="site-meta">
-            <h1 class="site-name"><a href="/">Example Site</a></h1>
-            <h2 class="site-description">Example description</h2>
+            <h1 class="site-name"><a href="/">ynhugo.github.io</a></h1>
+            <h2 class="site-description">演示说明</h2>
         </div>
     </header><ol class="menu-social">
             
@@ -119,7 +119,7 @@
         
         
         <li >
-            <a href='/about/' >
+            <a href='/%E5%85%B3%E4%BA%8E/' >
                 
                 
                 
@@ -132,7 +132,7 @@
 
 
                 
-                <span>About</span>
+                <span>关于</span>
             </a>
         </li>
         
@@ -211,9 +211,9 @@
 
                             <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
                                 
-                                    <option value="https://ynhugo.github.io/" selected>English</option>
+                                    <option value="https://ynhugo.github.io/en/" >English</option>
                                 
-                                    <option value="https://ynhugo.github.io/zh-cn/" >中文</option>
+                                    <option value="https://ynhugo.github.io/" selected>中文</option>
                                 
                                     <option value="https://ynhugo.github.io/ar/" >عربي</option>
                                 
@@ -240,7 +240,7 @@
 
 
 
-                        <span>Dark Mode</span>
+                        <span>暗色模式</span>
                     </li>
                 
             </ol>
@@ -265,7 +265,7 @@
 
 
         </div>
-        <h2 class="widget-title section-title">Table of contents</h2>
+        <h2 class="widget-title section-title">目录</h2>
         
         <div class="widget--toc">
             <nav id="TableOfContents">
@@ -692,7 +692,7 @@
 
 
                 <time class="article-time--reading">
-                    20 minute read
+                    阅读时长: 20 分钟
                 </time>
             </div>
         
@@ -4732,8 +4732,8 @@ Linux: Shell脚本实现支持长选项参数
     </section>
     
     <section class="powerby">
-        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
-        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.27.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.27.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
     </section>
 </footer>
 
