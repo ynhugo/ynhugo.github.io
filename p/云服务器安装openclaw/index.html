@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-cn" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" 云服务器安装openclaw 1 2 3 4 5 6 7 8 9 10 11 12 # 本地反向代理远程服务器，前提是本地实现科学上网，然后使用科学上网的代理端口 ssh -R 10808:127.0.0.1:10808 opencode # 进入服务器后修改原安装命令，给安装脚本中git clone配置代理，端口为反向代理端口 # curl -fsSL https://openclaw.ai/install.sh | bash curl -fsSL https://openclaw.ai/install.sh | sed -e &#39;s/clone/clone -c http.proxy=&#34;127.0.0.1:10808&#34;/g&#39; | bash # 查看当前token对应链接及端口转发命令 openclaw dashboard # 根据端口转发命令在本地进行端口转发 ssh -N -L 18789:127.0.0.1:18789 opencode # 端口转发后，根据前边查看的token链接在本地浏览器打开访问，然后就可以与AI进行交互了 # 如果要使用TUI模式 openclaw tui 参考链接 openclaw官方入门指南\nopenclaw官方工具页面\n">
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" 云服务器安装openclaw 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 # 本地反向代理远程服务器，前提是本地实现科学上网，然后使用科学上网的代理端口 ssh -R 10808:127.0.0.1:10808 opencode # 进入服务器后修改原安装命令，给安装脚本中git clone配置代理，端口为反向代理端口 # curl -fsSL https://openclaw.ai/install.sh | bash curl -fsSL https://openclaw.ai/install.sh | sed -e &#39;s/clone/clone -c http.proxy=&#34;127.0.0.1:10808&#34;/g&#39; | bash # 查看当前token对应链接及端口转发命令 openclaw dashboard # 根据端口转发命令在本地进行端口转发 ssh -N -L 18789:127.0.0.1:18789 opencode # 端口转发后，根据前边查看的token链接在本地浏览器打开访问，然后就可以与AI进行交互了 # 如果要使用TUI模式 openclaw tui # 可选-安装clawhub npm i -g clawhub 参考链接 openclaw官方入门指南\n">
 <title>云服务器安装openclaw</title>
 
 <link rel='canonical' href='https://ynhugo.github.io/p/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%89%E8%A3%85openclaw/'>
 
 <link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="云服务器安装openclaw">
-<meta property='og:description' content=" 云服务器安装openclaw 1 2 3 4 5 6 7 8 9 10 11 12 # 本地反向代理远程服务器，前提是本地实现科学上网，然后使用科学上网的代理端口 ssh -R 10808:127.0.0.1:10808 opencode # 进入服务器后修改原安装命令，给安装脚本中git clone配置代理，端口为反向代理端口 # curl -fsSL https://openclaw.ai/install.sh | bash curl -fsSL https://openclaw.ai/install.sh | sed -e &#39;s/clone/clone -c http.proxy=&#34;127.0.0.1:10808&#34;/g&#39; | bash # 查看当前token对应链接及端口转发命令 openclaw dashboard # 根据端口转发命令在本地进行端口转发 ssh -N -L 18789:127.0.0.1:18789 opencode # 端口转发后，根据前边查看的token链接在本地浏览器打开访问，然后就可以与AI进行交互了 # 如果要使用TUI模式 openclaw tui 参考链接 openclaw官方入门指南\nopenclaw官方工具页面\n">
+<meta property='og:description' content=" 云服务器安装openclaw 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 # 本地反向代理远程服务器，前提是本地实现科学上网，然后使用科学上网的代理端口 ssh -R 10808:127.0.0.1:10808 opencode # 进入服务器后修改原安装命令，给安装脚本中git clone配置代理，端口为反向代理端口 # curl -fsSL https://openclaw.ai/install.sh | bash curl -fsSL https://openclaw.ai/install.sh | sed -e &#39;s/clone/clone -c http.proxy=&#34;127.0.0.1:10808&#34;/g&#39; | bash # 查看当前token对应链接及端口转发命令 openclaw dashboard # 根据端口转发命令在本地进行端口转发 ssh -N -L 18789:127.0.0.1:18789 opencode # 端口转发后，根据前边查看的token链接在本地浏览器打开访问，然后就可以与AI进行交互了 # 如果要使用TUI模式 openclaw tui # 可选-安装clawhub npm i -g clawhub 参考链接 openclaw官方入门指南\n">
 <meta property='og:url' content='https://ynhugo.github.io/p/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%89%E8%A3%85openclaw/'>
 <meta property='og:site_name' content='ynhugo.github.io'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='云服务器' /><meta property='article:tag' content='openclaw' /><meta property='article:published_time' content='2026-03-16T01:50:48&#43;08:00'/><meta property='article:modified_time' content='2026-03-16T01:50:48&#43;08:00'/>
 <meta name="twitter:title" content="云服务器安装openclaw">
-<meta name="twitter:description" content=" 云服务器安装openclaw 1 2 3 4 5 6 7 8 9 10 11 12 # 本地反向代理远程服务器，前提是本地实现科学上网，然后使用科学上网的代理端口 ssh -R 10808:127.0.0.1:10808 opencode # 进入服务器后修改原安装命令，给安装脚本中git clone配置代理，端口为反向代理端口 # curl -fsSL https://openclaw.ai/install.sh | bash curl -fsSL https://openclaw.ai/install.sh | sed -e &#39;s/clone/clone -c http.proxy=&#34;127.0.0.1:10808&#34;/g&#39; | bash # 查看当前token对应链接及端口转发命令 openclaw dashboard # 根据端口转发命令在本地进行端口转发 ssh -N -L 18789:127.0.0.1:18789 opencode # 端口转发后，根据前边查看的token链接在本地浏览器打开访问，然后就可以与AI进行交互了 # 如果要使用TUI模式 openclaw tui 参考链接 openclaw官方入门指南\nopenclaw官方工具页面\n">
+<meta name="twitter:description" content=" 云服务器安装openclaw 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 # 本地反向代理远程服务器，前提是本地实现科学上网，然后使用科学上网的代理端口 ssh -R 10808:127.0.0.1:10808 opencode # 进入服务器后修改原安装命令，给安装脚本中git clone配置代理，端口为反向代理端口 # curl -fsSL https://openclaw.ai/install.sh | bash curl -fsSL https://openclaw.ai/install.sh | sed -e &#39;s/clone/clone -c http.proxy=&#34;127.0.0.1:10808&#34;/g&#39; | bash # 查看当前token对应链接及端口转发命令 openclaw dashboard # 根据端口转发命令在本地进行端口转发 ssh -N -L 18789:127.0.0.1:18789 opencode # 端口转发后，根据前边查看的token链接在本地浏览器打开访问，然后就可以与AI进行交互了 # 如果要使用TUI模式 openclaw tui # 可选-安装clawhub npm i -g clawhub 参考链接 openclaw官方入门指南\n">
     </head>
     <body class="
     article-page
@@ -368,6 +368,9 @@
 </span><span class="lnt">10
 </span><span class="lnt">11
 </span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 本地反向代理远程服务器，前提是本地实现科学上网，然后使用科学上网的代理端口</span>
@@ -381,7 +384,10 @@
 </span></span><span class="line"><span class="cl">ssh -N -L 18789:127.0.0.1:18789 opencode
 </span></span><span class="line"><span class="cl"><span class="c1"># 端口转发后，根据前边查看的token链接在本地浏览器打开访问，然后就可以与AI进行交互了</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># 如果要使用TUI模式</span>
-</span></span><span class="line"><span class="cl">openclaw tui</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">openclaw tui
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 可选-安装clawhub</span>
+</span></span><span class="line"><span class="cl">npm i -g clawhub</span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
@@ -393,6 +399,10 @@
 <p><a href="https://docs.openclaw.ai/zh-CN/start/getting-started">openclaw官方入门指南</a></p>
 <p>
 <a href="https://docs.openclaw.ai/zh-CN/tools">openclaw官方工具页面</a></p>
+<p>
+<a href="https://clawhub.ai/skills?sort=downloads&amp;nonSuspicious=true">clawhub官网skills</a></p>
+<p>
+<a href="https://docs.openclaw.ai/zh-CN/gateway/remote-gateway-readme">openclaw官方远程Gateway 网关设置</a></p>
 </div>
 </div>
 </div>
