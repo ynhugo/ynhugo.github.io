@@ -834,11 +834,21 @@ accept-eula.sh
 </span><span class="lnt">14
 </span><span class="lnt">15
 </span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">docker build --build-arg <span class="nv">PETA_VERSION</span><span class="o">=</span>2022.1 --build-arg <span class="nv">PETA_RUN_FILE</span><span class="o">=</span>petalinux-v2022.1-04191534-installer.run -t petalinux:2022.1 .
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 构建</span>
+</span></span><span class="line"><span class="cl">docker build --build-arg <span class="nv">PETA_VERSION</span><span class="o">=</span>2022.1 --build-arg <span class="nv">PETA_RUN_FILE</span><span class="o">=</span>petalinux-v2022.1-04191534-installer.run -t petalinux:2022.1 .
 </span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 运行</span>
 </span></span><span class="line"><span class="cl">docker run -ti --rm -e <span class="nv">DISPLAY</span><span class="o">=</span><span class="nv">$DISPLAY</span> --net<span class="o">=</span><span class="s2">&#34;host&#34;</span> -v /tmp/.X11-unix:/tmp/.X11-unix -v <span class="nv">$HOME</span>/.Xauthority:/home/vivado/.Xauthority -v <span class="nv">$HOME</span>/Projects:/home/vivado/project  petalinux:2022.1 /bin/bash
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 清理构建缓存</span>
+</span></span><span class="line"><span class="cl">docker system prune
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># 需要在项目目录内执行，</span>
 </span></span><span class="line"><span class="cl">petalinux-util --webtalk off
