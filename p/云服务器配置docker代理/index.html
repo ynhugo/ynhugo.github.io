@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-cn" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" 云服务器配置docker代理 docker添加临时代理 1 2 3 export HTTP_PROXY=&#34;http://127.0.0.1:7890&#34; export HTTPS_PROXY=&#34;http://127.0.0.1:7890&#34; docker pull ubuntu docker添加永久代理 1 2 3 4 5 6 7 8 9 10 # docker添加永久代理 mkdir -p /etc/systemd/system/docker.service.d cat - &gt; /etc/systemd/system/docker.service.d/http-proxy.conf &lt;&lt; &#39;EOF&#39; [Service] Environment=&#34;HTTP_PROXY=http://127.0.0.1:10808&#34; Environment=&#34;HTTPS_PROXY=http://127.0.0.1:10808&#34; Environment=&#34;NO_PROXY=localhost,127.0.0.1,docker-registry.somecorporation.com&#34; EOF systemctl daemon-reload systemctl restart docker 删除docker永久代理 1 2 3 4 # 如果要删除添加的代理 rm -rf /etc/systemd/system/docker.service.d systemctl daemon-reload systemctl restart docker 参考链接 ">
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" 云服务器配置docker代理 docker添加临时代理 1 2 3 export HTTP_PROXY=&#34;http://127.0.0.1:7890&#34; export HTTPS_PROXY=&#34;http://127.0.0.1:7890&#34; docker pull ubuntu docker添加永久代理 1 2 3 4 5 6 7 8 9 10 # docker添加永久代理 mkdir -p /etc/systemd/system/docker.service.d cat - &gt; /etc/systemd/system/docker.service.d/http-proxy.conf &lt;&lt; &#39;EOF&#39; [Service] Environment=&#34;HTTP_PROXY=http://127.0.0.1:10808&#34; Environment=&#34;HTTPS_PROXY=http://127.0.0.1:10808&#34; Environment=&#34;NO_PROXY=localhost,127.0.0.1,docker-registry.somecorporation.com&#34; EOF systemctl daemon-reload systemctl restart docker 删除docker永久代理 1 2 3 4 # 如果要删除添加的代理 rm -rf /etc/systemd/system/docker.service.d systemctl daemon-reload systemctl restart docker 参考链接 Docker 配置代理（临时/永久设置）\n">
 <title>云服务器配置docker代理</title>
 
 <link rel='canonical' href='https://ynhugo.github.io/p/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AEdocker%E4%BB%A3%E7%90%86/'>
 
 <link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="云服务器配置docker代理">
-<meta property='og:description' content=" 云服务器配置docker代理 docker添加临时代理 1 2 3 export HTTP_PROXY=&#34;http://127.0.0.1:7890&#34; export HTTPS_PROXY=&#34;http://127.0.0.1:7890&#34; docker pull ubuntu docker添加永久代理 1 2 3 4 5 6 7 8 9 10 # docker添加永久代理 mkdir -p /etc/systemd/system/docker.service.d cat - &gt; /etc/systemd/system/docker.service.d/http-proxy.conf &lt;&lt; &#39;EOF&#39; [Service] Environment=&#34;HTTP_PROXY=http://127.0.0.1:10808&#34; Environment=&#34;HTTPS_PROXY=http://127.0.0.1:10808&#34; Environment=&#34;NO_PROXY=localhost,127.0.0.1,docker-registry.somecorporation.com&#34; EOF systemctl daemon-reload systemctl restart docker 删除docker永久代理 1 2 3 4 # 如果要删除添加的代理 rm -rf /etc/systemd/system/docker.service.d systemctl daemon-reload systemctl restart docker 参考链接 ">
+<meta property='og:description' content=" 云服务器配置docker代理 docker添加临时代理 1 2 3 export HTTP_PROXY=&#34;http://127.0.0.1:7890&#34; export HTTPS_PROXY=&#34;http://127.0.0.1:7890&#34; docker pull ubuntu docker添加永久代理 1 2 3 4 5 6 7 8 9 10 # docker添加永久代理 mkdir -p /etc/systemd/system/docker.service.d cat - &gt; /etc/systemd/system/docker.service.d/http-proxy.conf &lt;&lt; &#39;EOF&#39; [Service] Environment=&#34;HTTP_PROXY=http://127.0.0.1:10808&#34; Environment=&#34;HTTPS_PROXY=http://127.0.0.1:10808&#34; Environment=&#34;NO_PROXY=localhost,127.0.0.1,docker-registry.somecorporation.com&#34; EOF systemctl daemon-reload systemctl restart docker 删除docker永久代理 1 2 3 4 # 如果要删除添加的代理 rm -rf /etc/systemd/system/docker.service.d systemctl daemon-reload systemctl restart docker 参考链接 Docker 配置代理（临时/永久设置）\n">
 <meta property='og:url' content='https://ynhugo.github.io/p/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AEdocker%E4%BB%A3%E7%90%86/'>
 <meta property='og:site_name' content='ynhugo.github.io'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='docker' /><meta property='article:tag' content='云服务器' /><meta property='article:tag' content='代理' /><meta property='article:published_time' content='2026-03-22T15:28:09&#43;08:00'/><meta property='article:modified_time' content='2026-03-22T15:28:09&#43;08:00'/>
 <meta name="twitter:title" content="云服务器配置docker代理">
-<meta name="twitter:description" content=" 云服务器配置docker代理 docker添加临时代理 1 2 3 export HTTP_PROXY=&#34;http://127.0.0.1:7890&#34; export HTTPS_PROXY=&#34;http://127.0.0.1:7890&#34; docker pull ubuntu docker添加永久代理 1 2 3 4 5 6 7 8 9 10 # docker添加永久代理 mkdir -p /etc/systemd/system/docker.service.d cat - &gt; /etc/systemd/system/docker.service.d/http-proxy.conf &lt;&lt; &#39;EOF&#39; [Service] Environment=&#34;HTTP_PROXY=http://127.0.0.1:10808&#34; Environment=&#34;HTTPS_PROXY=http://127.0.0.1:10808&#34; Environment=&#34;NO_PROXY=localhost,127.0.0.1,docker-registry.somecorporation.com&#34; EOF systemctl daemon-reload systemctl restart docker 删除docker永久代理 1 2 3 4 # 如果要删除添加的代理 rm -rf /etc/systemd/system/docker.service.d systemctl daemon-reload systemctl restart docker 参考链接 ">
+<meta name="twitter:description" content=" 云服务器配置docker代理 docker添加临时代理 1 2 3 export HTTP_PROXY=&#34;http://127.0.0.1:7890&#34; export HTTPS_PROXY=&#34;http://127.0.0.1:7890&#34; docker pull ubuntu docker添加永久代理 1 2 3 4 5 6 7 8 9 10 # docker添加永久代理 mkdir -p /etc/systemd/system/docker.service.d cat - &gt; /etc/systemd/system/docker.service.d/http-proxy.conf &lt;&lt; &#39;EOF&#39; [Service] Environment=&#34;HTTP_PROXY=http://127.0.0.1:10808&#34; Environment=&#34;HTTPS_PROXY=http://127.0.0.1:10808&#34; Environment=&#34;NO_PROXY=localhost,127.0.0.1,docker-registry.somecorporation.com&#34; EOF systemctl daemon-reload systemctl restart docker 删除docker永久代理 1 2 3 4 # 如果要删除添加的代理 rm -rf /etc/systemd/system/docker.service.d systemctl daemon-reload systemctl restart docker 参考链接 Docker 配置代理（临时/永久设置）\n">
     </head>
     <body class="
     article-page
@@ -444,6 +444,11 @@ docker添加永久代理
 <h3 id="headline-5">
 参考链接
 </h3>
+<div id="outline-text-headline-5" class="outline-text-3">
+<p><a href="https://zhuanlan.zhihu.com/p/703839288">Docker 配置代理（临时/永久设置）</a></p>
+<p>
+<a href="https://ynhugo.github.io/p/docker构建arm64与arm32交叉编译环境以及push与pull镜像/">Docker构建ARM64与ARM32交叉编译环境以及push与pull镜像</a></p>
+</div>
 </div>
 </div>
 </div>
