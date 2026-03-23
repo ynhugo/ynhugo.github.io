@@ -292,17 +292,15 @@
 </li>
 <li><a href="#headline-10">方案一，docker运行容器时指定离线编译包路径</a>
 </li>
-<li><a href="#headline-11">方案二，docker运行容器时指定离线编译包路径</a>
-</li>
-<li><a href="#headline-12">自动配置离线编译脚本，根据离线编译路径修改脚本中对应的离线编译包路径</a>
+<li><a href="#headline-11">自动配置离线编译脚本，根据离线编译路径修改脚本中对应的离线编译包路径</a>
 <ul>
-<li><a href="#headline-13">使用方法</a>
+<li><a href="#headline-12">使用方法</a>
 </li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#headline-14">参考链接</a>
+<li><a href="#headline-13">参考链接</a>
 </li>
 </ul>
 </li>
@@ -562,7 +560,6 @@ petalinux-docker
 关于离线编译的方案
 </h4>
 <div id="outline-text-headline-8" class="outline-text-4">
-<p>待具体验证，并且配置离线编译后建议执行petalinux-config确认是否正确了离线编译</p>
 <div id="outline-container-headline-9" class="outline-5">
 <h5 id="headline-9">
 准备离线编译包
@@ -627,31 +624,6 @@ petalinux-docker
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mkdir -p /data/disk/Projects<span class="p">;</span> <span class="nb">cd</span> /data/disk/Projects
-</span></span><span class="line"><span class="cl">docker run -ti --rm -e <span class="nv">DISPLAY</span><span class="o">=</span><span class="nv">$DISPLAY</span> --net<span class="o">=</span><span class="s2">&#34;host&#34;</span> -v /tmp/.X11-unix:/tmp/.X11-unix -v <span class="nv">$HOME</span>/.Xauthority:/home/vivado/.Xauthority -v ./:/home/vivado/project -v /root/data/disk/petalinux-2022.1:/home/vivado  petalinux:2022.1 /bin/bash
-</span></span><span class="line"><span class="cl">sudo chown -R vivado:vivado /home/vivado
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># 然后正常创建petalinux工程，导入硬件描述文件时配置离线编译路径，可以从网上找教程</span></span></span></code></pre></td></tr></table>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div id="outline-container-headline-11" class="outline-5">
-<h5 id="headline-11">
-方案二，docker运行容器时指定离线编译包路径
-</h5>
-<div id="outline-text-headline-11" class="outline-text-5">
-<div class="src src-bash">
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
 </span><span class="lnt">6
 </span><span class="lnt">7
 </span></code></pre></td>
@@ -668,11 +640,11 @@ petalinux-docker
 </div>
 </div>
 </div>
-<div id="outline-container-headline-12" class="outline-5">
-<h5 id="headline-12">
+<div id="outline-container-headline-11" class="outline-5">
+<h5 id="headline-11">
 自动配置离线编译脚本，根据离线编译路径修改脚本中对应的离线编译包路径
 </h5>
-<div id="outline-text-headline-12" class="outline-text-5">
+<div id="outline-text-headline-11" class="outline-text-5">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -817,11 +789,11 @@ petalinux-docker
 </div>
 </div>
 </div>
-<div id="outline-container-headline-13" class="outline-6">
-<h6 id="headline-13">
+<div id="outline-container-headline-12" class="outline-6">
+<h6 id="headline-12">
 使用方法
 </h6>
-<div id="outline-text-headline-13" class="outline-text-6">
+<div id="outline-text-headline-12" class="outline-text-6">
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -842,11 +814,11 @@ petalinux-docker
 </div>
 </div>
 </div>
-<div id="outline-container-headline-14" class="outline-4">
-<h4 id="headline-14">
+<div id="outline-container-headline-13" class="outline-4">
+<h4 id="headline-13">
 参考链接
 </h4>
-<div id="outline-text-headline-14" class="outline-text-4">
+<div id="outline-text-headline-13" class="outline-text-4">
 <p>
 <a href="https://github.com/z4yx/petalinux-docker/blob/master/accept-eula.sh">petalinux-docker/accept-eula.sh</a></p>
 </div>
