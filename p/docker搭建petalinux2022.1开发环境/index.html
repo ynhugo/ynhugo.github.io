@@ -519,7 +519,7 @@ petalinux-docker
 </span></span><span class="line"><span class="cl"><span class="c1"># docker run -ti --rm -e DISPLAY=$DISPLAY --net=&#34;host&#34; -v /tmp/.X11-unix:/tmp/.X11-unix -v $HOME/.Xauthority:/home/vivado/.Xauthority -v $HOME/Projects:/home/vivado/project  petalinux:2022.1 /bin/bash</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># mkdir -p Projects; cd Projects</span>
 </span></span><span class="line"><span class="cl">mkdir -p /data/disk/Projects<span class="p">;</span> <span class="nb">cd</span> /data/disk/Projects
-</span></span><span class="line"><span class="cl">docker run -ti --rm -e <span class="nv">DISPLAY</span><span class="o">=</span><span class="nv">$DISPLAY</span> --net<span class="o">=</span><span class="s2">&#34;host&#34;</span> -v /tmp/.X11-unix:/tmp/.X11-unix -v <span class="nv">$HOME</span>/.Xauthority:/home/vivado/.Xauthority -v /data/disk/Projects:/home/vivado/project  petalinux:2022.1 /bin/bash
+</span></span><span class="line"><span class="cl">docker run -ti --rm -e <span class="nv">DISPLAY</span><span class="o">=</span><span class="nv">$DISPLAY</span> --net<span class="o">=</span><span class="s2">&#34;host&#34;</span> -v /tmp/.X11-unix:/tmp/.X11-unix -v <span class="nv">$HOME</span>/.Xauthority:/home/vivado/.Xauthority -v ./:/home/vivado/project  petalinux:2022.1 /bin/bash
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># 清理构建缓存</span>
 </span></span><span class="line"><span class="cl">docker system prune
