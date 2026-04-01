@@ -322,6 +322,34 @@
 </li>
 </ul>
 </li>
+<li><a href="#headline-22">jq 处理 JSON 文件实战：数组合并与对象覆盖</a>
+<ul>
+<li><a href="#headline-23">背景</a>
+</li>
+<li><a href="#headline-24">原始文件内容</a>
+</li>
+<li><a href="#headline-25">jq 核心操作分析</a>
+<ul>
+<li><a href="#headline-26">合并两个文件中的数组</a>
+</li>
+<li><a href="#headline-27">jq 对数组的操作</a>
+</li>
+<li><a href="#headline-28">jq 对数字的操作</a>
+</li>
+<li><a href="#headline-29">jq 对对象的操作</a>
+</li>
+<li><a href="#headline-30">演示：向数组中追加元素（不修改原文件）</a>
+</li>
+<li><a href="#headline-31">修改文件（安全方式）</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-32">总结</a>
+</li>
+<li><a href="#headline-33">参考链接</a>
+</li>
+</ul>
+</li>
 </ul>
 </nav>
         </div>
@@ -378,7 +406,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 3 分钟
+                    阅读时长: 5 分钟
                 </time>
             </div>
         
@@ -985,6 +1013,283 @@ key 和 value 的值组合
 <div id="outline-text-headline-21" class="outline-text-3">
 <p>
 <a href="https://www.cnblogs.com/wutou/p/17652012.html">shell jq命令，解析 json 文件</a></p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-22" class="outline-2">
+<h2 id="headline-22">
+jq 处理 JSON 文件实战：数组合并与对象覆盖
+</h2>
+<div id="outline-text-headline-22" class="outline-text-2">
+<div id="outline-container-headline-23" class="outline-3">
+<h3 id="headline-23">
+背景
+</h3>
+<div id="outline-text-headline-23" class="outline-text-3">
+<p>现有两个 JSON 文件：</p>
+<ul>
+<li><code>package.json</code> ：包含 <code>menus.commandPalette</code> 数组。</li>
+<li><code>add.json</code> ：包含 <code>add_menu</code> 数组。</li>
+</ul>
+<p>目标：将 <code>add_menu</code> 的数组合并到 <code>menus.commandPalette</code> 中，并了解 <code>jq</code> 在数组、对象操作中的行为。</p>
+</div>
+</div>
+<div id="outline-container-headline-24" class="outline-3">
+<h3 id="headline-24">
+原始文件内容
+</h3>
+<div id="outline-text-headline-24" class="outline-text-3">
+<p>通过以下命令创建两个示例文件：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># file1: package.json</span>
+</span></span><span class="line"><span class="cl">cat - &gt; package.json <span class="s">&lt;&lt; &#39;EOF&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s">{
+</span></span></span><span class="line"><span class="cl"><span class="s">    &#34;menus&#34;: {
+</span></span></span><span class="line"><span class="cl"><span class="s">        &#34;commandPalette&#34;: [
+</span></span></span><span class="line"><span class="cl"><span class="s">            {
+</span></span></span><span class="line"><span class="cl"><span class="s">                &#34;command&#34;: &#34;go.test.refresh&#34;,
+</span></span></span><span class="line"><span class="cl"><span class="s">                &#34;when&#34;: &#34;false&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s">            }
+</span></span></span><span class="line"><span class="cl"><span class="s">        ]
+</span></span></span><span class="line"><span class="cl"><span class="s">    }
+</span></span></span><span class="line"><span class="cl"><span class="s">}
+</span></span></span><span class="line"><span class="cl"><span class="s">EOF</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># file2: add.json</span>
+</span></span><span class="line"><span class="cl">cat - &gt; add.json <span class="s">&lt;&lt; &#39;EOF&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s">{
+</span></span></span><span class="line"><span class="cl"><span class="s">    &#34;add_menu&#34;: [
+</span></span></span><span class="line"><span class="cl"><span class="s">        {
+</span></span></span><span class="line"><span class="cl"><span class="s">            &#34;command&#34;: &#34;go.explorer.refresh&#34;,
+</span></span></span><span class="line"><span class="cl"><span class="s">            &#34;when&#34;: &#34;false&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s">        },
+</span></span></span><span class="line"><span class="cl"><span class="s">        {
+</span></span></span><span class="line"><span class="cl"><span class="s">            &#34;command&#34;: &#34;go.explorer.open&#34;,
+</span></span></span><span class="line"><span class="cl"><span class="s">            &#34;when&#34;: &#34;false&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s">        }
+</span></span></span><span class="line"><span class="cl"><span class="s">    ]
+</span></span></span><span class="line"><span class="cl"><span class="s">}
+</span></span></span><span class="line"><span class="cl"><span class="s">EOF</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-25" class="outline-3">
+<h3 id="headline-25">
+jq 核心操作分析
+</h3>
+<div id="outline-text-headline-25" class="outline-text-3">
+<div id="outline-container-headline-26" class="outline-4">
+<h4 id="headline-26">
+合并两个文件中的数组
+</h4>
+<div id="outline-text-headline-26" class="outline-text-4">
+<p>使用 <code>-s</code> （–slurp）将多个输入合并为一个数组，然后通过索引访问并合并：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">jq -s <span class="s1">&#39;.[0].menus.commandPalette = .[0].menus.commandPalette + .[1].add_menu | .[0]&#39;</span> package.json add.json</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<ul>
+<li><code>.[0]</code> ：第一个文件（package.json）</li>
+<li><code>.[1]</code> ：第二个文件（add.json）</li>
+<li>将 <code>add_menu</code> 数组追加到 <code>commandPalette</code> 后，输出修改后的第一个对象。</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-headline-27" class="outline-4">
+<h4 id="headline-27">
+jq 对数组的操作
+</h4>
+<div id="outline-text-headline-27" class="outline-text-4">
+<p>加法（+）用于数组合并：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s1">&#39;[1,2] [3,4]&#39;</span> <span class="p">|</span> jq -s <span class="s1">&#39;.[0] + .[1]&#39;</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<pre class="example">
+[1,2,3,4]
+</pre>
+</div>
+</div>
+<div id="outline-container-headline-28" class="outline-4">
+<h4 id="headline-28">
+jq 对数字的操作
+</h4>
+<div id="outline-text-headline-28" class="outline-text-4">
+<p>加法（+）用于数值相加：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s1">&#39;1 2&#39;</span> <span class="p">|</span> jq -s <span class="s1">&#39;.[0] + .[1]&#39;</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<pre class="example">
+3
+</pre>
+</div>
+</div>
+<div id="outline-container-headline-29" class="outline-4">
+<h4 id="headline-29">
+jq 对对象的操作
+</h4>
+<div id="outline-text-headline-29" class="outline-text-4">
+<p>对象合并时，相同 key 的值会被后面的对象覆盖：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s1">&#39;{&#34;a&#34;:1, &#34;b&#34;:2} {&#34;b&#34;:21, &#34;c&#34;:3}&#39;</span> <span class="p">|</span> jq -s <span class="s1">&#39;.[0] + .[1]&#39;</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<pre class="example">
+{
+  &#34;a&#34;: 1,
+  &#34;b&#34;: 21,
+  &#34;c&#34;: 3
+}
+</pre>
+</div>
+</div>
+<div id="outline-container-headline-30" class="outline-4">
+<h4 id="headline-30">
+演示：向数组中追加元素（不修改原文件）
+</h4>
+<div id="outline-text-headline-30" class="outline-text-4">
+<p>使用 <code>+=</code> 操作符向 <code>add_menu</code> 追加新对象：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">jq <span class="s1">&#39;.add_menu += [{&#34;data-root&#34;: &#34;/data/disk/cache&#34;}]&#39;</span> add.json</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<pre class="example">
+{
+  &#34;add_menu&#34;: [
+    { &#34;command&#34;: &#34;go.explorer.refresh&#34;, &#34;when&#34;: &#34;false&#34; },
+    { &#34;command&#34;: &#34;go.explorer.open&#34;, &#34;when&#34;: &#34;false&#34; },
+    { &#34;data-root&#34;: &#34;/data/disk/cache&#34; }
+  ]
+}
+</pre>
+</div>
+</div>
+<div id="outline-container-headline-31" class="outline-4">
+<h4 id="headline-31">
+修改文件（安全方式）
+</h4>
+<div id="outline-text-headline-31" class="outline-text-4">
+<p>使用临时文件避免数据丢失：</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nv">tmpfile</span><span class="o">=</span><span class="k">$(</span>mktemp<span class="k">)</span>
+</span></span><span class="line"><span class="cl">jq <span class="s1">&#39;.add_menu += [{&#34;data-root&#34;: &#34;/data/disk/cache&#34;}]&#39;</span> add.json &gt; <span class="s2">&#34;</span><span class="nv">$tmpfile</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">mv <span class="s2">&#34;</span><span class="nv">$tmpfile</span><span class="s2">&#34;</span> add.json</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-32" class="outline-3">
+<h3 id="headline-32">
+总结
+</h3>
+<div id="outline-text-headline-32" class="outline-text-3">
+<ul>
+<li><code>jq -s</code> 将多个输入合并为一个数组，便于跨文件操作。</li>
+<li>
+<p><code>+</code> 操作符的行为取决于数据类型：</p>
+<ul>
+<li>数组：合并（拼接）</li>
+<li>数字：求和</li>
+<li>对象：合并（右侧覆盖左侧同名字段）</li>
+</ul>
+</li>
+<li>使用 <code>+=</code> 可方便地向数组或对象追加内容。</li>
+<li>修改文件时应先写入临时文件，再替换原文件，确保操作安全。</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-headline-33" class="outline-3">
+<h3 id="headline-33">
+参考链接
+</h3>
+<div id="outline-text-headline-33" class="outline-text-3">
+<p>
+<a href="https://stedolan.github.io/jq/manual/">jq 官方手册</a></p>
+<p>
+<a href="https://zhuanlan.zhihu.com/p/519992089">shell中使用jq命令修改json文件(合并,修改等)</a></p>
+<p>
+<a href="https://www.runoob.com/linux/linux-comm-jq.html">Linux jq 命令</a></p>
+<p>
+<a href="https://ynhugo.github.io/p/docker修改缓存目录与修改镜像存储路径/#headline-3">解决方案</a></p>
+<p>
+<a href="https://chat.deepseek.com/share/npu0br4kgmlwtd7f3d">jq JSON文件操作总结</a></p>
 </div>
 </div>
 </div>
