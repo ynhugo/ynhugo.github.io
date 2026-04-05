@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-cn" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" 从源码构建emacs 获取版本信息 curl http://mirrors.ustc.edu.cn/gnu/emacs/ | grep emacs\n下载最新版本 wget http://mirrors.ustc.edu.cn/gnu/emacs/最新版本emacs.tar.xz\n解压 tar -xf 最新版本emacs.tar.xz\n编译安装emacs 进入目录后执行下面的命令\n1 ./configure --without-x --with-gnutls=no &amp;&amp; chmod +x ./* &amp;&amp; sudo make &amp;&amp; sudo make install 非源码安装 emacs-snapshot 1 2 3 4 5 $sudo add-apt-repository ppa:ubuntu-elisp/ppa $sudo apt update $sudo apt install emacs-snapshot emacs-snapshot-el $emacs-snapshot --version #查看emacs版本 ">
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" 从源码构建emacs 获取版本信息 curl http://mirrors.ustc.edu.cn/gnu/emacs/ | grep emacs\n下载最新版本 wget http://mirrors.ustc.edu.cn/gnu/emacs/最新版本emacs.tar.xz\n解压 tar -xf 最新版本emacs.tar.xz\n编译安装emacs 进入目录后执行下面的命令\n1 ./configure --without-x --with-gnutls=no &amp;&amp; chmod +x ./* &amp;&amp; sudo make &amp;&amp; sudo make install 非源码安装 emacs-snapshot 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 apt install -y software-properties-common sudo add-apt-repository ppa:ubuntu-elisp/ppa sudo apt update sudo apt install emacs-snapshot emacs-snapshot-el emacs-snapshot --version #查看emacs版本 # 如果要使用代理 # 添加并安装 add-apt-repository -y ppa:ubuntu-elisp/ppa # apt update apt-get -o Acquire::http::proxy=&#34;http://127.0.0.1:10808/&#34; update apt list | grep &#34;^emacs&#34; # 安装 emacs25（包含 alist-get 函数） # apt install -y emacs25 apt-get -o Acquire::http::proxy=&#34;http://127.0.0.1:10808/&#34; install -y emacs25 ">
 <title>从源码构建emacs</title>
 
 <link rel='canonical' href='https://ynhugo.github.io/p/%E4%BB%8E%E6%BA%90%E7%A0%81%E6%9E%84%E5%BB%BAemacs/'>
 
 <link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="从源码构建emacs">
-<meta property='og:description' content=" 从源码构建emacs 获取版本信息 curl http://mirrors.ustc.edu.cn/gnu/emacs/ | grep emacs\n下载最新版本 wget http://mirrors.ustc.edu.cn/gnu/emacs/最新版本emacs.tar.xz\n解压 tar -xf 最新版本emacs.tar.xz\n编译安装emacs 进入目录后执行下面的命令\n1 ./configure --without-x --with-gnutls=no &amp;&amp; chmod +x ./* &amp;&amp; sudo make &amp;&amp; sudo make install 非源码安装 emacs-snapshot 1 2 3 4 5 $sudo add-apt-repository ppa:ubuntu-elisp/ppa $sudo apt update $sudo apt install emacs-snapshot emacs-snapshot-el $emacs-snapshot --version #查看emacs版本 ">
+<meta property='og:description' content=" 从源码构建emacs 获取版本信息 curl http://mirrors.ustc.edu.cn/gnu/emacs/ | grep emacs\n下载最新版本 wget http://mirrors.ustc.edu.cn/gnu/emacs/最新版本emacs.tar.xz\n解压 tar -xf 最新版本emacs.tar.xz\n编译安装emacs 进入目录后执行下面的命令\n1 ./configure --without-x --with-gnutls=no &amp;&amp; chmod +x ./* &amp;&amp; sudo make &amp;&amp; sudo make install 非源码安装 emacs-snapshot 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 apt install -y software-properties-common sudo add-apt-repository ppa:ubuntu-elisp/ppa sudo apt update sudo apt install emacs-snapshot emacs-snapshot-el emacs-snapshot --version #查看emacs版本 # 如果要使用代理 # 添加并安装 add-apt-repository -y ppa:ubuntu-elisp/ppa # apt update apt-get -o Acquire::http::proxy=&#34;http://127.0.0.1:10808/&#34; update apt list | grep &#34;^emacs&#34; # 安装 emacs25（包含 alist-get 函数） # apt install -y emacs25 apt-get -o Acquire::http::proxy=&#34;http://127.0.0.1:10808/&#34; install -y emacs25 ">
 <meta property='og:url' content='https://ynhugo.github.io/p/%E4%BB%8E%E6%BA%90%E7%A0%81%E6%9E%84%E5%BB%BAemacs/'>
 <meta property='og:site_name' content='ynhugo.github.io'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='emacs' /><meta property='article:published_time' content='2024-12-27T09:22:14&#43;08:00'/><meta property='article:modified_time' content='2024-12-27T09:22:14&#43;08:00'/>
 <meta name="twitter:title" content="从源码构建emacs">
-<meta name="twitter:description" content=" 从源码构建emacs 获取版本信息 curl http://mirrors.ustc.edu.cn/gnu/emacs/ | grep emacs\n下载最新版本 wget http://mirrors.ustc.edu.cn/gnu/emacs/最新版本emacs.tar.xz\n解压 tar -xf 最新版本emacs.tar.xz\n编译安装emacs 进入目录后执行下面的命令\n1 ./configure --without-x --with-gnutls=no &amp;&amp; chmod +x ./* &amp;&amp; sudo make &amp;&amp; sudo make install 非源码安装 emacs-snapshot 1 2 3 4 5 $sudo add-apt-repository ppa:ubuntu-elisp/ppa $sudo apt update $sudo apt install emacs-snapshot emacs-snapshot-el $emacs-snapshot --version #查看emacs版本 ">
+<meta name="twitter:description" content=" 从源码构建emacs 获取版本信息 curl http://mirrors.ustc.edu.cn/gnu/emacs/ | grep emacs\n下载最新版本 wget http://mirrors.ustc.edu.cn/gnu/emacs/最新版本emacs.tar.xz\n解压 tar -xf 最新版本emacs.tar.xz\n编译安装emacs 进入目录后执行下面的命令\n1 ./configure --without-x --with-gnutls=no &amp;&amp; chmod +x ./* &amp;&amp; sudo make &amp;&amp; sudo make install 非源码安装 emacs-snapshot 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 apt install -y software-properties-common sudo add-apt-repository ppa:ubuntu-elisp/ppa sudo apt update sudo apt install emacs-snapshot emacs-snapshot-el emacs-snapshot --version #查看emacs版本 # 如果要使用代理 # 添加并安装 add-apt-repository -y ppa:ubuntu-elisp/ppa # apt update apt-get -o Acquire::http::proxy=&#34;http://127.0.0.1:10808/&#34; update apt list | grep &#34;^emacs&#34; # 安装 emacs25（包含 alist-get 函数） # apt install -y emacs25 apt-get -o Acquire::http::proxy=&#34;http://127.0.0.1:10808/&#34; install -y emacs25 ">
     </head>
     <body class="
     article-page
@@ -422,18 +422,42 @@ emacs-snapshot
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  <span class="nv">$sudo</span> add-apt-repository ppa:ubuntu-elisp/ppa
-</span></span><span class="line"><span class="cl">  <span class="nv">$sudo</span> apt update
-</span></span><span class="line"><span class="cl">  <span class="nv">$sudo</span> apt install emacs-snapshot emacs-snapshot-el
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">apt install -y software-properties-common
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="nv">$emacs</span>-snapshot --version    <span class="c1">#查看emacs版本</span></span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">sudo add-apt-repository ppa:ubuntu-elisp/ppa
+</span></span><span class="line"><span class="cl">sudo apt update
+</span></span><span class="line"><span class="cl">sudo apt install emacs-snapshot emacs-snapshot-el
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">emacs-snapshot --version    <span class="c1">#查看emacs版本</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 如果要使用代理</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 添加并安装</span>
+</span></span><span class="line"><span class="cl">add-apt-repository -y ppa:ubuntu-elisp/ppa
+</span></span><span class="line"><span class="cl"><span class="c1"># apt update</span>
+</span></span><span class="line"><span class="cl">apt-get -o Acquire::http::proxy<span class="o">=</span><span class="s2">&#34;http://127.0.0.1:10808/&#34;</span> update
+</span></span><span class="line"><span class="cl">apt list <span class="p">|</span> grep <span class="s2">&#34;^emacs&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 安装 emacs25（包含 alist-get 函数）</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># apt install -y emacs25</span>
+</span></span><span class="line"><span class="cl">apt-get -o Acquire::http::proxy<span class="o">=</span><span class="s2">&#34;http://127.0.0.1:10808/&#34;</span> install -y emacs25</span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
