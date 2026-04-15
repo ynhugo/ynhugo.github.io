@@ -644,6 +644,22 @@
 </li>
 </ul>
 </li>
+<li><a href="#headline-156">find排除文件或目录</a>
+<ul>
+<li><a href="#headline-157">参考链接</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-158">find+mkdir+touch拷贝目录结构和创建目录结构下的文件</a>
+<ul>
+<li><a href="#headline-159">示例目录结构</a>
+</li>
+<li><a href="#headline-160">拷贝目录结构</a>
+</li>
+<li><a href="#headline-161">根据被拷贝目录结构下的文件，在新的目录结构下创建空文件</a>
+</li>
+</ul>
+</li>
 </ul>
 </nav>
         </div>
@@ -700,7 +716,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 21 分钟
+                    阅读时长: 22 分钟
                 </time>
             </div>
         
@@ -4725,6 +4741,238 @@ Linux: Shell脚本实现支持长选项参数
 <a href="https://zhuanlan.zhihu.com/p/673908518">如何使用getopt和getopts命令解析命令行选项和参数？</a></p>
 <p>
 <a href="https://blog.csdn.net/swandy45/article/details/8191630">Linux getopts＆shift命令浅析</a></p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-156" class="outline-2">
+<h2 id="headline-156">
+find排除文件或目录
+</h2>
+<div id="outline-text-headline-156" class="outline-text-2">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 排除指定类型的文件或指定文件</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 查找所有文件，但是排除*.txt文件</span>
+</span></span><span class="line"><span class="cl">find ./ -type -f ! -name <span class="s2">&#34;*.txt&#34;</span> <span class="s2">&#34;*&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 查找所有文件，但是排除CMakeLists.txt文件</span>
+</span></span><span class="line"><span class="cl">find ./ -type -f ! -name <span class="s2">&#34;CMakeLists.txt&#34;</span> <span class="s2">&#34;*&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 排除指定目录</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 对比测试，先查找所有文件</span>
+</span></span><span class="line"><span class="cl">find ./MyProject/ -name <span class="s2">&#34;CMakeLists.txt&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="s">&lt;&lt;&#39;CONTENT&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s">./MyProject/CMakeLists.txt
+</span></span></span><span class="line"><span class="cl"><span class="s">./MyProject/src/CMakeLists.txt
+</span></span></span><span class="line"><span class="cl"><span class="s">./MyProject/tests/CMakeLists.txt
+</span></span></span><span class="line"><span class="cl"><span class="s">CONTENT</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 然后排除./MyProject/tests目录再查找</span>
+</span></span><span class="line"><span class="cl">find ./MyProject/ -path <span class="s2">&#34;./MyProject/tests&#34;</span> -prune -o -name <span class="s2">&#34;CMakeLists.txt&#34;</span> -print
+</span></span><span class="line"><span class="cl"><span class="s">&lt;&lt;&#39;CONTENT&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s">./MyProject/CMakeLists.txt
+</span></span></span><span class="line"><span class="cl"><span class="s">./MyProject/src/CMakeLists.txt
+</span></span></span><span class="line"><span class="cl"><span class="s">CONTENT</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-157" class="outline-3">
+<h3 id="headline-157">
+参考链接
+</h3>
+<div id="outline-text-headline-157" class="outline-text-3">
+<p>
+<a href="https://blog.csdn.net/devwang_com/article/details/52457591">find . -type f ! -name &#34;*.o&#34; 排除某类文件 排除多类文件 排除隐藏文件</a></p>
+<p>
+<a href="https://developer.aliyun.com/article/1604967">如何在使用 Linux find 命令时排除特定目录？</a></p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-158" class="outline-2">
+<h2 id="headline-158">
+find+mkdir+touch拷贝目录结构和创建目录结构下的文件
+</h2>
+<div id="outline-text-headline-158" class="outline-text-2">
+<div id="outline-container-headline-159" class="outline-3">
+<h3 id="headline-159">
+示例目录结构
+</h3>
+<div id="outline-text-headline-159" class="outline-text-3">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">tree ../temp/MyProject/
+</span></span><span class="line"><span class="cl"><span class="s">&lt;&lt;&#39;CONTENT&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s">../temp/MyProject/
+</span></span></span><span class="line"><span class="cl"><span class="s">|-- CMakeLists.txt
+</span></span></span><span class="line"><span class="cl"><span class="s">|-- build
+</span></span></span><span class="line"><span class="cl"><span class="s">|-- src
+</span></span></span><span class="line"><span class="cl"><span class="s">|   |-- CMakeLists.txt
+</span></span></span><span class="line"><span class="cl"><span class="s">|   |-- include
+</span></span></span><span class="line"><span class="cl"><span class="s">|   |   `-- mylib.h
+</span></span></span><span class="line"><span class="cl"><span class="s">|   |-- lib
+</span></span></span><span class="line"><span class="cl"><span class="s">|   |   |-- module1.cpp
+</span></span></span><span class="line"><span class="cl"><span class="s">|   |   `-- module2.cpp
+</span></span></span><span class="line"><span class="cl"><span class="s">|   `-- main.cpp
+</span></span></span><span class="line"><span class="cl"><span class="s">`-- tests
+</span></span></span><span class="line"><span class="cl"><span class="s">    |-- CMakeLists.txt
+</span></span></span><span class="line"><span class="cl"><span class="s">    `-- test_main.cpp
+</span></span></span><span class="line"><span class="cl"><span class="s">
+</span></span></span><span class="line"><span class="cl"><span class="s">5 directories, 8 files
+</span></span></span><span class="line"><span class="cl"><span class="s">CONTENT</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-160" class="outline-3">
+<h3 id="headline-160">
+拷贝目录结构
+</h3>
+<div id="outline-text-headline-160" class="outline-text-3">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 拷贝目录结构</span>
+</span></span><span class="line"><span class="cl">find ../temp/MyProject -type d <span class="p">|</span> sed <span class="s1">&#39;s|../||&#39;</span> <span class="p">|</span> xargs mkdir -p
+</span></span><span class="line"><span class="cl"><span class="c1"># 查看拷贝的目录结构</span>
+</span></span><span class="line"><span class="cl">tree ../temp/temp/
+</span></span><span class="line"><span class="cl"><span class="s">&lt;&lt;&#39;CONTENT&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s">../temp/temp/
+</span></span></span><span class="line"><span class="cl"><span class="s">`-- MyProject
+</span></span></span><span class="line"><span class="cl"><span class="s">    |-- build
+</span></span></span><span class="line"><span class="cl"><span class="s">    |-- src
+</span></span></span><span class="line"><span class="cl"><span class="s">    |   |-- include
+</span></span></span><span class="line"><span class="cl"><span class="s">    |   `-- lib
+</span></span></span><span class="line"><span class="cl"><span class="s">    `-- tests
+</span></span></span><span class="line"><span class="cl"><span class="s">
+</span></span></span><span class="line"><span class="cl"><span class="s">6 directories, 0 files
+</span></span></span><span class="line"><span class="cl"><span class="s">CONTENT</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-161" class="outline-3">
+<h3 id="headline-161">
+根据被拷贝目录结构下的文件，在新的目录结构下创建空文件
+</h3>
+<div id="outline-text-headline-161" class="outline-text-3">
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 创建空文件</span>
+</span></span><span class="line"><span class="cl">find ../temp/MyProject -type f <span class="p">|</span> sed <span class="s1">&#39;s|../||&#39;</span> <span class="p">|</span> xargs touch
+</span></span><span class="line"><span class="cl"><span class="c1"># 查看创建空文件后的目录结构</span>
+</span></span><span class="line"><span class="cl">tree ../temp/temp/
+</span></span><span class="line"><span class="cl"><span class="s">&lt;&lt;&#39;CONTENT&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s">../temp/temp/
+</span></span></span><span class="line"><span class="cl"><span class="s">`-- MyProject
+</span></span></span><span class="line"><span class="cl"><span class="s">    |-- CMakeLists.txt
+</span></span></span><span class="line"><span class="cl"><span class="s">    |-- build
+</span></span></span><span class="line"><span class="cl"><span class="s">    |-- src
+</span></span></span><span class="line"><span class="cl"><span class="s">    |   |-- CMakeLists.txt
+</span></span></span><span class="line"><span class="cl"><span class="s">    |   |-- include
+</span></span></span><span class="line"><span class="cl"><span class="s">    |   |   `-- mylib.h
+</span></span></span><span class="line"><span class="cl"><span class="s">    |   |-- lib
+</span></span></span><span class="line"><span class="cl"><span class="s">    |   |   |-- module1.cpp
+</span></span></span><span class="line"><span class="cl"><span class="s">    |   |   `-- module2.cpp
+</span></span></span><span class="line"><span class="cl"><span class="s">    |   `-- main.cpp
+</span></span></span><span class="line"><span class="cl"><span class="s">    `-- tests
+</span></span></span><span class="line"><span class="cl"><span class="s">        |-- CMakeLists.txt
+</span></span></span><span class="line"><span class="cl"><span class="s">        `-- test_main.cpp
+</span></span></span><span class="line"><span class="cl"><span class="s">
+</span></span></span><span class="line"><span class="cl"><span class="s">6 directories, 8 files
+</span></span></span><span class="line"><span class="cl"><span class="s">CONTENT</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
