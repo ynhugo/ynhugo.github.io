@@ -10,17 +10,11 @@ on:
     types: [blog-updated]
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 concurrency:
   group: pages
   cancel-in-progress: false
-
-defaults:
-  run:
-    shell: bash
 
 jobs:
   build:
@@ -31,6 +25,7 @@ jobs:
       HUGO_VERSION: 0.154.2
       NODE_VERSION: 24.12.0
       TZ: Europe/Oslo
+
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -39,41 +34,16 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.PRIVATE_BLOG_REPO_TOKEN }}
 
-      # 第二层缓存：Node依赖缓存（提速前置环境安装）
       - name: Cache Node dependencies
         uses: actions/cache@v5
         with:
-          path: |
-            node_modules
+          path: node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      - name: Setup Go
-        uses: actions/setup-go@v6
-        with:
-          go-version: ${{ env.GO_VERSION }}
-          cache: false
 
       - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
           node-version: ${{ env.NODE_VERSION }}
-
-      - name: Setup Pages
-        id: pages
-        uses: actions/configure-pages@v6
-
-      - name: Create directory for user-specific executable files
-        run: |
-          mkdir -p "${HOME}/.local"
-
-      - name: Install Dart Sass
-        run: |
-          curl -sLJO "https://github.com/sass/dart-sass/releases/download/${DART_SASS_VERSION}/dart-sass-${DART_SASS_VERSION}-linux-x64.tar.gz"
-          tar -C "${HOME}/.local" -xf "dart-sass-${DART_SASS_VERSION}-linux-x64.tar.gz"
-          rm "dart-sass-${DART_SASS_VERSION}-linux-x64.tar.gz"
-          echo "${HOME}/.local/dart-sass" >> "${GITHUB_PATH}"
 
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
@@ -81,65 +51,40 @@ jobs:
           hugo-version: 'latest'
           extended: true
 
-      - name: Verify installations
-        run: |
-          echo "Dart Sass: $(sass --version)"
-          echo "Go: $(go version)"
-          echo "Hugo: $(hugo version)"
-          echo "Node.js: $(node --version)"
+      - name: Install dependencies
+        run: npm ci || true
 
-      - name: Install Node.js dependencies
-        run: |
-          [[ -f package-lock.json || -f package.json ]] && npm ci || true
-
-      - name: Configure Git
-        run: |
-          git config core.quotepath false
-
-      # 自动替换合并私有Giscus私密配置
       - name: Apply giscus config
         run: |
           sed -i '/^\[comments\]/,/^$/d' config/_default/params.toml
           cat content/post/giscus.toml >> config/_default/params.toml
 
-      # 第一层缓存：恢复Hugo持久化内核缓存（模板/样式/图片资源）
-      - name: Restore Hugo build cache
+      - name: Restore Hugo cache
         uses: actions/cache/restore@v5
         with:
           path: ${{ runner.temp }}/hugo_cache
-          key: hugo-full-cache-${{ hashFiles('config/**/*', 'themes/**/*') }}
-          restore-keys: |
-            hugo-full-cache-
+          key: hugo-cache-${{ hashFiles('config/**','themes/**') }}
+          restore-keys: hugo-cache-
 
-      # 增量构建：无GC清理、纯缓存复用
-      - name: Build the site
+      - name: Build
         run: |
-          echo "添加短代码"
           ./shortcode.sh
-          hugo \
-            --minify \
-            --baseURL "${{ steps.pages.outputs.base_url }}/" \
-            --cacheDir "${{ runner.temp }}/hugo_cache"
+          hugo --minify --cacheDir "${{ runner.temp }}/hugo_cache"
 
-      # 保存Hugo持久化缓存，供下次复用
-      - name: Save Hugo build cache
+      - name: Save Hugo cache
         uses: actions/cache/save@v5
         with:
           path: ${{ runner.temp }}/hugo_cache
-          key: hugo-full-cache-${{ hashFiles('config/**/*', 'themes/**/*') }}
+          key: hugo-cache-${{ hashFiles('config/**','themes/**') }}
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v5
+      # ==============================================
+      # 核心：直接部署 public 到 gh-pages 分支
+      # ==============================================
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          path: ./public
-
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v5
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+          publish_branch: gh-pages
+          user_name: "github-actions[bot]"
+          user_email: "github-actions[bot]@users.noreply.github.com"
