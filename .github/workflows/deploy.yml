@@ -2,10 +2,9 @@ name: Build and deploy
 
 on:
   push:
-    branches:
-      - main
-      - master
+    branches: [ main, master ]
   workflow_dispatch:
+  # ===================== 关键：必须开启这个触发 =====================
   repository_dispatch:
     types: [blog-updated]
 
@@ -34,10 +33,6 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.PRIVATE_BLOG_REPO_TOKEN }}
 
-      # ===================== 修复：等待子模块加载完成 =====================
-      - name: Wait for submodule
-        run: sleep 3
-
       - name: Cache Node dependencies
         uses: actions/cache@v5
         with:
@@ -58,7 +53,7 @@ jobs:
       - name: Install dependencies
         run: npm ci || true
 
-      # ===================== 修复：确保文件存在再执行 =====================
+      # 安全合并 giscus 配置
       - name: Apply giscus config
         run: |
           sed -i '/^\[comments\]/,/^$/d' config/_default/params.toml
@@ -66,6 +61,7 @@ jobs:
             cat content/post/giscus.toml >> config/_default/params.toml
           fi
 
+      # Hugo 缓存（提速核心）
       - name: Restore Hugo cache
         uses: actions/cache/restore@v5
         with:
@@ -73,7 +69,8 @@ jobs:
           key: hugo-cache-${{ hashFiles('config/**','themes/**') }}
           restore-keys: hugo-cache-
 
-      - name: Build
+      # 构建
+      - name: Build site
         run: |
           ./shortcode.sh
           hugo --minify --cacheDir "${{ runner.temp }}/hugo_cache"
@@ -84,9 +81,12 @@ jobs:
           path: ${{ runner.temp }}/hugo_cache
           key: hugo-cache-${{ hashFiles('config/**','themes/**') }}
 
+      # 极速部署到 gh-pages
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public
           publish_branch: gh-pages
+          user_name: github-actions[bot]
+          user_email: github-actions[bot]@users.noreply.github.com
