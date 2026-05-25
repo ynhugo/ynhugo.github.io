@@ -39,14 +39,15 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.PRIVATE_BLOG_REPO_TOKEN }}
 
-      # ===================== 缓存 public 目录（提速核心） =====================
-      - name: Cache public
-        uses: actions/cache@v4
+      # 第二层缓存：Node依赖缓存（提速前置环境安装）
+      - name: Cache Node dependencies
+        uses: actions/cache@v5
         with:
-          path: public
-          key: public-${{ github.sha }}
-          restore-keys: public-
-      # ======================================================================
+          path: |
+            node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
       - name: Setup Go
         uses: actions/setup-go@v6
@@ -95,20 +96,22 @@ jobs:
         run: |
           git config core.quotepath false
 
-      # 合并 giscus
+      # 自动替换合并私有Giscus私密配置
       - name: Apply giscus config
         run: |
           sed -i '/^\[comments\]/,/^$/d' config/_default/params.toml
           cat content/post/giscus.toml >> config/_default/params.toml
 
-      - name: Cache restore
+      # 第一层缓存：恢复Hugo持久化内核缓存（模板/样式/图片资源）
+      - name: Restore Hugo build cache
         uses: actions/cache/restore@v5
         with:
           path: ${{ runner.temp }}/hugo_cache
-          key: hugo-${{ github.run_id }}
-          restore-keys: hugo-
+          key: hugo-full-cache-${{ hashFiles('config/**/*', 'themes/**/*') }}
+          restore-keys: |
+            hugo-full-cache-
 
-      # ===================== ✅ 超快增量构建 =====================
+      # 增量构建：无GC清理、纯缓存复用
       - name: Build the site
         run: |
           echo "添加短代码"
@@ -117,13 +120,13 @@ jobs:
             --minify \
             --baseURL "${{ steps.pages.outputs.base_url }}/" \
             --cacheDir "${{ runner.temp }}/hugo_cache"
-      # ==========================================================
 
-      - name: Cache save
+      # 保存Hugo持久化缓存，供下次复用
+      - name: Save Hugo build cache
         uses: actions/cache/save@v5
         with:
           path: ${{ runner.temp }}/hugo_cache
-          key: hugo-${{ github.run_id }}
+          key: hugo-full-cache-${{ hashFiles('config/**/*', 'themes/**/*') }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
