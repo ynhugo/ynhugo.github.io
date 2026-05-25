@@ -39,6 +39,15 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.PRIVATE_BLOG_REPO_TOKEN }}
 
+      # ===================== 缓存 public 目录（提速核心） =====================
+      - name: Cache public
+        uses: actions/cache@v4
+        with:
+          path: public
+          key: public-${{ github.sha }}
+          restore-keys: public-
+      # ======================================================================
+
       - name: Setup Go
         uses: actions/setup-go@v6
         with:
@@ -80,13 +89,13 @@ jobs:
 
       - name: Install Node.js dependencies
         run: |
-          [[ -f package-lock.json || -f npm-shrinkwrap.json ]] && npm ci || true
+          [[ -f package-lock.json || -f package.json ]] && npm ci || true
 
       - name: Configure Git
         run: |
           git config core.quotepath false
 
-      # 直接从 submodule 读取 giscus 配置（超级快）
+      # 合并 giscus
       - name: Apply giscus config
         run: |
           sed -i '/^\[comments\]/,/^$/d' config/_default/params.toml
@@ -99,15 +108,17 @@ jobs:
           key: hugo-${{ github.run_id }}
           restore-keys: hugo-
 
+      # ===================== ✅ 超快增量构建 =====================
       - name: Build the site
         run: |
           echo "添加短代码"
           ./shortcode.sh
           hugo \
-            --gc \
+            --gc false \
             --minify \
             --baseURL "${{ steps.pages.outputs.base_url }}/" \
             --cacheDir "${{ runner.temp }}/hugo_cache"
+      # ==========================================================
 
       - name: Cache save
         uses: actions/cache/save@v5
