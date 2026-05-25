@@ -113,8 +113,9 @@ links:
 EOF
 
 # 添加配置短代码的脚本
-# 添加网易云短代码
+cat - > shortcode.sh << 'END'
 mkdir -p layouts/shortcodes/
+# 添加网易云短代码
 cat - > layouts/shortcodes/netease.html <<'EOF'
 <iframe
   frameborder="no"
@@ -143,6 +144,7 @@ cat - > layouts/shortcodes/github.html <<'EOF'
     </div>
 </div>
 EOF
+END
 
 # 追加配置短代码的命令
 sed -i 's|\(^[[:space:]]*\)\(hugo \\\)|\1echo "添加短代码"\n\1./shortcode.sh\n\1\2|g' .github/workflows/deploy.yml
