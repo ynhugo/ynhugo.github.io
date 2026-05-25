@@ -83,31 +83,31 @@ jobs:
         run: |
           git config core.quotepath false
 
-      # ========== 拉取私有文章 + giscus 配置 ==========
+      # ===================== 私有仓库：文章 + giscus =====================
       - name: Clone private blog repo
         run: |
           git clone https://${{ secrets.PRIVATE_BLOG_REPO_TOKEN }}@github.com/ynhugo/blogs.git private-blog
 
-      - name: Create content/post directory
+      - name: Create post directory
         run: mkdir -p content/post
 
       - name: Copy posts to Hugo content
         run: |
           cp -r private-blog/post/* content/post/
 
-      - name: Merge giscus config
+      # ✅ 关键修复：删除公开配置里的 [comments] 块，再插入 giscus
+      - name: Replace comments config with giscus
         run: |
+          sed -i '/^\[comments\]/,/^$/d' config/_default/params.toml
           cat private-blog/giscus.toml >> config/_default/params.toml
-      # ==============================================
+      # ====================================================================
 
       - name: Cache restore
-        id: cache-restore
         uses: actions/cache/restore@v5
         with:
           path: ${{ runner.temp }}/hugo_cache
           key: hugo-${{ github.run_id }}
-          restore-keys:
-            hugo-
+          restore-keys: hugo-
 
       - name: Build the site
         run: |
@@ -120,11 +120,10 @@ jobs:
             --cacheDir "${{ runner.temp }}/hugo_cache"
 
       - name: Cache save
-        id: cache-save
         uses: actions/cache/save@v5
         with:
           path: ${{ runner.temp }}/hugo_cache
-          key: ${{ steps.cache-restore.outputs.cache-primary-key }}
+          key: hugo-${{ github.run_id }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
