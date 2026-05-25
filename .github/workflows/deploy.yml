@@ -1,3 +1,25 @@
+name: Build and deploy
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: bash
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -61,27 +83,22 @@ jobs:
         run: |
           git config core.quotepath false
 
-      ###########################################################################
-      # 【核心：拉取私有仓库 → 导入文章 + 导入 giscus 配置】
-      ###########################################################################
-      - name: Clone private blog repo (文章 + giscus 配置)
+      # ========== 拉取私有文章 + giscus 配置 ==========
+      - name: Clone private blog repo
         run: |
           git clone https://${{ secrets.PRIVATE_BLOG_REPO_TOKEN }}@github.com/ynhugo/blogs.git private-blog
 
-      # 创建 Hugo 标准文章目录
       - name: Create content/post directory
         run: mkdir -p content/post
 
-      # 把私有仓库的所有文章复制过去（完美匹配你的目录结构）
-      - name: Copy private posts to Hugo content
+      - name: Copy posts to Hugo content
         run: |
           cp -r private-blog/post/* content/post/
 
-      # 合并 giscus 敏感配置
       - name: Merge giscus config
         run: |
           cat private-blog/giscus.toml >> config/_default/params.toml
-      ###########################################################################
+      # ==============================================
 
       - name: Cache restore
         id: cache-restore
@@ -113,3 +130,14 @@ jobs:
         uses: actions/upload-pages-artifact@v5
         with:
           path: ./public
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
