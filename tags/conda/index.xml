@@ -1,0 +1,1156 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Conda on ynhugo</title><link>https://ynhugo.github.io/tags/conda/</link><description>Recent content in Conda on ynhugo</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Sat, 17 Jan 2026 00:35:55 +0800</lastBuildDate><atom:link href="https://ynhugo.github.io/tags/conda/index.xml" rel="self" type="application/rss+xml"/><item><title>记录一次安装miniconda</title><link>https://ynhugo.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E5%AE%89%E8%A3%85miniconda/</link><pubDate>Sat, 17 Jan 2026 00:35:55 +0800</pubDate><guid>https://ynhugo.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E5%AE%89%E8%A3%85miniconda/</guid><description>
+&lt;div id="outline-container-headline-1" class="outline-2"&gt;
+&lt;h2 id="headline-1"&gt;
+记录一次安装miniconda
+&lt;/h2&gt;
+&lt;div id="outline-text-headline-1" class="outline-text-2"&gt;
+&lt;p&gt;
+安装miniconda过程中有勾选项，除默认勾选项，再勾选最后一个清除缓存的选项就可以了，其他不要勾选&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description></item><item><title>记录一次卸载Anaconda引发的事故</title><link>https://ynhugo.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E5%8D%B8%E8%BD%BDanaconda%E5%BC%95%E5%8F%91%E7%9A%84%E4%BA%8B%E6%95%85/</link><pubDate>Sat, 17 Jan 2026 00:31:31 +0800</pubDate><guid>https://ynhugo.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E5%8D%B8%E8%BD%BDanaconda%E5%BC%95%E5%8F%91%E7%9A%84%E4%BA%8B%E6%95%85/</guid><description>
+&lt;div id="outline-container-headline-1" class="outline-2"&gt;
+&lt;h2 id="headline-1"&gt;
+记录一次卸载Anaconda引发的事故
+&lt;/h2&gt;
+&lt;div id="outline-text-headline-1" class="outline-text-2"&gt;
+&lt;p&gt;
+卸载Anaconda后发现运行cmd会闪退，在网上查资料后说是要修改注册表，照着操作确实有效&lt;/p&gt;
+&lt;div id="outline-container-headline-2" class="outline-3"&gt;
+&lt;h3 id="headline-2"&gt;
+参考链接
+&lt;/h3&gt;
+&lt;div id="outline-text-headline-2" class="outline-text-3"&gt;
+&lt;p&gt;&lt;a href="https://zhuanlan.zhihu.com/p/1932534824335303430"&gt;windows打开cmd窗口的时候闪退解决办法&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description></item><item><title>conda换源</title><link>https://ynhugo.github.io/p/conda%E6%8D%A2%E6%BA%90/</link><pubDate>Fri, 16 Jan 2026 15:19:57 +0800</pubDate><guid>https://ynhugo.github.io/p/conda%E6%8D%A2%E6%BA%90/</guid><description>
+&lt;div id="outline-container-headline-1" class="outline-2"&gt;
+&lt;h2 id="headline-1"&gt;
+conda换源
+&lt;/h2&gt;
+&lt;div id="outline-text-headline-1" class="outline-text-2"&gt;
+&lt;div class="src src-bash"&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;cat &amp;gt; ~/.condarc &lt;span class="s"&gt;&amp;lt;&amp;lt;&amp;#39;EOF&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;channels:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt; - defaults
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;show_channel_urls: true
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;default_channels:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt; - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt; - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt; - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/msys2
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;custom_channels:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt; conda-forge: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt; pytorch: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;EOF&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-headline-2" class="outline-3"&gt;
+&lt;h3 id="headline-2"&gt;
+参考链接
+&lt;/h3&gt;
+&lt;div id="outline-text-headline-2" class="outline-text-3"&gt;
+&lt;p&gt;&lt;a href="https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/"&gt;Anaconda 软件仓库&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description></item><item><title>PyTorch安装方式全面归纳</title><link>https://ynhugo.github.io/p/pytorch%E5%AE%89%E8%A3%85%E6%96%B9%E5%BC%8F%E5%85%A8%E9%9D%A2%E5%BD%92%E7%BA%B3/</link><pubDate>Wed, 24 Dec 2025 17:20:58 +0800</pubDate><guid>https://ynhugo.github.io/p/pytorch%E5%AE%89%E8%A3%85%E6%96%B9%E5%BC%8F%E5%85%A8%E9%9D%A2%E5%BD%92%E7%BA%B3/</guid><description>
+&lt;div id="outline-container-pytorch安装方式全面归纳" class="outline-2"&gt;
+&lt;h2 id="pytorch安装方式全面归纳"&gt;
+PyTorch安装方式全面归纳
+&lt;/h2&gt;
+&lt;div id="outline-text-pytorch安装方式全面归纳" class="outline-text-2"&gt;
+&lt;div id="outline-container-一核心安装命令对比" class="outline-3"&gt;
+&lt;h3 id="一核心安装命令对比"&gt;
+一、核心安装命令对比
+&lt;/h3&gt;
+&lt;div id="outline-text-一核心安装命令对比" class="outline-text-3"&gt;
+&lt;div id="outline-container-标准安装命令最新稳定版" class="outline-4"&gt;
+&lt;h4 id="标准安装命令最新稳定版"&gt;
+1. &lt;strong&gt;标准安装命令（最新稳定版）&lt;/strong&gt;
+&lt;/h4&gt;
+&lt;div id="outline-text-标准安装命令最新稳定版" class="outline-text-4"&gt;
+&lt;div class="src src-sh"&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-sh" data-lang="sh"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Conda（自动处理CUDA依赖）&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;conda install pytorch torchvision torchaudio pytorch-cuda&lt;span class="o"&gt;=&lt;/span&gt;13.0 -c pytorch -c nvidia
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Pip（需系统已安装CUDA）&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu130&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-cuda版本对应表" class="outline-4"&gt;
+&lt;h4 id="cuda版本对应表"&gt;
+2. &lt;strong&gt;CUDA版本对应表&lt;/strong&gt;
+&lt;/h4&gt;
+&lt;div id="outline-text-cuda版本对应表" class="outline-text-4"&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th class="align-right"&gt;CUDA版本&lt;/th&gt;
+&lt;th&gt;Conda命令&lt;/th&gt;
+&lt;th&gt;Pip索引URL&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td class="align-right"&gt;13.0&lt;/td&gt;
+&lt;td&gt;&lt;code class="verbatim"&gt;pytorch-cuda=13.0&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code class="verbatim"&gt;https://.../whl/cu130&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td class="align-right"&gt;12.1&lt;/td&gt;
+&lt;td&gt;&lt;code class="verbatim"&gt;pytorch-cuda=12.1&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code class="verbatim"&gt;https://.../whl/cu121&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td class="align-right"&gt;11.8&lt;/td&gt;
+&lt;td&gt;&lt;code class="verbatim"&gt;pytorch-cuda=11.8&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code class="verbatim"&gt;https://.../whl/cu118&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td class="align-right"&gt;CPU&lt;/td&gt;
+&lt;td&gt;&lt;code class="verbatim"&gt;cpuonly&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;不加=–index-url=参数&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-二conda与pip的本质区别" class="outline-3"&gt;
+&lt;h3 id="二conda与pip的本质区别"&gt;
+二、Conda与Pip的本质区别
+&lt;/h3&gt;
+&lt;div id="outline-text-二conda与pip的本质区别" class="outline-text-3"&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;维度&lt;/th&gt;
+&lt;th&gt;&lt;strong&gt;Conda&lt;/strong&gt;&lt;/th&gt;
+&lt;th&gt;&lt;strong&gt;Pip&lt;/strong&gt;&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;管理范围&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;跨语言包管理器&lt;/td&gt;
+&lt;td&gt;Python专用包管理器&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;依赖处理&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;自动安装二进制依赖（CUDA/cuDNN等）&lt;/td&gt;
+&lt;td&gt;仅Python包，需手动安装系统依赖&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;环境隔离&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;内置完整环境隔离&lt;/td&gt;
+&lt;td&gt;依赖venv/virtualenv&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;适用场景&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;科学计算、深度学习、多语言项目&lt;/td&gt;
+&lt;td&gt;纯Python项目、生产部署&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;国内镜像&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;清华源、中科大源等&lt;/td&gt;
+&lt;td&gt;清华源、阿里源等&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-三国内镜像源使用策略" class="outline-3"&gt;
+&lt;h3 id="三国内镜像源使用策略"&gt;
+三、国内镜像源使用策略
+&lt;/h3&gt;
+&lt;div id="outline-text-三国内镜像源使用策略" class="outline-text-3"&gt;
+&lt;div id="outline-container-已配置清华源的情况" class="outline-4"&gt;
+&lt;h4 id="已配置清华源的情况"&gt;
+1. &lt;strong&gt;已配置清华源的情况&lt;/strong&gt;
+&lt;/h4&gt;
+&lt;div id="outline-text-已配置清华源的情况" class="outline-text-4"&gt;
+&lt;div class="src src-sh"&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-sh" data-lang="sh"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 优先尝试（不指定通道，让conda自动选择）&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;conda install pytorch torchvision torchaudio pytorch-cuda&lt;span class="o"&gt;=&lt;/span&gt;13.0
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 如果清华源没有，强制使用官方源&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;conda install ... -c pytorch -c nvidia --override-channels&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-清华源配置命令" class="outline-4"&gt;
+&lt;h4 id="清华源配置命令"&gt;
+2. &lt;strong&gt;清华源配置命令&lt;/strong&gt;
+&lt;/h4&gt;
+&lt;div id="outline-text-清华源配置命令" class="outline-text-4"&gt;
+&lt;div class="src src-sh"&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-sh" data-lang="sh"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 配置conda清华源&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/pytorch/
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 配置pip清华源&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;pip config &lt;span class="nb"&gt;set&lt;/span&gt; global.index-url https://pypi.tuna.tsinghua.edu.cn/simple&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-四安装流程决策树" class="outline-3"&gt;
+&lt;h3 id="四安装流程决策树"&gt;
+四、安装流程决策树
+&lt;/h3&gt;
+&lt;div id="outline-text-四安装流程决策树" class="outline-text-3"&gt;
+&lt;pre class="example"&gt;
+开始安装PyTorch
+ ↓
+是否有GPU？ → 否 → 安装CPU版本
+ ↓是
+CUDA版本？ → 检查 nvidia-smi
+ ↓
+选择安装方式：
+├─ Conda（推荐新手、Windows用户）
+│ ├─ 已配清华源 → conda install pytorch...
+│ └─ 未配/无包 → conda install ... -c pytorch -c nvidia
+│
+└─ Pip（推荐生产、Docker环境）
+ ├─ 系统已装CUDA → pip install torch... --index-url cuXXX
+ └─ 需装CUDA → 先安装CUDA Toolkit，再pip安装
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-五验证安装的正确方式" class="outline-3"&gt;
+&lt;h3 id="五验证安装的正确方式"&gt;
+五、验证安装的正确方式
+&lt;/h3&gt;
+&lt;div id="outline-text-五验证安装的正确方式" class="outline-text-3"&gt;
+&lt;div class="src src-python"&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;torch&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;PyTorch版本: &lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;torch&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;__version__&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;CUDA可用: &lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;torch&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cuda&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;is_available&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;torch&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cuda&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;is_available&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;CUDA版本: &lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;torch&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;version&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cuda&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;GPU名称: &lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;torch&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cuda&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get_device_name&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 简单测试&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;torch&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;randn&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cuda&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;GPU计算测试通过: &lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sum&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-六各场景推荐方案" class="outline-3"&gt;
+&lt;h3 id="六各场景推荐方案"&gt;
+六、各场景推荐方案
+&lt;/h3&gt;
+&lt;div id="outline-text-六各场景推荐方案" class="outline-text-3"&gt;
+&lt;div id="outline-container-学术研究实验环境" class="outline-4"&gt;
+&lt;h4 id="学术研究实验环境"&gt;
+1. &lt;strong&gt;学术研究/实验环境&lt;/strong&gt;
+&lt;/h4&gt;
+&lt;div id="outline-text-学术研究实验环境" class="outline-text-4"&gt;
+&lt;div class="src src-sh"&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-sh" data-lang="sh"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 使用Conda创建独立环境&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;conda create -n research &lt;span class="nv"&gt;python&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;3.10
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;conda activate research
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;conda install pytorch torchvision torchaudio pytorch-cuda&lt;span class="o"&gt;=&lt;/span&gt;13.0&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-生产服务器部署" class="outline-4"&gt;
+&lt;h4 id="生产服务器部署"&gt;
+2. &lt;strong&gt;生产服务器部署&lt;/strong&gt;
+&lt;/h4&gt;
+&lt;div id="outline-text-生产服务器部署" class="outline-text-4"&gt;
+&lt;div class="src src-sh"&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-sh" data-lang="sh"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 使用Docker + Pip&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;FROM nvidia/cuda:13.0-base
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;RUN pip install torch torchvision torchaudio --index-url https://.../cu130&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-团队协作项目" class="outline-4"&gt;
+&lt;h4 id="团队协作项目"&gt;
+3. &lt;strong&gt;团队协作项目&lt;/strong&gt;
+&lt;/h4&gt;
+&lt;div id="outline-text-团队协作项目" class="outline-text-4"&gt;
+&lt;div class="src src-sh"&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-sh" data-lang="sh"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 使用environment.yml（Conda）&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# environment.yml内容：&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;name: project_env
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;channels:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; - pytorch
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; - nvidia
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; - defaults
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;dependencies:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; - &lt;span class="nv"&gt;python&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;3.10
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; - &lt;span class="nv"&gt;pytorch&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;2.0.0
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; - torchvision
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; - torchaudio
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; - pytorch-cuda&lt;span class="o"&gt;=&lt;/span&gt;13.0&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-离线内网环境" class="outline-4"&gt;
+&lt;h4 id="离线内网环境"&gt;
+4. &lt;strong&gt;离线/内网环境&lt;/strong&gt;
+&lt;/h4&gt;
+&lt;div id="outline-text-离线内网环境" class="outline-text-4"&gt;
+&lt;div class="src src-sh"&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;span class="lnt"&gt;7
+&lt;/span&gt;&lt;span class="lnt"&gt;8
+&lt;/span&gt;&lt;span class="lnt"&gt;9
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-sh" data-lang="sh"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 在有网环境下载包&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;conda pack -n pytorch_env -o pytorch_env.tar.gz
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 或&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;pip download torch torchvision torchaudio --index-url ...
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 离线环境安装&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;conda create -n pytorch_env --offline --file pkgs.txt
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 或&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;pip install --no-index --find-links&lt;span class="o"&gt;=&lt;/span&gt;./packages torch&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-七常见问题速查" class="outline-3"&gt;
+&lt;h3 id="七常见问题速查"&gt;
+七、常见问题速查
+&lt;/h3&gt;
+&lt;div id="outline-text-七常见问题速查" class="outline-text-3"&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;问题&lt;/th&gt;
+&lt;th&gt;可能原因&lt;/th&gt;
+&lt;th&gt;解决方案&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;CUDA不可用&lt;/td&gt;
+&lt;td&gt;1. 驱动版本低2. CUDA版本不匹配3. 安装了CPU版本&lt;/td&gt;
+&lt;td&gt;更新驱动、检查CUDA版本、重装GPU版本&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;安装太慢&lt;/td&gt;
+&lt;td&gt;网络问题&lt;/td&gt;
+&lt;td&gt;使用国内镜像源、设置超时参数&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;包冲突&lt;/td&gt;
+&lt;td&gt;环境中有冲突包&lt;/td&gt;
+&lt;td&gt;创建新环境、使用conda clean&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;内存不足&lt;/td&gt;
+&lt;td&gt;包太大或内存小&lt;/td&gt;
+&lt;td&gt;使用pip安装、清理缓存&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-八最佳实践总结" class="outline-3"&gt;
+&lt;h3 id="八最佳实践总结"&gt;
+八、最佳实践总结
+&lt;/h3&gt;
+&lt;div id="outline-text-八最佳实践总结" class="outline-text-3"&gt;
+&lt;ol&gt;
+&lt;li&gt;*环境隔离优先*：始终在虚拟环境中安装&lt;/li&gt;
+&lt;li&gt;*版本明确*：生产环境固定版本号&lt;/li&gt;
+&lt;li&gt;*镜像加速*：国内用户优先配置清华源&lt;/li&gt;
+&lt;li&gt;*验证安装*：安装后务必运行验证脚本&lt;/li&gt;
+&lt;li&gt;*文档记录*：记录安装命令和环境配置&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-九一句话选择指南" class="outline-3"&gt;
+&lt;h3 id="九一句话选择指南"&gt;
+九、一句话选择指南
+&lt;/h3&gt;
+&lt;div id="outline-text-九一句话选择指南" class="outline-text-3"&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;新手/Windows/快速开始&lt;/strong&gt; → Conda安装（自动处理依赖）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;生产/服务器/Docker&lt;/strong&gt; → Pip安装（轻量可控）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;国内网络&lt;/strong&gt; → 配置清华源加速&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;团队协作&lt;/strong&gt; → 使用environment.yml固化环境&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;特定版本&lt;/strong&gt; → 明确指定版本号和CUDA版本&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;记住：*没有绝对最好的方式，只有最适合当前场景的方式*。根据具体需求选择，并保持团队内的一致性。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description></item><item><title>conda命令</title><link>https://ynhugo.github.io/p/conda%E5%91%BD%E4%BB%A4/</link><pubDate>Tue, 24 Jun 2025 18:46:13 +0800</pubDate><guid>https://ynhugo.github.io/p/conda%E5%91%BD%E4%BB%A4/</guid><description>
+&lt;div id="outline-container-headline-1" class="outline-2"&gt;
+&lt;h2 id="headline-1"&gt;
+conda命令
+&lt;/h2&gt;
+&lt;div id="outline-text-headline-1" class="outline-text-2"&gt;
+&lt;p&gt;
+除了界面操作，我们还可以在命令行使用 conda 来管理不同环境。&lt;/p&gt;
+&lt;p&gt;
+conda 是 Anaconda 发行版中的包管理器，用于安装、更新、卸载软件包，以及创建和管理不同的 Python 环境。&lt;/p&gt;
+&lt;p&gt;
+以下是一些常用的Conda命令及其简要介绍：&lt;/p&gt;
+&lt;div id="outline-container-headline-2" class="outline-3"&gt;
+&lt;h3 id="headline-2"&gt;
+环境管理
+&lt;/h3&gt;
+&lt;div id="outline-text-headline-2" class="outline-text-3"&gt;
+&lt;div id="outline-container-headline-3" class="outline-4"&gt;
+&lt;h4 id="headline-3"&gt;
+创建一个名为 &amp;#34;myenv&amp;#34; 的新环境:
+&lt;/h4&gt;
+&lt;div id="outline-text-headline-3" class="outline-text-4"&gt;
+&lt;div class="src src-bash"&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;conda create --name myenv&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-headline-4" class="outline-4"&gt;
+&lt;h4 id="headline-4"&gt;
+创建指定版本的环境：
+&lt;/h4&gt;
+&lt;div id="outline-text-headline-4" class="outline-text-4"&gt;
+&lt;div class="src src-bash"&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;conda create --name myenv &lt;span class="nv"&gt;python&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;3.8&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;以上代码创建一个名为 &amp;#34;myenv&amp;#34; 的新环境，并指定 Python 版本为 3.8。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-headline-5" class="outline-4"&gt;
+&lt;h4 id="headline-5"&gt;
+激活环境：
+&lt;/h4&gt;
+&lt;div id="outline-text-headline-5" class="outline-text-4"&gt;
+&lt;div class="src src-bash"&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;conda activate myenv&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;以上代码激活名为 &amp;#34;myenv&amp;#34; 的环境。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-headline-6" class="outline-4"&gt;
+&lt;h4 id="headline-6"&gt;
+要退出当前环境使用以下命令：
+&lt;/h4&gt;
+&lt;div id="outline-text-headline-6" class="outline-text-4"&gt;
+&lt;div class="src src-bash"&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;deactivate&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-headline-7" class="outline-4"&gt;
+&lt;h4 id="headline-7"&gt;
+查看所有环境：
+&lt;/h4&gt;
+&lt;div id="outline-text-headline-7" class="outline-text-4"&gt;
+&lt;div class="src src-bash"&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;conda env list&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;
+以上代码查看所有已创建的环境。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-headline-8" class="outline-4"&gt;
+&lt;h4 id="headline-8"&gt;
+复制环境：
+&lt;/h4&gt;
+&lt;div id="outline-text-headline-8" class="outline-text-4"&gt;
+&lt;div class="src src-bash"&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;conda create --name myclone --clone myenv&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;
+以上代码通过克隆已有环境创建新环境。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-headline-9" class="outline-4"&gt;
+&lt;h4 id="headline-9"&gt;
+删除环境：
+&lt;/h4&gt;
+&lt;div id="outline-text-headline-9" class="outline-text-4"&gt;
+&lt;div class="src src-bash"&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;conda env remove --name myenv&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;
+以上代码删除名为 &amp;#34;myenv&amp;#34; 的环境。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-headline-10" class="outline-3"&gt;
+&lt;h3 id="headline-10"&gt;
+包管理
+&lt;/h3&gt;
+&lt;div id="outline-text-headline-10" class="outline-text-3"&gt;
+&lt;div id="outline-container-headline-11" class="outline-4"&gt;
+&lt;h4 id="headline-11"&gt;
+安装包：
+&lt;/h4&gt;
+&lt;div id="outline-text-headline-11" class="outline-text-4"&gt;
+&lt;div class="src src-bash"&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;conda install package_name&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;
+以上代码安装名为 &amp;#34;package_name&amp;#34; 的软件包。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-headline-12" class="outline-4"&gt;
+&lt;h4 id="headline-12"&gt;
+安装指定版本的包：
+&lt;/h4&gt;
+&lt;div id="outline-text-headline-12" class="outline-text-4"&gt;
+&lt;div class="src src-bash"&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;conda install &lt;span class="nv"&gt;package_name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1.2.3&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;以上代码安装 &amp;#34;package_name&amp;#34; 的指定版本。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-headline-13" class="outline-4"&gt;
+&lt;h4 id="headline-13"&gt;
+更新包：
+&lt;/h4&gt;
+&lt;div id="outline-text-headline-13" class="outline-text-4"&gt;
+&lt;div class="src src-bash"&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;conda update package_name&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;
+以上代码更新已安装的软件包。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-headline-14" class="outline-4"&gt;
+&lt;h4 id="headline-14"&gt;
+卸载包：
+&lt;/h4&gt;
+&lt;div id="outline-text-headline-14" class="outline-text-4"&gt;
+&lt;div class="src src-bash"&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;conda remove package_name&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;
+以上代码卸载已安装的软件包。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-headline-15" class="outline-4"&gt;
+&lt;h4 id="headline-15"&gt;
+查看已安装的包：
+&lt;/h4&gt;
+&lt;div id="outline-text-headline-15" class="outline-text-4"&gt;
+&lt;div class="src src-bash"&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;conda list&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;
+查看当前环境下已安装的所有软件包及其版本。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-headline-16" class="outline-3"&gt;
+&lt;h3 id="headline-16"&gt;
+其他常用命令
+&lt;/h3&gt;
+&lt;div id="outline-text-headline-16" class="outline-text-3"&gt;
+&lt;div id="outline-container-headline-17" class="outline-4"&gt;
+&lt;h4 id="headline-17"&gt;
+查看帮助：
+&lt;/h4&gt;
+&lt;div id="outline-text-headline-17" class="outline-text-4"&gt;
+&lt;div class="src src-bash"&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;conda --help&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;以上代码获取 conda 命令的帮助信息。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-headline-18" class="outline-4"&gt;
+&lt;h4 id="headline-18"&gt;
+查看 conda 版本：
+&lt;/h4&gt;
+&lt;div id="outline-text-headline-18" class="outline-text-4"&gt;
+&lt;div class="src src-bash"&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;conda --version&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;以上代码查看安装的 conda 版本。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-headline-19" class="outline-4"&gt;
+&lt;h4 id="headline-19"&gt;
+搜索包：
+&lt;/h4&gt;
+&lt;div id="outline-text-headline-19" class="outline-text-4"&gt;
+&lt;div class="src src-bash"&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;conda search package_name&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;以上代码在 conda 仓库中搜索指定的软件包。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-headline-20" class="outline-4"&gt;
+&lt;h4 id="headline-20"&gt;
+清理不再需要的包：
+&lt;/h4&gt;
+&lt;div id="outline-text-headline-20" class="outline-text-4"&gt;
+&lt;div class="src src-bash"&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;conda clean --all&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;
+以上代码清理 conda 缓存，删除不再需要的软件包。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-headline-21" class="outline-4"&gt;
+&lt;h4 id="headline-21"&gt;
+查看指定虚拟环境中安装的包
+&lt;/h4&gt;
+&lt;div id="outline-text-headline-21" class="outline-text-4"&gt;
+&lt;div class="src src-bash"&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;conda list -n myenv&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-headline-22" class="outline-3"&gt;
+&lt;h3 id="headline-22"&gt;
+Jupyter Notebook（可选）
+&lt;/h3&gt;
+&lt;div id="outline-text-headline-22" class="outline-text-3"&gt;
+&lt;div id="outline-container-headline-23" class="outline-4"&gt;
+&lt;h4 id="headline-23"&gt;
+安装 Jupyter Notebook：
+&lt;/h4&gt;
+&lt;div id="outline-text-headline-23" class="outline-text-4"&gt;
+&lt;div class="src src-bash"&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;conda install jupyter&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;以上代码安装 Jupyter Notebook。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-headline-24" class="outline-4"&gt;
+&lt;h4 id="headline-24"&gt;
+启动 Jupyter Notebook：
+&lt;/h4&gt;
+&lt;div id="outline-text-headline-24" class="outline-text-4"&gt;
+&lt;div class="src src-bash"&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;jupyter notebook&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;
+以上代码在已激活的环境中启动 Jupyter Notebook。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-headline-25" class="outline-3"&gt;
+&lt;h3 id="headline-25"&gt;
+参考链接
+&lt;/h3&gt;
+&lt;div id="outline-text-headline-25" class="outline-text-3"&gt;
+&lt;p&gt;
+&lt;a href="https://www.runoob.com/python-qt/anaconda-tutorial.html"&gt;Anaconda 教程&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description></item><item><title>Linux安装Conda教程</title><link>https://ynhugo.github.io/p/linux%E5%AE%89%E8%A3%85conda%E6%95%99%E7%A8%8B/</link><pubDate>Tue, 24 Jun 2025 18:42:34 +0800</pubDate><guid>https://ynhugo.github.io/p/linux%E5%AE%89%E8%A3%85conda%E6%95%99%E7%A8%8B/</guid><description>
+&lt;div id="outline-container-headline-1" class="outline-2"&gt;
+&lt;h2 id="headline-1"&gt;
+安装Conda
+&lt;/h2&gt;
+&lt;div id="outline-text-headline-1" class="outline-text-2"&gt;
+&lt;div class="src src-bash"&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 1. 先 cd 到家目录下&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;cd&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 2. 下载安装包：在此地址 https://www.anaconda.com/download/success 中找到安装包的链接&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;wget https://repo.anaconda.com/archive/Anaconda3-2024.02-1-Linux-x86_64.sh
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 3. 安装 anaconda&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;bash Anaconda3-2024.02-1-Linux-x86_64.sh
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 4. 按照 anaconda 提示进行安装，默认安装到 /home/用户名/anaconda3&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-headline-2" class="outline-3"&gt;
+&lt;h3 id="headline-2"&gt;
+参考链接
+&lt;/h3&gt;
+&lt;div id="outline-text-headline-2" class="outline-text-3"&gt;
+&lt;p&gt;
+&lt;a href="https://blog.csdn.net/weixin_44878336/article/details/133967607"&gt;WSL2的安装与配置（创建Anaconda虚拟环境、更新软件包、安装PyTorch、VSCode）&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description></item><item><title>termux安装Conda教程</title><link>https://ynhugo.github.io/p/termux%E5%AE%89%E8%A3%85conda%E6%95%99%E7%A8%8B/</link><pubDate>Tue, 24 Jun 2025 18:38:08 +0800</pubDate><guid>https://ynhugo.github.io/p/termux%E5%AE%89%E8%A3%85conda%E6%95%99%E7%A8%8B/</guid><description>
+&lt;div id="outline-container-headline-1" class="outline-2"&gt;
+&lt;h2 id="headline-1"&gt;
+termux安装Conda教程
+&lt;/h2&gt;
+&lt;div id="outline-text-headline-1" class="outline-text-2"&gt;
+&lt;div id="outline-container-headline-2" class="outline-3"&gt;
+&lt;h3 id="headline-2"&gt;
+安装Ubuntu
+&lt;/h3&gt;
+&lt;div id="outline-text-headline-2" class="outline-text-3"&gt;
+&lt;div class="src src-bash"&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;span class="lnt"&gt;7
+&lt;/span&gt;&lt;span class="lnt"&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;#- 安装proot-distro&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; pkg install proot-distro -y
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;#- 查看有哪些系统&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; proot-distro list
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;#- 安装ubuntu系统&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; proot-distro install ubuntu
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;#- 登录ubuntu系统&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; proot-distro login ubuntu&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-headline-3" class="outline-3"&gt;
+&lt;h3 id="headline-3"&gt;
+安装Conda
+&lt;/h3&gt;
+&lt;div id="outline-text-headline-3" class="outline-text-3"&gt;
+&lt;div class="src src-bash"&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;#- 下载miniconda安装脚本&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; wget -v https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-aarch64.sh
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;#- 运行安装脚本&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; bash Miniconda3-latest-Linux-aarch64.sh&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-headline-4" class="outline-3"&gt;
+&lt;h3 id="headline-4"&gt;
+参考链接
+&lt;/h3&gt;
+&lt;div id="outline-text-headline-4" class="outline-text-3"&gt;
+&lt;p&gt;
+&lt;a href="https://blog.csdn.net/UCAS_HMM/article/details/145529239#Conda_150"&gt;【Termux】termux+ubuntu+vscode+conda环境搭建&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description></item><item><title>Linux服务器上安装Anaconda</title><link>https://ynhugo.github.io/p/linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E5%AE%89%E8%A3%85anaconda/</link><pubDate>Wed, 21 Aug 2024 00:46:14 +0800</pubDate><guid>https://ynhugo.github.io/p/linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E5%AE%89%E8%A3%85anaconda/</guid><description>
+&lt;ol&gt;
+&lt;li&gt;安装Anaconda&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;1.1 下载anaconda的安装包&lt;/p&gt;
+&lt;p&gt;
+这里我们需要在官网上查找自己需要的版本，地址链接在下面:&lt;/p&gt;
+&lt;p&gt;
+https://repo.anaconda.com/archive/&lt;/p&gt;
+&lt;p&gt;
+这里以我自己安装的版本为例：&lt;/p&gt;
+&lt;p&gt;
+https://repo.anaconda.com/archive/Anaconda3-5.3.0-Linux-x86_64.sh&lt;/p&gt;
+&lt;p&gt;
+这是我选择的版本，然后我们在控制台输入这句话：&lt;/p&gt;
+&lt;p&gt;
+wget &lt;a href="https://repo.anaconda.com/archive/Anaconda3-5.3.0-Linux-x86_64.sh"&gt;https://repo.anaconda.com/archive/Anaconda3-5.3.0-Linux-x86_64.sh&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;
+如果使用wget下载不下来的话，可以手动下载安装文件&lt;/p&gt;
+&lt;p&gt;
+1.3 安装anaconda&lt;/p&gt;
+&lt;p&gt;
+接下来我们需要首先赋权再执行安装程序，依次输入下面两句命令:&lt;/p&gt;
+&lt;p&gt;
+chmod +x Anaconda3-5.3.0-Linux-x86_64.sh&lt;/p&gt;
+&lt;p&gt;
+./Anaconda3-5.3.0-Linux-x86_64.sh&lt;/p&gt;
+&lt;p&gt;
+1.4 点击Enter（回车键）&lt;/p&gt;
+&lt;p&gt;
+此时显示Anaconda的信息，并且会出现More，继续按Enter，直到提示输入yes/no&lt;/p&gt;
+&lt;p&gt;
+1.5 输入 yes&lt;/p&gt;
+&lt;p&gt;
+1.6 继续点击 Enter&lt;/p&gt;
+&lt;p&gt;
+1.7 输入 yes，添加环境变量&lt;/p&gt;
+&lt;p&gt;
+这里需要注意点的就是如果你直接跳过这部设置环境变量的话：&lt;/p&gt;
+&lt;p&gt;
+[no ] &amp;gt;&amp;gt;&amp;gt;&lt;/p&gt;
+&lt;p&gt;
+那你需要自己到这个文件夹设置你安装Anaconda路径（比如上面显示我的是）&lt;/p&gt;
+&lt;p&gt;
+&lt;em&gt;home/wangke&lt;/em&gt;.bashrc&lt;/p&gt;
+&lt;p&gt;
+单击进去，在最后一行添加：&lt;/p&gt;
+&lt;p&gt;
+export PATH=/home/anaconda3/bin:$PATH&lt;/p&gt;
+&lt;p&gt;
+需要把之前的那句话给注释掉如下所示：&lt;/p&gt;
+&lt;div class="src src-bash"&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;# export PATH=/usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/sbin:/sbin:$PATH&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;
+export PATH=/root/anaconda3/bin:$PATH&lt;/p&gt;
+&lt;p&gt;
+这里只是个示例，具体的还是要看你们自己安装的路径。&lt;/p&gt;
+&lt;p&gt;
+然后保存更改，输入下面这句指令：&lt;/p&gt;
+&lt;p&gt;
+source ~/.bashrc&lt;/p&gt;
+&lt;p&gt;
+1.8 完成安装以及检测是否安装成功&lt;/p&gt;
+&lt;p&gt;
+打开新的终端后，进入自己的文件夹目录下，输入anaconda -V（注意a要小写，V要大写），conda -V ,显示版本信息，若显示则表示安装成功。&lt;/p&gt;
+&lt;p&gt;
+root@dev-wyf-react:~/wyf# conda -V&lt;/p&gt;
+&lt;p&gt;
+conda 4.5.11&lt;/p&gt;
+&lt;div id="outline-container-headline-1" class="outline-4"&gt;
+&lt;h4 id="headline-1"&gt;
+ubuntu下conda如何设置镜像源（清华镜像源）
+&lt;/h4&gt;
+&lt;div id="outline-text-headline-1" class="outline-text-4"&gt;
+&lt;div id="outline-container-headline-2" class="outline-5"&gt;
+&lt;h5 id="headline-2"&gt;
+ubuntu下如何设置镜像源
+&lt;/h5&gt;
+&lt;div id="outline-text-headline-2" class="outline-text-5"&gt;
+&lt;p&gt;
+首先贴出.condarc，直接给出清华的镜像源，需要的小伙伴直接使用，别看内容了&lt;/p&gt;
+&lt;div class="src src-text"&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;# ~/.condarc
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;channels:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;show_channel_urls: True&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;
+添加conda镜像源命令（直接使用）&lt;/p&gt;
+&lt;div class="src src-text"&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;conda config --set show_channel_urls yes&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-headline-3" class="outline-4"&gt;
+&lt;h4 id="headline-3"&gt;
+参考链接
+&lt;/h4&gt;
+&lt;div id="outline-text-headline-3" class="outline-text-4"&gt;
+&lt;p&gt;
+&lt;a href="https://blog.csdn.net/wyf2017/article/details/118676765"&gt;如何在Linux服务器上安装Anaconda（超详细）&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;
+&lt;a href="https://blog.csdn.net/youlinhuanyan/article/details/136110667"&gt;ubuntu下conda如何设置镜像源（清华镜像源）&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description></item></channel></rss>

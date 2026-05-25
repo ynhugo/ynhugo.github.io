@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>网络安全 on ynhugo</title><link>https://ynhugo.github.io/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/</link><description>Recent content in 网络安全 on ynhugo</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Fri, 19 Sep 2025 10:26:43 +0800</lastBuildDate><atom:link href="https://ynhugo.github.io/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/index.xml" rel="self" type="application/rss+xml"/><item><title>网络安全</title><link>https://ynhugo.github.io/p/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/</link><pubDate>Fri, 19 Sep 2025 10:26:43 +0800</pubDate><guid>https://ynhugo.github.io/p/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/</guid><description>
+&lt;div id="outline-container-headline-1" class="outline-2"&gt;
+&lt;h2 id="headline-1"&gt;
+工具安装
+&lt;/h2&gt;
+&lt;div id="outline-text-headline-1" class="outline-text-2"&gt;
+&lt;div id="outline-container-headline-2" class="outline-3"&gt;
+&lt;h3 id="headline-2"&gt;
+Termux安装MSF框架
+&lt;/h3&gt;
+&lt;div id="outline-text-headline-2" class="outline-text-3"&gt;
+&lt;div class="src src-bash"&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;span class="lnt"&gt;14
+&lt;/span&gt;&lt;span class="lnt"&gt;15
+&lt;/span&gt;&lt;span class="lnt"&gt;16
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Metasploite 黑客 Top10 工具之一，漏洞攻击库，安全从业者必备工具之一，也在各大黑客题材的电影中频频出现。通过 Github 上的 m-wiz 项目来辅助安装 Metasploit ，脚本启动比较简单：&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 安装依赖&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;pkg install git
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 克隆脚本项目&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git clone https://github.com/noob-hackers/m-wiz
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 运行脚本&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; m-wiz &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; bash m-wiz.sh
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 安装的时候还会有一些提示，比如选择 Metasploit 的版本之类的，大家根据提示自己选择安装即可，安装的过程可能会安装其他 Ruby gem，因此能需要很长时间。在安装完成之前，请勿关闭 Termux 会话，否则可能会出一些玄学问题导致安装失败，总之耐心等待即可。&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 添加环境变量&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;export PATH=&amp;#34;$PATH:/data/data/com.termux/files/home/metasploit-framework&amp;#34;&amp;#39;&lt;/span&gt; &amp;gt;&amp;gt; ~/.bashrc
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;source&lt;/span&gt; ~/.bashrc&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-headline-3" class="outline-4"&gt;
+&lt;h4 id="headline-3"&gt;
+参考链接
+&lt;/h4&gt;
+&lt;div id="outline-text-headline-3" class="outline-text-4"&gt;
+&lt;p&gt;
+&lt;a href="https://www.sqlsec.com/2018/05/termux.html#Metasploit"&gt;Termux 高级终端安装使用配置教程（国光）-Metasploit&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;
+&lt;a href="https://www.runoob.com/linux/linux-comm-nmap.html"&gt;Linux nmap 命令（菜鸟教程）&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-headline-4" class="outline-3"&gt;
+&lt;h3 id="headline-4"&gt;
+SQLmap
+&lt;/h3&gt;
+&lt;div id="outline-text-headline-4" class="outline-text-3"&gt;
+&lt;div class="src src-bash"&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git clone https://github.com/sqlmapproject/sqlmap.git
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; sqlmap
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;python sqlmap.py&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-headline-5" class="outline-4"&gt;
+&lt;h4 id="headline-5"&gt;
+参考链接
+&lt;/h4&gt;
+&lt;div id="outline-text-headline-5" class="outline-text-4"&gt;
+&lt;p&gt;
+&lt;a href="https://www.sqlsec.com/2018/05/termux.html#SQLmap"&gt;Termux 高级终端安装使用配置教程（国光）-SQLmap&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-headline-6" class="outline-3"&gt;
+&lt;h3 id="headline-6"&gt;
+网络安全学习指南
+&lt;/h3&gt;
+&lt;div id="outline-text-headline-6" class="outline-text-3"&gt;
+&lt;p&gt;关于黑客环境准备，一个是可以下载kali虚拟机，解压后使用vmware打开虚拟机文件直接运行，记得做快照，这样折腾坏了好恢复；另一个是可以在安卓手机上安装termux，在termux中搭建黑客环境，termux入门教程推荐看国光的文章，我当初入门termux就是看国光的termux教程，教程地址：&lt;a href="https://www.sqlsec.com/2018/05/termux.html"&gt;&lt;a href="https://www.sqlsec.com/2018/05/termux.html"&gt;https://www.sqlsec.com/2018/05/termux.html&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;
+如果你想快速构建一个测试用的漏洞靶场，可使用 Vulhub 项目快速部署漏洞测试靶场。Vulhub 是一个基于 docker 和 docker-compose 的漏洞环境集合，让漏洞复现变得更加简单，让安全研究者更加专注于漏洞原理本身。&lt;/p&gt;
+&lt;p&gt;
+Vulhub 项目地址：&lt;a href="https://vulhub.org/"&gt;&lt;a href="https://vulhub.org/"&gt;https://vulhub.org/&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;div id="outline-container-headline-7" class="outline-4"&gt;
+&lt;h4 id="headline-7"&gt;
+参考链接
+&lt;/h4&gt;
+&lt;div id="outline-text-headline-7" class="outline-text-4"&gt;
+&lt;p&gt;&lt;a href="https://www.sqlsec.com/2018/05/termux.html"&gt;Termux 高级终端安装使用配置教程&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;
+&lt;a href="https://www.sqlsec.com/2018/05/termux.html#信息安全"&gt;Termux 高级终端安装使用配置教程（国光） - 信息安全&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;
+&lt;a href="https://gist.github.com/caoya171193579/0662f16eeedf51a9307e01069a2bedf1"&gt;信息安全中常用术语介绍&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;
+&lt;a href="https://vulhub.org/zh"&gt;Vulhub&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;
+&lt;a href="https://ynhugo.github.io/p/在安卓系统上搭建-dvwa-和-sqli-靶场/#headline-4"&gt;在安卓系统上搭建 DVWA 和 SQLI 靶场&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;
+&lt;a href="https://kali.wiki"&gt;KaliArchive ・ Kali Linux 技术文献库&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;
+&lt;a href="https://bbskali.cn/forum.php?gid=53"&gt;kali 基础 | bbskali.cn&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;
+&lt;a href="https://vulhub.org/zh/getting-started"&gt;Vulhub入门指南&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description></item><item><title>网络安全笔记</title><link>https://ynhugo.github.io/p/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0/</link><pubDate>Sun, 01 Oct 2023 09:33:02 +0800</pubDate><guid>https://ynhugo.github.io/p/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0/</guid><description>
+&lt;div id="outline-container-headline-1" class="outline-3"&gt;
+&lt;h3 id="headline-1"&gt;
+nslookup
+&lt;/h3&gt;
+&lt;div id="outline-text-headline-1" class="outline-text-3"&gt;
+&lt;div class="src src-bash"&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;span class="lnt"&gt;7
+&lt;/span&gt;&lt;span class="lnt"&gt;8
+&lt;/span&gt;&lt;span class="lnt"&gt;9
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nv"&gt;$nslookup&lt;/span&gt; 12306.cn
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Server: 114.114.114.114
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Address: 114.114.114.114#53
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Non-authoritative answer:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Name: 12306.cn
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Address: 111.132.65.15
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Name: 12306.cn
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Address: 2409:8c02:21c:60::f&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&amp;#34;Server&amp;#34;对应DNS，可以在 /etc/resolv.conf中看到，&amp;#34;#53&amp;#34;对应DNS用到的端口为53，&amp;#34;非权威性的答案&amp;#34;对应 Non-authoritative answer，&amp;#34;Name&amp;#34;对应的是别名&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-headline-2" class="outline-3"&gt;
+&lt;h3 id="headline-2"&gt;
+命令行查看ip
+&lt;/h3&gt;
+&lt;div id="outline-text-headline-2" class="outline-text-3"&gt;
+&lt;div class="src src-bash"&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; curl ipinfo.io&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;除了查看ip，还显示经纬度&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description></item></channel></rss>
