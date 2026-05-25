@@ -145,6 +145,7 @@ cat - > layouts/shortcodes/github.html <<'EOF'
 </div>
 EOF
 END
+chmod +x shortcode.sh
 
 # 追加配置短代码的命令
 sed -i 's|\(^[[:space:]]*\)\(hugo \\\)|\1echo "添加短代码"\n\1./shortcode.sh\n\1\2|g' .github/workflows/deploy.yml
