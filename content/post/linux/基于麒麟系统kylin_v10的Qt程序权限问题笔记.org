@@ -1,0 +1,130 @@
+---
+title: "基于麒麟系统kylin_v10的Qt程序权限问题笔记"
+tags: ["kylin", "310P", "PCIE"]
+date: 2026-05-19T09:59:09.23+0800
+---
+
+* 基于麒麟系统kylin_v10的Qt程序权限问题笔记
+
+** 问题描述
+
+环境：
+- 设备：麒麟 ARM64 (Phytium D2000/8 E8C)
+- 程序：Qt5 + Qt Charts，调用 SGDMA 和 Ascend 310P
+- 编译：本机编译，RUNPATH 已配置
+
+现象：
+1. 普通用户运行 ./pcie_sgdma → ACL 库正常，但 SGDMA 设备无权限
+2. sudo 运行 → SGDMA 设备可访问，但环境变量被清除，Ascend 库找不到
+3. Debug 模式下 Qt Charts 波形绘制异常（已通过注释 OpenGL 代码解决）
+
+设备信息
+
+| 设备 | 路径 | 当前权限 |
+|------|------|----------|
+| SGDMA C2H 通道 | /dev/ydma0_c2h_0~7 | crw------- root:root 600 |
+| SGDMA H2C 通道 | /dev/ydma0_h2c_0~7 | crw------- root:root 600 |
+| SGDMA User 设备 | /dev/ydma0_user | crw------- root:root 600 |
+
+解决方案：udev 规则
+
+通过 udev 规则修改设备权限，让普通用户可以直接访问 /dev/ydma0_*，而不需要 sudo。
+
+*** 步骤 1：创建 udev 规则
+
+#+begin_src bash
+cat | sudo tee /etc/udev/rules.d/99-ydma.rules << 'EOF'
+SUBSYSTEM=="ydma", GROUP="kylin", MODE="0660"
+EOF
+#+end_src
+
+- SUBSYSTEM=="ydma" - 匹配 ydma 子系统设备
+- GROUP="kylin" - 设备所属组改为 kylin 组
+- MODE="0660" - 组用户有读写权限
+
+*** 步骤 2：重载 udev 规则
+
+#+begin_src bash
+sudo udevadm control --reload-rules
+sudo udevadm trigger --subsystem-match=ydma
+#+end_src
+
+或选择重启系统：
+#+begin_src bash
+sudo reboot
+#+end_src
+
+*** 步骤 3：验证
+
+#+begin_src bash
+ls -la /dev/ydma0_*
+# 预期：root:kylin, crw-rw---- (660)
+#+end_src
+
+*** 步骤 4：测试程序
+
+#+begin_src bash
+cd output_exe
+./pcie_sgdma
+#+end_src
+
+** 相关命令
+
+| 功能 | 命令 |
+|------|------|
+| 查看设备权限 | ls -la /dev/ydma0_* |
+| 查看用户组 | whoami && groups |
+| 检查库依赖 | ldd ./pcie_sgdma |
+| 检查 RUNPATH | readelf -d ./pcie_sgdma \| grep RUNPATH |
+
+** 备选方案
+
+临时 chmod（重启后可能失效）：
+#+begin_src bash
+sudo chmod 660 /dev/ydma0_*
+#+end_src
+
+** 架构说明
+
+程序同时使用 SGDMA 和 Ascend 310P：
+- SGDMA (/dev/ydma0_*) - 需要 root 权限访问 PCI Express 设备
+- Ascend 310P (libascendcl.so) - 通过 RUNPATH 嵌入，ACL 初始化在 main.cpp
+
+关键代码流程：
+1. main.cpp 调用 aclInit, aclrtSetDevice 初始化 Ascend
+2. boardoperate.cpp 调用 Pcie_Device_Open/Close 操作 SGDMA
+3. boardthread.cpp 使用 Pcie_DMA_Read/Write 传输数据，同时使用 aclrtMemcpy
+
+** 问题回顾
+
+环境：麒麟 ARM64 + Qt5 + SGDMA + Ascend 310P
+
+问题 1：Debug 模式下 Qt Charts 波形绘制异常
+- 
+原因：OpenGL 驱动加载失败
+- 
+解决：注释掉调用 OpenGL 的代码
+
+----------------------------------------------------------------
+
+问题 2：普通用户无权限访问 SGDMA 设备
+- 
+原因：/dev/ydma0_* 属于 root，权限 600
+- 
+解决：通过 udev 规则设置设备权限
+#+begin_src bash
+echo 'SUBSYSTEM=="ydma", GROUP="kylin", MODE="0660"' | sudo tee /etc/udev/rules.d/99-ydma.rules
+sudo udevadm control --reload-rules
+#+end_src
+
+----------------------------------------------------------------
+
+问题 3：Ascend 库（libmsprofiler.so）找不到
+- 
+原因：动态链接器未搜索 RUNPATH 路径
+- 
+解决：配置 ldconfig 永久生效
+#+begin_src bash
+echo "/usr/local/Ascend/ascend-toolkit/latest/aarch64-linux/lib64" | sudo tee /etc/ld.so.conf.d/ascend.conf
+sudo ldconfig
+#+end_src

@@ -1,0 +1,146 @@
+---
+title: conda命令
+tags: ["conda"]
+date: 2025-06-24T18:46:13.74+0800
+---
+
+* conda命令
+
+除了界面操作，我们还可以在命令行使用 conda 来管理不同环境。
+
+conda 是 Anaconda 发行版中的包管理器，用于安装、更新、卸载软件包，以及创建和管理不同的 Python 环境。
+
+以下是一些常用的Conda命令及其简要介绍：
+
+** 环境管理
+
+*** 创建一个名为 "myenv" 的新环境:
+#+begin_src bash
+conda create --name myenv
+#+end_src
+
+*** 创建指定版本的环境：
+#+begin_src bash
+conda create --name myenv python=3.8
+#+end_src
+以上代码创建一个名为 "myenv" 的新环境，并指定 Python 版本为 3.8。
+
+*** 激活环境：
+#+begin_src bash
+conda activate myenv
+#+end_src
+以上代码激活名为 "myenv" 的环境。
+
+*** 要退出当前环境使用以下命令：
+#+begin_src bash
+deactivate
+#+end_src
+
+*** 查看所有环境：
+#+begin_src bash
+conda env list
+#+end_src
+
+以上代码查看所有已创建的环境。
+
+*** 复制环境：
+#+begin_src bash
+conda create --name myclone --clone myenv
+#+end_src
+
+以上代码通过克隆已有环境创建新环境。
+
+*** 删除环境：
+#+begin_src bash
+conda env remove --name myenv
+#+end_src
+
+以上代码删除名为 "myenv" 的环境。
+
+** 包管理
+
+*** 安装包：
+#+begin_src bash
+conda install package_name
+#+end_src
+
+以上代码安装名为 "package_name" 的软件包。
+
+*** 安装指定版本的包：
+#+begin_src bash
+conda install package_name=1.2.3
+#+end_src
+以上代码安装 "package_name" 的指定版本。
+
+*** 更新包：
+#+begin_src bash
+conda update package_name
+#+end_src
+
+以上代码更新已安装的软件包。
+
+*** 卸载包：
+#+begin_src bash
+conda remove package_name
+#+end_src
+
+以上代码卸载已安装的软件包。
+
+*** 查看已安装的包：
+#+begin_src bash
+conda list
+#+end_src
+
+查看当前环境下已安装的所有软件包及其版本。
+
+** 其他常用命令
+
+*** 查看帮助：
+#+begin_src bash
+conda --help
+#+end_src
+以上代码获取 conda 命令的帮助信息。
+
+*** 查看 conda 版本：
+#+begin_src bash
+conda --version
+#+end_src
+以上代码查看安装的 conda 版本。
+
+*** 搜索包：
+#+begin_src bash
+conda search package_name
+#+end_src
+以上代码在 conda 仓库中搜索指定的软件包。
+
+*** 清理不再需要的包：
+#+begin_src bash
+conda clean --all
+#+end_src
+
+以上代码清理 conda 缓存，删除不再需要的软件包。
+
+*** 查看指定虚拟环境中安装的包
+
+#+begin_src bash
+conda list -n myenv
+#+end_src
+
+** Jupyter Notebook（可选）
+
+*** 安装 Jupyter Notebook：
+#+begin_src bash
+conda install jupyter
+#+end_src
+以上代码安装 Jupyter Notebook。
+
+*** 启动 Jupyter Notebook：
+#+begin_src bash
+jupyter notebook
+#+end_src
+
+以上代码在已激活的环境中启动 Jupyter Notebook。
+
+** 参考链接
+
+[[https://www.runoob.com/python-qt/anaconda-tutorial.html][Anaconda 教程]]

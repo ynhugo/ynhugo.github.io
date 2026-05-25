@@ -1,0 +1,41 @@
+---
+title: 有些网站Emacs访问不了
+tags: ["Emacs"]
+date: 2024-12-03T23:10:28.460000000+0800
+---
+
+* 命令行操作
+
+#+begin_src bash
+http_proxy=your-proxy-server-ip:port 前缀.
+#+end_src
+
+例如
+#+begin_src bash
+http_proxy=http://127.0.0.1:10809 emacs
+# 建议该操作
+http_proxy=127.0.0.1:1080 emacs
+# 或在命令行中启动Emacs时加上 -nw
+http_proxy=http://127.0.0.1:10809 emacs -nw
+#+end_src
+看是在什么环境下运行Emacs了，有些环境不需要加-nw，例如Cygwin。
+
+* 配置文件中操作
+
+#+begin_src emacs-lisp
+  (setq url-proxy-services '(
+							 ("http" . "127.0.0.1:10809")
+							 ))
+#+end_src
+
+** 参考链接
+
+[[https://github.com/redguardtoo/mastering-emacs-in-one-year-guide/blob/master/guide-zh.org#有些网站-emacs-访问不了][有些网站 Emacs 访问不了]]
+
+[[https://www.bing.com/search?q=emacs启动时设置代理&PC=U316&FORM=CHROMN][emacs启动时设置代理]]
+
+[[https://boxmaking.github.io/emacs/emacs-proxy.html][emacs使用代理教程]]
+
+[[https://emacs-china.org/t/topic/2808/1][Emacs 怎么使用代理]]
+
+[[https://zhuanlan.zhihu.com/p/432552171][专业 Emacs 入门（四）：基本配置]]

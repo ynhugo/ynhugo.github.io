@@ -1,0 +1,288 @@
+---
+title: nc命令教程
+date: 2024-03-26T00:24:30.00+0800
+tags: ["程序员", "Linux"]
+---
+
+** nc - 网络工具箱中的"瑞士军刀"
+
+nc 是 Linux 下强大的网络命令行工具，主要用于 TCP、UDP、UNIX域套接字 相关的操作
+
+它被设计成可以由其他程序灵活驱动可靠的后台工具，拥有 "瑞士军刀" 的美称，每个系统管理员都应该掌握它
+
+*** nc -h
+
+=nc= 命令的帮助手册提供了以下信息：
+
+1. 连接到某处：
+   - 语法：=nc [-options] hostname port[s] [ports] ...=
+   - 说明：用于向指定主机和端口发起连接。
+
+2. 监听传入连接：
+   - 语法：=nc -l -p port [-options] [hostname] [port]=
+   - 说明：在指定端口上监听传入连接。
+
+3. 选项包括：
+   - =-c shell commands= ：作为 =-e= 使用，用于执行 shell 命令（潜在危险）
+   - =-e filename= ：连接后执行指定程序（潜在危险）
+   - =-b= ：允许广播
+   - =-g gateway= ：指定源站点路由跳数，最多 8 个
+   - =-G num= ：设置源站点路由指针：4、8、12 等
+   - =-h= ：显示帮助信息
+   - =-i secs= ：发送行或扫描端口的延迟间隔
+   - =-k= ：在套接字上设置保持活动选项
+   - =-l= ：监听模式，用于接受传入连接
+   - =-n= ：仅使用数字 IP 地址，不进行 DNS 解析
+   - =-o file= ：以十六进制转储流量
+   - =-p port= ：本地端口号
+   - =-r= ：随机化本地和远程端口
+   - =-q secs= ：在标准输入 EOF 后退出，并延迟指定秒数
+   - =-s addr= ：本地源地址
+   - =-T tos= ：设置服务类型
+   - =-t= ：应答 TELNET 协商
+   - =-u= ：UDP 模式
+   - =-v= ：详细输出（使用两次更详细）
+   - =-w secs= ：连接和最终网络读取的超时时间
+   - =-C= ：将 CRLF 发送为行结束符
+   - =-z= ：零 I/O 模式（用于扫描）
+
+*** 扫描端口
+
+有时需要测试服务器的端口连通性，下面是测试服务器(IP:10.3.3.3 22) 22 端口是否开启的例子
+
+#+begin_src bash
+  ┌──(root💀adm-RecipeKit)-[~]
+  └─# nc -z -v -w 3 segfault.net 22
+  DNS fwd/rev mismatch: segfault.net != one.one.one.one
+  segfault.net [144.76.220.20] 22 (ssh) open
+
+  ┌──(root💀adm-RecipeKit)-[~]
+  └─# nc -z -v -w 3 segfault.net 6000
+  DNS fwd/rev mismatch: segfault.net != one.one.one.one
+  segfault.net [144.76.220.20] 6000 (x11) : Connection refused
+#+end_src
+
+-z 选项是报告连接状态(只连接不发送数据)
+
+-v 选项是输出命令过程信息,
+
+-w 是设置超时时间,默认是秒，如果要设置毫秒的话，可以在数字后面加上 ms, 比如：-w 3 是3秒超时，-w 300ms 表示超时时间是300毫秒
+
+从上面的结果可以看出，目标服务器上 22 端口是开启的，6000 端口是关闭的
+
+例子中扫描的是 TCP 协议的端口，如果要扫描 UDP 协议的端口，需要加上 -u 选项，如果换成 UDP 端口的话，上面的命令就会变成 nc -uz -v -w 3 segfault.net 22 
+
+*** 聊天服务器
+
+机器 A 的终端开启端口侦听，机器 B 连接 A 侦听的端口并向A发送数据。具体过程如下：
+
+- 机器 A 相当于一个简易的命令行聊天服务器，机器 B 相当于客户端的功能，默认使用 TCP 协议连接服务器
+- 机器 A 在本地开启一个侦听 8000 端口的服务，机器 B 连接 机器 A 的 8000 端口，连接成功之后可以互相发送数据了
+
+**** 机器 A
+
+#+begin_src bash
+  ┌──(root💀adm-RecipeKit)-[~]
+  └─# nc -l -p 8000
+  test
+  1
+  2
+  3
+  4
+  5
+#+end_src
+
+**** 机器 B
+
+#+begin_src bash
+  ┌──(root💀adm-RecipeKit)-[~]
+  └─# nc 100.126.224.24 8000
+  test
+  1
+  2
+  3
+  4
+  5
+#+end_src
+
+*** 传输文件
+
+机器 A 和机器 B 之间可以通过 nc 命令传输文件,具体步骤如下：
+
+机器 A 作为服务器，侦听 8000 端口并重定向到 out.txt 文件, 机器 B 连接机器 A  成功之后，自动把 input.txt 文件传输到服务器
+
+**** 机器 A
+
+#+begin_src bash
+  nc -l -p 8000 > out.txt  
+#+end_src
+
+**** 机器 B
+
+#+begin_src bash
+  nc 100.126.224.24 8000 < ts.sh
+#+end_src
+
+*** 创建后门
+
+可以在系统中创建后门执行 bash 命令的服务,因为涉及到系统安全性问题，所以生产环境要慎用，不过平时在内网开发环境中用
+来测试的话就很方便了，具体的使用步骤如下：
+
+上面的例子中，机器 A 开启端口 8000 的本地服务，服务会使用 /bin/bash 执行收到的命令，机器 B 客户端连上 机器 A 后，输入任意的命令，都相当于在63机器上执行，命令结果返回给64机器
+
+说明：-e 选项默认使用的是 /bin/bash 执行命令, 这里的 -e 也可以换成 -c ,唯一区别是 -c 默认使用的是 /bin/sh 执行命令
+
+**** 机器 A
+
+#+begin_src bash
+  ┌──(root💀adm-RecipeKit)-[~]
+  └─# nc -l -p 8000 -e /bin/bash
+#+end_src
+
+**** 机器 B
+
+#+begin_src bash
+  ┌──(root💀adm-RecipeKit)-[~]
+  └─# nc 100.126.224.24 8000
+  ls
+  CloudflareST
+  Desktop
+  Documents
+  Downloads
+  Music
+  Pictures
+  Public
+  Templates
+  Videos
+  info.txt
+  out.txt
+  test.bin
+  ts.sh
+  wordlists
+  yenao_ccf.sh
+  ls -l
+  total 28
+  drwxr-xr-x 2 root root      4096 Mar 14 18:13 CloudflareST
+  drwxr-xr-x 2 root root      4096 Feb 22 05:30 Desktop
+  drwxr-xr-x 2 root root        10 Feb 22 05:48 Documents
+  drwxr-xr-x 2 root root        10 Feb 22 05:48 Downloads
+  drwxr-xr-x 2 root root        10 Feb 22 05:48 Music
+  drwxr-xr-x 2 root root        10 Feb 22 05:48 Pictures
+  drwxr-xr-x 2 root root        10 Feb 22 05:48 Public
+  drwxr-xr-x 2 root root        10 Feb 22 05:48 Templates
+  drwxr-xr-x 2 root root        10 Feb 22 05:48 Videos
+  -rw-r--r-- 1 root root         7 Mar 15 01:46 info.txt
+  -rw-r--r-- 1 root root         0 Mar 16 08:48 out.txt
+  -rw-r--r-- 1 root root 209715200 Mar 14 03:17 test.bin
+  -rwxr-xr-x 1 root root       427 Mar 14 17:49 ts.sh
+  lrwxrwxrwx 1 root root        20 Feb 22 05:30 wordlists -> /usr/share/wordlists
+  -rwxr-xr-x 1 root root      3596 Mar 15 02:17 yenao_ccf.sh
+#+end_src
+
+*** 远程执行脚本
+
+nc 支持远程执行 shell 脚本和 lua 脚本
+
+**** shell 脚本
+
+脚本 s.sh 脚本内容如下：
+
+#+begin_src bash
+  #!/bin/sh
+
+  echo "this is a shell programming..."
+#+end_src
+
+**** 服务器端
+
+#+begin_src bash
+  ┌──(root💀adm-RecipeKit)-[~]
+  └─# nc -l 100.126.224.24 -p 8000 -e ./s.sh 
+#+end_src
+
+**** 客户端
+
+#+begin_src bash
+  ┌──(root💀adm-RecipeKit)-[~]
+  └─# nc 100.126.224.24 8000
+  this is a shell programming...
+#+end_src
+
+*** Web服务器
+
+nc 可以当做简易的 web 服务器，现服务器本地有一个 index.html 文件，内容如下
+
+#+begin_src html
+  HTTP/1.0 200 OK
+  <html>
+	<head>
+	  <title>Test Page</title>
+	</head>
+	<body>
+	  <p>This is a Netcat Basic HTTP server!</p>
+	</body>
+  </html>
+#+end_src
+
+服务器执行 nc -k -l 192.168.70.63 8080 < index.html 命令监听8080端口
+
+打开浏览器，地址栏输入 192.168.70.63:8080，具体效果如下图:
+
+此时，服务器端的输出如下：
+
+注意：-k 选项是指监听模式接受多个连接,如果没有指定 -k 选项的话，浏览器访问一次，服务器就会退出了
+
+**** 机器 A
+
+#+begin_src bash
+  ┌──(root💀adm-RecipeKit)-[~]
+  └─# nc -l 100.126.224.24 -p 80 < index.html
+  GET / HTTP/1.1
+  Host: 100.126.224.24
+  User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3
+  Accept: */*
+#+end_src
+
+**** 机器 B
+
+#+begin_src bash
+  ┌──(root💀adm-RecipeKit)-[~]
+  └─# curl -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3" 100.126.224.24 80
+#+end_src
+
+*** 作为浏览器
+
+nc 不仅可以当作web服务器，还可以当作浏览器发送HTTP请求
+
+以百度首页为例, 输入 nc www.baidu.com 80，回车之后，再次输入 GET / HTTP/1.0 再次敲击两次回车，即可获得百度首页的HTML 文档内容，由于百度首页HTML太长，下面的例子只是文档的部分内容
+
+#+begin_src bash
+  ┌──(root💀adm-RecipeKit)-[~]
+  └─# nc www.baidu.com 80
+  GET / HTTP/1.0
+
+  HTTP/1.0 200 OK
+  Accept-Ranges: bytes
+  Cache-Control: no-cache
+  Content-Length: 9508
+  Content-Type: text/html
+  Date: Sat, 16 Mar 2024 09:19:44 GMT
+  P3p: CP=" OTI DSP COR IVA OUR IND COM "
+  P3p: CP=" OTI DSP COR IVA OUR IND COM "
+  Pragma: no-cache
+  Server: BWS/1.1
+#+end_src
+
+*** 查找运行在端口上的服务
+
+nc 可以扫描指定IP上指定端口是否开启，那能否查找到指定IP上运行于指定端口上的服务呢？ 答案是肯定的，以下的例子是获取指定IP上 22 号端口上运行的服务
+
+#+begin_src bash
+  ┌──(root💀adm-RecipeKit)-[~]
+  └─# nc -v segfault.net 22
+  DNS fwd/rev mismatch: segfault.net != one.one.one.one
+  segfault.net [144.76.220.20] 22 (ssh) open
+  SSH-2.0-OpenSSH_9.6
+#+end_src
+
+从上面的例子中可以看出，机器(segfault.net)上 22 号端口上运行的是 SSH 服务

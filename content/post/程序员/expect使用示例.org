@@ -1,0 +1,165 @@
+---
+title: expect使用示例
+tags: ["expect"]
+date: 2025-06-27T14:26:36.09+0800
+---
+
+* expect使用示例
+
+如果通过对expect重定向的方式写脚本的话，这样的脚本适合出现在脚本文件中，如果是通过expect -c这样的方式调用，则运行在命令行上
+
+** 示例一
+
+该示例适合运行在脚本文件中，然后通过expect命令运行脚本文件，比如脚本名test.sh
+
+#+begin_src bash
+expect << 'END'
+  set pass "segfault"
+  spawn ssh root@segfault.net
+  expect {
+        "yes/no" { send "yes\r"; exp_continue }
+        "password:" { send -- "$pass\n" }
+  }
+  expect "Continuing in 30 sec..." { sleep 30; send "\r" }
+  expect "Press any key to continue" { send "\r" }
+  # expect "Would you like to see your SECRET now? (y/N)" { send "y" }  
+  interact
+END
+#+end_src
+
+*** 运行方式
+
+#+begin_src bash
+  expect test.sh
+#+end_src
+
+** 示例二
+
+该示例适合运行在命令行，如果将该示例添加到脚本文件运行则会执行不了，直接复制该示例粘贴到命令行上回车运行即可
+
+#+begin_src bash
+expect -c '
+  set pass "segfault"
+  spawn ssh root@segfault.net
+  expect {
+        "yes/no" { send "yes\r"; exp_continue }
+        "password:" { send -- "$pass\n" }
+  }
+  expect "Continuing in * sec..." { send "\n" }
+  expect "Press*" { send "\n" }
+  interact
+'
+#+end_src
+
+*** 增加端口转发和代理
+#+begin_src bash
+expect -c '
+  set pass "segfault"
+  spawn ssh -D 127.0.0.1:1080 root@segfault.net
+  expect {
+        "yes/no" { send "yes\r"; exp_continue }
+        "password:" { send -- "$pass\n" }
+  }
+  expect "Continuing in * sec..." { send "\n" }
+  expect "Press*" { send "\n" }
+  interact
+'
+#+end_src
+-D 127.0.0.1:1080：开启一个 SOCKS5 代理，监听在本机的 127.0.0.1:1080
+
+**** 验证代理
+#+begin_src bash
+$ curl --proxy socks5://127.0.0.1:1080 google.com
+<HTML><HEAD><meta http-equiv="content-type" content="text/html;charset=utf-8">
+<TITLE>301 Moved</TITLE></HEAD><BODY>
+<H1>301 Moved</H1>
+The document has moved
+<A HREF="http://www.google.com/">here</A>.
+</BODY></HTML>
+#+end_src
+
+** 示例三
+
+这是一个常规示例，同样，运行在命令行上
+
+#+begin_src bash
+expect -c '  
+  set pass "Mind@123"
+  spawn ssh root@192.168.0.2
+  expect {
+        "yes/no" { send "yes\r"; exp_continue }
+        "password:" { send -- "$pass\r" }
+  }  
+  interact
+'
+#+end_src
+
+** 使用for循环
+#+begin_src bash
+expect -c '
+    spawn cmd /c EMIFboot_out2bin.bat    
+    expect "Press"
+    for {set i 0} {$i < 3} {incr i} {
+        send "\n"
+        sleep 0.1
+    }                       
+    expect eof    
+'
+#+end_src
+
+** expect eof 和 interact 有什么区别
+expect eof 和 interact 是 Expect 脚本中两个非常重要的命令，它们有着本质的区别：
+
+*** expect eof - 等待子进程结束
+作用：等待 spawn 启动的子进程执行完毕
+
+行为：阻塞直到子进程退出
+
+适用场景：自动化脚本执行，不需要用户交互
+
+示例：
+#+begin_src bash
+expect
+spawn some_command
+expect "some pattern"
+send "some input\r"
+expect eof  # 等待 some_command 执行完成
+#+end_src
+
+*** interact - 将控制权交还给用户
+作用：将键盘输入传递给子进程，允许用户与程序交互
+
+行为：Expect 停止自动化控制，用户可以直接操作
+
+适用场景：部分自动化后需要用户手动操作
+
+示例：
+#+begin_src bash
+expect
+spawn ssh user@host
+expect "password:"
+send "mypassword\r"
+interact  # 登录后，用户可以直接操作ssh会话
+#+end_src
+
+对比表格：
+|----------+-----------------+------------------|
+| 特性     | expect eof      | interact         |
+|----------+-----------------+------------------|
+| 控制权   | Expect 保持控制 | 交还给用户       |
+|----------+-----------------+------------------|
+| 等待对象 | 等待进程结束    | 不等待，立即返回 |
+|----------+-----------------+------------------|
+| 典型用途 | 完全自动化      | 半自动化         |
+|----------+-----------------+------------------|
+| 后续代码 | 可以继续执行    | 通常放在脚本末尾 |
+|----------+-----------------+------------------|
+| 进程状态 | 进程结束后继续  | 进程继续运行     |
+|----------+-----------------+------------------|
+
+** 参考链接
+[[https://blog.csdn.net/qq_46227568/article/details/148049057][使用 curl 通过 SOCKS5 代理访问目标网站]]
+
+[[https://www.cnblogs.com/iloveyoucc/archive/2012/06/17/2552553.html][expect语法基础： while、for 循环、if 语句的用法示例]]
+
+[[https://chat.deepseek.com/share/4uo1i163nfgxuq2cim][expect eof 和 interact 有什么区别 | DeepSeek]]

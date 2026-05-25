@@ -1,0 +1,33 @@
+---
+title: termux安装Conda教程
+tags: ["termux", "conda"]
+date: 2025-06-24T18:38:08.39+0800
+---
+
+* termux安装Conda教程
+
+** 安装Ubuntu
+
+#+begin_src bash
+  #- 安装proot-distro
+  pkg install proot-distro -y
+  #- 查看有哪些系统
+  proot-distro list
+  #- 安装ubuntu系统
+  proot-distro install ubuntu
+  #- 登录ubuntu系统
+  proot-distro login ubuntu
+#+end_src
+
+** 安装Conda
+
+#+begin_src bash
+  #- 下载miniconda安装脚本
+  wget -v https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-aarch64.sh
+  #- 运行安装脚本
+  bash Miniconda3-latest-Linux-aarch64.sh
+#+end_src
+
+** 参考链接
+
+[[https://blog.csdn.net/UCAS_HMM/article/details/145529239#Conda_150][【Termux】termux+ubuntu+vscode+conda环境搭建]]

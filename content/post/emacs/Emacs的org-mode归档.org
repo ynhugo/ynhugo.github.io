@@ -1,0 +1,59 @@
+---
+title: Emacs的org-mode归档
+tags: ["emacs", "org-mode"]
+date: 2024-11-26T03:14:07.26+0800
+---
+
+* Emacs的org-mode归档
+
+如果你用org-mode来做TODO管理，那么无法避免的是，随着时间的流逝，被DONE的事件会越来越多，那么TODO被会被夹杂在DONE之间，难以查找。同时，由于后期回顾的需要，你也不想简单地将DONE事件删除掉。这个时候，你就需要归档命令了。归档，就是把你不想天天看到的东西，放到你看不到了，或者不怎么影响你的注意力的地方去。org-mode提供了两种归档方式。
+
+** 内部归档
+
+内部归档是在本文件内部给特定子树打上ACHIVED标签或者移动到名为achived的子树中去并打上标签。
+
+这个被认为是ACIVED的子树，会被移动了本级子树的最末端。
+例如有这么一个子树，由三个TODO项目组成。
+#+begin_src 
+	* blog
+    ** TODO 匈牙利命名法
+    ** TODO org-mode 归档
+    ** TODO BillG审查
+#+end_src
+
+** C-c C-x a
+将某一个节点打上ARCHIVE标签。
+#+begin_src 
+   * blog
+   ** TODO 匈牙利命名法
+   ** TODO org-mode 归档						    :ARCHIVE:
+   ** TODO BillG审查
+#+end_src
+
+** C-c C-x A
+将当前节点归入一个名为Archive的子树中，并且这个子树是位于当前级别子树的最下方。
+
+#+begin_src 
+  * blog
+  ** TODO org-mode 归档						    :ARCHIVE:
+  ** TODO BillG审查
+  ** Archive							    :ARCHIVE:
+  *** TODO 匈牙利命名法
+      :PROPERTIES:
+      :ARCHIVE_TIME: 2010-01-02 六 18:14
+      :END:
+#+end_src
+
+** 外部归档
+
+外部归档是指把子树移动到另一个org文件中去。文件名可以自定义。默认情况下，归档的子树会被移动到名为“当年文件名_archived”的文件中去。
+
+C-c C-x C-s是把当前的节点移到archived文件中去。
+
+我个人还是更喜欢在文件内部做归档。因为它兼具归档的好处和查找的方便。
+
+在任何一个树的子树中，只有一个archive子树，只占文档的一行，当你居然查看以前存档的事件时，只能在这个节点上使用"C-TAB"命令即可打开。
+
+** 参考链接
+
+[[https://blog.csdn.net/donglin425/article/details/7049513][Emacs的orgmode [归档］]]

@@ -1,0 +1,2478 @@
+---
+title: "ffmpeg 教程"
+date: 2024-09-14T15:18:12.00+0800
+tags: ["tools", "ffmpeg"]
+---
+
+* ffmpeg使用教程
+
+** 安装 ffmpeg
+
+*** windows 安装 ffmpeg
+
+下载页面：https://ffmpeg.org/download.html
+
+** 查看设备列表
+
+*** Windows查看设备列表
+
+#+begin_src bash
+  ffmpeg -list_devices true -f dshow -i dummy
+#+end_src
+
+**** 查看设备列表结果
+
+像我的主机上只有audio相关设备，没有video相关设备
+
+#+begin_src bash
+$ ffmpeg -list_devices true -f dshow -i dummy
+ffmpeg version N-112134-g9ef20920ab-20230920 Copyright (c) 2000-2023 the FFmpeg developers
+  built with gcc 13.1.0 (crosstool-NG 1.25.0.196_227d99d)
+  configuration: --prefix=/ffbuild/prefix --pkg-config-flags=--static --pkg-config=pkg-config --cross-prefix=x86_64-w64-mingw32- --arch=x86_64 --target-os=mingw32 --enable-gpl --enable-version3 --disable-debug --disable-w32threads --enable-pthreads --enable-iconv --enable-libxml2 --enable-zlib --enable-libfreetype --enable-libfribidi --enable-gmp --enable-lzma --enable-fontconfig --enable-libharfbuzz --enable-libvorbis --enable-opencl --disable-libpulse --enable-libvmaf --disable-libxcb --disable-xlib --enable-amf --enable-libaom --enable-libaribb24 --enable-avisynth --enable-chromaprint --enable-libdav1d --enable-libdavs2 --disable-libfdk-aac --enable-ffnvcodec --enable-cuda-llvm --enable-frei0r --enable-libgme --enable-libkvazaar --enable-libass --enable-libbluray --enable-libjxl --enable-libmp3lame --enable-libopus --enable-librist --enable-libssh --enable-libtheora --enable-libvpx --enable-libwebp --enable-lv2 --enable-libvpl --enable-openal --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-libopenh264 --enable-libopenjpeg --enable-libopenmpt --enable-librav1e --enable-librubberband --enable-schannel --enable-sdl2 --enable-libsoxr --enable-libsrt --enable-libsvtav1 --enable-libtwolame --enable-libuavs3d --disable-libdrm --enable-vaapi --enable-libvidstab --enable-vulkan --enable-libshaderc --enable-libplacebo --enable-libx264 --enable-libx265 --enable-libxavs2 --enable-libxvid --enable-libzimg --enable-libzvbi --extra-cflags=-DLIBTWOLAME_STATIC --extra-cxxflags= --extra-ldflags=-pthread --extra-ldexeflags= --extra-libs=-lgomp --extra-version=20230920
+  libavutil      58. 25.100 / 58. 25.100
+  libavcodec     60. 26.100 / 60. 26.100
+  libavformat    60. 13.100 / 60. 13.100
+  libavdevice    60.  2.101 / 60.  2.101
+  libavfilter     9. 11.100 /  9. 11.100
+  libswscale      7.  3.100 /  7.  3.100
+  libswresample   4. 11.100 /  4. 11.100
+  libpostproc    57.  2.100 / 57.  2.100
+[dshow @ 0000025ec2e24e80] "OBS Virtual Camera" (video)
+[dshow @ 0000025ec2e24e80]   Alternative name "@device_sw_{860BB310-5D01-11D0-BD3B-00A0C911CE86}\{A3FCE0F5-3493-419F-958A-ABA1250EC20B}"
+[dshow @ 0000025ec2e24e80] "麦克风 (Realtek(R) Audio)" (audio)
+[dshow @ 0000025ec2e24e80]   Alternative name "@device_cm_{33D9A762-90C8-11D0-BD43-00A0C911CE86}\wave_{8E507121-E2A9-415D-9EC9-B975D91463F7}"
+[dshow @ 0000025ec2e24e80] "立体声混音 (Realtek(R) Audio)" (audio)
+[dshow @ 0000025ec2e24e80]   Alternative name "@device_cm_{33D9A762-90C8-11D0-BD43-00A0C911CE86}\wave_{56D3F882-71A2-4A0B-BF2A-404379259FF8}"
+[in#0 @ 0000025ec2e1f4c0] Error opening input: Immediate exit requested
+Error opening input file dummy.
+#+end_src
+
+**** 查看视频录制的可选参数
+
+#+begin_src bash
+  ffmpeg -f dshow -list_options true -i video="OBS Virtual Camera"
+#+end_src
+
+***** 查看视频录制的可选参数结果
+
+#+begin_src bash
+  $ ffmpeg -f dshow -list_options true -i video="OBS Virtual Camera"
+  ffmpeg version N-112134-g9ef20920ab-20230920 Copyright (c) 2000-2023 the FFmpeg developers
+  built with gcc 13.1.0 (crosstool-NG 1.25.0.196_227d99d)
+  configuration: --prefix=/ffbuild/prefix --pkg-config-flags=--static --pkg-config=pkg-config --cross-prefix=x86_64-w64-mingw32- --arch=x86_64 --target-os=mingw32 --enable-gpl --enable-version3 --disable-debug --disable-w32threads --enable-pthreads --enable-iconv --enable-libxml2 --enable-zlib --enable-libfreetype --enable-libfribidi --enable-gmp --enable-lzma --enable-fontconfig --enable-libharfbuzz --enable-libvorbis --enable-opencl --disable-libpulse --enable-libvmaf --disable-libxcb --disable-xlib --enable-amf --enable-libaom --enable-libaribb24 --enable-avisynth --enable-chromaprint --enable-libdav1d --enable-libdavs2 --disable-libfdk-aac --enable-ffnvcodec --enable-cuda-llvm --enable-frei0r --enable-libgme --enable-libkvazaar --enable-libass --enable-libbluray --enable-libjxl --enable-libmp3lame --enable-libopus --enable-librist --enable-libssh --enable-libtheora --enable-libvpx --enable-libwebp --enable-lv2 --enable-libvpl --enable-openal --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-libopenh264 --enable-libopenjpeg --enable-libopenmpt --enable-librav1e --enable-librubberband --enable-schannel --enable-sdl2 --enable-libsoxr --enable-libsrt --enable-libsvtav1 --enable-libtwolame --enable-libuavs3d --disable-libdrm --enable-vaapi --enable-libvidstab --enable-vulkan --enable-libshaderc --enable-libplacebo --enable-libx264 --enable-libx265 --enable-libxavs2 --enable-libxvid --enable-libzimg --enable-libzvbi --extra-cflags=-DLIBTWOLAME_STATIC --extra-cxxflags= --extra-ldflags=-pthread --extra-ldexeflags= --extra-libs=-lgomp --extra-version=20230920
+  libavutil      58. 25.100 / 58. 25.100
+  libavcodec     60. 26.100 / 60. 26.100
+  libavformat    60. 13.100 / 60. 13.100
+  libavdevice    60.  2.101 / 60.  2.101
+  libavfilter     9. 11.100 /  9. 11.100
+  libswscale      7.  3.100 /  7.  3.100
+  libswresample   4. 11.100 /  4. 11.100
+  libpostproc    57.  2.100 / 57.  2.100
+  [dshow @ 000002a9577d4180] DirectShow video device options (from video devices)
+  [dshow @ 000002a9577d4180]  Pin "Video Output" (alternative pin name "Output Pin")
+  [dshow @ 000002a9577d4180]   pixel_format=nv12  min s=1920x1080 fps=30 max s=1920x1080 fps=30
+  [dshow @ 000002a9577d4180]   pixel_format=yuv420p  min s=1920x1080 fps=30 max s=1920x1080 fps=30
+  [dshow @ 000002a9577d4180]   pixel_format=yuyv422  min s=1920x1080 fps=30 max s=1920x1080 fps=30
+  [in#0 @ 000002a9577ce5c0] Error opening input: Immediate exit requested
+  Error opening input file video=OBS Virtual Camera.
+#+end_src
+
+**** 查看音频录制的可选参数
+
+#+begin_src bash
+  ffmpeg -f dshow -list_options true -i audio="麦克风 (Realtek(R) Audio)"
+#+end_src
+
+***** 查看音频录制的可选参数结果
+
+#+begin_src bash
+  $ ffmpeg -f dshow -list_options true -i audio="麦克风 (Realtek(R) Audio)"
+  ffmpeg version N-112134-g9ef20920ab-20230920 Copyright (c) 2000-2023 the FFmpeg developers
+  built with gcc 13.1.0 (crosstool-NG 1.25.0.196_227d99d)
+  configuration: --prefix=/ffbuild/prefix --pkg-config-flags=--static --pkg-config=pkg-config --cross-prefix=x86_64-w64-mingw32- --arch=x86_64 --target-os=mingw32 --enable-gpl --enable-version3 --disable-debug --disable-w32threads --enable-pthreads --enable-iconv --enable-libxml2 --enable-zlib --enable-libfreetype --enable-libfribidi --enable-gmp --enable-lzma --enable-fontconfig --enable-libharfbuzz --enable-libvorbis --enable-opencl --disable-libpulse --enable-libvmaf --disable-libxcb --disable-xlib --enable-amf --enable-libaom --enable-libaribb24 --enable-avisynth --enable-chromaprint --enable-libdav1d --enable-libdavs2 --disable-libfdk-aac --enable-ffnvcodec --enable-cuda-llvm --enable-frei0r --enable-libgme --enable-libkvazaar --enable-libass --enable-libbluray --enable-libjxl --enable-libmp3lame --enable-libopus --enable-librist --enable-libssh --enable-libtheora --enable-libvpx --enable-libwebp --enable-lv2 --enable-libvpl --enable-openal --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-libopenh264 --enable-libopenjpeg --enable-libopenmpt --enable-librav1e --enable-librubberband --enable-schannel --enable-sdl2 --enable-libsoxr --enable-libsrt --enable-libsvtav1 --enable-libtwolame --enable-libuavs3d --disable-libdrm --enable-vaapi --enable-libvidstab --enable-vulkan --enable-libshaderc --enable-libplacebo --enable-libx264 --enable-libx265 --enable-libxavs2 --enable-libxvid --enable-libzimg --enable-libzvbi --extra-cflags=-DLIBTWOLAME_STATIC --extra-cxxflags= --extra-ldflags=-pthread --extra-ldexeflags= --extra-libs=-lgomp --extra-version=20230920
+  libavutil      58. 25.100 / 58. 25.100
+  libavcodec     60. 26.100 / 60. 26.100
+  libavformat    60. 13.100 / 60. 13.100
+  libavdevice    60.  2.101 / 60.  2.101
+  libavfilter     9. 11.100 /  9. 11.100
+  libswscale      7.  3.100 /  7.  3.100
+  libswresample   4. 11.100 /  4. 11.100
+  libpostproc    57.  2.100 / 57.  2.100
+  [dshow @ 000001a1c5a65e00] DirectShow audio only device options (from audio devices)
+  [dshow @ 000001a1c5a65e00]  Pin "Capture" (alternative pin name "Capture")
+  [dshow @ 000001a1c5a65e00]   ch= 2, bits=16, rate= 44100
+  Last message repeated 1 times
+  [dshow @ 000001a1c5a65e00]   ch= 1, bits=16, rate= 44100
+  [dshow @ 000001a1c5a65e00]   ch= 2, bits=16, rate= 32000
+  [dshow @ 000001a1c5a65e00]   ch= 1, bits=16, rate= 32000
+  [dshow @ 000001a1c5a65e00]   ch= 2, bits=16, rate= 22050
+  [dshow @ 000001a1c5a65e00]   ch= 1, bits=16, rate= 22050
+  [dshow @ 000001a1c5a65e00]   ch= 2, bits=16, rate= 11025
+  [dshow @ 000001a1c5a65e00]   ch= 1, bits=16, rate= 11025
+  [dshow @ 000001a1c5a65e00]   ch= 2, bits=16, rate=  8000
+  [dshow @ 000001a1c5a65e00]   ch= 1, bits=16, rate=  8000
+  [dshow @ 000001a1c5a65e00]   ch= 2, bits= 8, rate= 44100
+  [dshow @ 000001a1c5a65e00]   ch= 1, bits= 8, rate= 44100
+  [dshow @ 000001a1c5a65e00]   ch= 2, bits= 8, rate= 22050
+  [dshow @ 000001a1c5a65e00]   ch= 1, bits= 8, rate= 22050
+  [dshow @ 000001a1c5a65e00]   ch= 2, bits= 8, rate= 11025
+  [dshow @ 000001a1c5a65e00]   ch= 1, bits= 8, rate= 11025
+  [dshow @ 000001a1c5a65e00]   ch= 2, bits= 8, rate=  8000
+  [dshow @ 000001a1c5a65e00]   ch= 1, bits= 8, rate=  8000
+  [dshow @ 000001a1c5a65e00]   ch= 2, bits=16, rate= 48000
+  [dshow @ 000001a1c5a65e00]   ch= 1, bits=16, rate= 48000
+  [dshow @ 000001a1c5a65e00]   ch= 2, bits=16, rate= 96000
+  [dshow @ 000001a1c5a65e00]   ch= 1, bits=16, rate= 96000
+  [in#0 @ 000001a1c5a5bd00] Error opening input: Immediate exit requested
+  Error opening input file audio=麦克风 (Realtek(R) Audio).
+#+end_src
+
+*** Linux查看设备列表
+
+#+begin_src bash
+  ffmpeg -devices true -f dshow -i dummy
+#+end_src
+
+**** 查看设备列表结果
+
+#+begin_src bash
+  ubt@ubt:~/ts/debug$ ffmpeg -devices true -f dshow -i dummy
+  ffmpeg version 4.3.1 Copyright (c) 2000-2020 the FFmpeg developers
+  built with gcc 9 (Ubuntu 9.4.0-1ubuntu1~20.04.2)
+  configuration: --enable-gpl --enable-libass --enable-libfdk-aac --enable-libfreetype --enable-libopus --enable-libvorbis --enable-libvpx --enable-libx264 --enable-libx265 --enable-nonfree
+  libavutil      56. 51.100 / 56. 51.100
+  libavcodec     58. 91.100 / 58. 91.100
+  libavformat    58. 45.100 / 58. 45.100
+  libavdevice    58. 10.100 / 58. 10.100
+  libavfilter     7. 85.100 /  7. 85.100
+  libswscale      5.  7.100 /  5.  7.100
+  libswresample   3.  7.100 /  3.  7.100
+  libpostproc    55.  7.100 / 55.  7.100
+  Devices:
+  D. = Demuxing supported
+  .E = Muxing supported
+  --
+  DE alsa            ALSA audio output
+  DE fbdev           Linux framebuffer
+  D  lavfi           Libavfilter virtual input device
+  DE oss             OSS (Open Sound System) playback
+  E sdl,sdl2        SDL2 output device
+  DE sndio           sndio audio playback
+  DE video4linux2,v4l2 Video4Linux2 output device
+  D  x11grab         X11 screen capture, using XCB
+  E xv              XV (XVideo) output device
+#+end_src
+
+** 屏幕录制
+
+*** Windows下操作
+
+**** 只录制画面，没有声音
+
+#+begin_src bash
+  ffmpeg -f gdigrab -i desktop -f mp4 out.mp4
+#+end_src
+
+***** 播放视频
+
+#+begin_src bash
+  ffplay out.mp4
+#+end_src
+
+**** 只录制声音，没有画面
+
+#+begin_src bash
+  ffmpeg -f dshow -i audio="麦克风 (Realtek(R) Audio)" -f mp3 out.mp3 -y
+#+end_src
+
+***** 播放音频
+
+#+begin_src bash
+  ffplay out.mp3
+#+end_src
+
+**** 同时录制声音和画面-1
+
+#+begin_src bash
+  ffmpeg -f dshow -i audio="麦克风 (Realtek(R) Audio)" -f gdigrab -i desktop -f mp4 -y out.mp4
+#+end_src
+
+***** 以下是录制命令的说明：
+
+-f gdigrab 使用 FFmpeg 内置的 Windows 屏幕录制命令gdigrab，录制对象可为全屏、指定范围和指定程序。MacOS 录屏方法为AVFoundation，Linux 录屏方法为x11grab。
+
+**** 同时录制声音和画面-2
+
+#+begin_src bash
+  ffmpeg -f dshow -i audio="麦克风 (Realtek(R) Audio)" -f dshow -i video="OBS Virtual Camera" -f mp4 -y out.mp4
+#+end_src
+
+***** 以下是录制命令的说明：
+
+"OBS Virtual Camera" 是电脑安装了OBS，然后将OBS的虚拟摄像机打开并设置输出类型为"来源"，输出选择为"显示器采集"，打开了虚拟摄像机后可以再次使用命令查看设备列表可以看到多出一个OBS的虚拟摄像机
+
+***** 播放视频
+
+#+begin_src bash
+  ffplay out.mp4
+#+end_src
+
+**** 多参数录屏示例
+
+#+begin_src bash
+  ffmpeg -f gdigrab -t 30 -framerate 15 -i desktop -f dshow -i audio="麦克风 (Realtek(R) Audio)" -b:v 3M -pixel_format yuv420p -vcodec libx264 -s 1366x768 -y test.flv
+#+end_src
+
+***** 命令详解
+
+-f 指定采集数据方式，一般为dshow 或 gdigrab。gdigrab为系统自带，只能录屏幕，没声音；dshow需装directX，优点是可以指定多个输入，比如下载安装screen capture recorder后，可将其作为dshow模式下的视频输入，可将virtual-audio-capturer作为dshow模式下的音频输入，实现录屏的同时录音。
+-i 指定输入，desktop表示gdigrab采集模式输入全部桌面。dshow模式下自己指定，如：-i video="screen-capture-recorder" -i audio="virtual-audio-capturer" 
+-t 表示录屏时间，缺省则没有录屏时间限制，会一直录，录到手动停止或强制关闭
+-framerate 表示帧率。对屏幕录制来说，一般15帧就够了，太大的话会很占资源，cpu占用率、内存、存储空间占用等都会很高。
+- s 表示分辨率
+-b:v 表示码率，如：-b:v 3M。大一点清楚，但是占资源，自己权衡吧。
+-pixel_format 表示像素格式，如yuv420p等，注意选择不同的像素格式会影响资源占用率和视频质量，自己研究吧。
+-vcodec 表示编码方式。libx264表示软编码，编码器的库为x264。你可以选择其他的，不同的编码方式也会影响资源占用率和视频质量，自己研究吧。此外可以用硬件加速，硬编解码有3种常见的方式，例如：-vcodec h264_qsv，即使用集显加速；例如： -vcodec h264_nvenc，即使用N卡加速；例如： -vcodec h264_amf，即使用A卡加速。开启硬件加速的情况下可大大降低CPU的占用率
+-y 表示覆盖同名文件
+test.flv为输出文件名，格式虽然mp4较为常见，但我建议用flv格式，因为如果中间有录制损坏，mp4整个就播放不了了，但flv能。
+
+***** 播放视频
+
+#+begin_src bash
+  ffplay test.flv
+#+end_src
+
+**** ffmpeg对桌面或指定窗口录制视频gdigrab
+
+***** ffmpeg录屏命令gdigrab
+
+基于Win32屏幕捕捉设备，支持对显示器指定区域进行录屏。
+
+可选2种捕捉方式：
+
+| -i | desktop            |
+|----+--------------------|
+| -i | title=window_title |
+
+- 方式1 捕捉整个桌面或者桌面的某个区域。
+
+- 方式2 捕捉指定窗口，由窗口标题栏指定窗口。
+
+实际上，由于窗口标题可能重名，导致录屏窗口不对。
+
+****** 录制窗口
+
+#+begin_src bash
+  ffmpeg -f gdigrab -t 3 -i title=企业微信 -y out.mp4
+#+end_src
+
+****** 整个桌面 6帧/秒
+
+#+begin_src bash
+  ffmpeg -f gdigrab -framerate 6 -i desktop out.mp4
+#+end_src
+
+****** 桌面指定区域 左上角(10,20) 尺寸(640x480)
+
+#+begin_src bash
+ffmpeg -f gdigrab -framerate 6 -offset_x 10 -offset_y 20 -video_size vga -i desktop out.mp4
+#+end_src
+
+****** 录制左半边屏幕
+
+录制时长为3秒
+
+#+begin_src bash
+  ffmpeg -f gdigrab -show_region 1 -t 3 -offset_x 0 -offset_y 0 -video_size 960x1080 -i desktop -y out.mp4
+#+end_src
+
+****** 录制右半边屏幕
+
+#+begin_src bash
+  ffmpeg -f gdigrab -show_region 1 -t 3 -offset_x 960 -offset_y 0 -video_size 960x1080 -i desktop -y out.mp4
+#+end_src
+
+****** 录制左上角占屏幕四分之一的区域
+
+#+begin_src bash
+  ffmpeg -f gdigrab -show_region 1 -t 3 -offset_x 0 -offset_y 0 -video_size 960x540 -i desktop -y out.mp4
+#+end_src
+
+****** 录制左下角占屏幕四分之一的区域
+
+#+begin_src bash
+  ffmpeg -f gdigrab -show_region 1 -t 3 -offset_x 0 -offset_y 540 -video_size 960x540 -i desktop -y out.mp4
+#+end_src
+
+****** 录制右上角占屏幕四分之一的区域
+
+#+begin_src bash
+  ffmpeg -f gdigrab -show_region 1 -t 3 -offset_x 960 -offset_y 0 -video_size 960x540 -i desktop -y out.mp4
+#+end_src
+
+****** 录制右下角占屏幕四分之一的区域
+
+#+begin_src bash
+  ffmpeg -f gdigrab -show_region 1 -t 3 -offset_x 960 -offset_y 540 -video_size 960x540 -i desktop -y out.mp4
+#+end_src
+
+****** 窗口标题为"Calculator"的窗口 也可设置offset_x/y和video_size
+
+#+begin_src bash
+  ffmpeg -f gdigrab -framerate 6 -i title=Calculator out.mp4
+#+end_src
+
+****** 显示边界框 只是提示作用不会保存进视频中
+
+#+begin_src bash
+  ffmpeg -f gdigrab -show_region 1 -framerate 6 -video_size cif -offset_x 10 -offset_y 20 -i desktop out.mp4
+#+end_src
+
+******* 参数详解
+
+- framerate
+    录屏帧率。默认值ntsc, 一般是30000/1001.
+除了ffmpeg设置默认参数之外，gdigrab可设置下列参数项：
+- show_region
+    录屏时是否在屏幕上显示边界框。用于检查录屏区域，防止区域错误。
+    1显示，0不显示。
+- draw_mouse
+    是否包含鼠标。0=不包含，1=包含。默认值1，视频含有鼠标。
+- video_size
+    视频尺寸，默认整个桌面或整个窗口。
+    自定义尺寸，如1280x720。或者，下面的列表之一。
+- offset_x
+    和video_size一起使用，指定左上角位置。
+    原点为桌面或指定窗口的左上角。
+- offset_y
+    同上。
+
+不使用video_size/offset_x/offset_y，则对整个桌面或程序窗口录屏，使用则只对桌面或窗口的部分区域进行录屏。
+
+***** video_size可选视频尺寸
+
+| ntsc      |   720x480 |
+|-----------+-----------|
+| pal       |   720x576 |
+|-----------+-----------|
+| qntsc     |   352x240 |
+|-----------+-----------|
+| qpal      |   352x288 |
+|-----------+-----------|
+| sntsc     |   640x480 |
+|-----------+-----------|
+| spal      |   768x576 |
+|-----------+-----------|
+| film      |   352x240 |
+|-----------+-----------|
+| ntsc-film |   352x240 |
+|-----------+-----------|
+| sqcif     |    128x96 |
+|-----------+-----------|
+| qcif      |   176x144 |
+|-----------+-----------|
+| cif       |   352x288 |
+|-----------+-----------|
+| 4cif      |   704x576 |
+|-----------+-----------|
+| 16cif     | 1408x1152 |
+|-----------+-----------|
+| qqvga     |   160x120 |
+|-----------+-----------|
+| qvga      |   320x240 |
+|-----------+-----------|
+| vga       |   640x480 |
+|-----------+-----------|
+| svga      |   800x600 |
+|-----------+-----------|
+| xga       |  1024x768 |
+|-----------+-----------|
+| uxga      | 1600x1200 |
+|-----------+-----------|
+| qxga      | 2048x1536 |
+|-----------+-----------|
+| sxga      | 1280x1024 |
+|-----------+-----------|
+| qsxga     | 2560x2048 |
+|-----------+-----------|
+| hsxga     | 5120x4096 |
+|-----------+-----------|
+| wvga      |   852x480 |
+|-----------+-----------|
+| wxga      |  1366x768 |
+|-----------+-----------|
+| wsxga     | 1600x1024 |
+|-----------+-----------|
+| wuxga     | 1920x1200 |
+|-----------+-----------|
+| woxga     | 2560x1600 |
+|-----------+-----------|
+| wqsxga    | 3200x2048 |
+|-----------+-----------|
+| wquxga    | 3840x2400 |
+|-----------+-----------|
+| whsxga    | 6400x4096 |
+|-----------+-----------|
+| whuxga    | 7680x4800 |
+|-----------+-----------|
+| cga       |   320x200 |
+|-----------+-----------|
+| ega       |   640x350 |
+|-----------+-----------|
+| hd480     |   852x480 |
+|-----------+-----------|
+| hd720     |  1280x720 |
+|-----------+-----------|
+| hd1080    | 1920x1080 |
+|-----------+-----------|
+| 2k        | 2048x1080 |
+|-----------+-----------|
+| 2kflat    | 1998x1080 |
+|-----------+-----------|
+| 2kscope   |  2048x858 |
+|-----------+-----------|
+| 4k        | 4096x2160 |
+|-----------+-----------|
+| 4kflat    | 3996x2160 |
+|-----------+-----------|
+| 4kscope   | 4096x1716 |
+|-----------+-----------|
+| nhd       |   640x360 |
+|-----------+-----------|
+| hqvga     |   240x160 |
+|-----------+-----------|
+| wqvga     |   400x240 |
+|-----------+-----------|
+| fwqvga    |   432x240 |
+|-----------+-----------|
+| hvga      |   480x320 |
+|-----------+-----------|
+| qhd       |   960x540 |
+|-----------+-----------|
+| 2kdci     | 2048x1080 |
+|-----------+-----------|
+| 4kdci     | 4096x2160 |
+|-----------+-----------|
+| uhd2160   | 3840x2160 |
+|-----------+-----------|
+| uhd4320   | 7680x4320 |
+|-----------+-----------|
+
+**** 参考链接
+
+[[https://blog.csdn.net/awangdea99/article/details/114555743][FFmpeg屏幕录制]]
+
+[[https://www.zhihu.com/zvideo/1240037588020662272][15-ffmpeg常用 命令视频录制]]
+
+[[https://zhuanlan.zhihu.com/p/580624916][3 分钟入门 FFmpeg，抛弃又贵又难用的录屏软件]]
+
+[[https://www.bilibili.com/read/cv20197318/][ffmpeg对桌面或指定窗口录制视频gdigrab]]
+
+[[https://www.cnblogs.com/yongfengnice/p/7156952.html][ffmpeg时间有关的操作]]
+
+*** Linux下操作
+
+**** 录制全屏视频
+
+#+begin_src bash
+  ffmpeg -f x11grab -r 25 -s $(xwininfo -root | grep -Eo "[0-9]{3,5}x[0-9]{3,5}") -i :0.0 -t 3 -vcodec libx264 -preset ultrafast -y output.mp4
+#+end_src
+
+***** 参数详解
+
+这条 ffmpeg 命令用于从 X11 屏幕录制视频，并将结果保存为 output.mp4。以下是对每个参数的详细解释：
+
+1. ffmpeg: 调用 FFmpeg 工具进行视频和音频处理。
+2. -f x11grab: 指定输入格式为 X11 屏幕捕捉（x11grab）。这表示要录制 X11 显示器上的屏幕内容。
+3. -r 25: 设置视频的帧率为 25 帧每秒（fps）。这决定了录制视频的流畅度。
+4. -s $(xwininfo -root | grep -Eo "[0-9]{3,5}x[0-9]{3,5}"): 设置输出视频的分辨率为当前屏幕的分辨率。
+   - xwininfo -root: 获取根窗口（即整个屏幕）的信息。
+   - grep -Eo "[0-9]{3,5}x[0-9]{3,5}": 使用正则表达式从 xwininfo 的输出中提取屏幕分辨率，格式为 宽度x高度。[0-9]{3,5} 匹配 3 到 5 位的数字，x 是分隔符，后面的 [0-9]{3,5} 匹配高度部分。
+5. -i :0.0: 指定 X11 屏幕的显示和显示编号为 :0.0。通常表示第一个显示器的第一个屏幕。
+6. -t 3: 设置录制时长为 3 秒。-t 指定录制的时间长度。
+7. -vcodec libx264: 指定视频编码器为 libx264，即使用 H.264 编码。H.264 是一种高效的视频编码格式。
+8. -preset ultrafast: 设置编码预设为 ultrafast，优先考虑编码速度，而非压缩效率。这将生成较大的文件，但编码速度最快。
+9. -y: 自动确认覆盖输出文件。如果 output.mp4 已经存在，FFmpeg 会自动覆盖它，而不会提示用户确认。
+10. output.mp4: 指定输出文件名为 output.mp4。mp4 是一种广泛使用的视频文件格式，能够容纳视频和音频流。
+
+总的来说，这条命令从 X11 屏幕录制 3 秒钟的视频，使用 H.264 编码，保存为 output.mp4。
+
+**** 录制指定区域视频
+
+#+begin_src bash
+  ffmpeg -f x11grab -r 25 -s 800x600 -i :0.0+100,200 -vcodec libx264 -y output.mp4
+#+end_src
+
+***** 参数详解
+
+这条 ffmpeg 命令用于从 X11 屏幕录制指定区域的视频，并将结果保存为 output.mp4。下面是对每个参数的解释：
+
+1. ffmpeg: 调用 FFmpeg 工具进行视频处理。
+2. -f x11grab: 指定输入格式为 X11 屏幕捕捉，表示要录制 X11 显示器上的屏幕内容。
+3. -r 25: 设置视频的帧率为 25 帧每秒（fps），决定了录制视频的流畅度。
+4. -s 800x600: 设置录制视频的分辨率为 800x600 像素。这里是指定的区域大小。
+5. -i :0.0+100,200: 指定录制的输入源为 X11 屏幕 :0.0，并且设置录制区域的起始位置为屏幕上的 (100, 200) 像素点。这意味着视频录制将从屏幕的 (100, 200) 位置开始，覆盖 800x600 像素的区域。
+6. -vcodec libx264: 指定视频编码器为 libx264，即使用 H.264 编码。这种编码格式在压缩效率和视频质量之间提供了很好的平衡。
+7. output.mp4: 指定输出文件名为 output.mp4。这是最终保存录制内容的视频文件名。
+
+总的来说，这条命令从 X11 屏幕的 (100, 200) 位置开始录制一个 800x600 像素的区域，录制的帧率为 25 fps，使用 H.264 编码，保存为 `output.mp4`。
+
+**** 指定录屏时间长度为30秒
+
+#+begin_src bash
+  ffmpeg -f x11grab -r 25 -s $(xwininfo -root | grep -Eo "[0-9]{3,5}x[0-9]{3,5}") -i :0.0 -t 30 -preset ultrafast -y output.mp4
+#+end_src
+
+***** 参数详解
+
+这条 `ffmpeg` 命令用于从 X11 屏幕录制指定时长的视频，并将结果保存为 `output.mp4`。下面是对每个参数的详细解释：
+
+1. ffmpeg: 调用 FFmpeg 工具来处理视频和音频。
+2. -f x11grab: 指定输入格式为 X11 屏幕捕捉，表示要录制 X11 显示器上的屏幕内容。
+3. -r 25: 设置视频的帧率为 25 帧每秒（fps），决定了录制视频的流畅度。
+4. -s $(xwininfo -root | grep -Eo "[0-9]{3,5}x[0-9]{3,5}"): 设置录制视频的分辨率为当前屏幕的分辨率。
+   - xwininfo -root: 获取根窗口（即整个屏幕）的信息。
+   - grep -Eo "[0-9]{3,5}x[0-9]{3,5}": 从 xwininfo 输出中提取屏幕的分辨率，格式为 宽度x高度。正则表达式 [0-9]{3,5} 匹配 3 到 5 位的数字，x 作为分隔符，后面 [0-9]{3,5} 匹配高度部分。这样做可以确保 FFmpeg 使用当前屏幕的完整分辨率进行录制。
+5. -i :0.0: 指定 X11 屏幕的显示和显示编号为 :0.0。通常表示第一个显示器的第一个屏幕。
+6. -t 30: 设置录制时长为 30 秒。-t 用来指定录制的时间长度。
+7. -preset ultrafast: 设置视频编码的预设为 ultrafast。这会使编码过程尽可能快，但会生成较大的文件，因为编码压缩率较低。
+8. -y: 自动确认覆盖输出文件。如果 output.mp4 已经存在，FFmpeg 会自动覆盖它，而不需要用户确认。
+9. output.mp4: 指定输出文件名为 output.mp4。这是录制的视频将被保存的文件名。
+
+总的来说，这条命令从 X11 屏幕录制 30 秒钟的视频，使用当前屏幕的完整分辨率，帧率为 25 fps，使用 H.264 编码，并将结果保存为 `output.mp4`。编码设置为 `ultrafast`，优先考虑编码速度。
+
+**** 使用alsa录制系统音频
+
+#+begin_src bash
+ffmpeg -f alsa -i default -f x11grab -r 25 -s $(xdpyinfo | grep 'dimensions:'|awk '{print $2;}') -i :0.0 -c:v libx264 -preset ultrafast -c:a aac -tune fastdecode -y output.mkv
+#+end_src
+
+***** 参数详解
+
+这条 `ffmpeg` 命令用于同时录制音频和视频，并将结果保存为 `output.mkv`。以下是对每个参数的详细解释：
+
+1. ffmpeg: 调用 FFmpeg 工具来处理视频和音频。
+2. -f alsa -i default: 指定音频输入格式为 ALSA（Advanced Linux Sound Architecture），并选择默认音频设备作为输入。-f alsa 指定了音频输入格式为 ALSA，-i default 表示使用系统默认的音频输入设备。
+3. -f x11grab -r 25 -s $(xdpyinfo | grep 'dimensions:' | awk '{print $2;}') -i :0.0: 指定视频输入格式为 X11 屏幕捕捉。
+   - -f x11grab: 指定视频输入格式为 X11 屏幕捕捉。
+   - -r 25: 设置视频的帧率为 25 帧每秒（fps）。
+   - -s $(xdpyinfo | grep 'dimensions:' | awk '{print $2;}'): 设置录制视频的分辨率。xdpyinfo 是一个 X11 工具，用于获取 X11 显示的相关信息。grep 'dimensions:' 提取包含屏幕分辨率的行，awk '{print $2;}' 从这一行中提取分辨率信息（如 1920x1080）。
+   - -i :0.0: 指定 X11 屏幕的显示和显示编号为 :0.0，通常表示第一个显示器的第一个屏幕。
+4. -c:v libx264: 指定视频编码器为 libx264，这是用于 H.264 视频编码的 FFmpeg 编码器。
+5. -preset ultrafast: 设置视频编码的预设为 ultrafast，使编码过程尽可能快，但会生成较大的文件，因为编码压缩率较低。
+6. -c:a aac: 指定音频编码器为 aac，用于音频压缩和编码，常用于高效的音频压缩。
+7. -tune fastdecode: 指定编码器的调整参数为 fastdecode，优化编码设置以加快解码速度。这通常有助于提高播放设备或软件的解码效率。
+8. output.mkv: 指定输出文件名为 output.mkv。这是录制的音视频将被保存的文件名，使用 MKV 格式。
+
+总结来说，这条命令将从默认的音频设备和 X11 屏幕录制视频和音频。视频将以 25 fps 录制，使用 `libx264` 编码器和 `ultrafast` 预设，音频将使用 `aac` 编码器，并且优化了解码速度。录制的结果将保存为 `output.mkv` 文件。
+
+这些命令可以根据需要进行修改，例如更改输出文件名或调整录屏分辨率和帧速率。
+
+**** 参考链接
+
+[[https://avmedia.0voice.com/?id=43422][linux ffmpeg录屏命令实例]]
+
+** 编辑字幕
+
+*** 硬字幕和软字幕的简介
+
+**** 硬字幕
+
+将字幕渲染到视频的纹理上，然后将其编码成独立于视频格式的一个完整的视频。硬字幕不能更改或删除，因为它们与视频（通道）是一个整体。
+
+**** 软字幕
+
+在播放视频时实时渲染和读取。软字幕可以在播放过程中随时添加或删除。软字幕比硬字幕更加灵活，因为它们可以随时进行修改，但它们也需要高性能的播放器支持。
+
+字幕单独生成一个字幕通道，与视频、音频一样，如以下Stream #0:2：
+
+#+begin_src bash
+  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(progressive), 852x480, 397 kb/s, 25 fps, 25 tbr, 12800 tbn (default)
+    Metadata:
+      handler_name    : VideoHandler
+      vendor_id       : [0][0][0][0]
+  Stream #0:1[0x2](und): Audio: aac (LC) (mp4a / 0x6134706D), 48000 Hz, stereo, fltp, 127 kb/s (default)
+    Metadata:
+      handler_name    : SoundHandler
+      vendor_id       : [0][0][0][0]
+  Stream #0:2[0x3](eng): Subtitle: mov_text (tx3g / 0x67337874), 0 kb/s (default)
+    Metadata:
+      handler_name    : SubtitleHandler
+#+end_src
+
+*** SRT和ASS字幕格式的简介
+
+**** SRT（SubRip Subtitle）
+
+是一种简单的字幕格式，主要由时间戳和文本组成。它通常用于简单的字幕文件，如电影聚会之类。SRT字幕格式的参数如下：
+
+- 标题的计数器/索引
+- START和END：字幕开始和字幕结束的时间戳，格式为 “小时：分钟：毫秒”。
+- TEXT：在此时间戳范围内显示的字幕文本
+- 一行空白表示一个结束
+
+#+begin_src bash
+1
+00:00:0,000 --> 00:00:2,000
+这是0到2秒显示的字幕
+
+2
+00:00:2,000 --> 00:00:4,000 
+这是2到4秒显示的字幕
+
+3
+00:00:4,000 --> 00:00:7,000
+这是4到7秒显示的字幕 
+#+end_src
+
+**** ASS（Advanced SubStation Alpha）
+
+是一个高级的字幕格式，它可以支持更多的样式和控制，比如，更改颜色、字体和大小，还可以通过几何变换来控制字幕的位置。ASS字幕格式包含以下参数：
+
+***** 样式
+
+#+begin_src bash
+Style: 序号, 字体名称, 字号, 颜色, 阴影, 边框, 描边, 阴影, 抗锯齿, 倾斜度, weight, underline
+例子：Style: Top, Microsoft YaHei,40,&H00F5FF&,-1,2,0,0,1,0,0
+#+end_src
+
+***** 对齐
+
+#+begin_src bash
+Dialogue: 0,0:00:03.42,0:00:04.91,Top,,0,0,0,,{\an6}本字幕居右上
+#+end_src
+
+***** 触发器
+
+#+begin_src bash
+Dialogue: 0,0:00:03.42,0:00:04.91,Top,,0,0,0,,{\t(0,300,\fade(400,400))}三秒内渐入渐出
+#+end_src
+
+***** 动画
+
+#+begin_src bash
+Dialogue: 0,0:00:03.42,0:00:04.91,Top,,0,0,0,,{\move(0,0,100,100)}右下角移动
+#+end_src
+
+***** 特殊效果
+
+#+begin_src bash
+Dialogue: 0,0:00:03.42,0:00:05.62,Top,,0,0,0,,{\fad(500,500)\blur3}左右淡入淡出，模糊度3
+#+end_src
+
+***** 合的ASS字幕案例
+
+#+begin_src bash
+[Script Info]
+; Script generated by FFmpeg/Lavc59.18.100
+Title: 某电影
+Original Script: 某人
+ScriptType: v4.00+
+WrapStyle: 0
+Collisions: Normal
+PlayResX: 1920
+PlayResY: 1080
+Timer: 100.0000
+
+[V4 Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Default,Arial,30,&Hffffff,&Hffffff,&H0,&H0,0,0,0,0,100,100,0,0,1,1,0,2,10,10,50,0
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.00,0:00:02.00,Default,,0,0,0,,这是0到2秒显示的{\b1}{\i1}字幕{\i0}{\b0}
+Dialogue: 0,0:00:02.00,0:00:04.00,Default,,0,0,0,,这是2到4秒显示的字幕
+Dialogue: 0,0:00:04.00,0:00:07.00,Default,,0,0,0,,这是4到7秒显示的字幕
+Dialogue: 0,0:00:07.00,0:00:10.00,Default,,0,0,0,,这是7到10秒显示的字幕
+Dialogue: 0,0:00:10.00,0:00:30.00,Default,,0,0,0,,这是10到30秒显示的字幕{\an5\move(960,700,960,900)\t(\fscx200\fscy200\frx360\fry360\fad(200,200))\fs60\p5\t(\fscx100\fscy100\frx0\fry0\fad(200,200))\c&HFFFFFF&\3c&HA000&}高级操作.
+#+end_src
+
+*** 生成字幕的命令
+
+**** SRT硬字幕命令
+
+#+begin_src bash
+ffmpeg -i input.mp4 -vf subtitles=subtitle.srt output_srt.mp4
+#+end_src
+
+***** 命令参数详解
+
+-vf 是 ffmpeg 的视频滤镜选项，subtitles=subtitle.srt 表示使用字幕滤镜将 subtitle.srt 文件中的字幕嵌入到视频中。这个选项会将 subtitle.srt 文件中的字幕渲染到视频流上。
+
+**** ASS硬字幕命令
+
+#+begin_src bash
+ffmpeg -i input.mp4 -vf ass=subtitle.ass output_ass.mp4
+#+end_src
+
+**** SRT和ASS软字幕命令
+
+#+begin_src bash
+ffmpeg -i input.mp4 -i subtitle.srt -c copy -c:s mov_text -metadata:s:s:0 language=chi ouptut_chi.mp4
+or
+ffmpeg -i input.mp4 -i subtitle.ass -c copy -c:s mov_text -metadata:s:s:0 language=chi ouptut_chi.mp4
+#+end_src
+
+**** SRT可以转ASS命令
+
+#+begin_src bash
+ffmpeg -i subtitle.srt subtitle.ass
+#+end_src
+
+**** 多通道(软)字幕命令
+
+***** 准备字幕文件：假设有中文字幕文件为ch.srt，英文字幕文件为en.srt。
+
+****** 中文字幕文件：ch.srt
+
+#+begin_src bash
+  1
+00:00:0,000 --> 00:00:5,000
+这里是视频的标题 1
+
+2
+00:00:5,000 --> 00:00:10,000 
+这里是视频的标题 2
+#+end_src
+
+****** 英文字幕文件：en.srt
+
+#+begin_src bash
+  1
+00:00:0,000 --> 00:00:5,000
+Here's the video's title 1
+
+2
+00:00:5,000 --> 00:00:10,000 
+Here's the video's title 2
+#+end_src
+
+***** 命令
+
+#+begin_src bash
+  ffmpeg -i input.mp4 -i ch.srt -i en.srt -map 0 -map 1 -map 2 -c copy -c:s mov_text -metadata:s:s:0 language=chi -metadata:s:s:1 language=eng output_chi_eng.mp4
+#+end_src
+
+注意：ass格式同样的操作
+
+#+begin_src bash
+  ffmpeg -i input.mp4 -i ch.ass -i en.ass -map 0 -map 1 -map 2 -c copy -c:s mov_text -metadata:s:s:0 language=chi -metadata:s:s:1 language=eng output_chi_eng_ass.mp4
+#+end_src
+
+****** 参数详解
+
+这个 ffmpeg 命令的作用是将 input.mp4 视频与两个字幕文件 ch.srt（中文）和 en.srt（英文）合并成一个包含两种语言字幕的输出视频文件 output_chi_eng.mp4。以下是各个参数的详细解释：
+
+1. ffmpeg: 调用 FFmpeg 工具。
+
+2. -i input.mp4: 指定第一个输入文件，input.mp4 是要处理的视频文件。
+
+3. -i ch.srt: 指定第二个输入文件，ch.srt 是中文字幕文件。
+
+4. -i en.srt: 指定第三个输入文件，en.srt 是英文字幕文件。
+
+5. -map 0: 包含第一个输入文件（input.mp4）的所有流（视频、音频、字幕）。
+
+6. -map 1: 包含第二个输入文件（ch.srt）的所有流（中文字幕）。
+
+7. -map 2: 包含第三个输入文件（en.srt）的所有流（英文字幕）。
+
+8. -c copy: 对视频和音频流使用直接复制方式，不进行重新编码。
+
+9. -c:s mov_text: 对字幕流使用 mov_text 编解码器，这种编码适用于 MP4 容器。
+
+10. -metadata:s:s:0 language=chi: 为第一个字幕流（中文字幕）设置语言元数据为 chi。
+
+11. -metadata:s:s:1 language=eng: 为第二个字幕流（英文字幕）设置语言元数据为 eng。
+
+12. output_chi_eng.mp4: 指定输出文件名，output_chi_eng.mp4 是最终生成的包含中英文字幕的视频文件。
+
+**** 多通道(软)字幕，中英字幕实现
+
+***** 准备字幕文件：假设有中英文字幕文件为ch_en.srt，英文字幕文件为en.srt。
+
+****** 中文字幕文件：ch_en.srt
+
+#+begin_src bash
+1
+00:00:0,000 --> 00:00:5,000
+这里是视频的标题 1
+Here's the video's title 1
+
+2
+00:00:5,000 --> 00:00:10,000 
+这里是视频的标题 2
+Here's the video's title 2
+#+end_src
+
+****** 英文字幕文件：en.srt
+
+#+begin_src bash
+1
+00:00:0,000 --> 00:00:5,000
+Here's the video's title 1
+
+2
+00:00:5,000 --> 00:00:10,000 
+Here's the video's title 2
+#+end_src
+
+****** 命令
+
+#+begin_src bash
+ffmpeg -i input.mp4 -i ch_en.srt -i en.srt -map 0 -map 1 -map 2 -c copy -c:s mov_text -metadata:s:s:0 language=chi_eng -metadata:s:s:1 language=eng output_chi_eng_eng.mp4
+#+end_src
+
+****** 最后使用ffprobe查看一下生成文件的内容
+
+#+begin_src bash
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from 'output_chi_eng_eng.mp4':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    encoder         : Lavf60.3.100
+    description     : Bilibili VXCode Swarm Transcoder v0.6.11
+  Duration: 00:05:24.20, start: 0.000000, bitrate: 531 kb/s
+  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(progressive), 852x480, 397 kb/s, 25 fps, 25 tbr, 12800 tbn (default)
+    Metadata:
+      handler_name    : VideoHandler
+      vendor_id       : [0][0][0][0]
+  Stream #0:1[0x2](und): Audio: aac (LC) (mp4a / 0x6134706D), 48000 Hz, stereo, fltp, 127 kb/s (default)
+    Metadata:
+      handler_name    : SoundHandler
+      vendor_id       : [0][0][0][0]
+  Stream #0:2[0x3](chi): Subtitle: mov_text (tx3g / 0x67337874), 0 kb/s (default)
+    Metadata:
+      handler_name    : SubtitleHandler
+  Stream #0:3[0x4](eng): Subtitle: mov_text (tx3g / 0x67337874), 0 kb/s
+    Metadata:
+      handler_name    : SubtitleHandler
+#+end_src
+
+*** ffmpeg给视频添加字幕(软字幕和硬字幕)
+
+**** 软字幕(外挂字幕)
+
+***** 先获取视频元数据
+
+#+begin_src bash
+  ffmpeg -i 1.mp4 -hide_banner
+#+end_src
+
+****** 获取视频元数据结果
+
+#+begin_src bash
+  $ ffmpeg -i 1.mp4 -hide_banner
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from '1.mp4':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    encoder         : Lavf60.13.100
+  Duration: 00:00:05.01, start: 0.000000, bitrate: 1320 kb/s
+  Stream #0:0[0x1](und): Video: h264 (High 4:4:4 Predictive) (avc1 / 0x31637661), yuv444p(progressive), 3840x1080, 1285 kb/s, 29.97 fps, 29.97 tbr, 30k tbn (default)
+    Metadata:
+      handler_name    : VideoHandler
+      vendor_id       : [0][0][0][0]
+      encoder         : Lavc60.26.100 libx264
+  Stream #0:1[0x2](und): Audio: aac (LC) (mp4a / 0x6134706D), 44100 Hz, stereo, fltp, 127 kb/s (default)
+    Metadata:
+      handler_name    : SoundHandler
+      vendor_id       : [0][0][0][0]
+At least one output file must be specified
+#+end_src
+
+假设有一个视频轨(#0:0), 一个音频轨(#0:1), 两个字幕轨(#0:2和#0:3)，现在我要添加第三个字幕, 可以如下操作
+
+#+begin_src bash
+  ffmpeg -i 4.mp4 -i ch_en.srt -map 0:v:0 -map 0:a:0 -map 0:s:0 -map 0:s:1 -c:v copy -c:a copy -c:s copy -map 1 -c:s:2 mov_text -metadata:s:s:2 language=chi_eng  -y 6.mp4
+#+end_src
+
+******* 参数解释
+
+1) 第一个输入流(视频.mp4)对应map 0, 第二个输入流(字幕.srt)对应map 1
+2) metadata:s:s:2 指向第三个字幕流元数据
+3) c:v 视频编解码方式
+4) c:a 音频编解码方式
+5) c:s 字幕编解码方式
+6) c:s:2 mov_text: 对字幕流使用 mov_text 编解码器，这种编码适用于 MP4 容器。
+
+****** 给无字幕的视频添加软字幕
+
+视频已经有video和audio，接下来要做是添加Subtitle
+
+#+begin_src bash
+  ffmpeg -i input.mp4 -i input.srt -c:v copy -c:a copy -c:s mov_text -y output.mp4
+#+end_src
+
+******* 参数详解
+
+1) -i input.mp4：-i 选项指定输入文件。这里 input.mp4 是你要处理的视频文件。
+2) -i input.srt：第二个 -i 选项指定字幕文件 input.srt。ffmpeg 会将这个字幕文件合并到视频中。
+3) -c:v copy：-c:v 用于指定视频编解码器。copy 表示直接拷贝视频流，不进行任何编码或重新压缩，从而保留原始视频质量。
+4) -c:a copy：-c:a 用于指定音频编解码器。copy 表示直接拷贝音频流，不进行重新编码，保持原始音频质量。
+5) -c:s mov_text：-c:s 用于指定字幕编解码器。mov_text 是将字幕编码为适用于 MP4 文件的文本轨道格式。这种格式允许播放器选择显示或隐藏字幕。
+6) -y：-y 选项表示在输出文件 output.mp4 已存在时自动覆盖该文件，而不会询问确认。这对于脚本或批处理操作非常有用。
+7) output.mp4：这是输出文件的名称。合并后的文件将保存为 output.mp4。
+
+**** 硬字幕(将字幕烧录到视频上)
+
+***** 将外部字幕烧录到视频中(例如第二个字幕轨)
+
+#+begin_src bash
+  ffmpeg -i 1.mp4 -map 0:v:0 -map 0:a:0 -vf subtitles=ch.srt -y 7.mp4
+#+end_src
+
+***** 使用mkv容器中的某一个字幕轨烧录到视频上
+
+#+begin_src bash
+  ffmpeg -i 1.mp4 -map 0:v:0 -map 0:a:0 -vf subtitles=4.mp4:si=1 8.mp4
+#+end_src
+
+****** 参数解释
+
+:si=1 代表指定选择第 1 个字幕轨道，字幕轨道从 0 开始算起，因此 si=1 对应第 2 个字幕轨道。si 是 subtitles 过滤器的一个选项，用于指定字幕流的索引。这里的 si 代表 "subtitle index"，即字幕流的索引。它必须用 si 而不是 s 是因为 s 是用来指定其它过滤器选项的缩写，例如 scale 或 setpts，而 si 特指字幕流的索引选择。
+
+*** 使用 FFmpeg 将 MKV 内封字幕压制为内嵌硬字幕
+
+#+begin_src bash
+  ffmpeg -i output_chi_eng_eng.mp4 -vf "subtitles=output_chi_eng_eng.mp4:si=0" -crf:18 -o result.mp4
+#+end_src
+
+**** 命令参数详解
+
+-i output_chi_eng_eng.mp4 为你的输入视频文件
+
+-vf "subtitles=output_chi_eng_eng.mp4:si=0" 代表了要选用的滤镜，请注意，这里 -vf 后面的参数是双引号之间的内容
+
+subtitles=output_chi_eng_eng.mp4 这里是字幕的来源，可以填写 mp4 文件
+
+:si=0 代表指定选择第 0 个字幕轨道。实际上此参数可以不加，FFmepg 将选择默认的字幕轨道。关于字幕轨道的编号可以通过播放器或 mediainfo 来查看，在 ffmpeg 中。si 是 subtitles 过滤器的一个选项，用于指定字幕流的索引。这里的 si 代表 "subtitle index"，即字幕流的索引。它必须用 si 而不是 s 是因为 s 是用来指定其它过滤器选项的缩写，例如 scale 或 setpts，而 si 特指字幕流的索引选择。
+
+-crf:18 这里简单指定了压制的质量，18 已经是画质较佳的选项。一般动画压制的范围在 16-23，可查找其他教程
+
+-o result.mp4 这里指定了输出文件名，mp4 的后缀将会自动将视频压制为 H.264 / AVC 编码。若需要使用其他封装格式请手动指定编码器为 libx264
+
+*** ffmpeg将带字幕轨道的视频分离成无字幕视频，同时提取字幕文件及替换视频音轨
+
+**** 查看视频信息
+
+***** 命令
+
+#+begin_src bash
+  ffmpeg -i output_chi.mp4
+#+end_src
+
+****** 查看视频信息结果
+
+#+begin_src bash
+  $ ffmpeg -i output_chi.mp4
+  ffmpeg version N-112134-g9ef20920ab-20230920 Copyright (c) 2000-2023 the FFmpeg developers
+  built with gcc 13.1.0 (crosstool-NG 1.25.0.196_227d99d)
+  configuration: --prefix=/ffbuild/prefix --pkg-config-flags=--static --pkg-config=pkg-config --cross-prefix=x86_64-w64-mingw32- --arch=x86_64 --target-os=mingw32 --enable-gpl --enable-version3 --disable-debug --disable-w32threads --enable-pthreads --enable-iconv --enable-libxml2 --enable-zlib --enable-libfreetype --enable-libfribidi --enable-gmp --enable-lzma --enable-fontconfig --enable-libharfbuzz --enable-libvorbis --enable-opencl --disable-libpulse --enable-libvmaf --disable-libxcb --disable-xlib --enable-amf --enable-libaom --enable-libaribb24 --enable-avisynth --enable-chromaprint --enable-libdav1d --enable-libdavs2 --disable-libfdk-aac --enable-ffnvcodec --enable-cuda-llvm --enable-frei0r --enable-libgme --enable-libkvazaar --enable-libass --enable-libbluray --enable-libjxl --enable-libmp3lame --enable-libopus --enable-librist --enable-libssh --enable-libtheora --enable-libvpx --enable-libwebp --enable-lv2 --enable-libvpl --enable-openal --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-libopenh264 --enable-libopenjpeg --enable-libopenmpt --enable-librav1e --enable-librubberband --enable-schannel --enable-sdl2 --enable-libsoxr --enable-libsrt --enable-libsvtav1 --enable-libtwolame --enable-libuavs3d --disable-libdrm --enable-vaapi --enable-libvidstab --enable-vulkan --enable-libshaderc --enable-libplacebo --enable-libx264 --enable-libx265 --enable-libxavs2 --enable-libxvid --enable-libzimg --enable-libzvbi --extra-cflags=-DLIBTWOLAME_STATIC --extra-cxxflags= --extra-ldflags=-pthread --extra-ldexeflags= --extra-libs=-lgomp --extra-version=20230920
+  libavutil      58. 25.100 / 58. 25.100
+  libavcodec     60. 26.100 / 60. 26.100
+  libavformat    60. 13.100 / 60. 13.100
+  libavdevice    60.  2.101 / 60.  2.101
+  libavfilter     9. 11.100 /  9. 11.100
+  libswscale      7.  3.100 /  7.  3.100
+  libswresample   4. 11.100 /  4. 11.100
+  libpostproc    57.  2.100 / 57.  2.100
+  Input #0, mov,mp4,m4a,3gp,3g2,mj2, from 'output_chi.mp4':
+  Metadata:
+  major_brand     : isom
+  minor_version   : 512
+  compatible_brands: isomiso2avc1mp41
+  encoder         : Lavf60.13.100
+  Duration: 00:00:07.00, start: 0.000000, bitrate: 1287 kb/s
+  Stream #0:0[0x1](und): Video: h264 (High 4:4:4 Predictive) (avc1 / 0x31637661), yuv444p(progressive), 3840x1080, 1457 kb/s, 29.97 fps, 29.97 tbr, 30k tbn (default)
+  Metadata:
+  handler_name    : VideoHandler
+  vendor_id       : [0][0][0][0]
+  encoder         : Lavc60.26.100 libx264
+  Stream #0:1[0x2](und): Audio: aac (LC) (mp4a / 0x6134706D), 44100 Hz, stereo, fltp, 127 kb/s (default)
+  Metadata:
+  handler_name    : SoundHandler
+  vendor_id       : [0][0][0][0]
+  Stream #0:2[0x3](chi): Subtitle: mov_text (tx3g / 0x67337874), 0 kb/s (default)
+  Metadata:
+  handler_name    : SubtitleHandler
+  At least one output file must be specified
+#+end_src
+
+可以看到第一个轨道是视频，第二个轨道是音频，第三个轨道是字幕
+
+****** 提取字幕文件
+
+#+begin_src bash
+  #将第三个轨道subrip字幕轨道提取成srt文件
+  ffmpeg -i output_chi.mp4 -map "0:2" test.srt
+  #将第三个轨道subrip字幕轨道提取成ass文件
+  ffmpeg -i output_chi.mp4 -map "0:2" test.ass
+#+end_src
+
+****** 提取无字幕的视频文件
+
+#+begin_src bash
+  ffmpeg -i output_chi.mp4 -map "0:0" test.srt
+#+end_src
+
+或
+
+#+begin_src bash
+  # 将第一轨道的视频和第二轨道的音频重新生成新的视频文件
+  ffmpeg -i .\33死者们的侵略.mp4 -map 0:0 -map 0:1 -vcodec copy -acodec copy 33死者们的侵略（无字幕）.mp4   
+#+end_src
+
+******* 命令参数详解
+
+1) -i: 输入文件
+2) -map 0:0: 第1个输入文件的第一个流，也就是主要的视频流。
+3) -map 0:1: 第1个输入文件的第二个流，是视频的声音。
+4) -vcodec copy: 拷贝选择的视频流。
+5) -acodec copy: 拷贝选择的声音流。
+
+****** 提取音频文件
+
+#+begin_src bash  
+  ffmpeg -i output_chi.mp4 -map "0:1" test.mp3
+#+end_src
+
+或
+
+#+begin_src bash
+  ffmpeg -i 1.mp4 -c:a mp3 -map 0:a:0 targetAudio.mp3
+#+end_src
+
+******* 命令参数详解
+
+1) -i 1.mp4 指定输入的视频文件名称和路径
+2) -c:a mp3 指定输出的音频编码采用mp3编码器
+3) -map 0:a:0 指定输入输出的映射
+4) targetAudio.mp3 指定输出的音频文件名称和路径
+
+****** 使用ffmpeg替换视频音轨
+
+#+begin_src bash
+  ffmpeg -i 1.mp4 -i 2.mp3 -c:v copy -c:a alac -map 0:v:0 -map 1:a:0 3.mp4
+#+end_src
+
+******* 命令参数详解
+
+1) -i sourceVideo.mp4 指定输入的视频文件名称和路径
+2) -i sourceAudio.flac 指定输入的音频文件名称和路径，这里是一个无损格式的flac音频文件
+3) -c:v copy 指定输出的视频编码，copy指直接拷贝源文件的内容，不就行二次编码
+4) -c:a alac 指定输出的音频编码采用alac编码器
+5) -map 0:v:0  指定第一个输入映射到输出的视频
+6) -map 1:a:0 指定第二个输入映射到输出的音频
+7) targetVideo.mp4 指定输出的视频文件名称和路径
+
+*** 参考链接
+
+[[https://blog.csdn.net/github_38117599/article/details/129976196][FFmpeg添加字幕的详细操作]]
+
+[[https://magma.ink/posts/ffmpeg-mkvass/][使用 FFmpeg 将 MKV 内封字幕压制为内嵌硬字幕]]
+
+[[https://yonglun.me/ffmpeg/][ffmpeg 视频音轨的提取及替换]]
+
+** ffmpeg给视频添加文字
+
+#+begin_src bash
+  ffmpeg -i 1.mp4 -vf drawtext=fontcolor=red:fontsize=50:text='Hello World!':x=0:y=100 -y 5.mp4
+#+end_src
+
+*** 上面简单命令的相关参数
+
+1) 输入文件 1.mp4
+2) fontcolor 文字颜色 为黑色red
+3) fontsize 文字大小 为50
+4) text 文本内容 “Hello Word”
+5) 文本所处的位置 x=0,y=100
+6) 输出文件 5.mp4
+
+*** 相关命令参数
+
+#+begin_src bash
+between(x, min, max)
+Return 1 if x is greater than or equal to min and lesser than or equal to max, 0 otherwise.
+...
+gt(x, y)
+Return 1 if x is greater than y, 0 otherwise.
+
+gte(x, y)
+Return 1 if x is greater than or equal to y, 0 otherwise.
+
+...
+if(x, y)
+Evaluate x, and if the result is non-zero return the result of the evaluation of y, return 0 otherwise.
+
+if(x, y, z)
+Evaluate x, and if the result is non-zero return the evaluation result of y, otherwise the evaluation result of z.
+...
+lt(x, y)
+Return 1 if x is lesser than y, 0 otherwise.
+
+lte(x, y)
+Return 1 if x is lesser than or equal to y, 0 otherwise.
+
+...
+mod(x, y)
+Compute the remainder of division of x by y.
+#+end_src
+
+*** 前5秒加文字
+
+#+begin_src bash
+  ffmpeg -i input.mp4 -vf drawtext=fontcolor=red:fontsize=40:text='test':x=50:y=50:enable='lte(t\,5)' -y 9.mp4
+#+end_src
+
+*** 5秒后加文字
+
+#+begin_src bash
+  ffmpeg -i input.mp4 -vf drawtext=fontcolor=red:fontsize=40:text='test':x=50:y=50:enable='gte(t\,5)' -y 10.mp4
+#+end_src
+
+*** 第2秒到第5加文字
+
+#+begin_src bash
+  ffmpeg -i input.mp4 -vf drawtext=fontcolor=red:fontsize=40:text='test':x=50:y=50:enable='between(t\,2\,5)' -y 11.mp4
+#+end_src
+
+**** 参数详解
+
+between(t\,start\,end)：这个条件判断 t 是否在 start 和 end 之间。例如，between(t\,2\,5) 会在视频播放时间从第 10 秒到第 15 秒之间为 true，即在这段时间内显示文本。
+
+*** 每隔3秒周期显示1秒文字
+
+#+begin_src bash
+  ffmpeg -i input.mp4 -vf drawtext=fontcolor=red:fontsize=40:text='test':x=50:y=50:enable='lte(mod(t\,3)\,1)' -y 12.mp4
+#+end_src
+
+*** 间隔1秒依次显示hello和world
+
+#+begin_src bash
+  ffmpeg -i input.mp4 -vf drawtext=fontcolor=red:fontsize=40:text='hello':x=50:y=50:enable='lte(mod(t\,2)\,1)',drawtext=fontcolor=red:fontsize=40:text='world':x=50:y=50:enable='gte(mod(t\,2)\,1)' -y 13.mp4
+#+end_src
+
+**** 文字从左向右移动 每帧移动50个像素
+
+#+begin_src bash
+  ffmpeg -i input.mp4 -vf drawtext=fontcolor=red:fontsize=60:text='test':x=50+50*t:y=50 -y 14.mp4
+#+end_src
+
+***** 参数解释
+
+x=50+50*t：文本的水平位置随着时间变化。50+50*t 意味着文本的水平位置会随着视频播放时间 t 增加，每秒移动 50 像素。
+
+*** 从下往上移动，每次移动100像素
+
+#+begin_src bash
+  ffmpeg -i input.mp4 -vf drawtext=fontcolor=red:fontsize=50:text='Hello World!':y=h-100*t -y 15.mp4
+#+end_src
+
+*** 打印real time
+
+#+begin_src bash
+  ffmpeg -i input.mp4 -vf drawtext=fontcolor=red:fontsize=40:text='%{localtime}':x=200:y=200 -y 16.mp4
+#+end_src
+
+*** 将每帧的时间戳以 hh:mm:ss 格式叠加到视频上
+
+#+begin_src bash
+  ffmpeg -i input.mp4 -vf "drawtext=fontcolor=red:fontsize=40:text='%{pts\:hms}':x=10:y=10" -y 17.mp4
+#+end_src
+
+*** 参考链接
+
+[[https://blog.csdn.net/m0_37477175/article/details/106453427][ffmpeg给视频添加文字]]
+
+** 水印的添加与去除
+
+*** ffmpeg添加水印
+
+**** 基本命令
+
+ffmpeg添加水印主要通过overlay滤镜实现。以下是一个基本示例，展示了如何在视频中添加静态水印：
+
+#+begin_src bash
+  ffmpeg -i input.mp4 -i yenao.png -filter_complex "overlay=400:50" -y 6.mp4
+#+end_src
+
+在这个命令中，-i input.mp4指定了输入视频文件，-i logo.png指定了水印图片文件，overlay=10:10表示将水印放置在视频的左上角（距离左边和上边各10像素的位置），output.mp4是输出视频文件。
+
+**** 自定义水印位置 
+
+#+begin_src bash
+  ffmpeg -i input.mp4 -i yenao.png -filter_complex "overlay=main_w-overlay_w-100:main_h-overlay_h-100" -y 6.mp4
+#+end_src
+
+其中，main_w和main_h分别代表主视频的宽度和高度，overlay_w和overlay_h分别代表水印的宽度和高度。通过计算，可以将水印放置在指定位置。
+
+**** 透明水印
+
+如果水印图片包含透明通道（如PNG图片），则可以直接使用ffmpeg添加透明水印。不需要额外的设置，ffmpeg会自动处理透明通道。
+
+*** fmpeg去除水印
+
+delogo是ffmpeg中用于去除视频中固定位置标志或水印的滤镜。基本语法如下：
+
+#+begin_src bash
+  ffmpeg -i input.mp4 -vf "delogo=x:y:w:h[:band[:show]]" output.mp4
+#+end_src
+
+其中，x和y是水印左上角的坐标，w和h是水印的宽度和高度，band是可选的边缘模糊宽度（默认值为4），show是可选的，如果设置为1，将显示一个矩形表示删除的区域（默认值为0）。
+
+**** 示例
+
+#+begin_src bash
+  ffmpeg -i 6.mp4 -vf delogo=x=400:y=50:w=70:h=30 -y 8.mp4
+#+end_src
+
+*** 遮盖水印
+
+如果delogo滤镜的效果不理想，可以尝试使用drawbox滤镜来遮盖水印。基本语法如下：
+
+#+begin_src bash
+  ffmpeg -i input.mp4 -vf "drawbox=x:y:w:h:color[:t]" output.mp4
+#+end_src
+
+其中，x、y、w、h分别代表矩形的位置和大小，color是矩形的颜色（可以是颜色名称或十六进制代码），t是矩形的厚度（t=fill表示填充整个区域）。
+
+**** 示例
+
+#+begin_src bash
+  ffmpeg -i 6.mp4 -vf drawbox=x=400:y=50:w=70:h=30:color=red:t=fill -y 7.mp4
+#+end_src
+
+*** 参考链接
+
+[[https://developer.baidu.com/article/detail.html?id=3333970][ffmpeg实战：水印的添加与去除]]
+
+** 如何使用 ffmpeg 剪切和裁剪视频
+
+*** 如何使用ffmpeg剪切视频
+
+使用 ffmpeg 剪切视频是一项非常简单、快速且资源消耗低的任务。您只需要定义开始或结束时间，或两者（如果需要）和输出文件。
+
+下面的命令使用 ffmpeg 从标志 -ss 指定的 00:00:05 处开始剪切视频；这是定义新视频起点的标志，以防您想剪切开头的一部分。如果您只想剪切视频末尾的一部分，则不需要使用此标志。如您所见，计时格式必须为 HH:MM:SS（小时、分钟、秒）。例如，对于 2 分 3 秒的计时，您应该键入 00:02:03。
+
+-i 标志用于指定要编辑的文件；
+
+选项-t用于指定新文件的结尾；在这种情况下，视频将在 00:00:05 结束。与 -ss 类似，如果您不想剪切视频结尾的部分，而只想剪切开头的部分，则不需要应用此标志。
+
+在这种情况下，-c copy 标志用于定义输出文件；
+
+从 -ss 00:00:05 处开始，剪辑了 -t 00:00:05 这么长时间，共5秒
+
+#+begin_src bash
+  ffmpeg -ss 00:00:05 -i input.mp4 -t 00:00:05 -c copy -y 1.mp4
+#+end_src
+
+整个操作只需几秒钟，不消耗计算机资源。
+
+下一个示例演示如何仅剪切视频的结尾部分。因此，我省略了选项 -ss，因为我想保留起点，并通过实施 -t 标志在 00:00:05 剪切视频。
+
+#+begin_src bash
+  ffmpeg -i input.mp4 -t 00:00:05 -c copy -y 3.mp4
+#+end_src
+
+与前面的示例相反，下面的命令仅使用 -ss 标志来剪切视频开头的部分。在这种情况下，新输出将从 00:00:05 开始。
+
+#+begin_src bash
+  ffmpeg -ss 00:00:05 -i input.mp4 -c copy -y 4.mp4
+#+end_src
+
+如您所见，使用 ffmpeg 剪切视频是一个简单而快速的过程。
+
+*** 使用 ffmpeg 裁剪黑色边框
+
+本教程的这一部分介绍如何使用 ffmpeg 裁剪视频。
+
+您可以使用 ffmpeg 尝试自动检测如何裁剪视频以去除黑色边框。
+
+下面的命令将尝试检测正确的尺寸和位置以正确裁剪视频。
+
+#+begin_src bash
+timeout 3s ffmpeg -i input.mp4 -vf cropdetect -f null - 2>&1 | awk '/crop/ {print $NF}' | head -n 1
+#+end_src
+
+如您所见，ffmpeg 返回正确的宽度 (320)、高度 (208)、X 和 Y 位置以正确裁剪视频。
+
+X 位置：X 位置定义从左边距开始的水平裁剪起点，其中左边距为 0。
+
+Y 位置：Y 是垂直裁剪起始点，上边距为 0。
+
+视频下面的示例将被裁剪；您可以看到 -filter:v 标志。
+
+-filter 标志实现一个过滤器图，该过滤器图划分输入流，裁剪它，并将其与其他流叠加。如您所见，下面的命令中定义的尺寸和位置是由上一个命令提供的。
+
+另外，您可以看到省略了标志“-c copy”，并且输出文件名写在作物标志之后。
+
+#+begin_src bash
+  ffmpeg -i 1.mp4 -filter:v "crop=1920:1072:0:4" -y 5.mp4
+#+end_src
+
+**** 参数解释
+
+timeout 3s：timeout 命令会在指定时间（如 3 秒）后强制终止 ffmpeg 命令。你可以根据需要调整时间长度。
+ffmpeg -i input.mp4 -vf cropdetect -f null - 2>&1：执行视频裁剪检测，将输出重定向到标准输出。
+awk '/crop/ {print $NF}'：过滤包含 “crop” 的行，并打印最后一个字段。
+head -n 1：只取 awk 输出的第一行。
+
+**** 说明
+
+timeout 命令会在指定时间后终止 ffmpeg 进程。如果 ffmpeg 在超时时间内找到了裁剪建议并打印出来，head -n 1 将确保你只得到第一行输出。
+timeout 的时间需要根据你的视频长度和处理速度进行调整，以确保它足够长以捕捉到裁剪建议，但又不会长到影响效率。
+
+*** 关于使用 ffmpeg 裁剪视频：
+
+您可以使用以前的技术裁剪视频的任何部分，而不仅仅是黑色边框。
+
+下面的命令将裁剪上一个视频，返回 200×200 的图像，从左侧开始 200 像素，从上边距开始 0 像素。
+
+#+begin_src bash
+  ffmpeg -i 5.mp4 -filter:v "crop=200:200:200:0" 6.mp4
+#+end_src
+
+如果不指定位置，ffmpeg会自动裁剪视频的中心。因此，在下面的示例中，仅定义了视频的高度和宽度，但没有定义位置，ffmpeg 将裁剪视频并返回视频中心的 500×500 裁剪输出。
+
+#+begin_src bash
+  ffmpeg -i 5.mp4 -filter:v "crop=200:200" 7.mp4
+#+end_src
+
+如果需要，可以使用ffmpeg命令结合grep来了解原始视频分辨率，如下所示。
+
+#+begin_src bash
+  ffmpeg -i 5.mp4 2>&1 | grep "Video:" | grep -Po '\d{3,5}x\d{3,5}'
+#+end_src
+
+*** FFmpeg如何将一个gif嵌入视频指定位置并指定显示时间
+
+#+begin_src bash
+  ffmpeg -i test.mp4 -stream_loop -1 -i test.gif -filter_complex "[0:v][1:v] overlay=10:10:enable='between(t,3,4)':shortest=1" -y output.mp4
+#+end_src
+
+或
+
+#+begin_src bash
+  ffmpeg -i test.mp4 -stream_loop -1 -i test.gif -filter_complex "overlay=10:10:enable='between(t,3,4)':shortest=1" -y output.mp4
+#+end_src
+
+**** 参数详解
+
+#+begin_src bash
+ffmpeg: 调用 FFmpeg 工具。
+
+-i test.mp4: 指定输入视频文件 test.mp4。
+
+-stream_loop -1 -i test.gif: 指定输入动图 test.gif 并使其无限循环（-1 表示无限循环）。
+
+-filter_complex: 应用复杂的滤镜链，允许同时处理多个输入流。
+
+"[0:v][1:v] overlay=10:10:enable='between(t,3,4)':shortest=1":
+
+[0:v]: 第一个输入的第一个视频流（即 test.mp4）。
+[1:v]: 第二个输入的第一个视频流（即 test.gif）。
+overlay=10:10: 在 test.mp4 上覆盖 test.gif，并将 test.gif 放置在视频的 (10,10) 位置。
+enable='between(t,3,4)': 仅在 test.mp4 的时间从第3秒到第4秒之间显示覆盖。
+shortest=1: 确保输出视频长度与最短输入视频流长度一致。
+-y: 自动覆盖输出文件 output.mp4（如果存在）。
+
+output.mp4: 指定输出文件名。
+#+end_src
+
+**** 参考链接
+
+[[https://www.cnblogs.com/xiaxiaolu/p/17717626.html][FFmpeg如何将一个gif嵌入视频指定位置并指定显示时间]]
+
+** 视频转换成帧图片再转换成视频，如何考虑速率问题
+
+将视频转换为帧图片，再将这些帧图片重新转换为视频时，考虑到速率（即帧率）的问题是关键。以下是处理这一过程的步骤和相关说明：
+
+*** 脚本
+
+#+begin_src bash
+  vcodec_1="libx264"				# 视频编码格式
+  crf_1="25"						# 画质
+  fps=$(ffprobe "$1" 2>&1 | grep -Eo "[0-9]{2,5} fps" | awk '{print $1}') # 获取帧率
+  s=$(ffprobe "$1" 2>&1 | grep "Video" | grep -Eo "[0-9]{3,5}x[0-9]{3,5}")				# 获取分辨率
+  b=$(ffprobe "$1" 2>&1 | grep "bitrate" | grep -Eo "[0-9]{4,6} kb/s" | awk '{print $1}')
+  pix_fmt=$(ffprobe "$1" 2>&1 | grep -Eo ", .*(.*progressive)" | awk -F '(' '{print $1}' | awk -F ',' '{print $2}' | sed 's/ //g') # 获取像素格式
+
+  # echo "fps: ${fps}"
+  # echo "s: ${s}"
+  # echo "pix_fmt: ${pix_fmt}"
+
+  case $2 in
+	  R)
+		  dir=$(echo "$1" | awk -F '.' '{print $1}')
+		  mkdir -p "${dir}"
+		  ffmpeg -i "$1" -vf "fps=${fps}" -y "${dir}"/%d.png
+		  cd "${dir}"
+		  mapfile -t files < <(ls *.png | sort -nr); for i in "${files[@]}"; do echo "file '${i}'"; done | cat > pngRlist.txt # 生成帧图片的文件列表
+		  ffmpeg -f concat -safe 0 -i pngRlist.txt -vf palettegen -y palette.png # 生成调色板
+		  case $3 in
+			  mp4)
+				  ffmpeg -r "${fps}" -f image2 -f concat -safe 0 -i pngRlist.txt -i palette.png -pix_fmt "${pix_fmt}" -vcodec "${vcodec_1}" -crf "${crf_1}" -lavfi paletteuse -s "${s}" -y routput.mp4 # 将视频转换为倒放
+				  rm *.png
+				  rm *.txt
+				  ;;
+			  gif)
+				  ffmpeg -r "${fps}" -f concat -safe 0 -i pngRlist.txt -i palette.png -pix_fmt "${pix_fmt}" -crf "${crf_1}" -lavfi paletteuse -s "${s}" -y routput.gif # 将视频转换为倒放的gif
+				  rm *.png
+				  rm *.txt
+				  ;;
+			  rgif)
+				  ffmpeg -r "${fps}" -f concat -safe 0 -i pngRlist.txt -i palette.png -pix_fmt "${pix_fmt}" -crf "${crf_1}" -lavfi paletteuse -s "${s}" -y routput.gif # 将视频转换为gif
+				  ffmpeg -i routput.gif -vf "scale=${4}:-2" -y rsoutput.gif # 缩放gif文件
+				  rm *.png
+				  rm *.txt
+				  ;;
+			  all)
+				  ffmpeg -r "${fps}" -f image2 -f concat -safe 0 -i pngRlist.txt -i palette.png -pix_fmt "${pix_fmt}" -vcodec "${vcodec_1}" -crf "${crf_1}" -lavfi paletteuse -s "${s}" -y routput.mp4 # 将视频转换为倒放
+				  ffmpeg -r "${fps}" -f concat -safe 0 -i pngRlist.txt -i palette.png -pix_fmt "${pix_fmt}" -crf "${crf_1}" -lavfi paletteuse -s "${s}" -y routput.gif # 将视频转换为倒放的gif				  
+				  ffmpeg -i routput.gif -vf "scale=${4}:-2" -y rsoutput.gif # 缩放gif文件
+				  rm *.png
+				  rm *.txt				  
+		  esac
+		  ;;
+	  N)
+		  dir=$(echo "$1" | awk -F '.' '{print $1}')
+		  mkdir -p "${dir}"
+		  ffmpeg -i "$1" -vf "fps=${fps}" -y "${dir}"/%d.png
+		  cd "${dir}"
+		  mapfile -t files < <(ls *.png | sort -n); for i in "${files[@]}"; do echo "file '${i}'"; done | cat > pngNlist.txt # 生成帧图片的文件列表
+		  ffmpeg -f concat -safe 0 -i pngNlist.txt -vf palettegen -y palette.png # 生成调色板		  
+		  case $3 in
+			  gif)
+				  ffmpeg -r "${fps}" -f concat -safe 0 -i pngNlist.txt -i palette.png -pix_fmt "${pix_fmt}" -crf "${crf_1}" -lavfi paletteuse -s "${s}" -y noutput.gif # 将视频转换为gif				  
+				  rm *.png
+				  rm *.txt
+				  ;;
+			  sgif)
+				  ffmpeg -r "${fps}" -f concat -safe 0 -i pngNlist.txt -i palette.png -pix_fmt "${pix_fmt}" -crf "${crf_1}" -lavfi paletteuse -s "${s}" -y noutput.gif # 将视频转换为gif
+				  ffmpeg -i noutput.gif -vf "scale=${4}:-2" -y nsoutput.gif # 缩放gif文件
+				  rm *.png
+				  rm *.txt
+				  ;;
+			  all)
+				  ffmpeg -r "${fps}" -f concat -safe 0 -i pngNlist.txt -i palette.png -pix_fmt "${pix_fmt}" -crf "${crf_1}" -lavfi paletteuse -s "${s}" -y noutput.gif # 将视频转换为gif
+				  ffmpeg -i noutput.gif -vf "scale=${4}:-2" -y nsoutput.gif # 缩放gif文件
+				  rm *.png
+				  rm *.txt
+		  esac
+		  ;;
+	  s)		  
+		  ffmpeg -i "$1" -vf "scale=${3}:-2" -y soutput.gif
+		  ;;
+	  c)
+		  ffmpeg -i "$1" -y coutput.gif
+		  ;;
+	  cs)
+		  ffmpeg -i "$1" -y coutput.gif
+		  ffmpeg -i "$1" -vf "scale=${3}:-2" -y csoutput.gif
+		  ;;
+  esac
+#+end_src
+
+**** 参考链接
+
+[[https://blog.csdn.net/weixin_37939906/article/details/107281060][FFmpeg将有序帧（图片）转换成视频（解决了生成视频后播放闪烁的问题）]]
+
+[[https://blog.csdn.net/m0_62599305/article/details/140483404][【ffmpeg命令入门】重新编码媒体流、设置码率、设置帧速率]]
+
+*** 1. 将视频转换为帧图片
+
+首先，你需要确定你想从视频中提取的帧率（fps）。可以使用 ffmpeg 提取帧图片，并指定 fps 参数：
+
+#+begin_src bash
+  ffmpeg -i input.mp4 -vf fps=25 frame_%04d.png
+#+end_src
+
+这里 fps=25 表示你从视频中每秒提取 25 帧。frame_%04d.png 是帧图片的命名格式，其中 %04d 是一个四位数的递增编号（如 0001, 0002, 等等）。
+
+*** 2. 将帧图片重新转换为视频
+
+当你把这些帧图片转换回视频时，你需要指定与提取时相同的帧率。这样可以确保视频播放的速率与原始视频一致：
+
+#+begin_src bash
+  ffmpeg -framerate 25 -i frame_%04d.png -c:v libx264 -r 25 output.mp4
+#+end_src
+
+- -framerate 25 表示输入的帧图片的帧率。
+- -i frame_%04d.png 是输入的帧图片文件名格式。
+- -c:v libx264 表示使用 libx264 编码器来编码视频。
+- -r 25 是输出视频的帧率，与输入帧图片的帧率保持一致。
+
+*** 注意事项
+
+1. 帧率一致性：确保提取帧时和重建视频时的帧率一致，以避免视频播放速度的变化。
+2. 文件命名：帧图片的命名格式应保持一致，以便 ffmpeg 能正确读取所有帧。
+3. 编码设置：选择合适的视频编码器和参数，以确保输出视频的质量和压缩效果。
+
+通过正确设置这些参数，你可以在帧图片和视频之间进行转换，而不会影响最终视频的播放速率。
+
+** 把视频拆帧的方法
+
+#+begin_src bash
+  ffmpeg -i 3.mp4 -vf fps=20 %d.png
+#+end_src
+
+这个 ffmpeg 命令将 3.mp4 视频按每秒 20 帧的速度提取为一系列 PNG 图片。每张图片将按递增的数字命名（如 1.png, 2.png）。确保 ffmpeg 已安装并在你的 PATH 中。如果有问题，可以检查文件路径或命名格式是否正确。
+
+*** 参考链接
+
+[[https://www.bilibili.com/video/BV1qt421J7MV/?spm_id_from=333.788.recommend_more_video.4&vd_source=e7de88f963dcdcb94847fceb0e821942][把视频拆帧的方法 ffmpeg]]
+
+** 用ffmpeg从多张图片生成动图
+
+在做笔记、写博客或者制作梗图时，我们有时需要将多张图片合成为动图。这里介绍一种使用 ffmpeg 从多张图片生成动图的方法。
+
+通过 ffmpeg -h encoder=gif 可以得知 ffmpeg 支持的 GIF 编码器仅支持 rgb8 bgr8 rgb4_byte bgr4_byte gray pal8 7 种 pixel format，不支持输入文件使用的 rg24。在 ffmpeg 将其强制转换为 rgb8 时，颜色出现偏差。
+
+*** 使用调色板解决颜色偏差问题
+
+**** 首先用以下命令生成调色板
+
+#+begin_src bash
+  ffmpeg -i %d.png -vf palettegen palette.png
+#+end_src
+
+-i %d.png：指定输入文件。%d.png 表示输入文件是以 1.png, 2.png, 3.png 等格式命名的一系列图像。%d 是一个格式说明符，表示这是一个数字序列。
+
+***** 如果不是以数字进行命名排列的，可以使用文件列表的方式进行操作
+
+****** 将文件添加到列表
+
+#+begin_src bash  
+  mapfile -t files < <(ls | sort); for i in "${files[@]}"; do echo "file '${i}'"; done | cat > test.txt
+#+end_src
+
+******* 生成调色板
+
+#+begin_src bash
+  ffmpeg -f concat -safe 0 -i test.txt -vf palettegen -y test.png
+#+end_src
+
+**** 然后在生成动图时使用调色板
+
+#+begin_src bash
+  ffmpeg  -framerate 1 -i %d.png -i palette.png -lavfi paletteuse out.gif
+#+end_src
+
+-framerate 1 是用来设置帧速率为间隔1秒
+
+***** 如果是文件列表方式生成的可以按照如下命令操作
+
+#+begin_src bash
+  ffmpeg -r 1 -f concat -safe 0 -i test.txt -i test.png -lavfi paletteuse -y test.gif
+#+end_src
+
+-r 是用来设置帧速率为间隔1秒 
+
+*** 参考链接
+
+[[https://blog.caomingjun.com/ffmpeg-images-to-gif/][用ffmpeg从多张图片生成动图]]
+
+** FFmpeg 视频旋转处理命令
+
+*** ffmpeg -vf
+
+-vf指令是一些简单的视频过滤器。
+
+**** 顺时针旋转90°
+
+#+begin_src bash
+  ffmpeg -i input.mp4 -vf "transpose=1" -y output.mp4
+#+end_src
+
+**** 逆时针旋转90°
+
+#+begin_src bash
+  ffmpeg -i input.mp4 -vf "transpose=2" -y output.mp4
+#+end_src
+
+**** 水平翻转
+
+#+begin_src bash
+  ffmpeg -i input.mp4 -vf hflip -y output.mp4
+#+end_src
+
+**** 水平翻转
+
+#+begin_src bash
+  ffmpeg -i input.mp4 -vf vflip -y output.mp4
+#+end_src
+
+**** 逆时针旋转90°后再水平翻转
+
+也可以理解为水平翻转后逆时针旋转90°。
+
+#+begin_src bash
+  ffmpeg -i input.mp4 -vf "transpose=3" -y output.mp4
+#+end_src
+
+等效于
+
+#+begin_src bash
+  ffmpeg -i input.mp4 -vf "transpose=2,hflip" -y output.mp4
+#+end_src
+
+**** 顺时针旋转90°后再水平翻转
+
+也可以理解为水平翻转后逆时针旋转90°
+
+#+begin_src bash
+  ffmpeg -i input.mp4 -vf "transpose=0" -y output.mp4
+#+end_src
+
+等效于
+
+#+begin_src bash
+  ffmpeg -i input.mp4 -vf "transpose=1,hflip" -y output.mp4
+#+end_src
+
+**** 旋转180°
+
+#+begin_src bash
+  ffmpeg -i input.mp4 -vf "transpose=1,transpose=1" -y output.mp4
+#+end_src
+
+**** 顺时针旋转45°
+
+#+begin_src bash
+  ffmpeg -i input.mp4 -vf "rotate=PI/4" -y output.mp4
+#+end_src
+
+兀等于180度，可以计算不同的值进行旋转
+
+*** 参考链接
+
+[[https://blog.csdn.net/shaosunrise/article/details/122006306][FFmpeg 视频旋转处理命令]]
+
+** ffmpeg 中打印实时信息
+
+要在 ffmpeg 中打印实时信息，你可以使用 -loglevel 参数来调整日志详细程度。在命令中添加 -loglevel debug 将显示更详细的调试信息，包括时间戳和实时数据。示例如下：
+
+#+begin_src bash
+  ffmpeg -loglevel debug -i input.mp4 -vf "drawtext=fontcolor=red:fontsize=40:text='%{pts\:hms}':x=10:y=10" -y 17.mp4
+#+end_src
+
+** ffplay常用参数总结
+
+通过ffplay播放视频时，窗口的大小规则是如何呢？
+
+答：如果拉取视频流的分辨率大于屏幕分辨率，那么ffplay播放时会将视频画面缩放至屏幕大小；如果拉取视频流的分辨率大小小于屏幕分辨率，那么ffplay播放时会按照视频分辨率的大小调整窗口大小。
+
+调整播放窗口大小
+
+答：通过-x xx -y xx的方式来调整播放窗口的大小
+
+调整播放窗口的位置
+
+答：通过-left xxx -top xxx的方式来调整播放窗口的位置，例如-left 0 -top 0来指出播放窗口在屏幕的左上角。
+
+设置播放窗口标题
+
+答：通过-window_title xxxxx 来设置窗口标题，注意不需要双引号
+
+设置播放窗口没有标题栏
+
+答：通过-noborder来取消播放窗口的标题栏，设置该选项后，播放窗口则不存在标题栏
+
+*** 指定播放窗口位置和窗口大小
+
+**** 首先录制一个时长为3秒，分辨率为960x540的视频
+
+#+begin_src bash
+  ffmpeg -t 3 -f gdigrab -offset_x 0 -offset_y 0 -video_size 960x540 -i desktop -y out.mp4
+#+end_src
+
+**** 指定窗口播放位置，根据分辨率长和高的数值进行位置数值的调整
+
+#+begin_src bash
+  ffplay -window_title test -left 960 -top 540 out.mp4
+#+end_src
+
+**** 指定播放窗口的大小
+
+#+begin_src bash
+  ffplay -window_title test -x 1000 -y 1000 out.mp4
+#+end_src
+
+最好是跟分辨率对应着进行设置，例如视频的分辨率也是960x540
+
+#+begin_src bash
+  ffplay -window_title test -x 960 -y 540 out.mp4
+#+end_src
+
+**** 将指定位置和指定大小的选项结合起来用
+
+视频在屏幕右上角播放
+
+#+begin_src bash
+  ffplay -window_title test -left 960 -top 0 -x 960 -y 540 out.mp4
+#+end_src
+
+*** 参考链接
+
+[[https://blog.csdn.net/iqanchao/article/details/131995780][ffplay常用参数总结]]
+
+** 播放 yuv 格式的视频
+
+*** 将yuv文件转换为mp4文件
+
+#+begin_src bash
+  ffmpeg -s:v 640x480 -pix_fmt yuv420p -i input.yuv output.mp4  
+#+end_src
+
+*** 直接播放yuv文件
+
+#+begin_src bash
+  ffplay -video_size 640x480 -i video.yuv
+#+end_src
+
+** 使用 ffplay 一帧一帧地播放视频
+
+要使用 ffplay 一帧一帧地播放视频，您可以通过在命令行中逐帧显示视频帧的方式来实现。以下是一种常见的方法：
+
+#+begin_src bash
+  ffplay -vf "select='eq(n\,FRAME_NUMBER)'" input.mp4
+#+end_src
+
+在这个命令中，将 `FRAME_NUMBER` 替换为您想要查看的帧数（从0开始），`input.mp4` 是您的视频文件名。
+
+通过这个命令，ffplay 将加载视频并显示指定帧的内容。您可以通过不断更改 `FRAME_NUMBER` 的值来逐帧显示视频内容，从而实现一帧一帧地播放视频。
+
+需要注意的是，ffplay 是一个简单的用于播放视频和音频的工具，如果您需要更多交互性或者更复杂的播放控制，可能需要借助其他工具或编程语言来实现。
+
+** 循环播放视频
+
+#+begin_src bash
+  ffplay -loop 0 output_ass.mp4
+#+end_src
+
+*** 命令说明
+
+-loop number
+循环播放影片 <number> 次。0表示永远。
+
+** ffplay倍速播放
+
+*** 音频变速播放
+
+#+begin_src bash
+  ffplay -i test.mp4 -af atempo=2
+#+end_src
+
+*** 视频变速播放
+
+#+begin_src bash
+  ffplay -i test.mp4 -vf setpts=PTS/2
+#+end_src
+
+*** 音视频同时变速
+
+#+begin_src bash
+  ffplay -i test.mp4 -vf setpts =PTS/2 -af atempo =2
+#+end_src
+
+*** 参考链接
+
+[[https://www.cnblogs.com/vczf/p/13450998.html][FFplay命令 ---- 播放与参数选项]]
+
+** 参考链接
+
+[[https://blog.csdn.net/m0_47449768/article/details/130102406][ffmpeg安装教程（windows版）]]
+
+[[https://ffmpeg.github.net.cn/ffplay.html][ffplay 文档]]
+
+* 视频裁剪与拼接命令 ( 裁剪视频命令 | h264 编码的 SPS 和 PPS 数据 | 拼接视频 - 相同编码和相同容器格式的拼接 | 拼接视频 - 不同编码和容器格式的拼接测试
+
+** 拼接视频 - 相同编码和相同容器格式的拼接测试
+
+*** 拼接视频命令 - mp4 格式
+
+**** 方法一，使用concat demuxer进行视频文件的合并
+
+***** 将视频添加到文件列表
+
+#+begin_src bash
+  mapfile -t files < <(ls | sort); for i in "${files[@]}"; do echo "file '${i}'"; done | cat > test.txt
+#+end_src
+
+***** 合并视频
+
+这种合并方式的适用场景是：当容器格式不支持文件层次的合并，而又不想（不需要）进行再编码的操作的时候。这种方式对源视频同样有同格式同性质的要求。其详细语法参见 [[https://ffmpeg.mplayerhq.hu/ffmpeg-formats.html#concat-1][这里]] 。典型的命令示例如下：
+
+#+begin_src bash
+  ffmpeg -f concat -i test.txt -c copy -y test.mp4
+#+end_src
+
+指定文件列表拼接 mp4 视频 - 拼接成功但是播放不正常
+
+*** 拼接视频命令 - ts 格式
+
+**** 将mp4转换为ts
+
+#+begin_src bash
+  mapfile -t files < <(ls *.mp4 | sort); for i in "${files[@]}"; do ffmpeg -i "${i}" -vcodec libx264 "${i}.ts"; done
+#+end_src
+
+**** 将ts文件添加为文件列表
+
+#+begin_src bash
+  mapfile -t files < <(ls *.ts | sort); for i in "${files[@]}"; do echo "file '${i}'"; done | cat > ts.txt
+#+end_src 
+
+**** 将ts文件进行拼接
+
+#+begin_src bash
+  ffmpeg -f concat -i ts.txt -c copy output.ts
+#+end_src
+
+*** 拼接视频命令 - flv 格式
+
+**** 将mp4转换为flv
+
+#+begin_src bash
+  mapfile -t files < <(ls *.mp4 | sort); for i in "${files[@]}"; do ffmpeg -i "${i}" -vcodec libx264 "${i}.flv"; done
+#+end_src
+
+**** 将flv文件添加为文件列表
+
+#+begin_src bash
+  mapfile -t files < <(ls *.flv | sort); for i in "${files[@]}"; do echo "file '${i}'"; done | cat > flv.txt
+#+end_src 
+
+**** 将flv文件进行拼接
+
+#+begin_src bash
+  ffmpeg -f concat -i flv.txt -c copy output.flv
+#+end_src
+
+** 参考链接
+
+[[https://blog.csdn.net/shulianghan/article/details/137548821][【FFmpeg】视频裁剪与拼接命令 ( 裁剪视频命令 | h264 编码的 SPS 和 PPS 数据 | 拼接视频 - 相同编码和相同容器格式的拼接 | 拼接视频 - 不同编码和容器格式的拼接测试 )]]
+
+[[https://cn.linux-console.net/?p=15837][如何使用 ffmpeg 剪切和裁剪视频]]
+
+* 手把手教你用ffmpeg制作表情包
+
+** 准备视频素材
+
+*** 裁剪视频
+
+找到要裁剪的时间段：00:00:02，裁剪时长3秒，进行裁剪：
+
+
+#+begin_src bash
+  ffmpeg -ss 00:00:02 -i 7.mp4 -t 00:00:03 gif.mp4
+#+end_src
+
+*** 添加文字
+
+ffmpeg中可以用drawtext filter为视频添加水印或添加文字，需要编译ffmpeg添加支持：
+
+- 使用drawtext，编译时需要加上--enable-libfreetype
+- 要使用多种字体，需要加上--enable-libfontconfig
+- 需要字体变形，需要加上--enable-libfribidi
+
+#+begin_src bash
+  ffmpeg -i gif.mp4 -vf "drawtext=yellow:fontsize=40:text='Gif测试':x=(w-text_w)/2:y=h-th-20" -y gif_3s.mp4
+#+end_src
+
+**** 设置文字位置：
+
+1. 顶端左侧: x=0:y=0 (边缘留白10像素： x=10:y=10)
+2. 顶端居中: x=(w-text_w)/2:y=0 (边缘留白10像素： x=(w-text_w)/2:y=10)
+3. 顶端右侧: x=w-tw:y=0 (边缘留白10像素: x=w-tw-10:y=10)
+4. 画面中心: x=(w-text_w)/2:y=(h-text_h)/2
+5. 底端左侧: x=0:y=h-th (边缘留白10像素: x=10:y=h-th-10)
+6. 底端居中: x=(w-text_w)/2:y=h-th (边缘留白10像素: x=(w-text_w)/2:y=h-th-10)
+7. 底端右侧: x=w-tw:y=h-th (边缘留白10像素: x=w-tw-10:y=h-th-10)
+
+**** 如果有多句话，可以指定时间段进行添加
+
+#+begin_src bash
+  ffmpeg -i gif.mp4 -vf "drawtext=enable='between(t,0,1)':fontcolor=yellow:fontsize=40:text='hello':x=(w-text_w)/2:y=h-th-20","drawtext=enable='between(t,1,2)':fontcolor=yellow:fontsize=40:text='world':x=(w-text_w)/2:y=h-th-20" -y out_3s.mp4
+#+end_src
+
+- enable='between(t,0,1)' 指定的是在0s-1s之间添加文字。
+- enable='between(t,1,2)' 指定的是在1s-2s之间添加文字。
+
+*** 缩放视频尺寸
+
+裁剪好后的源视频是1920x1080 1080格式的，做成gif可能有点大，需要先进行缩放：
+
+#+begin_src bash
+  ffmpeg -i gif_3s.mp4 -vf "scale=360:-2" -y small_3s.mp4
+#+end_src
+
+注意 sacle 值必须是偶数，这里的 -2 表示要求压缩出来的视频尺寸长宽都保持为偶数.如果需要保持长宽比，根据宽度值自适应高度，可以使用 -1。
+
+我这里只进行缩小就可以了，你也可能有加速播放和慢速播放的需要，也可以用实现。
+
+**** 加倍速播放视频
+
+#+begin_src bash
+  ffmpeg -i small_3s.mp4 -filter:v "setpts=0.5*PTS" out_speedup.mp4
+#+end_src
+    
+**** 定义帧率 16fps
+
+#+begin_src bash
+  ffmpeg -i small_3s.mp4 -r 16 -an -y out_16_fps.mp4
+#+end_src
+
+-an 选项表示“去除音频”。在你的命令中，-an 会移除视频文件 out_3s.mp4 的音频流，只保留视频流。
+
+**** 慢倍速播放视频
+
+#+begin_src bash
+  ffmpeg -i gif_3s.mp4 -filter:v "setpts=2.0*PTS" out_slowdown.mp4
+#+end_src
+
+*** 将视频 MP4 转化为 GIF
+
+经过以上步骤，已经有了我们处理完成的视频文件，只需要转换成gif即可
+
+#+begin_src bash
+  ffmpeg -i small_3s.mp4 small.gif  
+#+end_src
+
+转化成gif默认转换是中等质量的，压缩的比较厉害，可以修改比特率提高gif质量：
+
+#+begin_src bash
+  ffmpeg -i small_3s.mp4 -b 2048k -y small_3s.gif
+#+end_src
+
+统过以上步骤就完成了我们要制作的gif，ffmpeg的生态比较丰富，目前很多在线制作表情包的网站和一些Telegram上的bot，就是通过ffmpeg进行制作。也可以找其它的视频进行制作，比如，张学友：食屎啦你、有钱真的可以为所欲为、王镜泽： 真香 等等。
+
+** mp4转gif
+
+*** 转换命令
+
+#+begin_src bash
+  ffmpeg -i test.mp4 -y test.gif
+#+end_src
+
+*** 参考链接
+
+[[https://cloud.tencent.com/developer/article/2161440][利用 FFmpeg 将视频转换为 GIF 操作指北]]
+
+[[https://opswill.com/articles/ffmpeg-convert-video-to-gif.html][手把手教你用ffmpeg制作表情包]]
+
+* 使用ffplay拉流RSTP-海康威视摄像机
+
+#+begin_src bash
+  ffplay rtsp://admin:qingyikeji1@192.168.0.64:554/h264/ch1/main/av_stream
+#+end_src
+
+* windows环境下实现ffmpeg本地视频进行rtsp推流
+
+摘要：有时候服务端（如linux）或者边缘端（jetson盒子）需要接受摄像头的视频流输入，而摄像头的输入视频流一般为rtsp，测试时需要搭建摄像头环境，很不方便，因此需要对本地视频进行rtsp推流，模拟摄像头的rtsp输入。
+
+** 环境搭建
+
+*** 系统环境
+
+本地使用windows11 64位
+
+*** 下载rtsp
+
+[[https://github.com/bluenviron/mediamtx/releases/latest][rtsp下载地址]]
+
+[[resources/ffmpeg教程/png1.png]]
+
+*** 下载ffmpeg
+
+[[https://github.com/BtbN/FFmpeg-Builds/releases/latest][ffmpeg下载地址]]
+
+[[resources/ffmpeg教程/png2.png]]
+
+*** 把rtsp和ffmpeg解压到同一个文件夹
+
+把上面下载的两个压缩包解压到同一个文件夹，视频也放到该文件夹目录下，如下图所示：
+
+[[resources/ffmpeg教程/png3.png]]
+
+** ffmpeg对本地视频进行rtsp推流
+
+*** 启动rtsp
+
+双击点开mediamtx.exe，得到如下图画面：
+
+[[resources/ffmpeg教程/png4.png]]
+
+*** ffpmeg推流本地视频
+
+打开cmd终端(win+r，输入cmd, 回车)，进入到ffmpeg.exe所在路径，使用以下命令：
+
+#+begin_src bash
+  ffmpeg -re -stream_loop -1 -i normal_78.mp4 -c copy -f rtsp rtsp://127.0.0.1:8554/video
+#+end_src
+
+[[resources/ffmpeg教程/png5.png]]
+
+注意：这里ip为本地环境IP，可以在cmd终端输入ipconfig查看。
+
+**** ffpmeg常用参数
+
+| -re          | 以流的方式读取                     |
+|--------------+------------------------------------|
+| -i           | 输入视频                           |
+|--------------+------------------------------------|
+| -f           | 格式化输出到哪里                   |
+|--------------+------------------------------------|
+| -stream_loop | 循环读取视频源的次数，-l为无线循环 |
+|--------------+------------------------------------|
+| -c           | 指定编码器                         |
+|--------------+------------------------------------|
+| -c copy      | 直接复制，不经过重新编码（较快）   |
+|--------------+------------------------------------|
+| -c:v         | 指定视频编码器                     |
+|--------------+------------------------------------|
+| -c:a         | 指定音频编码器                     |
+|--------------+------------------------------------|
+| -vn          | 去除视频流                         |
+|--------------+------------------------------------|
+| -an          | 去除音频流                         |
+
+*** 使用vlc验证是否推流成功
+
+1. 下载vlc软件并安装:
+
+[[resources/ffmpeg教程/png6.png]]
+
+2. 打开vlc，点击媒体->打开网络串流->输入网路url：rtsp://127.0.0.1:8554/video
+
+[[resources/ffmpeg教程/png7.png]]
+
+如果能正常播放视频，证明推流成功，服务端或者边缘端可以使用ur进行rtsp来推流。
+
+[[resources/ffmpeg教程/png8.png]]
+
+** 参考链接
+
+[[https://blog.csdn.net/Caesar6666/article/details/137512406][windows环境下实现ffmpeg本地视频进行rtsp推流]]
+
+* 在Windows操作系统上使用mediamtx和ffmpeg推送录屏视频流
+
+** 搭建启动rtsp server
+
+从[[https://github.com/bluenviron/mediamtx/releases/latest]]下载Windows版本的编译结果。
+
+[[resources/ffmpeg教程/png1.png]]
+
+解压，然后启动该程序
+
+[[resources/ffmpeg教程/png4.png]]
+
+** 推送录屏视频流
+
+下载FFmpeg
+
+从[[https://github.com/BtbN/FFmpeg-Builds/releases/latest]]下载Windows版本的编译结果。
+
+[[resources/ffmpeg教程/png2.png]]
+
+解压后，通过cmd进入FFmpeg所在的目录，执行下面的命令（其中rtsp://localhost:8554/mystream是上一步生成的地址）。
+
+#+begin_src bash
+  ffmpeg -f gdigrab -framerate 10 -i desktop -f rtsp -g 5 -an rtsp://localhost:8554/mystream
+#+end_src
+
+我们可以看到console会出现下面的变化。
+
+[[resources/ffmpeg教程/png9.png]]
+
+rstp simple server的窗口会发生下面的变化。
+
+[[resources/ffmpeg教程/png10.png]]
+
+** 检验
+
+*** 获取本机IP
+
+在cmd中使用ipconfig获取本机IP
+
+*** 检测
+
+可以使用VLC播放器测试流地址是否有效。
+
+[[resources/ffmpeg教程/png11.png]]
+
+填入rtsp://127.0.0.1:8554/mystream。注意此处不能再使用localhost了，而是要用本机的IP。
+
+[[resources/ffmpeg教程/png12.png]]
+
+在VCL中能看到屏幕就代表我们方案是通过的。
+
+[[resources/ffmpeg教程/png13.png]]
+
+** 参考链接
+
+[[https://blog.csdn.net/wujiesunlirong/article/details/134804329][在Windows操作系统上使用mediamtx和ffmpeg推送录屏视频流]]
+
+* RTSP 和 RTMP原理 & 通过ffmpeg实现将本地摄像头推流到RTSP服务器
+
+** 流媒体：RTSP 和 RTMP
+
+*** 参考资料
+
+[[https://blog.csdn.net/weixin_43025343/article/details/124957360][秒懂流媒体协议 RTMP 与 RTSP]]
+
+[[https://blog.csdn.net/daocaokafei/article/details/127098972][什么是RTMP 和 RTSP？它们之间有什么区别？]]
+
+[[https://www.cnblogs.com/biao-wu/articles/13064243.html][RTSP和RTMP的区别是什么？]]
+
+*** RTSP 和 RTMP的工作原理
+
+**** RTSP工作原理
+
+1. 用户设备向视频流平台发送 RTSP 请求
+
+2. 视频流平台返回可以操作的请求列表，比如播放、暂停等
+
+3. 用户设备向视频流平台发送具体的请求，比如播放
+
+4. 视频流平台解析请求并调用指定机制启动视频流处理
+
+5. 由于 RTSP 依赖于专用服务器，并且依赖于 RTP（底层用到了UDP），因此该协议不支持加密视频内容或重传丢失的数据包。
+
+***** 这里解释一下RTSP中是如何用到UDP和TCP的：
+
+1. RTP协议，英文全称：Real-time Transport Protocol，中文就是实时传输协议，它的底层其实就是UDP，这样一来就可以实现低延迟。
+2. 除了RTP协议，为确保流畅和一致的流传输，RTSP 还使用另外两种网络通信协议：
+   1) TCP 收发控制命令（例如播放或停止请求）：TCP可靠传输，比如用户按下播放或者停止播放的时候，这个是个准确的请求，这个需要保证可靠性，这个时候TCP作用就体现了。
+   2) UDP传送音频、视频和数据：UDP是低延迟的协议，那么用于传送音频、视频和数据可以达到非常高效的效果。
+
+这里可以通过[[https://github.com/aler9/rtsp-simple-server/releases][开源的rtsp服务器]]可以简单理解：TCP监听端口为8554，UDP监听端口为8000
+
+[[resources/ffmpeg教程/png4.png]]
+
+**** RTMP工作原理
+
+1. 摄像头捕获视频
+
+2. 通过编码器将视频流传输到视频平台服务器
+
+3. 视频平台处理视频流
+
+4. 通过CDN分发到离用户最近的服务器上
+
+5. 最后视频流就能成功的到达用户设备
+
+[[resources/ffmpeg教程/png15.png]]
+
+在视频从摄像头到服务器的过程中，RTMP将大量数据分割成小块并跨多个虚拟通道传输（内容分发网络CDN），在视频源和 RTMP 服务器之间提供了稳定和流畅的视频流。
+
+*** RTSP 和 RTMP的优缺点
+
+**** RTSP的优缺点
+
+RTSP的优点：
+
+1. 轻松自定义流：可以通过结合不同的协议来开发自己的视频流解决方案。
+
+2. 分段流式传输：RTSP 流使观看者能够在下载完成之前访问的视频内容，而不必下载完整的视频以流式传输内容。
+
+RTSP的缺点：
+
+1. 与 HTTP不兼容：没有简单的解决方案可以在 Web 浏览器中播放 RTSP流，因为 RTSP 旨在通过私有网络流式传输视频，必须借用额外软件。
+
+2. 使用率低：由于视频播放器和流媒体服务并未广泛支持 RTSP 流媒体，因为使用率比较低。
+
+*** RTMP的优缺点
+
+**** RTMP的优点：
+
+1. 低延迟：RTMP使用独占的 1935 端口，无需缓冲，可以实现低延迟。
+
+2. 适应性强：所有 RTMP 服务器都可以录制直播媒体流，同时还允许观众跳过部分广播并在直播开始后加入直播流。
+
+3. 灵活性：RTMP 支持整合文本、视频和音频，支持 MP3 和 AAC 音频流，也支持MP4、FLV 和 F4V 视频。
+
+**** RTMP的缺点：
+
+1. HTML5 不支持：标准HTML5 播放器不支持 RTMP 流。
+
+2. 容易受到带宽问题的影响：RTMP 流经常会出现低带宽问题，造成视频中断。
+
+3. HTTP 不兼容：无法通过 HTTP 流式传输 RTMP，必须需要实现一个特殊的服务器，并使用第三方内容交付网络或使用流媒体视频平台。
+
+*** RTSP和RTMP的比较
+
+RTMP 和 RTSP协议 都是流媒体协议：
+
+1. RTMP（Real Time Message Protocol 实时消息传递协议） 有 Adobe 公司提出，用来解决多媒体数据传输流的多路复用（Multiplexing）和分包（packetizing）的问题，优势在于低延迟，稳定性高，支持所有摄像头格式，浏览器加载 flash插件就可以直接播放。
+2. RTSP （Real-Time Stream Protocol 实时流协议）由Real Networks 和 Netscape共同提出的，基于文本的多媒体播放控制协议。RTSP定义流格式，流数据经由RTP传输；RTSP实时效果非常好，适合视频聊天，视频监控等方向。
+
+**** RTMP 和 RTSP协议 的区别：
+
+RTSP虽然实时性最好，但是实现复杂，适合视频聊天和视频监控；
+
+RTMP强在浏览器支持好，加载flash插件后就能直接播放，所以非常火，相反在浏览器里播放rtsp就很困难了。
+
+*** RTSP和RTMP如何选择
+
+1. IP 摄像机选择RTSP：几乎所有 IP 摄像机都支持 RTSP，这是因为 IP 摄像机早在 RTMP 协议创建之前就已经存在，与 RTSP 和 IP 摄像机结合使用时，IP 摄像机本身充当 RTSP 服务器，这意味着要将摄像机连接到 IP 摄像机服务器并广播视频。
+
+2. 物联网设备选择RTSP：RTSP 通常内置在无人机或物联网软件中，从而可以访问视频源，它的好处之一是低延迟，确保视频中没有延迟，这对于无人机来说至关重要。
+
+3. 流媒体应用程序选择RTMP：比如各种短视频软件、视频直播软件等都内置了RTMP，RTMP 是为满足现代流媒体需求而设计的。
+
+*** 如何在浏览器上播放RTSP
+
+1. 直播的协议有：rtmp, http, rtsp等等。最常用的有二种：http, rtmp，当使用http协议的时候视频格式需要是m3u8或flv，下面作详细说明各种环境的优缺点。首先，rtsp不能使用于网页环境（包含PC端和移动端），那么直播只能选择rtmp或http。
+
+2. rtmp协议只支持flashplayer，也就是只能在PC端（或安卓环境中安装了flashplayer组件，这种环境比较少）安装了flashplayer的情况下使用。按现在的趋势，flashplayer是要逐渐被淘汰掉的。当然，在中国还会存在相对长时间。
+
+3. http协议的直播分二种格式，m3u8和flv。flv是一种即将被淘汰的直播格式。用来做直播已显的力不从心了。所以综合考虑，m3u8相对的比较好点，优点是支持移动端，并且支持PC端上安装了flashplayer的环境。缺点就如同rtmp一样。flashplayer并不是未来的发展趋势。另外一个缺点就是m3u8是有延迟的。并不能实时，实时传输方面不如rtmp协议。因为 m3u8的直播原理是将直播源不停的压缩成指定时长的ts文件（比如9秒，10秒一个ts文件）并同时实时更新m3u8文件里的列表以达到直播的效果。这样就会有一个至少9,10秒的时间延迟。如果压缩的过小，可能导致客户端网络原因致视频变卡。
+
+4. 实现rtsp转http并使用m3u8格式进行直播 可以参考[[https://www.youtube.com/watch?v=rgWVm_j3llo&list=LL][RTSP Webcam to HLS Live Streaming using FFMPEG and XAMPP | PART 1]]
+
+具体过程：外接支持rtsp的webcam；使用ffplay命令来播放rtsp流，可以根据参数将实时视频写入到指定文件夹中（分段写入）；xampp开启apache（开启80端口），可以让页面通过保存的m3u8文件实时访问webcam的监控界面。
+
+** ffmpeg将本地摄像头推流到RTSP服务器
+
+*** ffmpeg参考资料
+
+[[https://ffmpeg.org/ffmpeg-protocols.html][FFmpeg Protocols Documentation]]
+
+[[https://ffmpeg.org/ffmpeg-protocols.html][FFmpeg中文文档]]
+
+[[https://zhuanlan.zhihu.com/p/545070185][FFmpeg流媒体处理-收流与推流]]
+
+[[https://blog.51cto.com/u_3619476/5019788][FFmpeg发送流媒体的命令（UDP，RTP，RTMP）]]
+
+**** ffmpeg将本地摄像头推流到RTSP服务器
+
+[[https://blog.csdn.net/fkbiubiubiu/article/details/124028614][ffmpeg–使用命令+EasyDarwin推流笔记本摄像头]]
+
+[[https://blog.csdn.net/EthanCo/article/details/125321957][windows环境下，搭建RTSP视频推流服务器]]
+
+[[https://blog.csdn.net/qq_43994782/article/details/118941373][windows环境下python使用ffmpeg rtsp推流]]
+
+[[https://blog.csdn.net/yinshipin007/article/details/125982017][一个RtspServer的设计与实现和RTSP2.0简介]]
+
+[[https://www.youtube.com/watch?v=rgWVm_j3llo&list=LL][RTSP Webcam to HLS Live Streaming using FFMPEG and XAMPP | PART 1]]
+
+Note：ffmpeg将本地摄像头推流到rtsp的8554端口上（rtsp-simple-server在处理rtsp时，监听的是8554端口，指定其他端口ffmpeg推流会失败)
+
+*** 安装ffmpeg和rtsp-simple-server
+
+大致实现过程：使用rtsp-simple-server作为中转服务器，用于ffmpeg（写客户端）推流，后台服务（读客户端）拉流
+
+**** windows安装rtsp-simple-server和ffmpeg
+
+参考[[https://blog.csdn.net/EthanCo/article/details/125321957][windows环境下，搭建RTSP视频推流服务器]]即可（记得修改rtsp-simple-server.yml配置文件中的ip地址）
+
+**** linux安装rtsp-simple-server和ffmpeg
+
+安装[[https://github.com/aler9/rtsp-simple-server/releases/download/v0.20.2/rtsp-simple-server_v0.20.2_linux_amd64.tar.gz][rtsp-simple-server_v0.20.2_linux_amd64.tar.gz]]（这里以x86 CPU为例），解压后修改rtsp-simple-server.yml配置文件中的ip地址（vim替换命令为%s:/127.0.0.1/192.168.132.100/g），执行./rtsp-simple-server即可启动rtsp服务器。
+
+如果要想在后台启动rtsp服务器，执行如下命令
+
+#+begin_src bash
+  nohup ./rtsp-simple-server >> rtsp_server.log 2>&1 &  #非挂起启动命令
+#+end_src
+
+tail rtsp_server.log  #查看rtsp-simple-server启动日志文件
+
+#+begin_src bash
+  ps -aux | grep rtsp_simple_server  #查看rtsp-simple-server进程
+  dpf        2116  0.0  0.0  13140  1016 pts/0    S+   04:54   0:00 grep --color=auto rtsp_simple_server
+#+end_src
+
+ffmpeg安装地址如下[[https://johnvansickle.com/ffmpeg/]]，解压后执行./ffmpeg即可使用ffmpeg，参考[[https://blog.csdn.net/weixin_42010722/article/details/126951341][在linux下使用ffmpeg方法]]
+
+Note：在linux中关于tar.gz，xz，tar的解压操作请自行上网查阅。
+
+*** 将本地摄像头推流到RTSP服务器
+
+大致实现过程：使用rtsp-simple-server作为中转服务器，用于ffmpeg（写客户端）推流，后台服务（读客户端）拉流
+
+这里以windows系统作为演示，先解压[[https://github.com/aler9/rtsp-simple-server/releases][rtsp-simple-server_v0.19.1_windows_amd64.zip]]，打开rtsp-simple-server.exe监听RTSP下TCP的8554端口，然后通过ffmpeg将指定摄像头采集到的图像帧向该端口进行推流（即多个客户端与服务器端的socket通信）
+
+**** 写客户端：ffmpeg
+
+ffmpeg推流视频文件到指定ip + 端口上（-stream_loop -1）：
+
+#+begin_src bash
+  ffmpeg -re -stream_loop -1 -i 你视频的文件名 -c copy -f rtsp rtsp://127.0.0.1:8554/videoFile_test
+#+end_src
+
+ffmpeg将本地摄像头的视频流推送到指定ip + 端口上，则需要
+
+#+begin_src bash
+  //获取本地摄像头名称
+  ffmpeg -list_devices true -f dshow -i dummy  
+
+  //ffmpeg向指定端口推流（我的是Integrated Camera）
+  ffmpeg -f dshow -i video="自己的摄像头驱动名称" -vcodec libx264 -preset:v ultrafast -tune:v zerolatency -rtsp_transport tcp -f rtsp rtsp://127.0.0.1:8554/camera_test
+  //libx264编码
+  ffmpeg -f dshow -i video="Integrated Camera" -vcodec libx264 -preset:v ultrafast -tune:v zerolatency -rtsp_transport tcp -f rtsp rtsp://127.0.0.1:8554/camera_test
+#+end_src
+
+**** 服务器端：RTSP服务器
+
+初启动效果如下：
+
+[[resources/ffmpeg教程/png4.png]]
+
+开启两个ffmpeg模拟两个写客户端，完成摄像头采集视频帧的推流和本地视频文件的推流
+
+该过程会出现两个createby和publishing，在不同文件路径下写入图像帧，可以通过指定进程（ip+端口）来处理（这里新创建了56725和56732两个进程来处理），而RTSP的监听端口仍然是8554，这样可以实现非阻塞通信。
+
+[[resources/ffmpeg教程/png16.png]]
+
+**** 读客户端：读客户端可以通过两种方式来实现
+
+安装VLC，选择流数据播放模式，输入rtsp://127.0.0.1:8554/camera_test，rtsp://127.0.0.1:8554/videoFile_test即可播放；
+
+=通过OBS的虚拟摄像头，将终端打印信息接入到虚拟摄像头中，再通过ffmpeg将虚拟摄像头中的内容推流出来，最后通过VLC拉流查看效果=
+
+[[resources/ffmpeg教程/png17.png]]
+
+亦或者使用如下python代码：
+
+#+begin_src python
+import cv2
+
+def capture_video(rtsp_path):
+    name = rtsp_path.split("/")[-1]
+    capture = cv2.VideoCapture(rtsp_path)
+    while capture.isOpened():
+        ret, frame = capture.read()
+        if not ret:
+            break
+        cv2.imshow(name, frame)
+        if cv2.waitKey(50) == 27:
+            break
+
+if __name__ == '__main__':
+    # rtsp_paths = ['rtsp://127.0.0.1:8554/videoFile_test','rtsp://127.0.0.1:8554/camera_test']
+    rtsp_paths = ['rtsp://127.0.0.1:8554/videoFile_test']
+    for rtsp_path in rtsp_paths:
+        capture_video(rtsp_path)
+
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+#+end_src
+
+此时会出现两个createby和reading，即开启两个进程进行视频流的读取
+
+**** 存在问题：视频读取时延大
+
+基于tcp和RTP的rtsp直播延迟很高，一开始延迟只有7s，由于TCP的拥塞控制，导致随着时间推移，延迟越来越高，有14s之多。
+
+***** 可能原因1：视频编码导致延迟高（亲测效果不明显）
+
+参考[[https://blog.csdn.net/yuxinaibiancheng/article/details/119884095][ffmpeg直播解决延时的关键方法]]，主要原因是使用libx264或者h264对视频进行编码的问题。
+
+解决方法参考[[https://blog.csdn.net/fkbiubiubiu/article/details/124028614][ffmpeg–使用命令+EasyDarwin推流笔记本摄像头]]
+
+//h264_qsv编码（比libx264编码快点）
+
+#+begin_src bash
+  ffmpeg -f dshow -i video="Integrated Camera" -vcodec h264_qsv -tune:v zerolatency -rtsp_transport tcp -f rtsp rtsp://127.0.0.1:8554/camera_test
+#+end_src
+
+//不使用编码器，直接推送（但是很模糊）
+
+#+begin_src bash
+ffmpeg -f dshow -i video="Integrated Camera" -rtsp_transport tcp -f rtsp rtsp://127.0.0.1:8554/camera_test
+#+end_src
+
+***** 可能原因2：设置ffmpeg参数（亲测效果不明显）
+
+参考[[https://www.cnblogs.com/sk777/p/16831556.html][解决ffmpeg的播放摄像头的延时优化问题(项目案例使用有效)]]
+
+原参数：
+
+#+begin_src bash
+-vcodec libx264,
+-r 25,
+-video_size 1280x720,
+#+end_src
+
+优化参数1：
+
+-tune zerolatency  //设置零延时
+-preset ultrafast  //--preset的参数主要调节编码速度和质量的平衡，有ultrafast（转码速度最快，视频往往也最模糊）、superfast、veryfast、faster、fast、medium、slow、slower、veryslow、placebo这10个选项，从快到慢
+
+优化参数2：
+
+#+begin_src bash
+-threads 4,
+-c:a copy,
+-fflags nobuffer,
+-max_delay 1,
+-vprofile baseline,
+-rtsp_transport tcp,
+-crf 30,
+-vsync 2,
+-f flv
+#+end_src
+
+ffmpeg完整命令如下：
+
+#+begin_src bash
+  ffmpeg -f dshow -i video="Integrated Camera" -vcodec libx264 -r 25 -video_size 640x480 -tune:v zerolatency -preset:v ultrafast -threads 4 -c:a copy -fflags nobuffer -max_delay 1 -rtsp_transport tcp -crf 30 -vsync 2 -f flv -f rtsp rtsp://127.0.0.1:8554/camera_test
+#+end_src
+
+***** 可能原因3：tcp连接导致延迟高
+
+参考[[https://github.com/aler9/rtsp-simple-server/issues/902][RTSP end to end latency will be increasing when use tcp #902]]
+
+ffmpeg在通过rtsp实现推流时默认是遵循tcp协议的，目的是为了保证消息可靠传输。对于实时音视频通信，如果要想实现低延迟，要么增加带宽，要么使用UDP进行传输。
+
+***** 原因4：逐帧读取时需要逐帧解码，导致输入和输出速率不匹配导致延迟高（有效 - 抽帧读取）
+
+解决方法：对于读客户端，采用抽帧读取的方法来解决。如果采用逐帧读取并完成解码的方式，会让写客户端不停地推流，而读客户端来不及解码导致缓存区拥塞。
+
+参考[[http://www.yaotu.net/biancheng/21985.html][Opencv—视频跳帧处理，OpenCV笔记：cv2.VideoCapture 完成视频的跳帧输出操作]]
+
+ffmpeg写客户端命令无需修改：
+
+//获取本地摄像头名称
+#+begin_src bash
+  ffmpeg -list_devices true -f dshow -i dummy
+#+end_src
+
+
+#+begin_src bash
+  ffmpeg -f dshow -i video="Integrated Camera" -vcodec libx264 -r 25 -video_size 640x480 -tune:v zerolatency -preset:v ultrafast -threads 4 -c:a copy -fflags nobuffer -max_delay 1 -rtsp_transport tcp -crf 30 -vsync 2 -f flv -f rtsp rtsp://127.0.0.1:8554/camera_test
+#+end_src
+
+python读客户端代码修改如下：
+
+#+begin_src python
+def capture_video(rtsp_path):
+    name = rtsp_path.split("/")[-1]
+    capture = cv2.VideoCapture(rtsp_path)  #不用带cv2.CAP_DSHOW
+    now_fps = 0
+    while capture.isOpened():
+        # 设置每 10 帧输出一次
+        if (now_fps == 3):
+            now_fps = 0
+            ret, frame = capture.read()
+            if not ret:
+                break
+            cv2.imshow(name, frame)
+            if cv2.waitKey(50) == 27:
+                break
+        else:
+            # 跳帧，仅获取帧但不做解码处理
+            ret = capture.grab()
+            now_fps += 1
+#+end_src
+
+** 参考链接
+
+[[https://blog.csdn.net/qq_33934427/article/details/128009659][RTSP 和 RTMP原理 & 通过ffmpeg实现将本地摄像头推流到RTSP服务器]]
+
+[[https://blog.csdn.net/zhying719/article/details/107421180][FFMpeg 实现视频编码、解码]]

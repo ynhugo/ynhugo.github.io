@@ -1,0 +1,23 @@
+---
+title: "根据已知密码配置密码缓冲期"
+tags: ["linux", "sudo"]
+date: 2026-05-19T10:41:29.11+0800
+---
+
+* 根据已知密码配置密码缓冲期
+
+比如密码是：password@123
+
+#+begin_src bash
+# 根据已知密码配置密码缓冲期
+export SUDO_ASKPASS=$(mktemp)
+cat > ${SUDO_ASKPASS} <<'EOF'
+#!/bin/bash
+# 输出密码
+echo "password@123"
+EOF
+chmod 700 ${SUDO_ASKPASS}
+sudo -A whoami
+rm -f ${SUDO_ASKPASS}
+while true; do sudo -v; sleep 240; done &
+#+end_src

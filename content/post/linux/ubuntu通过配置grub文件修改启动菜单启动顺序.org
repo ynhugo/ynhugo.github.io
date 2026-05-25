@@ -1,0 +1,86 @@
+---
+title: ubuntu通过配置grub文件修改启动菜单启动顺序
+tags: ["ubuntu", "linux", "grub"]
+date: 2025-04-28T17:05:48.95+0800
+---
+
+* ubuntu通过配置grub文件修改启动菜单启动顺序和修改默认启动内核
+
+** ubuntu设置启动菜单默认启动项
+
+*** 计算您的启动菜单条目。
+
+无需记住所有引导条目的完整图块，您可以对它们进行计数并使用该数字来设置默认引导条目。
+
+要预览菜单，请按 =Ctrl+Alt+T= 打开终端窗口，然后运行以下命令来安装 =grub-emu= 工具并使用它模拟启动菜单：
+
+首先，运行命令安装 grub-emu：
+
+#+begin_src bash
+  sudo apt install grub-emu
+#+end_src
+
+然后，运行 =grub-emu= 以启动一个带有系统启动菜单的窗口：
+
+#+begin_src bash
+  sudo grub-emu
+#+end_src
+
+计数从数字 0 开始。第一个条目是 0，第二个条目是 1，第三个条目是 2 ...
+
+如果你想设置一个子菜单项来默认启动另一个内核，例如第二主菜单选项（在我的例子中为Ubuntu的高级选项，计数1）和第三 子菜单项（例如，Ubuntu with Linux Kernel 6.x.x…，计数 2），则目标编号为 1>2。
+
+*** 编辑默认操作系统/内核的配置文件
+
+接下来，打开终端 (Ctrl+Alt+T) 并运行命令来编辑 grub 配置文件：
+
+#+begin_src bash
+  sudo emacs /etc/default/grub
+#+end_src
+
+并且，当文件打开时，通过将数字 0（表示第一个）替换为上一步中获得的相应数字来设置 GRUB_DEFAULT=”0″。
+
+提示：您可以设置 =GRUB_DEFAULT=saved= 加上新行 =GRUB_SAVEDEFAULT=true= ，这样它会记住上次的启动项，并在下次启动时将其设置为默认值。
+#+begin_src bash
+GRUB_DEFAULT=saved
+GRUB_SAVEDEFAULT=true
+#+end_src
+
+最后，保存文件并退出。并且，运行以下命令来更新更改。
+
+#+begin_src bash
+sudo update-grub
+#+end_src
+
+** 更改系统内核版本
+
+
+1. 查看都有那些内核
+
+#+begin_src bash
+  cat /boot/grub/grub.cfg | grep menuentry
+#+end_src
+
+2. 查看 /boot/grub/grub.cfg 中的内容
+
+menuentry(主菜单）：是系统每次启动默认的kernel，对应 /etc/default/grub 中 GRUB_DEFAULT=0
+
+submenu(子菜单）：包含系统中所有的启动kernel。
+
+3. 打开/boot/grub/grub.cfg文件，对应ubuntu有menuentry和submenu，在submenu中还有数个menuentry，将submenu中想要作为默认启动的内核版本移动到submenu中的最靠前的位置。由于我们是直接修改/boot/grub/grub.cfg文件，直接修改grub.cfg就不要执行update了。
+
+** 参考链接
+
+[[https://cn.linux-terminal.com/?p=8402][配置 Ubuntu 24.04 中默认引导的操作系统或内核]]
+
+[[https://www.cnblogs.com/zhuangshenhao/articles/15632391.html][Ubuntu 修改默认启动内核（kernel） - zhuang6 - 博客园]]
+
+[[https://blog.csdn.net/qq_33406883/article/details/106708621][Ubuntu修改grub和grub.cfg文件不起作用_ubuntu grub.cfg-CSDN博客]]
+
+[[https://blog.csdn.net/perfect886/article/details/119783211][ubuntu修改启动项等待时间、修改启动项顺序、更改启动内核_ubuntu20.04修改启动顺序-CSDN博客]]
+
+[[https://blog.csdn.net/qq_42127861/article/details/107542981][【 GRUB 】修改启动列表项，自定义列表项内容，添加自定义GRUB主题_修改 grub-CSDN博客]]
+
+[[https://zhuanlan.zhihu.com/p/552895466][Ubuntu显示grub启动菜单以及修改默认启动项]]
+
+[[https://blog.csdn.net/youngong/article/details/119787458][解决双硬盘下一个windows两个linux操作系统的grub引导问题_多ubuntu grub 多硬盘-CSDN博客]]

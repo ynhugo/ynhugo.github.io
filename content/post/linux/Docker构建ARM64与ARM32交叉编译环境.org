@@ -1,0 +1,60 @@
+---
+title: Docker构建ARM64与ARM32交叉编译环境
+tags: ["docker", "linux", "arm64", "arm32"]
+date: 2026-03-20T12:08:38.08+0800
+---
+
+* Docker构建ARM64与ARM32交叉编译环境
+#+begin_src bash
+cat - > Dockerfile <<'EOF'
+FROM ubuntu:24.04
+ENV DEBIAN_FRONTEND=noninteractive
+# 使用清华APT源加速
+RUN sed -i 's/archive.ubuntu.com/mirrors.tuna.tsinghua.edu.cn/g' /etc/apt/sources.list && \
+  sed -i 's/security.ubuntu.com/mirrors.tuna.tsinghua.edu.cn/g' /etc/apt/sources.list && \
+  apt-get update && apt-get install -y \
+  build-essential cmake git pkg-config \
+  gcc-aarch64-linux-gnu g++-aarch64-linux-gnu \
+  gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf \
+  libbluetooth-dev nlohmann-json3-dev \
+  && rm -rf /var/lib/apt/lists/*
+WORKDIR /workspace
+ENV CC_aarch64-linux-gnu=aarch64-linux-gnu-gcc
+ENV CXX_aarch64-linux-gnu=aarch64-linux-gnu-g++
+ENV CC_arm-linux-gnueabihf=arm-linux-gnueabihf-gcc
+ENV CXX_arm-linux-gnueabihf=arm-linux-gnueabihf-g++
+    
+CMD ["/bin/bash"]
+EOF
+
+# 构建
+docker build -t cross-compiler .
+
+# 清理构建缓存
+docker system prune -f
+
+# 运行
+mkdir -p /opt/test
+docker run -it --mount type=bind,src=/opt/test,dst=/workspace cross-compiler
+<<'CONTENT'
+绑定挂载（Bind Mounts）
+简介:
+绑定挂载将主机文件系统 中的一个目录挂载到容器中，允许容器直接访问和修改主机上的文件。
+
+适用环境:
+开发环境: 开发过程中需要频繁修改主机文件，并立即在容器中生效。
+主机与容器数据共享: 需要在主机和容器之间共享文件。
+
+使用场景:
+开发和测试： 挂载代码目录，以便在主机上编辑代码时容器能立即使用最新代码。
+日志文件： 将容器的日志文件直接写入主机目录，方便监控和分析。
+CONTENT
+
+#+end_src
+
+** 参考链接
+[[https://www.cnblogs.com/zhaoo/p/19307397/docker-packages-and-creates-arm64-crosscompilation-environment-installs-bluetooth-libraries-z93oo7][DOCKER打包制作ARM64交叉编译环境，安装蓝牙库等]]
+
+[[https://blog.csdn.net/sz66cm/article/details/148225127][Docker基础 -- Ubuntu 22.04 AArch64 交叉编译 Docker 镜像构建指南]]
+
+[[https://blog.csdn.net/lwxvgdv/article/details/140543267][docker--容器数据进行持久化存储的三种方式]]

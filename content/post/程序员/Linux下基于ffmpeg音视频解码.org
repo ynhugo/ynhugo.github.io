@@ -1,0 +1,1942 @@
+---
+title: Linux下基于ffmpeg音视频解码
+tags: ["ffmpeg"]
+date: 2024-09-09T17:14:47.09+0800
+---
+
+* Linux下基于ffmpeg音视频解码
+
+FFmpeg开发环境配置参考：[[https://ynhugo.github.io/p/ubuntu-20.04lts-ffmpeg-环境配置/][Ubuntu 20.04LTS FFmpeg 环境配置]]
+
+** 工程示例
+
+#+begin_src
+#include <stdio.h>
+#include "libavcodec/avcodec.h"
+#include "libavformat/avformat.h"
+#include "libswscale/swscale.h"
+#include <libswresample/swresample.h>
+#include <libavutil/mathematics.h>
+#include <libavutil/timestamp.h>
+#include <stdio.h>
+#include <linux/fb.h>
+#include <stdlib.h>
+#include <sys/mman.h>
+#include <poll.h>
+#include <string.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <time.h>
+#include <wchar.h>
+#include <pthread.h>
+#include <signal.h>
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <SDL.h>
+
+#define FILE_NAME "123.flv"
+typedef unsigned char u8;
+typedef unsigned short u16;
+typedef unsigned int u32;
+typedef enum
+{
+	false,
+	true,
+}bool;
+uint8_t *out_buffer;
+#define MAX_AUDIO_FRAME_SIZE 1024*100 
+static Uint8* audio_chunk; 
+static unsigned int audio_len=0;
+static unsigned char *audio_pos;
+pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;//互斥锁
+
+//保存音频数据链表
+struct AUDIO_DATA
+{
+	unsigned char* audio_buffer;
+	int audio_size;
+	struct AUDIO_DATA *next;
+};
+//定义一个链表头
+struct AUDIO_DATA *list_head=NULL;
+struct AUDIO_DATA *List_CreateHead(struct AUDIO_DATA *head);//创建链表头
+void List_AddNode(struct AUDIO_DATA *head,unsigned char* audio_buffer,int audio_size);//添加节点
+void List_DelNode(struct AUDIO_DATA *head,unsigned char* audio_buffer);//删除节点
+int List_GetNodeCnt(struct AUDIO_DATA *head);//遍历
+int List_GetNode(struct AUDIO_DATA *head,char *audio_buff,int *audio_size);
+
+int file_stat=1;
+
+void  AudioCallback(void *userdata, Uint8 * stream,int len)
+{
+	SDL_memset(stream, 0,len);
+	if(audio_len<=0)
+	{
+		return ;
+	}
+	len=(len>audio_len?audio_len:len);
+	SDL_MixAudio(stream,audio_pos,len,SDL_MIX_MAXVOLUME);
+	audio_pos+=len;
+	audio_len-=len;
+	//printf("len=%d\n",len);
+}
+
+void *Audio_decode(void *arg)
+{
+	int res;
+	int audio_size;
+	char audio_buff[4096*3];
+	while(1)
+	{
+		res=List_GetNode(list_head,audio_buff,&audio_size);
+		if(res==0)
+		{
+			audio_chunk = audio_buff; //指向音频数据 (PCM data)
+			while(audio_len>0){}//等待数据处理完
+			audio_len =audio_size;//音频长度
+			audio_pos = audio_buff;//当前播放位置
+		}
+	}
+}
+int main(int argc,char *argv[])
+{
+	if(argc!=2)
+	{
+		printf("格式:./app 文件名\n");
+		return 0;
+	}
+	char *file_name=argv[1];
+	/*SDL初始化*/
+	SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO|SDL_INIT_TIMER);
+	printf("pth:%s\n",avcodec_configuration());/*获取ffmpeg配置信息*/
+	/*初始化所有组件*/
+	//av_register_all();
+	/*打开文件*/
+	AVCodecContext  *pCodecCtx;//解码器上下文
+	AVFormatContext *ps=NULL;//音视频封装格式结构体信息
+	printf("name:%s\n",file_name);
+	int res=avformat_open_input(&ps,file_name,NULL,NULL);
+	if(res!=0)
+	{
+		printf("open err: %d\n",res);
+		return 0;
+	}
+	/*寻找解码信息*/
+	avformat_find_stream_info(ps,NULL);
+	int64_t time=ps->duration;
+	printf("time:%ld s\n",time/1000000);
+	/*打印有关输入或输出格式的详细信息*/
+	av_dump_format(ps,0,file_name,0);
+	/*寻找视频流信息*/
+	int videostream=-1;
+	int audiostream=-1;
+	AVCodec *vcodec;
+	videostream=av_find_best_stream(ps,AVMEDIA_TYPE_VIDEO,-1,-1,NULL, 0);
+	printf("video=%d\n",videostream);
+	/*寻找音频流信息*/
+	audiostream=av_find_best_stream(ps,AVMEDIA_TYPE_AUDIO,-1,-1,NULL, 0);
+	printf("audio=%d\n",audiostream);
+	AVStream *stream;
+	int frame_rate;
+	if(videostream!=-1)//判断是否找到视频流数据
+	{
+		/*寻找视频解码器*/
+		AVStream *stream = ps->streams[videostream];
+		vcodec=avcodec_find_decoder(stream->codecpar->codec_id);
+		if(!vcodec)
+		{
+			printf("未找到视频解码器\n");
+			return -1;
+		}/*申请AVCodecContext空间。需要传递一个编码器，也可以不传，但不会包含编码器。*/
+		res=avcodec_open2(stream->codec,vcodec,NULL);
+		if(res)
+		{
+			printf("打开解码器失败\n");
+			return -1;
+		}
+		frame_rate=stream->avg_frame_rate.num/stream->avg_frame_rate.den;//每秒多少帧
+		printf("fps=%d\n",frame_rate);
+		printf("视频流ID=%#x\n",vcodec->id);//音频流
+	}
+	/*音频流数据处理*/
+	AVCodec *audcodec;
+	AVStream *audstream;
+	SwrContext *swrCtx;//保存重采样数据，即解码的信息
+	uint64_t out_channel_layout;//声道
+	int out_sample_fmt;//采样格式
+	int out_sample_rate;//采样率
+	int out_nb_samples;//样本数量
+	int out_channels;//通道数量
+	uint64_t in_channel_layout;//输入音频声道
+	SDL_AudioSpec desired;//SDL音频格式信息
+	AVFrame *audioframe;//保存音频数据
+	int out_buffer_size;//音频缓冲区大小
+	if(audiostream>=0)//判断是否有音频流
+	{
+		/*寻找音频解码器*/
+		audstream = ps->streams[audiostream];
+		audcodec=avcodec_find_decoder(audstream->codecpar->codec_id);
+		if(!audcodec)
+		{
+			printf("audcodec failed\n");
+			return -1;
+		}
+		/*申请音频AVCodecContext空间。需要传递一个编码器，也可以不传，但不会包含编码器。*/
+		pCodecCtx=audstream->codec;//解码器上下文
+		res=avcodec_open2(audstream->codec,audcodec,NULL);
+		if(res)
+		{
+			printf("未找到音频解码器\n");
+			return -1;
+		}
+		printf("音频流ID=%#x\n",audcodec->id);//音频流
+		printf("配置音频参数\n");
+		//输出音频参数
+		out_channel_layout  = AV_CH_LAYOUT_STEREO;  //声道格式
+		out_sample_fmt=AV_SAMPLE_FMT_S16;//AV_SAMPLE_FMT_S32;//;//采样格式
+		printf("pCodecCtx->sample_rate=%d\n",pCodecCtx->sample_rate);
+		out_sample_rate =pCodecCtx->sample_rate;//采样率，多为44100
+		/*样本数量*/
+		printf("frame_size=%d\n",pCodecCtx->frame_size);
+		if(pCodecCtx->frame_size>0)out_nb_samples=pCodecCtx->frame_size;
+		else if(audcodec->id == AV_CODEC_ID_AAC) out_nb_samples=1024;/*样本数量nb_samples: AAC-1024 MP3-1152  格式大小 */
+		else if(audcodec->id == AV_CODEC_ID_MP3)out_nb_samples=1152;
+		else out_nb_samples=1024;
+		out_channels=av_get_channel_layout_nb_channels(out_channel_layout);//通道个数
+		out_buffer_size=av_samples_get_buffer_size(NULL,out_channels,out_nb_samples,out_sample_fmt,1);//获取缓冲区大小
+		out_buffer=(uint8_t*)av_malloc(MAX_AUDIO_FRAME_SIZE);
+		memset(out_buffer,0,out_buffer_size);
+		printf("声道格式:%d\n",out_channel_layout);
+		printf("采样格式:%d\n",out_sample_fmt);	
+		printf("样本数量:%d\n",out_nb_samples);	
+		printf("采样率:%d\n",out_sample_rate);
+		printf("通道个数:%d\n",out_channels);
+		printf("缓冲区大小:%d\n",out_buffer_size);
+		//输入音频参数
+		in_channel_layout=av_get_default_channel_layout(pCodecCtx->channels);//输入声道格式
+		swrCtx = swr_alloc();
+		/*对解码数据进行重采样*/
+		swrCtx=swr_alloc_set_opts(swrCtx,out_channel_layout,out_sample_fmt,out_sample_rate,/*输入音频格式*/
+								in_channel_layout,pCodecCtx->sample_fmt,pCodecCtx->sample_rate,/*输出音频格式*/
+								0,NULL);				
+		swr_init(swrCtx);//初始化swrCtx
+		
+		printf("输入音频格式:%d\n",in_channel_layout);
+		printf("输入采样格式:%d\n",pCodecCtx->sample_fmt);
+		printf("输入采样率:%d\n",pCodecCtx->sample_rate);
+		
+		/*设置音频数据格式*/
+		desired.freq=out_sample_rate;/*采样率*/
+		desired.format=AUDIO_S16SYS;/*无符号16位*/
+		desired.channels=out_channels;/*声道*/
+		desired.samples=out_nb_samples;/*样本数1024*/
+		desired.silence=0;/*静音值*/
+		desired.callback=AudioCallback;
+		SDL_OpenAudio(&desired,NULL);
+		SDL_PauseAudio(0);/*开始播放音频，1为播放静音值*/
+		//分配内存
+		audioframe=av_frame_alloc();/*分配音频帧*/
+		printf("音频数据初始化完成");
+	}
+	//视频解码
+	AVFrame *frame=av_frame_alloc();/*分配视频帧*/
+	AVFrame *frameYUV=av_frame_alloc();/*申请yuv空间*/
+	/*分配空间，进行图像转换*/
+	int width=ps->streams[videostream]->codecpar->width;
+	int height=ps->streams[videostream]->codecpar->height;
+	int fmt=ps->streams[videostream]->codecpar->format;/*流格式*/
+	printf("fmt=%d\n",fmt);
+	int size=avpicture_get_size(AV_PIX_FMT_RGB24, width,height);
+	unsigned char *buff=NULL;
+	printf("w=%d,h=%d,size=%d\n",width,height,size);
+	buff=av_malloc(size);
+	/*计算一帧空间大小*/
+	avpicture_fill((AVPicture *)frameYUV,buff,AV_PIX_FMT_RGB24,width,height);
+	/*转换上下文*/
+	struct SwsContext *swsctx=sws_getContext(width,height, fmt,width,height, AV_PIX_FMT_RGB24,SWS_BICUBIC,NULL,NULL,NULL);
+	/*读帧*/
+	int go=0;
+	int go_audio;	
+	list_head=List_CreateHead(list_head);//创建链表头
+	/*创建音频处理线程*/
+	pthread_t pthid;
+	pthread_create(&pthid,NULL,Audio_decode,(void *)ps);
+	pthread_detach(pthid);//设置为分离属性
+	/*创建窗口*/
+	SDL_Window *window=SDL_CreateWindow("SDL_VIDEO", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,1280,720,SDL_WINDOW_SHOWN);
+	/*创建渲染器*/
+	SDL_Renderer *render=SDL_CreateRenderer(window,-1,SDL_RENDERER_ACCELERATED);
+	/*清空渲染器*/
+	SDL_RenderClear(render);	
+	/*创建纹理*/
+	SDL_Texture *sdltext=SDL_CreateTexture(render,SDL_PIXELFORMAT_RGB24,SDL_TEXTUREACCESS_STREAMING,width,height);		
+	bool quit=true;
+	SDL_Event event;
+	printf("read fream buff\n");
+	//初始化转码器
+	AVPacket *packet=av_malloc(sizeof(AVPacket));/*分配包*/
+	av_init_packet(packet);//初始化
+	int i=0;
+	int index=0;
+	long video_pts_time=0;
+	long audio_pts_time=0;//音频解码时间
+	time=(1000000/frame_rate-10000);//时间
+	printf("time=%d\n",time);
+	while((av_read_frame(ps,packet)>=0) && (quit))
+	{
+		SDL_PollEvent(&event);
+		if(event.type==SDL_QUIT)
+		{
+			quit=false;
+			continue;
+		}
+		if(packet->stream_index == videostream)/*判断是否为视频*/
+		{
+			res=avcodec_send_packet(ps->streams[videostream]->codec,packet);
+			if(res)
+			{
+				av_packet_unref(packet);//释放这个pkt
+				continue;
+			}
+			
+			res=avcodec_receive_frame(ps->streams[videostream]->codec,frame);
+			if(res)
+			{
+				av_packet_unref(packet);//释放这个pkt	
+				continue;
+			}
+			sws_scale(swsctx,(const uint8_t **)frame->data,frame->linesize,0,height,(const uint8_t **)frameYUV->data,frameYUV->linesize);
+			video_pts_time=packet->pts;
+			//printf("视频=%ld\n",video_pts_time);
+			SDL_UpdateTexture(sdltext,NULL,buff, width*3);
+			SDL_RenderCopy(render, sdltext, NULL, NULL); // 拷贝纹理到渲染器
+			SDL_RenderPresent(render); //渲染
+			usleep(time);
+		}
+		if(packet->stream_index == audiostream)  //如果为音频标志
+		{
+			if(audiostream<0)continue;
+			res=avcodec_send_packet(pCodecCtx,packet);
+			if(res)
+			{
+				printf("avcodec_send_packet failed,res=%d\n",res);
+				av_packet_unref(packet);//释放这个pkt	
+				continue;
+			}
+			res=avcodec_receive_frame(pCodecCtx,audioframe);
+			if(res)
+			{
+				printf("avcodec_receive_frame failed,res=%d\n",res);
+				av_packet_unref(packet);//释放这个pkt
+				continue;
+			}
+			//数据格式转换
+			res=swr_convert(swrCtx,&out_buffer,out_buffer_size,/*重采样之后的数据*/
+						(const uint8_t **)audioframe->data,audioframe->nb_samples/*重采样之前数据*/
+						);
+			audio_pts_time=packet->pts;
+			//printf("音频：%ld\n",audio_pts_time);
+			if(res>0)
+			{
+				//audio_chunk =out_buffer; //指向音频数据 (PCM data)
+				//while(audio_len>0){}//等待数据处理完
+				//audio_len =audioframe->nb_samples;//out_buffer_size;//音频长度
+				//audio_pos =out_buffer;//当前播放位置
+				List_AddNode(list_head,out_buffer,out_buffer_size);//添加节点
+			}
+		}
+		//释放数据包
+		av_packet_unref(packet);
+	}
+	sws_freeContext(swsctx);
+	av_frame_free(&frame);
+	av_frame_free(&frameYUV);
+	avformat_free_context(ps);
+	return 0;
+}
+/*创建链表头*/
+struct AUDIO_DATA *List_CreateHead(struct AUDIO_DATA *head)
+{
+	if(head==NULL)
+	{
+		head=malloc(sizeof(struct AUDIO_DATA));
+		head->next=NULL;
+	}
+	return head;	
+}
+
+/*添加节点*/
+void List_AddNode(struct AUDIO_DATA *head,unsigned char* audio_buffer,int audio_size)
+{
+	struct AUDIO_DATA *tmp=head;
+	struct AUDIO_DATA *new_node;
+	pthread_mutex_lock(&mutex);
+	/*找到链表尾部*/
+	while(tmp->next)
+	{
+		tmp=tmp->next;
+	}
+	/*插入新的节点*/
+	new_node=malloc(sizeof(struct AUDIO_DATA));
+	new_node->audio_size=audio_size;
+	new_node->audio_buffer=malloc(audio_size);//分配保存音频数据大小空间
+	memcpy(new_node->audio_buffer,audio_buffer,audio_size);
+	new_node->next=NULL;
+	/*将新节点接入到链表*/
+	tmp->next=new_node;	
+	pthread_mutex_unlock(&mutex);
+}
+/*
+函数功能:删除节点
+*/
+void List_DelNode(struct AUDIO_DATA *head,unsigned char* audio_buffer)
+{
+	struct AUDIO_DATA *tmp=head;
+	struct AUDIO_DATA *p;
+	/*找到链表中要删除的节点*/
+	pthread_mutex_lock(&mutex);
+	while(tmp->next)
+	{
+		p=tmp;
+		tmp=tmp->next;
+		if(tmp->audio_buffer==audio_buffer)
+		{
+			p->next=tmp->next;
+			free(tmp->audio_buffer);
+			free(tmp);
+			break;
+		}
+	}
+	pthread_mutex_unlock(&mutex);
+}
+/*
+函数功能:遍历链表，得到节点总数量
+*/
+int List_GetNodeCnt(struct AUDIO_DATA *head)
+{
+	int cnt=0;
+	struct AUDIO_DATA *tmp=head;
+	pthread_mutex_lock(&mutex);
+	while(tmp->next)
+	{
+		tmp=tmp->next;
+		cnt++;
+	}
+	pthread_mutex_unlock(&mutex);
+	return cnt;
+}
+/*
+从链表头取数据
+*/
+int List_GetNode(struct AUDIO_DATA *head,char *audio_buff,int *audio_size)
+{
+	struct AUDIO_DATA *tmp=head;
+	struct AUDIO_DATA *ptemp=head;
+	pthread_mutex_lock(&mutex);
+	while(tmp->next!=NULL)
+	{
+		ptemp=tmp;
+		tmp=tmp->next;
+		
+		if(tmp!=NULL)
+		{
+			*audio_size=tmp->audio_size;
+			memcpy(audio_buff,tmp->audio_buffer,tmp->audio_size);
+			ptemp->next=tmp->next;
+			free(tmp->audio_buffer);
+			free(tmp);
+			pthread_mutex_unlock(&mutex);
+			return 0;
+		}
+	}
+	pthread_mutex_unlock(&mutex);
+	return -1;
+}
+#+end_src
+
+*** Makefile文件
+
+注意Makefile文件中涉及到的路径要跟系统环境相匹配，如果路径不一致会编译报错
+
+#+begin_src 
+OBJ=main.o
+
+ffmpeg_dir="${HOME}/ffmpeg/ffmpeg-4.3.1"
+sdl_dir="/usr"
+
+CFLAGS=-I$(ffmpeg_dir)/_install/include -LI$(ffmpeg_dir)/_install/lib\
+-I$(sdl_dir)/include -I$(sdl_dir)/include/SDL2 -L$(sdl_dir)/lib \
+-lSDL2 -lpthread -lm -ldl  -lavcodec -lavfilter -lavutil -lswresample -lavdevice -lavformat -lpostproc -lswscale -lpthread -lstdc++ -lm -lasound -lx264
+
+app:$(OBJ)
+	gcc -o $@ $^ $(CFLAGS)  
+
+clean:
+	rm -rf app main.o
+#+end_src
+
+*** 运行程序
+
+**** 先准备一个视频
+
+#+begin_src bash
+  ffmpeg -f alsa -i default -f x11grab -r 25 -s $(xdpyinfo | grep 'dimensions:'|awk '{print $2;}') -i :0.0 -t 5 -c:v libx264 -preset ultrafast -c:a aac -tune fastdecode -y output.mp4
+#+end_src
+
+**** 运行示例
+
+#+begin_src bash
+  ./app output.mp4
+#+end_src
+
+**** 运行示例效果
+
+运行示例会播放视频，并在终端打印视频相关参数信息
+
+#+begin_src bash
+  video=0
+  audio=1
+  fps=25
+  视频流ID=0x1b
+  音频流ID=0x15002
+  配置音频参数
+  pCodecCtx->sample_rate=48000
+  frame_size=1024
+  声道格式:3
+  采样格式:1
+  样本数量:1024
+  采样率:48000
+  通道个数:2
+  缓冲区大小:4096
+  输入音频格式:3
+  输入采样格式:8
+  输入采样率:48000
+  音频数据初始化完成fmt=5
+  w=1918,h=926,size=5328204
+  read fream buff
+  time=30000
+#+end_src
+
+*** ChatGPT分析代码
+
+这个代码主要实现了通过FFmpeg和SDL库对FLV格式视频文件进行音频和视频的解码和播放，使用了线程和链表对音频数据进行处理。以下是对代码的详细分析：
+
+**** 1. 头文件与库引入
+#+begin_src c
+#include <stdio.h>
+#include "libavcodec/avcodec.h"
+#include "libavformat/avformat.h"
+#include "libswscale/swscale.h"
+#include <libswresample/swresample.h>
+#include <libavutil/mathematics.h>
+#include <libavutil/timestamp.h>
+#+end_src
+- FFmpeg库：用于音视频的编解码处理，包括 avcodec、avformat、swscale、swresample 等库，分别处理编解码、封装格式、视频格式转换、音频重采样等。
+- SDL库：用于处理音频和视频的输出，负责创建窗口和播放音频。
+
+**** 2. 常量与全局变量
+#+begin_src c
+#define FILE_NAME "123.flv"
+#define MAX_AUDIO_FRAME_SIZE 1024*100 
+static Uint8* audio_chunk; 
+static unsigned int audio_len=0;
+static unsigned char *audio_pos;
+pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+#+end_src
+- FILE_NAME 是测试用的 FLV 文件名，实际运行时通过命令行参数指定文件。
+- audio_chunk 是用于存储音频数据的指针，audio_len 和 audio_pos 用于管理音频缓冲区的状态。
+- mutex 是一个互斥锁，用于音频数据链表的并发访问控制。
+
+**** 3. 音频数据链表
+#+begin_src c
+struct AUDIO_DATA {
+    unsigned char* audio_buffer;
+    int audio_size;
+    struct AUDIO_DATA *next;
+};
+#+end_src
+- 这段代码定义了一个用于存储音频数据的链表结构 AUDIO_DATA，每个节点包含音频数据的大小和指向下一节点的指针。
+- 链表操作函数包括创建链表头 List_CreateHead，添加节点 List_AddNode，删除节点 List_DelNode，获取节点数量 List_GetNodeCnt 和从链表中获取数据 List_GetNode。
+
+**** 4. 音频回调函数
+#+begin_src c
+void AudioCallback(void *userdata, Uint8 *stream, int len) {
+    SDL_memset(stream, 0, len);  // 清零音频缓冲区
+    if (audio_len <= 0) return;
+    len = (len > audio_len) ? audio_len : len;
+    SDL_MixAudio(stream, audio_pos, len, SDL_MIX_MAXVOLUME);  // 将音频数据混入播放缓冲区
+    audio_pos += len;
+    audio_len -= len;
+}
+#+end_src
+- SDL 使用该回调函数在音频缓冲区为空时拉取数据，通过 SDL_MixAudio 函数混合音频数据。
+- 当 audio_len 为 0 时，表示当前没有音频数据可播放。
+
+**** 5. 音频解码线程
+#+begin_src c
+void *Audio_decode(void *arg) {
+    while (1) {
+        int audio_size;
+        char audio_buff[4096*3];
+        int res = List_GetNode(list_head, audio_buff, &audio_size);
+        if (res == 0) {
+            audio_chunk = audio_buff;
+            while (audio_len > 0) {}  // 等待数据被播放完毕
+            audio_len = audio_size;
+            audio_pos = audio_buff;
+        }
+    }
+}
+#+end_src
+- 该函数为一个线程，用于持续从链表中取出音频数据，并在播放缓冲区为空时将新数据填入。
+
+**** 6. 主程序 main
+- 初始化：
+  #+begin_src c
+  SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER);
+  #+end_src
+  初始化 SDL，指定需要使用的视频、音频和定时器子系统。
+
+- 打开媒体文件：
+  #+begin_src c
+  avformat_open_input(&ps, file_name, NULL, NULL);
+  avformat_find_stream_info(ps, NULL);
+  #+end_src
+  使用 FFmpeg 打开指定的视频文件，并解析其流信息。
+
+- 视频流和音频流解码器初始化：
+  - 视频：找到视频流后，使用 avcodec_find_decoder 查找合适的解码器，并打开解码器上下文 avcodec_open2。
+  - 音频：找到音频流后，类似地初始化音频解码器上下文，并设置音频的重采样参数 SwrContext。
+
+- 创建音频播放：
+  #+begin_src c
+  SDL_AudioSpec desired;
+  desired.callback = AudioCallback;
+  SDL_OpenAudio(&desired, NULL);
+  SDL_PauseAudio(0);
+  #+end_src
+  使用 SDL 创建音频播放，指定音频回调函数 AudioCallback，并启动音频播放。
+
+- 解码与播放循环：
+  #+begin_src c
+  while (av_read_frame(ps, packet) >= 0) {
+      if (packet->stream_index == videostream) {
+          // 视频解码
+          avcodec_send_packet(ps->streams[videostream]->codec, packet);
+          avcodec_receive_frame(ps->streams[videostream]->codec, frame);
+          // 视频缩放并更新纹理
+          sws_scale(swsctx, ...);
+          SDL_UpdateTexture(sdltext, NULL, buff, width*3);
+          SDL_RenderCopy(render, sdltext, NULL, NULL);
+          SDL_RenderPresent(render);
+      }
+      if (packet->stream_index == audiostream) {
+          // 音频解码
+          avcodec_send_packet(pCodecCtx, packet);
+          avcodec_receive_frame(pCodecCtx, audioframe);
+          swr_convert(swrCtx, ...);
+          List_AddNode(list_head, out_buffer, out_buffer_size);
+      }
+      av_packet_unref(packet);
+  }
+  #+end_src
+  - 视频部分：读取视频帧，使用 sws_scale 进行图像格式转换，更新 SDL 纹理并显示。
+  - 音频部分：读取音频帧，重采样后将数据添加到链表，供回调函数消费。
+
+**** 7. 链表管理
+音频数据使用链表存储，这样可以缓冲更多的数据，防止播放过程中音频数据不足造成的卡顿。
+
+在你提供的代码中，链表的类型是 单向链表。这是因为每个节点只包含一个指向下一个节点的指针，没有指向前一个节点的指针。
+
+链表的定义如下：
+
+#+begin_src c
+struct AUDIO_DATA {
+    unsigned char* audio_buffer;  // 音频数据指针
+    int audio_size;               // 音频数据大小
+    struct AUDIO_DATA *next;      // 指向下一个节点的指针
+};
+#+end_src
+
+每个 AUDIO_DATA 结构体中包含三个成员：
+1. audio_buffer：指向保存音频数据的缓冲区。
+2. audio_size：保存当前音频数据的大小。
+3. next：指向下一个 AUDIO_DATA 节点。如果这是链表的最后一个节点，则 next 为 NULL。
+
+这是一个典型的 单向链表，因为它的节点只通过 next 指针连接到下一个节点，而无法访问前一个节点。这种链表的操作（如添加、删除节点）只需处理单个方向的指针，不涉及双向连接。
+
+**** 总结
+- 该程序通过 FFmpeg 实现音频和视频的解码，通过 SDL 实现音视频的播放。
+- 使用了链表和线程处理音频数据，保证了音频播放的连续性。
+
+** 打开一个媒体文件并输出其格式信息
+
+#+begin_src 
+#include <stdio.h>
+#include "libavformat/avformat.h"
+
+int main(int argc, char *argv[])
+{
+	if (argc != 2)
+	{
+		printf("格式:./app 文件名\n");
+	    return 1;
+	}
+	const char *file_name = argv[1];
+
+	AVFormatContext *ps = NULL;
+
+	int res = avformat_open_input(&ps, file_name, NULL, NULL);
+	if (res != 0) {				
+		printf("open err: %d\n", res);
+		return 1;
+	}
+
+	av_dump_format(ps, 0, file_name, 0);
+
+	av_dump_format(ps, 0, file_name, 0);
+		
+	avformat_close_input(&ps);
+
+	return 0;
+}
+#+end_src
+
+*** 示例说明
+
+这段代码的功能是打开一个指定的视频或音频文件并打印其格式信息。具体步骤如下：
+
+1. 检查命令行参数：确保提供了一个文件名作为参数。
+2. 打开文件：使用 avformat_open_input 打开指定的媒体文件，并将文件的格式信息存储在 AVFormatContext 结构体中。
+3. 打印格式信息：使用 av_dump_format 打印文件的详细格式信息。
+4. 关闭文件：调用 avformat_close_input 释放资源并关闭文件。
+
+代码的最终目的是用来查看指定媒体文件的格式信息。
+
+*** 参考链接
+
+[[https://blog.csdn.net/weixin_42877471/article/details/139929421][【FFmpeg】avformat_open_input函数]]
+
+[[https://blog.csdn.net/u012587637/article/details/122804997][ffmpeg_av_dump_format]]
+
+** 查找视频和音频流示例-1
+
+#+begin_src
+#include <stdio.h>
+#include "libavformat/avformat.h"
+
+int main(int argc, char *argv[])
+{
+	if (argc != 2) {
+		printf("Usage:./app filename\n");
+		return 0;
+	}
+	const char *file_name = argv[1];
+
+	AVFormatContext *ps = NULL;
+
+	int res = avformat_open_input(&ps, file_name, NULL, NULL);
+	if (res) {
+		printf("Open error:%d\n", res);
+		return -1;		
+	}
+
+	avformat_find_stream_info(ps, NULL);
+
+	av_dump_format(ps, 0, file_name, 0);
+
+	int videostream = -1, audiostream = -1;
+	AVStream *stream = NULL, *audstream = NULL;
+	AVCodec *vcodec = NULL, *audcodec = NULL;
+	int frame_rate = 0;
+
+	videostream = av_find_best_stream(ps, AVMEDIA_TYPE_VIDEO, -1, -1, NULL, 0);
+	printf("video = %d\n", videostream);
+	audiostream = av_find_best_stream(ps, AVMEDIA_TYPE_AUDIO, -1, -1, NULL, 0);
+	printf("audio = %d\n", audiostream);
+	
+	if (videostream >= 0) {
+		stream = ps->streams[videostream];
+		vcodec = avcodec_find_decoder(stream->codecpar->codec_id);
+		if (!vcodec) {
+			printf("Not find video decoder.\n");
+			return -1;
+		}
+
+		res = avcodec_open2(stream->codec, vcodec, NULL);
+		if (res) {
+			printf("Open decoder failed.\n");
+			return -1;
+		}
+	}
+	printf("Video Stream ID = %#X\n", vcodec->id);
+	
+	frame_rate = stream->avg_frame_rate.num / stream->avg_frame_rate.den;
+	printf("FPS = %d\n", frame_rate);
+	
+	if (audiostream >= 0) {
+	    audstream = ps->streams[audiostream];
+		audcodec = avcodec_find_decoder(audstream->codecpar->codec_id);
+		if (!audcodec) {
+			printf("Not find audio deocder.\n");
+			return  -1;
+		}
+
+		res = avcodec_open2(audstream->codec, audcodec, NULL);
+		if (res) {
+			printf("Open decoder failed.\n");
+			return -1;
+		}
+	}
+	printf("Audio Stream ID = %#X\n", audcodec->id);
+
+	avformat_close_input(&ps);
+
+	return 0;
+}
+#+end_src
+
+*** 示例说明
+
+这段代码的功能是：
+
+1. 初始化：使用 SDL 库进行视频、音频和计时器的初始化。
+2. 打开媒体文件：通过 FFmpeg 的 avformat_open_input 函数打开用户指定的媒体文件，并检查是否成功。
+3. 获取流信息：调用 avformat_find_stream_info 函数获取媒体文件中的流信息，并使用 av_dump_format 打印流的详细信息。
+4. 查找流：使用 av_find_best_stream 函数查找视频流和音频流的索引，并输出这些流的索引。
+5. 解码器处理：
+   - 对视频流：查找并打开对应的视频解码器，计算帧率并打印。
+   - 对音频流：查找并打开对应的音频解码器，打印音频解码器的 ID。
+6. 清理：关闭媒体文件的输入流。
+
+总体来说，这段代码的目的是初始化 SDL，打开并分析指定的媒体文件，查找视频和音频流，并尝试打开相应的解码器。
+
+** 查找视频和音频流示例-2
+
+#+begin_src 
+#include <stdio.h>
+#include "libavformat/avformat.h"
+
+int main(int argc, char *argv[])
+{
+	if (argc != 2) {
+		printf("Usage:./app filename\n");
+		return 0;
+	}
+	const char *file_name = argv[1];
+
+	AVFormatContext *ps = NULL;
+
+	int res = avformat_open_input(&ps, file_name, NULL, NULL);
+	if (res) {
+		printf("Open error:%d\n", res);
+		return -1;
+	}
+
+	avformat_find_stream_info(ps, NULL);
+
+	av_dump_format(ps, 0, file_name, 0);
+
+	for(int i=0; i<ps->nb_streams; i++){
+		AVStream *stream = ps->streams[i];
+		AVCodecParameters *codec_par = stream->codecpar;
+		av_log(NULL, AV_LOG_INFO, "find audio/video stream index=%d, type=%s, codec id=%#X",  
+			   i, av_get_media_type_string(codec_par->codec_type), codec_par->codec_id);
+		printf("\n");
+	}
+
+    avformat_close_input(&ps);
+
+	return 0;
+}
+#+end_src
+
+*** 参考链接
+
+[[https://segmentfault.com/a/1190000017980746][一步步进行ffmpeg的C语言音视频编程]]
+
+** 查看音视频流的格式，同时获得解码器
+
+#+begin_src 
+#include <stdio.h>
+#include "libavformat/avformat.h"
+
+int main(int argc, char *argv[])
+{
+	if (argc != 2) {
+		printf("Usage:./app filename\n");
+		return 0;
+	}
+	const char *file_name = argv[1];
+
+	AVFormatContext *ps = NULL;
+
+	int res = avformat_open_input(&ps, file_name, NULL, NULL);
+	if (res) {
+		printf("Open error:%d\n", res);
+		return -1;
+	}
+
+	avformat_find_stream_info(ps, NULL);
+
+	av_dump_format(ps, 0, file_name, 0);
+
+	AVStream *stream = NULL;
+	AVCodecParameters *codec_par = NULL;
+	AVCodec *decodec = NULL;
+
+	for(int i = 0; i < ps->nb_streams; i++){
+	    stream = ps->streams[i];
+		codec_par = stream->codecpar;
+		decodec = avcodec_find_decoder(codec_par->codec_id);
+		
+		av_log(NULL, AV_LOG_INFO, "find audio/video stream index = %d, type = %s, codec id = %#X\n", i, av_get_media_type_string(codec_par->codec_type), codec_par->codec_id);
+		av_log(NULL, AV_LOG_INFO, "find codec name = %s\t%s\n", decodec->name, decodec->long_name);
+	}
+
+    avformat_close_input(&ps);
+
+	return 0;
+}
+#+end_src
+
+*** 参考链接
+
+[[https://segmentfault.com/a/1190000017980746][一步步进行ffmpeg的C语言音视频编程]]
+
+** 查看视频帧率
+
+#+begin_src 
+#include <stdio.h>
+#include "libavformat/avformat.h"
+
+int main(int argc, char *argv[])
+{
+	if (argc != 2) {
+		printf("Usage:./app filename\n");
+		return 0;
+	}
+	const char *file_name = argv[1];
+
+	AVFormatContext *ps = NULL;
+	AVRational framerate;
+
+	int res = avformat_open_input(&ps, file_name, NULL, NULL);
+	if (res) {
+		printf("Open error:%d\n", res);
+		return -1;
+	}
+
+	avformat_find_stream_info(ps, NULL);   	
+
+	framerate = av_guess_frame_rate(ps, ps->streams[0], NULL);
+	av_log(NULL, AV_LOG_INFO, "video framerate=%d/%d\n", framerate.num, framerate.den);
+
+    avformat_close_input(&ps);
+
+	return 0;
+}
+#+end_src
+
+*** 参考链接
+
+[[https://segmentfault.com/a/1190000017980746][一步步进行ffmpeg的C语言音视频编程]]
+
+** 正确获取和处理流索引、解码器、以及正确释放资源 - ChatGPT
+
+#+begin_src 
+#include <stdio.h>
+#include <libavformat/avformat.h>
+#include <libavcodec/avcodec.h>
+
+int main(int argc, char *argv[]) {
+    if (argc != 2) {
+        printf("Usage: ./app filename\n");
+        return 0;
+    }
+    const char *file_name = argv[1];
+
+    AVFormatContext *ps = NULL;
+    int res = avformat_open_input(&ps, file_name, NULL, NULL);
+    if (res) {
+        printf("Open error: %d\n", res);
+        return -1;
+    }
+
+    avformat_find_stream_info(ps, NULL);
+    av_dump_format(ps, 0, file_name, 0);
+
+    AVStream *stream = NULL;
+    AVCodecParameters *codec_par = NULL;
+    AVCodec *codec = NULL;
+    AVCodecContext *video_codec_ctx = NULL, *audio_codec_ctx = NULL;
+    int video_stream_idx = -1, audio_stream_idx = -1;
+    AVRational framerate;
+
+    for (int i = 0; i < ps->nb_streams; i++) {
+        stream = ps->streams[i];
+        codec_par = stream->codecpar;
+        codec = avcodec_find_decoder(codec_par->codec_id);
+
+        if (codec == NULL) {
+            av_log(NULL, AV_LOG_WARNING, "Unsupported codec with id %d\n", codec_par->codec_id);
+            continue;
+        }
+
+        av_log(NULL, AV_LOG_INFO, "Stream index = %d, type = %s, codec id = %#X\n", i, av_get_media_type_string(codec_par->codec_type), codec_par->codec_id);
+        av_log(NULL, AV_LOG_INFO, "Codec name = %s\t%s\n", codec->name, codec->long_name);
+
+        if (codec_par->codec_type == AVMEDIA_TYPE_VIDEO) {
+            video_stream_idx = i;
+            video_codec_ctx = avcodec_alloc_context3(codec);
+            avcodec_parameters_to_context(video_codec_ctx, codec_par);
+            if (avcodec_open2(video_codec_ctx, codec, NULL) < 0) {
+                av_log(NULL, AV_LOG_ERROR, "Failed to open video codec\n");
+                return -1;
+            }
+        } else if (codec_par->codec_type == AVMEDIA_TYPE_AUDIO) {
+            audio_stream_idx = i;
+            audio_codec_ctx = avcodec_alloc_context3(codec);
+            avcodec_parameters_to_context(audio_codec_ctx, codec_par);
+            if (avcodec_open2(audio_codec_ctx, codec, NULL) < 0) {
+                av_log(NULL, AV_LOG_ERROR, "Failed to open audio codec\n");
+                return -1;
+            }
+        }
+    }
+
+    if (video_stream_idx >= 0) {
+        framerate = av_guess_frame_rate(ps, ps->streams[video_stream_idx], NULL);
+        av_log(NULL, AV_LOG_INFO, "Video framerate = %d/%d\n", framerate.num, framerate.den);
+    }
+
+    AVPacket *pkt = av_packet_alloc();
+    AVFrame *frame = av_frame_alloc();
+
+    while (av_read_frame(ps, pkt) >= 0) {
+        if (pkt->size) {
+            if (pkt->stream_index == video_stream_idx) {
+                printf("Video stream index = %d\n", video_stream_idx);
+                avcodec_send_packet(video_codec_ctx, pkt);
+                while (avcodec_receive_frame(video_codec_ctx, frame) == 0) {
+                    printf("Decoded video frame\n");
+                }
+            } else if (pkt->stream_index == audio_stream_idx) {
+                printf("Audio stream index = %d\n", audio_stream_idx);
+                avcodec_send_packet(audio_codec_ctx, pkt);
+                while (avcodec_receive_frame(audio_codec_ctx, frame) == 0) {
+                    printf("Decoded audio frame\n");
+                }
+            }
+        }
+        av_packet_unref(pkt);
+        av_frame_unref(frame);
+    }
+
+    avcodec_free_context(&video_codec_ctx);
+    avcodec_free_context(&audio_codec_ctx);
+    av_frame_free(&frame);
+    av_packet_free(&pkt);
+    avformat_close_input(&ps);
+
+    return 0;
+}
+#+end_src
+
+** 打开一个多媒体文件，查找其中的视频和音频流，并打印每个流的相关信息
+
+#+begin_src 
+#include <stdio.h>
+#include <libavformat/avformat.h>
+#include <libavcodec/avcodec.h>
+
+int main(int argc, char *argv[]) {
+    if (argc != 2) {
+        printf("Usage: ./app filename\n");
+        return 0;
+    }
+    const char *file_name = argv[1];
+
+    AVFormatContext *fmt_ctx = NULL;
+    int ret = avformat_open_input(&fmt_ctx, file_name, NULL, NULL);
+    if (ret) {
+        printf("Open error: %d\n", ret);
+        return -1;
+    }
+
+    avformat_find_stream_info(fmt_ctx, NULL);
+    av_dump_format(fmt_ctx, 0, file_name, 0);
+
+	// find codec
+    int video_stream_idx = -1, audio_stream_idx = -1;
+    AVStream *video_stream = NULL, *audio_stream = NULL;
+    AVCodecContext *video_decodec_ctx=NULL, *audio_decodec_ctx=NULL;
+
+    // AVFormatContext.nb_stream 记录了该 URL 中包含有几路流
+    for(int i=0; i<fmt_ctx->nb_streams; i++){
+        AVStream *stream = fmt_ctx->streams[i];
+        AVCodecParameters *codec_par = stream->codecpar;
+        AVCodec *decodec = NULL;
+        AVCodecContext *decodec_ctx = NULL;
+
+        av_log(NULL, AV_LOG_INFO, "find audio/video stream index=%d, type=%s, codec id=%#X\n",
+			   i, av_get_media_type_string(codec_par->codec_type), codec_par->codec_id);
+
+        // 获得解码器
+        decodec = avcodec_find_decoder(codec_par->codec_id);
+
+        av_log(NULL, AV_LOG_INFO, "find codec name=%s\t%s\n", decodec->name, decodec->long_name);
+
+        // 分配解码器上下文句柄
+        decodec_ctx = avcodec_alloc_context3(decodec);
+        if(!decodec_ctx){
+            av_log(NULL, AV_LOG_ERROR, "fail to allocate codec context\n");
+        }
+
+        // 复制流信息到解码器上下文
+        if(avcodec_parameters_to_context(decodec_ctx, codec_par) < 0){
+            av_log(NULL, AV_LOG_ERROR, "fail to copy codec parameters to decoder context\n");
+            avcodec_free_context(&decodec_ctx);
+        }
+
+        // 初始化解码器
+        if ((ret = avcodec_open2(decodec_ctx, decodec, NULL)) < 0) {
+            av_log(NULL, AV_LOG_ERROR, "Failed to open %s codec\n", decodec->name);
+            return ret;
+        }
+
+        if( stream->codecpar->codec_type == AVMEDIA_TYPE_VIDEO){
+            // 视频的属性，帧率，这里 av_guess_frame_rate() 非必须，看业务是否需要使用帧率参数
+            decodec_ctx->framerate = av_guess_frame_rate(fmt_ctx, stream, NULL);
+            av_log(NULL, AV_LOG_INFO, "video framerate=%d/%d\n", decodec_ctx->framerate.num, decodec_ctx->framerate.den);
+            video_stream_idx = i;
+            video_stream = stream;
+            video_decodec_ctx = decodec_ctx;
+        } else if( stream->codecpar->codec_type == AVMEDIA_TYPE_AUDIO){
+            audio_stream_idx = i;
+            audio_stream = stream;
+            audio_decodec_ctx = decodec_ctx;
+        } 
+    }
+
+    avformat_close_input(&fmt_ctx);
+
+    return 0;
+}
+#+end_src
+
+*** 示例说明
+
+这段代码的功能是打开一个多媒体文件，查找其中的视频和音频流，并打印每个流的相关信息。具体步骤如下：
+
+1. 打开文件：通过 avformat_open_input 打开指定的多媒体文件。
+2. 获取流信息：调用 avformat_find_stream_info 获取流的详细信息，并用 av_dump_format 打印所有流的基本信息。
+3. 查找和初始化解码器：
+   - 遍历文件中的所有流，识别音频和视频流。
+   - 为每个流找到对应的解码器，并为其分配和初始化解码器上下文。
+   - 打印每个流的类型、编解码器 ID 和名称。
+4. 处理视频流：对于视频流，尝试获取帧率信息并打印。
+5. 关闭文件：最后，关闭输入文件并释放相关资源。
+
+总结：这段代码用于分析多媒体文件的流结构和编解码器信息。
+
+*** 参考链接
+
+[[https://segmentfault.com/a/1190000017980746][一步步进行ffmpeg的C语言音视频编程]]
+
+** decode_video_mp4 - ChatGPT
+
+解码视频
+
+#+begin_src 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include <libavcodec/avcodec.h>
+#include <libavformat/avformat.h>
+
+#define INBUF_SIZE 4096
+
+static void pgm_save(unsigned char *buf, int wrap, int xsize, int ysize,
+                     char *filename)
+{
+    FILE *f;
+    int i;
+
+    f = fopen(filename, "wb");
+    fprintf(f, "P5\n%d %d\n%d\n", xsize, ysize, 255);
+    for (i = 0; i < ysize; i++)
+        fwrite(buf + i * wrap, 1, xsize, f);
+    fclose(f);
+}
+
+static void decode(AVCodecContext *dec_ctx, AVFrame *frame, AVPacket *pkt,
+                   const char *filename)
+{
+    char buf[1024];
+    int ret;
+
+    ret = avcodec_send_packet(dec_ctx, pkt);
+    if (ret < 0) {
+        fprintf(stderr, "Error sending a packet for decoding\n");
+        exit(1);
+    }
+
+    while (ret >= 0) {
+        ret = avcodec_receive_frame(dec_ctx, frame);
+        if (ret == AVERROR(EAGAIN) || ret == AVERROR_EOF)
+            return;
+        else if (ret < 0) {
+            fprintf(stderr, "Error during decoding\n");
+            exit(1);
+        }
+
+        printf("saving frame %3"PRId64"\n", dec_ctx->frame_number);
+        fflush(stdout);
+
+        snprintf(buf, sizeof(buf), "%s-%"PRId64, filename, dec_ctx->frame_number);
+        pgm_save(frame->data[0], frame->linesize[0], frame->width, frame->height, buf);
+    }
+}
+
+int main(int argc, char **argv)
+{
+    const char *filename, *outfilename;
+    const AVCodec *codec;
+    AVCodecContext *c = NULL;
+    AVFormatContext *fmt_ctx = NULL;
+    AVFrame *frame;
+    AVPacket *pkt;
+    int video_stream_index;
+
+    if (argc <= 2) {
+        fprintf(stderr, "Usage: %s <input file> <output file>\n", argv[0]);
+        exit(0);
+    }
+    filename = argv[1];
+    outfilename = argv[2];
+
+    avformat_open_input(&fmt_ctx, filename, NULL, NULL);
+    if (!fmt_ctx) {
+        fprintf(stderr, "Could not open input file %s\n", filename);
+        exit(1);
+    }
+
+    if (avformat_find_stream_info(fmt_ctx, NULL) < 0) {
+        fprintf(stderr, "Failed to retrieve input stream information\n");
+        exit(1);
+    }
+
+    video_stream_index = -1;
+    for (int i = 0; i < fmt_ctx->nb_streams; i++) {
+        if (fmt_ctx->streams[i]->codecpar->codec_type == AVMEDIA_TYPE_VIDEO) {
+            video_stream_index = i;
+            break;
+        }
+    }
+    if (video_stream_index == -1) {
+        fprintf(stderr, "No video stream found in input file\n");
+        exit(1);
+    }
+
+    AVCodecParameters *codecpar = fmt_ctx->streams[video_stream_index]->codecpar;
+    codec = avcodec_find_decoder(codecpar->codec_id);
+    if (!codec) {
+        fprintf(stderr, "Codec not found\n");
+        exit(1);
+    }
+
+    c = avcodec_alloc_context3(codec);
+    if (!c) {
+        fprintf(stderr, "Could not allocate video codec context\n");
+        exit(1);
+    }
+
+    avcodec_parameters_to_context(c, codecpar);
+    avcodec_open2(c, codec, NULL);
+
+    frame = av_frame_alloc();
+    pkt = av_packet_alloc();
+
+    while (av_read_frame(fmt_ctx, pkt) >= 0) {
+        if (pkt->stream_index == video_stream_index) {
+            decode(c, frame, pkt, outfilename);
+        }
+        av_packet_unref(pkt);
+    }
+
+    decode(c, frame, NULL, outfilename);
+
+    av_packet_free(&pkt);
+    avcodec_free_context(&c);
+    avformat_close_input(&fmt_ctx);
+    av_frame_free(&frame);
+
+    return 0;
+}
+#+end_src
+
+*** 参考链接
+
+[[https://github.com/FFmpeg/FFmpeg/blob/master/doc/examples/decode_video.c][decode_video.c]]
+
+** encode_video_mp4 - ChatGPT
+
+多个视频帧通过编码恢复成视频
+
+#+begin_src 
+#include <stdio.h>
+#include <stdlib.h>
+#include <libavcodec/avcodec.h>
+#include <libavformat/avformat.h>
+#include <libswscale/swscale.h>
+
+static void encode(AVCodecContext *enc_ctx, AVFrame *frame, AVFormatContext *ofmt_ctx, AVStream *out_stream) {
+    int ret;
+    AVPacket *pkt = av_packet_alloc();
+
+    // Send frame to encoder
+    ret = avcodec_send_frame(enc_ctx, frame);
+    if (ret < 0) {
+        fprintf(stderr, "Error sending a frame for encoding\n");
+        exit(1);
+    }
+
+    // Receive encoded packet
+    while (ret >= 0) {
+        ret = avcodec_receive_packet(enc_ctx, pkt);
+        if (ret == AVERROR(EAGAIN) || ret == AVERROR_EOF)
+            return;
+        else if (ret < 0) {
+            fprintf(stderr, "Error during encoding\n");
+            exit(1);
+        }
+
+        // Rescale packet timestamp from codec to output stream timebase
+        av_packet_rescale_ts(pkt, enc_ctx->time_base, out_stream->time_base);
+        pkt->stream_index = out_stream->index;
+
+        // Write packet to output
+        ret = av_interleaved_write_frame(ofmt_ctx, pkt);
+        if (ret < 0) {
+            fprintf(stderr, "Error writing frame\n");
+            exit(1);
+        }
+        av_packet_unref(pkt);
+    }
+
+    av_packet_free(&pkt);
+}
+
+int main(int argc, char **argv) {
+    const char *output_filename;
+    const AVCodec *encoder;
+    AVCodecContext *enc_ctx = NULL;
+    AVFormatContext *ofmt_ctx = NULL;
+    AVStream *out_stream;
+    AVFrame *frame;
+    int ret, frame_count;
+
+    if (argc < 2) {
+        fprintf(stderr, "Usage: %s <output file>\n", argv[0]);
+        exit(1);
+    }
+
+    output_filename = argv[1];
+
+    // Initialize libavformat and register all formats and codecs
+    av_register_all();
+
+    // Initialize output format context
+    avformat_alloc_output_context2(&ofmt_ctx, NULL, NULL, output_filename);
+    if (!ofmt_ctx) {
+        fprintf(stderr, "Could not create output context\n");
+        exit(1);
+    }
+
+    // Find H.264 encoder for output video stream
+    encoder = avcodec_find_encoder(AV_CODEC_ID_H264);
+    if (!encoder) {
+        fprintf(stderr, "H.264 encoder not found\n");
+        exit(1);
+    }
+
+    // Create new video stream for output
+    out_stream = avformat_new_stream(ofmt_ctx, NULL);
+    if (!out_stream) {
+        fprintf(stderr, "Failed allocating output stream\n");
+        exit(1);
+    }
+
+    // Initialize codec context for the encoder
+    enc_ctx = avcodec_alloc_context3(encoder);
+    enc_ctx->bit_rate = 400000;
+    enc_ctx->width = 1280;  // Frame width
+    enc_ctx->height = 720;  // Frame height
+    enc_ctx->time_base = (AVRational){1, 25};  // Framerate: 25 fps
+    enc_ctx->framerate = (AVRational){25, 1};
+    enc_ctx->gop_size = 10;
+    enc_ctx->max_b_frames = 1;
+    enc_ctx->pix_fmt = AV_PIX_FMT_YUV420P;
+
+    // Open encoder
+    if (avcodec_open2(enc_ctx, encoder, NULL) < 0) {
+        fprintf(stderr, "Could not open encoder\n");
+        exit(1);
+    }
+
+    // Copy the codec parameters from the encoder context to the output stream
+    ret = avcodec_parameters_from_context(out_stream->codecpar, enc_ctx);
+    if (ret < 0) {
+        fprintf(stderr, "Failed to copy encoder parameters to output stream\n");
+        exit(1);
+    }
+
+    // Open output file
+    if (!(ofmt_ctx->oformat->flags & AVFMT_NOFILE)) {
+        if (avio_open(&ofmt_ctx->pb, output_filename, AVIO_FLAG_WRITE) < 0) {
+            fprintf(stderr, "Could not open output file %s\n", output_filename);
+            exit(1);
+        }
+    }
+
+    // Write output file header
+    if (avformat_write_header(ofmt_ctx, NULL) < 0) {
+        fprintf(stderr, "Error occurred when writing header to output file\n");
+        exit(1);
+    }
+
+    // Allocate frame
+    frame = av_frame_alloc();
+    if (!frame) {
+        fprintf(stderr, "Could not allocate video frame\n");
+        exit(1);
+    }
+    frame->format = enc_ctx->pix_fmt;
+    frame->width  = enc_ctx->width;
+    frame->height = enc_ctx->height;
+
+    // Allocate buffer for frame
+    ret = av_frame_get_buffer(frame, 32);
+    if (ret < 0) {
+        fprintf(stderr, "Could not allocate the frame data\n");
+        exit(1);
+    }
+
+    // Generate frames (this part is where you can insert your own frames)
+    frame_count = 100;  // Example: encoding 100 frames
+    for (int i = 0; i < frame_count; i++) {
+        // Make sure the frame is writable
+        ret = av_frame_make_writable(frame);
+        if (ret < 0) {
+            exit(1);
+        }
+
+        // Fill the frame with your data (for demonstration purposes, here we're setting all YUV planes to constant values)
+        for (int y = 0; y < enc_ctx->height; y++) {
+            for (int x = 0; x < enc_ctx->width; x++) {
+                frame->data[0][y * frame->linesize[0] + x] = i + y + x;  // Y plane
+            }
+        }
+        for (int y = 0; y < enc_ctx->height / 2; y++) {
+            for (int x = 0; x < enc_ctx->width / 2; x++) {
+                frame->data[1][y * frame->linesize[1] + x] = 128;  // U plane
+                frame->data[2][y * frame->linesize[2] + x] = 128;  // V plane
+            }
+        }
+
+        frame->pts = i;  // Set the frame presentation timestamp
+
+        // Encode the frame
+        encode(enc_ctx, frame, ofmt_ctx, out_stream);
+    }
+
+    // Flush the encoder
+    encode(enc_ctx, NULL, ofmt_ctx, out_stream);
+
+    // Write trailer and clean up
+    av_write_trailer(ofmt_ctx);
+
+    av_frame_free(&frame);
+    avcodec_free_context(&enc_ctx);
+    if (!(ofmt_ctx->oformat->flags & AVFMT_NOFILE)) {
+        avio_closep(&ofmt_ctx->pb);
+    }
+    avformat_free_context(ofmt_ctx);
+
+    return 0;
+}
+#+end_src
+
+** Linux下基于FFmpeg，通过C语言调用API函数解码mp4视频后再合并成一个新的视频，要求分辨率、颜色跟解码之前一样 - ChatGPT
+
+#+begin_src 
+#include <stdio.h>
+#include <stdlib.h>
+#include "libavformat/avformat.h"
+
+static void encode(AVCodecContext *enc_ctx, AVFrame *frame, AVFormatContext *ofmt_ctx, AVStream *out_stream) {
+    int ret;
+    AVPacket *pkt = av_packet_alloc();
+
+    ret = avcodec_send_frame(enc_ctx, frame);
+    if (ret < 0) {
+        fprintf(stderr, "Error sending frame to encoder\n");
+        exit(1);
+    }
+
+    while (ret >= 0) {
+        ret = avcodec_receive_packet(enc_ctx, pkt);
+        if (ret == AVERROR(EAGAIN) || ret == AVERROR_EOF)
+            return;
+        else if (ret < 0) {
+            fprintf(stderr, "Error during encoding\n");
+            exit(1);
+        }
+
+        av_packet_rescale_ts(pkt, enc_ctx->time_base, out_stream->time_base);
+        pkt->stream_index = out_stream->index;
+
+        ret = av_interleaved_write_frame(ofmt_ctx, pkt);
+        if (ret < 0) {
+            fprintf(stderr, "Error writing frame\n");
+            exit(1);
+        }
+        av_packet_unref(pkt);
+    }
+    av_packet_free(&pkt);
+}
+
+int main(int argc, char **argv) {
+    const char *input_filename, *output_filename = NULL;
+    AVFormatContext *ifmt_ctx = NULL, *ofmt_ctx = NULL;
+    AVCodecContext *dec_ctx = NULL, *enc_ctx = NULL;
+    AVStream *in_stream = NULL, *out_stream = NULL;
+    const AVCodec *decoder, *encoder;
+    AVFrame *frame = NULL;
+    AVPacket pkt;
+    int ret;
+
+    if (argc < 3) {
+        fprintf(stderr, "Usage: %s <input.mp4> <output.mp4>\n", argv[0]);
+        return -1;
+    }
+    input_filename = argv[1];
+    output_filename = argv[2];
+
+    av_register_all();
+
+    // 打开输入文件并获取格式上下文
+    if ((ret = avformat_open_input(&ifmt_ctx, input_filename, NULL, NULL)) < 0) {
+        fprintf(stderr, "Could not open input file '%s'\n", input_filename);
+        return ret;
+    }
+
+    // 查找流信息
+    if ((ret = avformat_find_stream_info(ifmt_ctx, NULL)) < 0) {
+        fprintf(stderr, "Failed to retrieve input stream information\n");
+        return ret;
+    }
+
+    // 打开输出文件格式上下文
+    avformat_alloc_output_context2(&ofmt_ctx, NULL, NULL, output_filename);
+    if (!ofmt_ctx) {
+        fprintf(stderr, "Could not create output context\n");
+        return AVERROR_UNKNOWN;
+    }
+
+    // 查找视频流
+    for (int i = 0; i < ifmt_ctx->nb_streams; i++) {
+        AVStream *stream = ifmt_ctx->streams[i];
+        if (stream->codecpar->codec_type == AVMEDIA_TYPE_VIDEO) {
+            in_stream = stream;
+            break;
+        }
+    }
+
+    if (!in_stream) {
+        fprintf(stderr, "Could not find video stream in input file\n");
+        return -1;
+    }
+
+    // 查找解码器
+    decoder = avcodec_find_decoder(in_stream->codecpar->codec_id);
+    if (!decoder) {
+        fprintf(stderr, "Decoder not found\n");
+        return AVERROR_DECODER_NOT_FOUND;
+    }
+
+    // 分配解码器上下文
+    dec_ctx = avcodec_alloc_context3(decoder);
+    if (!dec_ctx) {
+        fprintf(stderr, "Could not allocate decoder context\n");
+        return AVERROR(ENOMEM);
+    }
+
+    // 初始化解码器上下文
+    if ((ret = avcodec_parameters_to_context(dec_ctx, in_stream->codecpar)) < 0) {
+        fprintf(stderr, "Failed to copy decoder parameters to input context\n");
+        return ret;
+    }
+
+    // 打开解码器
+    if ((ret = avcodec_open2(dec_ctx, decoder, NULL)) < 0) {
+        fprintf(stderr, "Failed to open decoder\n");
+        return ret;
+    }
+
+    // 为输出流添加一个视频流
+    out_stream = avformat_new_stream(ofmt_ctx, NULL);
+    if (!out_stream) {
+        fprintf(stderr, "Failed allocating output stream\n");
+        return AVERROR_UNKNOWN;
+    }
+
+    // 查找编码器（使用与解码器相同的格式）
+    encoder = avcodec_find_encoder(dec_ctx->codec_id);
+    if (!encoder) {
+        fprintf(stderr, "Encoder not found\n");
+        return AVERROR_ENCODER_NOT_FOUND;
+    }
+
+    // 分配编码器上下文
+    enc_ctx = avcodec_alloc_context3(encoder);
+    if (!enc_ctx) {
+        fprintf(stderr, "Could not allocate encoder context\n");
+        return AVERROR(ENOMEM);
+    }
+
+    // 设置编码器上下文的属性
+    enc_ctx->height = dec_ctx->height;
+    enc_ctx->width = dec_ctx->width;
+    enc_ctx->pix_fmt = dec_ctx->pix_fmt;
+    enc_ctx->time_base = in_stream->time_base;
+    enc_ctx->framerate = av_guess_frame_rate(ifmt_ctx, in_stream, NULL);
+
+    // 打开编码器
+    if ((ret = avcodec_open2(enc_ctx, encoder, NULL)) < 0) {
+        fprintf(stderr, "Could not open encoder\n");
+        return ret;
+    }
+
+    // 复制编码器参数到输出流
+    if ((ret = avcodec_parameters_from_context(out_stream->codecpar, enc_ctx)) < 0) {
+        fprintf(stderr, "Failed to copy encoder parameters to output stream\n");
+        return ret;
+    }
+
+    out_stream->time_base = enc_ctx->time_base;
+
+    // 打开输出文件
+    if (!(ofmt_ctx->oformat->flags & AVFMT_NOFILE)) {
+        if ((ret = avio_open(&ofmt_ctx->pb, output_filename, AVIO_FLAG_WRITE)) < 0) {
+            fprintf(stderr, "Could not open output file '%s'\n", output_filename);
+            return ret;
+        }
+    }
+
+    // 写文件头
+    if ((ret = avformat_write_header(ofmt_ctx, NULL)) < 0) {
+        fprintf(stderr, "Error occurred when opening output file\n");
+        return ret;
+    }
+
+    // 解码并重新编码视频帧
+    frame = av_frame_alloc();
+    if (!frame) {
+        fprintf(stderr, "Could not allocate video frame\n");
+        return AVERROR(ENOMEM);
+    }
+
+    while (av_read_frame(ifmt_ctx, &pkt) >= 0) {
+        if (pkt.stream_index == in_stream->index) {
+            ret = avcodec_send_packet(dec_ctx, &pkt);
+            if (ret < 0) {
+                fprintf(stderr, "Error sending packet to decoder\n");
+                break;
+            }
+
+            while (ret >= 0) {
+                ret = avcodec_receive_frame(dec_ctx, frame);
+                if (ret == AVERROR(EAGAIN) || ret == AVERROR_EOF)
+                    break;
+                else if (ret < 0) {
+                    fprintf(stderr, "Error during decoding\n");
+                    return ret;
+                }
+
+                frame->pts = frame->best_effort_timestamp;
+                encode(enc_ctx, frame, ofmt_ctx, out_stream);
+            }
+        }
+        av_packet_unref(&pkt);
+    }
+
+    // Flush encoder
+    encode(enc_ctx, NULL, ofmt_ctx, out_stream);
+
+    // 写文件尾部
+    av_write_trailer(ofmt_ctx);
+
+    // 释放资源
+    av_frame_free(&frame);
+    avcodec_free_context(&dec_ctx);
+    avcodec_free_context(&enc_ctx);
+    avformat_close_input(&ifmt_ctx);
+
+    if (!(ofmt_ctx->oformat->flags & AVFMT_NOFILE))
+        avio_closep(&ofmt_ctx->pb);
+    avformat_free_context(ofmt_ctx);
+
+    return 0;
+}
+#+end_src
+
+*** 编码函数定义
+#+begin_src c
+  static void encode(AVCodecContext *enc_ctx, AVFrame *frame, AVFormatContext *ofmt_ctx, AVStream *out_stream)
+#+end_src
+- enc_ctx: 编码上下文，包含编码器的相关设置。
+- frame: 需要编码的输入帧。
+- ofmt_ctx: 输出格式上下文，表示输出文件的格式。
+- out_stream: 输出流，表示在输出文件中要写入的流。
+
+**** 内部变量
+#+begin_src c
+  int ret = 0;
+  AVPacket *pkt = av_packet_alloc();
+#+end_src
+- ret: 用于存储函数调用的返回值。
+- pkt: 分配一个 AVPacket，用于存储编码后的数据。
+
+**** 发送帧进行编码
+#+begin_src c
+  ret = avcodec_send_frame(enc_ctx, frame);
+  if (ret < 0) {
+	  fprintf(stderr, "Error sending frame to encoder\n");
+	  exit(1);
+  }
+#+end_src
+- 调用 avcodec_send_frame 将帧发送到编码器。
+- 如果返回值小于零，表示出错，打印错误信息并退出。
+
+**** 接收编码后数据
+#+begin_src c
+  while (ret >= 0) {
+	  ret = avcodec_receive_packet(enc_ctx, pkt);
+	  if (ret == AVERROR(EAGAIN) || ret == AVERROR_EOF)
+		  return;
+	  else if (ret < 0) {
+		  fprintf(stderr, "Error during encoding\n");
+		  exit(1);
+	  }
+#+end_src
+- 通过 avcodec_receive_packet 接收编码后的数据包。
+- 如果返回 EAGAIN 或 EOF，说明没有更多的数据可接收，直接返回。
+- 如果返回值小于零，表示出错，打印错误信息并退出。
+
+**** 时间基准转换和写入帧
+#+begin_src c
+  av_packet_rescale_ts(pkt, enc_ctx->time_base, out_stream->time_base);
+  pkt->stream_index = out_stream->index;
+
+  ret = av_interleaved_write_frame(ofmt_ctx, pkt);
+  if (ret < 0) {
+	  fprintf(stderr, "Error writing frame\n");
+	  exit(1);
+  }
+#+end_src
+- av_packet_rescale_ts: 将数据包的时间戳从编码上下文的时间基准转换为输出流的时间基准。
+- 设置数据包的流索引。
+- 使用 av_interleaved_write_frame 写入编码后的数据包到输出格式上下文中。
+- 如果写入失败，打印错误信息并退出。
+
+**** 释放数据包
+#+begin_src c
+  av_packet_unref(pkt);
+#+end_src
+- 释放 pkt，以准备下一次使用。
+
+**** 总结
+整体上，这段代码实现了视频帧的编码并写入到文件的功能，通过调用 FFmpeg 提供的 API 处理编码和输出。每一步都包含错误检查，以确保程序在发生错误时能够及时反馈并退出。
+
+*** 完整代码解析
+
+让我们分解并逐步解释代码的各个部分，包括其功能、参数以及工作机制。该代码的主要目的是在 Linux 下基于 FFmpeg，通过 C 语言解码一个 MP4 视频文件，然后将解码后的帧重新编码为另一个 MP4 文件。
+
+**** encode 函数
+
+#+begin_src c
+  static void encode(AVCodecContext *enc_ctx, AVFrame *frame, AVFormatContext *ofmt_ctx, AVStream *out_stream) {
+	  int ret;
+	  AVPacket *pkt = av_packet_alloc(); // 分配一个新的 AVPacket
+#+end_src
+
+***** 功能
+encode 函数的作用是将视频帧通过编码器进行编码，并将编码后的数据写入输出文件。
+
+***** 参数解释
+- AVCodecContext *enc_ctx: 编码器上下文，包含编码器的相关参数和状态。
+- AVFrame *frame: 待编码的帧。
+- AVFormatContext *ofmt_ctx: 输出格式上下文，管理输出文件的格式和流。
+- AVStream *out_stream: 输出流，代表输出文件中的单个流（视频流）。
+
+***** 过程解释
+1. 发送帧到编码器：
+#+begin_src c
+  ret = avcodec_send_frame(enc_ctx, frame);
+#+end_src
+将 frame 发送到编码器。如果 frame 为 NULL，则意味着需要刷新编码器，处理剩余未编码的帧。
+
+2. 从编码器接收已编码的包：
+#+begin_src c
+  while (ret >= 0) {
+	  ret = avcodec_receive_packet(enc_ctx, pkt);
+#+end_src
+通过 avcodec_receive_packet 获取编码后的数据包 pkt。返回 EAGAIN 表示编码器还在等待输入帧；返回 AVERROR_EOF 表示编码器已完成。
+
+3. 写入文件：
+#+begin_src c
+  av_interleaved_write_frame(ofmt_ctx, pkt);
+#+end_src
+编码后的数据包 pkt 被写入输出文件。
+
+4. 清理：
+#+begin_src c
+  av_packet_unref(pkt);
+  av_packet_free(&pkt);
+#+end_src
+使用 av_packet_unref 清理包内容并释放分配的 AVPacket。
+
+**** main 函数
+
+main 函数是程序的入口点，它负责打开输入文件、初始化解码器和编码器、逐帧解码并重新编码、最后将编码后的数据写入输出文件。
+
+#+begin_src c
+  int main(int argc, char argv) {
+	  const char *input_filename, *output_filename = NULL;
+	  AVFormatContext *ifmt_ctx = NULL, *ofmt_ctx = NULL;
+	  AVCodecContext *dec_ctx = NULL, *enc_ctx = NULL;
+	  AVStream *in_stream = NULL, *out_stream = NULL;
+	  const AVCodec *decoder, *encoder;
+	  AVFrame *frame = NULL;
+	  AVPacket pkt;
+	  int ret;
+#+end_src
+
+***** 参数解释
+- argc: 命令行参数的数量。
+- argv: 命令行参数数组，argv[1] 为输入视频文件路径，argv[2] 为输出视频文件路径。
+
+***** 核心步骤：
+
+1. 输入参数验证：
+#+begin_src c
+  if (argc < 3) {
+	  fprintf(stderr, "Usage: %s <input.mp4> <output.mp4>\n", argv[0]);
+	  return -1;
+  }
+  input_filename = argv[1];
+  output_filename = argv[2];
+#+end_src
+检查命令行参数是否足够，确保用户提供了输入和输出文件路径。
+
+2. 注册所有编解码器：
+#+begin_src c
+  av_register_all();
+#+end_src
+FFmpeg 初始化函数，注册所有支持的编解码器、文件格式等。
+
+3. 打开输入文件并获取格式上下文：
+#+begin_src c
+  if ((ret = avformat_open_input(&ifmt_ctx, input_filename, NULL, NULL)) < 0) {
+	  fprintf(stderr, "Could not open input file '%s'\n", input_filename);
+	  return ret;
+  }
+#+end_src
+通过 avformat_open_input 打开输入文件，并填充 ifmt_ctx 结构体，其中包含输入文件的信息。
+
+4. 查找输入文件流信息：
+#+begin_src c
+  if ((ret = avformat_find_stream_info(ifmt_ctx, NULL)) < 0) {
+	  fprintf(stderr, "Failed to retrieve input stream information\n");
+	  return ret;
+  }
+#+end_src
+使用 avformat_find_stream_info 获取输入文件的所有流信息（视频流、音频流等）。
+
+5. 查找视频流：
+#+begin_src c
+  for (int i = 0; i < ifmt_ctx->nb_streams; i++) {
+	  AVStream *stream = ifmt_ctx->streams[i];
+	  if (stream->codecpar->codec_type == AVMEDIA_TYPE_VIDEO) {
+		  in_stream = stream;
+		  break;
+	  }
+  }
+#+end_src
+遍历所有流，找到类型为视频的流并赋值给 in_stream。
+
+6. 查找解码器并初始化解码器上下文：
+#+begin_src c
+  decoder = avcodec_find_decoder(in_stream->codecpar->codec_id);
+  dec_ctx = avcodec_alloc_context3(decoder);
+  avcodec_parameters_to_context(dec_ctx, in_stream->codecpar);
+  avcodec_open2(dec_ctx, decoder, NULL);
+#+end_src
+根据输入视频的编码格式查找相应的解码器，并初始化解码器上下文 dec_ctx。然后，打开解码器以准备解码。
+
+7. 创建输出文件并初始化输出流：
+#+begin_src c
+  avformat_alloc_output_context2(&ofmt_ctx, NULL, NULL, output_filename);
+  out_stream = avformat_new_stream(ofmt_ctx, NULL);
+  encoder = avcodec_find_encoder(dec_ctx->codec_id);
+  enc_ctx = avcodec_alloc_context3(encoder);
+  avcodec_open2(enc_ctx, encoder, NULL);
+#+end_src
+为输出文件分配格式上下文，并创建一个新的视频流 out_stream。随后，查找对应的编码器并初始化编码器上下文 enc_ctx。
+
+8. 逐帧解码和编码：
+#+begin_src c
+  while (av_read_frame(ifmt_ctx, &pkt) >= 0) {
+	  if (pkt.stream_index == in_stream->index) {
+		  ret = avcodec_send_packet(dec_ctx, &pkt);
+		  while (ret >= 0) {
+			  ret = avcodec_receive_frame(dec_ctx, frame);
+			  encode(enc_ctx, frame, ofmt_ctx, out_stream);
+		  }
+	  }
+	  av_packet_unref(&pkt);
+  }
+#+end_src
+- 通过 av_read_frame 读取视频帧数据包 pkt。
+- 使用 avcodec_send_packet 发送数据包到解码器。
+- 从解码器获取解码后的 frame，然后通过 encode 函数将其编码并写入输出文件。
+
+9. 写入文件尾并释放资源：
+#+begin_src c
+  av_write_trailer(ofmt_ctx);
+  av_frame_free(&frame);
+  avcodec_free_context(&dec_ctx);
+  avcodec_free_context(&enc_ctx);
+  avformat_close_input(&ifmt_ctx);
+  avio_closep(&ofmt_ctx->pb);
+  avformat_free_context(ofmt_ctx);
+#+end_src
+
+***** 结论
+该程序逐步完成视频的解码和编码，将输入 MP4 文件中的视频流解码为帧，然后将每一帧重新编码为新的 MP4 文件，确保解码后的视频重新编码为同样的格式。
+** 参考链接
+
+[[https://blog.csdn.net/weixin_44453694/article/details/127098011][Linux下基于ffmpeg音视频解码]]
+
+[[https://blog.csdn.net/weixin_42877471/article/details/139929421][【FFmpeg】avformat_open_input函数]]
+
+[[https://blog.csdn.net/qq_51282224/article/details/130993130][ffmpeg之avformat_find_stream_info函数详细解释]]
+
+[[https://blog.csdn.net/leixiaohua1020/article/details/41181155][FFmpeg源代码简单分析：常见结构体的初始化和销毁（AVFormatContext，AVFrame等）]]
+
+[[https://segmentfault.com/a/1190000017980746][一步步进行ffmpeg的C语言音视频编程]]

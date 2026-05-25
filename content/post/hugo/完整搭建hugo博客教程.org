@@ -1,0 +1,193 @@
+---
+title: 完整搭建hugo博客教程
+tags: ["hugo", "termux", "stack"]
+date: 2026-03-15T19:13:39.36+0800
+---
+
+* 完整搭建hugo博客教程
+** 操作步骤
+#+begin_src bash
+# 版本应为版本号+extended
+hugo version
+<<'CONTENT'
+hugo v0.157.0+extended android/arm64 BuildDate=unknown
+CONTENT
+# 在站点根目录中操作
+rm -rf * .*
+# hugo new site quickstart
+hugo new site ./
+git init
+git submodule add https://github.com/CaiJimmy/hugo-theme-stack/ themes/hugo-theme-stack
+cd themes/hugo-theme-stack
+git log --grep "exampleSite"
+# 切换到关键词exampleSite的分支中
+git checkout 0fb25c808b484740d4568f487ca916bb7a6beb03
+cd -
+mv hugo.toml hugo.toml_bak
+cp themes/hugo-theme-stack/exampleSite/hugo.yaml ./
+
+# 配置自己的博客站点：https://ynhugo.github.io
+sed -i "s|\(^baseurl: \).*|\1https://ynhugo.github.io/|g" hugo.yaml
+# 修改语言，将默认语言改为zh-cn
+sed -i "s|\(^languageCode: \).*|\1zh-cn|g" hugo.yaml
+# 修改title
+sed -i "s|\(^title: \).*$|\1ynhugo.github.io|g" hugo.yaml
+# 修改默认语言
+sed -i "s|\(^DefaultContentLanguage: \).*$|\1zh-cn|g" hugo.yaml
+# 修改演示站点
+sed -i "s|演示站点|ynhugo.github.io|g" hugo.yaml
+# 修改演示说明
+sed -i "s|演示说明|ynhugo|g" hugo.yaml
+# 将默认页面显示文章数量改为20
+sed -i "s|\([[:space:]]*pagerSize: \).*|\120|g" hugo.yaml
+
+# 添加搜索栏
+mkdir content/page
+cp -rf themes/hugo-theme-stack/exampleSite/content/page/search/ content/page/
+cp content/page/search/index.md  content/page/search/index.zh-cn.md
+sed -i 's|\(^title: "\).*\("\)|\1搜索\2|g' content/page/search/index.zh-cn.md
+# 添加Archive栏
+cp -rf themes/hugo-theme-stack/exampleSite/content/page/archives/ content/page/
+cp content/page/archives/index.md  content/page/archives/index.zh-cn.md
+sed -i 's|\(^title: "\).*\("\)|\1文章归档\2|g' content/page/archives/index.zh-cn.md
+# 添加Links栏
+cp -rf themes/hugo-theme-stack/exampleSite/content/page/links/ content/page/
+cp content/page/links/index.md  content/page/links/index.zh-cn.md
+sed -i 's|\(^title: "\).*\("\)|\1友情链接\2|g' content/page/links/index.zh-cn.md
+# 添加About栏
+cp -rf themes/hugo-theme-stack/exampleSite/content/page/about/ content/page/
+
+# 添加彩虹背景
+cat - >> themes/hugo-theme-stack/layouts/partials/footer/custom.html <<'EOF'
+<!-- layouts/partials/footer/custom.html -->
+<script
+    src="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/js/ribbon.min.js"
+    integrity="sha384-UEK8ZiP3VgFNP8KnKMKDmd4pAUAOJ59Y2Jo3ED2Z5qKQf6HLHovMxq7Beb9CLPUe"
+    crossorigin="anonymous"
+    size="300"
+    alpha="0.6"
+    zindex="-1"
+    defer
+></script>
+EOF
+
+cat - >> themes/hugo-theme-stack/layouts/partials/footer/custom.html <<'EOF'
+<!-- layouts/partials/footer/custom.html -->
+<script
+    src="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/js/nprogress.min.js"
+    integrity="sha384-bHDlAEUFxsRI7JfULv3DTpL2IXbbgn4JHQJibgo5iiXSK6Iu8muwqHANhun74Cqg"
+    crossorigin="anonymous"
+></script>
+<link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/css/nprogress.css"
+    integrity="sha384-KJyhr2syt5+4M9Pz5dipCvTrtvOmLk/olWVdfhAp858UCa64Ia5GFpTN7+G4BWpE"
+    crossorigin="anonymous"
+/>
+<script>
+    NProgress.start();
+    document.addEventListener("readystatechange", () => {
+        if (document.readyState === "interactive") NProgress.inc(0.8);
+        if (document.readyState === "complete") NProgress.done();
+    });
+</script>
+EOF
+
+# 添加网易云短代码
+mkdir -p layouts/shortcodes/
+cat - > layouts/shortcodes/netease.html <<'EOF'
+<iframe
+  frameborder="no"
+  border="0"
+  marginwidth="0"
+  marginheight="0"
+  width=330 height=86
+  src="//music.163.com/outchain/player?type=2&id={{.Get 0}}&auto=0&height=66">
+</iframe>
+EOF
+# 添加文字属性
+cat - > layouts/shortcodes/align.html <<'EOF'
+<p style="text-align:{{ index .Params 0 }}">{{ index .Params 1 | markdownify }}</p>
+EOF
+# 插入github仓库
+cat - > layouts/shortcodes/github.html <<'EOF'
+<div class="github">
+    <div class="logo">
+        {{ replace $.Site.Data.SVG.repository "icon" "icon github-icon" | safeHTML }}
+        <a class="name" href={{ .Get "link" }} target="_blank">{{ .Get "name" }}</a>
+    </div>
+    <div class="description">{{ .Get "description" }}</div> 
+    <div class="language">
+        <span class="language-color" style="background-color: {{ .Get "color" }}"></span>
+        <span class="language-name">{{ .Get "language" }}</span>
+    </div>
+</div>
+EOF
+
+mkdir -p public
+cd public
+
+git init
+# git remote add origin remote_repository_url
+git remote add origin git@github.com:ynhugo/ynhugo.github.io.git
+git add .; git commit -m "upload"; git push -u origin $(git branch | awk '{print $2}'); cd $var1;
+# 局域网访问博客效果
+hugo server -D --bind 192.168.x.x -p 1313
+#+end_src
+
+** hugo.yaml添加Giscus（GitHub用户首选）
+
+*优势：*
+
+✅ 基于GitHub Discussions
+✅ 支持反应表情和回复
+✅ 完全免费，无广告
+✅ 支持多种主题
+
+*配置步骤：*
+
+1. 设置GitHub仓库：
+   - 仓库必须是公开的
+   - 安装 giscus app
+   - 在仓库中启用Discussions功能
+2. 配置hugo.yaml：
+
+#+begin_src yaml
+params:
+    comments:
+        enabled: true
+        provider: giscus
+        giscus:
+            repo: username/repo-name
+            repoID: R_kgDOxxxxxx
+            category: General
+            categoryID: DIC_kwDOxxxxxx
+            mapping: pathname
+            lightTheme: light
+            darkTheme: dark
+            reactionsEnabled: 1
+            emitMetadata: 0
+#+end_src
+# 该配置在hugo.yaml中已经有模板了，把需要替换的信息替换一下就可以了
+
+3. 获取配置信息：
+   - 访问 giscus.app
+   - 输入仓库信息，获取配置代码
+
+*** 参考链接
+
+[[https://gohugo.com.cn/getting-started/quick-start/][hugo快速入门]]
+
+[[https://blog.csdn.net/jiesunliu3215/article/details/141117007][git 如何在仓库所有分支所有提交中 找到关键的提交记录的关键字]]
+
+[[https://site.zhelper.net/Hugo/hugo-stack/][Stack主题]]
+
+[[https://ynhugo.github.io/p/hugo在局域网中运行server/][hugo在局域网中运行server]]
+
+[[https://skfwe.cn/p/博客切换到stack-主题/][博客切换到STACK 主题]]
+
+[[https://www.iminling.com/hugo/hugo-comment-config-guide/#2-giscusgithub%E7%94%A8%E6%88%B7%E9%A6%96%E9%80%89][2. Giscus（GitHub用户首选）]]
+
+[[https://docs.github.com/zh/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/enabling-or-disabling-github-discussions-for-a-repository][启用或禁用仓库的 GitHub 讨论]]
+
+[[https://giscus.app/zh-CN][giscus]]

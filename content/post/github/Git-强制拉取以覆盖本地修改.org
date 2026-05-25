@@ -1,0 +1,44 @@
+---
+title: Git：强制拉取以覆盖本地修改
+tags: ["git"]
+date: 2024-11-20T10:10:00.00+0800
+---
+
+* Git：强制拉取以覆盖本地修改
+
+在本文中，我们将介绍如何使用Git强制拉取以覆盖本地修改。Git是一种分布式版本控制系统，它允许多个开发者在同一时间协同工作，并轻松管理代码的变更。有时候，当我们在本地进行修改后，想要从远程仓库拉取最新的代码时，可能会遇到冲突问题，这时就需要强制拉取以覆盖本地修改。
+
+* Git Pull
+
+Git Pull命令用于从远程仓库获取最新的代码并合并到当前分支中。默认情况下，当我们执行Git Pull时，如果存在本地未提交的修改，Git会尝试自动合并远程代码和本地代码。然而，在某些情况下，自动合并可能会导致冲突，这时就需要进行手动干预。
+
+* 强制拉取指令
+
+如果我们确定无论如何都要覆盖本地修改，并使用远程仓库最新的代码，就需要使用强制拉取指令。在Git中，有两种方法可以实现强制拉取，一种是使用 git fetch 命令结合 git reset 命令，另一种是使用 git pull 命令的 --force 选项。
+
+** 方法一：使用git fetch和git reset命令
+
+步骤如下：
+
+1.首先，使用git fetch命令获取远程仓库最新的代码，但是不进行合并。
+
+#+begin_src 
+git fetch origin
+#+end_src
+
+2.然后，使用git reset命令将当前分支的HEAD指向远程分支的最新commit。
+
+#+begin_src 
+git reset --hard origin/master
+#+end_src
+这里的origin/master表示远程仓库的主分支。
+
+3.最后，使用git pull命令进行合并。
+
+#+begin_src 
+git pull origin master
+#+end_src
+
+** 参考链接
+
+[[https://deepinout.com/git/git-questions/447_git_git_force_a_pull_to_overwrite_local_changes.html][Git：强制拉取以覆盖本地修改]]

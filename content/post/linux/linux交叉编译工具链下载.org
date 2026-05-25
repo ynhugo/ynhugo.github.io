@@ -1,0 +1,96 @@
+---
+title: "linux交叉编译工具链下载"
+date: 2023-12-19T00:27:56.33+08:00
+tags: ["linux", "程序员"]
+---
+
+* 开篇赘述
+
+ARM 架构主要有两种不同的位数变体：ARM32 和 ARM64。
+
+1. ARM32：也称为 ARMv7 架构，通常用于较旧的嵌入式系统和移动设备。ARM32 架构有 32 位寻址空间和指令集，适用于需要较低功耗和资源占用的场景。
+
+2. ARM64：也称为 ARMv8 架构，是较新的 ARM 架构版本，提供了更高性能、更大内存寻址范围和更多的寄存器。ARM64 架构支持 64 位寻址空间和指令集，适用于需要更高性能和更大内存支持的系统，比如现代的智能手机、平板电脑和服务器等设备。
+
+因此，当选择交叉编译工具链时，需要确保选用的工具链与目标设备的架构兼容，以确保生成的可执行文件能够在目标设备上正确运行。对于 ARM32 和 ARM64 架构，你会发现相应的工具链，比如 `gcc-arm-linux-gnueabi` 用于 ARM32 架构，而 `gcc-aarch64-linux-gnu` 则用于 ARM64 架构。
+
+* 方法一
+
+官网页面：https://www.linaro.org/downloads/
+
+以下访问官网子页面
+
+** ARM-Linux交叉编译工具链下载
+
+下载页面：https://snapshots.linaro.org/gnu-toolchain/14.0-2023.06-1/arm-linux-gnueabihf/
+
+下载链接：https://snapshots.linaro.org/gnu-toolchain/14.0-2023.06-1/arm-linux-gnueabihf/gcc-linaro-14.0.0-2023.06-x86_64_arm-linux-gnueabihf.tar.xz
+
+** aarch64-Linux交叉编译工具链下载
+
+下载页面：https://snapshots.linaro.org/gnu-toolchain/14.0-2023.06-1/aarch64-linux-gnu/
+
+下载链接：https://snapshots.linaro.org/gnu-toolchain/14.0-2023.06-1/aarch64-linux-gnu/gcc-linaro-14.0.0-2023.06-x86_64_aarch64-linux-gnu.tar.xz
+
+* 方法二
+
+如果要使用aarch64-linux-gnu-gcc 交叉编译器编译程序，且没有ARM 交叉编译环境，则使用如下命令安装：
+
+#+begin_src bash
+  sudo apt-get install gcc-9-aarch64-linux-gnu
+  sudo apt-get install gcc-aarch64-linux-gnu
+#+end_src
+
+查看aarch64-linux-gnu-gcc版本号
+
+#+begin_src bash
+  aarch64-linux-gnu-gcc -v
+#+end_src
+
+* 不同的系统架构对应不同版本的gcc for arm编译工具
+
+| <l>                        | <l>         | <l>             | <l>         | <l>       | <l>                    | <l>                                  |
+|----------------------------+-------------+-----------------+-------------+-----------+------------------------+--------------------------------------|
+| multiarch name             | syscall ABI | instruction set | endian­ness | word size | description            | spec documents                       |
+|----------------------------+-------------+-----------------+-------------+-----------+------------------------+--------------------------------------|
+| aarch64-linux-gnu          | linux       | ARMv8           | little      | 64        | aarch64 Linux Platform | AAPCS64 (ARM IHI 005A)[[https://wiki.debian.org/Multiarch/Tuples#fnref-c7e3f48bab06503cfad11314b1aea053fd6f075f][1]]\\            |
+|                            |             |                 |             |           |                        | ELF for the ARM 64-bit Architecture[[https://wiki.debian.org/Multiarch/Tuples#fnref-8063f3fadbf6d71cb0805d7124d5606eda4f3ce0][2]] |
+|----------------------------+-------------+-----------------+-------------+-----------+------------------------+--------------------------------------|
+| aarch64_be-linux-gnu       | linux       | ARMv8           | big         | 64        | aarch64 Linux Platform | AAPCS64 (ARM IHI 005A)[[https://wiki.debian.org/Multiarch/Tuples#fnref-c7e3f48bab06503cfad11314b1aea053fd6f075f][1]]\\            |
+|                            |             |                 |             |           |                        | ELF for the ARM 64-bit Architecture[[https://wiki.debian.org/Multiarch/Tuples#fnref-8063f3fadbf6d71cb0805d7124d5606eda4f3ce0][2]] |
+|----------------------------+-------------+-----------------+-------------+-----------+------------------------+--------------------------------------|
+| aarch64-linux-gnu_ilp32    | linux       | ARMv8           | little      | 32        | aarch64 Linux Platform |                                      |
+|----------------------------+-------------+-----------------+-------------+-----------+------------------------+--------------------------------------|
+| aarch64_be-linux-gnu_ilp32 | linux       | ARMv8           | big         | 32        | aarch64 Linux Platform |                                      |
+|----------------------------+-------------+-----------------+-------------+-----------+------------------------+--------------------------------------|
+| arm-linux-gnu              | linux       | ARMv7           | little      | 32        | Old ARM ABI            | APCS (ARM DUI 0041 chapter 9)[[https://wiki.debian.org/Multiarch/Tuples#fnref-f460c72c3b0aef74f365b695986ecda40eaf37ec][4]]       |
+|----------------------------+-------------+-----------------+-------------+-----------+------------------------+--------------------------------------|
+| arm-linux-gnueabi          | linux       | ARMv7           | little      | 32        | ARM EABI, soft-float   | AAPCS (ARM IHI 0042D)[[https://wiki.debian.org/Multiarch/Tuples#fnref-1afc7a5c6e3b1f4f78fe36071dd1eebc87925aed][5]]\\             |
+|                            |             |                 |             |           |                        | ARM GNU/Linux ABI Supplement[[https://wiki.debian.org/Multiarch/Tuples#fnref-cd2c0ea0679f5d05c6d3f9ffd9cc6ef49f7ea0a2][6]]        |
+|----------------------------+-------------+-----------------+-------------+-----------+------------------------+--------------------------------------|
+| arm-linux-gnueabihf        | linux       | ARMv7           | little      | 32        | ARM EABI, hard-float   | AAPCS (ARM IHI 0042D)[[https://wiki.debian.org/Multiarch/Tuples#fnref-1afc7a5c6e3b1f4f78fe36071dd1eebc87925aed][5]] and\\         |
+|                            |             |                 |             |           |                        | XXXXX (TBD)                          |
+|----------------------------+-------------+-----------------+-------------+-----------+------------------------+--------------------------------------|
+| armeb-linux-gnueabi        | linux       | ARMv7           | big         | 32        | ARM EABI, soft-float   | AAPCS (ARM IHI 0042D)[[https://wiki.debian.org/Multiarch/Tuples#fnref-1afc7a5c6e3b1f4f78fe36071dd1eebc87925aed][5]]\\             |
+|                            |             |                 |             |           |                        | ARM GNU/Linux ABI Supplement[[https://wiki.debian.org/Multiarch/Tuples#fnref-cd2c0ea0679f5d05c6d3f9ffd9cc6ef49f7ea0a2][6]]        |
+|----------------------------+-------------+-----------------+-------------+-----------+------------------------+--------------------------------------|
+| armeb-linux-gnueabihf      | linux       | ARMv7           | big         | 32        | ARM EABI, hard-float   | AAPCS (ARM IHI 0042D)[[https://wiki.debian.org/Multiarch/Tuples#fnref-1afc7a5c6e3b1f4f78fe36071dd1eebc87925aed][5]] and\\         |
+|                            |             |                 |             |           |                        | XXXXX (TBD)                          |
+|----------------------------+-------------+-----------------+-------------+-----------+------------------------+--------------------------------------|
+| armv8l-linux-gnueabihf     | linux       | ARMv8           | little      | 32        | ARMv8 EABI, hard-float |                                      |
+|----------------------------+-------------+-----------------+-------------+-----------+------------------------+--------------------------------------|
+| arm-eabi                   | Bare-Metal  | ARMv7           | little      | 32        | ARM EABI, soft-float   |                                      |
+|----------------------------+-------------+-----------------+-------------+-----------+------------------------+--------------------------------------|
+| armeb-eabi                 | Bare-Metal  | ARMv7           | big         | 32        | ARM EABI, soft-float   |                                      |
+|----------------------------+-------------+-----------------+-------------+-----------+------------------------+--------------------------------------|
+| aarch64-elf                | Bare-Metal  | ARMv8           | little      | 64        | ARMv8 EABI, hard-float |                                      |
+|----------------------------+-------------+-----------------+-------------+-----------+------------------------+--------------------------------------|
+| aarch64_be-elf             | Bare-Metal  | ARMv8           | big         | 64        | ARMv8 EABI, hard-float |                                      |
+
+* 参考链接
+
+[[https://blog.csdn.net/Qiuhongim/article/details/124137192][ARM-Linux 交叉编译工具链安装]]
+
+[[https://blog.csdn.net/Namcodream521/article/details/88379307][arm-linux-gnueabihf、aarch64-linux-gnu等ARM交叉编译GCC的区别]]
+
+[[https://blog.csdn.net/qq_44705488/article/details/127650048][FPGA Zynq MPSOC ZU5EV 下CAN 应用编程]]

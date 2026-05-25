@@ -1,0 +1,250 @@
+---
+title: Tmux Plugin Manager使用及具体插件
+tags: ["tmux"]
+date: 2024-11-24T11:40:45.03+0800
+---
+
+* TPM安装
+
+按照官网的做法，很简单就安装上了，输入下面命令：
+
+** tmux基本配置文件
+
+ #+begin_src 
+# 把管理器文件安装到`~/.tmux/plugins/tpm`之下 此前这些目录是不存在的
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
+# 新建配置文件
+vim ~/.tmux.conf
+
+# 将下面内容复制到`~/.tmux.conf`
+# List of plugins
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'tmux-plugins/tmux-sensible'
+# Other examples:
+# set -g @plugin 'github_username/plugin_name'
+# set -g @plugin 'git@github.com/user/plugin'
+# set -g @plugin 'git@bitbucket.com/user/plugin'
+# Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
+run '~/.tmux/plugins/tpm/tpm'	# 记住，这个必须放在.tumx.conf的底部 
+#+end_src
+
+** 使tmux配置生效
+
+#+begin_src 
+#使其生效
+tmux source-file ~/.tmux.conf
+#+end_src
+
+** 快捷键管理插件（可忽略）
+
+*** 安装插件
+
+添加新的插件 =~/.tmux.conf= 与 =set -g @plugin '...'=
+按 =prefix= + I（大写字母i，如我 nstall）来获取插件。
+你很好！该插件已克隆到 =~/.tmux/plugins/dir= 并已获得。
+
+*** 卸载插件
+
+从列表中删除（或注释掉）插件。
+按 =prefix= + alt+ u（小写ü在ü n安装）删除插件。
+所有插件均已安装到， =~/.tmux/plugins/= 因此您也可以在此处找到插件目录并将其删除。
+
+*** 键绑定
+
+=prefix= + I
+
+- 从GitHub或任何其他git存储库安装新插件
+- 刷新TMUX环境
+
+=prefix= + U
+
+- 更新插件
+
+
+=prefix= + alt+u
+
+- 删除/卸载不在插件列表中的插件
+
+** 命令管理插件
+
+*** 安装插件
+
+像往常一样，需要在中指定插件 =.tmux.conf= 。运行以下命令以安装插件：
+
+#+begin_src 
+~/.tmux/plugins/tpm/bin/install_plugins
+#+end_src
+
+*** 更新插件
+
+要更新所有已安装的插件：
+
+#+begin_src 
+~/.tmux/plugins/tpm/bin/update_plugins all
+#+end_src
+
+或更新单个插件：
+
+#+begin_src 
+~/.tmux/plugins/tpm/bin/update_plugins tmux-sensible
+#+end_src
+
+*** 删除插件
+
+要删除不在插件列表中的插件：
+
+#+begin_src 
+~/.tmux/plugins/tpm/bin/clean_plugins
+#+end_src
+
+** tmux复制粘贴插件
+
+使用 =tmux-yank= 插件改善复制粘贴体验
+
+直接在 =.tmux.conf= 中的 =List of plugins= 下新增插件即可
+
+#+begin_src 
+set -g @plugin 'tmux-plugins/tmux-yank'
+#+end_src
+
+安装完成后默认使用鼠标选中后,松开鼠标右键即为复制
+
+** tmux永久保存插件(手动)
+
+将插件添加到TPM插件列表中 =.tmux.conf= ：
+
+#+begin_src 
+set -g @plugin 'tmux-plugins/tmux-resurrect'
+#+end_src
+
+要保存 Tmux 会话 ， 我们只要按 =前缀键 + Ctrl-s= 就可以了 。 此时 ，Tmux 状态栏会显示 “Saving ...” 字样 ， 完毕后会提示 Tmux 环境已保存 。
+
+Tmux Resurrect 会将 Tmux 会话的详细信息以文本文件形式保存到 =~/.tmux/resurrect= 目录 。
+
+还原则按 =前缀键 + Ctrl-r= 即可 。
+
+默认情况下，仅还原保守的程序列表
+#+begin_src 
+vi vim nvim emacs man less more tail top htop irssi weechat mutt
+#+end_src
+
+
+我们可能还需要保存当前每个窗格运行的程序。类似 =vim=, =less=, =man= 这些程序 tmux-resurrect 会自动恢复，其他的则需要配置：
+
+#+begin_src 
+set -g @resurrect-processes 'ssh mysql redis-server npm'
+#+end_src
+这个插件可以保存和恢复tmux窗格的内容。
+
+可以通过添加以下行来启用此功能 =.tmux.conf= ：
+#+begin_src 
+set -g @resurrect-capture-pane-contents 'on'
+#+end_src
+
+** tmux永久保存插件(自动)
+
+可能你嫌手动保存和恢复太过麻烦，别担心，这不是问题。Tmux Continuum 在 Tmux Resurrec的基础上更进一步，现在保存和恢复全部自动化了，如你所愿，可以无感使用tmux，不用再担心备份问题。
+
+Tmux Continuum依赖Tmux Resurrect，请保证已安装Tmux Resurrect插件
+
+Tmux Continuum默认每隔15mins备份一次，我设置的是一天一次：
+#+begin_src 
+set -g @continuum-save-interval '1440'
+#+end_src
+
+*关闭自动备份* ，只需设置时间间隔为 =0= 即可：
+#+begin_src 
+set -g @continuum-save-interval '0'
+#+end_src
+
+想要在 *tmux启动时就恢复最后一次保存的会话环境* ，需增加如下配置：
+#+begin_src 
+set -g @continuum-restore 'on' # 启用自动恢复
+#+end_src
+
+如果不想要启动时自动恢复的功能了，直接移除上面这行就行。想要绝对确定自动恢复不会发生，就在用户根目录下创建一个 =tmux_no_auto_restore= 空文件（创建命令： =touch ~/tmux_no_auto_restore= ），该文件存在时，自动恢复将不触发。
+
+对于tmux高级用户（可能就是你）而言，同时运行多个tmux服务器也是有可能的。你可能并不希望后面启用的几个tmux服务器自动恢复或者自动保存会话。因此Tmux Continuum会优先在第一个启用的tmux服务器中生效，随后启用的tmux服务器不再享受自动恢复或自动保存会话的待遇。
+
+实际上，不管Tmux Continuum功能有没有启用，或者多久保存一次，我们都有办法从状态栏知晓。Tmux Continuum提供了一个查看运行状态的插值 =#{continuum_status}= ，它支持 =status-right= 和 =status-left= 两种状态栏设置，如下所示：
+#+begin_src 
+set -g status-right 'Continuum status: #{continuum_status}'
+#+end_src
+
+tmux运行时， =#{continuum_status}= 将显示保存的时间间隔（单位为分钟），此时状态栏会显示：
+#+begin_src 
+Continuum status: 1440
+#+end_src
+
+如果其自动保存功能关闭了，那么状态栏会显示：
+#+begin_src 
+Continuum status: off
+#+end_src
+
+** tmux日志
+
+#+begin_src 
+set -g @plugin 'tmux-plugins/tmux-logging' 
+#+end_src
+
+*** 记录日志：
+
+在当前窗格中切换（开始/停止）日志记录。
+
+- 按键绑定： prefix + shift + p
+- 文件名格式： tmux-#{session_name}-#{window_index}-#{pane_index}-%Y%m%dT%H%M%S.log
+- 文件路径：(
+#+begin_src 
+$HOME
+#+end_src
+用户主目录)
+
+  + 示例文件： =~/tmux-my-session-0-1-20140527T165614.log=
+
+*** 截取屏幕日志：
+
+在当前窗格中保存可见文本。等效于“文本截图”。
+
+按键绑定： =prefix + alt + p=
+文件名格式： =tmux-screen-capture-#{session_name}-#{window_index}-#{pane_index}-%Y%m%dT%H%M%S.log=
+文件路径：（$HOME 用户主目录）
+示例文件： =tmux-screen-capture-my-session-0-1-20140527T165614.log=
+
+*** 保存完整的历史记录
+
+将完整的窗格历史记录保存到文件。如果您回想起来很方便，则需要记录/保存所有工作。
+
+- 按键绑定： prefix + alt + shift + p
+- 文件名格式： tmux-history-#{session_name}-#{window_index}-#{pane_index}-%Y%m%dT%H%M%S.log
+- 文件路径：（$HOME用户主目录）
+  - 示例文件： =tmux-history-my-session-0-1-20140527T165614.log=
+*注意* ：此功能取决于 =history-limit=- 值Tmux在回滚缓冲区中保留的行数。Tmux保留的内容也只会保存到文件中。
+
+=set -g history-limit 50000= 在.tmux.conf中使用，对于现代计算机，可以将此选项设置为高数字。
+
+*** 清除窗格历史记录
+
+按键绑定： =prefix + alt + c=
+
+这只是一个便捷键绑定。
+
+** 我的配置文件
+
+#+begin_src 
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'tmux-plugins/tmux-sensible' # 
+set -g @plugin 'tmux-plugins/tmux-yank' # tmux复制粘贴插件
+set -g @plugin 'tmux-plugins/tmux-resurrect' # tmux永久保存插件(手动)
+set -g @continuum-save-interval '15' # tmux永久保存插件(自动)，每隔15分钟自动保存一次
+# set -g @continuum-save-interval '0' # 关闭自动备份
+set -g @continuum-restore 'on' # 启用自动恢复，tmux启动时就恢复最后一次保存的会话环境
+set -g status-right 'Continuum status: #{continuum_status}' # 此时状态栏会显示保存的时间间隔（单位为分钟）
+set -g @plugin 'tmux-plugins/tmux-logging' # tmux日志
+set -g history-limit 50000
+#+end_src
+
+** 参考链接
+
+[[https://www.cnblogs.com/hongdada/p/13528984.html][Tmux Plugin Manager使用及具体插件]]
+

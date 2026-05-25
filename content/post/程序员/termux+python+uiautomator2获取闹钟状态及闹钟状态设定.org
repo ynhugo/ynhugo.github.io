@@ -1,0 +1,60 @@
+---
+title: termux+python+uiautomator2获取闹钟状态及闹钟状态设定
+tags: ["termux", "python", "uiautomator2"]
+date: 2025-07-29T02:09:05.80+0800
+---
+
+* termux+python+uiautomator2获取闹钟状态及闹钟状态设定
+
+** 代码
+
+#+begin_src python
+import os
+import time
+import uiautomator2 as u2
+
+connect=os.system('adb devices | grep -w "device" | awk \'{print $1}\'')
+d = u2.connect(connect)
+
+d.app_stop('com.asus.deskclock')
+d.app_start('com.asus.deskclock')
+
+# 获取某元素下的所有属性
+# flag=d.xpath('//*[@resource-id="com.asus.deskclock:id/alarms_list"]/android.widget.LinearLayout[4]/android.widget.RelativeLayout[1]/android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/android.widget.Switch[1]').info
+# print(flag)
+
+for alarm_index in range(1,5):
+  # 获取某元素下的所有属性
+  # flag=d.xpath(f'//*[@resource-id="com.asus.deskclock:id/alarms_list"]/android.widget.LinearLayout[{alarm_index}]/android.widget.RelativeLayout[1]/android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/android.widget.Switch[1]').info
+
+  # 获取某元素下的指定属性
+  flag=d.xpath(f'//*[@resource-id="com.asus.deskclock:id/alarms_list"]/android.widget.LinearLayout[{alarm_index}]/android.widget.RelativeLayout[1]/android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/android.widget.Switch[1]').info['checked']
+  # 判断闹钟复选框是未勾选状态，则打开闹钟
+  if flag==False:
+    d.xpath(f'//*[@resource-id="com.asus.deskclock:id/alarms_list"]/android.widget.LinearLayout[{alarm_index}]/android.widget.RelativeLayout[1]/android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/android.widget.Switch[1]').click()
+
+  # 判断闹钟复选框是勾选状态，则关闭闹钟
+  else:
+    d.xpath(f'//*[@resource-id="com.asus.deskclock:id/alarms_list"]/android.widget.LinearLayout[{alarm_index}]/android.widget.RelativeLayout[1]/android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/android.widget.Switch[1]').click()
+    time.sleep(0.1)
+    d(text="关闭这个重复闹钟").click()
+    time.sleep(0.1)
+
+time.sleep(1)
+d.swipe(28,1370,28,0,duration=0.7)
+for alarm_index in range(1,9):
+  flag=d.xpath(f'//*[@resource-id="com.asus.deskclock:id/alarms_list"]/android.widget.LinearLayout[{alarm_index}]/android.widget.RelativeLayout[1]/android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/android.widget.Switch[1]').info['checked']
+  print(flag)
+
+#+end_src
+
+** 参考链接
+
+[[https://www.cnblogs.com/zz-1021/p/17443621.html][uiautomator2获取UIObject元素的属性info用法]]
+
+[[https://blog.csdn.net/qq_24741027/article/details/118070989][uiautomator2详细使用方法-4. 元素定位]]
+
+[[https://ynhugo.github.io/p/termux-uiautomator2给多个qq好友点赞/][termux+uiautomator2给多个QQ好友点赞]]
+
+[[https://ynhugo.github.io/p/termux-uiautomator2滑动屏幕/][termux+uiautomator2滑动屏幕]]
+

@@ -1,0 +1,72 @@
+---
+title: Qt Linux 播放视频教程
+date: 2024-03-26T00:24:20.00+0800
+tags: [qt]
+---
+
+* Qt Linux 播放视频教程
+
+只需要两个模块、三个头文件、几行代码即可实现，不过在实现之前，还需要先在终端中安装一些文件才能实现播放视频，具体操作步骤如下
+
+** 配置系统环境
+
+以下文件缺一不可
+
+#+begin_src bash
+  # 安装 OpenGL 库
+  sudo apt-get install libgl1-mesa-dev -y
+  # 安装开源媒体播放器
+  sudo apt-get install mplayer -y
+  # 安装 GStreamer 插件，用于解码某些格式的音视频文件
+  sudo apt-get install -y gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav
+#+end_src
+
+** Qt中需要做的工作
+
+用Qt创建一个 Mainwindow 或者 widget 工程，我创建的是 Mainwindow
+
+Qt的.pro文件默认添加的只有两个模块如下
+
+#+begin_src c
+  QT += core gui
+#+end_src
+
+要想实现播放视频，还需要再添加两个媒体相关的模块
+
+#+begin_src c
+  multimedia  multimediawidgets
+#+end_src
+
+添加后如下
+
+#+begin_src c
+  QT += core gui multimedia  multimediawidgets
+#+end_src
+
+剩下的工作就完全可以在 mainwindow.cpp （如果是创建 Widget 工程，对应的文件是 widget.cpp） 中完成了
+
+在写代码之前，还需要在 mainwindow.cpp 添加三个头文件
+
+#+begin_src c
+  #include <QUrl>
+  #include <QMediaPlayer>
+  #include <QVideoWidget>
+#+end_src
+
+然后就可以添加代码，需要添加代码如下
+
+#+begin_src c
+  QMediaPlayer* player = new QMediaPlayer;
+  QVideoWidget* videoWidget = new QVideoWidget;
+  player->setVideoOutput(videoWidget);
+  player->setMedia(QUrl::fromLocalFile("/mnt/hgfs/share/source/Qt_Linux_Video_Player_Test/Qt_Linux_Video_Player_Test/videoList/test.mp4"));
+  videoWidget->show();
+  player->play();
+  this->setCentralWidget(videoWidget);
+#+end_src
+
+* 实验工程
+
+[[resources/Qt_Linux_Video_Player_Test.tar][点击下载]]
+
+* 参考链接：https://blog.csdn.net/zhang669154/article/details/78781011

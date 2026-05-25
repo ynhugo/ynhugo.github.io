@@ -1,0 +1,74 @@
+---
+title: 腾讯云轻量应用服务器一站式部署OpenClaw并通过终端ssh登录
+tags: ["腾讯云", "lighthouse", "moltbot", "ssh"]
+date: 2026-01-30T02:04:27.02+0800
+---
+
+* 腾讯云轻量应用服务器一站式部署OpenClaw并通过终端ssh登录
+
+** 轻量应用服务器 4核4G3M
+活动价79元/月
+
+选择镜像Moltbot
+
+** 本地生成自定义名称的密钥对
+#+begin_src bash
+# 如果不想使用现有的id_rsa秘钥对，可以生成自定义秘钥对
+ssh -t rsa -b 4096 -f ~/.ssh/moltbot
+
+# 如果不想指定秘钥名称，默认id_rsa秘钥对使用最方便
+ssh -t rsa -b 4096
+#+end_src
+
+
+** 配置SSH公钥
+#+begin_src bash
+# 查看公钥
+cat ~/.ssh/moltbot
+#+end_src
+将公钥粘贴到服务器的~/.ssh/authorized_keys中
+
+** 本地SSH登录
+#+begin_src bash
+# 如果是生成的自定义私钥对，需要指定私钥
+ssh -i ~/.ssh/moltbot root@101.43.216.165
+
+# 如果使用id_rsa秘钥对，可以不用指定私钥
+ssh root@101.43.216.165
+#+end_src
+如果不想指定私钥，可以把~/.ssh/id_rsa.pub配置到服务器的authorized_keys中，这样ssh会默认使用私钥id_rsa登录
+
+** 配置moltbot
+#+begin_src bash
+# 配置moltbot
+clawdbot onboard
+#+end_src
+
+** 准备工作
+#+begin_src bash
+# 端口转发
+ssh -N -L 18789:127.0.0.1:18789 moltbot
+#+end_src
+然后在本地访问18789端口即可，如：http://localhost:18789/
+
+** 查看dashboard
+#+begin_src bash
+clawdbot dashboard
+# 或
+ssh openclaw "bash -l -c clawdbot dashboard"
+
+openclaw dashboard
+# 或
+ssh openclaw "bash -l -c openclaw dashboard"
+#+end_src
+
+** 参考链接
+[[https://www.intoep.com/ai/72571.html][Clawdbot (Moltbot) 保姆级部署教程：国内专享方案与完整避坑指南]]
+
+[[https://mp.weixin.qq.com/s/xRDVRPevfwRvv8yLqgjpag][Clawdbot 保姆级教程，国内最佳部署方案！]]
+
+[[https://app.qiip.cc/9049.html][从零开始搭建部署 Moltbot/Clawdbot 完整攻略]]
+
+[[https://cloud.tencent.com/developer/article/2624973][🚀 云上Moltbot（原Clawdbot）最全实践指南合辑]]
+
+[[https://docs.openclaw.ai/zh-CN][OpenClaw官方中文手册]]

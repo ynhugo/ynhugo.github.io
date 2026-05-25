@@ -1,0 +1,22 @@
+---
+title: openssl加密聊天内容
+date: 2024-03-26T00:24:30.00+0800
+tags: ["程序员"]
+---
+
+* 加密内容
+
+使用openssl对字符串"test"进行了AES-256-CBC加密，并使用密码"1"进行了加密操作。加密后的输出是经过Base64编码的字符串。
+
+
+#+begin_src bash
+  echo "test" | openssl enc -aes-256-cbc -a -k 11
+#+end_src
+
+* 解密内容
+
+要解密这个加密文本，您可以使用以下命令：
+
+#+begin_src bash
+echo "加密后输出的经过Base64编码的字符串" | openssl enc -aes256 -a -d -k 1
+#+end_src

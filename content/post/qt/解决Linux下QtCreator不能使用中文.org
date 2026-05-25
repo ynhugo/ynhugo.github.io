@@ -1,0 +1,21 @@
+---
+title: Qt Creator"不能使用中文
+date: 2024-03-26T00:24:22.00+0800
+tags: ["qt"]
+---
+
+* Qt Creator"不能使用中文
+
+安装 "fcitx-frontend-qt5"
+
+然后将两个相关文件移动Qt安装目录的指定目录下
+
+接着重启QtCreator即可
+
+#+begin_src bash
+  sudo apt-get install fcitx-frontend-qt5 -y
+
+  sudo cp /usr/lib/x86_64-linux-gnu/qt5/plugins/platforminputcontexts/libfcitxplatforminputcontextplugin.so /opt/pkg/qt/qt5.8/Tools/QtCreator/lib/Qt/plugins/platforminputcontexts/
+
+  sudo cp /usr/lib/x86_64-linux-gnu/qt5/plugins/platforminputcontexts/libfcitxplatforminputcontextplugin.so /opt/pkg/qt/qt5.8/5.8/gcc_64/plugins/platforminputcontexts/
+#+end_src

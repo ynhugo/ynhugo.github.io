@@ -1,0 +1,105 @@
+---
+title: Linux服务器上安装Anaconda
+tags: ["Linux", "Anaconda", "conda"]
+date: 2024-08-21T00:46:14.95+0800
+---
+
+1. 安装Anaconda
+
+1.1 下载anaconda的安装包
+
+这里我们需要在官网上查找自己需要的版本，地址链接在下面:
+
+https://repo.anaconda.com/archive/
+
+这里以我自己安装的版本为例：
+
+https://repo.anaconda.com/archive/Anaconda3-5.3.0-Linux-x86_64.sh
+
+这是我选择的版本，然后我们在控制台输入这句话：
+
+wget https://repo.anaconda.com/archive/Anaconda3-5.3.0-Linux-x86_64.sh
+
+如果使用wget下载不下来的话，可以手动下载安装文件
+
+1.3 安装anaconda
+
+接下来我们需要首先赋权再执行安装程序，依次输入下面两句命令:
+
+chmod +x Anaconda3-5.3.0-Linux-x86_64.sh
+
+./Anaconda3-5.3.0-Linux-x86_64.sh
+
+1.4 点击Enter（回车键）
+
+此时显示Anaconda的信息，并且会出现More，继续按Enter，直到提示输入yes/no
+
+1.5 输入 yes
+
+1.6 继续点击 Enter
+
+1.7 输入 yes，添加环境变量
+
+这里需要注意点的就是如果你直接跳过这部设置环境变量的话：
+
+[no ] >>>
+
+那你需要自己到这个文件夹设置你安装Anaconda路径（比如上面显示我的是）
+
+/home/wangke/.bashrc
+
+单击进去，在最后一行添加：
+
+export PATH=/home/anaconda3/bin:$PATH
+
+需要把之前的那句话给注释掉如下所示：
+
+#+begin_src bash
+  # export PATH=/usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/sbin:/sbin:$PATH
+#+end_src
+
+export PATH=/root/anaconda3/bin:$PATH
+
+这里只是个示例，具体的还是要看你们自己安装的路径。
+
+然后保存更改，输入下面这句指令：
+
+source ~/.bashrc
+
+1.8 完成安装以及检测是否安装成功
+
+打开新的终端后，进入自己的文件夹目录下，输入anaconda -V（注意a要小写，V要大写），conda -V ,显示版本信息，若显示则表示安装成功。
+
+root@dev-wyf-react:~/wyf# conda -V
+
+conda 4.5.11
+
+*** ubuntu下conda如何设置镜像源（清华镜像源）
+
+**** ubuntu下如何设置镜像源
+
+首先贴出.condarc，直接给出清华的镜像源，需要的小伙伴直接使用，别看内容了
+
+#+begin_src
+# ~/.condarc
+channels:
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free
+show_channel_urls: True
+#+end_src
+
+添加conda镜像源命令（直接使用）
+
+#+begin_src 
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r
+conda config --set show_channel_urls yes
+#+end_src
+
+*** 参考链接
+
+[[https://blog.csdn.net/wyf2017/article/details/118676765][如何在Linux服务器上安装Anaconda（超详细）]]
+
+[[https://blog.csdn.net/youlinhuanyan/article/details/136110667][ubuntu下conda如何设置镜像源（清华镜像源）]]

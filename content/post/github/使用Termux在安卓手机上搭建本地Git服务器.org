@@ -1,0 +1,52 @@
+---
+title: 使用Termux在安卓手机上搭建本地Git服务器
+tags: ["git"]
+date: 2024-12-06T20:08:21.480000000+0800
+---
+
+* 使用Termux在安卓手机上搭建本地Git服务器
+
+在局域网使用，需要连接Wifi或开热点
+
+** 手机正式创建Git的服务仓库
+
+#+begin_src bash
+  git init --bare  test.git
+#+end_src
+--bare：表示创建的是裸仓库，我将该裸仓库创建在家目录下了，对应路径为 ~/test.git
+
+** 如何使用创建的Git服务仓库
+
+首先，获取Termux的用户名和IP地址，IP地址是IPV4格式的
+
+获取用户名
+#+begin_src bash
+  whoami							# 执行该命令后会看到用户名被打印出来
+#+end_src
+
+获取ip地址
+#+begin_src bash
+  ifconfig						# 执行该命令后可以看到IP地址
+#+end_src
+
+然后就是使用Git服务仓库了
+
+例如在Termux中通过 proot-distro 安装的Linux系统，可以进入Termux安装的Linux系统中后可以按照下面的命令格式clone仓库
+#+begin_src bash
+  git clone ssh://username@ipv4:8022/路径
+#+end_src
+
+例如
+#+begin_src bash
+  git clone ssh://u0_a223@192.168.3.39:8022/~/test.git
+#+end_src
+
+也可以在PC端上按照这个命令格式clone仓库
+
+** 注意事项
+
+Git服务仓库本身是不能执行push或pull操作的，需要另外建立一个空目录clone Git服务仓库，然后在clone下的仓库中执行操作后再进行push或pull操作。
+
+** 参考链接
+
+[[https://blog.csdn.net/u011795345/article/details/126834678][使用Termux在安卓手机上搭建本地Git服务器]]

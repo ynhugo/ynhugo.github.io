@@ -1,0 +1,29 @@
+---
+title: vim配置vimrc
+tags: ["vim", "vimrc"]
+date: 2026-03-23T18:53:16.84+0800
+---
+
+#+begin_src bash
+# 单独粘贴运行，更新用户的缓存信息，让密码有效期延长5分钟
+sudo -v
+
+# 批量粘贴运行
+sudo apt install -y vim
+if [ ! -f "/etc/vim/vimrc_bak" ]; then
+  sudo cp /etc/vim/vimrc /etc/vim/vimrc_bak
+fi
+sudo tee -a /etc/vim/vimrc << 'EOF'
+" vimrc for me
+set nu
+set ai
+set si
+set sw=4
+set ts=4
+set mouse=a
+noremap <C-a> <Esc>ggVG "全选
+syntax enable
+syntax on
+EOF
+
+#+end_src

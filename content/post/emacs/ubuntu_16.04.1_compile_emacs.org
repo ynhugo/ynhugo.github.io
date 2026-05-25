@@ -1,0 +1,33 @@
+---
+title: "ubuntu_16.04.1_compile_emacs"
+date: 2024-03-26T00:55:07+08:00
+tags: ["emacs"]
+---
+
+#+begin_src bash
+  emacs_file="emacs-28.2.tar.xz"
+  emacs_dir="emacs-28.2"
+  emacs_installed="/usr/local/bin/emacs-28.2"
+
+  if [ "$emacs_installed" ]; then
+	  echo "emacs-28.2 is installed."
+  else
+	  sudo apt install libncurses-dev -y;
+	  sudo apt install libgnutls28-dev -y;
+
+	  if [ "$emacs_file" ]; then
+		  echo "$emacs_file exists."
+	  else
+		  wget http://mirrors.ustc.edu.cn/gnu/emacs/$emacs_file
+	  fi
+
+	  if [ "$emacs_dir" ]; then
+		  echo "$emacs_dir exists."
+	  else
+		  tar -xvf $emacs_file
+	  fi
+
+	  cd $emacs_dir
+	  ./configure --without-x --with-gnutls=yes && chmod +x ./* && sudo make && sudo make install
+  fi
+#+end_src

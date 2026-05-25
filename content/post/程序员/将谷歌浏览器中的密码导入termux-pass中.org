@@ -1,0 +1,47 @@
+---
+title: 将谷歌浏览器中的密码导入termux-pass中
+tags: ["pass", "emacs", "google"]
+date: 2025-08-09T03:41:08.50+0800
+---
+
+* 将谷歌浏览器中的密码导入termux-pass中
+
+** 注意
+
+1. 谷歌浏览器中导出的密码，要先将name中包含.*://的给去掉，斜杠也去掉；
+2. username中，要将.*://字符串给去掉，斜杠也去掉（其实约等于是要删除、放弃这个密码了）
+
+** 脚本
+
+#+begin_src bash
+# name,url,username,password,note
+mapfile -t names < <(cat Google_Passwords.csv | awk -F ',' '{print $1}')
+mapfile -t urls < <(cat Google_Passwords.csv | awk -F ',' '{print $2}')
+mapfile -t usernames < <(cat Google_Passwords.csv | awk -F ',' '{print $3}')
+mapfile -t passwords < <(cat Google_Passwords.csv | awk -F ',' '{print $4}')
+
+# name_num="${#names[@]}"
+# echo "$name_num"
+
+if [ ! -d "temp" ]; then
+  mkdir -p temp
+fi
+cd temp
+mkdir -p ${names[@]}
+
+var1=$(pwd)
+for ((i=0; i < ${#names[@]}; i++)) ; do
+  # echo "${usernames[${i}]}"
+  cd "${names[${i}]}"
+  if [ "${usernames[${i}]}" == "" ]; then
+    usernames[${i}]="passwd${i}"
+  fi
+  # echo "${usernames[${i}]}"
+  echo "${passwords[${i}]}" > "${usernames[${i}]}"
+  echo "login: ${usernames[${i}]}" >> "${usernames[${i}]}"
+  echo "url: ${urls[${i}]}" >> "${usernames[${i}]}"
+  gpg --yes -r ynpass -e "${usernames[${i}]}"
+  rm "${usernames[${i}]}"
+  cd $var1
+done
+#+end_src

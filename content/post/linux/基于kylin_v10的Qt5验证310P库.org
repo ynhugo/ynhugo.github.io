@@ -1,0 +1,58 @@
+---
+title: "基于kylin_v10的Qt5验证310P库"
+tags: ["kylin", "310P"]
+date: 2026-05-19T09:55:57.31+0800
+---
+
+* Qt创建QtApplication->310P_Lib_Test->QWidget验证310P库
+
+** .pro文件中添加310P库
+
+#+begin_src bash
+ASCEND_HOME = /usr/local/Ascend/ascend-toolkit/latest
+INCLUDEPATH += $$ASCEND_HOME/include
+LIBS += -L$$ASCEND_HOME/lib64
+LIBS += -lascendcl
+QMAKE_RPATHDIR += $$ASCEND_HOME/aarch64-linux/lib64
+LIBS += -L/usr/local/Ascend/driver/lib64/driver -lascend_hal
+#+end_src
+
+#+begin_src bash
+# 在qtcreator中编译
+# 或在终端编译
+qmake pcie_sgdma.pro
+make clean && make
+#+end_src
+
+** 创建 ldconfig 配置（永久）
+
+#+begin_src bash
+cat /etc/ld.so.conf.d/ascend.conf
+<<'CONTENT'
+cat: /etc/ld.so.conf.d/ascend.conf: 没有那个文件或目录
+CONTENT
+
+echo "/usr/local/Ascend/ascend-toolkit/latest/aarch64-linux/lib64" | sudo tee /etc/ld.so.conf.d/ascend.conf
+sudo ldconfig
+#+end_src
+
+** 验证代码
+
+#+begin_src cpp
+#include "acl/acl.h"
+#include <iostream>
+
+int main() {
+    aclError ret = aclInit(nullptr);
+    if (ret != ACL_ERROR_NONE) {
+        std::cerr << "ACL init failed, error code: " << ret << std::endl;
+        return -1;
+    } else {
+        std::cout << "ACL init success" << std::endl;
+        aclFinalize();
+    }
+
+    return 0;
+}
+#+end_src
+

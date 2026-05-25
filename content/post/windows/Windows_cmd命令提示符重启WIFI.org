@@ -1,0 +1,69 @@
+---
+title: Windows cmd命令提示符重启WIFI
+tags: ["windows", "cmd"]
+date: 2026-01-14T15:29:01.47+0800
+---
+
+* Windows_cmd命令提示符重启WIFI
+
+** 操作WIFI的指令
+
+断开WIFI：
+#+begin_src bash
+netsh wlan disconnect
+#+end_src
+
+连接WIFI：
+#+begin_src bash
+netsh wlan connect name="yenao"
+#+end_src
+
+** 重启WIFI示例（在管理员权限cmd窗口运行）
+
+#+begin_src bash
+netsh wlan disconnect
+netsh wlan connect name="yenao"
+#+end_src
+
+** 实例cmd脚本
+脚本创建后要另存为ANSI字体，不然显示中文乱码
+
+脚本名：WIFI_Restart.bat
+
+脚本功能：当wifi断网后自动重启WIFI
+
+脚本内容：
+#+begin_src bat
+@echo off
+echo 开始网络连接监控...
+
+:Check
+echo 正在检查网络连接...
+ping -n 3 www.baidu.com > nul
+
+if %ERRORLEVEL% EQU 0 (
+    echo 网络连接正常，等待60秒后再次检查...
+    timeout /t 60 /nobreak > nul
+    goto Check
+) else (
+    echo 网络连接失败，错误代码: %ERRORLEVEL%
+    echo 正在重启WIFI...
+    goto RestartWIFI
+)
+
+:RestartWIFI
+echo 断开WIFI...
+netsh wlan disconnect
+
+echo 等待5秒...
+timeout /t 5 /nobreak > nul
+
+echo 连接WIFI...
+netsh wlan connect name="yenao"
+
+echo 等待10秒让网络重新连接...
+timeout /t 10 /nobreak > nul
+
+echo 重新检查网络连接...
+goto Check
+#+end_src

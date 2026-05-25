@@ -1,0 +1,35 @@
+---
+title: 记录定制Ubuntu22.04文件系统
+tags: ["linux", "ubuntu", "22.04", "arm64"]
+date: 2025-09-26T15:19:36.56+0800
+---
+
+* 定制Ubuntu 22.04文件系统
+
+#+begin_src bash
+wget https://old-releases.ubuntu.com/releases/22.04.1/ubuntu-22.04-live-server-arm64.iso
+mount ubuntu-22.04-live-server-arm64.iso /mnt
+cp /mnt/casper/ubuntu-server-minimal.squashfs ./
+umount /mnt
+unsquashfs ubuntu-server-minimal.squashfs
+echo 'nameserver 8.8.8.8' >> squashfs-root/etc/resolv.conf
+echo 'nameserver 8.8.4.4' >> squashfs-root/etc/resolv.conf
+chroot squashfs-root
+apt-get update
+apt-get install -y unzip vim  sysstat  libnuma1  dmidecode  rsync  net-tools  psmisc  parted  arping  ntpdate  iproute2  iputils-ping  mawk  cracklib-runtime  ethtool  ntp  fdisk  libssl-dev  libpam-cracklib  logrotate
+exit
+cd squashfs-root
+find . | cpio -o -H newc | gzip > ../Sample-root-filesystem-soc_ubuntu-22.04-aarch64.img
+#+end_src
+执行apt-get install命令后，若出现“perl：warning：xxx”相关报错、“debconf：xxx”相关报错、“Failed to retrieve available kernel versions.”以及“Failed to check for processor microcode upgrades.”报错，不影响Linux组件下载。
+
+或根据官方参考文档进行，但是添加如下内容到squashfs-root/etc/resolv.conf
+#+begin_src bash
+nameserver 127.0.0.53
+options edns0 trust-ad
+search .
+#+end_src
+
+** 参考链接
+
+[[https://www.hiascend.com/document/detail/zh/Atlas%20200I%20A2/24.1.0/RC/driverdevelopmentguide/atlasdg_11_0197.html][定制Ubuntu 22.04文件系统]]

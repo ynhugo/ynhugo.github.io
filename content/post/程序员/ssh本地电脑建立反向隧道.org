@@ -1,0 +1,25 @@
+---
+title: ssh本地电脑建立反向隧道
+tags: ["ssh", "反向"]
+date: 2026-03-13T01:28:55.15+0800
+---
+
+* ssh本地电脑建立反向隧道
+#+begin_src bash
+# 本地设置反向隧道
+# ssh -N -R 1080:127.0.0.1:1080 opencode
+# -N选项是只进行反向隧道而不在远程执行命令，因此该选项可以根据选择是否保留
+ssh -R 1080:127.0.0.1:1080 opencode
+# 验证
+curl --proxy 127.0.0.1:1080 google.com
+#+end_src
+
+** 使用示例
+#+begin_src bash
+# 以反向隧道方式进入云服务器
+ssh -R 1080:127.0.0.1:1080 opencode
+# 配置临时代理
+export https_proxy="127.0.0.1:1080"
+# 测试github的clone
+git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
+#+end_src

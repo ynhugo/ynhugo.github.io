@@ -1,0 +1,29 @@
+---
+title: "emacs调试配置"
+tags: ["emacs"]
+date: 2026-05-12T13:00:09.76+0800
+---
+
+* emacs调试配置
+
+#+begin_src bash
+./bemacs --batch -l .emacs
+<<'CONTENT'
+
+Error: file-missing ("Cannot open load file" "No such file or directory" "beancount")
+  require(beancount)
+  eval-buffer(#<buffer  *load*> nil "/data/data/com.termux/files/home/beancount/.emacs" nil t)
+  load-with-code-conversion("/data/data/com.termux/files/home/beancount/.emacs" "/data/data/com.termux/files/home/beancount/.emacs" nil t)
+  load("/data/data/com.termux/files/home/beancount/.emacs" nil t)
+  command-line-1(("-l" ".emacs"))
+  command-line()
+  normal-top-level()
+Cannot open load file: No such file or directory, beancount
+CONTENT
+#+end_src
+
+-- --batch，将配置报错信息打印在终端，不进入emacs界面
+
+** 参考链接
+
+[[https://chat.deepseek.com/share/0drty2h40ay2n54v74][emacs调试配置]]

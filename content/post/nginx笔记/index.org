@@ -1,0 +1,434 @@
+---
+title: nginx笔记
+date: 2024-11-29T19:33:34.00+0800
+tags: [nginx]
+---
+
+* windows下nginx教程
+
+** windows安装nginx
+
+下载对应windows版本的[[https://nginx.org/en/download.html][nginx]]最新版本
+
+下载链接：https://nginx.org/en/download.html
+
+[[resources/nginx笔记/nginx_note_1.png]]
+
+** 运行nginx
+
+下载下来的是一个压缩包，进入解压出来的nginx目录内，然后在当前目录运行cmd，运行方法是在当前的目录的地址栏将路径删掉，然后输入cmd并回车
+
+[[resources/nginx笔记/nginx_note_2.png]]
+
+** 修改nginx配置文件
+
+在修改nginx配置文件之前，先前nginx配置文件拷贝一份，这样如果nginx没有配置好还可以用原来的nginx配置文件恢复
+
+nginx的配置文件在nginx解压目录的conf目录，文件名是 nginx.conf
+
+[[resources/nginx笔记/nginx_note_3.png]]
+
+*** 打开配置文件查看内容
+
+#+begin_src txt
+#user  nobody;
+worker_processes  1;
+
+#error_log  logs/error.log;
+#error_log  logs/error.log  notice;
+#error_log  logs/error.log  info;
+
+#pid        logs/nginx.pid;
+
+
+events {
+    worker_connections  1024;
+}
+
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    #log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+    #                  '$status $body_bytes_sent "$http_referer" '
+    #                  '"$http_user_agent" "$http_x_forwarded_for"';
+
+    #access_log  logs/access.log  main;
+
+    sendfile        on;
+    #tcp_nopush     on;
+
+    #keepalive_timeout  0;
+    keepalive_timeout  65;
+
+    #gzip  on;
+
+    server {
+        listen       80;
+        server_name  localhost;
+
+        #charset koi8-r;
+
+        #access_log  logs/host.access.log  main;
+
+        location / {
+            root   html;
+            index  index.html index.htm;
+        }
+
+        #error_page  404              /404.html;
+
+        # redirect server error pages to the static page /50x.html
+        #
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   html;
+        }
+
+        # proxy the PHP scripts to Apache listening on 127.0.0.1:80
+        #
+        #location ~ \.php$ {
+        #    proxy_pass   http://127.0.0.1;
+        #}
+
+        # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+        #
+        #location ~ \.php$ {
+        #    root           html;
+        #    fastcgi_pass   127.0.0.1:9000;
+        #    fastcgi_index  index.php;
+        #    fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;
+        #    include        fastcgi_params;
+        #}
+
+        # deny access to .htaccess files, if Apache's document root
+        # concurs with nginx's one
+        #
+        #location ~ /\.ht {
+        #    deny  all;
+        #}
+    }
+
+
+    # another virtual host using mix of IP-, name-, and port-based configuration
+    #
+    #server {
+    #    listen       8000;
+    #    listen       somename:8080;
+    #    server_name  somename  alias  another.alias;
+
+    #    location / {
+    #        root   html;
+    #        index  index.html index.htm;
+    #    }
+    #}
+
+
+    # HTTPS server
+    #
+    #server {
+    #    listen       443 ssl;
+    #    server_name  localhost;
+
+    #    ssl_certificate      cert.pem;
+    #    ssl_certificate_key  cert.key;
+
+    #    ssl_session_cache    shared:SSL:1m;
+    #    ssl_session_timeout  5m;
+
+    #    ssl_ciphers  HIGH:!aNULL:!MD5;
+    #    ssl_prefer_server_ciphers  on;
+
+    #    location / {
+    #        root   html;
+    #        index  index.html index.htm;
+    #    }
+    #}
+
+}
+
+#+end_src
+
+*** 准备工作
+
+需要做的准备工作，在nginx的解压目录下新建一个myTest目录，再在myTest目录里建images子目录，然后存入图片，将图片命名为test2.png，也可以是其他命名，待会儿在链接里要访问的是test2.png
+
+[[resources/nginx笔记/nginx_note_4.png]]
+
+*** 修改nginx配置文件内容
+
+修改nginx配置文件内容如下
+
+监听 8911 端口，通过 localhost 访问，将 / 映射到 myTest/images 下
+
+此配置是nginx比较精简的配置，events相关的内容必须要有，否则重新加载nginx会报错，http块中的server块则是配置访问的资源了
+
+#+begin_src c
+  events {
+    worker_connections  1024;
+}
+http {
+    server {
+        listen       8911;
+        server_name  localhost;
+		autoindex on;
+        location / {
+            root   myTest/images;
+        }
+    }
+}
+#+end_src
+
+然后在cmd窗口重新加载nginx
+
+[[resources/nginx笔记/nginx_note_5.png]]
+
+打开浏览器访问 localhost:8911/test2.png
+
+[[resources/nginx笔记/nginx_note_6.png]]
+
+*** windows配置其他目录
+
+windows默认nginx运行程序所在目录为根目录，如果要配置其他路径的目录，需要配置绝对路径，并且对于windows的路径中的反斜杠要经过转义处理才能使得访问成功
+
+#+begin_src c :tangle
+  events {
+    worker_connections  1024;
+}
+http {
+    server {
+        listen       8911;
+        server_name  localhost;		
+        location / {
+			autoindex on;
+            root   d:\\share\\nginx\\yenao_test\\images;
+        }
+    }
+}
+
+#+end_src
+
+[[resources/nginx笔记/nginx_note_7.png]]
+
+
+*** 配置多个端口显示不同的内容
+
+#+begin_src c
+  events {
+    worker_connections  1024;
+}
+http {
+    server {
+        listen       8911;
+        server_name  localhost;		
+        location / {
+			autoindex on;
+            root   d:\\share\\nginx\\yenao_test\\images;
+        }
+    }
+	server {
+        listen       8910;
+        server_name  localhost;		
+        location / {
+			autoindex on;
+            root   myTest/images;
+        }
+    }
+}
+#+end_src
+
+[[resources/nginx笔记/nginx_note_8.png]]
+
+** 给nginx网页设置密码
+
+设置密码需要 htpasswd，该工具依赖 apache2，因此需要下载 apache2
+
+*** 下载apache2
+
+官网链接：https://httpd.apache.org/
+
+下载链接：https://www.apachelounge.com/download/
+
+下载解压 apache2 的压缩包，在 apache2 的 bin 目录可以看到 htpasswd 程序
+
+*** 给网页设置密码
+
+在cmd窗口执行行命令，会在nginx目录下生成一个password文件，这行命令最后是设定的用户名叫 yenao，输入这行命令后回车，终端会提示创建并确认密码
+
+#+begin_src bash
+  htpasswd -c d:/share/nginx/nginx-1.25.3/password yenao  
+#+end_src
+
+查看生成密码的过程和生成的用户名和密码
+
+[[resources/nginx笔记/nginx_note_9.png]]
+
+*** 修改或删除密码
+
+**** 删除用户和密码
+
+-D 删除指定的用户
+
+#+begin_src c
+  htpasswd -D /usr/local/nginx/password username
+  # -D 删除指定的用户
+#+end_src
+
+**** 修改用户和密码
+
+#+begin_src c
+  htpasswd -D /usr/local/nginx/password username
+  htpasswd -b /usr/local/nginx/password username passwd
+  # -D 删除指定的用户
+  # -b htpassswd命令行中一并输入用户名和密码而不是根据提示输入密码
+  # -p htpassswd命令不对密码进行进行加密，即明文密码
+#+end_src
+
+在nginx的配置文件加入关于密码的配置
+
+需要添加提示输入密码的信息和提供密码文件的路径
+
+#+begin_src c
+  events {
+    worker_connections  1024;
+}
+http {
+    server {
+        listen       8911;
+        server_name  localhost;
+
+		auth_basic "请输入用户名和密码";
+		auth_basic_user_file d:\\share\\nginx\\nginx-1.25.3\\password;
+		
+        location / {
+			autoindex on;
+            root   d:\\share\\nginx\\yenao_test\\images;
+        }
+    }
+	server {
+        listen       8910;
+        server_name  localhost;
+        location / {
+			autoindex on;
+            root   myTest/images;
+        }
+    }
+}
+#+end_src
+
+**** 效果
+[[resources/nginx笔记/nginx_note_10.png]]
+
+** 给整个网站添加密码
+
+给整个网站，跟添加网页密码的操作类似，只是需要将密码相关的配置放在http块下，而不是放在server块下
+
+#+begin_src c
+  events {
+	  worker_connections  1024;
+  }
+  http {
+
+	  auth_basic "请输入用户名和密码";
+	  auth_basic_user_file d:\\share\\nginx\\nginx-1.25.3\\password;
+		
+	  server {
+		  listen       8911;
+		  server_name  localhost;
+		
+		  location / {
+			  autoindex on;
+			  root   d:\\share\\nginx\\yenao_test\\images;
+		  }
+	  }
+	  server {
+		  listen       8910;
+		  server_name  localhost;
+		  location / {
+			  autoindex on;
+			  root   myTest/images;
+		  }
+	  }
+  }
+#+end_src
+
+** 最终配置
+
+#+begin_src c
+  events {
+	  worker_connections  1024;
+  }
+
+  http {
+	  charset utf-8;
+	  autoindex_exact_size off;
+	  autoindex_localtime on;
+	  auth_basic "请输入用户和密码";
+	  auth_basic_user_file d:\\share\\nginx\\nginx-1.25.3\\password;
+	  server {
+		  listen       8911;
+		  server_name  localhost;
+
+		  location / {
+			  autoindex on;
+			  root   d:\\share\\nginx\\yenao_test\\images;
+		  }
+	  }
+	  server {
+		  listen       8910;
+		  server_name  localhost;
+		  location / {
+			  autoindex on;
+			  root   myTest/images;
+		  }
+	  }
+  }
+#+end_src
+
+* linux下nginx教程
+
+** linux安装nginx
+
+#+begin_src bash
+  apt install nginx -y
+#+end_src
+
+** 运行nginx
+
+#+begin_src bash
+  nginx
+#+end_src
+
+** nginx修改配置后重新加载配置
+
+#+begin_src bash
+  nginx -s reload
+#+end_src
+
+** 配置方式跟配置方法参考上边windows的内容
+
+** 注意事项
+
+*** 配置完后重新加载失败，需要注意有没有端口占用，最简单粗暴的方式就是将所有的nginx的进程给kill掉
+
+#+begin_src bash
+  ps aux | grep "nginx" | awk '{print $2}' | xargs kill -9
+#+end_src
+
+* 参考链接
+
+[[https://segmentfault.com/a/1190000023086569][Nginx配置密码访问-访问网页需输入用户名密码]]
+
+* nginx访问页面 中文乱码 解决方案
+
+server层添加如下配置：
+
+#+begin_src bash 
+charset utf-8;
+#+end_src
+也有人说server层和访问路径都要配置一下，可以自己尝试看看效果。
+
+** 参考链接
+
+[[https://blog.csdn.net/weixin_42350212/article/details/107359891][nginx访问页面 中文乱码 解决方案]]

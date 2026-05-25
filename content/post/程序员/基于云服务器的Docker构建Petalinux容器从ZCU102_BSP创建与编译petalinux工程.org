@@ -1,0 +1,49 @@
+---
+title: 基于云服务器的Docker构建Petalinux容器从ZCU102_BSP创建与编译Petalinux工程
+tags: ["docker", "petalinux", "zcu102", "bsp"]
+date: 2026-03-22T04:25:10.51+0800
+---
+
+* 基于云服务器的Docker构建Petalinux容器从ZCU102_BSP创建与编译petalinux工程
+
+#+begin_src bash
+mkdir -P /root/Projects
+cd /root/Projects
+docker run -ti --rm -e DISPLAY=$DISPLAY --net="host" -v /tmp/.X11-unix:/tmp/.X11-unix -v $HOME/.Xauthority:/home/vivado/.Xauthority -v ./:/home/vivado/project  petalinux:2022.1 /bin/bash
+
+# ubuntu18.04下，如果需要安装工具，可以换源后再安装，这样速度会快一些
+sudo sed -i "s@http://.*archive.ubuntu.com@https://mirrors.aliyun.com/@g" /etc/apt/sources.list
+sudo sed -i "s@http://.*security.ubuntu.com@https://mirrors.aliyun.com/@g" /etc/apt/sources.list
+sudo apt-get update
+
+# 先准备好bsp文件，xilinx-zcu102-v2022.1-04191534.bsp，bsp文件可从xilinx官网petalinux版本页面下载，下载对应的版本的bsp，选择petalinux版本后可直接在页面搜索zcu102
+bsp_name="xilinx-zcu102-v2022.1-04191534.bsp"
+prj_index=1
+prj_name="prj_"
+
+sudo chown -R vivado:vivado ../$(basename $PWD)
+
+# 如果不指定工程名称，会以bsp文件命名工程
+# 从BSP中创建工程
+# petalinux-create -t project -s $bsp_name
+petalinux-create -t project -s $bsp_name -n $prj_name$prj_index
+# 不从BSP中创建工程
+# petalinux-create 命令用于创建新的PetaLinux 工程：
+# petalinux-create -t project --template zynqmp -n $prj_name$prj_index
+
+cd $prj_name$prj_index
+
+# 默认设置是启用 WebTalk 选项，向赛灵思反馈工具使用统计数据。可以运行 petalinux-util --webtalk 命令，关闭 Web Talk 功能
+petalinux-util --webtalk off
+
+petalinux-config --get-hw-description hardware/xilinx-zcu102-2022.1/outputs/project_1.xsa
+
+petalinux-build
+
+petalinux-package --boot --fsbl --fpga --u-boot --force
+#+end_src
+
+** 参考链接
+[[https://docs.amd.com/v/u/zh-CN/ug1144-petalinux-tools-reference-guide][PetaLinux 工具文档]]
+
+[[https://china.xilinx.com/support/download/index.html/content/xilinx/zh/downloadNav/embedded-design-tools/archive.html][嵌入式软件 | xilinx官网]]

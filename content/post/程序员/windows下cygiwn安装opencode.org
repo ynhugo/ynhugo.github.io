@@ -1,0 +1,55 @@
+---
+title: windows下cygiwn安装opencode
+tags: ["opencode", "windows", "cygwin"]
+date: 2026-01-29T02:40:14.16+0800
+---
+
+* windows下cygiwn安装opencode
+
+** 操作步骤
+在windows下的cygwin下，根据opencode官方文档进行opencode的安装：
+#+begin_src bash
+# 如果因网络问题安装失败，可配置代理，根据自己科学上网工具配置的端口进行设置
+export https_proxy="http://127.0.0.1:10808"
+
+# 安装opencode
+curl -fsSL https://opencode.ai/install | bash
+#+end_src
+
+** 运行opencode
+#+begin_src bash
+# 运行opencode
+opencode
+#+end_src
+
+** 使用opencode
+默认是免费的模型，如果要使用付费模型，需要付费，我是使用的招商银行的visa信用卡进行的付费，第一次使用付费模型时会提示opencode的付费链接，访问链接后根据提示充值就可以了，每个模型的收费情况不一样，谨慎使用
+
+#+begin_src bash
+# 执行后选择其他付费模型
+/models
+
+# 如果要选择其他模型提供者，例如Deepseek
+/connect
+# 然后选择Deepseek，接着粘入从Deepseeek获取到的API Key
+#+end_src
+
+** 临时使用
+#+begin_src bash
+opencode run "description"
+#+end_src
+
+** 查看命令列表
+#+begin_src bash
+Ctrl+p
+#+end_src
+
+** 快捷键
+全选：Ctrl+X，鼠标拖动选中
+
+换行：Ctrl+Shift+Enter
+
+** 参考链接
+[[https://www.opencodecn.com/docs/intro][OpenCode 中文站 | 入门教程]]
+
+[[https://learnopencode.com][OpenCode中文实战课]]

@@ -1,0 +1,21 @@
+---
+title: b站24小时不间断直播教程
+date: 2024-04-02T14:57:38.00+0800
+tags: ["程序员"]
+---
+
+* 简单教程
+
+b站将服务器地址与串流密钥拼接在一起形成推流服务器地址
+
+#+begin_src bash
+  ffmpeg -re -i input.mp4 -c:v libx264 -c:a aac -f flv "服务器地址/串流密钥"
+#+end_src
+
+上面的命令中，-re 参数表示以“实时”模式读取视频数据，这意味着 ffmpeg 会尽量按照视频的原始帧率来读取数据。-i input.mp4 参数指定了输入文件的名称，-c:v libx264 和 -c:a aac 参数分别指定了视频流和音频流使用的编码器。-f flv 参数指定了输出文件的格式，在这里我们使用 flv 格式。最后，"rtmp://your-server-url/app/stream"是推流服务器的地址，你需要将其替换为你自己的服务器地址。
+
+* 参考链接
+
+[[https://iweec.com/683.html][闲置vps挂直播赚钱]]
+
+[[https://blog.csdn.net/lggirls/article/details/123161161][用ffmpeg在Windows11下的命令行模式推流到B站直播间]]

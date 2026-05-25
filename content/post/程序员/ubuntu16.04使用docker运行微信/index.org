@@ -1,0 +1,207 @@
+---
+title: ubuntu16.04使用docker运行微信.org
+date: 2024-03-26T00:24:20.00+0800
+tags: [docker]
+---
+
+* 参考链接
+
+[[https://blog.csdn.net/iwanvan/article/details/119155094#t3][[已更新: 安装原生版微信] 超详细教程 - Ubuntu等Linux分支利用Docker安装并使用微信详细教程]]
+
+[[https://cloud.tencent.com/developer/article/1761394][使用 Docker 运行微信 PC 客户端]]
+
+* Ubuntu等Linux分支利用Docker安装并使用微信详细教程
+:PROPERTIES:
+:HEADER-ARGS: :tangle ./docker_install.sh
+:END:
+
+0. 引言
+
+通过Docker安装微信相比于wine和deepwine都稳定的多，毕竟整个环境是被测试过重新封装好的，所以这种又稳定又不占用太多内存的方式在我使用一段时间之后还是基本满意的。
+
+但是毕竟是第三方做的，肯定没有深度(deepin)或者windows那种官方维护的体验好，不过只要能解决基本通信使用的需求就谢天谢地了。
+
+1. 安装Docker（已经有docker的直接跳过这部分，去看第二步）
+
+#+begin_src bash
+  #先来更新一下包管理库
+  sudo apt update
+
+  #添加一下docker的包仓库的依赖文件
+  sudo apt install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+
+  #添加仓库钥匙
+  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+  #把在线仓库连接加到你的更新源里
+  sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+
+  #默认安装最新版docker
+  sudo apt update
+  sudo apt install docker-ce docker-ce-cli containerd.io -y
+#+end_src
+
+检查一下docker状态：
+
+#+begin_src bash
+  sudo systemctl status docker
+#+end_src
+
+输出大概会显示Active(running)这类的信息，其实还挺吃内存的：
+
+#+begin_src bash :tangle no
+  Loaded: loaded (/lib/systemd/system/docker.service; enabled; vendor preset: enabled)
+  Active: active (running) 
+  TriggeredBy: ● docker.socket
+  Docs: https://docs.docker.com
+  Main PID: 1461 (dockerd)
+  Tasks: 32
+  Memory: 1.0G
+  CGroup: /system.slice/docker.service
+  └─1461 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+#+end_src
+2. 下载并安装Docker微信
+
+DoChat(盒装微信)是一个 Linux 下的 Docker 化的微信 PC Windows 客户端，项目地址：https://github.com/huan/docker-wechat，当然既然是容器化的，理论上运行多个客户端也是可行的。
+
+建议使用 Linux Ubuntu 发行版（DoChat 是使用 Ubuntu Desktop 19.10开发的）运行，当然也需要安装 Docker（运行sudo apt update && apt install docker.io 以为 Ubuntu 用户安装 Docker）。
+
+要安装也很简单，通过运行以下单行命令，即可在 Linux 桌面上启动WeChat PC：
+
+#+begin_src bash
+  curl -sL https://raw.githubusercontent.com/huan/docker-wechat/master/dochat.sh | bash
+#+end_src
+
+只需将上述单行命令复制/粘贴到你的终端，然后按 Enter，微信 PC 版本应该会很快出现在你的 XWindows 桌面中了。
+
+
+另外要注意上面的 dochat.sh 启动脚本不能用 uid 0（root用户）运行，用 uid 0 运行它将导致一个死循环，很难从终端上杀死。如果你的用户无权运行 docker，请将该用户添加到 docker group 中
+
+#+begin_src bash
+  sudo usermod -aG docker $USER
+#+end_src
+
+可能需要重启才能进行更改。
+
+"另外需要注意有用户说使用该项目后，他的微信帐号会被封禁，虽然最终说明是看错了微信号，但是使用该项目是否会有封号风险需要自行评估，相关 issue 地址：https://github.com/huan/docker-wechat/issues/55"
+
+
+如果你想自己定制一些行为，比如在桌面上打开多个微信 PC 客户端；那么，你可以自行修改 dochat.sh 脚本，比如下面的 docker 命令可以将数据持久化到宿主机上：
+
+#+begin_src bash :tangle ./docker_wechat.sh
+  sudo docker run \
+	   --name DoChat \
+	   --rm \
+	   -i \
+	   \
+	   -v "$HOME/DoChat/WeChat Files/":'/home/$USER/WeChat Files/' \
+	   -v "$HOME/DoChat/Applcation Data":'/home/$USER/.wine/drive_c/users/user/Application Data/' \
+	   -v /tmp/.X11-unix:/tmp/.X11-unix \
+	   \
+	   -e DISPLAY \
+	   \
+	   -e XMODIFIERS=@im=fcitx \
+	   -e GTK_IM_MODULE=fcitx \
+	   -e QT_IM_MODULE=fcitx \
+	   -e GID="$(id -g)" \
+	   -e UID="$(id -u)" \
+	   \
+	   --ipc=host \
+	   --privileged \
+	   \
+	   zixia/wechat
+#+end_src
+
+* 直接通过脚本完成安装docker与运行微信
+
+脚本被压缩成zip压缩包，如果是在linux中要解压zip压缩包需要安装"unzip"
+
+#+begin_src bash :tangle no 
+  unzip docker_install.zip
+  unzip docker_wechat.zip
+#+end_src
+
+如果在安装过程中失败了，可以再次尝试，甚至多次尝试，直到安装成功，因为docker的服务器是国外的，所以偶尔会安装失败
+
+脚本在执行前要先赋予脚本执行权限
+
+#+begin_src bash :tangle no
+  sudo chmod +x docker_install.sh
+  sudo chmod +x docker_wechat.sh
+#+end_src
+
+** 安装docker与微信的脚本
+
+[[resources/docker_install.zip][点击下载脚本]]
+
+#+begin_src bash :tangle no 
+  #先来更新一下包管理库
+  sudo apt update
+
+  #添加一下docker的包仓库的依赖文件
+  sudo apt install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+
+  #添加仓库钥匙
+  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+  #把在线仓库连接加到你的更新源里
+  sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+
+  #默认安装最新版docker
+  sudo apt update
+  sudo apt install docker-ce docker-ce-cli containerd.io -y
+
+  sudo systemctl status docker
+
+  curl -sL https://raw.githubusercontent.com/huan/docker-wechat/master/dochat.sh | bash
+
+  sudo usermod -aG docker $USER
+#+end_src
+
+** 运行微信的脚本
+
+[[resources/docker_wechat.zip][点击下载脚本]]
+
+#+begin_src bash :tangle no 
+  sudo docker run \
+	   --name DoChat \
+	   --rm \
+	   -i \
+	   \
+	   -v "$HOME/DoChat/WeChat Files/":'/home/$USER/WeChat Files/' \
+	   -v "$HOME/DoChat/Applcation Data":'/home/$USER/.wine/drive_c/users/user/Application Data/' \
+	   -v /tmp/.X11-unix:/tmp/.X11-unix \
+	   \
+	   -e DISPLAY \
+	   \
+	   -e XMODIFIERS=@im=fcitx \
+	   -e GTK_IM_MODULE=fcitx \
+	   -e QT_IM_MODULE=fcitx \
+	   -e GID="$(id -g)" \
+	   -e UID="$(id -u)" \
+	   \
+	   --ipc=host \
+	   --privileged \
+	   \
+	   zixia/wechat
+#+end_src
+
+* windows环境写的脚本不能在Linux环境运行的原因与解决方法
+
+windows环境的换行符与lunix环境的换行符不一样，因此在windows环境导出的脚本的脚本直接拷贝到Linux环境的话是运行不了的，可以通过安装"dos2unix"工具解决
+
+*** 安装"dos2unix"
+
+dos2unix可以将文件中的换行符转换成linux环境中的换行符
+
+#+begin_src bash :tangle no
+  sudo apt-get install dos2unix -y 
+#+end_src
+
+*** 使用方法
+
+假设test.sh是windows环境写好的脚本，然后拷贝到了linux环境中，脚本不能运行，可能通过如下方法解决
+
+#+begin_src bash :tangle no
+  dos2unix test.sh
+#+end_src

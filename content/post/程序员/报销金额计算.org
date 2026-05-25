@@ -1,0 +1,70 @@
+---
+title: 报销金额计算
+tags: ["报销"]
+date: 2025-12-24T13:42:48.62+0800
+---
+
+* 报销金额计算
+
+** 差旅费
+
+#+begin_src bash
+echo "scale=2; 4919.65+368.00" | bc 
+#+end_src
+
+#+RESULTS:
+#+begin_results
+5287.65
+#+end_results
+
+** 交通费
+
+#+begin_src bash
+echo "scale=2; 49.09+398.50+474.00+88.50+517.00+454.50+10.62+10.63+10.95+11.30+12.56+13.20+14.38+21.63+22.30+24.85+28.68+63.51+65.01+103.21+128.73+250.86+5+5+25.00+155.10+23.00+24.00" | bc
+#+end_src
+
+#+RESULTS:
+#+begin_results
+3011.11
+#+end_results
+
+** 其他（服务器上架及线材购买）
+
+#+begin_src bash
+echo "scale=2; 1365.00+3430.00" | bc
+#+end_src
+
+#+RESULTS:
+#+begin_results
+4795.0
+#+end_results
+
+** 出差补助
+
+#+begin_src bash
+echo "600"
+#+end_src
+
+#+RESULTS:
+#+begin_results
+600
+#+end_results
+
+** 合计
+
+#+begin_src bash
+bc <<'EOF'
+scale=2
+    total = 1365.00+3430.00     # 服务器上架及线材购买
+    total += 4919.65+368.00     # 差旅费
+    total += 49.09+398.50+474.00+88.50+517.00+454.50+10.62+10.63+10.95+11.30+12.56+13.20+14.38+21.63+22.30+24.85+28.68+63.51+65.01+103.21+128.73+250.86+5+5+25.00+155.10+23.00+24.00 # 交通费
+    total += 600                # 出差补助
+    total
+EOF
+#+end_src
+
+#+RESULTS:
+#+begin_results
+13693.76
+#+end_results
+

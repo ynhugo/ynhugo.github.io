@@ -1,0 +1,100 @@
+---
+title: "termux使用ftp"
+tags: ["termux", "ftp"]
+date: 2026-05-15T00:53:50.69+0800
+---
+
+* termux使用ftp
+
+** 一键实现脚本
+
+#+begin_src bash
+# 先安装依赖
+pkg install -y busybox termux-services
+
+# 通过下面命令更新会话或重新打开termux
+source $PREFIX/etc/profile.d/start-services.sh
+
+cat - >> ~/.bashrc <<'EOF'
+alias ftpd="exec busybox tcpsvd -vE 0.0.0.0 8021 busybox ftpd -w"
+alias kftpd='ps aux | grep -v grep | grep -E "busybox|ftpd" | awk '\''{print $2}'\'' | xargs kill -9'
+EOF
+source ~/.bashrc
+
+# # 使用示例：
+# # 映射当前路径
+# ftpd
+# # 或，映射指定路径
+# ftpd ~/temp
+#+end_src
+
+** 正文
+
+*** 一键安装脚本
+
+#+begin_src bash
+# 先安装依赖
+pkg install -y busybox termux-services
+
+# 通过下面命令更新会话或重新打开termux
+source $PREFIX/etc/profile.d/start-services.sh
+#+end_src
+
+*** ftpd参考
+
+#+begin_src bash
+# 可以使用 MT管理器/ES文件浏览器 通过 8021 端口连接到ftp服务
+
+# 可以在 $PREFIX/var/service/ftpd/run 看到使用的命令，其中 -w 表示允许读写，不带则只读
+busybox ftpd
+<<'CONTENT'
+BusyBox v1.37.0 (2025-12-06 14:22:18 UTC) multi-call binary.
+
+Usage: ftpd [-wvS] [-t SEC] [-T SEC] [DIR]
+
+Anonymous FTP server. Client access occurs under ftpd's UID.
+Chroots to DIR, if this fails (run by non-root), cds to it.
+It is an inetd service, inetd.conf line:
+        21 stream tcp nowait root ftpd ftpd /files/to/serve
+Can be run from tcpsvd:
+        tcpsvd -vE 0.0.0.0 21 ftpd /files/to/serve
+
+        -w      Allow upload
+        -v      Log errors to stderr. -vv: verbose log
+        -S      Log errors to syslog. -SS: verbose log
+        -t,-T N Idle and absolute timeout
+CONTENT
+# 使用示例：
+exec busybox tcpsvd -vE 0.0.0.0 8021 busybox ftpd -w $HOME
+
+# 启动服务
+sv-enable ftpd
+sv up ftpd
+
+# 停止服务
+sv-disable ftpd
+sv down ftpd 
+#+end_src
+
+*** 使用示例
+
+#+begin_src bash
+cat - >> ~/.bashrc <<'EOF'
+alias ftpd="exec busybox tcpsvd -vE 0.0.0.0 8021 busybox ftpd -w"
+alias kftpd='ps aux | grep -v grep | grep -E "busybox|ftpd" | awk '\''{print $2}'\'' | xargs kill -9'
+EOF
+source ~/.bashrc
+
+# 映射当前路径
+ftpd
+# 或，映射指定路径
+ftpd ~/temp
+#+end_src
+
+** 参考链接
+
+[[https://gddhy.net/2021/termux-qi-yong-ftp/][termux启用ftp]]
+
+[[https://chatgpt.com/share/6a05edb6-d46c-83ea-8b13-2a4c9d215c12][Termux ftpd 停止问题]]
+
+[[https://chat.deepseek.com/share/76bbjk3y3kwqpquv2h][解决tcpsvd命令未找到问题]]

@@ -1,0 +1,25 @@
+---
+title: docker镜像的导出和导入
+tags: ["docker"]
+date: 2026-03-21T00:45:54.32+0800
+---
+
+* docker镜像的导出和导入
+#+begin_src bash
+# 云服务器导出完整镜像
+docker save -o <导出文件名.tar> <镜像名:标签>
+# 例
+docker save -o cross-compiler.tar cross-compiler:latest
+
+# 使用scp将镜像从云服务器拷贝到本地，如：
+scp opencode:/root/cross-compiler.tar.gz ./
+# opencode对应ssh连接目标
+
+# 本地导入
+docker load -i <导出文件名.tar>
+# 例
+docker load -i cross-compiler.tar.gz
+#+end_src
+
+** 参考链接
+[[https://blog.csdn.net/z13615480737/article/details/147834027][docker 镜像的导出和导入（导出完整镜像和导出容器快照）]]

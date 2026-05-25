@@ -1,0 +1,315 @@
+---
+title: cmake实战练习
+tags: ["cmake", "linux", "ubuntu"]
+date: 2026-04-15T15:25:57.50+0800
+---
+
+* cmake实战练习
+
+** 测试环境
+
+*** 系统环境
+
+#+begin_src bash
+inxi -b
+<<'CONTENT'
+System:
+  Host: VM-4-17-ubuntu Kernel: 6.8.0-71-generic arch: x86_64 bits: 64
+  Console: pty pts/0 Distro: Ubuntu 24.04 LTS (Noble Numbat)
+Machine:
+  Type: Kvm System: Tencent Cloud product: CVM v: 3.0 serial: 6b3a36b3-a76e-48d4-90af-df94e3af521d
+  Mobo: N/A model: N/A serial: N/A BIOS: SeaBIOS v: seabios-1.9.1-qemu-project.org
+    date: 04/01/2014
+CPU:
+  Info: dual core AMD EPYC 7K62 [MCP] speed (MHz): avg: 2595
+Graphics:
+  Device-1: Cirrus Logic GD 5446 driver: cirrus v: kernel
+  Display: server: No display server data found. Headless machine? tty: 209x58
+  API: OpenGL v: 4.5 vendor: mesa v: 25.2.8-0ubuntu0.24.04.1 note: console (EGL sourced)
+    renderer: llvmpipe (LLVM 20.1.2 256 bits)
+Network:
+  Device-1: Intel 82371AB/EB/MB PIIX4 ACPI type: network bridge driver: piix4_smbus
+  Device-2: Red Hat Virtio network driver: virtio-pci
+Drives:
+  Local Storage: total: 560 GiB used: 216.64 GiB (38.7%)
+Info:
+  Memory: total: 4 GiB available: 3.64 GiB used: 1.04 GiB (28.5%)
+  Processes: 131 Uptime: 11d 2h 53m Init: systemd target: graphical (5) Shell: Bash inxi: 3.3.34
+CONTENT
+#+end_src
+
+*** 准备软件环境
+
+#+begin_src bash
+# 更新软件源
+apt install update
+
+# 安装cmake和gtest库
+sudo apt install cmake libgtest-dev
+
+# 编译gtest库
+cd /usr/src/gtest
+mkdir build; cd build
+sudo cmake ..
+sudo make -j$((2*$(nproc)))
+sudo cp lib/*.a /usr/lib
+#+end_src
+
+**** cmake版本
+
+#+begin_src bash
+cmake --version
+<<'CONTENT'
+cmake version 3.28.3
+
+CMake suite maintained and supported by Kitware (kitware.com/cmake)
+CONTENT
+#+end_src
+
+**** 安装vim并简单配置vim的vimrc文件
+
+#+begin_src bash
+# 单独粘贴运行，更新用户的缓存信息，让密码有效期延长5分钟
+sudo -v
+
+# 批量粘贴运行
+sudo apt install -y vim
+if [ ! -f "/etc/vim/vimrc_bak" ]; then
+  sudo cp /etc/vim/vimrc /etc/vim/vimrc_bak
+fi
+sudo tee -a /etc/vim/vimrc << 'EOF'
+" vimrc for me
+set nu
+set ai
+set si
+set sw=4
+set ts=4
+set mouse=a
+noremap <C-a> <Esc>ggVG "全选
+syntax enable
+syntax on
+EOF
+#+end_src
+
+** 准备测试项目
+
+*** 目录结构
+
+#+begin_src bash
+tree MyProject
+<<'CONTENT'
+MyProject/
+├── build
+├── CMakeLists.txt
+├── src
+│   ├── CMakeLists.txt
+│   ├── include
+│   │   └── mylib.h
+│   ├── lib
+│   │   ├── module1.cpp
+│   │   └── module2.cpp
+│   └── main.cpp
+└── tests
+    ├── CMakeLists.txt
+    └── test_main.cpp
+
+6 directories, 8 files
+CONTENT
+#+end_src
+
+*** 创建目录结构
+
+创建了目录结构后，后边的代码可直接通过cat命令创建并追加对应的内容到对应的文件中
+
+#+begin_src bash
+mkdir -p ./MyProject/
+mkdir -p ./MyProject/src
+mkdir -p ./MyProject/src/lib
+mkdir -p ./MyProject/src/include
+mkdir -p ./MyProject/tests
+#+end_src
+
+*** 创建CMakeLists.txt
+
+#+begin_src bash
+find ./MyProject -name "CMakeLists.txt" -exec bash -c $'echo -e "\n# === {} ==="; echo "cat - > {} <<\'EOF\'"; cat "{}"; echo "EOF"' {} \;
+
+# === ./MyProject/src/CMakeLists.txt ===
+cat - > ./MyProject/src/CMakeLists.txt <<'EOF'
+# 创建库目标
+add_library(MyLib STATIC
+        lib/module1.cpp
+        lib/module2.cpp
+)
+
+# 指定库的头文件
+target_include_directories(MyLib PUBLIC ${CMAKE_SOURCE_DIR}/src/include)
+
+# 创建可执行文件目标
+add_executable(MyExecutable main.cpp)
+
+# 链接到可执行文件
+target_link_libraries(MyExecutable PRIVATE MyLib)
+EOF
+
+# === ./MyProject/CMakeLists.txt ===
+cat - > ./MyProject/CMakeLists.txt <<'EOF'
+# 指定最低 CMake 版本
+cmake_minimum_required(VERSION 3.28)
+# 定义项目名称和版本
+project(MyProject VERSION 1.0)
+
+# 设置 C++ 标准
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# 包含头文件路径
+include_directories($(PROJECT_SOURCE_DIR)/src/include)
+
+# 添加子目录
+add_subdirectory(src)
+add_subdirectory(tests)
+EOF
+
+# === ./MyProject/tests/CMakeLists.txt ===
+cat - > ./MyProject/tests/CMakeLists.txt <<'EOF'
+# 查找 GTest 包
+find_package(GTest REQUIRED)
+
+# 创建测试目标
+add_executable(TestMyLib test_main.cpp)
+
+# 链接库和 GTest 到测试目标（使用现代 CMake 方式）
+target_link_libraries(TestMyLib PRIVATE
+    MyLib
+    GTest::gtest      # Google Test 库
+    GTest::gtest_main # 提供 main 函数的库
+)
+
+# 可选：启用测试
+enable_testing()
+add_test(NAME TestMyLib COMMAND TestMyLib)
+EOF
+#+end_src
+
+*** 编写源代码
+
+#+begin_src bash
+find ./MyProject -type f ! -name "CMakeLists.txt" -name "*" -exec bash -c $'echo -e "\n# === {} ==="; echo "cat - > {} <<\'EOF\'"; cat "{}"; echo "EOF"' {} \;
+
+# === ./MyProject/src/main.cpp ===
+cat - > ./MyProject/src/main.cpp <<'EOF'
+#include <iostream>
+#include "mylib.h"
+
+int main() {
+        std::cout << "Hello, CMake!" << std::endl;
+        return 0;
+}
+EOF
+
+# === ./MyProject/src/lib/module2.cpp ===
+cat - > ./MyProject/src/lib/module2.cpp <<'EOF'
+#include "mylib.h"
+
+// Implementation of module2
+EOF
+
+# === ./MyProject/src/lib/module1.cpp ===
+cat - > ./MyProject/src/lib/module1.cpp <<'EOF'
+#include "mylib.h"
+
+// Implementation of module1
+EOF
+
+# === ./MyProject/src/include/mylib.h ===
+cat - > ./MyProject/src/include/mylib.h <<'EOF'
+#ifndef MYLIB_H
+#define MYLIB_H
+
+// Declarations of module functions
+
+#endif // MYLIB_H
+EOF
+
+# === ./MyProject/tests/test_main.cpp ===
+cat - > ./MyProject/tests/test_main.cpp <<'EOF'
+#include <gtest/gtest.h>
+// Test cases for MyLib
+TEST(MyLibTest, BasicTest) {
+        EXPECT_EQ(1, 1);
+}
+EOF
+#+end_src
+
+*** 编译和测试
+
+#+begin_src bash
+# 进入项目根目录
+cd MyProject
+# 创建构建目录
+mkdir build; cd build
+# 配置项目
+cmake ..
+# 编译项目
+make -j$((2*$(nproc)))
+#+end_src
+
+*** 运行
+
+**** 构建目录目录结构
+
+#+begin_src bash
+tree -L 2 ../build/
+<<'CONTENT'
+../build/
+├── CMakeCache.txt
+├── CMakeFiles
+│   ├── 3.28.3
+│   ├── cmake.check_cache
+│   ├── CMakeConfigureLog.yaml
+│   ├── CMakeDirectoryInformation.cmake
+│   ├── CMakeScratch
+│   ├── Makefile2
+│   ├── Makefile.cmake
+│   ├── pkgRedirects
+│   ├── progress.marks
+│   └── TargetDirectories.txt
+├── cmake_install.cmake
+├── Makefile
+├── src
+│   ├── CMakeFiles
+│   ├── cmake_install.cmake
+│   ├── libMyLib.a
+│   ├── Makefile
+│   └── MyExecutable
+└── tests
+    ├── CMakeFiles
+    ├── cmake_install.cmake
+    ├── CTestTestfile.cmake
+    ├── Makefile
+    └── TestMyLib
+
+9 directories, 18 files
+CONTENT
+#+end_src
+
+**** 运行可执行文件
+
+#+begin_src bash
+./src/MyExecutable
+#+end_src
+
+**** 运行测试
+
+#+begin_src bash
+./tests/TestMyLib
+#+end_src
+
+** 参考链接
+
+[[https://www.runoob.com/cmake/cmake-exercises.html][CMake 实战练习]]
+
+[[https://chat.deepseek.com/share/uun3mo3o9pl97k8i0t][CMake找不到GTest解决方案]]
+
+[[https://chat.deepseek.com/share/9a90w5morjnxtezygx][在find命令中先输出文件名再输出内容]]

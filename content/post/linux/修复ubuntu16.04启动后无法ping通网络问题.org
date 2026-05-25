@@ -1,0 +1,41 @@
+---
+title: 修复ubuntu16.04启动后无法ping通网络问题
+tags: ["ubuntu", "16.04", "dhclient"]
+date: 2026-03-10T14:45:00.42+0800
+---
+
+* 修复ubuntu16.04启动后无法ping通网络问题
+
+#+begin_src bash
+# 重新获取 IP 地址（DHCP）
+# 释放当前IP
+sudo dhclient -r
+# 重新获取IP
+sudo dhclient
+
+# 查看接口是否启动
+ifconfig ens33
+
+# 如果接口没有启动，可以用以下命令启动
+sudo ifconfig ens33 up
+
+# 测试能否连接到外网 IP（这是 Google 的 DNS 服务器，不依赖域名解析）
+ping -c 4 8.8.8.8
+
+# 查看当前的 DNS 配置
+cat /etc/resolv.conf
+
+# 使用 Google 的公共 DNS 服务器
+sudo su
+exit
+echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf
+echo "nameserver 8.8.4.4" | sudo tee -a /etc/resolv.conf
+
+# 再次尝试 ping 域名
+ping -c 3 bing.com
+
+
+#+end_src
+
+** 参考链接
+[[https://chat.deepseek.com/share/tlntmtry5fg5uoenrn][Ubuntu系统修复分析]]

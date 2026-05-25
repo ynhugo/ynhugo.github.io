@@ -1,0 +1,24 @@
+---
+title: 节点获取
+date: 2024-03-26T00:24:38.00+0800
+tags: ["VPS", "程序员"]
+---
+
+* 节点获取
+
+访问链接：https://pastebin.com/bKQsUFMR
+
+密码：0FXccDRchB
+
+访问之后应首先拷贝代码内容，保存到本地为.sh脚本并授予执行权限
+
+脚本功能：优选 IP 并获取 CF 的分流节点
+
+第一个建议执行方式：./ccf_v4.sh
+
+第二个建议执行方式：curl https://api.filedoge.com/download/b1cf49263090aee5acfc698e556ed8a5d8b13c3e3ed0fdea15cff09e62f5bb31e4aa372b93135cbf5ed5 | bash
+
+节点转换查看：for i in $(cat nodes.txt | base64 -d); do echo $i | awk -F "//" '{print $2}' | base64 -d | jq; sleep 1; done
+
+支持终端：Termux、Cygwin、Linux
+

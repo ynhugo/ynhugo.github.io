@@ -1,0 +1,177 @@
+---
+title: ubuntu_16.04安装vnc桌面及ssh连接终端配置分辨率和命令行远程桌面设置
+tags: ["ubuntu", "16.04", "vnc", "ssh"]
+date: 2026-04-02T03:44:46.16+0800
+---
+
+* 系统环境
+#+begin_src bash
+~$ cat /etc/os-release
+NAME="Ubuntu"
+VERSION="16.04.7 LTS (Xenial Xerus)"
+ID=ubuntu
+ID_LIKE=debian
+PRETTY_NAME="Ubuntu 16.04.7 LTS"
+VERSION_ID="16.04"
+HOME_URL="http://www.ubuntu.com/"
+SUPPORT_URL="http://help.ubuntu.com/"
+BUG_REPORT_URL="http://bugs.launchpad.net/ubuntu/"
+VERSION_CODENAME=xenial
+UBUNTU_CODENAME=xenial
+#+end_src
+
+* ubuntu_16.04安装vnc桌面及ssh连接终端配置分辨率
+
+#+begin_src bash
+sudo apt-get update
+sudo apt install -y xfce4 xfce4-goodies tightvncserver
+
+# 运行并设置密码（当前用户已设置密码则跳过），根据提示输入n
+vncserver
+
+
+mv ~/.vnc/xstartup ~/.vnc/xstartup.bak
+cat - > ~/.vnc/xstartup <<'EOF'
+#!/bin/bash
+xrdb $HOME/.Xresources
+xclipboard -noclipboard &
+startxfce4 &
+EOF
+sudo chmod +x ~/.vnc/xstartup
+
+# 测试VNC桌面
+# 在主机打开RealVNC Viewer访问serverip:5901，密码为启动vncserver时设置的密码
+# 或
+# 端口转发后在主机打开RealVNC Viewer访问127.0.0.1:5901，密码为启动vncserver时设置的密码
+ssh -L 5901:127.0.0.1:5901 -N -f -l username server_ip_address
+
+# 如果希望本地局域网访问5900端口，也可以是5901，不过5900是另外设置了ubuntu的桌面共享
+ssh -L 0.0.0.0:5900:127.0.0.1:5900 ubt@192.168.0.50
+# 或
+ssh -N -L 0.0.0.0:5900:127.0.0.1:5900 -f -l ubt 192.168.0.50
+
+# 映射ssh端口
+ssh -N -L 0.0.0.0:8922:127.0.0.1:22 -f -l ubt 192.168.0.50
+
+# # 如果显示模糊要设置分辨率
+# sudo apt install -y x11vnc
+# export DISPLAY=:0
+# # 使用xrandr列出所有可用的显示设备
+# xrandr
+
+vncserver -kill :1
+vncserver :1 -geometry 1920x1080 -depth 24
+
+# # vnc打开浏览器
+# XAUTHORITY=$HOME/.Xauthority
+# export XAUTHORITY
+
+# VNC中Tab键不能实现命令自动补全解决方法
+cp ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml_bak
+sed -i 's|type="string" value="switch_window_key"|type="empty"|g' ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml
+
+vncserver -kill :1
+vncserver :1 -geometry 1920x1080 -depth 24
+#+end_src
+
+** 参考链接
+
+[[https://blog.csdn.net/rubys007/article/details/140245546][在Ubuntu 16.04上安装和配置VNC的方法]]
+
+[[https://www.oryoy.com/news/qing-song-ti-sheng-ubuntu-vnc-fen-bian-lv-gao-bie-mo-hu-jin-xiang-qing-xi-yuan-cheng-zhuo-mian-ti-ya.html][轻松提升Ubuntu VNC分辨率：告别模糊，尽享清晰远程桌面体验]]
+
+[[https://ynhugo.github.io/p/ubuntu-22.04-server安装nvidia驱动/#headline-26][搭建VNC]]
+
+[[https://www.linuxcool.com/ssh][ssh命令 - 安全的远程连接服务 原文链接：https://www.linuxcool.com/ssh]]
+
+[[https://blog.csdn.net/zzq060143/article/details/78240687][VNC中Tab键不能实现命令自动补全解决方法]]
+
+[[https://blog.csdn.net/weixin_43455581/article/details/123648619][VNC显示不清晰的解决方案]]
+
+[[https://blog.csdn.net/2301_80317247/article/details/152746128][解决 VNC 远程连接无法复制粘贴的完整指南]]
+
+[[https://blog.csdn.net/weixin_54610021/article/details/114728594][解决vncviewer无法全屏]]
+
+[[https://blog.csdn.net/lxllinux/article/details/81940396][Ubuntu 16.04 远程桌面]]
+
+[[https://chatgpt.com/share/69cbc1c2-4128-8326-88a7-3de4a6fe1c70][Ubuntu 16.04 双栏问题 | ChatGPT]]
+
+[[https://blog.csdn.net/wesleyflagon/article/details/116355441][Ubuntu/Debian怎么在命令行开启远程桌面共享]]
+
+* Ubuntu/Debian怎么在命令行开启远程桌面共享
+
+** 操作步骤
+
+#+begin_src bash
+# Ubuntu 16.04 使用 vino 作为 VNC 服务器
+# sudo apt-get update
+sudo apt-get install -y vino
+
+# 如果需要 dconf 命令行工具
+sudo apt-get install -y dconf-cli dconf-editor
+
+export DISPLAY=:0
+# 关闭加密要求
+gsettings set org.gnome.Vino require-encryption false
+
+# 启用远程桌面
+gsettings set org.gnome.Vino enabled true
+
+gsettings set org.gnome.Vino prompt-enabled false
+
+# 可选：设置 VNC 密码（将 "your_password" 替换为实际密码）
+gsettings set org.gnome.Vino vnc-password $(echo -n "123456" | base64)
+
+# 可选：允许本地连接
+gsettings set org.gnome.Vino disable-background false
+gsettings set org.gnome.Vino disable-xdamage false
+
+# 查看当前设置
+gsettings get org.gnome.Vino require-encryption
+gsettings get org.gnome.Vino enabled
+
+# 启动 vino-server
+export DISPLAY=:0
+/usr/lib/vino/vino-server &
+#+end_src
+
+** 如果显示双栏，关闭虚拟显示器，例如：
+
+#+begin_src bash
+# 如果显示双栏，关闭虚拟显示器，例如：
+export DISPLAY=:0
+xrandr
+<<'CONTENT'
+Screen 0: minimum 8 x 8, current 2944 x 1080, maximum 32767 x 32767
+eDP1 connected primary 1024x768+0+0 (normal left inverted right x axis y axis) 0mm x 0mm
+   1024x768      60.00*+
+   800x600       60.32    56.25
+   640x480       59.94
+   512x384       60.00
+DP1 disconnected (normal left inverted right x axis y axis)
+DP2 connected 1920x1080+1024+0 (normal left inverted right x axis y axis) 509mm x 286mm
+   1920x1080     60.00*+
+   1680x1050     59.95
+   1600x900      60.00
+   1280x1024     60.02
+   1440x900      59.89
+   1024x768      60.00
+   800x600       60.32
+   640x480       60.00
+   720x400       70.08
+DP3 disconnected (normal left inverted right x axis y axis)
+HDMI1 disconnected (normal left inverted right x axis y axis)
+HDMI2 disconnected (normal left inverted right x axis y axis)
+HDMI3 disconnected (normal left inverted right x axis y axis)
+VIRTUAL1 disconnected (normal left inverted right x axis y axis)
+CONTENT
+# eDP1 是笔记本的内置屏幕，DP2 是一个外接显示器。
+# 连接状态：eDP1 显示 primary（主屏幕），DP2 没有 primary 标记
+
+# 虽然有内置显示器，但是实际是一个机箱，没有物理显示器对应内置主屏幕，因此可以关掉，对关闭eDP1，而DP2对应外接显示器则不进行操作
+ubt@ubt:~$ xrandr --output eDP1 --off
+#+end_src
+
+** 参考链接
+
+[[https://chat.deepseek.com/share/chaeyh6xcj47k18dm5][命令行配置远程桌面]]

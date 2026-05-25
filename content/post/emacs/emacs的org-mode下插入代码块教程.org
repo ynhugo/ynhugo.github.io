@@ -1,0 +1,17 @@
+---
+title: "emacs的org-mode下插入代码块教程"
+date: 2024-03-26T00:55:06+08:00
+tags: ["emacs"]
+---
+
+
+* 如果想要运行的话，在文件开头设置好运行语言，然后再加载一下该文件
+
+#+begin_src bash
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((C . t)
+	))
+#+end_src
+
+加载命令是： load-file 以我正在的编辑的 ts.org 文件为例 添加运行语言后，并设置 tangle，加载文件，执行 M-x，输入 load-file 后回车，输入当前文件名 ts.org 并回车加载成功。

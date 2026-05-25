@@ -1,0 +1,43 @@
+---
+title: emacs调试配置目录的技巧
+tags: ["emacs"]
+date: 2026-04-29T00:01:39.51+0800
+---
+
+* emacs调试配置目录的技巧
+
+** 方法1（推荐）
+
+#+begin_src bash
+temp="$HOME/temp"
+mkdir -p $temp
+git clone https://gitee.com/emacsd/emacs.d $temp/.emacs.d
+
+# 指在emacs启动时有效，不会影响到真实家目录
+HOME=$temp emacs
+#+end_src
+
+** 方法2
+
+#+begin_src bash
+temp="$HOME/temp"
+mkdir -p $temp; cd $temp
+git clone https://gitee.com/emacsd/emacs.d $temp/.emacs.d
+export HOME=$temp
+
+# 运行emacs加载克隆下来的配置
+emacs
+
+# 如果要恢复HOME变量的默认值
+# 查看HOME变量的默认值可以运行export -p发现OLDPWD变量对应的默认HOME变量值
+export -p
+HOME=$OLDPWD
+#+end_src
+
+** 参考链接
+
+[[https://www.linuxcool.com/export][export命令 – 将变量提升成环境变量]]
+
+[[https://blog.csdn.net/qq_39715000/article/details/125022929][Linux export 命令及如何删除export设置的环境变量]]
+
+[[https://gitee.com/emacsd/emacs.d][emacsd/emacs.d]]

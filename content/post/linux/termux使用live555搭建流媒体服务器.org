@@ -1,0 +1,93 @@
+---
+title: termux使用live555搭建流媒体服务器
+tags: ["linux", "termux", "live555", "rtsp"]
+date: 2024-10-28T14:07:19.21+0800
+---
+
+*** 安装live555
+
+termux安装live555，目前已知最新版本的live555源码编译会报错，因此下载旧版本进行编译安装
+
+**** 操作步骤
+
+live555归档链接：https://download.videolan.org/pub/contrib/live555/
+
+#+begin_src bash
+  wget https://download.videolan.org/pub/contrib/live555/live.2020.12.23.tar.gz
+  tar zxvf live.2020.12.23.tar.gz  
+  export live=$(readlink -f live)
+  cd $live
+  sed -i '97,98{s/^/\/\//}' liveMedia/ByteStreamFileSource.cpp
+  ./genMakefiles linux-64bit
+  make
+  cd $live/mediaServer
+  mkdir -p video
+  wget https://images.videolan.org/images/vlc-player.mp4
+  mv vlc-player.mp4 video
+  ffmpeg -i video/vlc-player.mp4 -vcodec h264 -s 352*278 -y video/vlc-player.264
+  ./live555MediaServer video/vlc-player.mp4
+#+end_src
+
+**** 运行打印信息
+
+#+begin_src 
+LIVE555 Media Server
+        version 1.04 (LIVE555 Streaming Media library version 2020.12.23).
+Play streams from this server using the URL
+        rtsp://192.168.3.33/<filename>
+where <filename> is a file present in the current directory.
+Each file's type is inferred from its name suffix:
+        ".264" => a H.264 Video Elementary Stream file
+        ".265" => a H.265 Video Elementary Stream file
+        ".aac" => an AAC Audio (ADTS format) file
+        ".ac3" => an AC-3 Audio file
+        ".amr" => an AMR Audio file
+        ".dv" => a DV Video file
+        ".m4e" => a MPEG-4 Video Elementary Stream file
+        ".mkv" => a Matroska audio+video+(optional)subtitles file
+        ".mp3" => a MPEG-1 or 2 Audio file
+        ".mpg" => a MPEG-1 or 2 Program Stream (audio+video) file
+        ".ogg" or ".ogv" or ".opus" => an Ogg audio and/or video file
+        ".ts" => a MPEG Transport Stream file
+                (a ".tsx" index file - if present - provides server 'trick play' support)
+        ".vob" => a VOB (MPEG-2 video with AC-3 audio) file
+        ".wav" => a WAV Audio file
+        ".webm" => a WebM audio(Vorbis)+video(VP8) file
+See http://www.live555.com/mediaServer/ for additional documentation.
+(We use port 80 for optional RTSP-over-HTTP tunneling, or for HTTP live streaming (for indexed Transport Stream files only).)
+#+end_src
+
+**** 测试
+
+#+begin_src bash
+  mkdir -p $live/mediaServer/video
+  cd $live/mediaServer/video
+  wget https://images.videolan.org/images/vlc-player.mp4
+  ffmpeg -i vlc-player.mp4 -vcodec h264 -s 352*278 -y vlc-player.264
+  cd $live/mediaServer
+  ./live555MediaServer video/vlc-player.mp4
+#+end_src
+客户端使用VLC，选择打开网络串流，在URL栏中填写：
+#+begin_src
+rtsp://192.168.3.33/video/vlc-player.264
+或者
+rtsp://192.168.3.33:8554/video/vlc-player.264
+#+end_src
+也可以使用ffplay命令播放，播放方式
+#+begin_src
+ffplay rtsp://192.168.3.33/video/vlc-player.264
+或者
+ffplay rtsp://192.168.3.33:8554/video/vlc-player.264
+如果要设置分辨率，比如1920x1080，使用-x和-y选项即可，例如：
+ffplay -x 1920 -y 1080 rtsp://192.168.3.102:8554/video/vlc-player.264
+#+end_src
+
+**** 参考链接
+
+[[https://download.videolan.org/pub/contrib/live555/][live555-archive]]
+
+[[https://blog.csdn.net/qq_32523587/article/details/103516224][Ubuntu下使用Live555搭建流媒体服务器]]
+
+[[https://wenku.csdn.net/answer/c523e5c39091413db9cf923780bd87ba][Android 编译live555]]
+
+[[https://gitee.com/ascend/mindxsdk-referenceapps/blob/master/docs/参考资料/Live555离线视频转RTSP说明文档.md#1-视频循环推流][1. 视频循环推流]]

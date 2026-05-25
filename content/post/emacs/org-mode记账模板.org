@@ -1,0 +1,66 @@
+---
+title: org-mode记账模板
+date: 2024-11-11T03:52:07.92+0800
+---
+
+* 操作步骤
+
+在org文件开头添加以下内容：
+#+COLUMNS: %25ITEM %Date %Money{+}
+
+然后输入自定义的 insert-timestamp-entry 插入记账模板
+
+然后在第一行按\C-c\C-x\C-c统计记账，按\C-c\C-c取消统计
+
+* org-mode记账模板-配置代码-ChatGPT
+#+begin_src
+(defun insert-timestamp-entry ()
+  "Insert a new entry with Money empty and Date set to current date with time (including seconds)."
+  (interactive)
+  (let ((current-date (format-time-string "%Y/%m/%d %H:%M:%S")))  ;; 获取当前日期和时间（包括秒）
+    (insert (format "** \n   :PROPERTIES:\n   :Money:    \n   :Date:     %s\n   :END:\n"
+                    current-date))))
+#+end_src
+
+** 代码解析
+
+让我们逐行解析这段 Emacs 配置文件中的 Emacs Lisp 代码：
+
+*** 1. defun insert-timestamp-entry ()
+这是定义一个新的 Emacs Lisp 函数。defun 用来定义一个函数，insert-timestamp-entry 是函数的名称。这个函数没有参数，因此括号中是空的。
+
+*** 2. "Insert a new entry with Money empty and Date set to current date with time (including seconds)."
+这是函数的文档字符串（docstring），用来简短描述这个函数的功能。Emacs 会在 M-x 命令提示时显示这个字符串，帮助用户了解该函数的作用。这里的描述说明了这个函数的功能：插入一个条目，包含一个空的 Money 字段和一个当前日期和时间（包括秒）的 Date 字段。
+
+*** 3. (interactive)
+(interactive) 是一个特殊的表单，它使得这个函数可以在 Emacs 中交互式调用。换句话说，通过 M-x 或绑定到键盘快捷键，用户可以直接执行这个函数。
+
+*** 4. (let ((current-date (format-time-string "%Y/%m/%d %H:%M:%S")))
+这一行创建了一个局部变量 current-date，并通过 let 绑定其值。current-date 变量存储了当前的日期和时间，格式为：%Y/%m/%d %H:%M:%S。具体解释：
+- %Y：四位年份（例如：2024）
+- %m：两位月份（例如：11）
+- %d：两位日期（例如：10）
+- %H：小时，24小时制（例如：14）
+- %M：分钟（例如：30）
+- %S：秒（例如：45）
+
+使用 format-time-string 函数，Emacs 将返回当前的时间，格式是 YYYY/MM/DD HH:MM:SS，例如 2024/11/10 14:32:45。
+
+*** 5. insert (format " \n   :PROPERTIES:\n   :Money:    \n   :Date:     %s\n   :END:\n" current-date)
+这行代码会在当前缓冲区插入一个字符串。具体来说，insert 函数用来在光标位置插入文本。format 函数用于格式化文本，其中：
+- " \n   :PROPERTIES:\n   :Money:    \n   :Date:     %s\n   :END:\n" 是插入的模板字符串，格式为一个 Org Mode 栏目（如 ），包含 :PROPERTIES: 块，空的 :Money: 字段和 :Date: 字段（%s 将被替换为当前日期时间）。
+- %s 是 format 函数的占位符，表示将 current-date 的值插入到此位置。current-date 的值是当前的日期和时间。
+
+这个条目插入到 Org Mode 文件中，表示一个带有时间戳的条目。
+
+*** 总结：
+- 这个函数的作用是插入一个带有当前日期和时间的条目。
+- 日期和时间格式为 YYYY/MM/DD HH:MM:SS，包括秒。
+- Money 字段为空，Date 字段会填充为当前的时间戳。
+
+此函数适用于需要记录时间、费用等信息的场景，特别是在 Org Mode 中。
+
+** 参考链接
+
+[[https://www.zhihu.com/question/21888326][如何用 Org-mode 理财？]]
+

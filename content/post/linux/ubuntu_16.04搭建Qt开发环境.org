@@ -1,0 +1,55 @@
+---
+title: ubuntu_16.04搭建Qt开发环境
+tags: ["ubuntu_16.04", "ubuntu", "linux"]
+date: 2025-07-10T10:49:13.76+0800
+---
+
+* ubuntu_16.04搭建Qt开发环境
+
+** 安装依赖
+
+#+begin_src bash
+sudo apt install -y gcc g++ make libgl1-mesa-dev
+#+end_src
+
+*** Ubuntu 22.04可能需要安装的依赖：
+#+begin_src bash
+sudo apt install -y gcc-12
+#+end_src
+
+*** 安装向日葵可能需要的依赖
+
+#+begin_src bash
+sudo apt --fix-broken install -y
+#+end_src
+
+*** 向日葵远程控制Ubuntu 22可能会遇到黑屏问题
+
+安装并选择lightdm，然后重启操作系统
+#+begin_src bash
+sudo apt install -y lightdm
+#+end_src
+
+如果在上面选择默认的视频管理插件手滑，点错了。我们可以输入如下命令，重新配置默认视频管理插件。
+
+#+begin_src bash
+sudo dpkg-reconfigure lightdm
+#+end_src
+
+**** 参考链接
+
+[[https://blog.csdn.net/liufangaliya/article/details/130860780][向日葵远程连接Ubuntu22主机黑屏解决方案]]
+
+** 准备安装包
+
+通过网盘分享的文件：qt-opensource-linux-x64-5.14.2.run
+链接: https://pan.baidu.com/s/12CXxXyqWIjq2-Mj_dO8wfQ?pwd=4qg5 提取码: 4qg5 
+
+** 安装Qt
+
+前提：已在官网注册账户
+
+运行后，默认安装在家目录，如果需要的话也可以指定安装目录，我是默认安装在家目录，组件全选
+#+begin_src bash
+./qt-opensource-linux-x64-5.14.2.run
+#+end_src

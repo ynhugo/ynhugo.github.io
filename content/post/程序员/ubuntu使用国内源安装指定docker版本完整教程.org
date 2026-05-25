@@ -1,0 +1,200 @@
+---
+title: "Ubuntu使用国内源安装指定docker版本完整教程"
+tags: ["docker"]
+date: 2023-09-10T16:19:32+08:00
+draft: false
+---
+
+* 1.卸载原有版本*
+
+#+name: code
+#+begin_src has :index 0 :style user-select: auto;
+sudo apt-get remove docker docker-engine docker-ce docker.io
+#+end_src
+
+如果需要删除所有镜像，容器和卷（第一次安装请忽略）：
+
+#+name: code
+#+begin_src has :index 1 :style user-select: auto;
+sudo rm -rf /var/lib/docker
+#+end_src
+
+备注：apt-get remove会保留软件的配置文件如果想删除请执行以下操作
+
+查看相关软件包是否有残余：
+
+#+name: code
+#+begin_src has :index 2 :style user-select: auto;
+dpkg -l | grep docker
+#+end_src
+
+使用purage清除配置文件：
+
+#+name: code
+#+begin_src has :index 3 :style user-select: auto;
+sudo apt-get purge docker-ce
+#+end_src
+
+* 2.更新索引包*
+
+#+name: code
+#+begin_src has :index 4 :style user-select: auto;
+sudo apt-get update
+#+end_src
+
+* 3.安装添加使用 HTTPS 传输的软件包*
+
+#+name: code
+#+begin_src has :index 5 :style user-select: auto;
+sudo apt-get -y install apt-transport-https ca-certificates curl software-properties-common
+#+end_src
+
+* 4.添加软件源的GPG密钥（本人选择的中科大）*
+
+中科大：
+
+#+name: code
+#+begin_src has :index 6 :style user-select: auto;
+curl -fsSL https://mirrors.ustc.edu.cn/docker-ce/linux/ubuntu/gpg | sudo apt-key add -
+#+end_src
+
+阿里云：
+
+#+name: code
+#+begin_src has :index 7 :style user-select: auto;
+curl -fsSL http://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo apt-key add -
+#+end_src
+
+官方源：
+
+#+name: code
+#+begin_src has :index 8 :style user-select: auto;
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+#+end_src
+
+* 5.向 source.list 中添加Docker软件源（本人选择的中科大）*
+
+中科大源：
+
+#+name: code
+#+begin_src has :index 9 :style user-select: auto;
+sudo add-apt-repository "deb [arch=amd64] https://mirrors.ustc.edu.cn/docker-ce/linux/ubuntu $(lsb_release -cs) stable"
+#+end_src
+
+阿里源：
+
+#+name: code
+#+begin_src has :index 10 :style user-select: auto;
+sudo add-apt-repository "deb [arch=amd64] http://mirrors.aliyun.com/docker-ce/linux/ubuntu $(lsb_release -cs) stable"
+#+end_src
+
+官方源：
+
+#+name: code
+#+begin_src has :index 11 :style user-select: auto;
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+#+end_src
+
+* 6.再次更新索引包*
+
+#+name: code
+#+begin_src has :index 12 :style user-select: auto;
+sudo apt-get update
+#+end_src
+
+若想直接安装最新版本执行以下命令即可
+
+#+name: code
+#+begin_src has :index 13 :style user-select: auto;
+sudo apt-get install docker-ce
+#+end_src
+
+* 7.查看docker版本*
+
+#+name: code
+#+begin_src has :index 14 :style user-select: auto;
+apt-cache madison docker-ce
+#+end_src
+
+* 8.安装指定版本*
+
+格式为：
+
+#+name: code
+#+begin_src has :index 15 :style user-select: auto;
+sudo apt-get install docker-ce=<VERSION>
+#+end_src
+
+例如：
+
+#+name: code
+#+begin_src has :index 16 :style user-select: auto;
+sudo apt-get install docker-ce=18.06.3~ce~3-0~ubuntu
+#+end_src
+
+* 9.启动后台服务*
+
+#+name: code
+#+begin_src has :index 17 :style user-select: auto;
+sudo service docker start
+#+end_src
+
+* 10.查看Docker版本信息*
+
+#+name: code
+#+begin_src has :index 18 :style user-select: auto;
+docker version
+#+end_src
+
+* 11.镜像加速*
+
+新版的 Docker 使用 /etc/docker/daemon.json 来配置 Daemon。
+
+请在该配置文件中加入（没有该文件的话，请先建一个）Docker中国官方加速：
+
+#+name: code
+#+begin_src has :index 19 :style user-select: auto;
+{    "registry-mirrors": ["https://registry.docker-cn.com"]}
+#+end_src
+
+重启Docker使之生效：
+
+#+name: code
+#+begin_src has :index 20 :style user-select: auto;
+sudo service docker restart
+#+end_src
+
+如果想添加其它加速源，请移步该博客查看：[[https://blog.csdn.net/M82_A1/article/details/91957886]]
+
+* 12.添加当前用户到docker组（可选）*
+
+创建docker组：
+
+#+name: code
+#+begin_src has :index 21 :style user-select: auto;
+sudo groupadd docker
+#+end_src
+
+当前用户加入docker组：
+
+#+name: code
+#+begin_src has :index 22 :style user-select: auto;
+sudo usermod -aG docker $USER
+#+end_src
+
+检查创建是否有效：
+
+#+name: code
+#+begin_src has :index 23 :style user-select: auto;
+cat /etc/group
+#+end_src
+
+重启docker：
+
+#+name: code
+#+begin_src has :index 24 :style user-select: auto;
+sudo systemctl restart docker
+#+end_src
+
+* 参考链接
+[[https://blog.csdn.net/m82_a1/article/details/98870376][Ubuntu使用国内源安装指定Docker版本（完整教程）]]

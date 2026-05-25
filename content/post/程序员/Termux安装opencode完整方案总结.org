@@ -1,0 +1,64 @@
+---
+title: Termux安装opencode完整方案总结
+tags: ["termux", "opencode", "proot-distro"]
+date: 2026-03-15T19:15:41.22+0800
+---
+
+* Termux安装opencode完整方案总结
+** 问题背景
+opencode 官方二进制是为标准 Linux (glibc) 编译的，无法在 Termux (Android/Bionic libc) 上直接运行。
+---
+
+** 解决方案：使用 proot-distro 安装 Ubuntu
+*** 步骤 1：安装基础工具
+#+begin_src bash
+pkg update
+pkg install proot-distro
+#+end_src
+
+*** 步骤 2：安装 Ubuntu
+#+begin_src bash
+proot-distro install ubuntu
+#+end_src
+
+*** 步骤 3：登录 Ubuntu 并安装 opencode
+#+begin_src bash
+proot-distro login ubuntu
+curl -fsSL https://opencode.ai/install | sh
+source ~/.bashrc
+#+end_src
+---
+
+** 关键问题：访问 Termux 主目录
+*** 问题：proot 环境默认隔离，无法直接访问 Termux 文件
+
+*** 解决方案：使用 --bind 挂载
+**** 方式 1：直接挂载登录
+#+begin_src bash
+proot-distro login ubuntu --bind /data/data/com.termux/files/home:/termux
+#+end_src
+
+**** 方式 2：设置别名（推荐，一劳永逸）
+#+begin_src bash
+echo 'alias ubl="proot-distro login ubuntu --bind /data/data/com.termux/files/home:/termux"' >> ~/.bashrc
+source ~/.bashrc
+#+end_src
+
+**** 之后只需运行
+#+begin_src bash
+ubl
+#+end_src
+
+登录后，/termux 目录即为 Termux 主目录。
+---
+
+** 方案对比
+|---------------------+-------------------|
+| 方案                | 优点              |
+|---------------------+-------------------|
+| proot-distro Ubuntu | 完全兼容 opencode |
+|---------------------+-------------------|
+| 原生 Termux         | 无额外空间        |
+|---------------------+-------------------|
+
+目前 proot-distro 是唯一可行方案。

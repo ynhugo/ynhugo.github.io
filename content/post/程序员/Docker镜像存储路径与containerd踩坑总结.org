@@ -1,0 +1,209 @@
+---
+title: Docker镜像存储路径与containerd踩坑总结
+tags: ["docker", "containerd"]
+date: 2026-03-23T17:08:31.50+0800
+---
+
+* Docker镜像存储路径与containerd踩坑总结
+
+** 背景
+
+在一台磁盘结构如下的机器上：
+
+#+begin_src text
+/               40G   （系统盘）
+/data/disk      500G  （数据盘）
+#+end_src
+
+目标是让 Docker 的镜像、构建缓存等全部存储到大盘 `/data/disk`，避免占满系统盘。
+
+已经配置：
+
+#+begin_src json
+{
+"data-root": "/data/disk/cache"
+}
+#+end_src
+但实际现象：
+- docker load 后 / 仍然暴涨
+- 删除镜像后 / 又恢复
+
+说明：Docker 仍然在往系统盘写数据
+
+** 结论（核心）
+
+#+begin_quote
+Docker 的 data-root 并不能覆盖全部数据路径。
+在新版本架构中，containerd 仍然默认写入 /var/lib/containerd。
+#+end_quote
+
+** Docker 存储架构拆解
+
+Docker 29 之后实际涉及三层：
+
+| 组件          | 默认路径                | 是否受 data-root 控制 |
+|---------------+-------------------------+-----------------------|
+| Docker 元数据 | /data-root              | yes                   |
+| 镜像 layer    | overlayfs / snapshotter | warning（部分受控）   |
+| containerd    | /var/lib/containerd     | no                    |
+
+关键点：
+
+- docker load 实际写入 containerd content store
+- containerd 默认路径在 /var/lib/containerd
+- 导致系统盘被占满
+
+** 问题复现过程
+
+#+begin_src bash
+docker load -i petalinux-2022.1.tar
+df -h
+#+end_src
+
+现象：
+
+- / 使用率飙升（40G → 90%）
+- /data/disk 几乎不变
+
+** 根因分析
+
+docker load 流程：
+1. 解压 tar
+2. 写入 containerd content store
+3. 解压 layer（snapshot）
+4. Docker 记录 metadata
+
+其中：
+#+begin_src text
+containerd root = /var/lib/containerd   （默认）
+#+end_src
+该路径不受 Docker data-root 控制。
+
+** 解决方案
+
+*** 方案一：迁移 containerd（推荐）
+
+1. 停止服务
+
+#+begin_src bash
+systemctl stop docker
+systemctl stop containerd
+#+end_src
+
+2. 迁移数据
+
+#+begin_src bash
+mkdir -p /data/disk/containerd
+mv /var/lib/containerd/* /data/disk/containerd/
+#+end_src
+
+3. 生成配置
+
+#+begin_src bash
+containerd config default > /etc/containerd/config.toml
+#+end_src
+
+4. 修改路径（可用 sed）
+
+#+begin_src bash
+sed -i 's#^root = .*#root = "/data/disk/containerd"#' /etc/containerd/config.toml
+sed -i 's#^state = .*#state = "/run/containerd"#' /etc/containerd/config.toml
+#+end_src
+
+5. 启动服务
+
+#+begin_src bash
+systemctl daemon-reexec
+systemctl start containerd
+systemctl start docker
+#+end_src
+
+** 验证
+
+#+begin_src bash
+containerd config dump | grep root
+#+end_src
+
+应输出：
+
+#+begin_src text
+root = "/data/disk/containerd"
+#+end_src
+
+再次执行：
+
+#+begin_src bash
+docker load -i petalinux-2022.1.tar
+df -h
+#+end_src
+
+预期：
+
+- / 不再增长
+- /data/disk 增长
+
+** 常见坑
+
+*** 1. sed 误修改
+
+错误写法：
+
+#+begin_src bash
+sed -i 's/root =/xxx/'   # 可能误伤多个字段
+#+end_src
+
+正确写法：
+
+#+begin_src bash
+sed -i 's#^root = .*#root = "/data/disk/containerd"#'
+#+end_src
+
+*** 2. 未停止服务直接修改
+
+会导致：
+
+- 配置不生效
+- 数据不一致
+
+*** 3. Docker 内置 containerd
+
+部分环境中 Docker 使用内置 containerd，可能忽略外部配置。
+
+可检查：
+
+#+begin_src bash
+ps -ef | grep containerd
+#+end_src
+
+*** 4. 旧数据未清理
+
+#+begin_src bash
+du -sh /var/lib/containerd
+du -sh /var/lib/docker
+#+end_src
+
+** 最佳实践（推荐结构）
+
+#+begin_src text
+/data/disk/
+├── cache/        # docker data-root
+├── containerd/   # containerd root
+├── buildkit/     # 构建缓存
+└── tmp/          # 临时文件
+#+end_src
+
+** 总结
+
+#+begin_quote
+Docker data-root 只控制 Docker 本身的数据路径，
+containerd 需要单独配置，否则仍会占用系统盘。
+#+end_quote
+
+一句话：
+
+#+begin_quote
+docker load 占满 / 的真正原因，不是 Docker，而是 containerd 默认路径。
+#+end_quote
+
+** 参考链接
+[[https://chatgpt.com/share/69c102a7-6b78-8013-8a7e-bb2ac5f2535d][查看Docker镜像存储路径 | ChatGPT]]

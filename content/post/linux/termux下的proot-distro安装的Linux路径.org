@@ -1,0 +1,42 @@
+---
+title: termux下的proot-distro安装的Linux路径
+tags: ["termux", "proot-distro"]
+date: 2024-12-06T20:52:12.520000000+0800
+---
+
+* termux下的proot-distro安装的Linux路径
+
+#+begin_src 
+/data/data/com.termux/files/usr/var/lib/proot-distro/installed-rootfs/
+即
+$PREFIX/var/lib/proot-distro/installed-rootfs/
+#+end_src
+使用proot-distro安装linux系统时可以看到这个路径，验证完proot-distro安装linux路径位置后，如果不需要linux可以到linux系统路径下将对应的linux系统删除即可。
+
+* proot-distro使用教程
+
+** 获取linux系统列表
+
+#+begin_src 
+proot-distro list
+#+end_src
+
+** 安装linux系统
+
+例如安装ubuntu或debian
+
+#+begin_src 
+proot-distro install ubuntu
+或
+proot-distro install debian
+#+end_src
+
+** 删除linux系统
+
+例如安装ubuntu或debian
+
+#+begin_src 
+proot-distro remove ubuntu
+或
+proot-distro remove debian
+#+end_src

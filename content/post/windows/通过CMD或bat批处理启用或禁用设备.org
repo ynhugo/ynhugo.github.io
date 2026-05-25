@@ -1,0 +1,26 @@
+---
+title: 通过CMD或bat批处理启用或禁用设备
+tags: ["windows", "bat", "驱动"]
+date: "2024-12-25T23:26:30.400000000+0800"
+---
+
+* 通过CMD或bat批处理启用或禁用设备
+
+在闲鱼买了一个二手的GPD Win Max2，用了几天后发现触摸屏有一些问题，于是写了一个禁用/启用设备的脚本。
+
+在设备管理器中查看目标设备的属性->事件_已配置设备的信息下紧跟着"已配置设备"的字符串，然后通过bat脚本禁用/启用目标设备。
+
+** 禁用触摸屏设备驱动
+#+begin_src bash
+pnputil /disable-device "HID\GXTP7385&Col01\4&36625b9a&0&0000"
+#+end_src
+
+** 启用触摸屏设备驱动
+
+#+begin_src bash
+pnputil /enable-device "HID\GXTP7385&Col01\4&36625b9a&0&0000"
+#+end_src
+
+** 参考链接
+
+[[https://www.bilibili.com/opus/739533836035031059][通过CMD或bat批处理启用/禁用设备]]

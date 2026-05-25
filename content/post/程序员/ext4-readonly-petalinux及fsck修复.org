@@ -1,0 +1,294 @@
+---
+title: PetaLinux 执行 petalinux-config 时出现 Read-only file system 的排查与修复
+tags: ["vmware"]
+date: 2026-02-25T17:47:48.50+0800
+---
+
+* 背景
+
+在使用 PetaLinux 执行如下命令时：
+
+#+begin_src bash
+petalinux-config --get-hw-description ../design_1_wrapper.xsa
+#+end_src
+
+出现大量报错：
+
+#+begin_src text
+Read-only file system
+ERROR: No XSA is found
+mkdir: cannot create directory ...
+cp: cannot create regular file ...
+#+end_src
+
+初看像是 XSA 文件问题，但实际上根本原因完全不同。
+
+本文记录一次完整排查与修复过程。
+
+---
+
+* 现象分析
+
+**1. 直接报错**
+
+#+begin_src text
+environment: line xxx: Read-only file system
+cp: cannot create regular file: Read-only file system
+mkdir: cannot create directory: Read-only file system
+#+end_src
+
+说明当前目录所在文件系统不可写。
+
+**2. 查看内核日志**
+
+#+begin_src bash
+dmesg | tail -30
+#+end_src
+
+出现关键报错：
+
+#+begin_src text
+EXT4-fs error (device sda1)
+Aborting journal on device sda1-8.
+EXT4-fs (sda1): Remounting filesystem read-only
+No space for directory leaf checksum. Please run e2fsck -D.
+#+end_src
+
+这几行是核心。
+
+---
+
+* 根因分析
+
+内核日志已经说明问题：
+
+1. ext4 文件系统检测到错误
+2. 中止 journal
+3. 自动将文件系统重新挂载为只读 (ro)
+
+这是一种保护机制，用来防止进一步数据损坏。
+
+因此：
+
+- 不是 XSA 文件问题
+- 不是 PetaLinux 问题
+- 不是权限问题
+- 而是 ext4 文件系统损坏
+
+---
+
+* 为什么会发生？
+
+常见原因：
+
+1. 虚拟机强制断电
+2. 宿主机磁盘空间不足
+3. 编译过程中异常崩溃
+4. 磁盘 I/O 错误
+5. PetaLinux 编译占用大量空间（几十 GB）
+
+尤其是在 VMware / VirtualBox 中非常常见。
+
+---
+
+* 错误本质
+
+关键错误信息：
+
+#+begin_src text
+No space for directory leaf checksum
+Please run e2fsck -D
+#+end_src
+
+说明目录索引损坏。
+
+ext4 无法正确校验目录结构，于是触发：
+
+#+begin_src text
+Remounting filesystem read-only
+#+end_src
+
+系统进入自保护模式。
+
+---
+
+* 修复方法
+
+⚠ 注意：不能在系统运行状态下修复根分区。
+
+必须离线 fsck。
+
+---
+
+**步骤 1：确认分区**
+
+#+begin_src bash
+lsblk
+#+end_src
+
+通常根分区为：
+
+#+begin_src text
+/dev/sda1
+#+end_src
+
+---
+
+**步骤 2：进入恢复模式**
+
+Ubuntu：
+
+1. 重启
+2. 进入 GRUB
+3. Advanced options
+4. Recovery mode
+5. Root shell
+
+---
+
+**步骤 3：执行 fsck**
+
+#+begin_src bash
+fsck -f -y /dev/sda1
+#+end_src
+
+参数说明：
+
+- -f 强制检查
+- -y 自动修复
+
+修复内容包括：
+
+- inode
+- 目录结构
+- journal
+- 校验信息
+
+耗时视磁盘大小而定。
+
+---
+
+**步骤 4：重启**
+
+#+begin_src bash
+reboot
+#+end_src
+
+系统恢复正常读写。
+
+---
+
+* 修复后验证
+
+#+begin_src bash
+mount | grep " / "
+#+end_src
+
+应看到：
+
+#+begin_src text
+rw
+#+end_src
+
+再执行：
+
+#+begin_src bash
+petalinux-config --get-hw-description ../design_1_wrapper.xsa
+#+end_src
+
+恢复正常。
+
+---
+
+* 如何预防
+
+**1. 保证足够磁盘空间**
+
+#+begin_src bash
+df -h
+#+end_src
+
+建议：
+
+- 至少保留 50GB 空闲
+- PetaLinux 工程建议 80GB+
+
+---
+
+**2. 不要强制关闭虚拟机**
+
+尤其在：
+
+- 编译中
+- 写大量文件时
+
+---
+
+**3. 定期检查文件系统**
+
+#+begin_src bash
+sudo tune2fs -l /dev/sda1 | grep "Mount count"
+#+end_src
+
+---
+
+**4. 不要在以下环境编译 PetaLinux**
+
+- NTFS 挂载盘
+- exFAT
+- NFS
+- WSL1
+- 外接移动硬盘
+
+推荐：
+
+- 本地 ext4 文件系统
+
+---
+
+* 总结
+
+当 PetaLinux 出现：
+
+#+begin_src text
+Read-only file system
+No XSA is found
+cannot create file
+#+end_src
+
+不要第一时间怀疑工具链。
+
+优先检查：
+
+#+begin_src bash
+dmesg | tail
+#+end_src
+
+如果看到：
+
+#+begin_src text
+EXT4-fs error
+Remounting filesystem read-only
+#+end_src
+
+说明是文件系统损坏。
+
+正确解决方式是：
+
+#+begin_src text
+离线 fsck 修复分区
+#+end_src
+
+而不是反复重建工程。
+
+---
+
+* 关键结论
+
+这类问题的本质是：
+
+#+begin_quote
+系统在自我保护，而不是 PetaLinux 出错。
+#+end_quote
+
+理解这一点，可以少走很多弯路。

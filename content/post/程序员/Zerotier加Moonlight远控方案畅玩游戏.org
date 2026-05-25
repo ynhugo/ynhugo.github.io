@@ -1,0 +1,43 @@
+---
+title: Zerotier+Moonlight 远控方案畅玩游戏
+tags: ["Zerotier", "Moonlight"]
+date: "2024-07-27T01:34:59.03+0800"
+---
+
+* Zerotier+Moonlight 远控方案畅玩游戏，一文看懂如何配置操作！
+
+** 方案
+
+使用的是 Zerotier One + moonlight 的一套控制方案，被控端（PC）使用 Zerotier One + sunshine 的一个输出
+
+** 配置
+
+主控端：Moonlight     https://github.com/moonlight-stream
+
+被控端：Sunshine      https://github.com/LizardByte/Sunshine
+
+** Steam link 方案
+
+主控端：Steamlink app 或者客户端，官方下载地址：https://help.steampowered.com/en/faqs/view/7112-CD02-7B57-59F8
+
+被控端：Steam 客户端，并在客户端内开启远程畅玩：设置 ——> 远程畅玩
+
+
+
+注意！Sunshine 推流的时候要在防火墙给对应端口放行！直接把防火墙关了就行！
+
+** 打洞方案的软件配置
+
+*** 局域网下软件配置
+
+**** 被控端
+
+安装并启动Sunshine，然后在你的浏览器输入  https://localhost:47990 ，进行一番密码设置，便能进入 Sunshine 的控制界面啦！点击网页菜单的PIN按钮，然后输入主控（Moonlight）那边的 PIN 码即可配对连接
+
+**** 主控端
+
+移动端下好 moonlight app 并启动，点击 “+” 号，进入后输入对应的被控端 IP 地址即可，公网下的 IP 地址在 Zerotier 这种虚拟组网软件上查看，对应 IP 由路由器分配，输入至上方 Moonlight 内即可识别
+
+** 参考链接
+
+[[https://www.bilibili.com/read/cv27006894/][Zerotier+Moonlight 远控方案畅玩游戏，一文看懂如何配置操作！]]

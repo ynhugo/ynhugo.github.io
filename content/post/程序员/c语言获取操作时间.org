@@ -1,0 +1,122 @@
+---
+title: c语言获取操作时间
+date: 2024-03-26T00:24:28.00+0800
+tags: ["程序员", "c"]
+---
+
+** 使用 C 语言在 Linux 环境下获得微秒级时间
+
+*** 数据结构
+
+#+begin_src c
+  int gettimeofday(struct timeval*tv, struct timezone *tz); /* 其参数 tv 是保存获取时间结果的结构体，参数 tz 用于保存时区结果： */
+#+end_src
+
+**** 结构体timezone的定义
+
+#+begin_src c
+  struct timezone{
+  int tz_minuteswest;/*格林威治时间往西方的时差*/
+  int tz_dsttime;/*DST 时间的修正方式*/
+  }
+#+end_src
+timezone 参数若不使用则传入NULL即可。
+
+**** 结构体timeval的定义
+
+#+begin_src c
+  struct timeval{
+  long int tv_sec; // 秒数
+  long int tv_usec; // 微秒数
+  }
+#+end_src
+
+*** 代码实例 temp.cpp
+
+#+begin_src c
+  #include <stdio.h>        // for printf()
+  #include <sys/time.h>    // for gettimeofday()
+  #include <unistd.h>        // for sleep()
+
+  int main()
+  {
+	  struct timeval start, end;
+	  gettimeofday( &start, NULL );
+	  printf("start : %d.%d\n", start.tv_sec, start.tv_usec);
+	  sleep(1);
+	  gettimeofday( &end, NULL );
+	  printf("end   : %d.%d\n", end.tv_sec, end.tv_usec);
+
+	  return 0;
+  }
+#+end_src
+
+**** 编译
+
+#+begin_src bash
+  g++ -o temp temp.cpp
+#+end_src
+
+**** 运行及结果
+
+#+begin_src bash
+  $ ./temp 
+  start : 1418118324.633128
+  end   : 1418118325.634616
+#+end_src
+
+***** usleep函数
+
+#+begin_src c
+  #include <unistd.h>
+  usleep(time);	// 百万分之一秒
+#+end_src
+
+** 使用 C 语言在 windows 环境下获得微秒级时间
+
+C 语言如何实现微秒级计算程序运行时间
+
+C 语言中用 clock() 函数计算程序运行时间只能达到毫秒级,要想使用微秒级别的计算,只能求助于CPU时钟频率.
+
+先使用 QueryPerformanceFrequency() 函数获取本机 CPU 的频率，QueryPerformanceFrequency() 函数包含在 windows.h 库中 
+
+再分别用 QueryPerformanceCounter() 函数在程序开始和结束时计数,相当于一个时间戳
+
+再通过 double dTimeTake = ((double)endCount.QuadPart - (double)startCount.QuadPart) / (double)fre.QuadPart;  计算时间差.输出.
+
+*** 计算程序运行时间 
+
+#+begin_src c
+  #include <stdio.h>
+  #include <windows.h>
+
+  int main(void)
+  {
+	  LARGE_INTEGER fre = {0};
+	  LARGE_INTEGER startCount = {0};
+	  LARGE_INTEGER endCount = {0};
+
+	  QueryPerformanceFrequency(&fre);
+	  QueryPerformanceCounter(&startCount);
+	  /* Sleep(2000);				/\* 单位为毫秒 *\/ */
+	  printf("Hello.\n");
+	  QueryPerformanceCounter(&endCount);
+
+	  double dTimeTake = ((double)endCount.QuadPart - (double)startCount.QuadPart) / (double)fre.QuadPart;
+	  printf("用时 %f 秒\n", dTimeTake); /* 单位为秒 */
+	  printf("用时 %f 微秒\n", (dTimeTake * 1000000)); /* 单位为微秒 */
+	
+
+	  return 0;
+  }
+#+end_src
+
+** 参考链接
+
+[[https://www.cnblogs.com/zhubaohua-bupt/p/7182821.html][linux下获取微秒级精度的时间]]
+
+[[https://blog.csdn.net/Zhuperb/article/details/109138632][C语言如何实现微秒级计算程序运行时间]]
+
+[[https://blog.csdn.net/xiaoyujiale/article/details/114012092][Window系统下C/C++程序毫秒级和微秒级执行时间获取方法（转载）]]
+
+[[https://blog.sina.com.cn/s/blog_9700e68d0100wfh4.html][C语言获得0.01微秒级程序运行时间的方法]]

@@ -1,0 +1,100 @@
+---
+title: Docker构建ARM64与ARM32交叉编译环境以及push与pull镜像
+tags: ["docker"]
+date: 2026-03-21T03:56:09.65+0800
+---
+
+* Docker构建ARM64与ARM32交叉编译环境以及push与pull镜像
+#+begin_src bash
+cat - > Dockerfile <<'EOF'
+FROM ubuntu:24.04
+ENV DEBIAN_FRONTEND=noninteractive
+# 使用清华APT源加速
+RUN sed -i 's/archive.ubuntu.com/mirrors.tuna.tsinghua.edu.cn/g' /etc/apt/sources.list && \
+  sed -i 's/security.ubuntu.com/mirrors.tuna.tsinghua.edu.cn/g' /etc/apt/sources.list && \
+  apt-get update && apt-get install -y \
+  build-essential cmake git pkg-config \
+  gcc-aarch64-linux-gnu g++-aarch64-linux-gnu \
+  gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf \
+  libbluetooth-dev nlohmann-json3-dev \
+  && rm -rf /var/lib/apt/lists/*
+WORKDIR /workspace
+ENV CC_aarch64-linux-gnu=aarch64-linux-gnu-gcc
+ENV CXX_aarch64-linux-gnu=aarch64-linux-gnu-g++
+ENV CC_arm-linux-gnueabihf=arm-linux-gnueabihf-gcc
+ENV CXX_arm-linux-gnueabihf=arm-linux-gnueabihf-g++
+    
+CMD ["/bin/bash"]
+EOF
+
+# 构建
+docker build -t cross-compiler .
+
+# 清理构建缓存
+docker system prune -f
+
+# 运行
+mkdir -p /opt/test
+docker run -it --mount type=bind,src=/opt/test,dst=/workspace cross-compiler
+<<'CONTENT'
+绑定挂载（Bind Mounts）
+简介:
+绑定挂载将主机文件系统 中的一个目录挂载到容器中，允许容器直接访问和修改主机上的文件。
+
+适用环境:
+开发环境: 开发过程中需要频繁修改主机文件，并立即在容器中生效。
+主机与容器数据共享: 需要在主机和容器之间共享文件。
+
+使用场景:
+开发和测试： 挂载代码目录，以便在主机上编辑代码时容器能立即使用最新代码。
+日志文件： 将容器的日志文件直接写入主机目录，方便监控和分析。
+CONTENT
+
+# docker添加永久代理
+mkdir -p /etc/systemd/system/docker.service.d
+cat - > /etc/systemd/system/docker.service.d/http-proxy.conf << 'EOF'
+[Service]
+Environment="HTTP_PROXY=http://127.0.0.1:10808"
+Environment="HTTPS_PROXY=http://127.0.0.1:10808"
+Environment="NO_PROXY=localhost,127.0.0.1,docker-registry.somecorporation.com"
+EOF
+systemctl daemon-reload
+systemctl restart docker
+
+# 如果要删除添加的代理
+rm -rf /etc/systemd/system/docker.service.d
+systemctl daemon-reload
+systemctl restart docker
+
+# 查看代理等相关信息
+docker info
+
+# token是自己创建的，创建token：访问并登录https://app.docker.com，然后访问settings/personal-access-tokens并生成token，token生成后第一时间复制下来，因为token只有在创建的时候显示
+# 登录docker
+docker login -u username -p "token"
+# 例，token需要自己创建
+docker login -u hexgio -p "token"
+
+# push镜像
+# 构建的镜像是 cross-compiler:latest，需要先打标签再推送。
+# 正确步骤：
+# 1. 给镜像打标签
+docker tag cross-compiler:latest hexgio/cross-compiler:latest
+# 2. 推送到 Docker Hub（需要先登录 docker login）
+docker push hexgio/cross-compiler:latest
+# 如果你想用特定版本标签：
+docker tag cross-compiler:latest hexgio/cross-compiler:v1.0
+docker push hexgio/cross-compiler:v1.0
+
+# pull镜像
+docker pull hexgio/cross-compiler:latest
+#+end_src
+
+** 参考链接
+[[https://ynhugo.github.io/p/docker构建arm64与arm32交叉编译环境/][Docker构建ARM64与ARM32交叉编译环境]]
+
+[[https://zhuanlan.zhihu.com/p/703839288][Docker 配置代理（临时/永久设置）]]
+
+[[https://blog.51cto.com/u_16213377/9834004?articleABtest=0][docker login 怎么通过token登录]]
+
+[[https://blog.csdn.net/lxy___/article/details/105821141][Docker镜像推送（push）到Docker Hub（最详细版）]]

@@ -1,0 +1,35 @@
+---
+title: git使用代理clone
+tags: ["git", "proxy", "clone"]
+date: 2024-12-08T02:23:37.720000000+0800
+---
+
+* git使用代理clone
+
+我使用的是ss代理,我在网上也看到了很多的关于设置代理的方案,但是都得不到解决。
+
+** 设置全局Config代理。
+
+#+begin_src bash
+  git config --global http.proxy http://127.0.0.1:1080
+  git config --global https.proxy http://127.0.0.1:1080
+#+end_src
+
+** 去除代理设置
+
+#+begin_src bash
+  git config --global --unset http.proxy
+  git config --global --unset https.proxy
+#+end_src
+
+在我使用过程中一直都没得到解决。
+
+我在clone的时候直接设置代理克隆，这样快的时候能达到3M/S，简直爽歪歪！
+
+#+begin_src bash
+  git clone -c http.proxy="127.0.0.1:1081" https://github.com/syl20bnr/spacemacs
+#+end_src
+
+** 参考链接
+
+[[https://blog.csdn.net/xhl_james/article/details/110775726][git使用代理clone]]

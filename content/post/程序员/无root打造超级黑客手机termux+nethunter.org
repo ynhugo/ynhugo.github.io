@@ -1,0 +1,99 @@
+---
+title: 无root打造超级黑客手机termux+nethunter
+tags: ["termux", "nethunter"]
+date: 2025-12-27T18:37:56.05+0800
+---
+
+* 无root打造超级黑客手机termux+nethunter
+
+Kali NetHunter (Rootless Edition)
+
+Kali Linux CLI 和 KeX 使用 Termux
+Kali NetHunter）是一个移动渗透测试平台， 而无根版本则提供了最大灵活性且无需承诺。
+用于未改装的原厂安卓手机，且不会失效保修！
+
+注意：Kali NetHunter此版本是无根系统，所以很多需要root权限的都无法正常使用。
+
+** 在手机上安装kali
+#+begin_src bash
+# 首先工具，termux（酷安，西西软件园，fdroid，googleplay均可下载）vnc viewer（好像只有百度有）
+# 1.打开termux（要等很长时间。。）
+# 2.pkg update 更新，中途会停下，按y继续。
+pkg update -y
+# 3.pkg upgrade升极
+pkg upgrade -y
+# 4.申请存储访问权限 termux-setup-storage
+termux-setup-storage
+# 5.安装 wget       pkg install wget
+pkg install -y wget
+# 6. 下载 安装脚本wget -O install-nethunter-termux https://offs.ec/2MceZWr
+wget -c -O install-nethunter-termux https://offs.ec/2MceZWr
+# 7.给脚本执行权限chmod +x install-nethunter-termux
+chmod +x install-nethunter-termux
+# 8.运行安装脚本 ./install-nethunter-termux
+./install-nethunter-termux
+# 9.进入kali ,nh
+nh
+# 10.apt update更新
+apt update -y
+# 11.apt upgrade升极
+apt upgrade -y
+# OK,以上安装完成。
+#+end_src
+
+** kali命令 说明
+nethunter默认可以用nh代替：
+
+nethunter 启动 Kali NetHunter 命令行界面
+
+nethunter kex passwd 配置 KeX 密码 (仅在第一次使用前需要)
+
+nethunter kex &amp; 开始 KeX 会话服务
+
+nethunter kex stop 停止 Kali NetHunter 桌面
+
+nethunter &lt;command&gt; 在 NetHunter 环境中运行命令
+
+nethunter -r 以 root 身份启动 Kali NetHunterk 命令行界面
+
+nethunter -r kex passwd 配置 root 用户的 KeX 密码
+
+nethunter -r kex &amp; 以 root 身份开始 KeX 会话服务
+
+nethunter -r kex stop 停止 root 身份运行的 KeX 会话服务
+
+nethunter -r kex kill 杀掉所有的 KeX 会话
+
+nethunter -r &lt;command&gt; 以 root 身份在 NetHunter 环境中运行命令
+
+nethunter 命令可以缩写成 nh ，Kali
+
+NetHunter 默认的用户名 kali 的密码也是 kali
+
+root 密码没有设置 可以输入 sudo passwd 来修改 root 用户的密码
+
+** 禁止锁屏
+
+kali设置中找到并点击Xfce Screensaver，把Lock Screen下的Enable Lock Screen关闭
+
+** 解决termux安装kali nethunter或kali liunx 出现的问题。（网络问题如nmap等无法使用上网）
+
+#+begin_src bash
+# sudo su
+sed -i 's/nameserver .*/nameserver 114.114.114.114/g' /etc/resolv.conf
+ping bing.com
+#+end_src
+
+** 参考链接
+
+[[https://www.bilibili.com/opus/654094549635825671][无root打造超级黑客手机termux+nethunter]]
+
+[[https://www.cnblogs.com/menkeyi/p/9001050.html][ubuntu VNC中Xfce4中Tab键失效的解决方法]]
+
+[[https://developer.aliyun.com/mirror/kali?spm=a2c6h.13651102.0.0.680a1b119jX32j][Kali 镜像]]
+
+[[https://blog.csdn.net/m0_53916623/article/details/134167219][解决termux安装kali nethunter或kali liunx 出现的问题。（网络问题如nmap等无法使用上网）]]
+
+[[https://gitlab.com/kalilinux/nethunter/build-scripts/kali-nethunter-rootless/-/tree/main?ref_type=heads][kali-nethunter-rootless]]
+
+[[https://blog.csdn.net/qq_24305079/article/details/144808817][全网最全！Termux安装Kali全详细教程！包括常见错误，实现Kali VNC图形化，安装老版本镜像！]]

@@ -1,0 +1,106 @@
+---
+title: docker构建ubuntu各版本容器及解决中文乱码
+tags: ["docker", "ubuntu"]
+date: 2026-04-05T20:46:25.28+0800
+---
+
+* docker构建ubuntu各版本容器及解决中文乱码
+:PROPERTIES:
+:ID:       36a3ca0b-c0d1-4b89-9d4c-f7882814bc7f
+:HEADER-ARGS: :tangle docker构建各版本容器.sh
+:END:
+
+#+begin_src bash
+set -e  # 出错立即停止
+
+versions="16.04 18.04 20.04 22.04 24.04"
+# versions="16.04"
+
+for version in $versions; do
+  echo "构建 ubuntu_${version}..."
+  
+  docker build \
+    --build-arg UBUNTU_VERSION=$version \
+    --build-arg DEBIAN_FRONTEND=noninteractive \
+    -t ubuntu_${version} \
+    -f - . <<'EOF'
+ARG UBUNTU_VERSION
+FROM ubuntu:${UBUNTU_VERSION}
+
+ARG DEBIAN_FRONTEND=noninteractive
+
+# 使用清华源加速
+RUN sed -i 's/archive.ubuntu.com/mirrors.tuna.tsinghua.edu.cn/g' /etc/apt/sources.list && \
+    sed -i 's/security.ubuntu.com/mirrors.tuna.tsinghua.edu.cn/g' /etc/apt/sources.list && \
+    apt-get update && apt-get install -y \
+    git emacs vim less curl wget iputils-ping tree findutils locales software-properties-common && \
+    rm -rf /var/lib/apt/lists/*
+
+# 配置 UTF-8 locale（修复中文乱码）
+RUN locale-gen en_US.UTF-8 && \
+    update-locale LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 && \
+    echo 'LANG="en_US.UTF-8"' > /etc/default/locale && \
+    echo 'LC_ALL="en_US.UTF-8"' >> /etc/default/locale
+
+# 设置环境变量（运行时生效）
+ENV LANG=en_US.UTF-8 \
+    LC_ALL=en_US.UTF-8 \
+    LANGUAGE=en_US:en \
+    LESSCHARSET=utf-8
+
+WORKDIR /root
+EOF
+  
+  echo "ubuntu_${version} 构建完成"
+done
+
+# 清理悬空镜像
+docker system prune -f
+
+echo "所有镜像构建完成！"
+docker images | grep ubuntu_
+#+end_src
+
+** 如果要一键删除多个容器命名含ubuntu的镜像
+
+#+begin_src bash
+docker rmi $(docker images | grep ubuntu_.* | awk '{print $2}')
+#+end_src
+
+** 各版本运行
+
+#+begin_src bash
+# ubuntu 16.04
+# 运行
+mkdir -p /opt/test; \
+  cd /opt/test; \
+  docker run -it --network host --mount type=bind,src=./,dst=/root ubuntu_16.04;
+
+# ubuntu 18.04
+# 运行
+mkdir -p /opt/test; \
+  cd /opt/test;
+  docker run -it --network host --mount type=bind,src=./,dst=/root ubuntu_18.04
+
+# ubuntu 20.04
+# 运行
+mkdir -p /opt/test; \
+  cd /opt/test;
+  docker run -it --network host --mount type=bind,src=./,dst=/root ubuntu_20.04
+
+# ubuntu 22.04
+# 运行
+mkdir -p /opt/test; \
+  cd /opt/test;
+  docker run -it --network host --mount type=bind,src=./,dst=/root ubuntu_22.04
+
+# ubuntu 24.04
+# 运行
+mkdir -p /opt/test; \
+  cd /opt/test;
+  docker run -it --network host --mount type=bind,src=./,dst=/root ubuntu_24.04
+#+end_src
+
+** 参考链接
+
+[[https://chat.deepseek.com/share/lcyrzawbp1f8wvqkg6][less中文乱码问题分析]]

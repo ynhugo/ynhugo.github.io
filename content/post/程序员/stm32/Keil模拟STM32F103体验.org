@@ -1,0 +1,39 @@
+---
+title: Keil模拟STM32F103体验
+date: 2024-03-26T00:24:32.00+0800
+tags: [stm32]
+---
+
+* Keil模拟STM32F103体验
+
+** 准备工作
+
+- 安装 5.14 版本及以上的 MDK-ARM （Keil） 集成开发环境,在安装好 MDK-ARM 集成开发环境后，再安装 STM32F1xx\_DFP PACK 包
+
+  MDK-ARM 下载链接：http://www.keil.com/download/
+
+- 下载一份完整的 OneOS-Metis-v1.1.0 代码
+
+  OneOS-Metis-v1.1.0 官方：https://gitee.com/cmcc-oneos/OneOS-Metis
+
+  OneOS-Metis-v1.1.0 下载链接：https://gitee.com/cmcc-oneos/OneOS-Metis/repository/blazearchive/v1.1.0.zip?Expires=1702803860&Signature=oPuPAPCFdt8jnzQMvffNMHtQsL4eAU3CxeXk%2BpS763s%3D
+
+** 打开使用Keil模拟器的示例工程
+  
+1.进入到 OneOS-Metis-v1.1.0\projects\stm32f103rc 目录中，双击“project.uvprojx”文件，打开stm32f103rc的Keil工程文件，重新编译一遍工程，然后点击魔法棒，接着点击 Deubg，选中 Use Simulator
+
+2.打开模拟器串口、运行程序并观察SHELL界面
+
+3.运行help命令
+
+通过输入help命令并长按回车可以查看当前系统支持的命令
+
+执行she命令时，输入命令后必须长按回车才能执行命令，否则会反应很慢，我猜是只按一下回车的过程太快，只有长按的时候让这个回车按下的过程保持的长一些才能被检测到
+
+4.查看内存堆使用情况
+
+其中 show_mem 是查看内存堆使用的情况，输入并长按回车来执行此命令
+
+* 参考链接
+
+[[https://zhuanlan.zhihu.com/p/415634934][不用板子也能跑！Keil模拟STM32F103体验]]

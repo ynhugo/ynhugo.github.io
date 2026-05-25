@@ -1,0 +1,28 @@
+---
+title: 多文件字符串查找替换
+tags: ["shell"]
+date: 2025-07-11T16:22:19.73+0800
+---
+
+* 多文件字符串查找替换
+:PROPERTIES:
+:EXPORT_FILE_NAME: find-replace.sh
+:END:
+
+#+begin_src bash :tangle find-replace.sh
+find_str=$1                     # 对应当前路径下多文件中要查找的字符串
+replace_str=$2                  # 对应当前路径下多文件中要替换的新字符串
+
+mapfile -t files < <(find ./ -name "*.c" -o -name "*.h" -o -name "*.cpp" | xargs grep -ainw "${find_str}" | awk -F ':' '{print $1}') # -name指定了要查找的文件类型
+# echo "${files[@]}"              # 输出所有包含要查找的字符串的文件
+
+for ((i = 0; i < "${#files[@]}"; i++)); do
+  sed -i "s/${find_str}/${replace_str}/g" "${files[${i}]}" # 进行字符串替换，用法为：sed -i "s/新字符串/旧字符串/g file"，由于涉及到变量，因此使用双引号而不是单引号
+done
+#+end_src
+
+** 使用示例
+
+#+begin_src bash
+~/find-replace.sh "text1" "text2"
+#+end_src

@@ -1,0 +1,606 @@
+---
+title: ubuntu 22.04 server安装Nvidia驱动
+tags: ["ubuntu", "22.04", "server", "nvidia"]
+date: 2025-12-06T08:38:24.91+0800
+---
+
+* ubuntu 22.04 server安装Nvidia驱动
+
+#+begin_src bash
+sudo apt install -y apt-rdepends
+# sudo apt install -y net-tools
+# sudo apt install -y openssh-server
+sudo apt download $(apt-rdepends apt-rdepends | grep -v "^ " | sed 's/debconf-2.0/debconf/g' | grep -v "perlapi-")
+sudo apt download $(apt-rdepends net-tools | grep -v "^ " | sed 's/debconf-2.0/debconf/g')
+#+end_src
+
+** 准备工作
+
+#+begin_src bash
+为了避免踩坑，建议按照流程完成准备工作！
+这些准备工作并不会影响你的计算机，不做的话可能会导致装驱动后黑屏！
+#+end_src
+
+*** 关闭安全模式
+
+#+begin_src bash
+重启计算机，在开机前狂按’ESC’进入bios设置，找到安全设置，并关闭它。
+#+end_src
+注：不同品牌电脑进入bios方式和安全设置的位置都不相同
+
+*** 切换独显模式（笔记本电脑单显卡注意，服务器略过）
+
+#+begin_src bash
+在bios设置中找到显卡设置，系统默认的为集显模式，将其修改为独显模式。
+#+end_src
+
+*** 更新软件列表和安装必要软件、依赖
+
+#+begin_src bash
+sudo apt-get update   #更新软件列表
+
+# sudo apt-get install -y g++ gcc make
+sudo apt download $(apt-rdepends g++ gcc make | grep -v "^ " | sed 's/debconf-2.0/debconf/g')
+
+sudo apt download $(apt-rdepends python3-pip | grep -v "^ " | sed 's/debconf-2.0/debconf/g')
+sudo apt download $(apt-rdepends build-essential cmake git | \
+                      grep -v "^ " | \
+                      sed 's/debconf-2.0/debconf/g' | \
+                      sed -e 's/libc-dev/libc6-dev/g' \
+                          -e 's/libc6-dev-bin/libc6-dev/g' \
+                          -e 's/linux-libc6-dev/linux-libc-dev/g' | \
+                      grep -vE "^(default-logind|logind)$")
+
+# 安装hwinfo
+sudo apt download $(apt-rdepends hwinfo | grep -v "^ " | sed 's/debconf-2.0/debconf/g')
+
+# 安装alsa-utils
+sudo apt download $(apt-rdepends alsa-utils | grep -v "^ " | sed 's/debconf-2.0/debconf/g')
+#+end_src
+
+*** 禁用nouveau (nouveau是通用的驱动程序)
+
+#+begin_src bash
+sudo vim /etc/modprobe.d/blacklist.conf
+#+end_src
+文件末尾添加下面两行内容
+#+begin_src bash
+blacklist nouveau
+options nouveau modeset=0
+#+end_src
+
+文件修改后在终端执行：
+#+begin_src bash
+sudo update-initramfs -u
+sudo reboot #重启电脑
+#+end_src
+电脑重启后执行：
+#+begin_src bash
+lsmod | grep nouveau  #输出内容为空，则表示成功禁用
+#+end_src
+
+*** 安装lightdm（笔记本电脑默认gdm3,不要选择lightdm，不然会启动不起来，需要恢复模式下rusume执行sudo dpkg-reconfigure lightdm）
+
+lightdm和gdm3一样都是图形界面管理插件，但是lightdm兼容性更好
+#+begin_src bash
+# sudo apt-get install lightdm
+sudo apt download $(apt-rdepends lightdm | grep -v "^ " | sed 's/debconf-2.0/debconf/g' | grep -v "^awk$")
+#+end_src
+用上下按键选中lightdm
+
+** 安装驱动
+
+#+begin_src bash
+网上安装方式杂七杂八很多，推荐把Ubuntu升级到22版本后使用系统推荐安装方式。
+#+end_src
+
+*** 安装 nvidia-cuda-toolkit 工具
+
+#+begin_src bash
+# sudo apt-get install nvidia-cuda-toolkit
+sudo apt download $(apt-rdepends nvidia-cuda-toolkit | grep -v "^ " | grep -v -E "^(debconf-2.0|libcuda|libnvidia|opencl-dev|clang-[0-9]|g\+\+-[0-9]|gcc-[0-9])" | sed 's/debconf-2.0/debconf/g')
+#+end_src
+
+*** 检查系统推荐显卡驱动，记录下recommend选项
+
+#+begin_src bash
+$ sudo ubuntu-drivers devices
+
+== /sys/devices/pci0000:00/0000:00:01.0/0000:01:00.0 ==
+modalias : pci:v000010DEd000028E0sv0000103Csd00008BABbc03sc00i00
+vendor   : NVIDIA Corporation
+driver   : nvidia-driver-535-open - distro non-free
+driver   : nvidia-driver-535-server-open - distro non-free
+driver   : nvidia-driver-535 - distro non-free recommended #记下推荐版本
+driver   : nvidia-driver-525-server - distro non-free
+driver   : nvidia-driver-535-server - distro non-free
+driver   : nvidia-driver-525 - distro non-free
+driver   : nvidia-driver-525-open - distro non-free
+driver   : xserver-xorg-video-nouveau - distro free builtin
+
+#+end_src
+
+*** 安装NVIDIA显卡驱动
+
+**** 方法一：安装NVIDIA显卡驱动（推荐，服务器操作）
+
+apt命令安装
+执行如下命令，查看适合的驱动
+#+begin_src bash
+ubuntu-drivers devices
+#+end_src
+
+安装驱动
+#+begin_src bash
+# apt-get install nvidia-driver-535
+# sudo apt download $(apt-rdepends nvidia-driver-535 | grep -v "^ " | grep -v -e "xorg-video-abi" -e "libc-dev" -e "kldutils" -e "perlapi-5.34" | sed 's/debconf-2.0/debconf/g')
+sudo apt-get install -d -o dir::cache::archives="$HOME/ubuntu-drivers" nvidia-driver-580
+sudo dpkg -i $HOME/ubuntu-drivers/*.deb
+#+end_src
+
+测试驱动是否正常工作
+#+begin_src bash
+nvidia-smi
+#+end_src
+
+**** 方法二（带桌面的操作系统可尝试一下）
+
+***** 添加驱动源
+
+#+begin_src bash
+sudo add-apt-repository ppa:graphics-drivers/ppa
+sudo apt-get update
+#+end_src
+
+***** 在Ubuntu系统中找到 软件和更新 选择 驱动
+
+#+begin_src bash
+按照图示找到附加驱动，选择推荐版本
+注意：不要选择第一项，可能会导致黑屏
+#+end_src
+安装完成后sudo reboot重启计算机
+
+**** 方法三（下载nvidia官方驱动文件可以尝试一下）
+
+#+begin_src bash
+# 根据前边的教程获取推荐版本，然后下载对应的版本进行如下方式安装
+./NVIDIA-Linux-x86_64-580.105.08.run --no-opengl-files
+#+end_src
+
+** 重启后测试安装
+
+#+begin_src bash
+$ nvidia-smi
+
+Wed Jul 19 11:08:47 2023       
++---------------------------------------------------------------------------------------+
+      | NVIDIA-SMI 535.54.03              Driver Version: 535.54.03    CUDA Version: 12.2     |
+      |-----------------------------------------+----------------------+----------------------+
+      | GPU  Name                 Persistence-M | Bus-Id        Disp.A | Volatile Uncorr. ECC |
+      | Fan  Temp   Perf          Pwr:Usage/Cap |         Memory-Usage | GPU-Util  Compute M. |
+      |                                         |                      |               MIG M. |
+      |=========================================+======================+======================|
+      |   0  NVIDIA GeForce RTX 4060 ...    Off | 00000000:01:00.0  On |                  N/A |
+      | N/A   40C    P8               2W /  80W |    571MiB /  8188MiB |      0%      Default |
+      |                                         |                      |                  N/A |
+      +-----------------------------------------+----------------------+----------------------+
+      
+      +---------------------------------------------------------------------------------------+
+      | Processes:                                                                            |
+      |  GPU   GI   CI        PID   Type   Process name                            GPU Memory |
+      |        ID   ID                                                             Usage      |
+      |=======================================================================================|
+      |    0   N/A  N/A      1489      G   /usr/lib/xorg/Xorg                          202MiB |
+      |    0   N/A  N/A      2539      G   /usr/bin/gnome-shell                         57MiB |
+      |    0   N/A  N/A      3848      G   ...irefox/2908/usr/lib/firefox/firefox      205MiB |
+      |    0   N/A  N/A     20451      G   ...dererForSitePerProcess --no-sandbox       94MiB |
+      +---------------------------------------------------------------------------------------+
+
+#+end_src
+显示如上则表示安装完成。
+
+** 出错急救
+
+#+begin_src bash
+如果驱动安装后不幸导致黑屏，尝试以下操作删除驱动，恢复安装前状态。
+#+end_src
+
+#+begin_src bash
+#在黑屏界面 ctrl+alt+f1 进入tty命令行，正确输入用户名和密码，再进行接下来的操作
+#在tty中先修改字符集
+export LANGUAGE="UTF-8"
+#执行删除操作
+sudo apt-get --purge remove nvidia*
+sudo apt autoremove
+#重启
+reboot
+
+#如果上述操作不超过，尝试以下命令删除
+sudo apt-get remove --purge nvidia*
+
+#+end_src
+删除驱动后，进入系统界面，从第一步开始重新安装即可。
+
+** 安装Anaconda3
+
+#+begin_src bash
+wget https://repo.anaconda.com/archive/Anaconda3-2025.12-1-Linux-x86_64.sh
+chmod +x Anaconda3-2025.12-1-Linux-x86_64.sh
+sh Anaconda3-2025.12-1-Linux-x86_64.sh
+#+end_src
+
+** 安装CUDA
+
+#+begin_src bash
+wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-ubuntu2204.pin
+sudo mv cuda-ubuntu2204.pin /etc/apt/preferences.d/cuda-repository-pin-600
+wget https://developer.download.nvidia.com/compute/cuda/13.0.2/local_installers/cuda-repo-ubuntu2204-13-0-local_13.0.2-580.95.05-1_amd64.deb
+sudo dpkg -i cuda-repo-ubuntu2204-13-0-local_13.0.2-580.95.05-1_amd64.deb
+sudo cp /var/cuda-repo-ubuntu2204-13-0-local/cuda-*-keyring.gpg /usr/share/keyrings/
+sudo apt-get update
+sudo apt-get -y install cuda-toolkit-13-0
+#+end_src
+
+** 安装nvidia-cudnn
+
+#+begin_src bash
+# 1. 先安装 nvidia-pyindex（添加 NVIDIA 源）
+pip install nvidia-pyindex
+
+# 2. 再下载 nvidia-cudnn 到指定目录（./）
+pip download nvidia-cudnn -d ./
+
+# 3. pip自动处理顺序（推荐）
+pip install ./setuptools-80.9.0-py3-none-any.whl ./wheel-0.45.1-py3-none-any.whl ./nvidia_cudnn-8.2.0.51-py3-none-manylinux1_x86_64.whl
+#+end_src
+   
+** 搭建PyTorch框架
+
+#+begin_src bash
+# wget https://download.pytorch.org/whl/cu130/torch-2.9.0%2Bcu130-cp314-cp314-manylinux_2_28_x86_64.whl
+pip download torch==2.9.0 torchvision==0.24.0 torchaudio==2.9.0 --index-url https://download.pytorch.org/whl/cu130 -d ./
+# pip install *.whl
+pip install --no-index --find-links=./ *.whl
+#+end_src
+	
+** 配置网络
+
+*** 配置wifi
+
+输入如下指令来安装network-manager
+#+begin_src bash
+# sudo apt install network-manager
+sudo apt download $(apt-rdepends network-manager | grep -v "^ " | sed 's/debconf-2.0/debconf/g' | grep -vE "^(default-logind|logind)$")
+#+end_src
+
+启动NetworkManager服务
+#+begin_src bash
+sudo systemctl start NetworkManager
+sudo systemctl enable NetworkManager
+#+end_src
+
+查找可用的WiFi
+#+begin_src bash
+nmcli dev wifi list
+#+end_src
+
+选择一个WiFi并连接，将<SSID>改为你的wifi名，<password>改为密码
+#+begin_src bash
+nmcli dev wifi connect <SSID> password <password>
+#+end_src
+
+确认网络是否连接
+#+begin_src bash
+nmcli connection show
+#+end_src
+
+设置为自动连接，这样每次开机后即自动连接该wifi
+#+begin_src bash
+nmcli connection modify <SSID> connection.autoconnect yes
+#+end_src
+
+检查自动连接是否启用，如果connection.autoconnect为yes则已启用
+#+begin_src bash
+nmcli connection show <SSID>
+#+end_src
+
+*** 配置静态IP
+
+#+begin_src bash
+cd /etc/netplan
+mv 50-cloud-init.yaml 50-cloud-init.yaml.bak
+cat > 01-network-manager-all.yaml  <<'EOF'
+# This file is generated from information provided by the datasource.  Changes
+# to it will not persist across an instance reboot.  To disable cloud-init's
+# network configuration capabilities, write a file
+# /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg with the following:
+# network: {config: disabled}
+network:
+    ethernets:
+        ens33:
+        # ens5f0:
+            dhcp4: no
+            addresses:              
+              # - 192.168.1.4/24
+              - 192.168.128.50/24
+            # nameservers:
+            #   addresses: [114.114.114.114,8.8.8.8]
+    version: 2
+EOF
+chmod 600 01-network-manager-all.yaml
+netplan apply
+sudo ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf
+#+end_src
+
+** 搭建VNC
+
+#+begin_src bash
+# 然后安装需要用到的图形化服务软件
+# apt install -y xfce4 xfce4-goodies
+apt download $(apt-rdepends xfce4 xfce4-goodies | grep -v "^ " | sed "s/debconf-2.0/debconf/g" | xargs apt-cache show 2>/dev/null | grep "Package:" | awk '{print $2}' | sort -u)
+
+# 然后安装tigervnc。tigervnc感觉比tightvnc要配置简单一些
+# apt install -y tigervnc-standalone-server tigervnc-common
+apt download $(apt-rdepends tigervnc-standalone-server tigervnc-common | grep -v "^ " | sed "s/debconf-2.0/debconf/g")
+
+# 安装tigervnc-tools
+apt download $(apt-rdepends tigervnc-tools | grep -v "^ " | sed "s/debconf-2.0/debconf/g")
+
+# 安装dbus-x11 dbus
+apt download $(apt-rdepends dbus-x11 dbus | grep -v "^ " | sed "s/debconf-2.0/debconf/g")
+
+# 安装下载的deb包
+dpkg -i ./*.deb
+
+# --------------------------------
+# 创建用户
+# 创建用户：sudo adduser 用户名
+# 删除用户：sudo deluser 用户名
+# 创建test用户，根据提示默认回车，最后输入Y确认：
+sudo adduser test
+# 添加sudo权限
+# 以添加 test 这个用户到 sudo 用户组为例子，输入下面命令：
+sudo usermod -aG sudo test
+sudo tee /etc/sudoers.d/test <<< 'test ALL=(ALL) ALL'
+sudo chmod 440 /etc/sudoers.d/test
+
+# 如果要删除用户：
+su root                         # 切换到root用户或其他用户
+# 停止所有 test 用户的进程（如果有）
+sudo pkill -u test
+sudo sleep 2
+# 删除用户及其所有文件
+sudo userdel test               # 只删除用户
+# sudo userdel -r test            # 完全删除用户及其主目录
+# 删除 sudo 配置
+sudo rm -f /etc/sudoers.d/test
+
+# 验证删除：
+# 检查用户是否已删除
+getent passwd test
+# 检查用户组
+getent group test
+# 检查主目录是否还存在
+ls -la /home/
+# --------------------------------
+
+# 运行并设置密码（当前用户已设置密码则跳过），根据提示输入n
+vncserver
+
+# 然后创建启动脚本， 编辑用户文件夹下的.vnc文件夹下的xstartup文件(如果没有就创建一个)内容如下：
+cat > $HOME/.vnc/xstartup <<'EOF'
+#!/usr/bin/bash
+xfce4-session
+EOF
+# 注意xfce4-session后面不要跟&号，不然会在运行vncserver时提示过早退出，然后记得给它加执行的权限。
+
+chmod +x $HOME/.vnc/xstartup
+# 首次设置VNC时，它将在端口5901上启动默认服务器实例。
+
+# 如下是一个启动vnc服务器的例子：
+# vncserver :1 -localhost no -geometry 1920x1080
+vncserver :1  -geometry 1920x1080  -depth 24 -localhost no
+# echo "vncserver :1  -geometry 1920x1080  -depth 24 -localhost no" >> $HOME/.bashrc
+<<'CONTENT'
+-depth 24 表示 24 位色深（24 bits per pixel, 24bpp）
+| depth 值 | 含义            | 颜色数量    | 典型用途      |
+| ------- | ------------- | ------- | --------- |
+| 8       | 256 色         | 2^8     | 低带宽 / 老设备 |
+| 16      | High Color    | 65536 色 | 嵌入式 / 低性能 |
+| 24      | True Color    | 1670 万色 | **推荐默认**  |
+| 32      | 24 位色 + Alpha | 同 24 位  | 某些桌面环境    |
+CONTENT
+
+# 查看已启动的实例
+vncserver -list
+
+# 关闭启动的实例
+vncserver -kill :1
+#+end_src
+然后就可以通过vnc的客户端登陆了，为了能够远端登陆不仅仅是本机登陆，设置-localhost no 是必要的。由于VNC是不加密的，会在登陆时提示如下，当然也可以自行百度实现在此基础上的外加SSH通道的加密。
+
+输入刚才设置的密码就可以登陆了
+
+之后就是熟悉的ubuntu界面了，可以自由安装自己喜欢的程序了
+
+#+begin_src bash
+在客户端地址栏输入192.168.x.x:5901，再输入前边创建的密码即可
+#+end_src
+
+** 搭建XRDP
+
+#+begin_src bash 
+# 然后安装需要用到的图形化服务软件
+apt download $(apt-rdepends xfce4 xfce4-goodies | grep -v "^ " | sed "s/debconf-2.0/debconf/g" | xargs apt-cache show 2>/dev/null | grep "Package:" | awk '{print $2}' | sort -u)
+
+# 安装xrdp
+apt download $(apt-rdepends xrdp | grep -v "^ " | sed "s/debconf-2.0/debconf/g")
+
+echo "startxfce4" > ~/.xsession
+
+sudo systemctl start xrdp
+
+# 查看xrdp启动状态
+sudo systemctl status xrdp
+
+# 放开3389端口
+sudo ufw allow 3389/tcp
+# sudo ufw allow 3350/tcp
+
+# 重启xrdp
+sudo systemctl restart xrdp
+#+end_src
+
+** 把文件制作成iso，上传并将挂载到服务器
+
+#+begin_src bash
+# windows使用软碟通制作iso文件
+
+# 从windows将iso文件上传到服务器
+rsync -rP nvidia-driver.iso root@192.168.234.38:~/
+
+# 服务器操作
+mount -t auto nvidia-driver.iso /mnt/
+cd /mnt/
+dpkg -i /*.deb
+# sudo apt --fix-broken install
+./NVIDIA-Linux-x86_64-580.105.08.run
+#+end_src
+
+** Linux 系统下硬盘自动挂载完全指南
+
+#+begin_src bash
+dd if=/dev/zero of=test.img bs=1M count=1024
+image=$(realpath test.img);
+mkfs.ext4 ${image}
+mkdir -p /mnt/myimg
+image=$(realpath test.img); mount -o loop ${image} /mnt/myimg
+# image=$(realpath test.img); echo "UUID=$(blkid ${image} | awk -F "\"" '{print $2}') ${image} $(blkid ${image} | awk -F '=' '{print $4}') defaults,noatime 0 0" | cat >> /etc/fstab
+image=$(realpath test.img); echo "${image} /mnt/myimg loop,defaults,noatime 0 0" | cat >> /etc/fstab
+#+end_src
+
+*** 挂载nvme硬盘示例
+
+#+begin_src bash
+sudo fdisk /dev/nvme1n1
+sudo mkfs.ext4 /dev/nvme1n1p1
+mkdir /nvme1n1p1
+echo "UUID=c3e4baa4-40c7-48a5-a804-081af08b5e31 /nvme1n1p1 ext4 defaults 0 0" >> /etc/fstab
+
+sudo fdisk /dev/nvme2n1 
+sudo mkfs.ext4 /dev/nvme2n1p1
+sudo mkdir /nvme2n1p1
+echo "UUID=3eca7f75-ecdc-4400-89c8-a7f481a25d43 /nvme2n1p1 ext4 defaults 0 0" >> /etc/fstab
+#+end_src
+大于2T的分区，需要在进入fdisk交互环境下时先执行g选项并回车，将硬盘转gpt，然后才能完整分区，否则只能分区2T空间
+
+** 多用户创建与删除
+
+*** 用户列表
+
+|-------|
+| user1 |
+|-------|
+| user2 |
+|-------|
+| user3 |
+|-------|
+| user4 |
+|-------|
+
+*** 创建用户
+
+#+begin_src bash :tangle creUsers.sh
+#!/usr/bin/bash
+users=(
+  user1
+  user2
+  user3
+  user4
+)
+
+for i in "${users[@]}"; do
+  # sudo adduser ${i}
+  sudo adduser --quiet --disabled-password --shell $(which bash) --home /home/${i} --gecos "User" ${i}
+  sleep 1
+  # 添加sudo权限
+  # 以添加 test 这个用户到 sudo 用户组为例子，输入下面命令：
+  sudo usermod -aG sudo ${i}
+  sudo tee /etc/sudoers.d/${i} <<< "${i} ALL=(ALL) ALL"
+  sudo chmod 440 /etc/sudoers.d/${i}
+done
+#+end_src
+
+*** 删除用户
+
+#+begin_src bash :tangle delUsers.sh
+#!/usr/bin/bash
+users=(
+  user1
+  user2
+  user3
+  user4
+)
+
+for i in "${users[@]}"; do
+  echo "${i}";
+  sudo pkill -u ${i}
+  sudo sleep 2
+  # 删除用户及其所有文件
+  # sudo userdel ${i}               # 只删除用户
+  sudo userdel -r ${i}            # 完全删除用户及其主目录
+  # 删除 sudo 配置
+  sudo rm -f /etc/sudoers.d/${i}
+done
+
+#+end_src
+
+** 参考链接
+
+[[https://blog.csdn.net/zgp210317/article/details/120586189][在Ubuntu本地下载软件包并递归下载其所有依赖包]]
+
+[[https://my.oschina.net/emacs_8909430/blog/17561966][批量安装 DEB 软件包的技巧与实践指南]]
+
+[[https://blog.csdn.net/jason_9214/article/details/144967111][ubuntu 22.04 server安装Nvidia驱动]]
+
+[[https://zhuanlan.zhihu.com/p/1894051813780615541][如何把文件夹或文件封装/制作成iso]]
+
+[[https://blog.csdn.net/Eric_xkk/article/details/131800365][Ubuntu22.04安装显卡驱动(高速、避错版)]]
+
+[[https://blog.csdn.net/qq_34777982/article/details/145182505][ubuntu使用iso镜像作为本地apt源――筑梦之路]]
+
+[[https://ynhugo.github.io/p/termux_study/#headline-6][通过Termux和VNC实现以手机为服务器的桌面办公]]
+
+[[https://zhuanlan.zhihu.com/p/1898542254144071601][在Ubuntu Server 22.04上配置静态IP地址]]
+
+[[https://blog.csdn.net/lxh413458727/article/details/144369407][ubuntu-22.04 配置静态IP成功，系统重启后失效]]
+
+[[https://www.cnblogs.com/milton/p/16730512.html][Ubuntu22.04下VNC和远程桌面的区别]]
+
+[[https://blog.csdn.net/ZhrXg/article/details/126831072][Ubuntu安装VNC，配置多用户vnc连接Ubuntu，开机自启vnc命令]]
+
+[[https://blog.csdn.net/w8888666666/article/details/149694700][vnc viewer灰屏问题（已解决）]]
+
+[[https://www.runoob.com/linux/linux-comm-blkid.html][Linux blkid 命令]]
+
+[[https://my.oschina.net/emacs_8895024/blog/17529533][Linux 系统下硬盘自动挂载完全指南]]
+
+[[https://blog.csdn.net/wowocpp/article/details/143566881][ubuntu 22.04 server 格式化 磁盘 为 ext4 并 自动挂载 LTS]]
+
+[[https://blog.csdn.net/u010632165/article/details/89597522][Ubuntu 配置/etc/fstab参数实现开机自动挂载硬盘]]
+
+[[https://www.cnblogs.com/sirdong/p/11969148.html][Linux下mount挂载新硬盘和开机自动挂载]]
+
+[[https://www.cnblogs.com/yanglang/p/9563496.html][SSH-keygen用法]]
+
+[[https://www.bilibili.com/opus/1101233390016790561][在Ubuntu 22.04上安装远程桌面服务]]
+
+[[https://cloud.tencent.com/developer/article/2428030][在Ubuntu22.04上使用xrdp启用远程桌面协议实现图形化]]
+
+[[https://zhuanlan.zhihu.com/p/630067986][Ubuntu安装GPU驱动、CUDA、cuDNN,以及是否安装成功的检测]]
+
+[[https://blog.csdn.net/qq_44004676/article/details/126511759][linux离线环境下安装anaconda]]
+
+[[https://juejin.cn/post/7517227110244417588][ 离线安装 Python 依赖：利用 pip download 构建本地包仓库 ]]
+
+ [[https://blog.csdn.net/weixin_44956153/article/details/142303905][PyTorch离线版本安装（超详细版！）]]

@@ -1,0 +1,63 @@
+---
+title: kali linux
+tags: ["kali"]
+date: 2026-01-10T15:03:32.02+0800
+---
+
+* Kali Linux
+
+** 换源
+#+begin_src bash
+sudo cp /etc/apt/sources.list  /etc/apt/sources.list.bak
+cat > /etc/apt/sources.list <<'EOF'
+deb https://mirrors.aliyun.com/kali kali-rolling main non-free contrib
+deb-src https://mirrors.aliyun.com/kali kali-rolling main non-free contrib
+EOF
+#+end_src
+
+*** 参考链接
+[[https://developer.aliyun.com/mirror/kali?spm=a2c6h.13651102.0.0.3e221b11IPUG76][Kali 镜像 | 阿里云]]
+
+** 安装fcitx-wbpy
+#+begin_src bash
+sudo apt install -y fcitx fcitx-table-wbpy
+reboot
+#+end_src
+
+** kali搭建dvwa环境演练
+#+begin_src bash
+# 克隆dvwa
+git clone -c http.proxy="192.168.1.102:10808" https://github.com/ethicalhack3r/DVWA.git
+
+mv DVWA /var/www/html/dvwa
+chmod -R 755  /var/www/html/dvwa
+
+# 启动mysql服务
+service mysql start
+# 打开mysql，命令“mysql -uroot -p”,默认密码是root
+mysql -uroot -p
+# 进来之后创建数据库表命令
+create database if not exists dvwa;
+# 创建一个新的用户dvwa给所有权限并且密码为root
+create user if not exists 'dvwa'@'localhost' identified by 'root';
+grant all privileges on dvwa.* TO 'dvwa'@'localhost';
+# 刷新一下权限更新并且退出数据库
+flush privileges;
+exit;
+
+# 把/var/www/html/dvwa/config/下config.inc.php.dist修改为config.inc.php
+cp /var/www/html/dvwa/config/config.inc.php.dist /var/www/html/dvwa/config/config.inc.php.dist.bak
+mv /var/www/html/dvwa/config/config.inc.php.dist /var/www/html/dvwa/config/config.inc.php
+# 修改用户名，匹配包含 db_user 的行，注释并添加新行
+sed -i "/.*db_user.*/s/^\(.*\)$/# \1\n\$_DVWA[ 'db_user' ] = 'dvwa';/" /var/www/html/dvwa/config/config.inc.php
+# 修改密码，匹配包含 db_password 的行，注释并添加新行
+sed -i "/.*db_password.*/s/^\(.*\)$/# \1\n\$_DVWA[ 'db_password' ] = 'root';/" /var/www/html/dvwa/config/config.inc.php
+
+# 启动apache2服务并且在浏览器输入输入127.0.0.1/dvwa/setup.php跳转到页面后，也可以用对应的局域网地址访问
+service apache2 start
+# 按Create/Reset Database按钮，# 输入默认账号admin默认密码password
+# 关闭apache2
+service apache2 start
+# OK大功告成
+#+end_src
+

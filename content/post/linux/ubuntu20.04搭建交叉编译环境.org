@@ -1,0 +1,103 @@
+---
+title: "ubuntu20.04搭建交叉编译环境"
+tags: ["ubuntu", "20.04", "交叉编译"]
+date: 2026-05-22T10:02:33.73+0800
+---
+
+#+begin_src bash
+# 根据已知密码配置密码缓冲期
+export SUDO_ASKPASS=$(mktemp)
+cat > ${SUDO_ASKPASS} <<'EOF'
+#!/bin/bash
+# configure password
+echo "ubt"
+EOF
+chmod 700 ${SUDO_ASKPASS}
+sudo -A whoami
+rm -f ${SUDO_ASKPASS}
+while true; do sudo -v; sleep 240; done &
+
+
+sudo tee /etc/apt/sources.list.d/arm64.list > /dev/null << 'END'
+deb https://mirrors.aliyun.com/ubuntu-ports/ focal main restricted universe multiverse
+deb-src https://mirrors.aliyun.com/ubuntu-ports/ focal main restricted universe multiverse
+
+deb https://mirrors.aliyun.com/ubuntu-ports/ focal-security main restricted universe multiverse
+deb-src https://mirrors.aliyun.com/ubuntu-ports/ focal-security main restricted universe multiverse
+
+deb https://mirrors.aliyun.com/ubuntu-ports/ focal-updates main restricted universe multiverse
+deb-src https://mirrors.aliyun.com/ubuntu-ports/ focal-updates main restricted universe multiverse
+
+# deb https://mirrors.aliyun.com/ubuntu-ports/ focal-proposed main restricted universe multiverse
+# deb-src https://mirrors.aliyun.com/ubuntu-ports/ focal-proposed main restricted universe multiverse
+
+deb https://mirrors.aliyun.com/ubuntu-ports/ focal-backports main restricted universe multiverse
+deb-src https://mirrors.aliyun.com/ubuntu-ports/ focal-backports main restricted universe multiverse
+END
+if [ "$(grep "^deb \[arch=arm64\]" /etc/apt/sources.list.d/arm64.list)" == "" ]; then
+  sudo sed -i 's|^\(deb[a-z]* \)|\1[arch=arm64] |g' /etc/apt/sources.list.d/arm64.list # 在每个deb开头行添加[arch=arm64]
+  sudo sed -i '/^deb-src /s/^/#/' /etc/apt/sources.list # deb-src源（源代码包）行首添加注释
+fi
+
+# 要添加的CPU架构（64位ARM），让x86_64系统能够安装和运行arm64架构的软件包。
+sudo dpkg --add-architecture arm64
+
+if [ ! -f "/etc/apt/sources.list_bak" ]; then
+  sudo cp -av /etc/apt/sources.list /etc/apt/sources.list.bak
+fi
+# sudo sed -i "s@http://.*archive.[a-z]*.com@https://mirrors.aliyun.com/@g" /etc/apt/sources.list
+# sudo sed -i "s@http://.*security.[a-z]*.com@https://mirrors.aliyun.com/@g" /etc/apt/sources.list
+
+sudo tee /etc/apt/sources.list /dev/null << 'EOF'
+deb https://mirrors.aliyun.com/ubuntu/ focal main restricted universe multiverse
+deb-src https://mirrors.aliyun.com/ubuntu/ focal main restricted universe multiverse
+
+deb https://mirrors.aliyun.com/ubuntu/ focal-security main restricted universe multiverse
+deb-src https://mirrors.aliyun.com/ubuntu/ focal-security main restricted universe multiverse
+
+deb https://mirrors.aliyun.com/ubuntu/ focal-updates main restricted universe multiverse
+deb-src https://mirrors.aliyun.com/ubuntu/ focal-updates main restricted universe multiverse
+
+# deb https://mirrors.aliyun.com/ubuntu/ focal-proposed main restricted universe multiverse
+# deb-src https://mirrors.aliyun.com/ubuntu/ focal-proposed main restricted universe multiverse
+
+deb https://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse
+deb-src https://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse
+EOF
+if [ "$(grep "deb \[arch=amd64\]" /etc/apt/sources.list)" == "" ]; then
+  sudo sed -i 's|^\(deb[a-z]* \)|\1[arch=amd64] |g' /etc/apt/sources.list # 在每个deb开头行添加[arch=arm64]
+  sudo sed -i '/^deb-src /s/^/#/' /etc/apt/sources.list # deb-src源（源代码包）行首添加注释
+fi
+
+# 更新源
+sudo apt update
+
+# # 重启系统
+# reboot
+
+# 安装libdw
+sudo apt install -y libdw-dev:arm64
+
+# 安装c++编译器
+sudo apt install -y build-essential
+
+# 安装ninja
+sudo apt install -y ninja-build
+
+# 安装交叉编译器
+sudo apt install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
+
+# 安装libssl-dev、cmake
+sudo apt install -y libssl-dev
+wget -c https://github.com/Kitware/CMake/releases/download/v3.24.2/cmake-3.24.2.tar.gz
+tar -zxf cmake-3.24.2.tar.gz
+cd cmake-3.24.2
+./bootstrap
+make -j$(nproc)
+sudo make install
+cd -
+#+end_src
+
+***** 参考链接
+
+[[https://developer.aliyun.com/mirror/ubuntu][Ubuntu 镜像（页面有各版本安装源）]]

@@ -1,0 +1,864 @@
+---
+title: Qt中多线程的使用
+date: 2024-03-26T00:24:22.00+0800
+tags: [qt]
+---
+
+* 参考链接
+
+[[https://subingwen.cn/qt/thread/][Qt中多线程的使用]]
+
+[[https://www.bilibili.com/video/BV1iN411f7dY?p=1][Qt中多线程-线程池的使用-C/C++/qt]]
+
+* Qt中多线程的使用
+
+默认的线程在Qt中称之为窗口线程，也叫主线程，负责窗口事件处理或者窗口控件数据的更新
+
+子线程负责后台的业务逻辑处理，子线程中不能对窗口对象做任何操作，这些事情需要交给窗口线程处理
+
+主线程和子线程之间如果要进行数据的传递，需要使用Qt中的信号槽机制
+
+该博客涉及到三个工程，用到的是同一个ui界面，如下图
+
+[[resources/Qt中多线程的使用/images/Qt多线程中的使用-设计师界面.png]]
+
+** Qthread_1
+
+*** mainwindow.h
+
+#+begin_src c
+  #ifndef MAINWINDOW_H
+  #define MAINWINDOW_H
+
+  #include <QMainWindow>
+  #include "mythread.h"
+
+  QT_BEGIN_NAMESPACE
+  namespace Ui { class MainWindow; }
+  QT_END_NAMESPACE
+
+  class MainWindow : public QMainWindow
+  {
+	  Q_OBJECT
+
+  public:
+	  MainWindow(QWidget *parent = nullptr);
+	  ~MainWindow();
+
+  signals:
+	  void starting(int num);
+
+  private:
+	  Ui::MainWindow *ui;
+  };
+  #endif // MAINWINDOW_H
+#+end_src
+
+*** mainwindow.cpp
+
+#+begin_src c
+  #include "mainwindow.h"
+  #include "ui_mainwindow.h"
+
+  MainWindow::MainWindow(QWidget *parent)
+  : QMainWindow(parent)
+  , ui(new Ui::MainWindow)
+  {
+	  ui->setupUi(this);
+
+	  Generate* gen = new Generate;
+	  BubbleSort* bubble = new BubbleSort;
+	  QuickSort* quick = new QuickSort;
+
+	  connect(this, &MainWindow::starting, gen, &Generate::recvNum);
+	  connect(ui->start, &QPushButton::clicked, this, [=]()
+			  {
+				  emit starting(10000);
+				  gen->start();
+			  });
+	  connect(gen, &Generate::sendArray, bubble, &BubbleSort::recvArray);
+	  connect(gen, &Generate::sendArray, quick, &QuickSort::recvArray);
+	  connect(gen, &Generate::sendArray, this, [=](QVector<int> list)
+			  {
+				  bubble->start();
+				  quick->start();
+				  for(int i = 0; i < list.size(); i++)
+				  {
+					  ui->randList->addItem(QString::number(list.at(i)));
+				  }
+			  });
+	  connect(bubble, &BubbleSort::finish, this, [=](QVector<int> list)
+			  {
+				  for(int i = 0; i < list.size(); i++)
+				  {
+					  ui->bubbleList->addItem(QString::number(list.at(i)));
+				  }
+			  });
+	  connect(quick, &QuickSort::finish, this, [=](QVector<int> list)
+			  {
+				  for(int i = 0; i < list.size(); i++)
+				  {
+					  ui->quickList->addItem(QString::number(list.at(i)));
+				  }
+			  });
+  }
+
+  MainWindow::~MainWindow()
+  {
+	  delete ui;
+  }
+#+end_src
+
+*** mythread.h
+
+#+begin_src c
+  #ifndef MYTHREAD_H
+  #define MYTHREAD_H
+
+  #include <QThread>
+  #include <QVector>
+
+  #pragma execution_character_set("utf-8")
+
+  class Generate : public QThread
+  {
+	  Q_OBJECT
+  public:
+	  explicit Generate(QObject *parent = nullptr);
+
+	  void recvNum(int num);
+
+  protected:
+	  void run();
+
+  signals:
+	  void sendArray(QVector<int> list);
+  private:
+	  int m_num;
+
+  };
+
+  class BubbleSort : public QThread
+  {
+	  Q_OBJECT
+  public:
+	  explicit BubbleSort(QObject *parent = nullptr);
+
+	  void recvArray(QVector<int> list);
+
+  protected:
+	  void run();
+
+  signals:
+	  void finish(QVector<int> num);
+  private:
+	  QVector<int> m_list;
+
+  };
+
+  class QuickSort : public QThread
+  {
+	  Q_OBJECT
+  public:
+	  explicit QuickSort(QObject *parent = nullptr);
+
+	  void recvArray(QVector<int> list);
+
+  protected:
+	  void run();
+  private:
+	  void quickSort(QVector<int> &list, int l, int r);
+
+  signals:
+	  void finish(QVector<int> num);
+  private:
+	  QVector<int> m_list;
+
+  };
+
+
+  #endif // MYTHREAD_H
+#+end_src
+
+*** mythread.cpp
+
+#+begin_src c
+  #include "mythread.h"
+  #include <QRandomGenerator>
+  #include <QElapsedTimer>
+  #include <QDebug>
+
+  Generate::Generate(QObject *parent) : QThread(parent)
+  {
+
+  }
+
+  void Generate::recvNum(int num)
+  {
+	  m_num = num;
+  }
+
+  void Generate::run()
+  {
+	  qDebug() << "生成随机数的线程的线程地址: " << QThread::currentThread();
+	  QVector<int> list;
+	  QElapsedTimer time;
+	  time.start();
+	  for(int i = 0; i < m_num; i++)
+	  {
+		  list.push_back(qrand() % 100000);
+	  }
+	  int mlisec = time.elapsed();
+	  qDebug() << "生成" << m_num << "个随机数总共用时:" << mlisec << "毫秒";
+	  emit sendArray(list);
+  }
+
+  BubbleSort::BubbleSort(QObject *parent) : QThread(parent)
+  {
+
+  }
+
+  void BubbleSort::recvArray(QVector<int> list)
+  {
+	  m_list = list;
+  }
+
+  void BubbleSort::run()
+  {
+	  qDebug() << "冒泡排序的线程的线程地址: " << QThread::currentThread();
+	  QElapsedTimer time;
+	  time.start();
+	  int temp = 0;
+	  for(int i=0; i<m_list.size(); ++i)
+	  {
+		  for(int j=0; j<m_list.size()-i-1; ++j)
+		  {
+			  if(m_list[j] > m_list[j+1])
+			  {
+				  temp = m_list[j];
+				  m_list[j] = m_list[j+1];
+				  m_list[j+1] = temp;
+			  }
+		  }
+	  }
+	  int mlisec = time.elapsed();
+	  qDebug() << "冒泡排序用时" << mlisec << "毫秒";
+	  emit finish(m_list);
+  }
+
+  QuickSort::QuickSort(QObject *parent) : QThread(parent)
+  {
+
+  }
+
+  void QuickSort::recvArray(QVector<int> list)
+  {
+	  m_list = list;
+  }
+
+  void QuickSort::run()
+  {
+	  qDebug() << "快速排序的线程的线程地址: " << QThread::currentThread();
+	  QElapsedTimer time;
+	  time.start();
+	  quickSort(m_list, 0, m_list.size()-1);
+	  int mlisec = time.elapsed();
+	  qDebug() << "快速排序用时" << mlisec << "毫秒";
+	  emit finish(m_list);
+  }
+
+  void QuickSort::quickSort(QVector<int> &s, int l, int r)
+  {
+	  if(l < r)
+	  {
+		  int i = l, j = r;
+		  /* 拿出第一个元素，保存到x中，第一个位置成为一个坑 */
+		  int x = s[l];
+		  while(i < j)
+		  {
+			  /* 从右向左找小于x的数 */
+			  while(i < j && s[j] >= x)
+			  {
+				  /* 左移，直到遇到小于等于x的数 */
+				  j--;
+			  }
+			  if(i < j)
+			  {
+				  /* 将右侧找到的小于x的元素放入左侧坑中，右侧出现一个坑 */
+				  /* 左侧元素索引右移 */
+				  s[i++] = s[j];
+			  }
+
+			  /* 从左向右找大于等于x的数 */
+			  while(i < j && s[i] < x)
+			  {
+				  /* 左移，直到遇到大于x的数 */
+				  i++;
+			  }
+			  if(i < j)
+			  {
+				  /* 将左侧找到的元素放入右侧坑中，左侧出现一个坑 */
+				  /* 右侧元素索引向前移动 */
+				  s[j--] = s[i];
+			  }
+		  }
+		  /* 此时 i=j,将保存在x中的数值填入坑中 */
+		  s[i] = x;
+		  quickSort(s, l, i-1);			/* 递归调用 */
+		  quickSort(s, i+1, r);
+	  }
+  }
+#+end_src
+
+** Qthread_2
+
+*** mainwindow.h
+
+#+begin_src c
+  #ifndef MAINWINDOW_H
+  #define MAINWINDOW_H
+
+  #include <QMainWindow>
+  #include "mythread.h"
+
+  QT_BEGIN_NAMESPACE
+  namespace Ui { class MainWindow; }
+  QT_END_NAMESPACE
+
+  class MainWindow : public QMainWindow
+  {
+	  Q_OBJECT
+
+  public:
+	  MainWindow(QWidget *parent = nullptr);
+	  ~MainWindow();
+
+  signals:
+	  void starting(int num);
+
+  private:
+	  Ui::MainWindow *ui;
+  };
+  #endif // MAINWINDOW_H
+#+end_src
+
+*** mainwindow.cpp
+
+#+begin_src c
+  #include "mainwindow.h"
+  #include "ui_mainwindow.h"
+  #include <QThread>
+
+  MainWindow::MainWindow(QWidget *parent)
+  : QMainWindow(parent)
+  , ui(new Ui::MainWindow)
+  {
+	  ui->setupUi(this);
+
+	  QThread* t1 = new QThread;
+	  QThread* t2 = new QThread;
+	  QThread* t3 = new QThread;
+
+	  Generate* gen = new Generate;
+	  BubbleSort* bubble = new BubbleSort;
+	  QuickSort* quick = new QuickSort;
+
+	  gen->moveToThread(t1);
+	  bubble->moveToThread(t2);
+	  quick->moveToThread(t3);
+
+	  connect(this, &MainWindow::starting, gen, &Generate::working);
+	  connect(ui->start, &QPushButton::clicked, this, [=]()
+			  {
+				  emit starting(10000);
+				  t1->start();
+			  });
+	  connect(gen, &Generate::sendArray, bubble, &BubbleSort::working);
+	  connect(gen, &Generate::sendArray, quick, &QuickSort::working);
+	  connect(gen, &Generate::sendArray, this, [=](QVector<int> list)
+			  {
+				  t2->start();
+				  t3->start();
+				  for(int i = 0; i < list.size(); i++)
+				  {
+					  ui->randList->addItem(QString::number(list.at(i)));
+				  }
+			  });
+	  connect(bubble, &BubbleSort::finish, this, [=](QVector<int> list)
+			  {
+				  for(int i = 0; i < list.size(); i++)
+				  {
+					  ui->bubbleList->addItem(QString::number(list.at(i)));
+				  }
+			  });
+	  connect(quick, &QuickSort::finish, this, [=](QVector<int> list)
+			  {
+				  for(int i = 0; i < list.size(); i++)
+				  {
+					  ui->quickList->addItem(QString::number(list.at(i)));
+				  }
+			  });
+  }
+
+  MainWindow::~MainWindow()
+  {
+	  delete ui;
+  }
+#+end_src
+
+*** mythread.h
+
+#+begin_src c
+  #ifndef MYTHREAD_H
+  #define MYTHREAD_H
+
+  #include <QObject>
+  #include <QVector>
+
+  #pragma execution_character_set("utf-8")
+
+  class Generate : public QObject
+  {
+	  Q_OBJECT
+  public:
+	  explicit Generate(QObject *parent = nullptr);
+
+	  void working(int num);
+
+  signals:
+	  void sendArray(QVector<int> list);
+
+  };
+
+  class BubbleSort : public QObject
+  {
+	  Q_OBJECT
+  public:
+	  explicit BubbleSort(QObject *parent = nullptr);
+
+	  void working(QVector<int> list);
+
+  signals:
+	  void finish(QVector<int> num);
+
+  };
+
+  class QuickSort : public QObject
+  {
+	  Q_OBJECT
+  public:
+	  explicit QuickSort(QObject *parent = nullptr);
+
+	  void working(QVector<int> list);
+  private:
+	  void quickSort(QVector<int> &list, int l, int r);
+
+  signals:
+	  void finish(QVector<int> num);
+
+  };
+  #endif // MYTHREAD_H
+#+end_src
+
+*** mythread.cpp
+
+#+begin_src c
+  #include "mythread.h"
+  #include <QRandomGenerator>
+  #include <QElapsedTimer>
+  #include <QDebug>
+  #include <QThread>
+
+  Generate::Generate(QObject *parent) : QObject(parent)
+  {
+
+  }
+
+  void Generate::working(int num)
+  {
+	  qDebug() << "生成随机数的线程的线程地址: " << QThread::currentThread();
+	  QVector<int> list;
+	  QElapsedTimer time;
+	  time.start();
+	  for(int i = 0; i < num; i++)
+	  {
+		  list.push_back(qrand() % 100000);
+	  }
+	  int mlisec = time.elapsed();
+	  qDebug() << "生成" << num << "个随机数总共用时:" << mlisec << "毫秒";
+	  emit sendArray(list);
+  }
+
+  BubbleSort::BubbleSort(QObject *parent) : QObject(parent)
+  {
+
+  }
+  void BubbleSort::working(QVector<int> list)
+  {
+	  qDebug() << "冒泡排序的线程的线程地址: " << QThread::currentThread();
+	  QElapsedTimer time;
+	  time.start();
+	  int temp = 0;
+	  for(int i=0; i<list.size(); ++i)
+	  {
+		  for(int j=0; j<list.size()-i-1; ++j)
+		  {
+			  if(list[j] > list[j+1])
+			  {
+				  temp = list[j];
+				  list[j] = list[j+1];
+				  list[j+1] = temp;
+			  }
+		  }
+	  }
+	  int mlisec = time.elapsed();
+	  qDebug() << "冒泡排序用时" << mlisec << "毫秒";
+	  emit finish(list);
+  }
+
+  QuickSort::QuickSort(QObject *parent) : QObject(parent)
+  {
+
+  }
+  void QuickSort::working(QVector<int> list)
+  {
+	  qDebug() << "快速排序的线程的线程地址: " << QThread::currentThread();
+	  QElapsedTimer time;
+	  time.start();
+	  quickSort(list, 0, list.size()-1);
+	  int mlisec = time.elapsed();
+	  qDebug() << "快速排序用时" << mlisec << "毫秒";
+	  emit finish(list);
+  }
+
+  void QuickSort::quickSort(QVector<int> &s, int l, int r)
+  {
+	  if(l < r)
+	  {
+		  int i = l, j = r;
+		  /* 拿出第一个元素，保存到x中，第一个位置成为一个坑 */
+		  int x = s[l];
+		  while(i < j)
+		  {
+			  /* 从右向左找小于x的数 */
+			  while(i < j && s[j] >= x)
+			  {
+				  /* 左移，直到遇到小于等于x的数 */
+				  j--;
+			  }
+			  if(i < j)
+			  {
+				  /* 将右侧找到的小于x的元素放入左侧坑中，右侧出现一个坑 */
+				  /* 左侧元素索引右移 */
+				  s[i++] = s[j];
+			  }
+
+			  /* 从左向右找大于等于x的数 */
+			  while(i < j && s[i] < x)
+			  {
+				  /* 左移，直到遇到大于x的数 */
+				  i++;
+			  }
+			  if(i < j)
+			  {
+				  /* 将左侧找到的元素放入右侧坑中，左侧出现一个坑 */
+				  /* 右侧元素索引向前移动 */
+				  s[j--] = s[i];
+			  }
+		  }
+		  /* 此时 i=j,将保存在x中的数值填入坑中 */
+		  s[i] = x;
+		  quickSort(s, l, i-1);			/* 递归调用 */
+		  quickSort(s, i+1, r);
+	  }
+  }
+#+end_src
+
+** Qthreadpool
+
+*** mainwindow.h
+
+#+begin_src c
+  #ifndef MAINWINDOW_H
+  #define MAINWINDOW_H
+
+  #include <QMainWindow>
+  #include "mythread.h"
+
+  QT_BEGIN_NAMESPACE
+  namespace Ui { class MainWindow; }
+  QT_END_NAMESPACE
+
+  class MainWindow : public QMainWindow
+  {
+	  Q_OBJECT
+
+  public:
+	  MainWindow(QWidget *parent = nullptr);
+	  ~MainWindow();
+
+  signals:
+	  void starting(int num);
+
+  private:
+	  Ui::MainWindow *ui;
+  };
+  #endif // MAINWINDOW_H
+#+end_src
+
+*** mainwindow.cpp
+
+#+begin_src c
+  #include "mainwindow.h"
+  #include "ui_mainwindow.h"
+  #include <QThreadPool>
+
+  MainWindow::MainWindow(QWidget *parent)
+  : QMainWindow(parent)
+  , ui(new Ui::MainWindow)
+  {
+	  ui->setupUi(this);
+
+	  Generate* gen = new Generate;
+	  BubbleSort* bubble = new BubbleSort;
+	  QuickSort* quick = new QuickSort;
+
+	  connect(this, &MainWindow::starting, gen, &Generate::recvNum);
+	  connect(ui->start, &QPushButton::clicked, this, [=]()
+			  {
+				  emit starting(10000);
+				  QThreadPool::globalInstance()->start(gen);
+			  });
+	  connect(gen, &Generate::sendArray, bubble, &BubbleSort::recvArray);
+	  connect(gen, &Generate::sendArray, quick, &QuickSort::recvArray);
+	  connect(gen, &Generate::sendArray, this, [=](QVector<int> list)
+			  {
+				  QThreadPool::globalInstance()->start(bubble);
+				  QThreadPool::globalInstance()->start(quick);
+				  for(int i = 0; i < list.size(); i++)
+				  {
+					  ui->randList->addItem(QString::number(list.at(i)));
+				  }
+			  });
+	  connect(bubble, &BubbleSort::finish, this, [=](QVector<int> list)
+			  {
+				  for(int i = 0; i < list.size(); i++)
+				  {
+					  ui->bubbleList->addItem(QString::number(list.at(i)));
+				  }
+			  });
+	  connect(quick, &QuickSort::finish, this, [=](QVector<int> list)
+			  {
+				  for(int i = 0; i < list.size(); i++)
+				  {
+					  ui->quickList->addItem(QString::number(list.at(i)));
+				  }
+			  });
+  }
+
+  MainWindow::~MainWindow()
+  {
+	  delete ui;
+  }
+#+end_src
+
+*** mythread.h
+
+#+begin_src c
+  #ifndef MYTHREAD_H
+  #define MYTHREAD_H
+
+  #include <QVector>
+  #include <QObject>
+  #include <QRunnable>
+
+  #pragma execution_character_set("utf-8")
+
+  class Generate : public QObject, public QRunnable
+  {
+	  Q_OBJECT
+  public:
+	  explicit Generate(QObject *parent = nullptr);
+
+	  void recvNum(int num);
+
+	  void run();
+
+  signals:
+	  void sendArray(QVector<int> list);
+  private:
+	  int m_num;
+
+  };
+
+  class BubbleSort : public QObject, public QRunnable
+  {
+	  Q_OBJECT
+  public:
+	  explicit BubbleSort(QObject *parent = nullptr);
+
+	  void recvArray(QVector<int> list);
+
+	  void run();
+
+  signals:
+	  void finish(QVector<int> num);
+  private:
+	  QVector<int> m_list;
+
+  };
+
+  class QuickSort : public QObject, public QRunnable
+  {
+	  Q_OBJECT
+  public:
+	  explicit QuickSort(QObject *parent = nullptr);
+
+	  void recvArray(QVector<int> list);
+
+	  void run();
+
+  private:
+	  void quickSort(QVector<int> &list, int l, int r);
+
+  signals:
+	  void finish(QVector<int> num);
+  private:
+	  QVector<int> m_list;
+
+  };
+
+
+  #endif // MYTHREAD_H
+#+end_src
+
+*** mythread.cpp
+
+#+begin_src c
+  #include "mythread.h"
+  #include <QRandomGenerator>
+  #include <QElapsedTimer>
+  #include <QDebug>
+  #include <QThread>
+
+  Generate::Generate(QObject *parent) : QObject(parent), QRunnable()
+  {
+	  setAutoDelete(true);
+  }
+
+  void Generate::recvNum(int num)
+  {
+	  m_num = num;
+  }
+
+  void Generate::run()
+  {
+	  qDebug() << "生成随机数的线程的线程地址: " << QThread::currentThread();
+	  QVector<int> list;
+	  QElapsedTimer time;
+	  time.start();
+	  for(int i = 0; i < m_num; i++)
+	  {
+		  list.push_back(qrand() % 100000);
+	  }
+	  int mlisec = time.elapsed();
+	  qDebug() << "生成" << m_num << "个随机数总共用时:" << mlisec << "毫秒";
+	  emit sendArray(list);
+  }
+
+  BubbleSort::BubbleSort(QObject *parent) : QObject(parent), QRunnable()
+  {
+	  setAutoDelete(true);
+  }
+
+  void BubbleSort::recvArray(QVector<int> list)
+  {
+	  m_list = list;
+  }
+
+  void BubbleSort::run()
+  {
+	  qDebug() << "冒泡排序的线程的线程地址: " << QThread::currentThread();
+	  QElapsedTimer time;
+	  time.start();
+	  int temp = 0;
+	  for(int i=0; i<m_list.size(); ++i)
+	  {
+		  for(int j=0; j<m_list.size()-i-1; ++j)
+		  {
+			  if(m_list[j] > m_list[j+1])
+			  {
+				  temp = m_list[j];
+				  m_list[j] = m_list[j+1];
+				  m_list[j+1] = temp;
+			  }
+		  }
+	  }
+	  int mlisec = time.elapsed();
+	  qDebug() << "冒泡排序用时" << mlisec << "毫秒";
+	  emit finish(m_list);
+  }
+
+  QuickSort::QuickSort(QObject *parent) : QObject(parent), QRunnable()
+  {
+	  setAutoDelete(true);
+  }
+
+  void QuickSort::recvArray(QVector<int> list)
+  {
+	  m_list = list;
+  }
+
+  void QuickSort::run()
+  {
+	  qDebug() << "快速排序的线程的线程地址: " << QThread::currentThread();
+	  QElapsedTimer time;
+	  time.start();
+	  quickSort(m_list, 0, m_list.size()-1);
+	  int mlisec = time.elapsed();
+	  qDebug() << "快速排序用时" << mlisec << "毫秒";
+	  emit finish(m_list);
+  }
+
+  void QuickSort::quickSort(QVector<int> &s, int l, int r)
+  {
+	  if(l < r)
+	  {
+		  int i = l, j = r;
+		  /* 拿出第一个元素，保存到x中，第一个位置成为一个坑 */
+		  int x = s[l];
+		  while(i < j)
+		  {
+			  /* 从右向左找小于x的数 */
+			  while(i < j && s[j] >= x)
+			  {
+				  /* 左移，直到遇到小于等于x的数 */
+				  j--;
+			  }
+			  if(i < j)
+			  {
+				  /* 将右侧找到的小于x的元素放入左侧坑中，右侧出现一个坑 */
+				  /* 左侧元素索引右移 */
+				  s[i++] = s[j];
+			  }
+
+			  /* 从左向右找大于等于x的数 */
+			  while(i < j && s[i] < x)
+			  {
+				  /* 左移，直到遇到大于x的数 */
+				  i++;
+			  }
+			  if(i < j)
+			  {
+				  /* 将左侧找到的元素放入右侧坑中，左侧出现一个坑 */
+				  /* 右侧元素索引向前移动 */
+				  s[j--] = s[i];
+			  }
+		  }
+		  /* 此时 i=j,将保存在x中的数值填入坑中 */
+		  s[i] = x;
+		  quickSort(s, l, i-1);			/* 递归调用 */
+		  quickSort(s, i+1, r);
+	  }
+  }
+#+end_src

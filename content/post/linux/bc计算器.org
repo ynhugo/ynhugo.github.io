@@ -1,0 +1,117 @@
+---
+title: "bc计算器"
+tags: ["tools", "linux", "程序员"]
+date: 2024-03-28T01:04:36.43+0800
+---
+
+* 使用方式
+
+最简单的使用方式是在终端执行 bc 命令，然后就进入计算环境，直接输入计算式子进行计算即可
+
+还有一种是通过管道进行计算的，也是我比较喜欢的，如果要计算复杂的式子，用管道会比较方便
+
+以下是一个运行示例，输出十六进制，输入十进制，将十进制256转换为十六进制100
+
+#+begin_src bash
+  $ echo "obase=16;ibase=10;256" | bc
+  100
+#+end_src
+
+- scale代表结果如果包含小数，则保留两位小数
+
+#+begin_src bash
+  echo "scale=2; (100*8000)/12/7000" | bc
+#+end_src
+
+嵌套运算示例
+
+#+begin_src bash
+  $ echo "$(echo "$(echo "$(echo "1*10")" | bc) * 10" | bc) * 10" | bc
+  1000
+#+end_src
+
+* 三角函数、开方和幂次运算
+
+bc在使用参数-l指定代数运算模式下也支持三角函数、开方、幂次等操作。
+但是与matlab等语言不同的是，为了简化代码，bc中三角函数与数学上的函数名字有所不同，具体如下：
+
+s(x) 计算 sin(x)，以下x皆为弧度表示
+c(x) 计算 cos(x)
+a(x) 计算arctangent(x)
+l(x) 计算ln(x)
+e(x) 计算e的x次方，其中e为自然底数
+x^y 计算x的y次方
+sqrt(x) 计算根号下x
+
+例如：
+分别计算sin(1)，cos(0)，arctan(1.0):
+
+#+begin_src bash
+  ~$ echo "s(1)" | bc -l
+  .84147098480789650665
+  ~$ echo "c(0.0)" | bc -l
+  1.00000000000000000000
+  ~$ echo "a(1.0)" | bc -l
+  .78539816339744830961
+#+end_src
+
+分别计算ln(2)，pow(e,1):
+
+#+begin_src bash
+  ~$ echo "l(2)" | bc -l
+  .69314718055994530941
+  ~$ echo "e(1)" | bc -l
+  2.71828182845904523536
+#+end_src
+
+分别计算pow(2,3)，sqrt(9.0)：
+
+#+begin_src bash
+  ~$ echo "2^3" | bc -l
+  8
+  ~$ echo "sqrt(9.0)" | bc -l
+  3.00000000000000000000
+#+end_src
+
+* 如何进行移位运算
+
+** 进行移位运算
+
+以十六进制输出
+
+#+begin_src bash
+  echo "obase=16; $(echo $((1<<29)))" | bc
+  echo "obase=16; $(((1 << 22) | (1 << 20) | (4 << 12) | 6))" | bc
+#+end_src
+
+或
+
+#+begin_src bash
+  temp=0; temp=$(echo "$(((1 << 22) | (1 << 20) | (4 << 12) | 6))" | bc); echo "obase=16; $temp" | bc
+#+end_src
+
+以二进制输出
+
+#+begin_src bash
+  echo "obase=2; $(echo $((1<<29)))" | bc
+#+end_src
+
+** 进制转换
+
+#+begin_src bash
+  echo "0x$(echo "obase=2;ibase=16;3A" | bc)"
+#+end_src
+
+** 参考链接
+
+[[https://blog.csdn.net/qq_45503700/article/details/100678500][第八篇 shell位运算，左移，右移，与运算，进制转换]]
+
+* 注意事项
+
+先设置 obase 在设置 ibase，计算器正常。
+
+在 bc 计算器中，obase 与 ibase 的赋值有先后顺序。
+
+且在计算过程中 obase 与 ibase 只能赋值一次。
+
+进行三角函数、开方，幂次等代数运算时，一定要加上参数-l，表示进行代数运算，不然无法使用内置的三角函数、开方等函数。

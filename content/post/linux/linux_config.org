@@ -1,0 +1,58 @@
+---
+title: Linux_config
+date: 2024-03-26T00:24:18.00+0800
+tags: ["linux"]
+draft: false
+---
+
+* ubuntu18.04配置~/.bashrc
+#+begin_src bash
+#!/bin/bash
+
+cat >> ~/.bashrc <<EOF
+find ./ -name "*~" | xargs rm
+ps -ef | grep "emacs --daemon" | grep -v "grep" > /dev/null 2>&1
+if [ $? -ne 0 ]
+then
+nohup emacs --daemon &
+fi
+alias 'emacs'='emacsclient'
+if [ -e "/data/data/com.termux/files/home/null" ]
+then
+rm /data/data/com.termux/files/home/null
+fi
+if [ -e "/data/data/com.termux/files/home/nohup.out" ]
+then
+        rm /data/data/com.termux/files/home/nohup.out
+fi
+EOF
+
+* ubuntu换源脚本
+#!/bin/bash
+
+cp /etc/apt/sources.list /etc/apt/sources.list.bak
+cat /etc/apt/sources.list > /etc/apt/sources.list
+cat > /etc/apt/sources.list <<EOF
+## 18.04LTS
+# 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic main restricted universe multiverse
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic main restricted universe multiverse
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-updates main restricted universe multiverse
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-updates main restricted universe multiverse
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-backports main restricted universe multiverse
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-backports main restricted universe multiverse
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-security main restricted universe multiverse
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-security main restricted universe multiverse
+# 预发布软件源，不建议启用
+# deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-proposed main restricted universe multiverse
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-proposed main restricted universe multiverse
+EOF
+
+sudo apt update -y && sudo apt upgrade -y
+* 卸载wsl-ubuntu18.04.6参考链接：
+[[https://blog.csdn.net/qq_39645262/article/details/125644647][Windows子系统(WSL2)中自定义安装Ubuntu并换源]
+
+[[https://blog.csdn.net/qq_38162575/article/details/116202725][Windows 10(WSL) 安装Linux发行版Ubuntu18.04]
+
+#+end_src
+

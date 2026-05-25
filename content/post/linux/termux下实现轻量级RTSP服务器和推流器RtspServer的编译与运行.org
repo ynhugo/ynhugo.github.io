@@ -1,0 +1,100 @@
+---
+title: termux下实现轻量级RTSP服务器和推流器RtspServer的编译与运行
+tags: ["rtsp", "termux"]
+date: 2024-12-24T21:01:00.640000000+0800
+---
+
+* 项目概述
+RtspServer 是由 PHZ76 开发的高效、可定制的实时流媒体服务器解决方案。它基于作者编写的网络基础库 xop，允许开发者轻松处理和分发实时音视频流。项目提供了一个名为 DesktopSharing 的示例应用，可以捕获桌面和麦克风声音，并在编码后通过 RTSP 协议进行转发和推流。该项目支持Windows 和 Linux 平台，代码量少，相比于 live555 等经典的流媒体库，RtspServer 更加轻量级，易于集成和二次开发。
+
+* 技术分析
+** 支持的编码格式
+RtspServer 支持多种音视频编码格式，涵盖了广泛的应用场景：
+
+- 视频编码：H.264、H.265
+- 音频编码：G.711A、AAC
+
+** 传输方式
+- 单播 (Unicast)：
+RTP_OVER_UDP：通过 UDP 协议传输 RTP 数据，延迟低，但在网络不稳定时可能会丢包。
+RTP_OVER_RTSP (TCP)：通过 RTSP 协议在 TCP 连接上传输 RTP 数据，可靠性高，适用于防火墙或 NAT 环境。
+
+- 组播 (Multicast)：
+适用于需要将同一流媒体数据发送给多个客户端的场景，节省网络带宽。
+
+** 心跳检测机制
+针对单播传输，RtspServer 内置了心跳检测机制，可以及时发现和处理连接异常，确保数据传输的稳定性。
+
+** RTSP 推流
+RtspServer 支持 RTSP 推流功能，使用 TCP 协议进行数据传输，保证了数据的可靠传输，适用于对传输可靠性要求较高的应用场景。
+
+** 安全性
+RtspServer 内置了摘要认证（Digest Authentication），为服务提供了安全保障，防止未经授权的访问。
+
+* 架构分析
+RtspServer 的架构主要包括以下组件：
+- RTSP Server：处理客户端的 RTSP 请求，包括 SETUP、PLAY、PAUSE、TEARDOWN 等指令，管理会话和媒体流。
+- Media Session：表示一个媒体会话，包含媒体流的相关信息，如流名称、媒体类型、编码格式等。
+- Media Source：媒体源，负责提供音视频帧数据，可以来自文件、摄像头、麦克风或其他实时数据源。
+- RTP Connection：负责通过 RTP 协议发送音视频数据，支持单播和组播传输。
+
+* 流程分析
+1. 客户端连接和会话建立
+客户端通过 RTSP 协议发送连接请求到服务器。
+RTSP Server 接收到请求后，解析并创建一个新的 Media Session。
+为每个媒体流（音频或视频）创建对应的 Media Source。
+2. 媒体数据传输
+Media Source 获取音视频数据帧（可能来自编码器或实时采集设备）。
+RTP Connection 负责将媒体数据打包成 RTP 包，通过网络传输给客户端。
+支持的传输方式包括 RTP_OVER_UDP、RTP_OVER_RTSP 和组播。
+3. 心跳检测和连接维护
+为了保持连接的稳定性，服务器会定期发送心跳检测，确认客户端的在线状态。
+如果检测到连接异常，服务器会及时释放资源，防止资源泄漏。
+
+* xop 基础库
+** 项目介绍
+xop 是 RtspServer 的基础网络库，参考了 muduo 和 live555 的设计，封装了一个简单高效的网络框架，提供了构建高性能网络应用的基础组件。
+
+** 功能特性
+- 跨平台支持：兼容 Windows 和 Linux 操作系统。
+  - Windows 下：使用 select 实现事件循环。
+  - Linux 下：使用 epoll 实现高效的事件通知机制。
+- 事件驱动模型：基于 Reactor 模式，实现非阻塞 IO 和事件驱动。
+- 定时器：提供高精度的定时任务调度。
+- 内存管理：实现了环形缓冲区和内存池，提升内存分配和释放的效率。
+- 日志系统：内置简洁的日志功能，方便调试和运行监控。
+- EventLoop：事件循环，核心组件，负责监听和分发 IO 事件、定时器事件等。
+- Channel：通道，封装了文件描述符及其感兴趣的事件类型，如可读、可写等。
+- TimerQueue：定时器队列，管理所有的定时任务。
+- Buffer：缓冲区，提供高效的数据读写接口。
+- Acceptor：监听器，负责接受新的客户端连接。
+
+* 编译与运行
+
+#+begin_src bash
+  git clone https://github.com/PHZ76/RtspServer.git
+  cd RtspServer
+  find ./ -name "*.cpp" -o -name "*.h" | xargs sed -i s/554/8554/g # 因为手机上面低的端口有安全限制，所以这里将默认的554端口更改为8554，如果是ubuntu的话可以省略该命令
+  make
+  sudo ./rtsp_h264_file test.h264
+#+end_src
+
+** 测试
+
+客户端使用VLC，选择打开网络串流，在URL栏中填写：
+
+#+begin_src bash
+rtsp://192.168.3.33:8554/live
+#+end_src
+
+也可以使用ffplay命令播放，播放方式：
+
+#+begin_src bash
+  ffplay rtsp://192.168.3.33:8554/live
+  或
+  ffplay -x 1920 -y 1080 rtsp://192.168.3.33:8554/live
+#+end_src
+
+* 参考链接
+
+[[https://blog.csdn.net/stallion5632/article/details/142487150][RtspServer:轻量级RTSP服务器和推流器]]

@@ -1,0 +1,31 @@
+---
+title: "mstsc教程"
+date: 2023-11-22T02:03:03+08:00
+draft: false
+---
+
+* 参考链接
+
+[[https://blog.csdn.net/MssGuo/article/details/116245252][Windows远程桌面连接（有密码和无密码连接）]]
+
+[[https://blog.csdn.net/CGS_______/article/details/120083545][win10 无用户名密码 实现mstsc远程桌面连接]]
+
+* mstsc 教程
+
+** 客户端设置
+
+开始 > 运行 （win+R) > 输入secpol.msc，打开本地安全策略
+本地策略 > 安全选项 > 使用空密码的本地账户只允许进行控制台登录 > 禁用
+在这里插入图片描述
+
+[[resources/mstsc教程/png1.png]]
+
+** 服务端设置
+
+[[resources/mstsc教程/png2.png]]
+
+控制面板 > 用户账户 > 用户账户 > 管理其他账户
+
+选择要更改的 账户 > 更改密码 > 填写当前密码不填新密码 > 点击更改密码
+
+再次打开mstsc远程桌面连接，输入ip和用户名后（或者输入ip无需输入用户名），点击连接即可远程过去

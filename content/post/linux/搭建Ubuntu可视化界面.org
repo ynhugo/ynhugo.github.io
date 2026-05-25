@@ -1,0 +1,101 @@
+---
+title: 搭建Ubuntu可视化界面
+tags: ["云服务器", "腾讯云", "linux", "vnc"]
+date: 2026-03-20T03:34:56.34+0800
+---
+
+* 搭建 Ubuntu 可视化界面
+
+** 系统环境
+#+begin_src bash
+ cat /etc/os-release
+PRETTY_NAME="Ubuntu 24.04 LTS"
+NAME="Ubuntu"
+VERSION_ID="24.04"
+VERSION="24.04 LTS (Noble Numbat)"
+VERSION_CODENAME=noble
+ID=ubuntu
+ID_LIKE=debian
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+UBUNTU_CODENAME=noble
+LOGO=ubuntu-logo
+ uname -a
+Linux VM-4-13-ubuntu 6.8.0-71-generic #71-Ubuntu SMP PREEMPT_DYNAMIC Tue Jul 22 16:52:38 UTC 2025 x86_64 x86_64 x86_64 GNU/Linux
+#+end_src
+
+** 安装软件包
+#+begin_src bash
+# 1. 使用标准登录方式登录 Linux 实例（推荐）。
+
+# 2. 执行以下命令，清空缓存，更新您的软件包列表。
+sudo apt clean all && sudo apt update
+
+# 3. 执行以下命令，安装桌面环境所需软件包。
+sudo apt install -y xfce4 xfce4-goodies dbus-x11
+
+# 4. 执行以下命令，安装 VNC。
+sudo apt install -y tightvncserver
+#+end_src
+
+** 配置VNC
+#+begin_src bash
+# 1. 执行以下命令，启动 VNC 服务，并设置 VNC 的密码。
+# 注意：
+# 一般 VNC 服务器密码最大长度是8位，所以这里不能设置超过8位的密码。
+vncserver
+
+# 返回类似如下结果，表示 VNC 启动成功。
+<<'CONTENT'
+ vncserver
+
+You will require a password to access your desktops.
+
+Password:
+Verify:
+Would you like to enter a view-only password (y/n)? n
+xauth:  file /root/.Xauthority does not exist
+
+New 'X' desktop is VM-4-13-ubuntu:1
+
+Creating default startup script /root/.vnc/xstartup
+Starting applications specified in /root/.vnc/xstartup
+Log file is /root/.vnc/VM-4-13-ubuntu:1.log
+CONTENT
+
+# 2. 修改VNC配置文件
+echo "startxfce4 &" >> ~/.vnc/xstartup
+# 完整内容如下
+<<'CONTENT'
+#!/bin/sh
+
+xrdb "$HOME/.Xresources"
+xsetroot -solid grey
+#x-terminal-emulator -geometry 80x24+10+10 -ls -title "$VNCDESKTOP Desktop" &
+#x-window-manager &
+# Fix to make GNOME work
+export XKL_XMODMAP_DISABLE=1
+/etc/X11/Xsession
+startxfce4 &
+CONTENT
+
+# 3. 执行以下命令，重启桌面进程。
+vncserver -kill :1 #杀掉原桌面进程，输入命令（其中的:1是桌面号）
+
+# 启动VNC服务
+# vncserver
+vncserver :1  -geometry 1920x1080  -depth 24 -localhost no
+
+# 查看启动的vnc服务，可以看到对应的端口及桌面号
+ps aux | grep "vnc"
+
+# 接下来就是使用VNC Viewer连接了，输入IP:端口号即可
+
+# 我使用的是腾讯云服务器，没有成功，可能是服务器的问题，先到这里
+#+end_src
+
+*** 参考链接
+
+[[https://cloud.tencent.com/document/product/213/46001][搭建 Ubuntu 可视化界面]]

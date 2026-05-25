@@ -1,0 +1,40 @@
+---
+title: Emacs使用本地elpa镜像
+tags: ["Emacs", "elpa", "package"]
+date: 2024-12-07T23:34:29.360000000+0800
+---
+
+* Emacs使用本地elpa镜像
+
+** 搭建本地镜像源
+可以将国内的elpa镜像同步到本地作为自己的镜像源，以清华elpa镜像源为例。
+
+** 同步镜像源
+国内的elpa镜像源都有同步地址，如清华镜像同步地址为rsync://mirrors.tuna.tsinghua.edu.cn/elpa/,使用 rsync 命令进行同步。
+
+#+begin_src bash
+  // 查看同步内容
+  rsync rsync://mirrors.tuna.tsinghua.edu.cn/elpa/ 
+  // 将镜像内容同步到本机 ~/elpa 目录下
+  rsync -avz rsync://mirrors.tuna.tsinghua.edu.cn/elpa/ ~/elpa
+#+end_src
+
+等待一段时间即可同步完成。注意同步时要仔细阅读同步要求，尽量不要对镜像服务器造成流量压力。
+
+** emacs 中使用本地镜像
+
+#+begin_src emacs-lisp
+  ;; emacs 初始化文件中添加以下代码
+  (setq package-archives '(("gnu" . "~/elpa/gnu/")
+						   ("melpa" . "~/elpa/melpa/")
+						   ("nongnu" . "~/elpa/nongnu/")
+						   ("org" . "~/elpa/org/")
+						   ("melpa-stable" . "~/elpa/stable-melpa/")))
+  (package-initialize)
+#+end_src
+
+添加完成后保存重启emacs，然后使用 M-x package-list-packages 命令既可以查看本地melpa等镜像中的包，而且如果电脑处于断网离线状态，依然可以安装本地镜像中存在的包。
+
+* 参考链接
+
+[[https://blog.csdn.net/weixin_46253518/article/details/128474079][1. Emacs使用本地elpa镜像]]

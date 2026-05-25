@@ -1,0 +1,155 @@
+---
+title: "Git修改与提交完整总结-含高级用法"
+tags: ["git", "commit"]
+date: 2026-05-12T10:16:11.19+0800
+---
+
+* Git修改与提交完整总结（含高级用法）
+
+** 一、查看修改（提交前/后）
+
+| 场景                         | 命令                                      | 说明                                 |
+|------------------------------+-------------------------------------------+--------------------------------------|
+| 查看工作区修改（未暂存）     | ~git diff~                                | 查看已修改但未 ~git add~ 的内容       |
+| 查看暂存区修改（已暂存未提交）| ~git diff --staged~ 或 ~git diff --cached~| 查看已 ~git add~ 但未 ~git commit~ 的内容 |
+| 查看最近一次提交的修改       | ~git show~                                | 显示最新提交的详细内容               |
+| 查看特定提交的修改           | ~git show <commit-hash>~                  | 如 ~git show 13b99c0~                |
+| 查看提交历史+修改统计        | ~git log --stat~                          | 每次提交改了哪些文件                 |
+| 查看提交历史+详细内容        | ~git log -p~                              | 每次提交的具体代码改动               |
+| 只看修改了哪些文件           | ~git diff --name-only~                    | 不显示具体内容                       |
+
+** 二、提交修改（基础）
+
+| 方式                         | 命令                                      | 说明                                 |
+|------------------------------+-------------------------------------------+--------------------------------------|
+| 分两步（推荐）               | ~git add <文件>~<br />~git commit -m "说明"~ | 先暂存后提交，可先确认内容           |
+| 一步完成（已跟踪文件）       | ~git commit -a -m "说明"~                 | 自动暂存所有已跟踪文件的修改         |
+| 编辑器编写说明               | ~git commit~ 或 ~git commit -v~           | 打开编辑器写详细说明                 |
+
+** 三、从 diff 输出提取提交说明（高级）
+
+*** 1. 提取单行作为提交说明
+
+#+BEGIN_SRC bash
+git commit -m "$(git diff --cached | grep '+;;' | head -1 | sed 's/^+//')"
+#+END_SRC
+
+- ~grep '+;;'~ : 筛选包含 ~+;;~ 的行（新增的以 ~;;~ 开头的行）
+- ~head -1~ : 只取第一行
+- ~sed 's/^+//'~ : 去掉行首的 ~+~ 号
+
+*** 2. 提取多行组合成提交说明
+
+**** 方式一：用分号连接多行
+
+#+BEGIN_SRC bash
+git commit -m "$(git diff --cached | grep '+;;' | sed 's/^+//' | tr '\n' '; ')"
+#+END_SRC
+
+- ~tr '\n' '; '~ : 将换行符替换为分号+空格，多行合并为一行
+
+**** 方式二：用空格连接
+
+#+BEGIN_SRC bash
+git commit -m "$(git diff --cached | grep '+;;' | sed 's/^+//' | paste -sd ' ' -)"
+#+END_SRC
+
+- ~paste -sd ' ' -~ : 用空格连接多行（~-s~ 串行化，~-d ' '~ 指定分隔符）
+
+**** 方式三：保留换行（需用 ~-F~ 从文件读取）
+
+#+BEGIN_SRC bash
+git diff --cached | grep '+;;' | sed 's/^+//' > /tmp/msg.txt
+git commit -F /tmp/msg.txt
+#+END_SRC
+
+- ~-F~ : 从文件读取提交说明，可保留多行格式
+
+*** 3. 带固定前缀组合
+
+#+BEGIN_SRC bash
+git commit -m "$(echo "更新配置: "; git diff --cached | grep '+;;' | sed 's/^+;; //' | tr '\n' ' ')"
+#+END_SRC
+
+结果示例：~更新配置: 或 bean-price main.beancount 2> /dev/null >> prices.beancount~
+
+*** 4. 创建 Git 别名（一劳永逸）
+
+#+BEGIN_SRC bash
+# 单行版本
+git config --global alias.commit-diff '!git commit -m "$(git diff --cached | grep "+;;" | head -1 | sed "s/^+//")"'
+
+# 多行组合版本（分号连接）
+git config --global alias.commit-diff-all '!git commit -m "$(git diff --cached | grep "+;;" | sed "s/^+//" | tr "\n" "; ")"'
+
+# 使用别名
+git commit-diff      # 提取第一行
+git commit-diff-all  # 提取所有匹配行并合并
+#+END_SRC
+
+*** 5. 与编辑器结合（预填充，可修改）
+
+#+BEGIN_SRC bash
+git commit -e -m "$(git diff --cached | grep '+;;' | head -1 | sed 's/^+;; //')"
+#+END_SRC
+
+- ~-e~ : 打开编辑器，允许修改预填充的提交说明
+
+** 四、实用场景示例
+
+*** 场景一：提取新增的配置行作为提交说明
+
+#+BEGIN_SRC bash
+# 暂存文件后
+git add prices.beancount
+
+# 提取所有新增的 ;; 注释行作为提交说明
+git commit -m "$(git diff --cached | grep '^+;;' | sed 's/^+//' | tr '\n' '; ')"
+#+END_SRC
+
+*** 场景二：提取函数名作为提交说明
+
+#+BEGIN_SRC bash
+# 假设 diff 中有 "+def new_function():"
+git commit -m "$(git diff --cached | grep '^+def ' | sed 's/^+def //' | sed 's/(.*$//' | head -1)"
+#+END_SRC
+
+** 五、关键提醒
+
+| 要点                     | 说明                                                       |
+|--------------------------+------------------------------------------------------------|
+| ⚠️ 提交后暂存区清空      | ~git diff --staged~ 为空是正常的，用 ~git show~ 查看历史   |
+| ⚠️ 空提交说明会失败      | 如果 ~grep~ 找不到匹配行，命令会报错                       |
+| ⚠️ 自动提取不够智能      | 适合固定格式的提交（如配置行、注释），复杂提交建议手动写   |
+| ✅ 好习惯                | 提交说明写"为什么改"而非"改了什么"                         |
+
+** 六、完整工作流速查
+
+*** 基础工作流
+
+#+BEGIN_SRC bash
+git status                    # 查看状态
+git diff                      # 确认修改内容
+git add prices.beancount      # 暂存文件
+git diff --staged             # 确认暂存内容（提交前最后检查）
+git commit -m "清晰说明"       # 提交
+#+END_SRC
+
+*** 高级工作流（自动提取提交说明）
+
+#+BEGIN_SRC bash
+git add prices.beancount
+git commit -m "$(git diff --cached | grep '^+;;' | sed 's/^+//' | tr '\n' '; ')"
+#+END_SRC
+
+*** 提交后验证
+
+#+BEGIN_SRC bash
+git show                      # 确认提交内容
+git log --oneline -1          # 查看最新提交记录
+#+END_SRC
+
+
+** 参考链接
+
+[[https://chat.deepseek.com/share/05ana37nnzemg44412][Git提交修改记录]]

@@ -1,0 +1,70 @@
+---
+title: 网络安全
+tags: ["网络安全"]
+date: 2025-09-19T10:26:43.89+0800
+---
+
+* 工具安装
+
+** Termux安装MSF框架
+
+#+begin_src bash
+# Metasploite 黑客 Top10 工具之一，漏洞攻击库，安全从业者必备工具之一，也在各大黑客题材的电影中频频出现。通过 Github 上的 m-wiz 项目来辅助安装 Metasploit ，脚本启动比较简单：
+
+# 安装依赖
+pkg install git
+
+# 克隆脚本项目
+git clone https://github.com/noob-hackers/m-wiz
+
+# 运行脚本
+cd m-wiz && bash m-wiz.sh
+
+# 安装的时候还会有一些提示，比如选择 Metasploit 的版本之类的，大家根据提示自己选择安装即可，安装的过程可能会安装其他 Ruby gem，因此能需要很长时间。在安装完成之前，请勿关闭 Termux 会话，否则可能会出一些玄学问题导致安装失败，总之耐心等待即可。
+
+# 添加环境变量
+echo 'export PATH="$PATH:/data/data/com.termux/files/home/metasploit-framework"' >> ~/.bashrc
+source ~/.bashrc
+#+end_src
+
+*** 参考链接
+
+[[https://www.sqlsec.com/2018/05/termux.html#Metasploit][Termux 高级终端安装使用配置教程（国光）-Metasploit]]
+
+[[https://www.runoob.com/linux/linux-comm-nmap.html][Linux nmap 命令（菜鸟教程）]]
+
+** SQLmap
+
+#+begin_src bash
+git clone https://github.com/sqlmapproject/sqlmap.git
+cd sqlmap
+python sqlmap.py
+#+end_src
+
+*** 参考链接
+
+[[https://www.sqlsec.com/2018/05/termux.html#SQLmap][Termux 高级终端安装使用配置教程（国光）-SQLmap]]
+
+** 网络安全学习指南
+关于黑客环境准备，一个是可以下载kali虚拟机，解压后使用vmware打开虚拟机文件直接运行，记得做快照，这样折腾坏了好恢复；另一个是可以在安卓手机上安装termux，在termux中搭建黑客环境，termux入门教程推荐看国光的文章，我当初入门termux就是看国光的termux教程，教程地址：[[https://www.sqlsec.com/2018/05/termux.html][https://www.sqlsec.com/2018/05/termux.html]]
+
+如果你想快速构建一个测试用的漏洞靶场，可使用 Vulhub 项目快速部署漏洞测试靶场。Vulhub 是一个基于 docker 和 docker-compose 的漏洞环境集合，让漏洞复现变得更加简单，让安全研究者更加专注于漏洞原理本身。
+
+Vulhub 项目地址：[[https://vulhub.org/][https://vulhub.org/]]
+
+*** 参考链接
+[[https://www.sqlsec.com/2018/05/termux.html][Termux 高级终端安装使用配置教程]]
+
+[[https://www.sqlsec.com/2018/05/termux.html#信息安全][Termux 高级终端安装使用配置教程（国光） - 信息安全]]
+
+[[https://gist.github.com/caoya171193579/0662f16eeedf51a9307e01069a2bedf1][信息安全中常用术语介绍]]
+
+[[https://vulhub.org/zh][Vulhub]]
+
+[[https://ynhugo.github.io/p/在安卓系统上搭建-dvwa-和-sqli-靶场/#headline-4][在安卓系统上搭建 DVWA 和 SQLI 靶场]]
+
+[[https://kali.wiki][KaliArchive ・ Kali Linux 技术文献库]]
+
+[[https://bbskali.cn/forum.php?gid=53][kali 基础 | bbskali.cn]]
+
+[[https://vulhub.org/zh/getting-started][Vulhub入门指南]]

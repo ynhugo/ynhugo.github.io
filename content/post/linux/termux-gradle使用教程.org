@@ -1,0 +1,223 @@
+---
+title: termux-gradle使用教程
+tag: ["termux", "gradle", "app"]
+date: 2024-11-01T03:14:40.18+0800
+---
+
+* 安装 Termux 和必要工具
+
+只是创建、编译、运行项目，没有打包生成apk的内容，不过将在网上找到的链接添加到参考链接中了，感兴趣可以看一看。
+
+** 安装 Termux
+
+如果还没有安装 Termux，可以从 F-Droid 或 Google Play 商店安装。
+
+** 更新和安装必需的软件
+
+打开 Termux，执行以下命令以更新包管理器和安装 Java 和 Gradle：
+
+#+begin_src bash
+  pkg update && pkg upgrade
+  pkg install openjdk-17
+  pkg install gradle
+#+end_src
+
+* 创建一个简单的 Gradle 项目
+
+** 实现过程
+
+除了java版本需要指定一下，其他全部默认即可。
+
+*** 查看java版本
+
+#+begin_src 
+~/ts/MyApplication $ java -version
+openjdk version "17-internal" 2021-09-14
+OpenJDK Runtime Environment (build 17-internal+0-adhoc..src)
+OpenJDK 64-Bit Server VM (build 17-internal+0-adhoc..src, mixed mode)
+#+end_src
+
+*** 创建项目目录
+
+#+begin_src bash
+  mkdir MyGradleApp
+  cd MyGradleApp
+#+end_src
+
+
+*** 初始化 Gradle 项目
+
+使用 Gradle 初始化项目
+
+#+begin_src bash 
+  gradle init
+  # 或
+  gradle init --type java-application
+#+end_src
+
+*** 查看项目树
+
+#+begin_src 
+~/ts/MyApplication $ tree
+.
+├── app
+│   ├── build.gradle.kts
+│   └── src
+│       ├── main
+│       │   ├── java
+│       │   │   └── org
+│       │   │       └── example
+│       │   │           └── App.java
+│       │   └── resources
+│       └── test
+│           ├── java
+│           │   └── org
+│           │       └── example
+│           │           └── AppTest.java
+│           └── resources
+├── gradle
+│   ├── libs.versions.toml
+│   └── wrapper
+│       ├── gradle-wrapper.jar
+│       └── gradle-wrapper.properties
+├── gradlew
+├── gradlew.bat
+└── settings.gradle.kts
+
+15 directories, 9 files
+#+end_src
+
+*** 构建项目
+
+在项目根目录下运行以下命令以构建项目
+
+#+begin_src bash 
+  gradle build
+#+end_src
+
+*** 运行项目
+
+构建成功后，可以运行你的应用
+
+#+begin_src bash 
+  gradle run
+#+end_src
+
+*** 完整执行过程
+
+先确认 java 版本，然后执行 gradle init ，过程中一路回车，直到需要输入 java 版本时根据之前查看的版本进行输入，然后接着一路回车到底，最后执行 gradle build 进行编译，再执行 gradle run 运行程序。
+
+#+begin_src 
+~/ts/MyApplication $ java -version
+openjdk version "17-internal" 2021-09-14
+OpenJDK Runtime Environment (build 17-internal+0-adhoc..src)
+OpenJDK 64-Bit Server VM (build 17-internal+0-adhoc..src, mixed mode)
+~/ts/MyApplication $ gradle init
+
+Select type of build to generate:
+  1: Application
+  2: Library
+  3: Gradle plugin
+  4: Basic (build structure only)
+Enter selection (default: Application) [1..4]
+
+Select implementation language:
+  1: Java
+  2: Kotlin
+  3: Groovy
+  4: Scala
+  5: C++
+  6: Swift
+Enter selection (default: Java) [1..6]
+
+Enter target Java version (min: 7, default: 21): 17
+
+Project name (default: MyApplication):
+
+Select application structure:
+  1: Single application project
+  2: Application and library project
+Enter selection (default: Single application project) [1..2]
+
+Select build script DSL:
+  1: Kotlin
+  2: Groovy
+Enter selection (default: Kotlin) [1..2]
+
+Select test framework:
+  1: JUnit 4
+  2: TestNG
+  3: Spock
+  4: JUnit Jupiter
+Enter selection (default: JUnit Jupiter) [1..4]
+
+Generate build using new APIs and behavior (some features may change in the next minor release)? (default: no) [yes, no]
+
+
+> Task :init
+Learn more about Gradle by exploring our Samples at https://docs.gradle.org/8.10.2/samples/sample_building_java_applications.html
+
+BUILD SUCCESSFUL in 17s
+1 actionable task: 1 executed
+~/ts/MyApplication $ tree
+.
+├── app
+│   ├── build.gradle.kts
+│   └── src
+│       ├── main
+│       │   ├── java
+│       │   │   └── org
+│       │   │       └── example
+│       │   │           └── App.java
+│       │   └── resources
+│       └── test
+│           ├── java
+│           │   └── org
+│           │       └── example
+│           │           └── AppTest.java
+│           └── resources
+├── gradle
+│   ├── libs.versions.toml
+│   └── wrapper
+│       ├── gradle-wrapper.jar
+│       └── gradle-wrapper.properties
+├── gradlew
+├── gradlew.bat
+└── settings.gradle.kts
+
+15 directories, 9 files
+~/ts/MyApplication $ gradle build
+> Task :app:compileJava
+> Task :app:processResources NO-SOURCE
+> Task :app:classes
+> Task :app:jar
+> Task :app:startScripts
+> Task :app:distTar
+> Task :app:distZip
+> Task :app:assemble
+> Task :app:compileTestJava
+> Task :app:processTestResources NO-SOURCE
+> Task :app:testClasses
+> Task :app:test
+> Task :app:check
+> Task :app:build
+
+BUILD SUCCESSFUL in 2s
+7 actionable tasks: 7 executed
+~/ts/MyApplication $ gradle run
+> Task :app:compileJava UP-TO-DATE
+> Task :app:processResources NO-SOURCE
+> Task :app:classes UP-TO-DATE
+
+> Task :app:run
+Hello World!
+
+BUILD SUCCESSFUL in 1s
+2 actionable tasks: 1 executed, 1 up-to-date
+#+end_src
+
+** 参考链接
+
+[[https://gradle.github.net.cn/current/userguide/part1_gradle_init.html][第 1 部分：初始化项目]]
+
+[[https://blog.51cto.com/u_16175521/12656675][gradle 打包命令 Android gradle命令行打包生成apk]]

@@ -1,0 +1,31 @@
+---
+title: 使用HTTP_Basic_Auth下载受保护文件
+tags: ["http", "https", "下载", "验证"]
+date: 2026-03-25T15:16:50.13+0800
+---
+
+* 使用 HTTP Basic Auth 下载受保护文件
+
+在实际开发和资源下载中，很多服务器会对文件进行账号验证。其中最常见的方式是 **HTTP Basic Authentication**，它通过简单的用户名和密码认证来控制访问。
+
+** URL 方式
+
+HTTP Basic Auth 支持将账号信息直接嵌入 URL：
+#+begin_src bash
+https://用户名:密码@域名/路径/文件名
+#+end_src
+
+** 示例
+
+假设我们要下载的文件地址为：
+#+begin_src bash
+https://download.fdwxhb.com/data/.../icraft3.31_ubuntuFs.cpio.gz
+#+end_src
+
+账号为 user，密码为 pass，则完整 URL 为：
+#+begin_src bash
+https://user:pass@download.fdwxhb.com/data/.../icraft3.31_ubuntuFs.cpio.gz
+#+end_src
+
+** 参考链接
+[[https://blog.csdn.net/weixin_39765280/article/details/111338745][url+用户名+密码_URI和URL详解]]

@@ -1,0 +1,23 @@
+---
+title: "从零开始将Emacs绿色便携化_打包即用"
+date: 2024-03-26T00:55:07+08:00
+tags: ["emacs"]
+---
+
+* windos
+
+在emacs官网下载"emacs-28.2-no-deps.zip"，"no-deps"表示没有依赖，下载之后解压该并重命名为"emacs"，然后在"emacs/share/emacs/site-lisp/"下创建"site-start.el"文件并添加以下代码
+
+#+begin_src emacs-lisp
+  (defvar program-dir       
+
+	(replace-regexp-in-string "share/emacs.*/etc/$" "home/" data-directory :from-end))   
+
+  (setenv "HOME" program-dir) 
+
+  (load "~/.emacs.d/init.el")
+#+end_src
+
+如果打开u盘中的emacs提示找不到libgmp-10.dll，可以将安装到电脑上的emacs安装目录的bin目录下的libgmp-10.dll拷贝到u盘emacs存放目录的bin路径下与emacs可执行文件保持同一路径即可
+
+也可以下载博客中提供的libgmp-10.dll：[[resources/libgmp-10.dll][libgmp-10.dll]]

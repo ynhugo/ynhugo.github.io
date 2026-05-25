@@ -1,0 +1,110 @@
+---
+title:  Visual Studio 安装路径异常（F盘残留）问题分析与彻底解决
+tags: ["visual studio", "2022"]
+date: 2026-04-15T19:28:14.76+0800
+---
+
+* Visual Studio 安装路径异常（F盘残留）问题分析与彻底解决
+
+** 问题背景
+在安装 =Visual Studio 2022= 时，即使系统中没有 F 盘，安装界面仍显示如下路径：
+
+#+begin_example
+F:\Program Files (x86)\Microsoft Visual Studio\Shared
+#+end_example
+
+且该路径无法修改。
+
+** 原因分析
+
+该问题本质是 =Visual Studio= 安装器的“共享组件路径（Shared）”机制导致。
+
+**1. 历史安装残留**
+安装器会读取历史配置，主要来源：
+
+- 注册表：
+  - HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\VisualStudio\Setup
+  - HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\VisualStudio\Setup
+- 旧版本 Visual Studio 安装记录
+
+如果曾经：
+- 在 F 盘安装过 VS
+- 或 F 盘曾存在（移动硬盘/旧分区）
+
+则路径会被继承。
+
+**2. Shared 组件路径不可修改**
+Visual Studio 的路径分为三类：
+
+| 类型           | 是否可修改 |
+|----------------|------------|
+| 产品安装路径   | 是         |
+| 下载缓存路径   | 是         |
+| 共享组件路径   | 否         |
+
+Shared 路径具有以下特性：
+- 全局唯一
+- 多版本 VS 共用
+- 首次安装后锁定
+
+** 解决方案（已验证有效）
+
+采用“彻底清理 + 重装”方式。
+
+**步骤 1：删除相关目录**
+
+#+begin_src bash
+rm -rf "C:\Program Files (x86)\Microsoft Visual Studio"
+rm -rf "C:\ProgramData\Microsoft\VisualStudio"
+#+end_src
+
+（Windows 可使用资源管理器手动删除）
+
+**步骤 2：清理注册表**
+
+打开 =regedit=，删除以下项：
+
+#+begin_example
+HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\VisualStudio\Setup
+HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\VisualStudio\Setup
+#+end_example
+
+**步骤 3：删除缓存目录**
+
+#+begin_example
+C:\ProgramData\Microsoft\VisualStudio\Packages
+#+end_example
+
+** 注意事项
+
+- 删除注册表前建议备份
+- 确保所有 Visual Studio 实例已卸载
+- 清理后重新安装时，Shared 路径会自动重建
+
+** 结果验证
+
+重新打开安装器：
+
+- 不再出现 F 盘路径
+- Shared 路径恢复为系统默认（通常为 C 盘）
+- 安装过程正常
+
+** 总结
+
+该问题的核心在于：
+
+- Visual Studio 使用全局共享组件路径
+- 路径来源于历史安装记录
+- 一旦写入注册表即被锁定
+
+解决关键：
+
+#+begin_quote
+彻底清理历史配置（目录 + 注册表 + 缓存）
+#+end_quote
+
+即可恢复正常安装行为。
+
+** 参考链接
+
+[[https://chatgpt.com/share/69df7677-c660-8332-a2de-c9447ab1f873][Visual Studio 安装路径异常（F盘残留）问题分析与彻底解决 | chatgpt]]

@@ -1,0 +1,219 @@
+---
+title: win11实现yolov5推理（无CPU）
+tags: ["AI", "yolov5"]
+date: 2025-09-08T15:57:42.51+0800
+---
+
+* win11实现yolov5推理（无CPU）
+
+** 安装Git Bash
+
+任意版本皆可，下载链接：https://github.com/git-for-windows/git/releases/download/v2.51.0.windows.1/Git-2.51.0-64-bit.exe
+
+根据默认选项进行安装，建议安装在C盘，这样运行可以会更快一些。
+
+** 安装Anaconda及Git Bash Shell初始化
+
+任意版本皆可，下载链接：https://repo.anaconda.com/archive/Anaconda3-2025.06-0-Windows-x86_64.exe
+
+勾选添加环境变量，其他默认
+
+**** Git Bash Shell初始化
+
+如果Git Bash没有默认运行Anaconda自带的base虚拟环境，则进行初始化操作，反之跳过该操作
+
+#+begin_src bash
+conda init bash                 # 只有第一次需要执行该命令，下次再运行Git Bash不需要再执行
+#+end_src
+
+** 安装OpenCV
+
+下载链接：https://sourceforge.net/projects/opencvlibrary/files/4.5.5/opencv-4.5.5-vc14_vc15.exe/download
+
+自定义提取目录位置，双击文件会提取opencv目录到设定的位置。
+
+添加环境变量，opencv下要添加环境变量的路径如下，根据对应位置，添加完整路径到环境变量。
+
+#+begin_src bash
+opencv\build\x64\vc14\bin
+opencv\build\x64\vc15\bin
+#+end_src
+
+** 安装Cmake
+
+任意版本皆可，下载链接：https://github.com/Kitware/CMake/releases/download/v4.1.1/cmake-4.1.1-windows-x86_64.msi
+
+根据习惯选择是否添加桌面快捷方式和自定义安装路径
+
+** Visual Studio 2022
+
+下载社区版即可，下载链接：https://visualstudio.microsoft.com/zh-hans/thank-you-downloading-visual-studio/?sku=Community&channel=Release&version=VS2022&source=VSLandingPage&cid=2030&passive=false
+
+根据默认选项进行安装，如果提示添加工作负荷，根据提示确定后再次点击安装即可。
+
+*** 准备微软账户（或许可以忽略）
+
+注册一个微软账号，用于第一次使用Visual Studio的账户登录，也可用自己现成的微软账号。
+
+注册账号的信息可以随便填。
+
+微软账号注册链接：https://outlook.live.com/mail/0/?prompt=create_account
+
+** 安装PyCharm
+
+下载链接：https://www.jetbrains.com/zh-cn/pycharm/download/?section=windows
+
+** Anaconda创建环境
+
+在Git Bash中操作
+
+#+begin_src bash
+# 如果Git Bash没有默认运行Anaconda自带的base环境，则进行初始化操作，反之跳过该操作
+conda init bash
+
+# 配置Conda镜像源
+cat > ~/.condarc <<'EOF'
+channels:
+  - defaults
+show_channel_urls: true
+default_channels:
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/msys2
+custom_channels:
+  conda-forge: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  pytorch: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+EOF
+# 清理缓存（确保立即生效）
+conda clean -i
+
+# 如果要恢复默认官方源
+conda config --remove-key channels
+
+# 查看环境变量，刚安装的Anaconda只有自带的第一个base环境
+conda env list
+
+# 配置环境名称
+export myenv="python_3.8"
+
+# 创建环境
+conda create -n $myenv python=3.8 -y
+
+# 激活环境
+conda activate $myenv
+
+# 删除环境，仅不需要该环境的时候执行该命令
+conda env remove --name $myenv -y
+#+end_src
+
+*** 参考链接
+
+[[https://www.runoob.com/python-qt/anaconda-tutorial.html][Anaconda 教程]]
+
+[[https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/][Anaconda 软件仓库]]
+
+** yolov5推理
+
+#+begin_src bash
+# 设置代理，根据需要进行设置
+conda config --set proxy_servers.http http://127.0.0.1:10808
+
+export myenv="pytorch_v1.8"
+
+# 创建环境
+conda create -n $myenv python=3.8 -y
+
+# 如果要设置复制环境变量
+export myclone=${myenv}_clone
+
+# 复制环境
+conda create --name $myclone --clone $myenv
+
+# 激活环境
+conda activate $myenv
+
+conda install -y pytorch==1.8.0 torchvision==0.9.0 torchaudio==0.8.0 cudatoolkit=10.2 -c pytorch
+
+# Install the ultralytics package
+pip install ultralytics -i https://pypi.tuna.tsinghua.edu.cn/simple
+
+# Clone the YOLOv5 repository
+git clone https://github.com/ultralytics/yolov5
+
+# Navigate to the cloned directory
+cd yolov5
+
+# Install required packages
+pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
+
+# Traning配置的--cfg *.yaml与Run inference using a webcam的.pt模型对应
+# --------------------------------Training
+# Train YOLOv5n on COCO for 300 epochs
+python train.py --data coco.yaml --epochs 300 --weights '' --cfg yolov5n.yaml --batch-size 128
+
+# Train YOLOv5s on COCO for 300 epochs
+python train.py --data coco.yaml --epochs 300 --weights '' --cfg yolov5s.yaml --batch-size 64
+
+# Train YOLOv5m on COCO for 300 epochs
+python train.py --data coco.yaml --epochs 300 --weights '' --cfg yolov5m.yaml --batch-size 40
+
+# Train YOLOv5l on COCO for 300 epochs
+python train.py --data coco.yaml --epochs 300 --weights '' --cfg yolov5l.yaml --batch-size 24
+
+# Train YOLOv5x on COCO for 300 epochs
+python train.py --data coco.yaml --epochs 300 --weights '' --cfg yolov5x.yaml --batch-size 16
+
+# --------------------------------Inference with detect.py
+# Run inference using a webcam
+python detect.py --weights yolov5s.pt --source 0
+
+# Run inference on a local image file
+python detect.py --weights yolov5s.pt --source img.jpg
+
+# Run inference on a local video file
+python detect.py --weights yolov5s.pt --source vid.mp4
+
+# Run inference on a screen capture
+python detect.py --weights yolov5s.pt --source screen
+
+# Run inference on a directory of images
+python detect.py --weights yolov5s.pt --source path/to/images/
+
+# Run inference on a text file listing image paths
+python detect.py --weights yolov5s.pt --source list.txt
+
+# Run inference on a text file listing stream URLs
+python detect.py --weights yolov5s.pt --source list.streams
+
+# Run inference using a glob pattern for images
+python detect.py --weights yolov5s.pt --source 'path/to/*.jpg'
+
+# Run inference on a YouTube video URL
+python detect.py --weights yolov5s.pt --source 'https://youtu.be/LNwODJXcvt4'
+
+# Run inference on an RTSP, RTMP, or HTTP stream
+python detect.py --weights yolov5s.pt --source 'rtsp://example.com/media.mp4'
+
+# 取消代理
+conda config --remove-key proxy_servers.http
+#+end_src
+
+*** 参考链接
+
+[[https://www.runoob.com/python-qt/anaconda-tutorial.html][Anaconda 教程]]
+
+[[https://www.runoob.com/w3cnote/python-pip-install-usage.html][Python pip 安装与使用]]
+
+[[https://github.com/ultralytics/yolov5?tab=readme-ov-file][ultralytics/yolov5]]
+
+[[https://docs.ultralytics.com/zh/yolov5/tutorials/pytorch_hub_model_loading/][从PyTorch Hub加载YOLOv5]]
+
+[[https://blog.csdn.net/weixin_52797278/article/details/125427898][【从零开始】win10系统部署Yolov5详细过程（CPU，无GPU）]]
+
+[[https://pytorch.org/get-started/previous-versions/][pytorch_v1.8.0]]
+
+[[https://blog.csdn.net/qq_52813185/article/details/129222436][conda 恢复channel的默认设置]]
+
+[[https://blog.csdn.net/m0_59118857/article/details/132119672][Anaconda 的代理设置]]
+
+[[https://blog.csdn.net/weixin_43941438/article/details/149858144][【Conda】配置Conda镜像源]]

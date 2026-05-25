@@ -1,0 +1,169 @@
+---
+title: "Windows安装mysql教程"
+date: 2023-09-23T15:51:47+08:00
+draft: false
+---
+
+* mysql安装教程
+我准备安装的是mysql-8.0.34，如果想安装其他版本可以在下载页面的归档里面进行更换，然后进入mysql的bin目录，然后复制当前路径，将路径添加到环境变量
+** 下载mysql
+下载链接：https://dev.mysql.com/downloads/windows/installer/
+** 开始安装
+在开始菜单搜索 cmd，然后以管理员身份运行 cmd
+在cmd窗口执行以下命令进行安装
+#+begin_src emacs-lisp :tangle no
+  mysqld --install
+#+end_src
+如果是重装mysql失败，明明已删除mysql可是在安装的时候提示已存在，可以如下操作
+#+begin_src emacs-lisp :tangle no
+  输入安装命令mysqld --install 
+
+  出现问题The service already exists 
+
+  这是由于之前已经安装过mysql并且没有删除干净
+
+  重新以管理员身份运行，输入"sc query mysql"，查看一下名为mysql的服务： 
+
+  发现之前确实有安装过。
+
+  命令"sc delete mysql"，删除该mysql 
+
+  之后继续安装，就能成功
+#+end_src
+初始化mysql，在这里，初始化会产生一个随机密码,如下图框框所示，记住这个密码，后面会用到
+#+begin_src emacs-lisp :tangle no
+  mysqld --initialize --console
+#+end_src
+启动mysql服务
+#+begin_src emacs-lisp :tangle no
+  net start mysql
+#+end_src
+如果提示：MySQL 服务正在启动 . MySQL 服务无法启动 服务没有报告任何错误 解决方案
+#+begin_src emacs-lisp :tangle no
+  (1)找到MySQL的安装目录,将data删除 (注意该文件下会有一些你自己建立的数据库的数据!)
+  (2)然后复制bin文件的路径
+  (3)从开始里搜索cmd 右键以管理员身份运行
+  (4)cd bin文件的路径 进入后输入mysqld --initialize
+  (5)关闭cmd 重新启动 输入net start mysql即可启动成功!
+#+end_src
+修改密码，将密码设为 root
+#+begin_src emacs-lisp :tangle no
+  alter user 'root'@'localhost' identified by 'root'
+#+end_src
+不用的时候停止mysql服务
+#+begin_src emacs-lisp :tangle no
+  net stop mysql
+#+end_src
+停止mysql服务，添加配置文件，在mysql的bin目录创建mysql.ini，添加以下内容
+#+begin_src emacs-lisp :tangle no
+  mysqld
+  #设置MySQL默认端口号
+  port=3306
+  #设置mysql的安装目录-你的文件路径，如果mysql要存放的目录不存在，可以创建一下
+  basedir=D:\ProgramFiles\mysql-8.0.34-winx64
+  #mysql数据库的数据的存放目录
+  datadir=D:\ProgramFiles\mysql-8.0.34-winx64\data
+  #允许最大连接数
+  max_connections=200
+  #允许连接失败的次数。可防止有人从该主机试图攻击数据库系统
+  max_connect_errors=10
+  #服务端使用的字符集默认为UTF8
+  character-set-server=utf8
+  #创建新表时将使用的默认存储引擎
+ 
+  default-storage-engine=INNODB
+  #默认使用“mysql_native_password”插件认证
+  default_authentication_plugin=mysql_native_password
+  mysql
+  #设置mysql客户端默认字符集
+  default-character-set=utf8
+  client
+  #设置mysql客户端连接服务端时默认使用的端口
+  port=3306
+  default-character-set=utf8
+#+end_src
+** 登录验证
+#+begin_src bash :tangle no
+  mysql -u root -p
+#+end_src
+* 参考链接
+[[https://www.cnblogs.com/winton-nfs/p/11524007.html][MySQL的安装与配置——详细教程]]
+
+* MySQL修改、忘记root密码（8.0版本）
+
+在修改MySQL数据库的root密码时很多老帖子的方式不成功
+
+#+begin_src mysql
+mysql> set password for 用户名@localhost = password('新密码');
+例如（将用户root的密码更改为root）：
+mysql> set password for root@localhost = password('root');
+#+end_src
+
+以及
+
+#+begin_src text
+mysqladmin -u用户名 -p旧密码； password 新密码
+例如：
+mysqladmin -uroot -proot password 123
+#+end_src
+
+以及用UPDATE直接编辑user表方法也是不管用的。
+
+这是由于版本在8.0以上已经不再支持。
+
+** 解决方法：
+** 1、首先终止MySQL服务
+
+#+begin_src text
+1、右键此电脑-管理-服务-MySQL
+或者
+2、以管理员身份打开cmd,执行：
+net stop mysql
+#+end_src
+
+** 2、以管理员身份新开cmd，进入mysql安装的bin目录后执行：
+
+#+begin_src text
+mysqld --console --skip-grant-tables --shared-memory
+#+end_src
+
+此时，命令行框会处于持续运行状态：
+
+[[https://pic3.zhimg.com/v2-f6cd8bb4ed0c3ec910159302b0a9b926_b.jpg]]
+
+[[./20231105073338_files/v2-f6cd8bb4ed0c3ec910159302b0a9b926_r.jpg]]
+
+** 3、保持上述的窗口（切记），再以管理员身份新开cmd，执行：
+
+#+begin_src text
+mysql -uroot -p
+#+end_src
+
+这时就已经绕过密码登录进入mysql了。
+
+** 4、接下来修改root的密码为空
+
+#+begin_src text
+UPDATE mysql.user SET authentication_string='' WHERE user='root';
+#+end_src
+
+** 5、此时关闭所有命令行界面，正常开启MySQL服务后进行登录，无需密码即可进入成功。
+此时进行修改密码操作：
+
+#+begin_src text
+use mysql 
+
+ALTER user root@'localhost' identified by '123456';
+#+end_src
+
+密码修改成功，退出mysql,即可通过密码：123456登录.
+
+\\
+
+或者，修改当前用户的密码（最简单）：
+
+#+begin_src text
+set password = ‘123456’;
+#+end_src
+
+#+caption: 修改成功！

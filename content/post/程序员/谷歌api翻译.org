@@ -1,0 +1,86 @@
+---
+title: "谷歌api翻译"
+tags: ["tools", "程序员"]
+date: 2024-04-05T17:38:21.30+0800
+---
+
+** 使用方式
+
+#+begin_src bash
+  curl "http://translate.google.com/translate_a/single?client=gtx&sl=en&tl=zh-CN&dt=t&q=good"
+#+end_src
+
+*** 使用示例
+
+使用门槛，该api由谷歌提供，因此使用的话需要具备一定的上网条件
+
+#+begin_src bash
+  ┌──(root💀adm-RecipeKit)-[~]
+  └─# curl "http://translate.google.com/translate_a/single?client=gtx&sl=en&tl=zh-CN&dt=t&q=good"
+  [[["好的","good",null,null,10]],null,"en",null,null,null,null,[]]
+#+end_src
+
+*** 翻译单词-脚本实现
+
+#+begin_src bash
+  curl "http://translate.google.com/translate_a/single?client=gtx&sl=en&tl=zh-CN&dt=t&q=$1"
+#+end_src
+
+**** 使用示例
+
+#+begin_src bash
+  ┌──(root💀adm-RecipeKit)-[~]
+  └─# ./translate.sh good
+  [[["好的","good",null,null,10]],null,"en",null,null,null,null,[]]
+#+end_src
+
+*** 翻译句子-脚本实现-1
+
+#+begin_src bash
+  date="$(echo "$1" | sed -e 's/ /%20/g')"
+  curl "http://translate.google.com/translate_a/single?client=gtx&sl=en&tl=zh-CN&dt=t&q=${date}"
+#+end_src
+
+**** 使用示例
+
+#+begin_src bash
+  ┌──(root💀adm-RecipeKit)-[~]
+  └─# ./translate.sh "HOW old are you?"
+  [[["你今年多大？","HOW old are you.",null,null,10]],null,"en",null,null,null,null,[]]
+  #+end_src
+
+**** 使用示例-VPS
+
+#+begin_src bash
+  $ ssh sdf './translate.sh "How old are you?"'
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+  Dload  Upload   Total   Spent    Left  Speed
+  100    91    0    91    0     0   1101      0 --:--:-- --:--:-[[["你今年多大？","How old are you?",null,null,10]],null,"en",null,null,null,null,[]]- --:--:--  1109
+#+end_src
+
+*** 翻译句子-脚本实现-2
+
+#+begin_src bash
+  #!/usr/bin/bash
+
+  args="$#"
+
+  for ((i = 1; i < args; i++)); do
+	  data+="${!i}%20"
+  done
+
+  # echo "${data}${!#}"
+  curl "http://translate.google.com/translate_a/single?client=gtx&sl=en&tl=zh-CN&dt=t&q=${data}
+#+end_src
+
+**** 使用示例
+
+#+begin_src bash
+  ┌──(root💀adm-RecipeKit)-[~]
+  └─# echo "How old are you?" | xargs ./translate.sh
+  [[["几岁了","How old are",null,null,3,null,null,[[]],[[["6ffafab0da7e640be86ac09d0d5e539c","en_zh_2023q1.md"]]]]],null,"en",null,null,null,null,[]]
+#+end_src
+
+** 参考链接
+
+[[https://gist.github.com/ringsaturn/6060788b9cfb697f9187fecec7952fe2][Google 单词翻译 API.py]]

@@ -1,0 +1,23 @@
+---
+title: 批量处理博客中时间戳编译报错
+tags: ["blog", "shell"]
+date: 2025-06-28T18:45:44.70+0800
+---
+
+* 批量处理博客中时间戳编译报错
+
+#+begin_src bash
+  files=(
+	# 博客文件
+  )
+  files_num=${#files[@]}
+  # echo "${files_num}"
+  # echo "${files[0]}"
+
+  for ((i = 0; i < files_num; i++)) do
+	  timestamp=$(stat "${files[${i}]}" | grep "Modify" | awk '{$1=""; print $0}')
+	  newtimestamp=$(date -d "${timestamp}" "+%Y-%m-%dT%H:%M:%S.%2N%z")
+	  # echo "date: $newtimestamp"
+	  sed -i "1,5s/date:.*/date: $newtimestamp/g" "${files[${i}]}"
+  done
+#+end_src

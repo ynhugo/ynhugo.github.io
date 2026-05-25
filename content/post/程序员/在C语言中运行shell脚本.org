@@ -1,0 +1,191 @@
+---
+title: 在C语言中运行shell脚本
+date: 2024-03-26T00:24:36.00+0800
+tags: ["c语言"]
+---
+
+** 创建第一个脚本，并拷贝第一个脚本为第二个脚本，再创建第三个脚本，并将第一个脚本的内容输出到第三个脚本
+
+*** 用"fgets"和"fputs"将第一个脚本的内容输出到第三个脚本
+
+#+begin_src c
+  #include <stdio.h>
+  #include <stdlib.h>
+
+  int main(void)
+  {
+	  FILE* fd_1;
+	  FILE* fd_2;
+	  char* path_1 = "./test_1.sh";
+	  char* path_2 = "./test_2.sh";
+	  char* path_3 = "./test_3.sh";
+	  char *buffer_1;
+	  char command[100];
+
+	  /* 创建文件 */
+	  fd_1 = fopen(path_1, "w");
+
+	  /* 输出一个空行 */
+	  sprintf(command, "echo \"\"");
+	  system(command);
+
+	  /* 判断变量"path_2"对应的文件是否存在 */
+	  sprintf(command, "echo \"if [ ! -f %s ]; then\" >> %s", path_2, path_1);
+	  system(command);
+	  /* 如果变量"path_2"对应的文件不存在，则将变量"path_1"对应的文件拷贝为变量"path_2"对应的文件 */
+	  sprintf(command, "echo \"cp %s %s\" >> %s", path_1, path_2, path_1);
+	  system(command);
+	  sprintf(command, "echo \"fi\" >> %s", path_1);
+	  system(command);
+
+	  /* 运行变量"path_1"对应的脚本 */
+	  sprintf(command, "sh %s", path_1);
+	  system(command);
+
+	  /* 以只读的方式打开变量"path_1"对应的文件 */
+	  fd_1 = fopen(path_1, "r");
+	  /* 创建"path_3"对应的文件 */
+	  fd_2 = fopen(path_3, "w");
+	  if (fd_1 == NULL || fd_2 == NULL) {
+		  printf("文件打开失败\n");
+		  return 1;
+	  }
+	  /* 获取变量"path_1"对应的文件内容 */
+	  while (fgets(command, sizeof(command), fd_1) != NULL) {
+		  /* 将变量"path_1"对应的文件内容输出到变量"path_3"对应的文件 */
+		  fputs(command, fd_2);
+	  }
+
+	  return 0;
+  }
+#+end_src
+
+*** 用"fread"和"fwrite"将第一个脚本的内容输出到第三个脚本
+
+#+begin_src c
+  #include <stdio.h>
+  #include <stdlib.h>
+
+  int main(void)
+  {
+	  FILE* fd_1;
+	  FILE* fd_2;
+	  char* path_1 = "./test_1.sh";
+	  char* path_2 = "./test_2.sh";
+	  char* path_3 = "./test_3.sh";
+	  char *buffer_1 = (char*)malloc(sizeof(char) * 1024 *1024);
+	  char* command = (char*)malloc(sizeof(char) * 1024 * 1024);
+
+	  /* 创建文件 */
+	  fd_1 = fopen(path_1, "w");
+
+	  /* 输出一个空行 */
+	  sprintf(command, "echo \"\"");
+	  system(command);
+
+	  /* 判断变量"path_2"对应的文件是否存在 */
+	  sprintf(command, "echo \"if [ ! -f %s ]; then\" >> %s", path_2, path_1);
+	  system(command);
+	  /* 如果变量"path_2"对应的文件不存在，则将变量"path_1"对应的文件拷贝为变量"path_2"对应的文件 */
+	  sprintf(command, "echo \"cp %s %s\" >> %s", path_1, path_2, path_1);
+	  system(command);
+	  sprintf(command, "echo \"fi\" >> %s", path_1);
+	  system(command);
+
+	  /* 运行变量"path_1"对应的脚本 */
+	  sprintf(command, "sh %s", path_1);
+	  system(command);
+
+	  /* 以只读的方式打开变量"path_1"对应的文件 */
+	  fd_1 = fopen(path_1, "r");
+	  /* 创建变量"path_3"对应的文件 */
+	  fd_2 = fopen(path_3, "w");
+
+	  /* 读取变量"path_1"对应的文件内容 */
+	  fread(buffer_1, 1024, 1, fd_1);
+	  /* 将变量"path_1"对应的文件内容写入到变量"path_3"对应的文件中 */
+	  fwrite(buffer_1, 1024, 1, fd_2);
+
+	  return 0;
+  }
+
+#+end_src
+
+**** 获取变量"command"对应的缓存区中实际字符个数
+
+#+begin_src c
+  #include <stdio.h>
+  #include <stdlib.h>
+
+  int main(void)
+  {
+	  FILE* fd_1;
+	  FILE* fd_2;
+	  char* path_1 = "./test_1.sh";
+	  char* path_2 = "./test_2.sh";
+	  char* path_3 = "./test_3.sh";
+	  char *buffer_1 = (char*)malloc(sizeof(char) * 1024 *1024);
+	  char* command = (char*)malloc(sizeof(char) * 1024 * 1024);
+	  int j = 0;
+
+	  /* 创建文件 */
+	  fd_1 = fopen(path_1, "w");
+
+	  /* 输出一个空行 */
+	  sprintf(command, "echo \"\"");
+	  system(command);
+	  j = 0;
+	  while(command[j] != '\0') {
+		  j++;
+	  }
+	  printf("cur_line: %d, j: %d\n", __LINE__, j);	
+
+	  /* 判断变量"path_2"对应的文件是否存在 */
+	  sprintf(command, "echo \"if [ ! -f %s ]; then\" >> %s", path_2, path_1);
+	  system(command);
+	  j = 0;
+	  while(command[j] != '\0') {
+		  j++;
+	  }
+	  printf("cur_line: %d, j: %d\n", __LINE__, j);
+	
+	  /* 如果变量"path_2"对应的文件不存在，则将变量"path_1"对应的文件拷贝为变量"path_2"对应的文件 */
+	  sprintf(command, "echo \"cp %s %s\" >> %s", path_1, path_2, path_1);
+	  system(command);
+	  j = 0;
+	  while(command[j] != '\0') {
+		  j++;
+	  }
+	  printf("cur_line: %d, j: %d\n", __LINE__, j);	
+	
+	  sprintf(command, "echo \"fi\" >> %s", path_1);
+	  system(command);
+	  j = 0;
+	  while(command[j] != '\0') {
+		  j++;
+	  }
+	  printf("cur_line: %d, j: %d\n", __LINE__, j);	
+
+	  /* 运行变量"path_1"对应的脚本 */
+	  sprintf(command, "sh %s", path_1);
+	  j = 0;
+	  while(command[j] != '\0') {
+		  j++;
+	  }
+	  printf("cur_line: %d, j: %d\n", __LINE__, j);
+	  system(command);
+
+	  /* 以只读的方式打开变量"path_1"对应的文件 */
+	  fd_1 = fopen(path_1, "r");
+	  /* 创建变量"path_3"对应的文件 */
+	  fd_2 = fopen(path_3, "w");
+
+	  /* 读取变量"path_1"对应的文件内容 */
+	  fread(buffer_1, 1024, 1, fd_1);
+	  /* 将变量"path_1"对应的文件内容写入到变量"path_3"对应的文件中 */
+	  fwrite(buffer_1, 1024, 1, fd_2);
+
+	  return 0;
+  }
+
+#+end_src

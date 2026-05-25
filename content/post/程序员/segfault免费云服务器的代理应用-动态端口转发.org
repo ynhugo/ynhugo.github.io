@@ -1,0 +1,17 @@
+---
+title: segfault免费云服务器的代理应用-动态端口转发
+tags: ["segfault", "vps", "动态端口转发", "1080"]
+date: 
+---
+
+* 动态端口转发
+#+begin_src bash
+ssh -N -D 127.0.0.1:1080 root@segfault.net
+
+# then from another Terminal on your workstation:
+curl --proxy 127.0.0.1:1080 ipinfo.io
+curl --proxy 127.0.0.1:1080 google.com
+#+end_src
+
+** 参考链接
+[[https://www.thc.org/segfault/][Segfault]]

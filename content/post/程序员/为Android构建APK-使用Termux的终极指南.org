@@ -1,0 +1,137 @@
+---
+title: 为 Android 构建 APK：使用 Termux 的终极指南
+tags: ["android", "termux", "gradle"]
+date: 2025-07-06T17:12:23.57+0800
+---
+
+* 为 Android 构建 APK：使用 Termux 的终极指南
+
+配置编译环境部分可以忽略，原本想配置android-sdk的，但是下载的文件跟安卓架构好像不是很匹配，先略过。
+
+** 第 1 部分：下载并安装 Termux
+
+- 获取 Termux
+
+Termux 可从 Google Play 商店或 F-Droid 获取。安装后，启动 Termux 并等待初始化过程完成。
+
+** 第 2 部分：安装 Gradle
+
+- 安装 Gradle
+
+Gradle 是构建、测试和部署 Android 应用程序的构建自动化工具。在 Termux 中，使用以下命令安装 Gradle：
+
+#+begin_src bash
+pkg install gradle
+#+end_src
+
+** Termux配置安卓编译环境
+
+直接复制粘贴到终端运行即可
+
+#+begin_src bash :tangle cfg.sh
+
+if [ ! "$(env | grep --color=always "cmdline-tools/latest/bin")" ]; then
+  if [ ! -f "$(basename $HOME/commandlinetools*.zip)" ]; then
+    cd $HOME
+    curl -O https://googledownloads.cn/android/repository/commandlinetools-linux-13114758_latest.zip
+    ANDROID_HOME=~/android/sdk
+
+    mkdir -p ${ANDROID_HOME}/latest
+    unzip $(basename commandlinetools*.zip) -d $ANDROID_HOME
+    # cmdline-tools 的产物需要移动到cmdline-tools/latest目录中，这是android sdk固定的路径组织形式
+    # 压缩包没有包含在latest文件夹中，自己移动一下
+    mv $ANDROID_HOME/cmdline-tools/* $ANDROID_HOME/latest
+    mv $ANDROID_HOME/latest $ANDROID_HOME/cmdline-tools
+
+    # 双引号与单引号不要动，单引号是为了避免通过echo命令重定向到~/.bashrc的内容中的变量被执行
+    echo "export ANDROID_HOME=~/android/sdk" >> ~/.bashrc
+    echo 'export PATH=$ANDROID_HOME/cmdline-tools/latest/bin:$PATH' >> ~/.bashrc
+    source ~/.bashrc
+    rm $(basename $HOME/commandlinetools*.zip)
+  fi
+fi
+#+end_src
+
+*** 参考链接
+
+[[https://blog.csdn.net/Mingyueyixi/article/details/136014207][Termux配置安卓编译环境]]
+
+[[https://developer.android.google.cn/tools/sdkmanager?hl=zh-cn][sdkmanager介绍]]
+
+[[https://developer.android.google.cn/studio?hl=zh-cn#command-line-tools-only][仅限命令行工具 | sdkmanager]]
+
+** 第 3 部分：创建 Android 项目
+
+*** gradle-apk.sh
+:PROPERTIES:
+:EXPORT_FILE_NAME: gradle-apk.sh
+:END:
+
+#+begin_src bash :tangle gradle-apk.sh
+#!/usr/bin/bash
+
+java_version=$(java --version | awk 'NR==1{print $2}' | awk -F. '{print $1}')
+echo "Detected Java version: $java_version"
+
+mkdir -p MyApplication
+cd MyApplication
+
+expect <<EOF
+# log_user 1
+# exp_internal 1
+
+spawn gradle init
+
+# 确认修改目录
+expect -re ".*overwritten.* \\[yes, no\\]" {
+  send "\r"
+}
+
+# 选择 build类型
+expect -re ".*Application.*\\[1..4\\]" {
+  send "\r"
+}  
+
+# 选择语言
+expect -re ".*Java.*\\[1..6\\]" {
+  send "\r"
+}
+
+# 输入 Java 版本
+expect -re ".*target Java version.*min: 7, default: 21.*" {
+  send "$java_version\r" 
+}
+
+expect -re "Project name.*default: MyApplication.*:" {
+  send "\r"
+}
+
+expect -re ".*default: Single application project.*\\[1..2\\]" {
+  send "\r"
+}
+
+expect -re ".*default: Kotlin.*\\[1..2\\]" {
+  send "\r"
+}
+
+expect -re ".*default: JUnit Jupiter.*\\[1..4\\]" {
+  send "\r"
+}
+
+expect -re ".*build using new APIs and behavior.*\\[yes, no\\]" {
+  send "\r"
+}
+
+expect eof
+EOF
+
+gradle build
+gradle run
+
+#+end_src
+
+** 参考链接
+
+[[https://www.bytezonex.com/archives/vrzAexDr.html][为 Android 构建 APK：使用 Termux 的终极指南]]
+
+[[https://blog.51cto.com/u_16175521/12656675][gradle 打包命令 Android gradle命令行打包生成apk]]

@@ -1,0 +1,98 @@
+---
+title: 关于docker的磁盘空间占用分析及处理方案
+tags: ["docker", "linux"]
+date: 2026-03-20T11:52:10.97+0800
+---
+
+* 关于docker的磁盘空间占用分析及处理方案
+
+** 当前磁盘使用情况
+
+| 项目 | 大小 | 说明 |
+|------|------|------|
+| 总容量 | 79GB | |
+| 已使用 | 35GB | |
+| 可用空间 | 41GB | 46%使用率 |
+
+** Docker 空间占用分析
+
+*** 镜像占用
+
+| 镜像 | 磁盘占用 | 内容大小 | 说明 |
+|------|----------|----------|------|
+| petalinux:2022.1 | 23.4GB | 8.55GB | PetaLinux 2022.1 工具链 |
+| nginx:latest | 240MB | 65.8MB | Web服务器镜像 |
+
+*** 总计
+
+| 类型 | 大小 |
+|------|------|
+| 镜像总占用 | ~23.6GB |
+| 容器 | 12KB (已清理) |
+| 构建缓存 | 0B (已清理) |
+
+** 空间占用来源分析
+
+*** petalinux:2022.1 镜像构成 (~23.4GB)
+
+1. Ubuntu 18.04 基础系统
+2. PetaLinux 2022.1 安装文件 (~8GB 解压后)
+3. 依赖包和工具链:
+   - Yocto/OpenEmbedded 构建系统
+   - 交叉编译工具链 (gcc, g++, make等)
+   - Python 3 及相关库
+   - 开发库 (libssl-dev, libglib2.0-dev等)
+4. 多层镜像的元数据开销
+
+** 处理方案
+
+*** 已执行操作
+
+- [X] 清理构建缓存: 释放 ~29.5GB
+
+
+*** 当前可用空间
+
+- 当前可用空间: 41GB
+- 使用率: 46%
+
+*** 后续建议
+
+**** 如需进一步释放空间
+
+1. 删除未使用的镜像:
+   #+BEGIN_SRC bash
+   docker rmi nginx:latest
+   #+END_SRC
+   - 释放: 240MB
+
+2. 清理构建缓存
+   #+BEGIN_SRC bash
+     docker system prune
+   #+END_SRC
+   - 只清理构建缓存
+
+
+3. 清理所有未使用资源:
+   #+BEGIN_SRC bash
+     docker system prune -a
+   #+END_SRC
+   - 注意: 会删除所有未使用的镜像(包括 petalinux)
+
+**** 如需保留镜像但减少占用
+
+- 镜像已压缩存储，无法进一步精简
+- 可考虑使用多阶段构建减少最终镜像大小(需修改Dockerfile)
+
+** 结论
+
+当前磁盘空间充足 (41GB可用)，无需进一步清理。PetaLinux镜像约23.4GB是正常运行占用。
+
+** 附录: 常用Docker清理命令
+
+| 命令 | 作用 |
+|------|------|
+| docker system df | 查看Docker磁盘占用 |
+| docker system prune | 清理构建缓存 |
+| docker system prune -a | 清理未使用的镜像和缓存 |
+| docker rmi <image> | 删除指定镜像 |

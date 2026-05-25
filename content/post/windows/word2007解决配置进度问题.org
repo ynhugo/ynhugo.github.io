@@ -1,0 +1,31 @@
+---
+title: "word2007解决配置进度问题"
+tags: ["windows", "办公", "word2007"]
+date: 2024-03-29T20:39:57.95+0800
+---
+
+* word2007解决配置进度问题
+
+解决办法1(注册office安装文件，office2007)
+
+1、出现这个问题是office配置注册文件有错误，通过命令修正这个文件即可
+
+打开开始----运行(或者 windows 键+R) 输入下面内容
+
+如若是Office 2003的对应问题，在运行对话框中输入：
+
+#+begin_src bash
+  reg add HKCU\Software\Microsoft\Office\11.0\Word\Options /v NoReReg /t REG_DWORD /d 1
+#+end_src
+
+回车即可
+
+若是Office 2007的对应问题，在运行对话框中输入：
+
+#+begin_src bash
+  reg add HKCU\Software\Microsoft\Office\14.0\Word\Options /v NoReReg /t REG_DWORD /d 1
+#+end_src
+
+* 参考链接
+
+[[https://blog.csdn.net/weixin_36151066/article/details/113024810][office2007每次打开都配置进度_office2007 每次打开word,excel等显示正在配置Office Professional Plus 2007的解决方...]]

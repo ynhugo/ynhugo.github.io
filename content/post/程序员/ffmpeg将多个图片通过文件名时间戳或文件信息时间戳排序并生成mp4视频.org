@@ -1,0 +1,31 @@
+---
+title: ffmpeg将多个图片通过文件名时间戳或文件信息时间戳排序并生成mp4视频
+tags: ["ffmpeg"]
+date: 2025-08-05T02:12:22.75+0800
+---
+
+* ffmpeg将多个图片通过文件名时间戳或文件信息时间戳排序并生成mp4视频
+
+#+begin_src bash
+# 1、准备文件列表，如果是根据文件信息时间戳排序，推荐第一种准备文件列表方式，如果是根据文件命名时间戳排序，推荐第2种方式准备文件列表
+find ./ -name "*.jpg" -newermt "2025-08-01" -exec echo "file " >> jpgList.txt {} \;
+# 或
+ls P_*.jpg | sort -n > jpgList.txt; sed -i 's/^/file /' jpgList.txt
+# 2、根据准备的文件列表生成调色板
+ffmpeg -f concat -safe 0 -i jpglist.txt -vf palettegen -y paletteg.jpg
+# 3、根据调色板及对应文件合成mp4视频
+ ffmpeg -r 1 -f image2 -f concat -safe 0 -i jpgList.txt -i paletteg.jpg -vcodec libx264 -crf 25 -pix_fmt yuv420p -y demo.mp4
+#+end_src
+
+
+** 参考链接
+
+[[https://blog.csdn.net/weixin_37939906/article/details/107281060][FFmpeg将有序帧（图片）转换成视频（解决了生成视频后播放闪烁的问题）]]
+
+[[https://blog.caomingjun.com/ffmpeg-images-to-gif/][用ffmpeg从多张图片生成动图]]
+
+[[https://ynhugo.github.io/p/ffmpeg-教程/#headline-158][如果是文件列表方式生成的可以按照如下命令操作]]
+
+[[https://ynhugo.github.io/p/ffmpeg-教程/#headline-143][视频转换成帧图片再转换成视频，如何考虑速率问题]]
+
+[[https://ynhugo.github.io/p/note/#7%E5%9C%A8%E6%8C%87%E5%AE%9A%E8%A1%8C%E9%A6%96%E6%B7%BB%E5%8A%A0%E5%AD%97%E7%AC%A6%E4%B8%B2][在指定行首添加字符串]]

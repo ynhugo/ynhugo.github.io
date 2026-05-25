@@ -1,0 +1,24 @@
+---
+title: conda换源
+tags: ["conda"]
+date: 2026-01-16T15:19:57.12+0800
+---
+
+* conda换源
+#+begin_src bash
+cat > ~/.condarc <<'EOF'
+channels:
+  - defaults
+show_channel_urls: true
+default_channels:
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/msys2
+custom_channels:
+  conda-forge: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  pytorch: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+EOF
+#+end_src
+
+** 参考链接
+[[https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/][Anaconda 软件仓库]]

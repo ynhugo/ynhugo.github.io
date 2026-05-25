@@ -1,0 +1,55 @@
+---
+title: 无线调试ADB使用配对码链接Android
+tags: ["adb", "无线调试"]
+date: 2024-12-13T10:52:52.530000000+0800
+---
+
+* 无线调试ADB使用配对码链接Android
+
+** 先决条件
+
+Android 手机需要是 Android 11 以上系统；
+电脑上的 Android SDK 工具需要 ≥ 30.0.0 版本，确认方式是：adb --version
+
+#+begin_src 
+$ adb --version
+Android Debug Bridge version 1.0.41
+Version 35.0.0-11411520
+Installed as D:\Program Files (x86)\scrcpy-win64-v2.5\adb.exe
+Running on Windows 10.0.19045
+#+end_src
+
+Android 手机和电脑需连接在同一 WiFi 网络下；
+
+** 配对步骤
+
+当你确认这些条件都具备，那么就可以愉快的开始 Android 11 的无线调试开启步骤了：
+
+在手机上启用开发者模式 & USB 调试（一般是关于手机 --> 连续点击版本号，直到提示你已进入开发者模式）；
+启用无线调试选项；
+在询问 要在此网络上允许无线调试吗? 的对话框中，点击允许。
+经过第三步的操作，已经成功在手机上开启无线调试服务，点击无线调试 --> 点击使用配对码配对设备 可以看到配对码、ip 和端口号（每次点击都会生成新的）
+
+在电脑上的终端终端运行 adb pair ipaddr:port, 如下:
+
+#+begin_src 
+// ip 和 port 点击无线调试 --> 点击使用配对码配对设备即可获取（每次点击都会生成新的）
+~ » adb pair 192.168.3.161:37933
+// 当系统提示，输入在 4 中获取到的配对码
+Enter pairing code: 662287
+Successfully paired to 192.168.3.161:37933 [guid=adb-05KAY1XPBC-hyXNZI]
+#+end_src
+
+输入 adb devices -l 即可看到通过无线连接成功的设备，如下：
+
+#+begin_src 
+~ » adb devices -l
+List of devices attached
+adb-05KAY1XPBC-hyXNZI._adb-tls-connect._tcp. device product:sargo model:Pixel_3a device:sargo transport_id:2
+#+end_src
+
+完成这些步骤，接下来我们就可以愉快的写 BUG 去了，更爽的是这些操作是带记忆存储的，也就是说已经成功配对的两个设备（手机和电脑）每次连接到同一个 WiFi 时会自动完成匹配，无需人工干预，简直爆赞！！！
+
+** 参考链接
+
+[[https://blog.csdn.net/Death_Panda/article/details/121482764][无线调试 ADB 使用配对码链接Android]]

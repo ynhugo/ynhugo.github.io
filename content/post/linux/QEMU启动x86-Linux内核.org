@@ -1,0 +1,195 @@
+---
+title: QEMU启动x86-Linux内核
+tags: ["qemu", "linux", "x86"]
+date: 2025-03-16T03:26:36.67+0800
+---
+
+* 脚本使用方式
+
+** 环境部署
+第一次使用该脚本需要先搭建环境，执行命令如下：
+
+#+begin_src bash
+qemu-x86-linux.sh default
+#+end_src
+
+** 运行方式
+
+在环境完备的情况下，可以使用两种启动方式启动，一种是通过图形化界面启动，还有一种是通过控制台启动，命令分别如下：
+
+#+begin_src bash
+qemu-x86-linux.sh run graphic
+和
+qemu-x86-linux.sh run nographic
+#+end_src
+
+** 输出运行命令
+
+如果想输出启动方式，需要执行的命令如下：
+
+#+begin_src bash
+qemu-x86-linux.sh run_way graphic
+和
+qemu-x86-linux.sh run_way nographic
+#+end_src
+
+** 脚本内容
+
+#+begin_src bash
+linux="linux-5.19";
+busybox="busybox-1.35.0";
+file_linux="${linux}.tar.gz";
+file_busybox="${busybox}.tar.bz2";
+busybox_config="busybox-1.35.0/.config";
+work_dir_name="qemu-x86-linux";
+work_dir="${HOME}/${work_dir_name}";
+mkdir -p ${work_dir};
+qemu_arch="qemu-system-x86_64"
+cd ${work_dir};
+
+tools-install()
+{
+	package_array=(flex bison libncurses5-dev libelf-dev libssl-dev qemu-system-x86)
+	package_array_size=${#package_array[@]}
+	for ((i = 0; i < package_array_size; i++))
+	do
+		# 软件安装
+		if [ ! "$(apt list --installed | grep -wo "${package_array[${i}]}" | head -n 1)" = "${package_array[${i}]}" ]; then
+			echo -e "\e[34m"
+			sudo apt-get install ${package_array[${i}]} -y
+			echo -e "\e[0m"
+			if [ ! "$(apt list --installed | grep -wo "${package_array[${i}]}" | head -n 1)" = "${package_array[${i}]}" ]; then
+				echo -e "\e[31m${package_array[${i}]} 未安装\e[0m"
+			else
+				echo -e "\e[32m${package_array[${i}]} 已安装\e[0m"
+			fi		  
+		else
+			echo -e "\e[32m${package_array[${i}]} 已安装\e[0m"
+		fi
+	done	
+}
+
+if [ "$1" = "run" ] &&  [ "$2" = "graphic" ]; then		
+	$qemu_arch -kernel $work_dir/$linux/arch/x86/boot/bzImage -initrd $work_dir/$busybox/initramfs.cpio.gz -append "init=/init"
+elif [ "$1" = "run" ] &&  [ "$2" = "nographic" ]; then	
+    $qemu_arch -kernel $work_dir/$linux/arch/x86/boot/bzImage -initrd $work_dir/$busybox/initramfs.cpio.gz -nographic -append "init=/init console=ttyS0"
+elif [ "$1" = "help" ]; then
+	echo "$0 graphic"
+	echo "$0 nographic"
+elif [ "$1" = "run_way" ] && [ "$2" = "graphic" ]; then
+	echo "$qemu_arch -kernel $work_dir/$linux/arch/x86/boot/bzImage -initrd $work_dir/$busybox/initramfs.cpio.gz -append \"init=/init\""
+elif [ "$1" = "run_way" ] && [ "$2" = "nographic" ]; then
+	echo "$qemu_arch -kernel $work_dir/$linux/arch/x86/boot/bzImage -initrd $work_dir/$busybox/initramfs.cpio.gz -nographic -append \"init=/init console=ttyS0\""
+elif [ "$1" = "default" ]; then
+	tools-install
+
+	# 判断linux内核是否准备好	
+	while true;
+	do
+		if [ ! -f "${work_dir}/$file_linux" ]; then		  
+			echo -e "\e[32m"
+			wget https://mirrors.aliyun.com/linux-kernel/v5.x/$file_linux
+			echo -e  "\e[0m"
+		else
+			echo -e "\e[32m${file_linux} 已下载\e[0m"
+			break;
+		fi		
+	done
+
+	# 判断busybox文件是否准备好
+	while true;
+	do
+		if [ ! -f "${work_dir}/$file_busybox" ]; then
+			echo -e  "\e[33m"
+			# wget --no-check-certificate https://busybox.net/downloads/busybox-1.32.0.tar.bz2
+			wget --no-check-certificate https://busybox.net/downloads/${file_busybox}
+			echo -e  "\e[0m"
+		else
+			echo -e "\e[32m$file_busybox 已下载\e[0m"
+			break;
+		fi	  	  
+	done	
+
+	# 判断linux内核是否解压
+	echo -e  "\e[32m"
+	# kernel
+	if [ -d "${work_dir}/$linux" ]; then
+		echo "$linux exists."
+	else
+		tar xf ${work_dir}/$file_linux -C ${work_dir};
+	fi
+	echo -e  "\e[0m"
+
+	# 判断busybox文件是否解压
+	echo -e  "\e[33m"
+	if [ -d "${work_dir}/$busybox" ]; then
+		echo "$busybox exists."
+	else
+		tar xf ${work_dir}/$file_busybox -C ${work_dir};
+	fi
+	echo -e  "\e[0m"	
+
+	# 编译linux内核
+	echo -e  "\e[32m"
+	cd  ${work_dir}/${linux};
+	make defconfig				# 在x86_64架构上默认编译x86_64_defconfig
+	make -j$(nproc)
+	echo -e  "\e[0m"
+
+	# 编译busybox，编译之后把"${busybox}/_install/*"拷贝到rootfs目录下
+	cd  ${work_dir}/${busybox};
+	if [ ! -f "${work_dir}/${busybox}/_install/bin/busybox" ]; then
+		echo "# 修改配置，选中如下项目，静态编译"
+		echo -e "\e[31m# Settings ?C> Build Options ?C> [*] Build static binary（no share libs）\e[0m"
+		echo "# 反选如下项目，否则后续qemu执行会提示 /bin/sh:can't access tty;job control turned off"
+		echo -e "\e[31m# Shells  --->  [ ]   Job control\e[0m"
+		read -p "仅第一次编译运行时需要进行该操作，回车后要返回该界面可以执行快捷键Ctrl+z，回到menuconfig界面则执行fg，配置完毕后退出并确认保存即可，回车继续" continue;
+		make menuconfig	
+	fi	
+	make -j$(nproc)
+	make install
+	
+	# 制作initramfs
+	cd  ${work_dir}/${busybox}/_install/	
+	mkdir -p proc sys dev tmp
+	touch init
+	chmod +x init
+	cat > init << \EOF
+#!/bin/sh
+
+# 挂载一些必要的文件系统
+mount -t proc none /proc
+mount -t sysfs none /sys
+mount -t tmpfs none /tmp
+mount -t devtmpfs none /dev
+
+echo
+echo "Hello Linux"
+
+# 显示开机消耗时间
+
+echo "This boot took $(cut -d' ' -f1 /proc/uptime) seconds"
+echo
+
+# 停留在控制台
+exec /bin/sh
+EOF
+
+	if [ -f "initramfs.cpio.gz" ]; then
+		echo "initramfs.cpio.gz exists"
+	else
+		find . -print0 | cpio --null -ov --format=newc | gzip -9 > ../initramfs.cpio.gz
+	fi
+	
+	# QEMU运行虚拟机，通过sd卡加载linux内核	
+	$qemu_arch -kernel $work_dir/$linux/arch/x86/boot/bzImage -initrd $work_dir/$busybox/initramfs.cpio.gz -nographic -device edu -append "init=/init console=ttyS0"	
+elif [ "$1" = "install" ]; then
+	tools-install
+fi
+#+end_src
+
+** 参考链接
+
+[[https://blog.csdn.net/benkaoya/article/details/129469116][QEMU启动x86-Linux内核]]
+
+[[https://ynhugo.github.io/p/使用qemu搭建arm嵌入式linux开发环境/][使用qemu搭建arm嵌入式linux开发环境]]

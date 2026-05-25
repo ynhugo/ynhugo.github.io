@@ -1,0 +1,84 @@
+---
+title: Windows cmd命令提示符重启网卡（网络适配器）
+tags: ["windows", "cmd"]
+date: 2025-09-19T13:40:04.97+0800
+---
+
+* Windows cmd命令提示符重启网卡（网络适配器）
+
+** 查询计算机上所有的网卡（包括虚拟网卡）
+
+#+begin_src bash
+netsh interface show interface
+#+end_src
+
+** 操作网卡的指令
+
+关闭网卡：
+#+begin_src bash
+netsh interface set interface "要操作的网卡名称" disable
+#+end_src
+
+开启网卡：
+#+begin_src bash
+netsh interface set interface "要操作的网卡名称" enable
+#+end_src
+
+** 以无线网卡WLAN为例，重启网卡（在管理员权限cmd窗口运行）
+
+#+begin_src bash
+netsh interface set interface "WLAN" disable
+netsh interface set interface "WLAN" enable
+#+end_src
+
+** 实例cmd脚本
+
+脚本名：WLAN_Check.bat
+
+脚本功能：当wifi断网后自动重启WLAN（网络适配器）
+
+操作方式：将该脚本添加到任务计划程序，配置启动时运行，设置无限期每隔5分钟运行一次。配置后先手动运行一下后就不用再管了。
+
+脚本内容：
+#+begin_src bat
+@echo off
+echo 开始网络连接监控...
+
+:Check
+echo 正在检查网络连接...
+ping -n 3 www.baidu.com > nul
+
+if %ERRORLEVEL% EQU 0 (
+    echo 网络连接正常，等待60秒后再次检查...
+    timeout /t 60 /nobreak > nul
+    goto Check
+) else (
+    echo 网络连接失败，错误代码: %ERRORLEVEL%
+    echo 正在重启WLAN适配器...
+    goto RestartWLAN
+)
+
+:RestartWLAN
+echo 禁用WLAN...
+netsh interface set interface "WLAN" disable
+
+echo 等待5秒...
+timeout /t 5 /nobreak > nul
+
+echo 启用WLAN...
+netsh interface set interface "WLAN" enable
+
+echo 等待10秒让网络重新连接...
+timeout /t 10 /nobreak > nul
+
+echo 重新检查网络连接...
+goto Check
+#+end_src
+
+** 参考链接
+
+[[https://blog.csdn.net/m0_66757371/article/details/125143570][Windows cmd命令提示符重启网卡（网络适配器）]]
+
+[[https://blog.csdn.net/weixin_42419762/article/details/123437592][Windows通过计划任务定时执行bat文件]]
+
+[[https://www.cnblogs.com/nanstar/p/13298741.html][批处理（bat）用来监测Windows网络状态脚本]]

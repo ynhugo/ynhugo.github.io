@@ -1,0 +1,126 @@
+---
+title: Ledger进行复式记账
+tags: ["记账", "ledger"]
+date: 2024-11-11T04:57:15,712956600+08:00
+---
+
+* Ledger进行复式记账-ChatGPT
+
+使用 Ledger 进行复式记账（double-entry bookkeeping）时，可以根据你的消费方式（花呗、借呗、工资银行卡）和消费类别（吃饭、交通费、生活费）设计一个合理的账户结构。Ledger 是一个基于文本的财务管理工具，它通过清晰的借贷记账规则帮助你记录和追踪财务状况。
+
+以下是一个基本的示例，帮助你将消费、收入以及不同账户之间的交易整理成复式记账的形式。
+
+** 账户结构设计
+1. 资产账户：
+   - Assets:Bank:Salary —— 工资银行卡
+   - Assets:PayLater:Huabei —— 花呗
+   - Assets:PayLater:Jiebei —— 借呗
+
+2. 费用账户：
+   - Expenses:Food —— 吃饭
+   - Expenses:Transportation —— 交通费
+   - Expenses:Living —— 生活费
+
+3. 收入账户：
+   - Income:Salary —— 工资收入
+
+** 示例交易记录
+
+*** 1. 工资收入到账
+当你工资收入到账时，使用工资银行卡支付，所以我们会记录从工资账户（Assets:Bank:Salary）到银行账户的转账。
+
+#+begin_src 
+2024/11/01 工资收入
+    Assets:Bank:Salary        5000 CNY
+    Income:Salary              -5000 CNY
+#+end_src
+
+*** 2. 吃饭消费（使用花呗支付）
+假设你在餐馆消费了 100 元，使用花呗支付。
+
+#+begin_src 
+2024/11/02 吃饭
+    Expenses:Food              100 CNY
+    Assets:PayLater:Huabei     -100 CNY
+#+end_src
+
+*** 3. 交通费消费（使用借呗支付）
+假设你乘坐公交车花费了 20 元，使用借呗支付。
+
+#+begin_src 
+2024/11/03 交通费
+    Expenses:Transportation    20 CNY
+    Assets:PayLater:Jiebei     -20 CNY
+#+end_src
+
+*** 4. 生活费消费（使用工资银行卡支付）
+假设你购买日常生活用品花费了 200 元，从工资银行卡支付。
+
+#+begin_src 
+2024/11/04 生活费
+    Expenses:Living            200 CNY
+    Assets:Bank:Salary         -200 CNY
+#+end_src
+
+*** 5. 还花呗账单
+假设你还了 100 元花呗账单。
+
+#+begin_src 
+2024/11/05 还花呗
+    Assets:Bank:Salary         100 CNY
+    Assets:PayLater:Huabei     100 CNY
+#+end_src
+
+*** 6. 还借呗账单
+假设你还了 20 元借呗账单。
+
+#+begin_src 
+2024/11/06 还借呗
+    Assets:Bank:Salary         20 CNY
+    Assets:PayLater:Jiebei     20 CNY
+#+end_src
+
+** 账户结余
+使用 Ledger，你可以通过命令 ledger register 或 ledger balance 来查看各个账户的余额。例如：
+
+#+begin_src
+ledger register Assets
+#+end_src
+
+这会显示各个资产账户的余额，包括工资银行卡、花呗和借呗的余额。
+
+** 总结
+- 资产账户 用来记录你的银行卡、花呗和借呗等账户的余额。
+- 费用账户 用来记录不同类别的消费（如吃饭、交通费、生活费）。
+- 每一笔消费都需要有两个条目：一条是从支付方式账户（如银行卡、花呗、借呗）减少钱款，另一条是将金额记录到相应的费用账户中。
+
+你可以根据自己的实际情况进一步扩展和调整这些账户分类和交易记录，使得 Ledger 更符合你的需求。
+
+* ledger记账工具导出文件
+
+** 导出表格
+
+#+begin_src 
+ledger bal -f ledger.ledger -o test.csv
+或
+ledger reg -f ledger.ledger -o test.csv
+#+end_src
+
+** 导出其他文件
+
+#+begin_src 
+ledger bal -f ledger.ledger -o test.txt
+或
+ledger reg -f ledger.ledger -o test.txt
+#+end_src
+也可以导出为.md文件或.org文件，只需要更改后缀即可。
+
+* ledger记账工具查看指定时间范围的记账情况
+
+#+begin_src bash
+  ledger -f ledger_1.ledger bal --begin 12/13 --end 12/14
+#+end_src
+
+* 参考链接
+
+[[https://zero4drift.github.io/posts/ledger--ledger-mode-xue-xi-zhi-shi-dian-zong-jie/][Ledger & ledger-mode 学习知识点总结]]

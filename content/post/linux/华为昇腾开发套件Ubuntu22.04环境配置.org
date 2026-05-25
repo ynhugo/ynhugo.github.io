@@ -1,0 +1,34 @@
+---
+title: 华为昇腾开发套件Ubuntu22.04环境配置
+tags: ["linux", "ubuntu", "华为"] 
+date: 2025-04-28T19:21:38.11+0800
+---
+
+** 华为昇腾开发套件Ubuntu22.04环境配置
+
+#+begin_src bash
+  sudo groupadd HwHiAiUser
+  sudo useradd -g HwHiAiUser -d /home/HwHiAiUser -m HwHiAiUser -s /bin/bash
+  sudo passwd HwHiAiUser
+  usermod -a -G sudo HwHiAiUser
+  sudo userdel -rf hwhiaiuser  
+  # su HwHiAiUser
+  reboot
+  su - root
+  echo 'HwHiAiUser    ALL=(ALL)       ALL' >> /etc/sudoers
+  exit
+  sudo apt update
+  sudo apt install -y net-tools git emacs openssh-server vim fcitx5 fcitx5-*
+  # 确保语言安装了中文简体并且中设置默认输入法为fcitx，然后重启
+  reboot
+#+end_src
+
+*** 参考链接
+
+[[https://www.hiascend.com/document/detail/zh/Atlas%20200I%20A2/24.1.0/ep/installationguide/Install_06.html][创建运行用户]]
+
+[[https://bbs.huaweicloud.com/blogs/349995][如何让HwHiAiUser用户sudo ----小白入门知识汇总4]]
+
+[[https://www.cnblogs.com/mq0036/p/18604106][Linux 完全删除用户]]
+
+[[https://blog.csdn.net/lookwind09/article/details/128379045][Debian11.5和Ubuntu22.04安装fcitx5中文输入法(五笔拼音)]]

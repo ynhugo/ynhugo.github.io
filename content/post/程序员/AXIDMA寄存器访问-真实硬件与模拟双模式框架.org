@@ -1,0 +1,250 @@
+---
+title: AXIDMA寄存器访问-真实硬件与模拟双模式框架
+tags: ["axidma", "模拟", "mmap"]
+date: 2026-03-13T11:28:34.21+0800
+---
+
+* AXIDMA寄存器访问-真实硬件与模拟双模式框架
+
+#+begin_src c
+/*
+ ,* AXI DMA 寄存器访问 - 双模式框架
+ ,* 
+ ,* 编译方式:
+ ,*   gcc -o dma_test dma_test.c              # 真实硬件模式
+ ,*   gcc -DSIMULATE -o dma_test dma_test.c   # 模拟模式(云服务器)
+ ,*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdint.h>
+#include <errno.h>
+#ifdef SIMULATE
+/* ===================== 模拟模式: 使用匿名内存 ===================== */
+#include <sys/mman.h>
+#define MAP_SIZE      4096
+#define USER_CH0      0x20000          /* 模拟偏移地址 */
+#define MMAP_FAILED   MAP_FAILED
+static void *sim_mmap(void) {
+    void *mem = mmap(NULL, MAP_SIZE, 
+                     PROT_READ | PROT_WRITE,
+                     MAP_PRIVATE | MAP_ANONYMOUS, 
+                     -1, 0);
+    if (mem == MAP_FAILED) {
+        fprintf(stderr, "[SIM] mmap failed: %s\n", strerror(errno));
+        return NULL;
+    }
+    printf("[SIM] mmap anonymous: %p (size=%d)\n", mem, MAP_SIZE);
+    return mem;
+}
+static void sim_munmap(void *addr) {
+    if (addr) {
+        munmap(addr, MAP_SIZE);
+        printf("[SIM] munmap: %p\n", addr);
+    }
+}
+#define MODE_MMAP     sim_mmap
+#define MODE_MUNMAP   sim_munmap
+#define MODE_NAME     "SIMULATE (匿名内存模拟)"
+#else
+/* ===================== 真实硬件模式 ===================== */
+#include <fcntl.h>
+#include <unist.h>
+#include <sys/mman.h>
+#define MAP_SIZE      4096
+#define USER_CH0      0x43C20000       /* 实际硬件地址 */
+#define MMAP_FAILED   MAP_FAILED
+static int g_memfd = -1;
+static void *real_mmap(void) {
+    g_memfd = open("/dev/mem", O_RDWR | O_SYNC);
+    if (g_memfd == -1) {
+        fprintf(stderr, "[HW] Cannot open /dev/mem: %s\n", strerror(errno));
+        fprintf(stderr, "[HW] Hint: Try 'sudo'\n");
+        return NULL;
+    }
+    
+    uintptr_t aligned_addr = USER_CH0 & ~0xFFF;
+    void *map_base = mmap(NULL, MAP_SIZE, PROT_READ | PROT_WRITE,
+                          MAP_SHARED, g_memfd, aligned_addr);
+    
+    if (map_base == MMAP_FAILED) {
+        fprintf(stderr, "[HW] mmap failed: %s\n", strerror(errno));
+        close(g_memfd);
+        g_memfd = -1;
+        return NULL;
+    }
+    
+    void *reg_addr = (char*)map_base + (USER_CH0 & 0xFFF);
+    printf("[HW] mmap: virt=%p, phys=0x%08X\n", reg_addr, USER_CH0);
+    
+    /* 注意: map_base 需要保存以便 munmap */
+    return (void*)((uintptr_t)reg_addr | (map_base != NULL ? 0 : 0));
+}
+static void real_munmap(void *reg_addr) {
+    /* 从 reg_addr 中恢复 map_base (高位存储) */
+    void *map_base = (void*)((uintptr_t)reg_addr & ~0xFFF);
+    
+    if (map_base && map_base != MAP_FAILED) {
+        munmap(map_base, MAP_SIZE);
+    }
+    if (g_memfd != -1) {
+        close(g_memfd);
+        g_memfd = -1;
+    }
+    printf("[HW] cleanup complete\n");
+}
+#define MODE_MMAP     real_mmap
+#define MODE_MUNMAP   real_munmap
+#define MODE_NAME     "REAL HARDWARE"
+#endif
+/* ===================== 通用抽象层 ===================== */
+typedef struct {
+    void *reg_addr;            /* 寄存器虚拟地址 */
+    uintptr_t phys_addr;       /* 物理基地址 */
+    void *map_base;            /* 原始映射地址(用于cleanup) */
+    int initialized;
+} dma_handle_t;
+static int dma_init(dma_handle_t *dma, uintptr_t phys_addr) {
+    memset(dma, 0, sizeof(*dma));
+    dma->phys_addr = phys_addr;
+    
+    void *result = MODE_MMAP();
+    if (!result) {
+        return -1;
+    }
+    
+    /* 保存映射信息 */
+    dma->reg_addr = result;
+    dma->map_base = (void*)((uintptr_t)result & ~0xFFF);
+    dma->initialized = 1;
+    
+    printf("[INIT] Mode: %s\n", MODE_NAME);
+    printf("[INIT] Phys addr: 0x%08lX\n", (unsigned long)phys_addr);
+    printf("[INIT] Reg addr: %p\n", dma->reg_addr);
+    
+    return 0;
+}
+static void dma_cleanup(dma_handle_t *dma) {
+    if (!dma->initialized) return;
+    
+    MODE_MUNMAP(dma->reg_addr);
+    dma->initialized = 0;
+    
+    printf("[CLEANUP] Done\n");
+}
+static inline uint32_t dma_read(dma_handle_t *dma, int offset) {
+    volatile uint32_t *reg = (volatile uint32_t*)((char*)dma->reg_addr + offset);
+    uint32_t val = *reg;
+    printf("[READ]  [0x%08lX + 0x%02X] = 0x%08X\n", 
+           (unsigned long)dma->phys_addr, offset * 4, val);
+    return val;
+}
+static inline void dma_write(dma_handle_t *dma, int offset, uint32_t val) {
+    volatile uint32_t *reg = (volatile uint32_t*)((char*)dma->reg_addr + offset);
+    ,*reg = val;
+    printf("[WRITE] [0x%08lX + 0x%02X] = 0x%08X\n", 
+           (unsigned long)dma->phys_addr, offset * 4, val);
+}
+static inline void *dma_ptr(dma_handle_t *dma, int offset) {
+    return (char*)dma->reg_addr + offset;
+}
+/* ===================== 测试函数 ===================== */
+static int test_basic_rw(dma_handle_t *dma) {
+    printf("\n=== 基础读写测试 ===\n");
+    
+    uint32_t test_val = 0x12345678;
+    printf("写入 reg[0]: 0x%08X\n", test_val);
+    dma_write(dma, 0, test_val);
+    
+    printf("读取 reg[0]: ");
+    uint32_t read_val = dma_read(dma, 0);
+    printf("结果: 0x%08X %s\n", read_val, 
+           (read_val == test_val) ? "? OK" : "? FAIL");
+    
+    return (read_val == test_val) ? 0 : -1;
+}
+static int test_loop(dma_handle_t *dma, int count) {
+    printf("\n=== 循环测试 ( %d 次) ===\n", count);
+    
+    for (int i = 0; i < count; i++) {
+        uint32_t val = 0xA0000000 | i;
+        printf("\n--- 第 %d 次 ---\n", i + 1);
+        
+        dma_write(dma, 0, val);
+        printf("读取: 0x%08X\n", dma_read(dma, 0));
+        
+#ifndef SIMULATE
+        /* 真实硬件模式，每次循环后短暂休眠 */
+        usleep(10000);  /* 10ms */
+#endif
+    }
+    
+    return 0;
+}
+static int test_multi_reg(dma_handle_t *dma, int reg_count) {
+    printf("\n=== 多寄存器测试 (前 %d 个) ===\n", reg_count);
+    
+    uint32_t pattern[] = {0x11111111, 0x22222222, 0x33333333, 0x44444444};
+    
+    for (int i = 0; i < reg_count && i < 4; i++) {
+        printf("reg[%d]: 写入 0x%08X\n", i, pattern[i]);
+        dma_write(dma, i * 4, pattern[i]);  /* offset = index * 4 */
+    }
+    
+    printf("\n读取验证:\n");
+    for (int i = 0; i < reg_count && i < 4; i++) {
+        uint32_t val = dma_read(dma, i * 4);
+        printf("  reg[%d]: 0x%08X %s\n", i, val, 
+               (val == pattern[i]) ? "?" : "?");
+    }
+    
+    return 0;
+}
+/* ===================== 主函数 ===================== */
+int main(int argc, char *argv[]) {
+    printf("================================================\n");
+    printf("AXI DMA 寄存器访问测试\n");
+    printf("模式: %s\n", MODE_NAME);
+    printf("基地址: 0x%08lX\n", (unsigned long)USER_CH0);
+    printf("================================================\n");
+    
+    dma_handle_t dma;
+    
+    if (dma_init(&dma, USER_CH0) != 0) {
+        fprintf(stderr, "初始化失败\n");
+        return EXIT_FAILURE;
+    }
+    
+    /* 测试1: 基础读写 */
+    test_basic_rw(&dma);
+    
+    /* 测试2: 循环测试 */
+    test_loop(&dma, 3);
+    
+    /* 测试3: 多寄存器 */
+#ifdef SIMULATE
+    test_multi_reg(&dma, 4);
+#else
+    test_multi_reg(&dma, 1);  /* 真实硬件只测1个 */
+    printf("[注意] 跳过多寄存器读取测试\n");
+#endif
+    
+    /* 最终赋值 */
+    printf("\n=== 最终赋值 0x12345678 ===\n");
+    dma_write(&dma, 0, 0x12345678);
+    
+#ifdef SIMULATE
+    printf("最终读取: 0x%08X\n", dma_read(&dma, 0));
+#else
+    printf("[注意] 真实硬件跳过最终读取\n");
+#endif
+    
+    dma_cleanup(&dma);
+    
+    printf("\n================================================\n");
+    printf("测试完成\n");
+    printf("================================================\n");
+    
+    return EXIT_SUCCESS;
+}
+#+end_src

@@ -1,0 +1,195 @@
+---
+title: "termux搭建kod（可道云）教程及配置数据库mariadb（mysql）"
+tags: ["termux", "kod", "php", "nginx"]
+date: 2026-05-20T16:37:11.41+0800
+---
+
+* termux搭建kod（可道云）教程
+
+** 脚本功能
+
+安装相关命令，修改php配置：listen = 127.0.0.1:9000，正则匹配修改，多次追加，nginx配置添加php解析，并且配置如果存在php解析则不会再次追加。
+
+** 命令行粘贴一键执行脚本
+
+如果要重置为指定密码，在脚本中指定自定义密码然后将脚本内容一键粘贴到终端运行即可
+
+#+begin_src bash
+# 备份安装源文件
+if [ ! -f "$PREFIX/etc/apt/sources.list_bak" ]; then
+  cp -av $PREFIX/etc/apt/sources.list $PREFIX/etc/apt/sources.list_bak
+fi
+# # 手动选择源
+# termux-change-repo
+# 脚本一键换源
+cat - > $PREFIX/etc/apt/sources.list <<'EOF'
+deb https://mirrors.ustc.edu.cn/termux/termux-main stable main
+EOF
+
+pkg update
+pkg install -y root-repo x11-repo
+pkg install -y wget nginx php php-fpm expect vim 
+
+# 随手配置一下vimrc
+cat - >> ~/.vimrc << 'EOF'
+" vimrc for me
+set nu
+set ai
+set si
+set sw=4
+set ts=4
+set mouse=a
+noremap <C-a> <Esc>ggVG "全选
+syntax enable
+syntax on
+EOF
+
+if [ ! -f "$PREFIX/etc/php-fpm.d/www.conf_bak" ]; then
+cp $PREFIX/etc/php-fpm.d/www.conf $PREFIX/etc/php-fpm.d/www.conf_bak
+fi
+if [ ! -f "$PREFIX/etc/nginx/nginx.conf_bak" ]; then
+cp $PREFIX/etc/nginx/nginx.conf $PREFIX/etc/nginx/nginx.conf_bak
+fi
+# 修改
+# sed -i 's|^\(listen =\).*|\1 0.0.0.0:9000|g' $PREFIX/etc/php-fpm.d/www.conf
+sed -i 's|^\(listen =\).*|\1 127.0.0.1:9000|g' $PREFIX/etc/php-fpm.d/www.conf
+# 检查修改结果
+grep -n "^listen" $PREFIX/etc/php-fpm.d/www.conf
+
+# 修改，index行追加index.php
+sed -i 's|\([[:space:]]*index  index.html index.htm\).*|\1 index.php;|g' $PREFIX/etc/nginx/nginx.conf
+# 检查
+grep -n "^[[:space:]]*index" $PREFIX/etc/nginx/nginx.conf
+# 添加php解析配置，这段配置只需要执行一次就可以
+temp_nginx_conf=$(mktemp) && awk '
+BEGIN { depth = 0; target_depth = 2; inserted = 0; already_exists = 0 }
+# 先扫描一遍，检查是否已存在该 location 块（简单特征匹配）
+NR == FNR {
+    if ($0 ~ /location ~ \\\.php\$/) already_exists = 1
+    next
+}
+# 正常处理
+{
+    if (!inserted && !already_exists && depth == target_depth && $0 ~ /^[[:space:]]*}/) {
+        print ""
+        print "        location ~ \\.php$ {"
+        print "            root           html;"
+        print "            fastcgi_pass   127.0.0.1:9000;"
+        print "            # fastcgi_pass   0.0.0.0:9000;"
+        print "            fastcgi_index  index.php;"
+        print "            fastcgi_param  SCRIPT_FILENAME  /data/data/com.termux/files/usr/share/nginx/html$fastcgi_script_name;"
+        print "            include        fastcgi_params;"
+        print "        }"
+        inserted = 1
+    }
+    if ($0 ~ /\{/) depth++
+    if ($0 ~ /\}/) depth--
+    print
+}
+END {
+    if (!inserted && !already_exists && depth == target_depth) {
+        print "    location ~ \\.php$ { ... }"
+    }
+}' "$PREFIX/etc/nginx/nginx.conf" "$PREFIX/etc/nginx/nginx.conf" > ${temp_nginx_conf} && mv ${temp_nginx_conf} "$PREFIX/etc/nginx/nginx.conf"
+
+# 下载kodbox
+if [ ! - f "kodbox-1.67.02.zip" ]; then
+  curl -JOL https://github.com/kalcaddle/kodbox/archive/refs/tags/1.67.02.zip
+fi
+
+# 解压 到 Nginx 的 kod 目录下
+if [ ! -d "$PREFIX/share/nginx/html/kod" ]; then
+  unzip kodbox-1.67.02.zip -d $PREFIX/share/nginx/html/kod
+  mv $PREFIX/share/nginx/html/kod/kodbox-1.67.02/* $PREFIX/share/nginx/html/kod
+fi
+ 
+# 挂载termux家目录与手机内部存储目录
+# termux-setup-storage
+# 自动运行termux-setup-storage
+# expect -c 'spawn termux-setup-storage; expect "*continue? (y/n)*" { send "n\r" }; interact'
+# 如果再次运行时会提示y/n，自动回复n即可
+yes n | termux-setup-storage
+
+if [ ! -d "$PREFIX/share/nginx/html/kod/data/files/$(basename $HOME)" ]; then
+  ln -s $HOME/ $PREFIX/share/nginx/html/kod/data/files
+fi
+
+if [ ! -d "$PREFIX/share/nginx/html/kod/data/files/$(basename $HOME/storage)" ]; then
+  ln -s $HOME/storage $PREFIX/share/nginx/html/kod/data/files
+fi
+
+# # 如果忘记管理员密码，删除install.lock后重新访问 ip:8080/kod/ 即可重新设置密码，kod数据不会受影响
+# read -p "是否重置密码，y：重置，n：不重置，请输入y/n: " delete
+# if [ "$delete" == "y" ]; then
+#   rm $PREFIX/share/nginx/html/kod/data/system/install.lock
+# fi
+
+# # 修改默认监听端口号，默认8080
+# sed -i 's|^\([[:space:]]*listen[[:space:]]*\).*|\18081;|g' $PREFIX/etc/nginx/nginx.conf
+# # 检查
+# grep -n "^[[:space:]]*listen" $PREFIX/etc/nginx/nginx.conf
+
+# # 启动nginx与php-fpm，自行启动
+# nginx; php-fpm
+#+end_src
+
+#+begin_src bash
+#!/data/data/com.termux/files/usr/bin/bash
+
+# 1. 配置 my.cnf 添加 skip-grant-tables
+CONFIG="$PREFIX/etc/my.cnf"
+sed -i '/\[mysqld\]/d' "$CONFIG"
+sed -i '/skip-grant-tables/d' "$CONFIG"
+sed -i '1 i [mysqld]' "$CONFIG"
+echo "skip-grant-tables" >> "$CONFIG"
+
+# 2. 强制停止所有 mysql/mariadb 进程
+pkill -f mariadbd || pkill -f mysqld
+sleep 2
+
+# 3. 以 skip-grant-tables 模式启动（后台）
+mariadbd --skip-grant-tables --skip-networking &
+# 等待启动完成
+sleep 3
+
+# 4. 非交互式执行 SQL 重置密码
+#   注意：先 FLUSH PRIVILEGES 激活权限系统，再 ALTER USER
+mariadb -u root -e "FLUSH PRIVILEGES; ALTER USER 'root'@'localhost' IDENTIFIED BY '123456'; FLUSH PRIVILEGES;"
+
+# 5. 关闭当前 mariadbd 进程
+pkill -f mariadbd
+sleep 2
+
+# 6. 从配置文件中删除 skip-grant-tables
+sed -i '/skip-grant-tables/d' "$CONFIG"
+
+# 7. 正常启动 MariaDB
+mariadbd &
+echo "root 密码已重置为 123456"
+#+end_src
+
+** 参考链接
+
+[[https://blog.csdn.net/YiBYiH/article/details/127503804][Termux个人云盘搭建kodbox | csdn]]
+
+[[https://www.sqlsec.com/2018/05/termux.html#%E5%AE%89%E8%A3%85-Nginx][（Termux 高级终端安装使用配置教程 | 国光）| 安装 Nginx]]
+
+[[https://www.sqlsec.com/2018/05/termux.html#Nginx-%E8%A7%A3%E6%9E%90-PHP][（Termux 高级终端安装使用配置教程 | 国光）| Nginx 解析 PHP]]
+
+[[https://www.sqlsec.com/2018/05/termux.html#KodExplorer][（Termux 高级终端安装使用配置教程 | 国光）| KodExplorer]]
+
+[[https://www.sqlsec.com/2018/05/termux.html#使用-dalvikvm-运行][（Termux 高级终端安装使用配置教程 | 国光）| MariaDB (MySQL)]]
+
+[[https://zhidao.baidu.com/question/1951857964847772348.html][KODExplorer可道私有云忘记密码怎么办？| 百度知道]]
+
+[[https://bbs.kodcloud.com/d/4952-wang-ji-guan-li-yuan-mi-ma-you-shi-yao-jie-jue-ban-fa][忘记管理员密码有什么解决办法？| 可道云社区]]
+
+[[https://chat.deepseek.com/share/qv2kgc7ublkku0jfl9][awk花括号深度脚本用法 | deepseek]]
+
+[[https://www.linuxcool.com/read][read - 读取单行数据内容 | Linux命令大全(手册)]]
+
+[[https://blog.csdn.net/xiaoxinshuaiga/article/details/82870459][MariaDB忘记root密码，修改root密码]]
+
+[[https://blog.csdn.net/Olivia_Vang/article/details/104081096][Linux 添加文本到指定行/在文件的指定行添加内容（shell, sed）]]
+
+[[https://sworker.gitlab.io/2019/05/06/mysql-on-termux/][在termux上运行mysql]]

@@ -1,0 +1,24 @@
+---
+title: 如何通过SSH在远程Linux系统上运行命令
+date: 2024-03-26T00:24:36.00+0800
+tags: ["程序员", "SSH"]
+---
+
+** 通用语法如下所示
+
+#+begin_src bash
+  $ ssh [用户名]@[远程主机名或 IP] [命令或脚本]
+#+end_src
+
+
+** 使用示例
+
+以下代码为 Termux 环境使用示例，termux-clipboard-set 为 Termux 剪切板，"sed -n '13'p" 输出指定行
+
+#+begin_src bash
+  ssh thc_1 ./ccf.sh 104.19.62.5 | sed -n '13'p | termux-clipboard-set
+#+end_src
+
+** 参考链接
+
+[[https://www.51cto.com/article/603972.html][如何通过SSH在远程Linux系统上运行命令]]

@@ -1,0 +1,39 @@
+---
+title: Git如何配置命令行Git使用SSH密钥
+tags: ["git", "ssh"]
+date: 2025-06-26T16:10:46.65+0800
+---
+
+* Git如何配置命令行Git使用SSH密钥
+
+** 生成 SSH 密钥
+
+#+begin_src bash
+  ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+#+end_src
+
+** 配置 Git 使用 SSH 密钥
+
+1. 打开命令行终端，并输入以下命令来查看公钥内容：
+#+begin_src bash
+  cat ~/.ssh/id_rsa.pub			# 复制显示的公钥内容
+#+end_src
+
+2. 将显示的公钥内容复制到剪贴板。
+3. 打开 Git 服务器上的账户页面，进入 SSH 密钥的设置页面。
+4. 在页面上点击 “Add SSH Key” 或类似的按钮，并将刚才复制的公钥粘贴到相应的输入框中。
+5. 保存设置，服务器就会将你的公钥添加到授权列表中。
+
+6. 接下来，打开命令行终端，并使用以下命令来配置 Git 使用 SSH 密钥：
+#+begin_src bash
+git config --global user.email "your_email@example.com"
+git config --global user.name "Your Name"
+git config --global core.sshCommand "ssh -i ~/.ssh/id_rsa"
+#+end_src
+其中，your_email@example.com 需要替换为你的邮箱地址，Your Name 需要替换为你的用户名。
+
+7. 现在，你就可以使用命令行 Git 来进行远程操作了，而无需每次都输入密码。
+
+** 参考链接
+
+[[https://geek-docs.com/git/git-questions/324_git_how_to_configure_command_line_git_to_use_ssh_key.html][Git 如何配置命令行 Git 使用 SSH 密钥]]
