@@ -34,6 +34,10 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.PRIVATE_BLOG_REPO_TOKEN }}
 
+      # ===================== 修复：等待子模块加载完成 =====================
+      - name: Wait for submodule
+        run: sleep 3
+
       - name: Cache Node dependencies
         uses: actions/cache@v5
         with:
@@ -54,10 +58,13 @@ jobs:
       - name: Install dependencies
         run: npm ci || true
 
+      # ===================== 修复：确保文件存在再执行 =====================
       - name: Apply giscus config
         run: |
           sed -i '/^\[comments\]/,/^$/d' config/_default/params.toml
-          cat content/post/giscus.toml >> config/_default/params.toml
+          if [ -f "content/post/giscus.toml" ]; then
+            cat content/post/giscus.toml >> config/_default/params.toml
+          fi
 
       - name: Restore Hugo cache
         uses: actions/cache/restore@v5
@@ -77,14 +84,9 @@ jobs:
           path: ${{ runner.temp }}/hugo_cache
           key: hugo-cache-${{ hashFiles('config/**','themes/**') }}
 
-      # ==============================================
-      # 核心：直接部署 public 到 gh-pages 分支
-      # ==============================================
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public
           publish_branch: gh-pages
-          user_name: "github-actions[bot]"
-          user_email: "github-actions[bot]@users.noreply.github.com"
