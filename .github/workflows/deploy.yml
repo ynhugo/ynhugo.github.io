@@ -6,6 +6,8 @@ on:
       - main
       - master
   workflow_dispatch:
+  repository_dispatch:
+    types: [blog-updated]
 
 permissions:
   contents: read
@@ -35,6 +37,7 @@ jobs:
         with:
           submodules: recursive
           fetch-depth: 0
+          token: ${{ secrets.PRIVATE_BLOG_REPO_TOKEN }}
 
       - name: Setup Go
         uses: actions/setup-go@v6
@@ -83,24 +86,11 @@ jobs:
         run: |
           git config core.quotepath false
 
-      # ===================== 私有仓库：文章 + giscus =====================
-      - name: Clone private blog repo
-        run: |
-          git clone https://${{ secrets.PRIVATE_BLOG_REPO_TOKEN }}@github.com/ynhugo/blogs.git private-blog
-
-      - name: Create post directory
-        run: mkdir -p content/post
-
-      - name: Copy posts to Hugo content
-        run: |
-          cp -r private-blog/post/* content/post/
-
-      # ✅ 关键修复：删除公开配置里的 [comments] 块，再插入 giscus
-      - name: Replace comments config with giscus
+      # 直接从 submodule 读取 giscus 配置（超级快）
+      - name: Apply giscus config
         run: |
           sed -i '/^\[comments\]/,/^$/d' config/_default/params.toml
-          cat private-blog/giscus.toml >> config/_default/params.toml
-      # ====================================================================
+          cat content/post/giscus.toml >> config/_default/params.toml
 
       - name: Cache restore
         uses: actions/cache/restore@v5
