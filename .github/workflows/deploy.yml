@@ -7,6 +7,10 @@ on:
   repository_dispatch:
     types: [blog-updated]
 
+# 兼容 Node24 告警，同时保证 gh-pages 动作正常运行
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 permissions:
   contents: write
 
@@ -18,12 +22,22 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout with private submodule
+      - name: Checkout main repo + submodules
         uses: actions/checkout@v6
         with:
           submodules: recursive
           fetch-depth: 0
           token: ${{ secrets.PRIVATE_BLOG_REPO_TOKEN }}
+
+      # 调试：打印文章目录，确认子模块拉取成功
+      - name: Check content files
+        run: |
+          ls -la content/
+          ls -la content/post/ || echo "content/post 目录为空"
+
+      # 清理旧 public，避免缓存残留
+      - name: Clean old public dir
+        run: rm -rf public
 
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
@@ -42,7 +56,10 @@ jobs:
         run: |
           ./shortcode.sh
           hugo --minify
+        # 构建后打印产物，确认 public 有内容
+        post-run: ls -la public/
 
+      # 部署到 gh-pages，增加强制覆盖、保留历史提交
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
         with:
@@ -51,3 +68,5 @@ jobs:
           publish_branch: gh-pages
           user_name: github-actions[bot]
           user_email: github-actions[bot]@users.noreply.github.com
+          # 关键：不保留历史文件，强制全量更新，解决分支不刷新
+          keep_files: false
