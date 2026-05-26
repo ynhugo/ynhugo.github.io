@@ -73,7 +73,7 @@ comments: false
 EOF
 
 # 5. 生成短代码脚本（本地操作，批量复制执行）
-
+#+BEGIN_SRC bash
 cat - > shortcode.sh << 'END'
 mkdir -p layouts/shortcodes/
 # 添加网易云短代码
