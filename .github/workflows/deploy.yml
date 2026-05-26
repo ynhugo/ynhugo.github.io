@@ -26,23 +26,16 @@ jobs:
         with:
           fetch-depth: 0
 
-      # ==============================================
-      # 🔥 缓存 Git LFS 和 Hugo 构建文件（核心加速）
-      # ==============================================
-      - name: Cache LFS & Hugo assets
+      # 缓存 Hugo 构建目录（官方标准写法，绝对不报错）
+      - name: Setup Hugo cache
         uses: actions/cache@v4
         with:
-          path: |
-            ~/.git/lfs
-            .git/lfs
-            content/post/.git/lfs
-            ./resources/_gen
-            .hugo_cache
-          key: ${{ runner.os }}-blog-lfs-hugo-${{ github.sha }}
+          path: ${{ runner.temp }}/hugo_cache
+          key: ${{ runner.os }}-hugo-${{ github.sha }}
           restore-keys: |
-            ${{ runner.os }}-blog-lfs-hugo-
+            ${{ runner.os }}-hugo-
 
-      # 浅克隆私有仓库（你原来的配置，不动）
+      # 浅克隆私有仓库（你原来的配置）
       - name: Clone private posts (shallow)
         run: |
           git clone --depth 1 --branch main \
@@ -67,13 +60,12 @@ jobs:
             cat content/post/giscus.toml >> config/_default/params.toml
           fi
 
-      # 构建命令：开启缓存，加速编译
+      # 正确官方写法：--cacheDir 不会报错
       - name: Build site
         run: |
           ./shortcode.sh
-          hugo --minify --gc --logLevel error --cache .hugo_cache
+          hugo --minify --gc --logLevel error --cacheDir "${{ runner.temp }}/hugo_cache"
 
-      # 增量部署（你原来的配置，不动）
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
         with:
