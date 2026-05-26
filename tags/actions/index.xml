@@ -6,14 +6,590 @@
 &lt;div id="outline-text-headline-1" class="outline-text-2"&gt;
 &lt;div id="outline-container-headline-2" class="outline-3"&gt;
 &lt;h3 id="headline-2"&gt;
-一、整体架构介绍
+一、底层模板：Hugo Theme Stack 启动模板说明
 &lt;/h3&gt;
 &lt;div id="outline-text-headline-2" class="outline-text-3"&gt;
+&lt;p&gt;当前整套博客基于官方脚手架仓库 &lt;code class="verbatim"&gt;hugo-theme-stack-starter&lt;/code&gt; 二次开发，该模板是 Stack 主题官方推荐快速启动模板，也是本架构的底层基础。本文所有改造、配置与自动化流程，均依托此模板实现。&lt;/p&gt;
 &lt;div id="outline-container-headline-3" class="outline-4"&gt;
 &lt;h4 id="headline-3"&gt;
-1.1 目录结构
+1.1 模板仓库与核心特性
 &lt;/h4&gt;
 &lt;div id="outline-text-headline-3" class="outline-text-4"&gt;
+&lt;p&gt;官方仓库地址：&lt;a href="https://github.com/CaiJimmy/hugo-theme-stack-starter"&gt;https://github.com/CaiJimmy/hugo-theme-stack-starter&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;
+模板原生能力：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;采用 Hugo Modules 加载主题，无需手动拷贝主题文件，版本管理规范&lt;/li&gt;
+&lt;li&gt;预置完整站点目录与默认配置，开箱即用&lt;/li&gt;
+&lt;li&gt;内置 GitHub Actions 工作流，自动构建并部署至 GitHub Pages&lt;/li&gt;
+&lt;li&gt;配置定时任务，每日自动检测、更新主题版本&lt;/li&gt;
+&lt;li&gt;同时支持本地运行、GitHub Codespaces 在线运行两种环境&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-headline-4" class="outline-4"&gt;
+&lt;h4 id="headline-4"&gt;
+1.2 前置运行依赖
+&lt;/h4&gt;
+&lt;div id="outline-text-headline-4" class="outline-text-4"&gt;
+&lt;p&gt;本地部署模板需提前安装依赖（GitHub Codespaces 已预装，可跳过）：&lt;/p&gt;
+&lt;div class="src src-text"&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Git
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Go
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Hugo Extended 扩展版本&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;
+参考官方安装文档：&lt;a href="https://gohugo.io/installation/"&gt;https://gohugo.io/installation/&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-headline-5" class="outline-4"&gt;
+&lt;h4 id="headline-5"&gt;
+1.3 模板标准搭建流程
+&lt;/h4&gt;
+&lt;div id="outline-text-headline-5" class="outline-text-4"&gt;
+&lt;div id="outline-container-headline-6" class="outline-5"&gt;
+&lt;h5 id="headline-6"&gt;
+1.3.1 基于模板创建仓库
+&lt;/h5&gt;
+&lt;div id="outline-text-headline-6" class="outline-text-5"&gt;
+&lt;ol&gt;
+&lt;li&gt;进入模板仓库主页，点击 &lt;code class="verbatim"&gt;Use this template&lt;/code&gt; 新建仓库&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;仓库命名规范&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;个人博客主站：命名为 `&amp;lt;用户名&amp;gt;.github.io`，访问地址：`https://&amp;lt;用户名&amp;gt;.github.io`&lt;/li&gt;
+&lt;li&gt;自定义仓库名：访问地址：`https://&amp;lt;用户名&amp;gt;.github.io/仓库名/`&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-headline-7" class="outline-5"&gt;
+&lt;h5 id="headline-7"&gt;
+1.3.2 配置 GitHub Pages 部署源
+&lt;/h5&gt;
+&lt;div id="outline-text-headline-7" class="outline-text-5"&gt;
+&lt;ol&gt;
+&lt;li&gt;进入仓库 → Settings → Pages&lt;/li&gt;
+&lt;li&gt;找到 &lt;code class="verbatim"&gt;Build and deployment&lt;/code&gt; 模块，将 &lt;code class="verbatim"&gt;Source&lt;/code&gt; 设置为 &lt;code class="verbatim"&gt;GitHub Actions&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-headline-8" class="outline-5"&gt;
+&lt;h5 id="headline-8"&gt;
+1.3.3 站点本地预览
+&lt;/h5&gt;
+&lt;div id="outline-text-headline-8" class="outline-text-5"&gt;
+&lt;div id="outline-container-headline-9" class="outline-6"&gt;
+&lt;h6 id="headline-9"&gt;
+方式一：GitHub Codespaces 在线预览
+&lt;/h6&gt;
+&lt;div id="outline-text-headline-9" class="outline-text-6"&gt;
+&lt;ol&gt;
+&lt;li&gt;仓库页面点击 =Create codespace=，等待环境初始化&lt;/li&gt;
+&lt;li&gt;终端执行预览命令：&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="src src-bash"&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;hugo server&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-headline-10" class="outline-6"&gt;
+&lt;h6 id="headline-10"&gt;
+方式二：本地克隆运行
+&lt;/h6&gt;
+&lt;div id="outline-text-headline-10" class="outline-text-6"&gt;
+&lt;div class="src src-bash"&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git clone 你的公开仓库地址
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; 仓库目录
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;hugo server&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-headline-11" class="outline-5"&gt;
+&lt;h5 id="headline-11"&gt;
+1.3.4 站点基础配置
+&lt;/h5&gt;
+&lt;div id="outline-text-headline-11" class="outline-text-5"&gt;
+&lt;p&gt;所有配置文件统一存放于 &lt;code class="verbatim"&gt;config/_default/&lt;/code&gt; 目录，核心配置项：
+编辑 &lt;code class="verbatim"&gt;config/_default/config.toml=，修改 =baseurl&lt;/code&gt; 为博客实际域名。&lt;/p&gt;
+&lt;p&gt;
+示例配置：&lt;/p&gt;
+&lt;div class="src src-toml"&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-toml" data-lang="toml"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="err"&gt;;;&lt;/span&gt; &lt;span class="err"&gt;仓库名为&lt;/span&gt; &lt;span class="err"&gt;用户名&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;github&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;io&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;baseurl&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;https://xxx.github.io/&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="err"&gt;;;&lt;/span&gt; &lt;span class="err"&gt;自定义仓库名称&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;baseurl&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;https://xxx.github.io/仓库名/&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-headline-12" class="outline-6"&gt;
+&lt;h6 id="headline-12"&gt;
+1.3.4.1 配置文件格式说明
+&lt;/h6&gt;
+&lt;div id="outline-text-headline-12" class="outline-text-6"&gt;
+&lt;p&gt;本主题及官方模板默认采用 &lt;strong&gt;&lt;strong&gt;TOML&lt;/strong&gt;&lt;/strong&gt; 作为配置文件格式，而非 YAML。
+全站 `config/` 目录下所有配置均使用 TOML 语法编写，请勿混用格式，避免编译报错。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-headline-13" class="outline-6"&gt;
+&lt;h6 id="headline-13"&gt;
+1.3.4.2 Giscus 评论配置（私有仓库隔离方案）
+&lt;/h6&gt;
+&lt;div id="outline-text-headline-13" class="outline-text-6"&gt;
+&lt;p&gt;出于安全考虑，Giscus 评论相关配置文件不存放在公开站点仓库，统一放置在**私有内容仓库**中。
+部署流程中通过 GitHub Actions 脚本动态读取并合并配置，实现敏感信息隔离。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;私有仓库目录结构&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;将 &lt;code class="verbatim"&gt;giscus.toml&lt;/code&gt; 放置在私有仓库 &lt;code class="verbatim"&gt;content/post/&lt;/code&gt; 目录下，与博文同级。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Actions 动态合并逻辑&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;构建阶段先清空原有评论配置，再将私有仓库内的 &lt;code class="verbatim"&gt;giscus.toml&lt;/code&gt; 追加至站点主配置文件：&lt;/p&gt;
+&lt;div class="src src-bash"&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sed -i &lt;span class="s1"&gt;&amp;#39;/^\[comments\]/,/^$/d&amp;#39;&lt;/span&gt; config/_default/params.toml
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; -f &lt;span class="s2"&gt;&amp;#34;content/post/giscus.toml&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; cat content/post/giscus.toml &amp;gt;&amp;gt; config/_default/params.toml
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;fi&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;
+优势：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;评论密钥、仓库地址等敏感配置仅留存私有仓库，降低泄露风险&lt;/li&gt;
+&lt;li&gt;公开仓库保持纯净，仅保留站点通用配置&lt;/li&gt;
+&lt;li&gt;依托现有双仓库架构，无需额外改造目录与权限&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol&gt;
+&lt;li&gt;giscus.toml 内容格式&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="src src-toml"&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-toml" data-lang="toml"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;comments&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nx"&gt;enabled&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;true&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nx"&gt;provider&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;giscus&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;comments&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;giscus&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nx"&gt;repo&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;ynhugo/ynhugo.github.io&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nx"&gt;repoID&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;R_xxxxxxxxxx&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nx"&gt;category&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;Announcements&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nx"&gt;categoryID&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;DIC_xxxxxxxxxxxxxxx&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nx"&gt;mapping&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;pathname&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nx"&gt;lightTheme&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;light&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nx"&gt;darkTheme&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;dark&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nx"&gt;reactionsEnabled&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nx"&gt;emitMetadata&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-headline-14" class="outline-5"&gt;
+&lt;h5 id="headline-14"&gt;
+1.3.5 提交与自动发布
+&lt;/h5&gt;
+&lt;div id="outline-text-headline-14" class="outline-text-5"&gt;
+&lt;p&gt;修改完成后执行常规 Git 推送，GitHub Actions 自动完成构建与部署：&lt;/p&gt;
+&lt;div class="src src-bash"&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git add .
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git commit -m &lt;span class="s2"&gt;&amp;#34;更新站点内容/配置&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git push&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-headline-15" class="outline-5"&gt;
+&lt;h5 id="headline-15"&gt;
+1.3.6 一键自动化配置（分步执行版）
+&lt;/h5&gt;
+&lt;div id="outline-text-headline-15" class="outline-text-5"&gt;
+&lt;p&gt;&lt;a href="https://github.com/CaiJimmy/hugo-theme-stack-starter"&gt;https://github.com/CaiJimmy/hugo-theme-stack-starter&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/ynhugo/ynhugo.github.io"&gt;https://github.com/ynhugo/ynhugo.github.io&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;git clone git@github.com:ynhugo/ynhugo.github.io.git ynhugo
+cd ynhugo&lt;/p&gt;
+&lt;p&gt;hugo mod get -u github.com/CaiJimmy/hugo-theme-stack/v4
+hugo mod tidy&lt;/p&gt;
+&lt;div class="src src-bash"&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt; 10
+&lt;/span&gt;&lt;span class="lnt"&gt; 11
+&lt;/span&gt;&lt;span class="lnt"&gt; 12
+&lt;/span&gt;&lt;span class="lnt"&gt; 13
+&lt;/span&gt;&lt;span class="lnt"&gt; 14
+&lt;/span&gt;&lt;span class="lnt"&gt; 15
+&lt;/span&gt;&lt;span class="lnt"&gt; 16
+&lt;/span&gt;&lt;span class="lnt"&gt; 17
+&lt;/span&gt;&lt;span class="lnt"&gt; 18
+&lt;/span&gt;&lt;span class="lnt"&gt; 19
+&lt;/span&gt;&lt;span class="lnt"&gt; 20
+&lt;/span&gt;&lt;span class="lnt"&gt; 21
+&lt;/span&gt;&lt;span class="lnt"&gt; 22
+&lt;/span&gt;&lt;span class="lnt"&gt; 23
+&lt;/span&gt;&lt;span class="lnt"&gt; 24
+&lt;/span&gt;&lt;span class="lnt"&gt; 25
+&lt;/span&gt;&lt;span class="lnt"&gt; 26
+&lt;/span&gt;&lt;span class="lnt"&gt; 27
+&lt;/span&gt;&lt;span class="lnt"&gt; 28
+&lt;/span&gt;&lt;span class="lnt"&gt; 29
+&lt;/span&gt;&lt;span class="lnt"&gt; 30
+&lt;/span&gt;&lt;span class="lnt"&gt; 31
+&lt;/span&gt;&lt;span class="lnt"&gt; 32
+&lt;/span&gt;&lt;span class="lnt"&gt; 33
+&lt;/span&gt;&lt;span class="lnt"&gt; 34
+&lt;/span&gt;&lt;span class="lnt"&gt; 35
+&lt;/span&gt;&lt;span class="lnt"&gt; 36
+&lt;/span&gt;&lt;span class="lnt"&gt; 37
+&lt;/span&gt;&lt;span class="lnt"&gt; 38
+&lt;/span&gt;&lt;span class="lnt"&gt; 39
+&lt;/span&gt;&lt;span class="lnt"&gt; 40
+&lt;/span&gt;&lt;span class="lnt"&gt; 41
+&lt;/span&gt;&lt;span class="lnt"&gt; 42
+&lt;/span&gt;&lt;span class="lnt"&gt; 43
+&lt;/span&gt;&lt;span class="lnt"&gt; 44
+&lt;/span&gt;&lt;span class="lnt"&gt; 45
+&lt;/span&gt;&lt;span class="lnt"&gt; 46
+&lt;/span&gt;&lt;span class="lnt"&gt; 47
+&lt;/span&gt;&lt;span class="lnt"&gt; 48
+&lt;/span&gt;&lt;span class="lnt"&gt; 49
+&lt;/span&gt;&lt;span class="lnt"&gt; 50
+&lt;/span&gt;&lt;span class="lnt"&gt; 51
+&lt;/span&gt;&lt;span class="lnt"&gt; 52
+&lt;/span&gt;&lt;span class="lnt"&gt; 53
+&lt;/span&gt;&lt;span class="lnt"&gt; 54
+&lt;/span&gt;&lt;span class="lnt"&gt; 55
+&lt;/span&gt;&lt;span class="lnt"&gt; 56
+&lt;/span&gt;&lt;span class="lnt"&gt; 57
+&lt;/span&gt;&lt;span class="lnt"&gt; 58
+&lt;/span&gt;&lt;span class="lnt"&gt; 59
+&lt;/span&gt;&lt;span class="lnt"&gt; 60
+&lt;/span&gt;&lt;span class="lnt"&gt; 61
+&lt;/span&gt;&lt;span class="lnt"&gt; 62
+&lt;/span&gt;&lt;span class="lnt"&gt; 63
+&lt;/span&gt;&lt;span class="lnt"&gt; 64
+&lt;/span&gt;&lt;span class="lnt"&gt; 65
+&lt;/span&gt;&lt;span class="lnt"&gt; 66
+&lt;/span&gt;&lt;span class="lnt"&gt; 67
+&lt;/span&gt;&lt;span class="lnt"&gt; 68
+&lt;/span&gt;&lt;span class="lnt"&gt; 69
+&lt;/span&gt;&lt;span class="lnt"&gt; 70
+&lt;/span&gt;&lt;span class="lnt"&gt; 71
+&lt;/span&gt;&lt;span class="lnt"&gt; 72
+&lt;/span&gt;&lt;span class="lnt"&gt; 73
+&lt;/span&gt;&lt;span class="lnt"&gt; 74
+&lt;/span&gt;&lt;span class="lnt"&gt; 75
+&lt;/span&gt;&lt;span class="lnt"&gt; 76
+&lt;/span&gt;&lt;span class="lnt"&gt; 77
+&lt;/span&gt;&lt;span class="lnt"&gt; 78
+&lt;/span&gt;&lt;span class="lnt"&gt; 79
+&lt;/span&gt;&lt;span class="lnt"&gt; 80
+&lt;/span&gt;&lt;span class="lnt"&gt; 81
+&lt;/span&gt;&lt;span class="lnt"&gt; 82
+&lt;/span&gt;&lt;span class="lnt"&gt; 83
+&lt;/span&gt;&lt;span class="lnt"&gt; 84
+&lt;/span&gt;&lt;span class="lnt"&gt; 85
+&lt;/span&gt;&lt;span class="lnt"&gt; 86
+&lt;/span&gt;&lt;span class="lnt"&gt; 87
+&lt;/span&gt;&lt;span class="lnt"&gt; 88
+&lt;/span&gt;&lt;span class="lnt"&gt; 89
+&lt;/span&gt;&lt;span class="lnt"&gt; 90
+&lt;/span&gt;&lt;span class="lnt"&gt; 91
+&lt;/span&gt;&lt;span class="lnt"&gt; 92
+&lt;/span&gt;&lt;span class="lnt"&gt; 93
+&lt;/span&gt;&lt;span class="lnt"&gt; 94
+&lt;/span&gt;&lt;span class="lnt"&gt; 95
+&lt;/span&gt;&lt;span class="lnt"&gt; 96
+&lt;/span&gt;&lt;span class="lnt"&gt; 97
+&lt;/span&gt;&lt;span class="lnt"&gt; 98
+&lt;/span&gt;&lt;span class="lnt"&gt; 99
+&lt;/span&gt;&lt;span class="lnt"&gt;100
+&lt;/span&gt;&lt;span class="lnt"&gt;101
+&lt;/span&gt;&lt;span class="lnt"&gt;102
+&lt;/span&gt;&lt;span class="lnt"&gt;103
+&lt;/span&gt;&lt;span class="lnt"&gt;104
+&lt;/span&gt;&lt;span class="lnt"&gt;105
+&lt;/span&gt;&lt;span class="lnt"&gt;106
+&lt;/span&gt;&lt;span class="lnt"&gt;107
+&lt;/span&gt;&lt;span class="lnt"&gt;108
+&lt;/span&gt;&lt;span class="lnt"&gt;109
+&lt;/span&gt;&lt;span class="lnt"&gt;110
+&lt;/span&gt;&lt;span class="lnt"&gt;111
+&lt;/span&gt;&lt;span class="lnt"&gt;112
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 修改baseurl&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sed -i &lt;span class="s1"&gt;&amp;#39;s|\(^baseurl = &amp;#34;\).*\(&amp;#34;\)|\1https://ynhugo.github.io/\2|g&amp;#39;&lt;/span&gt; config/_default/config.toml
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 修改语言&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sed -i &lt;span class="s1"&gt;&amp;#39;s|\(^locale[[:space:]]*= &amp;#34;\).*\(&amp;#34;\)|\1zh-cn\2|g&amp;#39;&lt;/span&gt; config/_default/config.toml
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 修改title&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sed -i &lt;span class="s1"&gt;&amp;#39;s|\(^title[[:space:]]*= &amp;#34;\).*\(&amp;#34;\)|\1ynhugo\2|g&amp;#39;&lt;/span&gt; config/_default/config.toml
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 修改默认博文语言&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sed -i &lt;span class="s1"&gt;&amp;#39;s|\(^defaultContentLanguage[[:space:]]*= &amp;#34;\).*\(&amp;#34;\)|\1zh-cn\2|g&amp;#39;&lt;/span&gt; config/_default/config.toml
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 修改每页显示博文数量&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sed -i &lt;span class="s1"&gt;&amp;#39;s|\(^[[:space:]]*pagerSize[[:space:]]*= \).*|\120|g&amp;#39;&lt;/span&gt; config/_default/config.toml
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 4. 创建中文页面（纯本地操作，批量复制执行）&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 添加中文归档&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;cat &amp;gt; content/page/archives/index.zh-cn.md &lt;span class="s"&gt;&amp;lt;&amp;lt; &amp;#39;EOF&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;---
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;title: &amp;#34;文章归档&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;date: 2019-05-28
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;layout: &amp;#34;archives&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;slug: &amp;#34;archives&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;menu:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt; main:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt; weight: -70
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt; params:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt; icon: archives
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;---
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;EOF&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 添加中文主页&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;cat &amp;gt; content/_index.zh-cn.md &lt;span class="s"&gt;&amp;lt;&amp;lt; &amp;#39;EOF&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;---
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;menu:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt; main:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt; name: &amp;#34;主页&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt; weight: 1
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt; params:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt; icon: home
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;---
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;EOF&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 添加中文搜索&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;cat &amp;gt; content/page/search/index.zh-cn.md &lt;span class="s"&gt;&amp;lt;&amp;lt; &amp;#39;EOF&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;---
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;title: &amp;#34;搜索&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;slug: &amp;#34;search&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;layout: &amp;#34;search&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;outputs:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt; - html
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt; - json
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;menu:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt; main:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt; weight: -60
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt; params:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt; icon: search
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;---
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;EOF&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 添加中文友情链接&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;cat &amp;gt; content/page/links/index.zh-cn.md &lt;span class="s"&gt;&amp;lt;&amp;lt; &amp;#39;EOF&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;---
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;title: 友情链接
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;links:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt; - title: GitHub
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt; description: GitHub is the world&amp;#39;s largest software development platform.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt; website: https://github.com
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt; image: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;menu:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt; main:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt; weight: 4
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt; params:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt; icon: link
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;comments: false
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;---
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;EOF&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 5. 生成短代码脚本（本地操作，批量复制执行）&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;#+BEGIN_SRC bash&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;cat - &amp;gt; shortcode.sh &lt;span class="s"&gt;&amp;lt;&amp;lt; &amp;#39;END&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;mkdir -p layouts/shortcodes/
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;# 添加网易云短代码
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;cat - &amp;gt; layouts/shortcodes/netease.html &amp;lt;&amp;lt;&amp;#39;EOF&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;&amp;lt;iframe
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt; frameborder=&amp;#34;no&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt; border=&amp;#34;0&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt; marginwidth=&amp;#34;0&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt; marginheight=&amp;#34;0&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt; width=330 height=86
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt; src=&amp;#34;//music.163.com/outchain/player?type=2&amp;amp;id={{.Get 0}}&amp;amp;auto=0&amp;amp;height=66&amp;#34;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;&amp;lt;/iframe&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;EOF
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;# 添加文字属性
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;cat - &amp;gt; layouts/shortcodes/align.html &amp;lt;&amp;lt;&amp;#39;EOF&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;&amp;lt;p style=&amp;#34;text-align:{{ index .Params 0 }}&amp;#34;&amp;gt;{{ index .Params 1 | markdownify }}&amp;lt;/p&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;EOF
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;# 插入github仓库
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;cat - &amp;gt; layouts/shortcodes/github.html &amp;lt;&amp;lt;&amp;#39;EOF&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;&amp;lt;div class=&amp;#34;github&amp;#34;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt; &amp;lt;div class=&amp;#34;logo&amp;#34;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt; {{ replace $.Site.Data.SVG.repository &amp;#34;icon&amp;#34; &amp;#34;icon github-icon&amp;#34; | safeHTML }}
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt; &amp;lt;a class=&amp;#34;name&amp;#34; href={{ .Get &amp;#34;link&amp;#34; }} target=&amp;#34;_blank&amp;#34;&amp;gt;{{ .Get &amp;#34;name&amp;#34; }}&amp;lt;/a&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt; &amp;lt;/div&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt; &amp;lt;div class=&amp;#34;description&amp;#34;&amp;gt;{{ .Get &amp;#34;description&amp;#34; }}&amp;lt;/div&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt; &amp;lt;div class=&amp;#34;language&amp;#34;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt; &amp;lt;span class=&amp;#34;language-color&amp;#34; style=&amp;#34;background-color: {{ .Get &amp;#34;color&amp;#34; }}&amp;#34;&amp;gt;&amp;lt;/span&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt; &amp;lt;span class=&amp;#34;language-name&amp;#34;&amp;gt;{{ .Get &amp;#34;language&amp;#34; }}&amp;lt;/span&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt; &amp;lt;/div&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;&amp;lt;/div&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;EOF
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;END&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;chmod +x shortcode.sh
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 6. 注入 Actions 流程（本地操作，批量复制执行）&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sed -i &lt;span class="s1"&gt;&amp;#39;s|\(^[[:space:]]*\)\(hugo \\\)|\1echo &amp;#34;添加短代码&amp;#34;\n\1./shortcode.sh\n\1\2|g&amp;#39;&lt;/span&gt; .github/workflows/deploy.yml&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;git add .
+git commit -m &amp;#34;初始化博客配置&amp;#34;
+git push&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-headline-16" class="outline-4"&gt;
+&lt;h4 id="headline-16"&gt;
+1.4 Stack 主题版本管理
+&lt;/h4&gt;
+&lt;div id="outline-text-headline-16" class="outline-text-4"&gt;
+&lt;p&gt;模板默认使用 Stack 主题 v4 版本，通过 Hugo Modules 统一管理依赖。&lt;/p&gt;
+&lt;div id="outline-container-headline-17" class="outline-5"&gt;
+&lt;h5 id="headline-17"&gt;
+1.4.1 手动更新主题
+&lt;/h5&gt;
+&lt;div id="outline-text-headline-17" class="outline-text-5"&gt;
+&lt;p&gt;站点根目录执行命令，拉取最新主题并整理依赖：&lt;/p&gt;
+&lt;div class="src src-bash"&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;hugo mod get -u github.com/CaiJimmy/hugo-theme-stack/v4
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;hugo mod tidy&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-headline-18" class="outline-5"&gt;
+&lt;h5 id="headline-18"&gt;
+1.4.2 版本说明
+&lt;/h5&gt;
+&lt;div id="outline-text-headline-18" class="outline-text-5"&gt;
+&lt;p&gt;受 Go Modules 机制限制，若后续主题发布 v4 以上大版本，需要手动修改 &lt;code class="verbatim"&gt;config/module.toml&lt;/code&gt; 内的主题版本路径。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-headline-19" class="outline-4"&gt;
+&lt;h4 id="headline-19"&gt;
+1.5 与现有架构兼容说明
+&lt;/h4&gt;
+&lt;div id="outline-text-headline-19" class="outline-text-4"&gt;
+&lt;ol&gt;
+&lt;li&gt;目录与配置：公开仓库完全沿用模板原生目录结构、配置体系、Hugo Modules 规则，无需改动。&lt;/li&gt;
+&lt;li&gt;自动化任务：现有 &lt;code class="verbatim"&gt;update-theme.yml&lt;/code&gt; 主题定时更新工作流，与模板原生能力一致，可长期保留使用。&lt;/li&gt;
+&lt;li&gt;部署流程：自定义的 &lt;code class="verbatim"&gt;deploy.yml&lt;/code&gt; 融合了模板部署逻辑 + Hugo 编译缓存 + 私有仓库拉取 + Git LFS 资源加载，完全向下兼容。&lt;/li&gt;
+&lt;li&gt;写作规范：Stack 主题强制要求文章头部使用 YAML 数组格式标签，禁止纯空格分隔标签，避免渲染报错。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-headline-20" class="outline-4"&gt;
+&lt;h4 id="headline-20"&gt;
+1.6 多平台部署参考
+&lt;/h4&gt;
+&lt;div id="outline-text-headline-20" class="outline-text-4"&gt;
+&lt;p&gt;如需部署到 GitHub Pages 以外的静态托管平台，可参考 Hugo 官方文档：
+&lt;a href="https://gohugo.io/host-and-deploy/"&gt;https://gohugo.io/host-and-deploy/&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-headline-21" class="outline-3"&gt;
+&lt;h3 id="headline-21"&gt;
+二、整体架构介绍
+&lt;/h3&gt;
+&lt;div id="outline-text-headline-21" class="outline-text-3"&gt;
+&lt;div id="outline-container-headline-22" class="outline-4"&gt;
+&lt;h4 id="headline-22"&gt;
+2.1 目录结构
+&lt;/h4&gt;
+&lt;div id="outline-text-headline-22" class="outline-text-4"&gt;
 &lt;p&gt;采用「博文+配套资源同目录」结构，不拆分文件、不使用外部图床，贴合日常写作习惯，无需适配特殊路径。&lt;/p&gt;
 &lt;div class="src src-text"&gt;
 &lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
@@ -41,11 +617,11 @@
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id="outline-container-headline-4" class="outline-4"&gt;
-&lt;h4 id="headline-4"&gt;
-1.2 技术选型与设计思路
+&lt;div id="outline-container-headline-23" class="outline-4"&gt;
+&lt;h4 id="headline-23"&gt;
+2.2 技术选型与设计思路
 &lt;/h4&gt;
-&lt;div id="outline-text-headline-4" class="outline-text-4"&gt;
+&lt;div id="outline-text-headline-23" class="outline-text-4"&gt;
 &lt;ul&gt;
 &lt;li&gt;核心载体：Git + GitHub 仓库统一存储博文与配套资源&lt;/li&gt;
 &lt;li&gt;静态站点：使用 Hugo 作为静态博客生成器&lt;/li&gt;
@@ -53,11 +629,11 @@
 &lt;li&gt;自动化能力：Shell 脚本 + Git Hook 联动，推送代码前自动识别新资源文件类型，自动纳入 LFS 托管；搭配 GitHub Actions 实现全自动编译、发布&lt;/li&gt;
 &lt;li&gt;部署方案：GitHub Actions 自动拉取私有仓库代码与 LFS 资源，借助 Hugo 编译后发布静态博客站点&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div id="outline-container-headline-5" class="outline-6"&gt;
-&lt;h6 id="headline-5"&gt;
+&lt;div id="outline-container-headline-24" class="outline-6"&gt;
+&lt;h6 id="headline-24"&gt;
 方案优势
 &lt;/h6&gt;
-&lt;div id="outline-text-headline-5" class="outline-text-6"&gt;
+&lt;div id="outline-text-headline-24" class="outline-text-6"&gt;
 &lt;ol&gt;
 &lt;li&gt;资源与博文同目录绑定，路径无需手动修改，完全贴合原生写作习惯&lt;/li&gt;
 &lt;li&gt;大文件统一 LFS 托管，仓库体积可控，长期更新不臃肿&lt;/li&gt;
@@ -68,11 +644,11 @@
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id="outline-container-headline-6" class="outline-4"&gt;
-&lt;h4 id="headline-6"&gt;
-1.3 双仓库整体架构说明
+&lt;div id="outline-container-headline-25" class="outline-4"&gt;
+&lt;h4 id="headline-25"&gt;
+2.3 双仓库整体架构说明
 &lt;/h4&gt;
-&lt;div id="outline-text-headline-6" class="outline-text-4"&gt;
+&lt;div id="outline-text-headline-25" class="outline-text-4"&gt;
 &lt;p&gt;采用**私有内容库 + 公开站点库**分离架构，兼顾原始数据安全与博客公开访问需求：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;私有仓库：`blogs`，存储原始博文、资源文件、自动化脚本、配置文件，对外完全不可见，保障源码与资源安全&lt;/li&gt;
@@ -80,17 +656,17 @@
 &lt;/ul&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id="outline-container-headline-7" class="outline-4"&gt;
-&lt;h4 id="headline-7"&gt;
-1.4 权限体系：细粒度 Token + 同名 Secrets
+&lt;div id="outline-container-headline-26" class="outline-4"&gt;
+&lt;h4 id="headline-26"&gt;
+2.4 权限体系：细粒度 Token + 同名 Secrets
 &lt;/h4&gt;
-&lt;div id="outline-text-headline-7" class="outline-text-4"&gt;
+&lt;div id="outline-text-headline-26" class="outline-text-4"&gt;
 &lt;p&gt;整套架构依靠**单个细粒度 Personal Access Token** 实现双仓库跨仓权限互通，两个仓库统一使用同名 Secrets 存储密钥，配置极简、维护便捷。&lt;/p&gt;
-&lt;div id="outline-container-headline-8" class="outline-5"&gt;
-&lt;h5 id="headline-8"&gt;
-1.4.1 创建细粒度访问令牌
+&lt;div id="outline-container-headline-27" class="outline-5"&gt;
+&lt;h5 id="headline-27"&gt;
+2.4.1 创建细粒度访问令牌
 &lt;/h5&gt;
-&lt;div id="outline-text-headline-8" class="outline-text-5"&gt;
+&lt;div id="outline-text-headline-27" class="outline-text-5"&gt;
 &lt;p&gt;令牌创建地址：&lt;a href="https://github.com/settings/personal-access-tokens"&gt;https://github.com/settings/personal-access-tokens&lt;/a&gt;&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;点击 Generate new token，选择 Fine-grained token（细粒度令牌）&lt;/li&gt;
@@ -113,11 +689,11 @@
 &lt;/ol&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id="outline-container-headline-9" class="outline-5"&gt;
-&lt;h5 id="headline-9"&gt;
-1.4.2 仓库配置同名 Secrets
+&lt;div id="outline-container-headline-28" class="outline-5"&gt;
+&lt;h5 id="headline-28"&gt;
+2.4.2 仓库配置同名 Secrets
 &lt;/h5&gt;
-&lt;div id="outline-text-headline-9" class="outline-text-5"&gt;
+&lt;div id="outline-text-headline-28" class="outline-text-5"&gt;
 &lt;p&gt;将同一 Token 密钥，分别配置到两个仓库的 Actions 密钥中，**密钥名称完全一致**：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
@@ -137,11 +713,11 @@
 &lt;/ul&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id="outline-container-headline-10" class="outline-5"&gt;
-&lt;h5 id="headline-10"&gt;
-1.4.3 配置优势
+&lt;div id="outline-container-headline-29" class="outline-5"&gt;
+&lt;h5 id="headline-29"&gt;
+2.4.3 配置优势
 &lt;/h5&gt;
-&lt;div id="outline-text-headline-10" class="outline-text-5"&gt;
+&lt;div id="outline-text-headline-29" class="outline-text-5"&gt;
 &lt;ol&gt;
 &lt;li&gt;单 Token 管控双仓库，密钥轮换、更新仅需操作一次，大幅降低维护成本&lt;/li&gt;
 &lt;li&gt;同名 Secrets 统一配置，GitHub Actions 调用语法一致，无需区分环境&lt;/li&gt;
@@ -152,11 +728,11 @@
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id="outline-container-headline-11" class="outline-4"&gt;
-&lt;h4 id="headline-11"&gt;
-1.5 全链路流转流程
+&lt;div id="outline-container-headline-30" class="outline-4"&gt;
+&lt;h4 id="headline-30"&gt;
+2.5 全链路流转流程
 &lt;/h4&gt;
-&lt;div id="outline-text-headline-11" class="outline-text-4"&gt;
+&lt;div id="outline-text-headline-30" class="outline-text-4"&gt;
 &lt;p&gt;完整链路：**本地编辑 → 钩子自动化检测 → 同步私有仓库 → Actions 拉取编译 → 发布至 gh-pages 分支 → 公网访问**&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;
@@ -251,11 +827,11 @@
 &lt;li&gt;最终访问链路&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;本地文件 → 私有仓库（Git代码+LFS资源）→ GitHub Actions + Hugo 编译 → 公开仓库 gh-pages 分支 → 终端用户访问&lt;/p&gt;
-&lt;div id="outline-container-headline-12" class="outline-5"&gt;
-&lt;h5 id="headline-12"&gt;
-1.5.1 公开仓库 Actions 核心工作流
+&lt;div id="outline-container-headline-31" class="outline-5"&gt;
+&lt;h5 id="headline-31"&gt;
+2.5.1 公开仓库 Actions 核心工作流
 &lt;/h5&gt;
-&lt;div id="outline-text-headline-12" class="outline-text-5"&gt;
+&lt;div id="outline-text-headline-31" class="outline-text-5"&gt;
 &lt;ol&gt;
 &lt;li&gt;拉取私有仓库：通过统一密钥鉴权克隆私有内容仓库，自动下载全部 LFS 资源&lt;/li&gt;
 &lt;li&gt;Hugo 编译：读取原始博文与资源，编译生成完整静态网站&lt;/li&gt;
@@ -270,25 +846,25 @@
 &lt;/ul&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id="outline-container-headline-13" class="outline-5"&gt;
-&lt;h5 id="headline-13"&gt;
-1.5.2 Pre-Push 钩子时序与 .gitattributes 推送机制
+&lt;div id="outline-container-headline-32" class="outline-5"&gt;
+&lt;h5 id="headline-32"&gt;
+2.5.2 Pre-Push 钩子时序与 .gitattributes 推送机制
 &lt;/h5&gt;
-&lt;div id="outline-text-headline-13" class="outline-text-5"&gt;
-&lt;div id="outline-container-headline-14" class="outline-6"&gt;
-&lt;h6 id="headline-14"&gt;
+&lt;div id="outline-text-headline-32" class="outline-text-5"&gt;
+&lt;div id="outline-container-headline-33" class="outline-6"&gt;
+&lt;h6 id="headline-33"&gt;
 执行时序（Git 官方固定规则）
 &lt;/h6&gt;
-&lt;div id="outline-text-headline-14" class="outline-text-6"&gt;
+&lt;div id="outline-text-headline-33" class="outline-text-6"&gt;
 &lt;p&gt;`git push` 执行顺序：**优先运行 pre-push 钩子 → 钩子执行完毕 → 执行真正的远程推送**
 所有 LFS 扫描、规则更新动作均在推送前完成，无规则遗漏、无执行时序错乱问题。&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id="outline-container-headline-15" class="outline-6"&gt;
-&lt;h6 id="headline-15"&gt;
+&lt;div id="outline-container-headline-34" class="outline-6"&gt;
+&lt;h6 id="headline-34"&gt;
 配置文件推送逻辑
 &lt;/h6&gt;
-&lt;div id="outline-text-headline-15" class="outline-text-6"&gt;
+&lt;div id="outline-text-headline-34" class="outline-text-6"&gt;
 &lt;p&gt;脚本采用 `–scan-only` 纯扫描模式，核心特性：**仅本地修改 .gitattributes，不自动提交**&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;本次 `git push`：仅推送**上一次已提交**的代码和资源，不推送本次更新的 `.gitattributes`&lt;/li&gt;
@@ -298,11 +874,11 @@
 &lt;/ol&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id="outline-container-headline-16" class="outline-6"&gt;
-&lt;h6 id="headline-16"&gt;
+&lt;div id="outline-container-headline-35" class="outline-6"&gt;
+&lt;h6 id="headline-35"&gt;
 机制优势
 &lt;/h6&gt;
-&lt;div id="outline-text-headline-16" class="outline-text-6"&gt;
+&lt;div id="outline-text-headline-35" class="outline-text-6"&gt;
 &lt;ul&gt;
 &lt;li&gt;不破坏原生 Git 推送流程，无冲突、无推送中断风险&lt;/li&gt;
 &lt;li&gt;自动迭代 LFS 规则，无需手动维护配置&lt;/li&gt;
@@ -314,21 +890,21 @@
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id="outline-container-headline-17" class="outline-4"&gt;
-&lt;h4 id="headline-17"&gt;
-1.6 GitHub Actions 工作流（完整配置）
+&lt;div id="outline-container-headline-36" class="outline-4"&gt;
+&lt;h4 id="headline-36"&gt;
+2.6 GitHub Actions 工作流（完整配置）
 &lt;/h4&gt;
-&lt;div id="outline-text-headline-17" class="outline-text-4"&gt;
+&lt;div id="outline-text-headline-36" class="outline-text-4"&gt;
 &lt;p&gt;本架构采用「私有仓库触发 → 公开仓库构建」的自动化部署模式，共包含 3 个工作流文件：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;私有仓库：1 个触发部署工作流&lt;/li&gt;
 &lt;li&gt;公开仓库：1 个构建部署工作流 + 1 个主题自动更新工作流&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div id="outline-container-headline-18" class="outline-5"&gt;
-&lt;h5 id="headline-18"&gt;
-1.6.1 私有仓库工作流（触发部署）
+&lt;div id="outline-container-headline-37" class="outline-5"&gt;
+&lt;h5 id="headline-37"&gt;
+2.6.1 私有仓库工作流（触发部署）
 &lt;/h5&gt;
-&lt;div id="outline-text-headline-18" class="outline-text-5"&gt;
+&lt;div id="outline-text-headline-37" class="outline-text-5"&gt;
 &lt;p&gt;路径：.github/workflows/trigger-deploy.yml
 作用：私有仓库内容更新后，自动通知公开仓库重新构建博客&lt;/p&gt;
 &lt;div class="src src-yaml"&gt;
@@ -375,11 +951,11 @@
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id="outline-container-headline-19" class="outline-5"&gt;
-&lt;h5 id="headline-19"&gt;
-1.6.2 公开仓库工作流（构建与部署）
+&lt;div id="outline-container-headline-38" class="outline-5"&gt;
+&lt;h5 id="headline-38"&gt;
+2.6.2 公开仓库工作流（构建与部署）
 &lt;/h5&gt;
-&lt;div id="outline-text-headline-19" class="outline-text-5"&gt;
+&lt;div id="outline-text-headline-38" class="outline-text-5"&gt;
 &lt;p&gt;路径：.github/workflows/deploy.yml
 作用：浅克隆私有博客内容 → 启用 Hugo 编译缓存加速构建 → 编译站点 → 发布到 gh-pages&lt;/p&gt;
 &lt;p&gt;
@@ -549,11 +1125,11 @@
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id="outline-container-headline-20" class="outline-5"&gt;
-&lt;h5 id="headline-20"&gt;
-1.6.3 公开仓库工作流（主题自动更新）
+&lt;div id="outline-container-headline-39" class="outline-5"&gt;
+&lt;h5 id="headline-39"&gt;
+2.6.3 公开仓库工作流（主题自动更新）
 &lt;/h5&gt;
-&lt;div id="outline-text-headline-20" class="outline-text-5"&gt;
+&lt;div id="outline-text-headline-39" class="outline-text-5"&gt;
 &lt;p&gt;路径：.github/workflows/update-theme.yml
 作用：每日自动更新 Hugo 主题，无需手动维护&lt;/p&gt;
 &lt;div class="src src-yaml"&gt;
@@ -644,11 +1220,11 @@
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id="outline-container-headline-21" class="outline-4"&gt;
-&lt;h4 id="headline-21"&gt;
-1.7 架构亮点总结
+&lt;div id="outline-container-headline-40" class="outline-4"&gt;
+&lt;h4 id="headline-40"&gt;
+2.7 架构亮点总结
 &lt;/h4&gt;
-&lt;div id="outline-text-headline-21" class="outline-text-4"&gt;
+&lt;div id="outline-text-headline-40" class="outline-text-4"&gt;
 &lt;ul&gt;
 &lt;li&gt;单 Token 管控双仓库，同名 Secrets 统一配置，极简易维护&lt;/li&gt;
 &lt;li&gt;细粒度最小权限设计，兼顾安全与实用性&lt;/li&gt;
@@ -659,11 +1235,11 @@
 &lt;/ul&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id="outline-container-headline-22" class="outline-4"&gt;
-&lt;h4 id="headline-22"&gt;
-1.8 部署耗时说明
+&lt;div id="outline-container-headline-41" class="outline-4"&gt;
+&lt;h4 id="headline-41"&gt;
+2.8 部署耗时说明
 &lt;/h4&gt;
-&lt;div id="outline-text-headline-22" class="outline-text-4"&gt;
+&lt;div id="outline-text-headline-41" class="outline-text-4"&gt;
 &lt;p&gt;结合实测结果，对当前架构部署耗时做客观说明：&lt;/p&gt;
 &lt;p&gt;
 在 &lt;strong&gt;&lt;strong&gt;Git LFS + 双仓库&lt;/strong&gt;&lt;/strong&gt; 架构下，部署耗时主要分为两部分：&lt;/p&gt;
@@ -680,16 +1256,16 @@
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id="outline-container-headline-23" class="outline-3"&gt;
-&lt;h3 id="headline-23"&gt;
-二、前置环境准备
+&lt;div id="outline-container-headline-42" class="outline-3"&gt;
+&lt;h3 id="headline-42"&gt;
+三、前置环境准备
 &lt;/h3&gt;
-&lt;div id="outline-text-headline-23" class="outline-text-3"&gt;
-&lt;div id="outline-container-headline-24" class="outline-4"&gt;
-&lt;h4 id="headline-24"&gt;
-2.1 安装 Git 与 Git LFS
+&lt;div id="outline-text-headline-42" class="outline-text-3"&gt;
+&lt;div id="outline-container-headline-43" class="outline-4"&gt;
+&lt;h4 id="headline-43"&gt;
+3.1 安装 Git 与 Git LFS
 &lt;/h4&gt;
-&lt;div id="outline-text-headline-24" class="outline-text-4"&gt;
+&lt;div id="outline-text-headline-43" class="outline-text-4"&gt;
 &lt;p&gt;主流 Linux / macOS 环境执行安装命令：&lt;/p&gt;
 &lt;div class="src src-bash"&gt;
 &lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
@@ -719,11 +1295,11 @@
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id="outline-container-headline-25" class="outline-4"&gt;
-&lt;h4 id="headline-25"&gt;
-2.2 初始化博客仓库
+&lt;div id="outline-container-headline-44" class="outline-4"&gt;
+&lt;h4 id="headline-44"&gt;
+3.2 初始化博客仓库
 &lt;/h4&gt;
-&lt;div id="outline-text-headline-25" class="outline-text-4"&gt;
+&lt;div id="outline-text-headline-44" class="outline-text-4"&gt;
 &lt;p&gt;全新仓库可执行初始化，已有仓库可跳过：&lt;/p&gt;
 &lt;div class="src src-bash"&gt;
 &lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
@@ -745,16 +1321,16 @@
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id="outline-container-headline-26" class="outline-3"&gt;
-&lt;h3 id="headline-26"&gt;
-三、核心配置：Git LFS 自动化方案
+&lt;div id="outline-container-headline-45" class="outline-3"&gt;
+&lt;h3 id="headline-45"&gt;
+四、核心配置：Git LFS 自动化方案
 &lt;/h3&gt;
-&lt;div id="outline-text-headline-26" class="outline-text-3"&gt;
-&lt;div id="outline-container-headline-27" class="outline-4"&gt;
-&lt;h4 id="headline-27"&gt;
-3.1 智能扫描脚本（auto-lfs-tracker.sh）
+&lt;div id="outline-text-headline-45" class="outline-text-3"&gt;
+&lt;div id="outline-container-headline-46" class="outline-4"&gt;
+&lt;h4 id="headline-46"&gt;
+4.1 智能扫描脚本（auto-lfs-tracker.sh）
 &lt;/h4&gt;
-&lt;div id="outline-text-headline-27" class="outline-text-4"&gt;
+&lt;div id="outline-text-headline-46" class="outline-text-4"&gt;
 &lt;p&gt;仓库根目录创建自动化脚本，支持多运行模式、自动扫描规则、内置全套排错命令：&lt;/p&gt;
 &lt;div class="src src-bash"&gt;
 &lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
@@ -1048,11 +1624,11 @@
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id="outline-container-headline-28" class="outline-4"&gt;
-&lt;h4 id="headline-28"&gt;
-3.2 配置 Git Pre-Push 钩子
+&lt;div id="outline-container-headline-47" class="outline-4"&gt;
+&lt;h4 id="headline-47"&gt;
+4.2 配置 Git Pre-Push 钩子
 &lt;/h4&gt;
-&lt;div id="outline-text-headline-28" class="outline-text-4"&gt;
+&lt;div id="outline-text-headline-47" class="outline-text-4"&gt;
 &lt;p&gt;实现每次 `git push` 前自动扫描 LFS 规则，全程无感自动化：&lt;/p&gt;
 &lt;div class="src src-bash"&gt;
 &lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
@@ -1100,11 +1676,11 @@
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id="outline-container-headline-29" class="outline-4"&gt;
-&lt;h4 id="headline-29"&gt;
-3.3 存量历史文件迁移（仅执行一次）
+&lt;div id="outline-container-headline-48" class="outline-4"&gt;
+&lt;h4 id="headline-48"&gt;
+4.3 存量历史文件迁移（仅执行一次）
 &lt;/h4&gt;
-&lt;div id="outline-text-headline-29" class="outline-text-4"&gt;
+&lt;div id="outline-text-headline-48" class="outline-text-4"&gt;
 &lt;p&gt;针对已有大量资源的旧仓库，批量将历史大文件迁移至 LFS，实现仓库瘦身：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;迁移历史资源文件&lt;/li&gt;
@@ -1149,11 +1725,11 @@
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id="outline-container-headline-30" class="outline-4"&gt;
-&lt;h4 id="headline-30"&gt;
-3.4 上传 LFS 实体文件（解决 404 报错）
+&lt;div id="outline-container-headline-49" class="outline-4"&gt;
+&lt;h4 id="headline-49"&gt;
+4.4 上传 LFS 实体文件（解决 404 报错）
 &lt;/h4&gt;
-&lt;div id="outline-text-headline-30" class="outline-text-4"&gt;
+&lt;div id="outline-text-headline-49" class="outline-text-4"&gt;
 &lt;p&gt;migrate 仅修改提交记录，需手动推送实体文件至远程，避免 CI/克隆资源404：&lt;/p&gt;
 &lt;div class="src src-bash"&gt;
 &lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
@@ -1171,16 +1747,16 @@
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id="outline-container-headline-31" class="outline-3"&gt;
-&lt;h3 id="headline-31"&gt;
-四、日常使用流程
+&lt;div id="outline-container-headline-50" class="outline-3"&gt;
+&lt;h3 id="headline-50"&gt;
+五、日常使用流程
 &lt;/h3&gt;
-&lt;div id="outline-text-headline-31" class="outline-text-3"&gt;
-&lt;div id="outline-container-headline-32" class="outline-4"&gt;
-&lt;h4 id="headline-32"&gt;
-4.1 常规写作与提交
+&lt;div id="outline-text-headline-50" class="outline-text-3"&gt;
+&lt;div id="outline-container-headline-51" class="outline-4"&gt;
+&lt;h4 id="headline-51"&gt;
+5.1 常规写作与提交
 &lt;/h4&gt;
-&lt;div id="outline-text-headline-32" class="outline-text-4"&gt;
+&lt;div id="outline-text-headline-51" class="outline-text-4"&gt;
 &lt;p&gt;完全保留原生 Git 操作习惯，无需额外干预：&lt;/p&gt;
 &lt;div class="src src-bash"&gt;
 &lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
@@ -1199,11 +1775,11 @@
 &lt;p&gt;推送时钩子自动触发 LFS 扫描，补全缺失规则，全程自动化。&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id="outline-container-headline-33" class="outline-4"&gt;
-&lt;h4 id="headline-33"&gt;
-4.2 手动执行扫描脚本
+&lt;div id="outline-container-headline-52" class="outline-4"&gt;
+&lt;h4 id="headline-52"&gt;
+5.2 手动执行扫描脚本
 &lt;/h4&gt;
-&lt;div id="outline-text-headline-33" class="outline-text-4"&gt;
+&lt;div id="outline-text-headline-52" class="outline-text-4"&gt;
 &lt;p&gt;灵活手动维护 LFS 规则：&lt;/p&gt;
 &lt;div class="src src-bash"&gt;
 &lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
@@ -1233,16 +1809,16 @@
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id="outline-container-headline-34" class="outline-3"&gt;
-&lt;h3 id="headline-34"&gt;
-五、常见问题排错
+&lt;div id="outline-container-headline-53" class="outline-3"&gt;
+&lt;h3 id="headline-53"&gt;
+六、常见问题排错
 &lt;/h3&gt;
-&lt;div id="outline-text-headline-34" class="outline-text-3"&gt;
-&lt;div id="outline-container-headline-35" class="outline-4"&gt;
-&lt;h4 id="headline-35"&gt;
-5.1 克隆/CI 报错：Object does not exist on the server (404)
+&lt;div id="outline-text-headline-53" class="outline-text-3"&gt;
+&lt;div id="outline-container-headline-54" class="outline-4"&gt;
+&lt;h4 id="headline-54"&gt;
+6.1 克隆/CI 报错：Object does not exist on the server (404)
 &lt;/h4&gt;
-&lt;div id="outline-text-headline-35" class="outline-text-4"&gt;
+&lt;div id="outline-text-headline-54" class="outline-text-4"&gt;
 &lt;p&gt;原因：本地 LFS 实体文件未推送至远程服务器
 解决：&lt;/p&gt;
 &lt;div class="src src-bash"&gt;
@@ -1259,11 +1835,11 @@
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id="outline-container-headline-36" class="outline-4"&gt;
-&lt;h4 id="headline-36"&gt;
-5.2 Shell 脚本被纳入 LFS，克隆失败
+&lt;div id="outline-container-headline-55" class="outline-4"&gt;
+&lt;h4 id="headline-55"&gt;
+6.2 Shell 脚本被纳入 LFS，克隆失败
 &lt;/h4&gt;
-&lt;div id="outline-text-headline-36" class="outline-text-4"&gt;
+&lt;div id="outline-text-headline-55" class="outline-text-4"&gt;
 &lt;p&gt;原因：.sh 脚本被误追踪，文本文件无需 LFS 托管
 解决：&lt;/p&gt;
 &lt;div class="src src-bash"&gt;
@@ -1286,20 +1862,20 @@
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id="outline-container-headline-37" class="outline-4"&gt;
-&lt;h4 id="headline-37"&gt;
-5.3 git push 被钩子中断、出现提交冲突
+&lt;div id="outline-container-headline-56" class="outline-4"&gt;
+&lt;h4 id="headline-56"&gt;
+6.3 git push 被钩子中断、出现提交冲突
 &lt;/h4&gt;
-&lt;div id="outline-text-headline-37" class="outline-text-4"&gt;
+&lt;div id="outline-text-headline-56" class="outline-text-4"&gt;
 &lt;p&gt;原因：钩子模式下脚本执行了 git commit，打乱推送流程
 解决方案：使用 –scan-only 仅扫描不提交（本文钩子已默认配置）&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id="outline-container-headline-38" class="outline-4"&gt;
-&lt;h4 id="headline-38"&gt;
-5.4 .git 目录体积偏大
+&lt;div id="outline-container-headline-57" class="outline-4"&gt;
+&lt;h4 id="headline-57"&gt;
+6.4 .git 目录体积偏大
 &lt;/h4&gt;
-&lt;div id="outline-text-headline-38" class="outline-text-4"&gt;
+&lt;div id="outline-text-headline-57" class="outline-text-4"&gt;
 &lt;p&gt;原因：migrate 操作后 Git 保留了旧历史对象，需手动垃圾回收
 解决方案：&lt;/p&gt;
 &lt;div class="src src-bash"&gt;
@@ -1316,11 +1892,11 @@
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id="outline-container-headline-39" class="outline-4"&gt;
-&lt;h4 id="headline-39"&gt;
-5.5 Actions 克隆私有仓库权限不足
+&lt;div id="outline-container-headline-58" class="outline-4"&gt;
+&lt;h4 id="headline-58"&gt;
+6.5 Actions 克隆私有仓库权限不足
 &lt;/h4&gt;
-&lt;div id="outline-text-headline-39" class="outline-text-4"&gt;
+&lt;div id="outline-text-headline-58" class="outline-text-4"&gt;
 &lt;p&gt;原因：Token 权限缺失、Secrets 名称错误、未勾选对应仓库
 排查要点：&lt;/p&gt;
 &lt;ol&gt;
@@ -1331,11 +1907,11 @@
 &lt;/ol&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id="outline-container-headline-40" class="outline-4"&gt;
-&lt;h4 id="headline-40"&gt;
-5.6 GitHub Actions 部署总耗时 4~5 分钟，速度偏慢
+&lt;div id="outline-container-headline-59" class="outline-4"&gt;
+&lt;h4 id="headline-59"&gt;
+6.6 GitHub Actions 部署总耗时 4~5 分钟，速度偏慢
 &lt;/h4&gt;
-&lt;div id="outline-text-headline-40" class="outline-text-4"&gt;
+&lt;div id="outline-text-headline-59" class="outline-text-4"&gt;
 &lt;p&gt;原因：GitHub Actions 无法缓存 Git LFS 大文件，每次构建都会完整拉取所有 LFS 资源，仓库资源体量越大，耗时越长。&lt;/p&gt;
 &lt;p&gt;
 解决方案：&lt;/p&gt;
@@ -1347,18 +1923,19 @@
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id="outline-container-headline-41" class="outline-3"&gt;
-&lt;h3 id="headline-41"&gt;
-六、方案总结
+&lt;div id="outline-container-headline-60" class="outline-3"&gt;
+&lt;h3 id="headline-60"&gt;
+七、方案总结
 &lt;/h3&gt;
-&lt;div id="outline-text-headline-41" class="outline-text-3"&gt;
+&lt;div id="outline-text-headline-60" class="outline-text-3"&gt;
 &lt;ol&gt;
 &lt;li&gt;目录结构兼容传统写作习惯，博文与资源同目录，无需修改文件路径；&lt;/li&gt;
 &lt;li&gt;Git LFS 专门托管大体积资源，从根源解决 Git 仓库无限膨胀问题；&lt;/li&gt;
 &lt;li&gt;脚本 + Git Hook 实现全自动化，新增文件自动识别并纳入 LFS；&lt;/li&gt;
 &lt;li&gt;细粒度 Token + 同名 Secrets 实现双仓库权限互通，安全且易维护；&lt;/li&gt;
 &lt;li&gt;脚本内置全套排错命令，换设备、重装环境均可快速复原；&lt;/li&gt;
-&lt;li&gt;基于 Hugo 搭建静态博客，完美适配 GitHub Actions 自动部署，私有内容隔离，公开站点正常访问；&lt;/li&gt;
+&lt;li&gt;基于 Hugo + Stack 主题模板搭建静态博客，采用 TOML 格式配置，完美适配 GitHub Actions 自动部署，私有内容隔离，公开站点正常访问；&lt;/li&gt;
+&lt;li&gt;Giscus 评论配置独立存放在私有仓库，通过 Actions 动态合并，兼顾功能与数据安全；&lt;/li&gt;
 &lt;li&gt;钩子时序逻辑安全可控，配置文件更新无冲突、无推送风险，长期稳定运行。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;*注*：本方案基于 Git LFS 实现大文件托管，受 GitHub 机制限制，CI 部署会存在固定资源拉取耗时，属于正常现象。&lt;/p&gt;
@@ -1366,11 +1943,11 @@
 本方案适合大容量个人博客、技术文档库，一次完整配置后，可实现长期零维护稳定运行。&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id="outline-container-headline-42" class="outline-3"&gt;
-&lt;h3 id="headline-42"&gt;
+&lt;div id="outline-container-headline-61" class="outline-3"&gt;
+&lt;h3 id="headline-61"&gt;
 参考链接
 &lt;/h3&gt;
-&lt;div id="outline-text-headline-42" class="outline-text-3"&gt;
+&lt;div id="outline-text-headline-61" class="outline-text-3"&gt;
 &lt;p&gt;
 &lt;a href="https://www.doubao.com/thread/w23ef61bd0004f836"&gt;Hugo网站自动构建部署 | 豆包&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
