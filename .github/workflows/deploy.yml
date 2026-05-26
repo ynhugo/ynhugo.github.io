@@ -26,7 +26,23 @@ jobs:
         with:
           fetch-depth: 0
 
-      # 浅克隆 + 不下载历史
+      # ==============================================
+      # 🔥 缓存 Git LFS 和 Hugo 构建文件（核心加速）
+      # ==============================================
+      - name: Cache LFS & Hugo assets
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.git/lfs
+            .git/lfs
+            content/post/.git/lfs
+            ./resources/_gen
+            .hugo_cache
+          key: ${{ runner.os }}-blog-lfs-hugo-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-blog-lfs-hugo-
+
+      # 浅克隆私有仓库（你原来的配置，不动）
       - name: Clone private posts (shallow)
         run: |
           git clone --depth 1 --branch main \
@@ -51,15 +67,17 @@ jobs:
             cat content/post/giscus.toml >> config/_default/params.toml
           fi
 
+      # 构建命令：开启缓存，加速编译
       - name: Build site
         run: |
           ./shortcode.sh
-          hugo --minify --gc --logLevel error
+          hugo --minify --gc --logLevel error --cache .hugo_cache
 
+      # 增量部署（你原来的配置，不动）
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public
           publish_branch: gh-pages
-          keep_files: true   # 保留旧文件，增量更新
+          keep_files: true
