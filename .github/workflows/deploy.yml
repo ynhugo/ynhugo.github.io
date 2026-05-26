@@ -22,11 +22,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout main
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      # 缓存 Hugo 构建目录（官方标准写法，绝对不报错）
       - name: Setup Hugo cache
         uses: actions/cache@v4
         with:
@@ -35,11 +34,13 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-hugo-
 
-      # 浅克隆私有仓库（你原来的配置）
-      - name: Clone private posts (shallow)
+      - name: Clone private posts (shallow + LFS)
         run: |
           git clone --depth 1 --branch main \
           https://${{ secrets.PRIVATE_BLOG_REPO_TOKEN }}@github.com/ynhugo/blogs.git content/post
+          cd content/post
+          git lfs pull
+          cd ../..
 
       - name: List posts
         run: ls -la content/post
@@ -60,9 +61,9 @@ jobs:
             cat content/post/giscus.toml >> config/_default/params.toml
           fi
 
-      # 正确官方写法：--cacheDir 不会报错
       - name: Build site
         run: |
+          chmod +x shortcode.sh
           ./shortcode.sh
           hugo --minify --gc --logLevel error --cacheDir "${{ runner.temp }}/hugo_cache"
 
