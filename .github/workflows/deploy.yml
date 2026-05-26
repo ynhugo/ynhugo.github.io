@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - master
   workflow_dispatch:
   repository_dispatch:
     types:
@@ -19,7 +20,7 @@ jobs:
       - name: 拉取代码
         run: |
           git clone https://github.com/ynhugo/ynhugo.github.io.git .
-          git checkout main
+          git checkout master
 
       - name: 安装 Hugo
         run: |
@@ -56,4 +57,4 @@ jobs:
           git config user.email "actions@github.com"
           git add .
           git commit -m "Deploy"
-          git push -f https://${{ GITHUB_TOKEN }}@github.com/ynhugo/ynhugo.github.io.git main:gh-pages
+          git push -f https://${{ github.token }}@github.com/ynhugo/ynhugo.github.io.git master:gh-pages
