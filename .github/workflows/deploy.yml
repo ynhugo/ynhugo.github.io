@@ -22,10 +22,13 @@ jobs:
           git clone https://github.com/ynhugo/ynhugo.github.io.git .
           git checkout master
 
-      - name: 安装 Hugo
+      # 直接下载官方最新Extended版Hugo，彻底解决版本兼容问题
+      - name: Install Latest Hugo Extended
         run: |
-          sudo apt update
-          sudo apt install -y hugo
+          wget -q https://github.com/gohugoio/hugo/releases/download/v0.157.0/hugo_extended_0.157.0_linux-amd64.tar.gz
+          tar -zxvf hugo_extended_0.157.0_linux-amd64.tar.gz
+          sudo mv hugo /usr/local/bin/
+          hugo version
 
       - name: 拉取私有博客内容 + LFS
         run: |
@@ -44,6 +47,11 @@ jobs:
         run: |
           chmod +x shortcode.sh
           ./shortcode.sh
+
+      - name: 更新主题依赖
+        run: |
+          hugo mod get -u github.com/CaiJimmy/hugo-theme-stack/v4
+          hugo mod tidy
 
       - name: 构建网站
         run: |
