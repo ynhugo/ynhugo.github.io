@@ -8,7 +8,7 @@ SCAN_ONLY=false
 if [[ "$1" == "--help" || "$1" == "-h" ]]; then
 cat <<EOF
 =============================================
-        智能 Git LFS 自动追踪工具（终极版）
+        智能 Git LFS 自动追踪工具（加固终极版）
 =============================================
 【使用】
    ./auto-lfs-tracker.sh          # 自动扫描 + 提交配置
@@ -42,9 +42,9 @@ chmod +x .git/hooks/pre-push
 chmod +x auto-lfs-tracker.sh
 
 =============================================
-【四、🔥 GitHub Actions / 克隆 404 错误修复】
-【报错：Object does not exist on the server 404】
-  作用：把本地 LFS 大文件真正上传到 GitHub 服务器
+【四、🔥 GitHub Actions / 克隆 404 / GH008 错误修复】
+【报错：Object does not exist on the server / unknown Git LFS object】
+  作用：把本地 LFS 大文件真正上传到 GitHub 服务器（必执行）
 =============================================
 git lfs push origin main --all
 git push origin main --force
@@ -65,8 +65,10 @@ git push origin main --force
 1. 自动扫描 post/ 目录所有资源文件
 2. 自动追加未追踪的类型到 Git LFS
 3. 自动保护 **/resources/**/* 全部托管
-4. 自动排除 .sh/.md/.git 等文本文件
-5. 防止 Git 仓库爆炸、保证 CI 正常运行
+4. 自动排除 .sh/.md/.org 等文本文件
+5. 自动排除编辑器临时文件 *Minibuf* .DS_Store
+6. 防止 Git 仓库爆炸、保证 CI 正常运行
+7. 加固防 GH008 推送拒绝错误
 =============================================
 EOF
 exit 0
@@ -83,10 +85,10 @@ cd "$(dirname "$0")"
 
 echo -e "\n📂 扫描目录：$SCAN_DIR"
 
-# 🔥 修复：自动排除脚本、文本、配置文件，只扫资源
+# 🔥 加固：排除文本、脚本、配置、编辑器临时文件
 all_exts=$(find "$SCAN_DIR" -type f | \
-  grep -vE '\.md$|\.org$|\.sh$|\.git|\.gitattributes|\.gitignore|README|LICENSE' | \
-  sed -e 's/^.*\.//' | sort -u | grep -v '^/' | grep -v '^$' | head -30)
+  grep -vE '\.md$|\.org$|\.sh$|\.git|\.gitattributes|\.gitignore|README|LICENSE|^\./|/\.|Minibuf|\.DS_Store' | \
+  sed -e 's/^.*\.//' | sort -u | grep -v '^/' | grep -v '^$' | grep -v ' ' | head -30)
 
 echo -e "\n🔍 扫描到的文件类型："
 echo "$all_exts"
@@ -95,6 +97,11 @@ existing_patterns=$(git lfs track | awk '{print $1}')
 added=0
 
 for ext in $all_exts; do
+    # 🔥 加固：过滤非法后缀、空后缀、带空格的垃圾文件
+    if [[ -z "$ext" || "$ext" =~ " " || "$ext" =~ "/" || "$ext" =~ "*" ]]; then
+        continue
+    fi
+
     pattern="*.${ext}"
     if ! echo "$existing_patterns" | grep -qx "$pattern"; then
         echo "✅ 新增 LFS 追踪：$pattern"
