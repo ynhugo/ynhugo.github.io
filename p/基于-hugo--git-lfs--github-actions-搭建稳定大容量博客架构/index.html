@@ -145,6 +145,17 @@
 </span><span class=lnt>62
 </span><span class=lnt>63
 </span><span class=lnt>64
+</span><span class=lnt>65
+</span><span class=lnt>66
+</span><span class=lnt>67
+</span><span class=lnt>68
+</span><span class=lnt>69
+</span><span class=lnt>70
+</span><span class=lnt>71
+</span><span class=lnt>72
+</span><span class=lnt>73
+</span><span class=lnt>74
+</span><span class=lnt>75
 </span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Build and deploy</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w>
 </span></span></span><span class=line><span class=cl><span class=nt>on</span><span class=p>:</span><span class=w>
@@ -173,10 +184,20 @@
 </span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>with</span><span class=p>:</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>fetch-depth</span><span class=p>:</span><span class=w> </span><span class=m>0</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=c># 直接克隆私有文章到 content/post（全自动）</span><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Clone private posts</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=c># 缓存 Hugo 构建目录（官方标准写法，绝对不报错）</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Setup Hugo cache</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>actions/cache@v4</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>with</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>path</span><span class=p>:</span><span class=w> </span><span class=l>${{ runner.temp }}/hugo_cache</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>key</span><span class=p>:</span><span class=w> </span><span class=l>${{ runner.os }}-hugo-${{ github.sha }}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>restore-keys</span><span class=p>:</span><span class=w> </span><span class=p>|</span><span class=sd>
+</span></span></span><span class=line><span class=cl><span class=sd>            ${{ runner.os }}-hugo-</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=c># 浅克隆私有仓库（你原来的配置）</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Clone private posts (shallow)</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>run</span><span class=p>:</span><span class=w> </span><span class=p>|</span><span class=sd>
-</span></span></span><span class=line><span class=cl><span class=sd>          git clone https://${{ secrets.PRIVATE_BLOG_REPO_TOKEN }}@github.com/ynhugo/blogs.git content/post</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=sd>          git clone --depth 1 --branch main \
+</span></span></span><span class=line><span class=cl><span class=sd>          https://${{ secrets.PRIVATE_BLOG_REPO_TOKEN }}@github.com/ynhugo/blogs.git content/post</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>List posts</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>run</span><span class=p>:</span><span class=w> </span><span class=l>ls -la content/post</span><span class=w>
@@ -197,10 +218,11 @@
 </span></span></span><span class=line><span class=cl><span class=sd>            cat content/post/giscus.toml &gt;&gt; config/_default/params.toml
 </span></span></span><span class=line><span class=cl><span class=sd>          fi</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=c># 正确官方写法：--cacheDir 不会报错</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Build site</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>run</span><span class=p>:</span><span class=w> </span><span class=p>|</span><span class=sd>
 </span></span></span><span class=line><span class=cl><span class=sd>          ./shortcode.sh
-</span></span></span><span class=line><span class=cl><span class=sd>          hugo --minify</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=sd>          hugo --minify --gc --logLevel error --cacheDir &#34;${{ runner.temp }}/hugo_cache&#34;</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Deploy to gh-pages</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>peaceiris/actions-gh-pages@v4</span><span class=w>
@@ -208,7 +230,7 @@
 </span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>github_token</span><span class=p>:</span><span class=w> </span><span class=l>${{ secrets.GITHUB_TOKEN }}</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>publish_dir</span><span class=p>:</span><span class=w> </span><span class=l>./public</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>publish_branch</span><span class=p>:</span><span class=w> </span><span class=l>gh-pages</span><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>keep_files</span><span class=p>:</span><span class=w> </span><span class=kc>false</span></span></span></code></pre></td></tr></table></div></div></div></div></div><div id=outline-container-headline-18 class=outline-4><h4 id=headline-18>1.6.3 公开仓库工作流（主题自动更新）</h4><div id=outline-text-headline-18 class=outline-text-4><p>路径：.github/workflows/update-theme.yml
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>keep_files</span><span class=p>:</span><span class=w> </span><span class=kc>true</span></span></span></code></pre></td></tr></table></div></div></div></div></div><div id=outline-container-headline-18 class=outline-4><h4 id=headline-18>1.6.3 公开仓库工作流（主题自动更新）</h4><div id=outline-text-headline-18 class=outline-text-4><p>路径：.github/workflows/update-theme.yml
 作用：每日自动更新 Hugo 主题，无需手动维护</p><div class="src src-yaml"><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
