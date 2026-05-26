@@ -1,0 +1,120 @@
+name: Build and deploy (Official Pages + Private Repo + LFS + Giscus)
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+  repository_dispatch:
+    types: [blog-updated]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      TZ: Asia/Shanghai
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Setup Go
+        uses: actions/setup-go@v6
+        with:
+          go-version: stable
+          cache: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v6
+
+      - name: Install Git LFS
+        run: git lfs install
+
+      - name: Clone private blog repo (posts + LFS)
+        uses: actions/checkout@v6
+        with:
+          repository: ynhugo/blogs
+          token: ${{ secrets.PRIVATE_BLOG_REPO_TOKEN }}
+          path: content/post
+          lfs: true
+
+      - name: List posts
+        run: ls -la content/post
+
+      - name: Run shortcode.sh
+        run: |
+          chmod +x shortcode.sh
+          ./shortcode.sh
+
+      - name: Apply giscus config from private repo
+        run: |
+          sed -i '/^\[comments\]/,/^$/d' config/_default/params.toml
+          if [ -f "content/post/giscus.toml" ]; then
+            cat content/post/giscus.toml >> config/_default/params.toml
+          fi
+
+      - name: Cache restore
+        id: cache-restore
+        uses: actions/cache/restore@v5
+        with:
+          path: ${{ runner.temp }}/hugo_cache
+          key: hugo-${{ github.run_id }}
+          restore-keys: hugo-
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: 'latest'
+          extended: true
+
+      - name: Build site
+        run: |
+          hugo \
+            --gc \
+            --minify \
+            --baseURL "${{ steps.pages.outputs.base_url }}/" \
+            --cacheDir "${{ runner.temp }}/hugo_cache"
+
+      - name: Cache save
+        uses: actions/cache/save@v5
+        with:
+          path: ${{ runner.temp }}/hugo_cache
+          key: ${{ steps.cache-restore.outputs.cache-primary-key }}
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: ./public
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
