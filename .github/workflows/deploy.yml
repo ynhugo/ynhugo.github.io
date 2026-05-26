@@ -17,32 +17,13 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      DART_SASS_VERSION: 1.97.1
-      GO_VERSION: 1.25.5
-      HUGO_VERSION: 0.154.2
-      NODE_VERSION: 24.12.0
-      TZ: Europe/Oslo
-
     steps:
-      # ===================== 关键修复：拉取私有子模块 =====================
-      - name: Checkout
+      - name: Checkout with private submodule
         uses: actions/checkout@v6
         with:
           submodules: recursive
           fetch-depth: 0
           token: ${{ secrets.PRIVATE_BLOG_REPO_TOKEN }}
-
-      - name: Cache Node dependencies
-        uses: actions/cache@v5
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: ${{ env.NODE_VERSION }}
 
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
@@ -50,10 +31,6 @@ jobs:
           hugo-version: 'latest'
           extended: true
 
-      - name: Install dependencies
-        run: npm ci || true
-
-      # 安全合并配置
       - name: Apply giscus config
         run: |
           sed -i '/^\[comments\]/,/^$/d' config/_default/params.toml
@@ -61,30 +38,16 @@ jobs:
             cat content/post/giscus.toml >> config/_default/params.toml
           fi
 
-      # Hugo 缓存
-      - name: Restore Hugo cache
-        uses: actions/cache/restore@v5
-        with:
-          path: ${{ runner.temp }}/hugo_cache
-          key: hugo-cache-${{ hashFiles('config/**','themes/**') }}
-          restore-keys: hugo-cache-
-
-      # 构建网站
       - name: Build site
         run: |
           ./shortcode.sh
-          hugo --minify --cacheDir "${{ runner.temp }}/hugo_cache"
+          hugo --minify
 
-      - name: Save Hugo cache
-        uses: actions/cache/save@v5
-        with:
-          path: ${{ runner.temp }}/hugo_cache
-          key: hugo-cache-${{ hashFiles('config/**','themes/**') }}
-
-      # 极速部署到 gh-pages
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public
           publish_branch: gh-pages
+          user_name: github-actions[bot]
+          user_email: github-actions[bot]@users.noreply.github.com
