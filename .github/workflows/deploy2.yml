@@ -1,0 +1,72 @@
+name: Build and deploy
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+  repository_dispatch:
+    types: [blog-updated]
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Setup Hugo cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ runner.temp }}/hugo_cache
+          key: ${{ runner.os }}-hugo-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-hugo-
+
+      - name: Clone private posts (shallow)
+        run: |
+          git clone --depth 1 --branch main \
+          https://${{ secrets.PRIVATE_BLOG_REPO_TOKEN }}@github.com/ynhugo/blogs.git content/post
+
+      - name: List posts
+        run: ls -la content/post
+
+      - name: Clean old public
+        run: rm -rf public
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: 'latest'
+          extended: true
+
+      - name: Apply giscus config
+        run: |
+          sed -i '/^\[comments\]/,/^$/d' config/_default/params.toml
+          if [ -f "content/post/giscus.toml" ]; then
+            cat content/post/giscus.toml >> config/_default/params.toml
+          fi
+
+      - name: Build site
+        run: |
+          ./shortcode.sh
+          hugo --minify --gc --logLevel error --cacheDir "${{ runner.temp }}/hugo_cache"
+
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+          publish_branch: gh-pages
+          keep_files: true
