@@ -1,4 +1,3 @@
-#!/bin/bash
 # 修改baseurl
 sed -i 's|\(^baseurl = "\).*\("\)|\1https://ynhugo.github.io/\2|g' config/_default/config.toml
 # 修改语言
