@@ -2,10 +2,12 @@ name: Build and deploy
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
   workflow_dispatch:
   repository_dispatch:
-    types: [blog-updated]
+    types:
+      - blog-updated
 
 permissions:
   contents: write
@@ -14,44 +16,44 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout main
+      - name: 拉取代码
         run: |
           git clone https://github.com/ynhugo/ynhugo.github.io.git .
           git checkout main
 
-      - name: Install Hugo
+      - name: 安装 Hugo
         run: |
-          sudo apt-get update
-          sudo apt-get install -y hugo
+          sudo apt update
+          sudo apt install -y hugo
 
-      - name: Clone private posts
+      - name: 拉取私有博客内容 + LFS
         run: |
           git clone --depth 1 https://${{ secrets.PRIVATE_BLOG_REPO_TOKEN }}@github.com/ynhugo/blogs.git content/post
           cd content/post
           git lfs pull
 
-      - name: Apply giscus config
+      - name: 合并评论配置
         run: |
           sed -i '/^\[comments\]/,/^$/d' config/_default/params.toml
           if [ -f "content/post/giscus.toml" ]; then
             cat content/post/giscus.toml >> config/_default/params.toml
           fi
 
-      - name: Run shortcode script
+      - name: 运行短代码脚本
         run: |
           chmod +x shortcode.sh
           ./shortcode.sh
 
-      - name: Build site
+      - name: 构建网站
         run: |
           hugo --minify --gc
 
-      - name: Deploy to gh-pages
+      - name: 发布到 gh-pages
         run: |
           cd public
           git init
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "actions@github.com"
+          git config user.name "Actions"
+          git config user.email "actions@github.com"
           git add .
           git commit -m "Deploy"
-          git push -f https://${{ secrets.GITHUB_TOKEN }}@github.com/ynhugo/ynhugo.github.io.git main:gh-pages
+          git push -f https://${{ GITHUB_TOKEN }}@github.com/ynhugo/ynhugo.github.io.git main:gh-pages
