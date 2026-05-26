@@ -5,7 +5,7 @@ on:
     branches: [ main, master ]
   workflow_dispatch:
   repository_dispatch:
-    types: [blog-updated]
+  types: [blog-updated]
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
@@ -21,26 +21,21 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout main
         uses: actions/checkout@v6
         with:
-          submodules: recursive
           fetch-depth: 0
-          token: ${{ secrets.PRIVATE_BLOG_REPO_TOKEN }}
 
       # ==============================================
-      # ✅ 全自动强制刷新子模块（云端自己跑）
+      # ✅ 云端自动克隆私有文章（全自动，不需要子模块）
       # ==============================================
-      - name: Force update submodule
+      - name: Clone private posts
         run: |
-          git submodule sync
-          git submodule update --init --recursive --force
+          git clone https://${{ secrets.PRIVATE_BLOG_REPO_TOKEN }}@github.com/ynhugo/blogs.git content/post
 
-      # ==============================================
-      # ✅ 验证文章是否真的存在（你可以在日志看到）
-      # ==============================================
-      - name: List all posts
-        run: ls -la content/post/
+      # 验证文章是否存在
+      - name: List posts
+        run: ls -la content/post
 
       - name: Clean old public
         run: rm -rf public
@@ -58,13 +53,10 @@ jobs:
             cat content/post/giscus.toml >> config/_default/params.toml
           fi
 
-      - name: Build site
+      - name: Build
         run: |
           ./shortcode.sh
           hugo --minify
-
-      - name: Show public content
-        run: ls -la public/
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
