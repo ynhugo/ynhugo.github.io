@@ -1,0 +1,629 @@
+<!doctype html><html lang=zh-cn dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content=" 一、整体架构介绍 1.1 目录结构 采用「博文+配套资源同目录」结构，不拆分文件、不使用外部图床，贴合日常写作习惯，无需适配特殊路径。\n1 2 3 4 5 6 7 8 blogs/ ├── post/ ;; 所有博文目录 │ ├── 分类目录/ │ │ ├── 文章.org/.md │ │ └── resources/ ;; 图片、PDF、压缩包、源码包等资源文件 ├── auto-lfs-tracker.sh ;; LFS 自动管理脚本 ├── .gitattributes ;; Git LFS 规则配置文件 └── .git/hooks/pre-push ;; Git 前置钩子，自动触发扫描脚本 1.2 技术选型与设计思路 核心载体：Git + GitHub 仓库统一存储博文与配套资源 静态站点：使用 Hugo 作为静态博客生成器 大文件方案：基于 Git LFS 托管图片、压缩包、PDF 等大容量资源，彻底避免 .git 目录无限膨胀 自动化能力：Shell 脚本 + Git Hook 联动，推送代码前自动识别新资源文件类型，自动纳入 LFS 托管 部署方案：GitHub Actions 自动拉取私有仓库代码与 LFS 资源，借助 Hugo 编译后发布静态博客站点 方案优势\n"><title>基于 Hugo + Git LFS + GitHub Actions 搭建稳定大容量博客架构</title><link rel=canonical href=https://ynhugo.github.io/p/%E5%9F%BA%E4%BA%8E-hugo--git-lfs--github-actions-%E6%90%AD%E5%BB%BA%E7%A8%B3%E5%AE%9A%E5%A4%A7%E5%AE%B9%E9%87%8F%E5%8D%9A%E5%AE%A2%E6%9E%B6%E6%9E%84/><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link rel=preload as=style href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap"><link rel=stylesheet href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap"><link rel=stylesheet href=/scss/style.min.e62e09c60ba428a627e03568fa3df938f6a8224f815b5846f00816c17d4a0be4.css><meta property='og:title' content="基于 Hugo + Git LFS + GitHub Actions 搭建稳定大容量博客架构"><meta property='og:description' content=" 一、整体架构介绍 1.1 目录结构 采用「博文+配套资源同目录」结构，不拆分文件、不使用外部图床，贴合日常写作习惯，无需适配特殊路径。\n1 2 3 4 5 6 7 8 blogs/ ├── post/ ;; 所有博文目录 │ ├── 分类目录/ │ │ ├── 文章.org/.md │ │ └── resources/ ;; 图片、PDF、压缩包、源码包等资源文件 ├── auto-lfs-tracker.sh ;; LFS 自动管理脚本 ├── .gitattributes ;; Git LFS 规则配置文件 └── .git/hooks/pre-push ;; Git 前置钩子，自动触发扫描脚本 1.2 技术选型与设计思路 核心载体：Git + GitHub 仓库统一存储博文与配套资源 静态站点：使用 Hugo 作为静态博客生成器 大文件方案：基于 Git LFS 托管图片、压缩包、PDF 等大容量资源，彻底避免 .git 目录无限膨胀 自动化能力：Shell 脚本 + Git Hook 联动，推送代码前自动识别新资源文件类型，自动纳入 LFS 托管 部署方案：GitHub Actions 自动拉取私有仓库代码与 LFS 资源，借助 Hugo 编译后发布静态博客站点 方案优势\n"><meta property='og:url' content='https://ynhugo.github.io/p/%E5%9F%BA%E4%BA%8E-hugo--git-lfs--github-actions-%E6%90%AD%E5%BB%BA%E7%A8%B3%E5%AE%9A%E5%A4%A7%E5%AE%B9%E9%87%8F%E5%8D%9A%E5%AE%A2%E6%9E%B6%E6%9E%84/'><meta property='og:site_name' content='ynhugo'><meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:tag' content='git'><meta property='article:tag' content='lfs'><meta property='article:tag' content='actions'><meta property='article:tag' content='hugo'><meta property='article:published_time' content='2026-05-26T13:57:18+08:00'><meta property='article:modified_time' content='2026-05-26T13:57:18+08:00'><meta name=twitter:title content="基于 Hugo + Git LFS + GitHub Actions 搭建稳定大容量博客架构"><meta name=twitter:description content=" 一、整体架构介绍 1.1 目录结构 采用「博文+配套资源同目录」结构，不拆分文件、不使用外部图床，贴合日常写作习惯，无需适配特殊路径。\n1 2 3 4 5 6 7 8 blogs/ ├── post/ ;; 所有博文目录 │ ├── 分类目录/ │ │ ├── 文章.org/.md │ │ └── resources/ ;; 图片、PDF、压缩包、源码包等资源文件 ├── auto-lfs-tracker.sh ;; LFS 自动管理脚本 ├── .gitattributes ;; Git LFS 规则配置文件 └── .git/hooks/pre-push ;; Git 前置钩子，自动触发扫描脚本 1.2 技术选型与设计思路 核心载体：Git + GitHub 仓库统一存储博文与配套资源 静态站点：使用 Hugo 作为静态博客生成器 大文件方案：基于 Git LFS 托管图片、压缩包、PDF 等大容量资源，彻底避免 .git 目录无限膨胀 自动化能力：Shell 脚本 + Git Hook 联动，推送代码前自动识别新资源文件类型，自动纳入 LFS 托管 部署方案：GitHub Actions 自动拉取私有仓库代码与 LFS 资源，借助 Hugo 编译后发布静态博客站点 方案优势\n"><link rel="shortcut icon" href=/img/favicon.png></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label>
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/avatar.png width=300 height=300 class=site-logo loading=lazy alt=Avatar>
+</a><span class=emoji>🍥</span></figure><div class=site-meta><h1 class=site-name><a href=/>ynhugo</a></h1><h2 class=site-description>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2></div></header><ol class=menu-social><li><a href=https://github.com/CaiJimmy/hugo-theme-stack title=GitHub rel=me><svg class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li><li><a href=https://twitter.com title=Twitter rel=me><svg class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M22 4.01c-1 .49-1.98.689-3 .99-1.121-1.265-2.783-1.335-4.38-.737S11.977 6.323 12 8v1c-3.245.083-6.135-1.395-8-4 0 0-4.182 7.433 4 11-1.872 1.247-3.739 2.088-6 2 3.308 1.803 6.913 2.423 10.034 1.517 3.58-1.04 6.522-3.723 7.651-7.742a13.84 13.84.0 00.497-3.753C20.18 7.773 21.692 5.25 22 4.009z"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/archives/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>文章归档</span></a></li><li><a href=/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>搜索</span></a></li><li><a href=/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>主页</span></a></li><li><a href=/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/><svg class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg>
+<span>友情链接</span></a></li><li class=menu-bottom-section><ol class=menu><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span></span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title"></h2><div class=widget--toc><nav class=toc-nav id=TableOfContents><ul><li><a href=#headline-1>一、整体架构介绍</a><ul><li><a href=#headline-2>1.1 目录结构</a></li><li><a href=#headline-3>1.2 技术选型与设计思路</a></li><li><a href=#headline-4>1.3 双仓库整体架构说明</a></li><li><a href=#headline-5>1.4 权限体系：细粒度 Token + 同名 Secrets</a><ul><li><a href=#headline-6>1.4.1 创建细粒度访问令牌</a></li><li><a href=#headline-7>1.4.2 仓库配置同名 Secrets</a></li><li><a href=#headline-8>1.4.3 配置优势</a></li></ul></li><li><a href=#headline-9>1.5 全链路流转流程</a><ul><li><a href=#headline-10>1.5.1 公开仓库 Actions 核心工作流</a></li><li><a href=#headline-11>1.5.2 Pre-Push 钩子时序与 .gitattributes 推送机制</a><ul><li><a href=#headline-12>执行时序（Git 官方固定规则）</a></li><li><a href=#headline-13>配置文件推送逻辑</a></li><li><a href=#headline-14>机制优势</a></li></ul></li></ul></li><li><a href=#headline-15>1.6 GitHub Actions 工作流（完整配置）</a><ul><li><a href=#headline-16>1.6.1 私有仓库工作流（触发部署）</a></li><li><a href=#headline-17>1.6.2 公开仓库工作流（构建与部署）</a></li><li><a href=#headline-18>1.6.3 公开仓库工作流（主题自动更新）</a></li></ul></li><li><a href=#headline-19>1.7 架构亮点总结</a></li></ul></li><li><a href=#headline-20>二、前置环境准备</a><ul><li><a href=#headline-21>2.1 安装 Git 与 Git LFS</a></li><li><a href=#headline-22>2.2 初始化博客仓库</a></li></ul></li><li><a href=#headline-23>三、核心配置：Git LFS 自动化方案</a><ul><li><a href=#headline-24>3.1 智能扫描脚本（auto-lfs-tracker.sh）</a></li><li><a href=#headline-25>3.2 配置 Git Pre-Push 钩子</a></li><li><a href=#headline-26>3.3 存量历史文件迁移（仅执行一次）</a></li><li><a href=#headline-27>3.4 上传 LFS 实体文件（解决 404 报错）</a></li></ul></li><li><a href=#headline-28>四、日常使用流程</a><ul><li><a href=#headline-29>4.1 常规写作与提交</a></li><li><a href=#headline-30>4.2 手动执行扫描脚本</a></li></ul></li><li><a href=#headline-31>五、常见问题排错</a><ul><li><a href=#headline-32>5.1 克隆/CI 报错：Object does not exist on the server (404)</a></li><li><a href=#headline-33>5.2 Shell 脚本被纳入 LFS，克隆失败</a></li><li><a href=#headline-34>5.3 git push 被钩子中断、出现提交冲突</a></li><li><a href=#headline-35>5.4 .git 目录体积偏大</a></li><li><a href=#headline-36>5.5 Actions 克隆私有仓库权限不足</a></li></ul></li><li><a href=#headline-37>六、方案总结</a></li></ul></nav></div></section></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><div class=article-title-wrapper><h2 class=article-title><a href=/p/%E5%9F%BA%E4%BA%8E-hugo--git-lfs--github-actions-%E6%90%AD%E5%BB%BA%E7%A8%B3%E5%AE%9A%E5%A4%A7%E5%AE%B9%E9%87%8F%E5%8D%9A%E5%AE%A2%E6%9E%B6%E6%9E%84/>基于 Hugo + Git LFS + GitHub Actions 搭建稳定大容量博客架构</a></h2></div><footer class=article-meta><div class=inline-meta><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published datetime=2026-05-26T13:57:18+08:00>Tuesday, May 26, 2026</time>
+<svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading></time></div></footer></div></header><aside class=article-toc><details><summary><div class=article-toc-title><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-right"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 6l6 6-6 6"/></svg>
+<span></span></div></summary><nav class=toc-nav><ul><li><a href=#headline-1>一、整体架构介绍</a><ul><li><a href=#headline-2>1.1 目录结构</a></li><li><a href=#headline-3>1.2 技术选型与设计思路</a></li><li><a href=#headline-4>1.3 双仓库整体架构说明</a></li><li><a href=#headline-5>1.4 权限体系：细粒度 Token + 同名 Secrets</a><ul><li><a href=#headline-6>1.4.1 创建细粒度访问令牌</a></li><li><a href=#headline-7>1.4.2 仓库配置同名 Secrets</a></li><li><a href=#headline-8>1.4.3 配置优势</a></li></ul></li><li><a href=#headline-9>1.5 全链路流转流程</a><ul><li><a href=#headline-10>1.5.1 公开仓库 Actions 核心工作流</a></li><li><a href=#headline-11>1.5.2 Pre-Push 钩子时序与 .gitattributes 推送机制</a><ul><li><a href=#headline-12>执行时序（Git 官方固定规则）</a></li><li><a href=#headline-13>配置文件推送逻辑</a></li><li><a href=#headline-14>机制优势</a></li></ul></li></ul></li><li><a href=#headline-15>1.6 GitHub Actions 工作流（完整配置）</a><ul><li><a href=#headline-16>1.6.1 私有仓库工作流（触发部署）</a></li><li><a href=#headline-17>1.6.2 公开仓库工作流（构建与部署）</a></li><li><a href=#headline-18>1.6.3 公开仓库工作流（主题自动更新）</a></li></ul></li><li><a href=#headline-19>1.7 架构亮点总结</a></li></ul></li><li><a href=#headline-20>二、前置环境准备</a><ul><li><a href=#headline-21>2.1 安装 Git 与 Git LFS</a></li><li><a href=#headline-22>2.2 初始化博客仓库</a></li></ul></li><li><a href=#headline-23>三、核心配置：Git LFS 自动化方案</a><ul><li><a href=#headline-24>3.1 智能扫描脚本（auto-lfs-tracker.sh）</a></li><li><a href=#headline-25>3.2 配置 Git Pre-Push 钩子</a></li><li><a href=#headline-26>3.3 存量历史文件迁移（仅执行一次）</a></li><li><a href=#headline-27>3.4 上传 LFS 实体文件（解决 404 报错）</a></li></ul></li><li><a href=#headline-28>四、日常使用流程</a><ul><li><a href=#headline-29>4.1 常规写作与提交</a></li><li><a href=#headline-30>4.2 手动执行扫描脚本</a></li></ul></li><li><a href=#headline-31>五、常见问题排错</a><ul><li><a href=#headline-32>5.1 克隆/CI 报错：Object does not exist on the server (404)</a></li><li><a href=#headline-33>5.2 Shell 脚本被纳入 LFS，克隆失败</a></li><li><a href=#headline-34>5.3 git push 被钩子中断、出现提交冲突</a></li><li><a href=#headline-35>5.4 .git 目录体积偏大</a></li><li><a href=#headline-36>5.5 Actions 克隆私有仓库权限不足</a></li></ul></li><li><a href=#headline-37>六、方案总结</a></li></ul></nav></details></aside><section class=article-content><div id=outline-container-headline-1 class=outline-2><h2 id=headline-1>一、整体架构介绍</h2><div id=outline-text-headline-1 class=outline-text-2><div id=outline-container-headline-2 class=outline-3><h3 id=headline-2>1.1 目录结构</h3><div id=outline-text-headline-2 class=outline-text-3><p>采用「博文+配套资源同目录」结构，不拆分文件、不使用外部图床，贴合日常写作习惯，无需适配特殊路径。</p><div class="src src-text"><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>blogs/
+</span></span><span class=line><span class=cl>├── post/                ;; 所有博文目录
+</span></span><span class=line><span class=cl>│   ├── 分类目录/
+</span></span><span class=line><span class=cl>│   │   ├── 文章.org/.md
+</span></span><span class=line><span class=cl>│   │   └── resources/   ;; 图片、PDF、压缩包、源码包等资源文件
+</span></span><span class=line><span class=cl>├── auto-lfs-tracker.sh  ;; LFS 自动管理脚本
+</span></span><span class=line><span class=cl>├── .gitattributes       ;; Git LFS 规则配置文件
+</span></span><span class=line><span class=cl>└── .git/hooks/pre-push  ;; Git 前置钩子，自动触发扫描脚本</span></span></code></pre></td></tr></table></div></div></div></div></div><div id=outline-container-headline-3 class=outline-3><h3 id=headline-3>1.2 技术选型与设计思路</h3><div id=outline-text-headline-3 class=outline-text-3><ul><li>核心载体：Git + GitHub 仓库统一存储博文与配套资源</li><li>静态站点：使用 Hugo 作为静态博客生成器</li><li>大文件方案：基于 Git LFS 托管图片、压缩包、PDF 等大容量资源，彻底避免 .git 目录无限膨胀</li><li>自动化能力：Shell 脚本 + Git Hook 联动，推送代码前自动识别新资源文件类型，自动纳入 LFS 托管</li><li>部署方案：GitHub Actions 自动拉取私有仓库代码与 LFS 资源，借助 Hugo 编译后发布静态博客站点</li></ul><p>方案优势</p><ol><li>资源与博文同目录绑定，路径无需手动修改，完全贴合原生写作习惯</li><li>大文件统一 LFS 托管，仓库体积可控，长期更新不臃肿</li><li>全流程自动化配置，一次部署终身零维护</li><li>兼容私有仓库、公开部署、CI 编译、多设备克隆等全部场景</li></ol></div></div><div id=outline-container-headline-4 class=outline-3><h3 id=headline-4>1.3 双仓库整体架构说明</h3><div id=outline-text-headline-4 class=outline-text-3><p>采用**私有内容库 + 公开站点库**分离架构，兼顾原始数据安全与博客公开访问需求：</p><ul><li>私有仓库：`blogs`，存储原始博文、资源文件、自动化脚本、配置文件，对外完全不可见，保障源码与资源安全</li><li>公开仓库：`ynhugo.github.io`，仅存储 Hugo 编译完成的静态网页文件，作为 GitHub Pages 对外访问入口</li></ul></div></div><div id=outline-container-headline-5 class=outline-3><h3 id=headline-5>1.4 权限体系：细粒度 Token + 同名 Secrets</h3><div id=outline-text-headline-5 class=outline-text-3><p>整套架构依靠**单个细粒度 Personal Access Token** 实现双仓库跨仓权限互通，两个仓库统一使用同名 Secrets 存储密钥，配置极简、维护便捷。</p><div id=outline-container-headline-6 class=outline-4><h4 id=headline-6>1.4.1 创建细粒度访问令牌</h4><div id=outline-text-headline-6 class=outline-text-4><p>令牌创建地址：<a href=https://github.com/settings/personal-access-tokens>https://github.com/settings/personal-access-tokens</a></p><ol><li>点击 Generate new token，选择 Fine-grained token（细粒度令牌）</li><li>自定义令牌名称、有效期、用途备注，按需配置长期有效</li><li><p>仓库范围：精准勾选两个业务仓库</p><ul><li>`ynhugo/blogs`（私有内容仓库）</li><li>`ynhugo/ynhugo.github.io`（公开部署仓库）</li></ul></li><li><p>仓库最小权限配置</p><ul><li>Metadata：Read（读取仓库基础信息，系统必选）</li><li>Code：Read and Write（支持代码拉取、推送、LFS 资源读写）</li></ul></li><li>生成令牌后**立即复制备份**，页面刷新后无法再次查看密钥。</li></ol></div></div><div id=outline-container-headline-7 class=outline-4><h4 id=headline-7>1.4.2 仓库配置同名 Secrets</h4><div id=outline-text-headline-7 class=outline-text-4><p>将同一 Token 密钥，分别配置到两个仓库的 Actions 密钥中，**密钥名称完全一致**：</p><ul><li><p>私有仓库 blogs：Settings → Secrets and variables → Actions 新建密钥</p><ul><li>名称：`PRIVATE_BLOG_REPO_TOKEN`</li><li>值：粘贴统一 Token</li></ul></li><li><p>公开仓库 ynhugo.github.io：同路径新建同名密钥</p><ul><li>名称：`PRIVATE_BLOG_REPO_TOKEN`</li><li>值：粘贴**完全相同的 Token**</li></ul></li></ul></div></div><div id=outline-container-headline-8 class=outline-4><h4 id=headline-8>1.4.3 配置优势</h4><div id=outline-text-headline-8 class=outline-text-4><ol><li>单 Token 管控双仓库，密钥轮换、更新仅需操作一次，大幅降低维护成本</li><li>同名 Secrets 统一配置，GitHub Actions 调用语法一致，无需区分环境</li><li>细粒度权限精准限制仓库与操作范围，安全性远高于传统全局 Token</li><li>完美覆盖私有仓库推送、公开仓库跨仓克隆、LFS 资源拉取、静态文件推送等全部场景</li></ol></div></div></div></div><div id=outline-container-headline-9 class=outline-3><h3 id=headline-9>1.5 全链路流转流程</h3><div id=outline-text-headline-9 class=outline-text-3><p>完整链路：**本地编辑 → 钩子自动化检测 → 同步私有仓库 → Actions 拉取编译 → 发布至 gh-pages 分支 → 公网访问**</p><ol><li><p>本地编辑阶段</p><ul><li>在本地 `blogs` 仓库新增、修改 `.md/.org` 博文，同步更新 `resources` 目录下的图片、PDF、压缩包等资源，保持原生目录结构。</li></ul></li><li><p>本地提交与钩子触发</p><ul><li>执行常规 Git 提交推送命令：</li></ul><div class="src src-bash"><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>git add .
+</span></span><span class=line><span class=cl>git commit -m <span class=s2>&#34;更新博文/补充资源&#34;</span>
+</span></span><span class=line><span class=cl>git push</span></span></code></pre></td></tr></table></div></div></div><ul><li>执行 `git push` 瞬间优先触发 `pre-push` 前置钩子</li><li>自动调用 `auto-lfs-tracker.sh –scan-only` 脚本</li><li>仅扫描新文件类型、更新 LFS 规则配置，**不执行任何提交操作**，不打断推送流程</li><li>自动补全缺失的 LFS 追踪规则，确保新增资源全部纳入 LFS 托管</li></ul></li><li><p>同步至私有 GitHub 仓库</p><ul><li>文本类文件（博文、脚本、配置）通过标准 Git 机制推送</li><li>大体积资源文件，同步 LFS 指针文件与实体文件至 GitHub LFS 服务</li><li>私有仓库完整留存原始博文、配置、LFS 资源，实现数据安全隔离</li></ul></li><li><p>公开仓库 Actions 自动拉取</p><ul><li><p>公开仓库工作流自动触发，通过配置密钥鉴权执行操作：</p><ul><li>读取 `PRIVATE_BLOG_REPO_TOKEN` 密钥，鉴权克隆私有 `blogs` 仓库</li><li>开启 LFS 自动下载，根据指针文件拉取完整实体资源，彻底规避页面资源 404 问题</li></ul><div class="src src-yaml"><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>steps</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Clone private blogs repo</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>actions/checkout@v4</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>with</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>repository</span><span class=p>:</span><span class=w> </span><span class=l>ynhugo/blogs</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>token</span><span class=p>:</span><span class=w> </span><span class=l>${{ secrets.PRIVATE_BLOG_REPO_TOKEN }}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>path</span><span class=p>:</span><span class=w> </span><span class=l>content/post</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>lfs</span><span class=p>:</span><span class=w> </span><span class=kc>true</span><span class=w>  </span><span class=c># 开启 LFS 自动下载</span></span></span></code></pre></td></tr></table></div></div></div></li></ul></li><li><p>编译与发布站点</p><ul><li>调用 Hugo 编译工具，基于原始博文与完整资源生成纯静态网页</li><li>将编译完成的 public 静态资源，强制推送至公开仓库 `gh-pages` 分支</li><li>GitHub Pages 自动监听 `gh-pages` 分支，对外提供公网访问</li></ul></li><li>最终访问链路</li></ol><p>本地文件 → 私有仓库（Git代码+LFS资源）→ GitHub Actions + Hugo 编译 → 公开仓库 gh-pages 分支 → 终端用户访问</p><div id=outline-container-headline-10 class=outline-4><h4 id=headline-10>1.5.1 公开仓库 Actions 核心工作流</h4><div id=outline-text-headline-10 class=outline-text-4><ol><li>拉取私有仓库：通过统一密钥鉴权克隆私有内容仓库，自动下载全部 LFS 资源</li><li>Hugo 编译：读取原始博文与资源，编译生成完整静态网站</li><li>分支部署：将静态文件推送至公开仓库 `gh-pages` 分支</li><li>站点上线：GitHub Pages 加载分支资源，自动更新公开博客站点</li></ol><p>最终效果</p><ul><li>原始文章、私有资源仅存于私有仓库，安全不泄露</li><li>静态页面统一托管公开仓库分支，公网正常访问</li><li>全程自动化，无需人工干预，无部署冲突</li></ul></div></div><div id=outline-container-headline-11 class=outline-4><h4 id=headline-11>1.5.2 Pre-Push 钩子时序与 .gitattributes 推送机制</h4><div id=outline-text-headline-11 class=outline-text-4><div id=outline-container-headline-12 class=outline-5><h5 id=headline-12>执行时序（Git 官方固定规则）</h5><div id=outline-text-headline-12 class=outline-text-5><p>`git push` 执行顺序：**优先运行 pre-push 钩子 → 钩子执行完毕 → 执行真正的远程推送**
+所有 LFS 扫描、规则更新动作均在推送前完成，无规则遗漏、无执行时序错乱问题。</p></div></div><div id=outline-container-headline-13 class=outline-5><h5 id=headline-13>配置文件推送逻辑</h5><div id=outline-text-headline-13 class=outline-text-5><p>脚本采用 `–scan-only` 纯扫描模式，核心特性：**仅本地修改 .gitattributes，不自动提交**</p><ol><li>本次 `git push`：仅推送**上一次已提交**的代码和资源，不推送本次更新的 `.gitattributes`</li><li>更新后的 `.gitattributes` 保留为**本地未提交修改**</li><li>在下一次手动 `git add && git commit` 时统一提交</li><li>随下一次 `git push` 推送至远程私有仓库</li></ol></div></div><div id=outline-container-headline-14 class=outline-5><h5 id=headline-14>机制优势</h5><div id=outline-text-headline-14 class=outline-text-5><ul><li>不破坏原生 Git 推送流程，无冲突、无推送中断风险</li><li>自动迭代 LFS 规则，无需手动维护配置</li><li>规则滞后一次提交为安全兜底，不影响当前资源托管与站点部署</li></ul></div></div></div></div></div></div><div id=outline-container-headline-15 class=outline-3><h3 id=headline-15>1.6 GitHub Actions 工作流（完整配置）</h3><div id=outline-text-headline-15 class=outline-text-3><p>本架构采用「私有仓库触发 → 公开仓库构建」的自动化部署模式，共包含 3 个工作流文件：</p><ul><li>私有仓库：1 个触发部署工作流</li><li>公开仓库：1 个构建部署工作流 + 1 个主题自动更新工作流</li></ul><div id=outline-container-headline-16 class=outline-4><h4 id=headline-16>1.6.1 私有仓库工作流（触发部署）</h4><div id=outline-text-headline-16 class=outline-text-4><p>路径：.github/workflows/trigger-deploy.yml
+作用：私有仓库内容更新后，自动通知公开仓库重新构建博客</p><div class="src src-yaml"><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Trigger public repo deploy</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=nt>on</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>push</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>branches</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=l>main</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=l>master</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=nt>jobs</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>trigger</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>runs-on</span><span class=p>:</span><span class=w> </span><span class=l>ubuntu-latest</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>steps</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Trigger public site rebuild</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>peter-evans/repository-dispatch@v3</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>with</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>token</span><span class=p>:</span><span class=w> </span><span class=l>${{ secrets.PRIVATE_BLOG_REPO_TOKEN }} </span><span class=w> </span><span class=c># 这行必须加！</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>repository</span><span class=p>:</span><span class=w> </span><span class=l>ynhugo/ynhugo.github.io</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>event-type</span><span class=p>:</span><span class=w> </span><span class=l>blog-updated</span></span></span></code></pre></td></tr></table></div></div></div></div></div><div id=outline-container-headline-17 class=outline-4><h4 id=headline-17>1.6.2 公开仓库工作流（构建与部署）</h4><div id=outline-text-headline-17 class=outline-text-4><p>路径：.github/workflows/deploy.yml
+作用：拉取私有博客内容 → 编译 Hugo → 发布到 gh-pages</p><div class="src src-yaml"><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span><span class=lnt>59
+</span><span class=lnt>60
+</span><span class=lnt>61
+</span><span class=lnt>62
+</span><span class=lnt>63
+</span><span class=lnt>64
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Build and deploy</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=nt>on</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>push</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>branches</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span><span class=l>main, master ]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>workflow_dispatch</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>repository_dispatch</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>types</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>blog-updated]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=nt>env</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>FORCE_JAVASCRIPT_ACTIONS_TO_NODE24</span><span class=p>:</span><span class=w> </span><span class=kc>true</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=nt>permissions</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>contents</span><span class=p>:</span><span class=w> </span><span class=l>write</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=nt>concurrency</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>group</span><span class=p>:</span><span class=w> </span><span class=l>pages</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>cancel-in-progress</span><span class=p>:</span><span class=w> </span><span class=kc>false</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=nt>jobs</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>build</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>runs-on</span><span class=p>:</span><span class=w> </span><span class=l>ubuntu-latest</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>steps</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Checkout main</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>actions/checkout@v6</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>with</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>fetch-depth</span><span class=p>:</span><span class=w> </span><span class=m>0</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=c># 直接克隆私有文章到 content/post（全自动）</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Clone private posts</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>run</span><span class=p>:</span><span class=w> </span><span class=p>|</span><span class=sd>
+</span></span></span><span class=line><span class=cl><span class=sd>          git clone https://${{ secrets.PRIVATE_BLOG_REPO_TOKEN }}@github.com/ynhugo/blogs.git content/post</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>List posts</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>run</span><span class=p>:</span><span class=w> </span><span class=l>ls -la content/post</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Clean old public</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>run</span><span class=p>:</span><span class=w> </span><span class=l>rm -rf public</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Setup Hugo</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>peaceiris/actions-hugo@v3</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>with</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>hugo-version</span><span class=p>:</span><span class=w> </span><span class=s1>&#39;latest&#39;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>extended</span><span class=p>:</span><span class=w> </span><span class=kc>true</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Apply giscus config</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>run</span><span class=p>:</span><span class=w> </span><span class=p>|</span><span class=sd>
+</span></span></span><span class=line><span class=cl><span class=sd>          sed -i &#39;/^\[comments\]/,/^$/d&#39; config/_default/params.toml
+</span></span></span><span class=line><span class=cl><span class=sd>          if [ -f &#34;content/post/giscus.toml&#34; ]; then
+</span></span></span><span class=line><span class=cl><span class=sd>            cat content/post/giscus.toml &gt;&gt; config/_default/params.toml
+</span></span></span><span class=line><span class=cl><span class=sd>          fi</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Build site</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>run</span><span class=p>:</span><span class=w> </span><span class=p>|</span><span class=sd>
+</span></span></span><span class=line><span class=cl><span class=sd>          ./shortcode.sh
+</span></span></span><span class=line><span class=cl><span class=sd>          hugo --minify</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Deploy to gh-pages</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>peaceiris/actions-gh-pages@v4</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>with</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>github_token</span><span class=p>:</span><span class=w> </span><span class=l>${{ secrets.GITHUB_TOKEN }}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>publish_dir</span><span class=p>:</span><span class=w> </span><span class=l>./public</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>publish_branch</span><span class=p>:</span><span class=w> </span><span class=l>gh-pages</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>keep_files</span><span class=p>:</span><span class=w> </span><span class=kc>false</span></span></span></code></pre></td></tr></table></div></div></div></div></div><div id=outline-container-headline-18 class=outline-4><h4 id=headline-18>1.6.3 公开仓库工作流（主题自动更新）</h4><div id=outline-text-headline-18 class=outline-text-4><p>路径：.github/workflows/update-theme.yml
+作用：每日自动更新 Hugo 主题，无需手动维护</p><div class="src src-yaml"><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Update theme</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=c># Controls when the workflow will run</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=nt>on</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>schedule</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=c># Update theme automatically everyday at 00:00 UTC</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=nt>cron</span><span class=p>:</span><span class=w> </span><span class=s2>&#34;0 0 * * *&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=c># Allows you to run this workflow manually from the Actions tab</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>workflow_dispatch</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=nt>jobs</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>update-theme</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>runs-on</span><span class=p>:</span><span class=w> </span><span class=l>ubuntu-latest</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>permissions</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=c># Give the default GITHUB_TOKEN write permission to commit and push the</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=c># added or changed files to the repository.</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>contents</span><span class=p>:</span><span class=w> </span><span class=l>write</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>steps</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>actions/checkout@v6</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Setup Hugo</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>peaceiris/actions-hugo@v3</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>with</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>hugo-version</span><span class=p>:</span><span class=w> </span><span class=s1>&#39;latest&#39;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>extended</span><span class=p>:</span><span class=w> </span><span class=kc>true</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Update theme</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>run</span><span class=p>:</span><span class=w> </span><span class=l>hugo mod get -u</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Tidy go.mod, go.sum</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>run</span><span class=p>:</span><span class=w> </span><span class=l>hugo mod tidy</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Commit changes</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>stefanzweifel/git-auto-commit-action@v7</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>with</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>commit_message</span><span class=p>:</span><span class=w> </span><span class=s2>&#34;CI: Update theme&#34;</span></span></span></code></pre></td></tr></table></div></div></div></div></div></div></div><div id=outline-container-headline-19 class=outline-3><h3 id=headline-19>1.7 架构亮点总结</h3><div id=outline-text-headline-19 class=outline-text-3><ul><li>单 Token 管控双仓库，同名 Secrets 统一配置，极简易维护</li><li>细粒度最小权限设计，兼顾安全与实用性</li><li>基于 Hugo 构建静态博客，搭配 Git LFS 管理大体积资源</li><li>源码资源私有隔离，静态页面公开部署，权限边界清晰</li><li>钩子+脚本全自动化，一次配置长期零维护</li><li>执行时序安全可控，规则更新稳定无风险</li></ul></div></div></div></div><div id=outline-container-headline-20 class=outline-2><h2 id=headline-20>二、前置环境准备</h2><div id=outline-text-headline-20 class=outline-text-2><div id=outline-container-headline-21 class=outline-3><h3 id=headline-21>2.1 安装 Git 与 Git LFS</h3><div id=outline-text-headline-21 class=outline-text-3><p>主流 Linux / macOS 环境执行安装命令：</p><div class="src src-bash"><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1># 安装 Git（多数系统默认预装）</span>
+</span></span><span class=line><span class=cl><span class=c1># 安装 Git LFS</span>
+</span></span><span class=line><span class=cl>git lfs install</span></span></code></pre></td></tr></table></div></div></div><p>验证安装：</p><div class="src src-bash"><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>git lfs version</span></span></code></pre></td></tr></table></div></div></div></div></div><div id=outline-container-headline-22 class=outline-3><h3 id=headline-22>2.2 初始化博客仓库</h3><div id=outline-text-headline-22 class=outline-text-3><p>全新仓库可执行初始化，已有仓库可跳过：</p><div class="src src-bash"><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nb>cd</span> ~/blogs/blogs
+</span></span><span class=line><span class=cl>git init
+</span></span><span class=line><span class=cl>git config user.name <span class=s2>&#34;你的用户名&#34;</span>
+</span></span><span class=line><span class=cl>git config user.email <span class=s2>&#34;你的邮箱&#34;</span></span></span></code></pre></td></tr></table></div></div></div></div></div></div></div><div id=outline-container-headline-23 class=outline-2><h2 id=headline-23>三、核心配置：Git LFS 自动化方案</h2><div id=outline-text-headline-23 class=outline-text-2><div id=outline-container-headline-24 class=outline-3><h3 id=headline-24>3.1 智能扫描脚本（auto-lfs-tracker.sh）</h3><div id=outline-text-headline-24 class=outline-text-3><p>仓库根目录创建自动化脚本，支持多运行模式、自动扫描规则、内置全套排错命令：</p><div class="src src-bash"><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>  1
+</span><span class=lnt>  2
+</span><span class=lnt>  3
+</span><span class=lnt>  4
+</span><span class=lnt>  5
+</span><span class=lnt>  6
+</span><span class=lnt>  7
+</span><span class=lnt>  8
+</span><span class=lnt>  9
+</span><span class=lnt> 10
+</span><span class=lnt> 11
+</span><span class=lnt> 12
+</span><span class=lnt> 13
+</span><span class=lnt> 14
+</span><span class=lnt> 15
+</span><span class=lnt> 16
+</span><span class=lnt> 17
+</span><span class=lnt> 18
+</span><span class=lnt> 19
+</span><span class=lnt> 20
+</span><span class=lnt> 21
+</span><span class=lnt> 22
+</span><span class=lnt> 23
+</span><span class=lnt> 24
+</span><span class=lnt> 25
+</span><span class=lnt> 26
+</span><span class=lnt> 27
+</span><span class=lnt> 28
+</span><span class=lnt> 29
+</span><span class=lnt> 30
+</span><span class=lnt> 31
+</span><span class=lnt> 32
+</span><span class=lnt> 33
+</span><span class=lnt> 34
+</span><span class=lnt> 35
+</span><span class=lnt> 36
+</span><span class=lnt> 37
+</span><span class=lnt> 38
+</span><span class=lnt> 39
+</span><span class=lnt> 40
+</span><span class=lnt> 41
+</span><span class=lnt> 42
+</span><span class=lnt> 43
+</span><span class=lnt> 44
+</span><span class=lnt> 45
+</span><span class=lnt> 46
+</span><span class=lnt> 47
+</span><span class=lnt> 48
+</span><span class=lnt> 49
+</span><span class=lnt> 50
+</span><span class=lnt> 51
+</span><span class=lnt> 52
+</span><span class=lnt> 53
+</span><span class=lnt> 54
+</span><span class=lnt> 55
+</span><span class=lnt> 56
+</span><span class=lnt> 57
+</span><span class=lnt> 58
+</span><span class=lnt> 59
+</span><span class=lnt> 60
+</span><span class=lnt> 61
+</span><span class=lnt> 62
+</span><span class=lnt> 63
+</span><span class=lnt> 64
+</span><span class=lnt> 65
+</span><span class=lnt> 66
+</span><span class=lnt> 67
+</span><span class=lnt> 68
+</span><span class=lnt> 69
+</span><span class=lnt> 70
+</span><span class=lnt> 71
+</span><span class=lnt> 72
+</span><span class=lnt> 73
+</span><span class=lnt> 74
+</span><span class=lnt> 75
+</span><span class=lnt> 76
+</span><span class=lnt> 77
+</span><span class=lnt> 78
+</span><span class=lnt> 79
+</span><span class=lnt> 80
+</span><span class=lnt> 81
+</span><span class=lnt> 82
+</span><span class=lnt> 83
+</span><span class=lnt> 84
+</span><span class=lnt> 85
+</span><span class=lnt> 86
+</span><span class=lnt> 87
+</span><span class=lnt> 88
+</span><span class=lnt> 89
+</span><span class=lnt> 90
+</span><span class=lnt> 91
+</span><span class=lnt> 92
+</span><span class=lnt> 93
+</span><span class=lnt> 94
+</span><span class=lnt> 95
+</span><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=lnt>100
+</span><span class=lnt>101
+</span><span class=lnt>102
+</span><span class=lnt>103
+</span><span class=lnt>104
+</span><span class=lnt>105
+</span><span class=lnt>106
+</span><span class=lnt>107
+</span><span class=lnt>108
+</span><span class=lnt>109
+</span><span class=lnt>110
+</span><span class=lnt>111
+</span><span class=lnt>112
+</span><span class=lnt>113
+</span><span class=lnt>114
+</span><span class=lnt>115
+</span><span class=lnt>116
+</span><span class=lnt>117
+</span><span class=lnt>118
+</span><span class=lnt>119
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=cp>#!/bin/bash
+</span></span></span><span class=line><span class=cl><span class=nb>set</span> -e
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>SCAN_DIR</span><span class=o>=</span><span class=s2>&#34;post&#34;</span>
+</span></span><span class=line><span class=cl><span class=nv>CONFIG_FILE</span><span class=o>=</span><span class=s2>&#34;.gitattributes&#34;</span>
+</span></span><span class=line><span class=cl><span class=nv>SCAN_ONLY</span><span class=o>=</span><span class=nb>false</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=o>[[</span> <span class=s2>&#34;</span><span class=nv>$1</span><span class=s2>&#34;</span> <span class=o>==</span> <span class=s2>&#34;--help&#34;</span> <span class=o>||</span> <span class=s2>&#34;</span><span class=nv>$1</span><span class=s2>&#34;</span> <span class=o>==</span> <span class=s2>&#34;-h&#34;</span> <span class=o>]]</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>cat <span class=s>&lt;&lt;EOF
+</span></span></span><span class=line><span class=cl><span class=s>=============================================
+</span></span></span><span class=line><span class=cl><span class=s>        智能 Git LFS 自动追踪工具（终极版）
+</span></span></span><span class=line><span class=cl><span class=s>=============================================
+</span></span></span><span class=line><span class=cl><span class=s>【使用】
+</span></span></span><span class=line><span class=cl><span class=s>   ./auto-lfs-tracker.sh          # 自动扫描 + 提交配置
+</span></span></span><span class=line><span class=cl><span class=s>   ./auto-lfs-tracker.sh --scan-only # 仅扫描（钩子专用，不提交）
+</span></span></span><span class=line><span class=cl><span class=s>   ./auto-lfs-tracker.sh --help   # 查看帮助
+</span></span></span><span class=line><span class=cl><span class=s>
+</span></span></span><span class=line><span class=cl><span class=s>=============================================
+</span></span></span><span class=line><span class=cl><span class=s>【一、历史大文件迁移到 LFS（仅执行一次）】
+</span></span></span><span class=line><span class=cl><span class=s>  作用：将仓库旧大文件转为 LFS 托管
+</span></span></span><span class=line><span class=cl><span class=s>=============================================
+</span></span></span><span class=line><span class=cl><span class=s>git lfs migrate import --everything --include=&#34;**/resources/**/*&#34;
+</span></span></span><span class=line><span class=cl><span class=s>git push origin main --force
+</span></span></span><span class=line><span class=cl><span class=s>
+</span></span></span><span class=line><span class=cl><span class=s>=============================================
+</span></span></span><span class=line><span class=cl><span class=s>【二、迁移后 .git 瘦身清理（必做）】
+</span></span></span><span class=line><span class=cl><span class=s>  作用：删除旧历史，缩小仓库体积
+</span></span></span><span class=line><span class=cl><span class=s>=============================================
+</span></span></span><span class=line><span class=cl><span class=s>git reflog expire --all --expire=now
+</span></span></span><span class=line><span class=cl><span class=s>git gc --prune=now --aggressive
+</span></span></span><span class=line><span class=cl><span class=s>
+</span></span></span><span class=line><span class=cl><span class=s>=============================================
+</span></span></span><span class=line><span class=cl><span class=s>【三、pre-push 钩子安装（push 自动检查）】
+</span></span></span><span class=line><span class=cl><span class=s>  作用：每次 push 前自动扫描新文件类型
+</span></span></span><span class=line><span class=cl><span class=s>=============================================
+</span></span></span><span class=line><span class=cl><span class=s>cat &gt; .git/hooks/pre-push &lt;&lt; &#39;EOF</span>_HOOK<span class=s1>&#39;
+</span></span></span><span class=line><span class=cl><span class=s1>#!/bin/bash
+</span></span></span><span class=line><span class=cl><span class=s1>echo &#34;🔍 Git Push 前自动检查 LFS 未追踪文件（仅扫描）...&#34;
+</span></span></span><span class=line><span class=cl><span class=s1>./auto-lfs-tracker.sh --scan-only
+</span></span></span><span class=line><span class=cl><span class=s1>EOF_HOOK
+</span></span></span><span class=line><span class=cl><span class=s1>chmod +x .git/hooks/pre-push
+</span></span></span><span class=line><span class=cl><span class=s1>chmod +x auto-lfs-tracker.sh
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>=============================================
+</span></span></span><span class=line><span class=cl><span class=s1>【四、GitHub Actions / 克隆 404 错误修复】
+</span></span></span><span class=line><span class=cl><span class=s1>【报错：Object does not exist on the server 404】
+</span></span></span><span class=line><span class=cl><span class=s1>  作用：上传本地 LFS 实体文件至远程服务器
+</span></span></span><span class=line><span class=cl><span class=s1>=============================================
+</span></span></span><span class=line><span class=cl><span class=s1>git lfs push origin main --all
+</span></span></span><span class=line><span class=cl><span class=s1>git push origin main --force
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>=============================================
+</span></span></span><span class=line><span class=cl><span class=s1>【五、.sh 脚本误进 LFS 修复】
+</span></span></span><span class=line><span class=cl><span class=s1>【报错：Smudge error 下载 sh 文件失败】
+</span></span></span><span class=line><span class=cl><span class=s1>  作用：将脚本移出 LFS 托管
+</span></span></span><span class=line><span class=cl><span class=s1>=============================================
+</span></span></span><span class=line><span class=cl><span class=s1>git lfs untrack &#34;*.sh&#34;
+</span></span></span><span class=line><span class=cl><span class=s1>git add --renormalize auto-lfs-tracker.sh
+</span></span></span><span class=line><span class=cl><span class=s1>git add .gitattributes
+</span></span></span><span class=line><span class=cl><span class=s1>git commit -m &#34;fix: 移除 .sh 从 LFS&#34;
+</span></span></span><span class=line><span class=cl><span class=s1>git push origin main --force
+</span></span></span><span class=line><span class=cl><span class=s1>EOF
+</span></span></span><span class=line><span class=cl><span class=s1>exit 0
+</span></span></span><span class=line><span class=cl><span class=s1>fi
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>if [[ &#34;$1&#34; == &#34;--scan-only&#34; ]]; then
+</span></span></span><span class=line><span class=cl><span class=s1>  SCAN_ONLY=true
+</span></span></span><span class=line><span class=cl><span class=s1>  echo &#34;=============================================&#34;
+</span></span></span><span class=line><span class=cl><span class=s1>  echo &#34;       智能 Git LFS 扫描模式（仅检查）&#34;
+</span></span></span><span class=line><span class=cl><span class=s1>  echo &#34;=============================================&#34;
+</span></span></span><span class=line><span class=cl><span class=s1>fi
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>cd &#34;$(dirname &#34;$0&#34;)&#34;
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>echo -e &#34;\n📂 扫描目录：$SCAN_DIR&#34;
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1># 排除文本、脚本、配置类文件，仅扫描资源文件
+</span></span></span><span class=line><span class=cl><span class=s1>all_exts=$(find &#34;$SCAN_DIR&#34; -type f | \
+</span></span></span><span class=line><span class=cl><span class=s1>  grep -vE &#39;</span><span class=se>\.</span>md$<span class=p>|</span><span class=se>\.</span>org$<span class=p>|</span><span class=se>\.</span>sh$<span class=p>|</span><span class=se>\.</span>git<span class=p>|</span><span class=se>\.</span>gitattributes<span class=p>|</span><span class=se>\.</span>gitignore<span class=p>|</span>README<span class=p>|</span>LICENSE<span class=s1>&#39; | \
+</span></span></span><span class=line><span class=cl><span class=s1>  sed -e &#39;</span>s/^.*<span class=se>\.</span>//<span class=s1>&#39; | sort -u | grep -v &#39;</span>^/<span class=s1>&#39; | grep -v &#39;</span>^<span class=s1>$&#39; | head -30)
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>echo -e &#34;\n🔍 扫描到的文件类型：&#34;
+</span></span></span><span class=line><span class=cl><span class=s1>echo &#34;$all_exts&#34;
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>existing_patterns=$(git lfs track | awk &#39;</span><span class=o>{</span>print <span class=nv>$1</span><span class=o>}</span><span class=err>&#39;</span><span class=o>)</span>
+</span></span><span class=line><span class=cl><span class=nv>added</span><span class=o>=</span><span class=m>0</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>for</span> ext in <span class=nv>$all_exts</span><span class=p>;</span> <span class=k>do</span>
+</span></span><span class=line><span class=cl>    <span class=nv>pattern</span><span class=o>=</span><span class=s2>&#34;*.</span><span class=si>${</span><span class=nv>ext</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> ! <span class=nb>echo</span> <span class=s2>&#34;</span><span class=nv>$existing_patterns</span><span class=s2>&#34;</span> <span class=p>|</span> grep -qx <span class=s2>&#34;</span><span class=nv>$pattern</span><span class=s2>&#34;</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>        <span class=nb>echo</span> <span class=s2>&#34;✅ 新增 LFS 追踪：</span><span class=nv>$pattern</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>        git lfs track <span class=s2>&#34;</span><span class=nv>$pattern</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=nv>added</span><span class=o>=</span><span class=k>$((</span>added <span class=o>+</span> <span class=m>1</span><span class=k>))</span>
+</span></span><span class=line><span class=cl>    <span class=k>fi</span>
+</span></span><span class=line><span class=cl><span class=k>done</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 全局规则：resources 目录下所有文件强制走 LFS</span>
+</span></span><span class=line><span class=cl><span class=k>if</span> ! grep -q <span class=s2>&#34;**/resources/**/\*&#34;</span> <span class=s2>&#34;</span><span class=nv>$CONFIG_FILE</span><span class=s2>&#34;</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>    <span class=nb>echo</span> <span class=s2>&#34;✅ 启用全局规则：**/resources/**/*&#34;</span>
+</span></span><span class=line><span class=cl>    git lfs track <span class=s2>&#34;**/resources/**/*&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=nv>added</span><span class=o>=</span><span class=k>$((</span>added <span class=o>+</span> <span class=m>1</span><span class=k>))</span>
+</span></span><span class=line><span class=cl><span class=k>fi</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 钩子专属模式：仅扫描，不提交</span>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=o>[[</span> <span class=s2>&#34;</span><span class=nv>$SCAN_ONLY</span><span class=s2>&#34;</span> <span class=o>==</span> <span class=nb>true</span> <span class=o>]]</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> -e <span class=s2>&#34;\n✅ 扫描完成（钩子模式：不提交）&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=nb>exit</span> <span class=m>0</span>
+</span></span><span class=line><span class=cl><span class=k>fi</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=o>[</span> <span class=nv>$added</span> -gt <span class=m>0</span> <span class=o>]</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>    <span class=nb>echo</span> -e <span class=s2>&#34;\n📝 提交配置...&#34;</span>
+</span></span><span class=line><span class=cl>    git add <span class=s2>&#34;</span><span class=nv>$CONFIG_FILE</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>    git commit -m <span class=s2>&#34;auto: lfs 自动追踪新文件类型&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=nb>echo</span> -e <span class=s2>&#34;\n🎉 更新完成！&#34;</span>
+</span></span><span class=line><span class=cl><span class=k>else</span>
+</span></span><span class=line><span class=cl>    <span class=nb>echo</span> -e <span class=s2>&#34;\n🎉 所有类型已追踪，无需更新！&#34;</span>
+</span></span><span class=line><span class=cl><span class=k>fi</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> -e <span class=s2>&#34;\n✅ 全部完成！&#34;</span></span></span></code></pre></td></tr></table></div></div></div><p>添加脚本执行权限：</p><div class="src src-bash"><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>chmod +x auto-lfs-tracker.sh</span></span></code></pre></td></tr></table></div></div></div></div></div><div id=outline-container-headline-25 class=outline-3><h3 id=headline-25>3.2 配置 Git Pre-Push 钩子</h3><div id=outline-text-headline-25 class=outline-text-3><p>实现每次 `git push` 前自动扫描 LFS 规则，全程无感自动化：</p><div class="src src-bash"><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>cat &gt; .git/hooks/pre-push <span class=s>&lt;&lt; &#39;EOF&#39;
+</span></span></span><span class=line><span class=cl><span class=s>#!/bin/bash
+</span></span></span><span class=line><span class=cl><span class=s>echo &#34;🔍 Git Push 前自动检查 LFS 未追踪文件（仅扫描）...&#34;
+</span></span></span><span class=line><span class=cl><span class=s>./auto-lfs-tracker.sh --scan-only
+</span></span></span><span class=line><span class=cl><span class=s>EOF</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>chmod +x .git/hooks/pre-push</span></span></code></pre></td></tr></table></div></div></div></div></div><div id=outline-container-headline-26 class=outline-3><h3 id=headline-26>3.3 存量历史文件迁移（仅执行一次）</h3><div id=outline-text-headline-26 class=outline-text-3><p>针对已有大量资源的旧仓库，批量将历史大文件迁移至 LFS，实现仓库瘦身：</p><ol><li>迁移历史资源文件</li></ol><div class="src src-bash"><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>git lfs migrate import --everything --include<span class=o>=</span><span class=s2>&#34;**/resources/**/*&#34;</span></span></span></code></pre></td></tr></table></div></div></div><ol><li>清理 Git 历史垃圾对象</li></ol><div class="src src-bash"><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>git reflog expire --all --expire<span class=o>=</span>now
+</span></span><span class=line><span class=cl>git gc --prune<span class=o>=</span>now --aggressive</span></span></code></pre></td></tr></table></div></div></div><ol><li>强制推送重写历史（单人私有仓库安全）</li></ol><div class="src src-bash"><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>git push origin main --force</span></span></code></pre></td></tr></table></div></div></div></div></div><div id=outline-container-headline-27 class=outline-3><h3 id=headline-27>3.4 上传 LFS 实体文件（解决 404 报错）</h3><div id=outline-text-headline-27 class=outline-text-3><p>migrate 仅修改提交记录，需手动推送实体文件至远程，避免 CI/克隆资源404：</p><div class="src src-bash"><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>git lfs push origin main --all
+</span></span><span class=line><span class=cl>git push origin main --force</span></span></code></pre></td></tr></table></div></div></div></div></div></div></div><div id=outline-container-headline-28 class=outline-2><h2 id=headline-28>四、日常使用流程</h2><div id=outline-text-headline-28 class=outline-text-2><div id=outline-container-headline-29 class=outline-3><h3 id=headline-29>4.1 常规写作与提交</h3><div id=outline-text-headline-29 class=outline-text-3><p>完全保留原生 Git 操作习惯，无需额外干预：</p><div class="src src-bash"><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>git add .
+</span></span><span class=line><span class=cl>git commit -m <span class=s2>&#34;更新博文：xxx&#34;</span>
+</span></span><span class=line><span class=cl>git push</span></span></code></pre></td></tr></table></div></div></div><p>推送时钩子自动触发 LFS 扫描，补全缺失规则，全程自动化。</p></div></div><div id=outline-container-headline-30 class=outline-3><h3 id=headline-30>4.2 手动执行扫描脚本</h3><div id=outline-text-headline-30 class=outline-text-3><p>灵活手动维护 LFS 规则：</p><div class="src src-bash"><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1># 完整扫描并提交新规则</span>
+</span></span><span class=line><span class=cl>./auto-lfs-tracker.sh
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 仅扫描不提交（钩子同款模式）</span>
+</span></span><span class=line><span class=cl>./auto-lfs-tracker.sh --scan-only
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 查看帮助与全套排错命令</span>
+</span></span><span class=line><span class=cl>./auto-lfs-tracker.sh -h</span></span></code></pre></td></tr></table></div></div></div></div></div></div></div><div id=outline-container-headline-31 class=outline-2><h2 id=headline-31>五、常见问题排错</h2><div id=outline-text-headline-31 class=outline-text-2><div id=outline-container-headline-32 class=outline-3><h3 id=headline-32>5.1 克隆/CI 报错：Object does not exist on the server (404)</h3><div id=outline-text-headline-32 class=outline-text-3><p>原因：本地 LFS 实体文件未推送至远程服务器
+解决：</p><div class="src src-bash"><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>git lfs push origin main --all
+</span></span><span class=line><span class=cl>git push origin main --force</span></span></code></pre></td></tr></table></div></div></div></div></div><div id=outline-container-headline-33 class=outline-3><h3 id=headline-33>5.2 Shell 脚本被纳入 LFS，克隆失败</h3><div id=outline-text-headline-33 class=outline-text-3><p>原因：.sh 脚本被误追踪，文本文件无需 LFS 托管
+解决：</p><div class="src src-bash"><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>git lfs untrack <span class=s2>&#34;*.sh&#34;</span>
+</span></span><span class=line><span class=cl>git add --renormalize auto-lfs-tracker.sh
+</span></span><span class=line><span class=cl>git add .gitattributes
+</span></span><span class=line><span class=cl>git commit -m <span class=s2>&#34;fix: 移除 .sh 文件从 LFS 托管&#34;</span>
+</span></span><span class=line><span class=cl>git push origin main --force</span></span></code></pre></td></tr></table></div></div></div></div></div><div id=outline-container-headline-34 class=outline-3><h3 id=headline-34>5.3 git push 被钩子中断、出现提交冲突</h3><div id=outline-text-headline-34 class=outline-text-3><p>原因：钩子模式下脚本执行了 git commit，打乱推送流程
+解决方案：使用 –scan-only 仅扫描不提交（本文钩子已默认配置）</p></div></div><div id=outline-container-headline-35 class=outline-3><h3 id=headline-35>5.4 .git 目录体积偏大</h3><div id=outline-text-headline-35 class=outline-text-3><p>原因：migrate 操作后 Git 保留了旧历史对象，需手动垃圾回收
+解决方案：</p><div class="src src-bash"><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>git reflog expire --all --expire<span class=o>=</span>now
+</span></span><span class=line><span class=cl>git gc --prune<span class=o>=</span>now --aggressive</span></span></code></pre></td></tr></table></div></div></div></div></div><div id=outline-container-headline-36 class=outline-3><h3 id=headline-36>5.5 Actions 克隆私有仓库权限不足</h3><div id=outline-text-headline-36 class=outline-text-3><p>原因：Token 权限缺失、Secrets 名称错误、未勾选对应仓库
+排查要点：</p><ol><li>核对细粒度 Token 已勾选 blogs 和 ynhugo.github.io 两个仓库</li><li>确认 Token 拥有 Metadata(Read)、Code(Read and Write) 权限</li><li>检查 Actions 配置中密钥名称为 PRIVATE_BLOG_REPO_TOKEN（区分大小写）</li><li>重新粘贴 Token 至仓库 Secrets，确保无多余空格</li></ol></div></div></div></div><div id=outline-container-headline-37 class=outline-2><h2 id=headline-37>六、方案总结</h2><div id=outline-text-headline-37 class=outline-text-2><ol><li>目录结构兼容传统写作习惯，博文与资源同目录，无需修改文件路径；</li><li>Git LFS 专门托管大体积资源，从根源解决 Git 仓库无限膨胀问题；</li><li>脚本 + Git Hook 实现全自动化，新增文件自动识别并纳入 LFS；</li><li>细粒度 Token + 同名 Secrets 实现双仓库权限互通，安全且易维护；</li><li>脚本内置全套排错命令，换设备、重装环境均可快速复原；</li><li>基于 Hugo 搭建静态博客，完美适配 GitHub Actions 自动部署，私有内容隔离，公开站点正常访问；</li><li>钩子时序逻辑安全可控，配置文件更新无冲突、无推送风险，长期稳定运行。</li></ol><p>本方案适合大容量个人博客、技术文档库，一次完整配置后，可实现长期零维护稳定运行。</p></div></div></section><footer class="article-meta article-footer"><section class=article-tags><a href=/tags/git/>Git</a>
+<a href=/tags/lfs/>Lfs</a>
+<a href=/tags/actions/>Actions</a>
+<a href=/tags/hugo/>Hugo</a></section><section class="article-copyright inline-meta"><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span></section></footer></article><aside><h2 class=section-title></h2><div class=subsection-list><div class=article-list--tile><article><a href=/p/%E4%BD%BF%E7%94%A8hugo-stack%E5%92%8Cgithub-pages%E5%8F%8Aactions%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/><div class=article-details><h2 class=article-title>使用Hugo-Stack和GitHub-Pages及Actions搭建博客</h2></div></a></article></div></div></aside><script src=https://giscus.app/client.js data-repo=ynhugo/ynhugo.github.io data-repo-id=R_kgDOSnA4MQ data-category=Announcements data-category-id=DIC_kwDOSnA4Mc4C9zNa data-mapping=pathname data-strict=0 data-reactions-enabled=1 data-emit-metadata=0 data-input-position=top data-theme=light data-lang=en data-loading=lazy crossorigin=anonymous async></script><script>function setGiscusTheme(e){let t=document.querySelector("iframe.giscus-frame");t&&t.contentWindow.postMessage({giscus:{setConfig:{theme:e}}},"https://giscus.app")}(function(){addEventListener("message",t=>{if(event.origin!=="https://giscus.app")return;e()}),window.addEventListener("onColorSchemeChange",e);function e(){setGiscusTheme(document.documentElement.dataset.scheme==="light"?"light":"dark")}})()</script><footer class=site-footer><section class=copyright>&copy;
+2020 -
+2026 ynhugo</section><section class=powerby><br></section></footer><script type=module>
+    import gallery from '\/ts\/gallery.js';
+
+    const articleContent = document.querySelector('.article-content');
+    const shouldLoad = articleContent && (articleContent.querySelectorAll('figure').length > 0 || articleContent.querySelectorAll('img.gallery-image').length > 0);
+    
+    if (shouldLoad) {
+        gallery(articleContent);
+
+        const PhotoSwipeLightbox = (await import("https:\/\/cdn.jsdelivr.net\/npm\/photoswipe@5.4.4\/dist\/photoswipe-lightbox.esm.min.js")).default;
+        const styleHref = "https:\/\/cdn.jsdelivr.net\/npm\/photoswipe@5.4.4\/dist\/photoswipe.css";
+
+        const styleTag = document.createElement('link');
+        styleTag.rel = 'stylesheet';
+        styleTag.href = styleHref;
+        document.head.appendChild(styleTag);
+
+        const lightbox = new PhotoSwipeLightbox({
+            gallerySelector: '.article-content',
+            childSelector: 'figure a.image-link',
+            pswpModule: () => import("https:\/\/cdn.jsdelivr.net\/npm\/photoswipe@5.4.4\/dist\/photoswipe.esm.min.js")
+        });
+        lightbox.init();
+    }
+</script></main></div><script type=text/javascript src=/ts/main.d00997a2f4a6ce525f496da0c3ae6ad392b0468b8a9024f23309fdfc75c67a35.js defer></script></body></html>
