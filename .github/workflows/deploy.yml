@@ -21,17 +21,26 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout main repo + submodules
+      - name: Checkout
         uses: actions/checkout@v6
         with:
           submodules: recursive
           fetch-depth: 0
           token: ${{ secrets.PRIVATE_BLOG_REPO_TOKEN }}
 
-      - name: Check content files
+      # ==============================================
+      # ✅ 全自动强制刷新子模块（云端自己跑）
+      # ==============================================
+      - name: Force update submodule
         run: |
-          ls -la content/
-          ls -la content/post/ || echo "content/post 为空"
+          git submodule sync
+          git submodule update --init --recursive --force
+
+      # ==============================================
+      # ✅ 验证文章是否真的存在（你可以在日志看到）
+      # ==============================================
+      - name: List all posts
+        run: ls -la content/post/
 
       - name: Clean old public
         run: rm -rf public
@@ -63,6 +72,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public
           publish_branch: gh-pages
-          user_name: github-actions[bot]
-          user_email: github-actions[bot]@users.noreply.github.com
           keep_files: false
