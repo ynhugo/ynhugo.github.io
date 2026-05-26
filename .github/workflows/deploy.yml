@@ -2,57 +2,33 @@ name: Build and deploy
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main ]
   workflow_dispatch:
   repository_dispatch:
     types: [blog-updated]
 
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
 permissions:
   contents: write
-
-concurrency:
-  group: pages
-  cancel-in-progress: false
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout main
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Setup Hugo cache
-        uses: actions/cache@v4
-        with:
-          path: ${{ runner.temp }}/hugo_cache
-          key: ${{ runner.os }}-hugo-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-hugo-
-
-      - name: Clone private posts (shallow + LFS)
         run: |
-          git clone --depth 1 --branch main \
-          https://${{ secrets.PRIVATE_BLOG_REPO_TOKEN }}@github.com/ynhugo/blogs.git content/post
+          git clone https://github.com/ynhugo/ynhugo.github.io.git .
+          git checkout main
+
+      - name: Install Hugo
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y hugo
+
+      - name: Clone private posts
+        run: |
+          git clone --depth 1 https://${{ secrets.PRIVATE_BLOG_REPO_TOKEN }}@github.com/ynhugo/blogs.git content/post
           cd content/post
           git lfs pull
-          cd ../..
-
-      - name: List posts
-        run: ls -la content/post
-
-      - name: Clean old public
-        run: rm -rf public
-
-      - name: Setup Hugo
-        uses: peaceiris/actions-hugo@v3
-        with:
-          hugo-version: 'latest'
-          extended: true
 
       - name: Apply giscus config
         run: |
@@ -61,16 +37,21 @@ jobs:
             cat content/post/giscus.toml >> config/_default/params.toml
           fi
 
-      - name: Build site
+      - name: Run shortcode script
         run: |
           chmod +x shortcode.sh
           ./shortcode.sh
-          hugo --minify --gc --logLevel error --cacheDir "${{ runner.temp }}/hugo_cache"
+
+      - name: Build site
+        run: |
+          hugo --minify --gc
 
       - name: Deploy to gh-pages
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./public
-          publish_branch: gh-pages
-          keep_files: true
+        run: |
+          cd public
+          git init
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git add .
+          git commit -m "Deploy"
+          git push -f https://${{ secrets.GITHUB_TOKEN }}@github.com/ynhugo/ynhugo.github.io.git main:gh-pages
