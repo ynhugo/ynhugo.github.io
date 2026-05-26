@@ -26,10 +26,11 @@ jobs:
         with:
           fetch-depth: 0
 
-      # 直接克隆私有文章到 content/post（全自动）
-      - name: Clone private posts
+      # 浅克隆 + 不下载历史
+      - name: Clone private posts (shallow)
         run: |
-          git clone https://${{ secrets.PRIVATE_BLOG_REPO_TOKEN }}@github.com/ynhugo/blogs.git content/post
+          git clone --depth 1 --branch main \
+          https://${{ secrets.PRIVATE_BLOG_REPO_TOKEN }}@github.com/ynhugo/blogs.git content/post
 
       - name: List posts
         run: ls -la content/post
@@ -53,7 +54,7 @@ jobs:
       - name: Build site
         run: |
           ./shortcode.sh
-          hugo --minify
+          hugo --minify --gc --logLevel error
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
@@ -61,4 +62,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public
           publish_branch: gh-pages
-          keep_files: false
+          keep_files: true   # 保留旧文件，增量更新
