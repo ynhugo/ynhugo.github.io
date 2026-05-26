@@ -76,28 +76,49 @@ Termux安装opencode完整方案总结
 &lt;p&gt;—&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
+&lt;div id="outline-container-headline-7" class="outline-4"&gt;
+&lt;h4 id="headline-7"&gt;
+步骤 4：解决中文乱码问题
+&lt;/h4&gt;
+&lt;div id="outline-text-headline-7" class="outline-text-4"&gt;
+&lt;div class="src src-bash"&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;export LANG=C.UTF-8&amp;#39;&lt;/span&gt; &amp;gt;&amp;gt; ~/.profile
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;export LC_ALL=C.UTF-8&amp;#39;&lt;/span&gt; &amp;gt;&amp;gt; ~/.profile
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;source&lt;/span&gt; ~/.profile&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id="outline-container-headline-7" class="outline-3"&gt;
-&lt;h3 id="headline-7"&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-headline-8" class="outline-3"&gt;
+&lt;h3 id="headline-8"&gt;
 关键问题：访问 Termux 主目录
 &lt;/h3&gt;
-&lt;div id="outline-text-headline-7" class="outline-text-3"&gt;
-&lt;div id="outline-container-headline-8" class="outline-4"&gt;
-&lt;h4 id="headline-8"&gt;
+&lt;div id="outline-text-headline-8" class="outline-text-3"&gt;
+&lt;div id="outline-container-headline-9" class="outline-4"&gt;
+&lt;h4 id="headline-9"&gt;
 问题：proot 环境默认隔离，无法直接访问 Termux 文件
 &lt;/h4&gt;
 &lt;/div&gt;
-&lt;div id="outline-container-headline-9" class="outline-4"&gt;
-&lt;h4 id="headline-9"&gt;
+&lt;div id="outline-container-headline-10" class="outline-4"&gt;
+&lt;h4 id="headline-10"&gt;
 解决方案：使用 –bind 挂载
 &lt;/h4&gt;
-&lt;div id="outline-text-headline-9" class="outline-text-4"&gt;
-&lt;div id="outline-container-headline-10" class="outline-5"&gt;
-&lt;h5 id="headline-10"&gt;
+&lt;div id="outline-text-headline-10" class="outline-text-4"&gt;
+&lt;div id="outline-container-headline-11" class="outline-5"&gt;
+&lt;h5 id="headline-11"&gt;
 方式 1：直接挂载登录
 &lt;/h5&gt;
-&lt;div id="outline-text-headline-10" class="outline-text-5"&gt;
+&lt;div id="outline-text-headline-11" class="outline-text-5"&gt;
 &lt;div class="src src-bash"&gt;
 &lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
 &lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
@@ -110,11 +131,11 @@ Termux安装opencode完整方案总结
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id="outline-container-headline-11" class="outline-5"&gt;
-&lt;h5 id="headline-11"&gt;
+&lt;div id="outline-container-headline-12" class="outline-5"&gt;
+&lt;h5 id="headline-12"&gt;
 方式 2：设置别名（推荐，一劳永逸）
 &lt;/h5&gt;
-&lt;div id="outline-text-headline-11" class="outline-text-5"&gt;
+&lt;div id="outline-text-headline-12" class="outline-text-5"&gt;
 &lt;div class="src src-bash"&gt;
 &lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
 &lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
@@ -129,11 +150,11 @@ Termux安装opencode完整方案总结
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id="outline-container-headline-12" class="outline-5"&gt;
-&lt;h5 id="headline-12"&gt;
+&lt;div id="outline-container-headline-13" class="outline-5"&gt;
+&lt;h5 id="headline-13"&gt;
 之后只需运行
 &lt;/h5&gt;
-&lt;div id="outline-text-headline-12" class="outline-text-5"&gt;
+&lt;div id="outline-text-headline-13" class="outline-text-5"&gt;
 &lt;div class="src src-bash"&gt;
 &lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
 &lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
@@ -153,11 +174,11 @@ Termux安装opencode完整方案总结
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id="outline-container-headline-13" class="outline-3"&gt;
-&lt;h3 id="headline-13"&gt;
+&lt;div id="outline-container-headline-14" class="outline-3"&gt;
+&lt;h3 id="headline-14"&gt;
 方案对比
 &lt;/h3&gt;
-&lt;div id="outline-text-headline-13" class="outline-text-3"&gt;
+&lt;div id="outline-text-headline-14" class="outline-text-3"&gt;
 &lt;table&gt;
 &lt;tbody&gt;
 &lt;tr&gt;
@@ -180,6 +201,15 @@ Termux安装opencode完整方案总结
 &lt;/table&gt;
 &lt;p&gt;
 目前 proot-distro 是唯一可行方案。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-headline-15" class="outline-3"&gt;
+&lt;h3 id="headline-15"&gt;
+参考链接
+&lt;/h3&gt;
+&lt;div id="outline-text-headline-15" class="outline-text-3"&gt;
+&lt;p&gt;
+&lt;a href="https://chat01.ai/zh/chat/01K4GMPTME21H8QR2FR5AT9HED"&gt;termux里面安装的mobox中文显示乱码怎么解决？&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
