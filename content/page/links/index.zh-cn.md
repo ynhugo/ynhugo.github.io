@@ -5,6 +5,8 @@ links:
     website: https://naoemb.github.io
   - title: embnao
     website: https://embnao.github.io
+  - title: hexgio
+    website: https://hexgio.github.io
   - title: GitHub
     description: GitHub is the world's largest software development platform.
     website: https://github.com
