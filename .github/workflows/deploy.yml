@@ -67,10 +67,10 @@ jobs:
         run: ls -la content/post
 
       # 执行自定义短代码脚本，适配主题样式
-      - name: Run autoconfig.sh
+      - name: Run content/autoconfig.sh
         run: |
-          chmod +x autoconfig.sh
-          bash autoconfig.sh
+          chmod +x content/autoconfig.sh
+          bash content/autoconfig.sh
 
       # 动态注入私有仓库Giscus评论配置，覆盖原有配置
       - name: Inject giscus config
