@@ -59,7 +59,7 @@ jobs:
         with:
           repository: ynhugo/blogs
           token: ${{ secrets.PRIVATE_BLOG_REPO_TOKEN }}
-          path: content/post
+          path: content
           lfs: false # 关键配置：禁用LFS下载，彻底规避LFS额度限制
 
       # 校验博文文件拉取结果
@@ -76,8 +76,8 @@ jobs:
       - name: Inject giscus config
         run: |
           sed -i '/^\[comments\]/,/^$/d' config/_default/params.toml
-          if [ -f "content/post/giscus.toml" ]; then
-            cat content/post/giscus.toml >> config/_default/params.toml
+          if [ -f "content/giscus.toml" ]; then
+            cat content/giscus.toml >> config/_default/params.toml
           fi
 
       # 加载最新Hugo扩展版本
