@@ -59,8 +59,11 @@ jobs:
         with:
           repository: ynhugo/blogs
           token: ${{ secrets.PRIVATE_BLOG_REPO_TOKEN }}
-          path: /
+          path: blogs
           lfs: false # 关键配置：禁用LFS下载，彻底规避LFS额度限制
+
+      - name: Copy blog content
+        run: cp -a blogs/content ./content && rm -rf blogs
 
       # 校验博文文件拉取结果 
       - name: Show content
