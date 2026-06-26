@@ -34,8 +34,8 @@ jobs:
           fetch-depth: 0
 
       # 清空默认博文目录，准备拉取私有仓库博文
-      - name: Delete default content
-        run: rm -rf content
+      - name: Delete default content/post
+        run: rm -rf content/post
 
       # 安装环境依赖，适配Hugo编译
       - name: Setup Go
@@ -59,28 +59,25 @@ jobs:
         with:
           repository: ynhugo/blogs
           token: ${{ secrets.PRIVATE_BLOG_REPO_TOKEN }}
-          path: blogs
+          path: content
           lfs: false # 关键配置：禁用LFS下载，彻底规避LFS额度限制
 
-      - name: Copy blog content
-        run: cp -a blogs/content ./content
-
-      # 校验博文文件拉取结果 
+      # 校验博文文件拉取结果
       - name: Show content
-        run: ls -la content
+        run: ls -la content/post
 
       # 执行自定义短代码脚本，适配主题样式
-      - name: Run blogs/autoconfig.sh
+      - name: Run autoconfig.sh
         run: |
-          chmod +x blogs/autoconfig.sh
-          bash blogs/autoconfig.sh
+          chmod +x autoconfig.sh
+          bash autoconfig.sh
 
       # 动态注入私有仓库Giscus评论配置，覆盖原有配置
       - name: Inject giscus config
         run: |
           sed -i '/^\[comments\]/,/^$/d' config/_default/params.toml
-          if [ -f "blogs/giscus.toml" ]; then
-            cat blogs/giscus.toml >> config/_default/params.toml
+          if [ -f "content/post/giscus.toml" ]; then
+            cat content/post/giscus.toml >> config/_default/params.toml
           fi
 
       # 加载最新Hugo扩展版本
