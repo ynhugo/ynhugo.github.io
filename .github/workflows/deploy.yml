@@ -34,8 +34,8 @@ jobs:
           fetch-depth: 0
 
       # 清空默认博文目录，准备拉取私有仓库博文
-      - name: Delete default content/post
-        run: rm -rf content/post
+      - name: Delete default content
+        run: rm -rf content
 
       # 安装环境依赖，适配Hugo编译
       - name: Setup Go
@@ -64,7 +64,7 @@ jobs:
 
       # 校验博文文件拉取结果
       - name: Show content
-        run: ls -la content/post
+        run: ls -la content
 
       # 执行自定义短代码脚本，适配主题样式
       - name: Run content/autoconfig.sh
