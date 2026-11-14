@@ -9,13 +9,11 @@ on:
   repository_dispatch:
     types: [blog-updated]
 
-# 官方Pages部署最小权限配置
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# 并发控制，避免重复构建冲突
 concurrency:
   group: pages
   cancel-in-progress: false
@@ -26,18 +24,15 @@ jobs:
     env:
       TZ: Asia/Shanghai
     steps:
-      # 拉取公开仓库完整代码
       - name: Checkout public repo
         uses: actions/checkout@v6
         with:
           submodules: recursive
           fetch-depth: 0
 
-      # 清空默认博文目录，准备拉取私有仓库博文
       - name: Delete default content/post
         run: rm -rf content/post
 
-      # 安装环境依赖，适配Hugo编译
       - name: Setup Go
         uses: actions/setup-go@v6
         with:
@@ -48,38 +43,44 @@ jobs:
         with:
           node-version: 22
 
-      # ===== 新增：全局安装 Dart Sass（Hugo v0.170.0+ 编译 SCSS 的唯一途径）=====
+      # ===== 修正：使用 Release Downloader 获取 Dart Sass 二进制 =====
       - name: Install Dart Sass
-        run: npm install -g sass
+        uses: robinraju/release-downloader@v1
+        with:
+          repository: "sass/dart-sass"
+          latest: true
+          filename: "dart-sass-*-linux-x64.tar.gz"
+          tarBall: false
+          zipBall: false
+          extract: true
 
-      # 初始化Pages部署配置
+      - name: Add Dart Sass to PATH
+        run: echo "$(pwd)/dart-sass" >> $GITHUB_PATH
+        shell: bash
+
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v6
 
-      # 核心适配：关闭LFS拉取，纯Git模式拉取私有博文
       - name: Clone private blog posts (No LFS)
         uses: actions/checkout@v6
         with:
           repository: ynhugo/blogs
           token: ${{ secrets.PRIVATE_BLOG_REPO_TOKEN }}
           path: blogs
-          lfs: false # 关键配置：禁用LFS下载，彻底规避LFS额度限制
+          lfs: false
 
       - name: Copy blog content
         run: cp -a blogs/content ./content
 
-      # 校验博文文件拉取结果
       - name: Show content
         run: ls -la content/post
 
-      # 执行自定义短代码脚本，适配主题样式
       - name: Run blogs/autoconfig.sh
         run: |
           chmod +x blogs/autoconfig.sh
           bash blogs/autoconfig.sh
 
-      # 动态注入私有仓库Giscus评论配置，覆盖原有配置
       - name: Inject giscus config
         run: |
           sed -i '/^\[comments\]/,/^$/d' config/_default/params.toml
@@ -87,13 +88,11 @@ jobs:
             cat blogs/giscus.toml >> config/_default/params.toml
           fi
 
-      # 加载最新Hugo版本（注意：v0.170.0+ 已无 extended 版本，extended 参数不再生效）
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
         with:
           hugo-version: "latest"
 
-      # 优化编译：清理缓存、压缩静态资源、适配官方域名
       - name: Build
         run: |
           hugo \
@@ -101,13 +100,11 @@ jobs:
             --minify \
             --baseURL "${{ steps.pages.outputs.base_url }}/"
 
-      # 上传编译产物，用于Pages部署
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
         with:
           path: ./public
 
-  # 官方标准部署流程
   deploy:
     needs: build
     runs-on: ubuntu-latest
